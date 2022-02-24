@@ -7,7 +7,7 @@
 
 #if NDEBUG
 	#pragma option -d0
-    #pragma option -O1
+	#pragma option -O1
 #else
 	#pragma option -d3
 #endif
@@ -63,6 +63,7 @@ L1:
 
 // Functions
 ///////////////
+#include "core/utils/functions.pwn"
 
 // Callbacks
 ///////////////

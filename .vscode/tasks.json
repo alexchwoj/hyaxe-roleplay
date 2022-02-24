@@ -1,71 +1,71 @@
 {
-    "version": "2.0.0",
-    "type": "shell",
-    "command": "${workspaceRoot}/compiler/pawncc.exe",
-    "problemMatcher": "$pawncc",
-    "presentation": {
-        "reveal": "always",
-        "focus": true,
-        "panel": "dedicated",
-        "clear": true
-    },
-    "tasks": [
-        {
-            "label": "Compilar servidor",
-            "args": [
-                "--%",
-                "\"${workspaceFolder}\\source\\main.pwn\"",
-                "\"-icompiler\\include\"",
-                "\"-isource\"",
-                "\"-ogamemodes\\hyaxe.amx\""
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-        },
-        {
-            "label": "Preprocesar",
-            "args": [
-                "\"source/main.pwn\"",
-                "--%",
-                "\"-icompiler/include\"",
-                "\"-isource\"",
-                "\"-ogamemodes/hyaxe.lst\"",
-                "\"-l\""
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Ensamblar",
-            "args": [
-                "\"source/main.pwn\"",
-                "--%",
-                "\"-icompiler/include\"",
-                "\"-isource\"",
-                "\"-ogamemodes/hyaxe.asm\"",
-                "\"-a\"",
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Compilar archivo",
-            "args": [
-                "\"${relativeFile}\"",
-                "\"-icompiler/include\"",
-                "\"-isource\"",
-                "\"-o${fileDirname}\\${fileBasenameNoExtension}.amx\"",
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        }
-    ]
+	"version": "2.0.0",
+	"type": "shell",
+	"command": "${workspaceRoot}/compiler/pawncc.exe",
+	"problemMatcher": "$pawncc",
+	"presentation": {
+		"reveal": "always",
+		"focus": true,
+		"panel": "dedicated",
+		"clear": true
+	},
+	"tasks": [
+		{
+			"label": "Compilar servidor",
+			"args": [
+				"--%",
+				"\"${workspaceFolder}\\source\\main.pwn\"",
+				"\"-icompiler\\include\"",
+				"\"-isource\"",
+				"\"-ogamemodes\\hyaxe.amx\""
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+		},
+		{
+			"label": "Preprocesar",
+			"args": [
+				"\"source/main.pwn\"",
+				"--%",
+				"\"-icompiler/include\"",
+				"\"-isource\"",
+				"\"-ogamemodes/hyaxe.lst\"",
+				"\"-l\""
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "Ensamblar",
+			"args": [
+				"\"source/main.pwn\"",
+				"--%",
+				"\"-icompiler/include\"",
+				"\"-isource\"",
+				"\"-ogamemodes/hyaxe.asm\"",
+				"\"-a\"",
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "Compilar archivo",
+			"args": [
+				"\"${relativeFile}\"",
+				"\"-icompiler/include\"",
+				"\"-isource\"",
+				"\"-o${fileDirname}\\${fileBasenameNoExtension}.amx\"",
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
 }
