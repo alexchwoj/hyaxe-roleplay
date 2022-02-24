@@ -1,0 +1,7 @@
+#if defined _UTILS_HEADER_
+    #endinput
+#endif
+#define _UTILS_HEADER_
+
+const HYAXE_UNSAFE_HUGE_LENGTH = 1024;
+new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
