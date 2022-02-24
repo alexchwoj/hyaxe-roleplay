@@ -1,7 +1,7 @@
-#if defined _CALLBACKS_CONFIG_
+#if defined _config_callbacks_
     #endinput
 #endif
-#define _CALLBACKS_CONFIG_
+#define _config_callbacks_
 
 public OnGameModeInit()
 {
