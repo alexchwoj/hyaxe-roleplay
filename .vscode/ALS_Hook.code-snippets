@@ -23,5 +23,21 @@
 			"\tforward $1_$2($3);",
 			"#endif"
 		]
+	},
+	"ALS Native Hook": {
+		"prefix": [ "hook native", "ALS" ],
+		"body": [
+			"stock $1_$2($3)",
+			"{",
+			"\t$0",
+			"\treturn $2($3);",
+			"}",
+			"",
+			"#if !defined _ALS_$2",
+			"\t#define _ALS_$2",
+			"#endif",
+			"#define $2 $1_$2",
+			""
+		]
 	}
 }

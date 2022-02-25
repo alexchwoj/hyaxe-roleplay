@@ -55,6 +55,10 @@ L1:
 #include <a_mysql>
 #include <foreach>
 
+// Fixes
+///////////
+#include "core/fixes/textdraws.pwn"
+
 // Headers
 /////////////
 #include "core/utils/header.pwn"
