@@ -20,7 +20,7 @@ public OnGameModeInit()
 	print("[db] Connected.");
 	print("[db] Initializing tables...");
 	
-	mysql_query_file(g_hDatabase, "scheme.sql", false);
+	mysql_query_file(g_hDatabase, "schema.sql", false);
 
 	if(mysql_errno(g_hDatabase) != 0)
 	{
