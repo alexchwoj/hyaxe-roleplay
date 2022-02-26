@@ -31,7 +31,13 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 	** %2 = Amount of cells to fill in array
 	** Indexing the array is required per https://github.com/pawn-lang/compiler/issues/695
 	*/
-	#define memset(%0,%1,%2) __emit(addr.u.alt %0[0], const.pri %1, fill (%2 * cellbytes))
+	#define memset(%0,%1,%2) __emit(addr.u.alt (%0[0]), const.pri %1, fill (%2 * cellbytes))
+#endif
+
+#if !NDEBUG
+	#define DEBUG_PRINT(%1) printf(%1)
+#else
+	#define DEBUG_PRINT(%1);
 #endif
 
 #include "core/utils/bitarray.pwn"

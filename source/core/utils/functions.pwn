@@ -18,6 +18,18 @@ RawIpToString(rawip)
     return ip;
 }
 
+KickTimed(playerid, time = 250)
+{
+	SetTimerEx(!"KickTimed_Due", time, false, !"i", playerid);
+}
+
+forward KickTimed_Due(playerid);
+public KickTimed_Due(playerid)
+{
+	Kick(playerid);
+	return 1;
+}
+
 /*
 Float:fclamp(Float:v, Float:min, Float:max)
 {

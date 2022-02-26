@@ -64,16 +64,22 @@ L1:
 #include "core/utils/header.pwn"
 #include "core/database/header.pwn"
 #include "core/config/header.pwn"
+#include "core/dialogs/header.pwn"
 #include "player/account/header.pwn"
 
 // Functions
 ///////////////
 #include "core/utils/functions.pwn"
+#include "core/dialogs/functions.pwn"
+#include "player/account/functions.pwn"
 
 // Callbacks
 ///////////////
 #include "core/database/callbacks.pwn"
 #include "core/config/callbacks.pwn"
+#include "core/dialogs/callbacks.pwn"
+#include "player/account/callbacks.pwn"
+#include "player/auth/callbacks.pwn"
 
 // Prevents runtime error 20 (invalid index)
 main() { return 0; }
