@@ -64,6 +64,7 @@ L1:
 #include "core/utils/header.pwn"
 #include "core/database/header.pwn"
 #include "core/config/header.pwn"
+#include "player/account/header.pwn"
 
 // Functions
 ///////////////

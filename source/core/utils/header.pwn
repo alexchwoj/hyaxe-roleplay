@@ -33,3 +33,5 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 	*/
 	#define memset(%0,%1,%2) __emit(addr.u.alt %0[0], const.pri %1, fill (%2 * cellbytes))
 #endif
+
+#include "core/utils/bitarray.pwn"

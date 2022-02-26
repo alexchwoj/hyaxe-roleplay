@@ -1,0 +1,70 @@
+#if defined _account_header_
+    #endinput
+#endif
+#define _account_header_
+
+enum 
+{
+    PFLAG_AUTHENTICATING = 0,
+
+    MAX_PLAYER_FLAGS
+}
+
+enum ePlayerData
+{
+    e_iPlayerAccountId,
+    Cache:e_hDataCache,
+    e_szPlayerName[MAX_PLAYER_NAME],
+    e_szPlayerRpName[MAX_PLAYER_NAME],
+    e_iPlayerIp,
+    e_szPlayerLastConnection[20],
+    e_szPassword[65],
+    
+    Float:e_fPlayerHealth,
+    Float:e_fPlayerArmor,
+    e_iPlayerMoney,
+    Float:e_fSpawnPosX,
+    Float:e_fSpawnPosY,
+    Float:e_fSpawnPosZ,
+    Float:e_fSpawnPosAngle,
+    e_iPlayerVirtualWorld,
+    e_iPlayerInterior,
+    e_iPlayerSex,
+    e_iPlayerSkin,
+    Float:e_fPlayerHunger,
+    Float:e_fPlayerThirst,
+
+    e_iAdminLevel,
+    e_iPlayedTime,
+    
+    // MISC DATA
+    e_iCurrentConnectionTime,
+    e_iPlayerPausedTick,
+    e_iPlayerPausedTime
+};
+
+new 
+    g_rgePlayerData[MAX_PLAYERS + 1][ePlayerData],
+    BitArray:g_rgiPlayerFlags[MAX_PLAYERS]<MAX_PLAYER_FLAGS>;
+
+#define Player_Flags(%0) Bit:(g_rgiPlayerFlags[(%0)])
+#define Player_Cache(%0) (g_rgePlayerData[(%0)][e_hDataCache])
+#define Player_AccountID(%0) (g_rgePlayerData[(%0)][e_iPlayerAccountId])
+#define Player_Name(%0) (g_rgePlayerData[(%0)][e_szPlayerName])
+#define Player_RPName(%0) (g_rgePlayerData[(%0)][e_szPlayerRpName])
+#define Player_GetIp(%0) (g_rgePlayerData[(%0)][e_iPlayerIp])
+#define Player_GetIpString(%0) (RawIpToString(g_rgePlayerData[(%0)][e_iPlayerIp]))
+#define Player_LastConnection(%0) (g_rgePlayerData[(%0)][e_szPlayerLastConnection])
+#define Player_Health(%0) (g_rgePlayerData[(%0)][e_fPlayerHealth])
+#define Player_Armor(%0) (g_rgePlayerData[(%0)][e_fPlayerArmor])
+#define Player_Money(%0) (g_rgePlayerData[(%0)][e_iPlayerMoney])
+#define Player_VirtualWorld(%0) (g_rgePlayerData[(%0)][e_iPlayerVirtualWorld])
+#define Player_Interior(%0) (g_rgePlayerData[(%0)][e_iPlayerInterior])
+#define Player_Sex(%0) (g_rgePlayerData[(%0)][e_iPlayerSex])
+#define Player_Skin(%0) (g_rgePlayerData[(%0)][e_iPlayerSkin])
+#define Player_Hunger(%0) (g_rgePlayerData[(%0)][e_fPlayerHunger])
+#define Player_Thirst(%0) (g_rgePlayerData[(%0)][e_fPlayerThirst])
+#define Player_Rank(%0) (g_rgePlayerData[(%0)][e_iAdminLevel])
+#define Player_SavedPlayedTime(%0) (g_rgePlayerData[(%0)][e_iPlayedTime])
+#define Player_PlayedTime(%0) ((gettime() - g_rgePlayerData[(%0)][e_iCurrentConnectionTime]) + g_rgePlayerData[(%0)][e_iPlayedTime] - g_rgePlayerData[(%0)][e_iPlayerPausedTime])
+#define Player_Data(%0,%1) (g_rgePlayerData[(%0)][(%1)])
