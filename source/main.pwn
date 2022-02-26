@@ -69,11 +69,13 @@ L1:
 // Functions
 ///////////////
 #include "core/utils/functions.pwn"
+#include "core/notification/functions.pwn"
 
 // Callbacks
 ///////////////
 #include "core/database/callbacks.pwn"
 #include "core/config/callbacks.pwn"
+#include "core/notification/callbacks.pwn"
 
 // Prevents runtime error 20 (invalid index)
 main() { return 0; }
