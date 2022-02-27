@@ -3,6 +3,15 @@
 #endif
 #define _notification_functions_
 
+stock GetTextDrawLineCount(const string[]) {
+	new count = 1, pos = -3;
+
+	while ((pos = strfind(string, "~n~", true, pos + 3)) != -1) {
+		count++;
+	}
+
+	return count;
+}
 
 static GetFreeNotificationSlot(playerid)
 {
