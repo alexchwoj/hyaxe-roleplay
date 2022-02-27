@@ -146,3 +146,8 @@ stock rawMemset(address /* 12 */, value /* 16 */, size /* 20 */)
 		return 1;
 	}
 }
+
+Float:lerp(Float:start_value, Float:end_value, Float:pct)
+{
+    return (start_value + (end_value - start_value) * pct);
+}

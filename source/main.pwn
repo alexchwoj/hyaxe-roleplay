@@ -64,6 +64,7 @@ L1:
 #include "core/utils/header.pwn"
 #include "core/database/header.pwn"
 #include "core/config/header.pwn"
+#include "core/notification/header.pwn"
 #include "core/dialogs/header.pwn"
 #include "player/account/header.pwn"
 #include "player/needs/header.pwn"
@@ -71,6 +72,7 @@ L1:
 // Functions
 ///////////////
 #include "core/utils/functions.pwn"
+#include "core/notification/functions.pwn"
 #include "core/dialogs/functions.pwn"
 #include "player/account/functions.pwn"
 #include "player/needs/functions.pwn"
@@ -79,6 +81,7 @@ L1:
 ///////////////
 #include "core/database/callbacks.pwn"
 #include "core/config/callbacks.pwn"
+#include "core/notification/callbacks.pwn"
 #include "core/dialogs/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/auth/callbacks.pwn"
