@@ -48,14 +48,11 @@ public NotificationMoveToRight(playerid, index, seconds, Float:pos_y, Float:max,
 	NOTIFICATION_DATA[playerid][index][notificationFrameCount] += count;
 
     new Float:pct = floatdiv(NOTIFICATION_DATA[playerid][index][notificationFrameCount], max);
+    new Float:pos_x = lerp(0.0, 100.0, easeOutBack(pct));
 
-  	//new Float:border_pos = lerp(0.0, 55.000000, easeOutBack(pct));
-    //new Float:bg_pos = lerp(0.0, 100.000000, easeOutBack(pct));
-    new Float:pos_x = lerp(0.0, 22.0, easeOutBack(pct));
-
-    //PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][0], -55.000000 + border_pos, pos_y);
-    //PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][1], -100.000000 + bg_pos, pos_y);
-    PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][2], (22.000000 - 10.0) + pos_x, pos_y + 1.0);
+    PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][0], (55.000000 - 100.0) + pos_x, pos_y);
+    PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][1], (100.000000 - 100.0) + pos_x, pos_y);
+    PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][2], (22.000000 - 100.0) + pos_x, pos_y + 1.0);
 
     NotificationShowAll(playerid, index);
     
