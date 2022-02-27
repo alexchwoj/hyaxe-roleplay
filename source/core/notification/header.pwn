@@ -3,11 +3,10 @@
 #endif
 #define _NOTIFICATION_HEADER_
 
-#include <td-string-width>
+const MAX_NOTIFICATIONS = 16;
 
-#define MAX_NOTIFICATIONS 16
-
-enum eNotificationData {
+enum eNotificationData 
+{
     bool:notificationActive,
     notificationFrameCount,
     notificationFrameTimer,
@@ -15,5 +14,6 @@ enum eNotificationData {
     notificationText[512],
     notificationSeconds,
     Float:notificationHeight
-}
+};
+
 new NOTIFICATION_DATA[MAX_PLAYERS][MAX_NOTIFICATIONS][eNotificationData];

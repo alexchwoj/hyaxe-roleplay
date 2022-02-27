@@ -54,6 +54,7 @@ L1:
 #include <Pawn.RakNet>
 #include <a_mysql>
 #include <foreach>
+#include <td-string-width>
 
 // Fixes
 ///////////
