@@ -90,6 +90,7 @@ ShowNotification(playerid, const text[], seconds, color = 0xCB3126FF)
     NOTIFICATION_DATA[playerid][index][notificationSeconds] = seconds;
 
     NOTIFICATION_DATA[playerid][index][notificationFrameCount] = 0;
+    NOTIFICATION_DATA[playerid][index][notificationHeight] = 0.0;
     KillTimer(NOTIFICATION_DATA[playerid][index][notificationFrameTimer]);
 
     new count;
@@ -150,12 +151,12 @@ CMD:notification(playerid, params[])
 
 CMD:notification2(playerid, params[])
 {
-    ShowNotification(playerid, "Fusce et odio sagittis, tincidunt justo eget, posuere neque. Donec tempor dolor id velit viverra pellentesque. Suspendisse dictum augue ac sapien consectetur pellentesque. Aenean vestibulum varius consequat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam nec semper lectus, ut semper odio. Etiam eget dapibus dolor.", 10);
+    ShowNotification(playerid, "Fusce et odio sagittis, tincidunt justo eget, posuere neque. Donec tempor dolor id velit viverra pellentesque. Suspendisse dictum augue ac sapien consectetur pellentesque. Aenean vestibulum varius consequat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam nec semper lectus, ut semper odio. Etiam eget dapibus dolor.", 4);
     return 1;
 }
 
 CMD:notification3(playerid, params[])
 {
-    ShowNotification(playerid, "Bienvenido a hyaxe roleplay.", 10);
+    ShowNotification(playerid, "Bienvenido a hyaxe roleplay.", 5);
     return 1;
 }
