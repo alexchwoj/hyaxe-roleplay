@@ -64,6 +64,33 @@ public OnPlayerConnect(playerid)
     forward ACC_OnPlayerConnect(playerid);
 #endif
 
+public OnPlayerDisconnect(playerid, reason)
+{
+    if(Player_Cache(playerid) != MYSQL_INVALID_CACHE)
+        cache_delete(Player_Cache(playerid));
+
+    Account_Save(playerid);
+
+    g_rgePlayerData[playerid] = g_rgePlayerData[MAX_PLAYERS];
+    Bit_SetAll(Player_Flags(playerid), false);
+
+    #if defined ACC_OnPlayerDisconnect
+        return ACC_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect ACC_OnPlayerDisconnect
+#if defined ACC_OnPlayerDisconnect
+    forward ACC_OnPlayerDisconnect(playerid, reason);
+#endif
+
 public OnPlayerDataFetched(playerid)
 {
     DEBUG_PRINT("OnPlayerDataFetched(%i)", playerid);
@@ -102,6 +129,7 @@ public OnPlayerDataFetched(playerid)
 forward OnAccountInserted(playerid, callback);
 public OnAccountInserted(playerid, callback)
 {
+    Bit_Set(Player_Flags(playerid), PFLAG_REGISTERED, true);
     Player_AccountID(playerid) = cache_insert_id();
     Account_RegisterConnection(playerid);
 

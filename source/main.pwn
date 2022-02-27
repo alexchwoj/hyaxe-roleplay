@@ -67,6 +67,7 @@ L1:
 #include "core/notification/header.pwn"
 #include "core/dialogs/header.pwn"
 #include "player/account/header.pwn"
+#include "player/needs/header.pwn"
 
 // Functions
 ///////////////
@@ -74,6 +75,7 @@ L1:
 #include "core/notification/functions.pwn"
 #include "core/dialogs/functions.pwn"
 #include "player/account/functions.pwn"
+#include "player/needs/functions.pwn"
 
 // Callbacks
 ///////////////
@@ -83,6 +85,7 @@ L1:
 #include "core/dialogs/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/auth/callbacks.pwn"
+#include "player/needs/callbacks.pwn"
 
 // Prevents runtime error 20 (invalid index)
 main() { return 0; }

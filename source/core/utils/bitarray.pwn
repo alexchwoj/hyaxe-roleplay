@@ -41,7 +41,11 @@ stock Bit_Set(BitArray:array<>, slot, bool:set)
 }
 
 #define Bit_FastSet(%0,%1,%2) ((%2) ? (Bit_Let(%0,(%1))) : (Bit_Vet(%0,(%1))))
-#define Bit_SetAll(%0,%1,%2) memset((%0),%1,(%2))
+
+stock Bit_SetAll(BitArray:array<>, bool:set, size = sizeof(array))
+{
+    memset(_:array, set ? 0xFFFFFFFF : 0, size);
+}
 
 #define bits<%0> Bit_Bits(%0)
 

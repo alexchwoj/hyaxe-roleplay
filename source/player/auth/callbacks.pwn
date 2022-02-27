@@ -162,7 +162,7 @@ dialog login(playerid, response, listitem, inputtext[])
     DEBUG_PRINT("Login: Comparing hashes from %i", playerid);
     DEBUG_PRINT("Original: %s", Player_Password(playerid));
     DEBUG_PRINT("Input: %s", hash);
-    
+
     if(strcmp(Player_Password(playerid), hash, .ignorecase = true))
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}Contraseña {CB3126}incorrecta{DADADA}.\nIntroduce la contraseña correcta para entrar al servidor:", Player_RPName(playerid));
@@ -187,6 +187,9 @@ dialog login(playerid, response, listitem, inputtext[])
     if(Player_AdminLevel(playerid) > 0)
         Iter_Add(Admin, playerid);
 
+    Bit_Set(Player_Flags(playerid), PFLAG_AUTHENTICATING, false);
+    Bit_Set(Player_Flags(playerid), PFLAG_IN_GAME, true);
+    
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYERS` SET `CURRENT_CONNECTION` = UNIX_TIMESTAMP() WHERE `ID` = %d LIMIT 1;", Player_AccountID(playerid));
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
     Account_RegisterConnection(playerid);

@@ -21,7 +21,8 @@
 			"#define $2 $1_$2",
 			"#if defined $1_$2",
 			"\tforward $1_$2($3);",
-			"#endif"
+			"#endif",
+			""
 		]
 	},
 	"ALS Native Hook": {
