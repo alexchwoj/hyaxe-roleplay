@@ -1,0 +1,3 @@
+[submodule "compiler/include/amx"]
+	path = compiler/include/amx
+	url = https://github.com/Zeex/amx_assembly

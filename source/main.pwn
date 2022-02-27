@@ -54,6 +54,7 @@ L1:
 #include <Pawn.RakNet>
 #include <a_mysql>
 #include <foreach>
+#include <amx/amx_header>
 
 // Fixes
 ///////////
@@ -66,6 +67,7 @@ L1:
 #include "core/config/header.pwn"
 #include "core/notification/header.pwn"
 #include "core/dialogs/header.pwn"
+#include "core/commands/header.pwn"
 #include "player/account/header.pwn"
 #include "player/needs/header.pwn"
 
@@ -74,6 +76,7 @@ L1:
 #include "core/utils/functions.pwn"
 #include "core/notification/functions.pwn"
 #include "core/dialogs/functions.pwn"
+#include "core/commands/functions.pwn"
 #include "player/account/functions.pwn"
 #include "player/needs/functions.pwn"
 
@@ -83,6 +86,7 @@ L1:
 #include "core/config/callbacks.pwn"
 #include "core/notification/callbacks.pwn"
 #include "core/dialogs/callbacks.pwn"
+#include "core/commands/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/auth/callbacks.pwn"
 #include "player/needs/callbacks.pwn"

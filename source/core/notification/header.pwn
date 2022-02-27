@@ -1,7 +1,7 @@
-#if defined _notification_header_
+#if defined _NOTIFICATION_HEADER_
     #endinput
 #endif
-#define _notification_header_
+#define _NOTIFICATION_HEADER_
 
 const MAX_NOTIFICATIONS = 16;
 

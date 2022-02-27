@@ -16,6 +16,7 @@
 				"--%",
 				"\"${workspaceFolder}\\source\\main.pwn\"",
 				"\"-icompiler\\include\"",
+				"\"-icompiler\\include\\amx\"",
 				"\"-isource\"",
 				"\"-ogamemodes\\hyaxe.amx\""
 			],
@@ -30,6 +31,7 @@
 				"\"source/main.pwn\"",
 				"--%",
 				"\"-icompiler/include\"",
+				"\"-icompiler\\include\\amx\"",
 				"\"-isource\"",
 				"\"-ogamemodes/hyaxe.lst\"",
 				"\"-l\""
@@ -45,6 +47,7 @@
 				"\"source/main.pwn\"",
 				"--%",
 				"\"-icompiler/include\"",
+				"\"-icompiler\\include\\amx\"",
 				"\"-isource\"",
 				"\"-ogamemodes/hyaxe.asm\"",
 				"\"-a\"",
@@ -59,6 +62,7 @@
 			"args": [
 				"\"${relativeFile}\"",
 				"\"-icompiler/include\"",
+				"\"-icompiler\\include\\amx\"",
 				"\"-isource\"",
 				"\"-o${fileDirname}\\${fileBasenameNoExtension}.amx\"",
 			],
