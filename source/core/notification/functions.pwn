@@ -112,7 +112,18 @@ ShowNotification(playerid, const text[], seconds, color = 0xCB3126FF)
         PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][2], 22.000000, pos_y + 1.0);
     }
 
+    /*if (GetPlayerPing(playerid) <= 300 || NetStats_PacketLossPercent(playerid) <= 4.5)
+    {
+
+    }
+    else
+    {
+        _NotificationShowAll(playerid, index);
+        NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("DestroyPlayerNotification", 1000 * seconds, false, "ii", playerid, index);
+    }*/
+
     _NotificationShowAll(playerid, index);
+    NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("DestroyPlayerNotification", 1000 * seconds, false, "ii", playerid, index);
     return 1;
 }
 

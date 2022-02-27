@@ -24,3 +24,15 @@ public OnPlayerConnect(playerid)
 #if defined NOTI_OnPlayerConnect
     forward NOTI_OnPlayerConnect(playerid);
 #endif
+
+forward DestroyPlayerNotification(playerid, index);
+public DestroyPlayerNotification(playerid, index)
+{
+    NOTIFICATION_DATA[playerid][index][notificationActive] = false;
+    NOTIFICATION_DATA[playerid][index][notificationText] = EOS;
+    PlayerTextDrawDestroy(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][0]);
+    PlayerTextDrawDestroy(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][1]);
+    PlayerTextDrawDestroy(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][2]);
+    KillTimer(NOTIFICATION_DATA[playerid][index][notificationFrameTimer]);
+    return 1;
+}

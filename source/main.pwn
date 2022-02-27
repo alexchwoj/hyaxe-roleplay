@@ -66,7 +66,7 @@ L1:
 #include "core/config/header.pwn"
 #include "core/notification/header.pwn"
 #include "core/dialogs/header.pwn"
-#include "player/account/header.pwn"-
+#include "player/account/header.pwn"
 
 // Functions
 ///////////////
