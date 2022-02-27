@@ -1,3 +1,8 @@
+#if defined _notification_callbacks_
+    #endinput
+#endif
+#define _notification_callbacks_
+
 public OnPlayerConnect(playerid)
 {
     for(new i = 0; i < MAX_NOTIFICATIONS; i++)

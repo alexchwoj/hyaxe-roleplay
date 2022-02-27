@@ -1,9 +1,7 @@
-#if defined _NOTIFICATION_HEADER_
+#if defined _notification_header_
     #endinput
 #endif
-#define _NOTIFICATION_HEADER_
-
-#include <td-string-width>
+#define _notification_header_
 
 #define MAX_NOTIFICATIONS 16
 
