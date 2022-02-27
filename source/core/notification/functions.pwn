@@ -143,19 +143,19 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
     return 1;
 }
 
-CMD:notification(playerid, params[])
+command notification(playerid, const params[], "")
 {
     Notification_Show(playerid, "Fusce et odio sagittis, tincidunt justo eget, posuere neque. Donec tempor dolor id velit viverra pellentesque. Suspendisse dictum augue ac sapien consectetur pellentesque.", 10);
     return 1;
 }
 
-CMD:notification2(playerid, params[])
+command notification2(playerid, const params[], "")
 {
     Notification_Show(playerid, "Fusce et odio sagittis, tincidunt justo eget, posuere neque. Donec tempor dolor id velit viverra pellentesque. Suspendisse dictum augue ac sapien consectetur pellentesque. Aenean vestibulum varius consequat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam nec semper lectus, ut semper odio. Etiam eget dapibus dolor.", 4);
     return 1;
 }
 
-CMD:notification3(playerid, params[])
+command notification3(playerid, const params[], "")
 {
     Notification_Show(playerid, "Bienvenido a hyaxe roleplay.", 5);
     return 1;
