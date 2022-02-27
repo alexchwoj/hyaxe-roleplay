@@ -3,17 +3,17 @@
 #endif
 #define _notification_functions_
 
-stock Float:easeInOutCubic(Float:t)
+Float:easeInOutCubic(Float:t)
 {
     return t < 0.5 ? 4 * t * t * t : 1 + (--t) * (2 * (--t)) * (2 * t);
 }
 
-stock Float:easeOutBack(Float:t)
+Float:easeOutBack(Float:t)
 {
     return 1 + (--t) * t * (2.70158 * t + 1.70158);
 }
 
-stock GetTextDrawLineCount(const string[]) {
+GetTextDrawLineCount(const string[]) {
 	new count = 1, pos = -3;
 
 	while ((pos = strfind(string, "~n~", true, pos + 3)) != -1) {
@@ -139,7 +139,7 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
         PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][2], 22.000000, pos_y + 1.0);
     }
 
-    if (GetPlayerPing(playerid) <= 300 || NetStats_PacketLossPercent(playerid) <= 4.5)
+    if (GetPlayerPing(playerid) <= 300 || NetStats_PacketLossPercent(playerid) <= 4.5 || GetServerTickRate() >= 300)
     {
         NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationMoveToRight", 10, true, "dddffd", playerid, index, seconds, pos_y, 300.0, 5);
     }

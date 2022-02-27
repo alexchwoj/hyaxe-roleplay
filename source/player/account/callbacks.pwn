@@ -147,5 +147,7 @@ public OnAccountInserted(playerid, callback)
         }
     }
 
+    Notification_Show(playerid, "Felicidades, te has registrado correctamente.", 3, 0x64A752FF);
+
     return 1;
 }

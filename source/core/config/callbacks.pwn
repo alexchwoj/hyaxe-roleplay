@@ -16,8 +16,8 @@ public OnGameModeInit()
 
     SetNameTagDrawDistance(20.0);
 
-	SendRconCommand(!"hostname 	  .•°   Hyaxe Roleplay   °•.");
-	SendRconCommand(!"language Español");
+	SendRconCommand(!"hostname Hyaxe Roleplay [Rol en español]");
+	SendRconCommand(!"language Español / Spanish");
 	SendRconCommand(!"gamemodetext Roleplay / RPG");
 
 	SetServerRule(!"lagcomp", "skinshot");
