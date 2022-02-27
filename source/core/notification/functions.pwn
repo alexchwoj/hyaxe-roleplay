@@ -13,9 +13,9 @@ stock GetTextDrawLineCount(const string[]) {
 	return count;
 }
 
-GetFreeNotificationSlot(playerid)
+static GetFreeNotificationSlot(playerid)
 {
-    for(new i = 0; i < MAX_NOTIFICATIONS; i++)
+    for(new i; i < MAX_NOTIFICATIONS; ++i)
 	{
 		if (!NOTIFICATION_DATA[playerid][i][notificationActive])
 		    return i;
@@ -23,7 +23,7 @@ GetFreeNotificationSlot(playerid)
     return MAX_NOTIFICATIONS + 1;
 }
 
-_NotificationShowAll(playerid, index)
+static NotificationShowAll(playerid, index)
 {
     PlayerTextDrawShow(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][0]);
     PlayerTextDrawShow(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][1]);
@@ -31,7 +31,7 @@ _NotificationShowAll(playerid, index)
     return 1;
 }
 
-_CreateNotificationTD(playerid, index, const text[], color)
+static CreateNotificationTD(playerid, index, const text[], color)
 {
     NOTIFICATION_DATA[playerid][index][notificationTextdraw][0] = CreatePlayerTextDraw(playerid, 55.000000, 135.000000, !"_");
     PlayerTextDrawFont(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][0], 1);
@@ -78,7 +78,7 @@ _CreateNotificationTD(playerid, index, const text[], color)
     return 1;
 }
 
-ShowNotification(playerid, const text[], seconds, color = 0xCB3126FF)
+Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
 {
     new index = GetFreeNotificationSlot(playerid);
     if (index > MAX_NOTIFICATIONS)
@@ -104,7 +104,7 @@ ShowNotification(playerid, const text[], seconds, color = 0xCB3126FF)
         count ++;
     }
 
-    _CreateNotificationTD(playerid, index, NOTIFICATION_DATA[playerid][index][notificationText], color);
+    CreateNotificationTD(playerid, index, NOTIFICATION_DATA[playerid][index][notificationText], color);
 
     new lines = GetTextDrawLineCount(NOTIFICATION_DATA[playerid][index][notificationText]);
     NOTIFICATION_DATA[playerid][index][notificationHeight] += (lines * 1.0) + 0.3;
@@ -138,14 +138,14 @@ ShowNotification(playerid, const text[], seconds, color = 0xCB3126FF)
         NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("DestroyPlayerNotification", 1000 * seconds, false, "ii", playerid, index);
     }*/
 
-    _NotificationShowAll(playerid, index);
+    NotificationShowAll(playerid, index);
     NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("DestroyPlayerNotification", 1000 * seconds, false, "ii", playerid, index);
     return 1;
 }
 
 CMD:notification(playerid, params[])
 {
-    ShowNotification(playerid, "Fusce et odio sagittis, tincidunt justo eget, posuere neque. Donec tempor dolor id velit viverra pellentesque. Suspendisse dictum augue ac sapien consectetur pellentesque.", 10);
+    Notification_Show(playerid, "Fusce et odio sagittis, tincidunt justo eget, posuere neque. Donec tempor dolor id velit viverra pellentesque. Suspendisse dictum augue ac sapien consectetur pellentesque.", 10);
     return 1;
 }
 
