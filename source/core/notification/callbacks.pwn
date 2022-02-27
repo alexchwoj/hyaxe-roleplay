@@ -56,7 +56,7 @@ public NotificationMoveToLeft(playerid, index, seconds, Float:pos_y, Float:max, 
 
     NotificationShowAll(playerid, index);
     
-	if (pct >= -1.0)
+	if (pct <= -1.0)
 	{
 		NOTIFICATION_DATA[playerid][index][notificationFrameCount] = 0;
 		DestroyPlayerNotification(playerid, index);
