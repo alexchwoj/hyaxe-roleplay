@@ -4,10 +4,10 @@
 #define _account_header_
 
 const PLAYER_DEFAULT_MONEY = 250;
-const Float:PLAYER_SPAWN_X = 0.0;
-const Float:PLAYER_SPAWN_Y = 0.0;
-const Float:PLAYER_SPAWN_Z = 0.0;
-const Float:PLAYER_SPAWN_ANGLE = 0.0;
+const Float:PLAYER_SPAWN_X = 1728.8326;
+const Float:PLAYER_SPAWN_Y = -1174.8977;
+const Float:PLAYER_SPAWN_Z = 23.8315;
+const Float:PLAYER_SPAWN_ANGLE = 45.1207;
 
 enum 
 {

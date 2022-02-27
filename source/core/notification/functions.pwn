@@ -3,6 +3,16 @@
 #endif
 #define _notification_functions_
 
+stock Float:easeInOutCubic(Float:t)
+{
+    return t < 0.5 ? 4 * t * t * t : 1 + (--t) * (2 * (--t)) * (2 * t);
+}
+
+stock Float:easeOutBack(Float:t)
+{
+    return 1 + (--t) * t * (2.70158 * t + 1.70158);
+}
+
 stock GetTextDrawLineCount(const string[]) {
 	new count = 1, pos = -3;
 
@@ -23,7 +33,7 @@ static GetFreeNotificationSlot(playerid)
     return MAX_NOTIFICATIONS + 1;
 }
 
-static NotificationShowAll(playerid, index)
+NotificationShowAll(playerid, index)
 {
     PlayerTextDrawShow(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][0]);
     PlayerTextDrawShow(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][1]);
@@ -112,9 +122,10 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
     PlayerTextDrawLetterSize(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][0], 0.975000, NOTIFICATION_DATA[playerid][index][notificationHeight]);
     PlayerTextDrawLetterSize(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][1], 0.975000, NOTIFICATION_DATA[playerid][index][notificationHeight]);
 
+    new Float:pos_y = 135.000000;
     if (index)
     {
-        new Float:pos_x, Float:pos_y;
+        new Float:pos_x;
         PlayerTextDrawGetPos(playerid, NOTIFICATION_DATA[playerid][index - 1][notificationTextdraw][0], pos_x, pos_y);
         #pragma unused pos_x
 
@@ -128,18 +139,15 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
         PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][2], 22.000000, pos_y + 1.0);
     }
 
-    /*if (GetPlayerPing(playerid) <= 300 || NetStats_PacketLossPercent(playerid) <= 4.5)
+    if (GetPlayerPing(playerid) <= 300 || NetStats_PacketLossPercent(playerid) <= 4.5)
     {
-
+        NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationMoveToRight", 10, true, "dddffd", playerid, index, seconds, pos_y, 300.0, 5);
     }
     else
     {
-        _NotificationShowAll(playerid, index);
+        NotificationShowAll(playerid, index);
         NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("DestroyPlayerNotification", 1000 * seconds, false, "ii", playerid, index);
-    }*/
-
-    NotificationShowAll(playerid, index);
-    NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("DestroyPlayerNotification", 1000 * seconds, false, "ii", playerid, index);
+    }
     return 1;
 }
 
