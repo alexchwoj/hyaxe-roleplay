@@ -11,8 +11,6 @@ enum eNotificationData
     notificationFrameCount,
     notificationFrameTimer,
     PlayerText:notificationTextdraw[3],
-    notificationText[512],
-    notificationSeconds,
     Float:notificationHeight
 };
 

@@ -95,29 +95,28 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
         return 0;
 
     NOTIFICATION_DATA[playerid][index][notificationActive] = true;
-    strcat(NOTIFICATION_DATA[playerid][index][notificationText], text);
-
-    NOTIFICATION_DATA[playerid][index][notificationSeconds] = seconds;
-
     NOTIFICATION_DATA[playerid][index][notificationFrameCount] = 0;
     NOTIFICATION_DATA[playerid][index][notificationHeight] = 0.0;
     KillTimer(NOTIFICATION_DATA[playerid][index][notificationFrameTimer]);
 
-    new count;
-    for (new i = 0, len = strlen(NOTIFICATION_DATA[playerid][index][notificationText]); i <= len; i++)
+    new fixed_text[512];
+    new len = strcat(fixed_text, text);
+
+    new count, line_count = 1;
+    for (new i = 0; i <= len; ++i)
 	{
-        if (count >= 50 && NOTIFICATION_DATA[playerid][index][notificationText][i] == ' ')
+        if (count >= 50 && fixed_text[i] == ' ')
         {
-            strins(NOTIFICATION_DATA[playerid][index][notificationText], "~n~", i + 1);
+            strins(fixed_text, "~n~", i + 1);
+            line_count++;
             count = 0;
         }
         count ++;
     }
 
-    CreateNotificationTD(playerid, index, NOTIFICATION_DATA[playerid][index][notificationText], color);
+    CreateNotificationTD(playerid, index, fixed_text, color);
 
-    new lines = GetTextDrawLineCount(NOTIFICATION_DATA[playerid][index][notificationText]);
-    NOTIFICATION_DATA[playerid][index][notificationHeight] += (lines * 1.0) + 0.3;
+    NOTIFICATION_DATA[playerid][index][notificationHeight] += (line_count * 1.0) + 0.3;
     
     PlayerTextDrawLetterSize(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][0], 0.975000, NOTIFICATION_DATA[playerid][index][notificationHeight]);
     PlayerTextDrawLetterSize(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][1], 0.975000, NOTIFICATION_DATA[playerid][index][notificationHeight]);
@@ -129,10 +128,9 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
         PlayerTextDrawGetPos(playerid, NOTIFICATION_DATA[playerid][index - 1][notificationTextdraw][0], pos_x, pos_y);
         #pragma unused pos_x
 
-        lines = GetTextDrawLineCount(NOTIFICATION_DATA[playerid][index - 1][notificationText]);
-        if (!lines) pos_y += 10.0;
-
-        pos_y += (lines * 10.0) + 10.0;
+        PlayerTextDrawGetString(playerid, NOTIFICATION_DATA[playerid][index - 1][notificationTextdraw][2], fixed_text);
+        line_count = GetTextDrawLineCount(fixed_text);
+        pos_y += (line_count * 10.0) + 10.0;
 
         PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][0], 55.000000, pos_y);
         PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][1], 100.000000, pos_y);

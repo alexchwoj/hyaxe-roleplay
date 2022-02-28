@@ -3,38 +3,37 @@
 #endif
 #define _notification_callbacks_
 
-public OnPlayerConnect(playerid)
+public OnPlayerDisconnect(playerid, reason)
 {
     for(new i = 0; i < MAX_NOTIFICATIONS; i++)
     {
-        NOTIFICATION_DATA[playerid][i][notificationActive] = false;
-        PlayerTextDrawDestroy(playerid, NOTIFICATION_DATA[playerid][i][notificationTextdraw][0]);
-        PlayerTextDrawDestroy(playerid, NOTIFICATION_DATA[playerid][i][notificationTextdraw][1]);
-        PlayerTextDrawDestroy(playerid, NOTIFICATION_DATA[playerid][i][notificationTextdraw][2]);
+        if(NOTIFICATION_DATA[playerid][i][notificationActive])
+        {
+            DestroyPlayerNotification(playerid, i);
+        }
     }
 
-    #if defined NOTI_OnPlayerConnect
-        return NOTI_OnPlayerConnect(playerid);
+    #if defined NOTI_OnPlayerDisconnect
+        return NOTI_OnPlayerDisconnect(playerid, reason);
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnPlayerConnect
-    #undef OnPlayerConnect
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
 #else
-    #define _ALS_OnPlayerConnect
+    #define _ALS_OnPlayerDisconnect
 #endif
-#define OnPlayerConnect NOTI_OnPlayerConnect
-#if defined NOTI_OnPlayerConnect
-    forward NOTI_OnPlayerConnect(playerid);
+#define OnPlayerDisconnect NOTI_OnPlayerDisconnect
+#if defined NOTI_OnPlayerDisconnect
+    forward NOTI_OnPlayerDisconnect(playerid, reason);
 #endif
 
 forward DestroyPlayerNotification(playerid, index);
 public DestroyPlayerNotification(playerid, index)
 {
     NOTIFICATION_DATA[playerid][index][notificationActive] = false;
-    NOTIFICATION_DATA[playerid][index][notificationText] = EOS;
     PlayerTextDrawDestroy(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][0]);
     PlayerTextDrawDestroy(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][1]);
     PlayerTextDrawDestroy(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][2]);
@@ -42,8 +41,8 @@ public DestroyPlayerNotification(playerid, index)
     return 1;
 }
 
-forward NotificationMoveToLeft(playerid, index, seconds, Float:pos_y, Float:max, count);
-public NotificationMoveToLeft(playerid, index, seconds, Float:pos_y, Float:max, count)
+forward NotificationMoveToLeft(playerid, index, Float:pos_y, Float:max, count);
+public NotificationMoveToLeft(playerid, index, Float:pos_y, Float:max, count)
 {
 	NOTIFICATION_DATA[playerid][index][notificationFrameCount] -= count;
 
@@ -65,11 +64,11 @@ public NotificationMoveToLeft(playerid, index, seconds, Float:pos_y, Float:max, 
 	return 1;
 }
 
-forward NotificationWaitToLeft(playerid, index, seconds, Float:pos_y, Float:max, count);
-public NotificationWaitToLeft(playerid, index, seconds, Float:pos_y, Float:max, count)
+forward NotificationWaitToLeft(playerid, index, Float:pos_y, Float:max, count);
+public NotificationWaitToLeft(playerid, index, Float:pos_y, Float:max, count)
 {
     KillTimer(NOTIFICATION_DATA[playerid][index][notificationFrameTimer]);
-    NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationMoveToLeft", 10, true, "dddffd", playerid, index, seconds, pos_y, 300.0, 5);
+    NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationMoveToLeft", 10, true, "ddffd", playerid, index, pos_y, 300.0, 5);
 	return 1;
 }
 
@@ -91,7 +90,7 @@ public NotificationMoveToRight(playerid, index, seconds, Float:pos_y, Float:max,
 	{
 		NOTIFICATION_DATA[playerid][index][notificationFrameCount] = 0;
 		KillTimer(NOTIFICATION_DATA[playerid][index][notificationFrameTimer]);
-        NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationWaitToLeft", 1000 * seconds, false, "dddffd", playerid, index, seconds, pos_y, 300.0, 5);
+        NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationWaitToLeft", 1000 * seconds, false, "ddffd", playerid, index, pos_y, 300.0, 5);
 	}
 
 	return 1;
