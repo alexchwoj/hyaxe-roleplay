@@ -69,6 +69,8 @@ L1:
 #include "core/notification/header.pwn"
 #include "core/dialogs/header.pwn"
 #include "core/commands/header.pwn"
+#include "server/textdraws/header.pwn"
+#include "server/vehicles/header.pwn"
 #include "player/account/header.pwn"
 #include "player/needs/header.pwn"
 
@@ -78,6 +80,7 @@ L1:
 #include "core/notification/functions.pwn"
 #include "core/dialogs/functions.pwn"
 #include "core/commands/functions.pwn"
+#include "server/vehicles/functions.pwn"
 #include "player/account/functions.pwn"
 #include "player/needs/functions.pwn"
 
@@ -88,6 +91,8 @@ L1:
 #include "core/notification/callbacks.pwn"
 #include "core/dialogs/callbacks.pwn"
 #include "core/commands/callbacks.pwn"
+#include "server/textdraws/callbacks.pwn"
+#include "server/vehicles/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/auth/callbacks.pwn"
 #include "player/needs/callbacks.pwn"

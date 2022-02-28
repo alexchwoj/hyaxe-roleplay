@@ -161,6 +161,46 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
     return 1;
 }
 
+Notification_ShowBeatingText(playerid, time, color, alpha_min, alpha_max, const text[])
+{
+    if(g_rgiTextProcessTimer[playerid])
+    {
+        KillTimer(g_rgiTextProcessTimer[playerid]);
+    }
+
+    new string[128];
+    strcat(string, Str_FixEncoding(text));
+
+    for(new i = strlen(string) - 1; i != -1; --i)
+    {
+        if(string[i] == ' ')
+            string[i] = '_';
+    }
+
+    new td_color = (color << 8) ^ alpha_max;
+    PlayerTextDrawColor(playerid, p_tdBeatingText{playerid}, td_color);
+    PlayerTextDrawBackgroundColor(playerid, p_tdBeatingText{playerid}, alpha_max);
+    PlayerTextDrawSetString(playerid, p_tdBeatingText{playerid}, string);
+    PlayerTextDrawShow(playerid, p_tdBeatingText{playerid});
+
+    g_rgiTextProcessTick[playerid] = GetTickCount();
+    g_rgiTextProcessTimer[playerid] = SetTimerEx("NOTIFICATION_ProcessText", 10, true, "iiiii", playerid, time, alpha_min, alpha_max, false);
+
+    return 1;
+}
+
+Notification_HideBeatingText(playerid)
+{
+    if(!g_rgiTextProcessTick[playerid])
+        return 0;
+
+    KillTimer(g_rgiTextProcessTimer[playerid]);
+    g_rgiTextProcessTick[playerid] = 0;
+    PlayerTextDrawHide(playerid, p_tdBeatingText{playerid});
+
+    return 1;
+}
+
 command notification(playerid, const params[], "")
 {
     Notification_Show(playerid, "Fusce et odio sagittis, tincidunt justo eget, posuere neque. Donec tempor dolor id velit viverra pellentesque. Suspendisse dictum augue ac sapien consectetur pellentesque.", 3);
@@ -182,5 +222,11 @@ command notification3(playerid, const params[], "")
 command nt(playerid, const params[], "")
 {
     Notification_Show(playerid, params, 5);
+    return 1;
+}
+
+command bt(playerid, const params[], "")
+{
+    Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, params);
     return 1;
 }

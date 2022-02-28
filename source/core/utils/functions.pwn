@@ -151,3 +151,64 @@ Float:lerp(Float:start_value, Float:end_value, Float:pct)
 {
     return (start_value + (end_value - start_value) * pct);
 }
+
+Str_FixEncoding(const string[])
+{
+    static result[1024];
+    strcpy(result, string);
+
+    for (new i = (strlen(result) - 1); i != -1; --i)
+    {
+        switch (result[i])
+        {
+            case 'à': result[i] = 151;
+            case 'á': result[i] = 152;
+            case 'â': result[i] = 153;
+            case 'ä': result[i] = 154;
+            case 'À': result[i] = 128;
+            case 'Á': result[i] = 129;
+            case 'Â': result[i] = 130;
+            case 'Ä': result[i] = 131;
+            case 'è': result[i] = 157;
+            case 'é': result[i] = 158;
+            case 'ê': result[i] = 159;
+            case 'ë': result[i] = 160;
+            case 'È': result[i] = 134;
+            case 'É': result[i] = 135;
+            case 'Ê': result[i] = 136;
+            case 'Ë': result[i] = 137;
+            case 'ì': result[i] = 161;
+            case 'í': result[i] = 162;
+            case 'î': result[i] = 163;
+            case 'ï': result[i] = 164;
+            case 'Ì': result[i] = 138;
+            case 'Í': result[i] = 139;
+            case 'Î': result[i] = 140;
+            case 'Ï': result[i] = 141;
+            case 'ò': result[i] = 165;
+            case 'ó': result[i] = 166;
+            case 'ô': result[i] = 167;
+            case 'ö': result[i] = 168;
+            case 'Ò': result[i] = 142;
+            case 'Ó': result[i] = 143;
+            case 'Ô': result[i] = 144;
+            case 'Ö': result[i] = 145;
+            case 'ù': result[i] = 169;
+            case 'ú': result[i] = 170;
+            case 'û': result[i] = 171;
+            case 'ü': result[i] = 172;
+            case 'Ù': result[i] = 146;
+            case 'Ú': result[i] = 147;
+            case 'Û': result[i] = 148;
+            case 'Ü': result[i] = 149;
+            case 'ñ': result[i] = 174;
+            case 'Ñ': result[i] = 173;
+            case '¡': result[i] = 64;
+            case '¿': result[i] = 175;
+            case '`': result[i] = 177;
+            case '&': result[i] = 38;
+        }
+    }
+
+    return result;
+}

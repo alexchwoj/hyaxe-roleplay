@@ -95,3 +95,61 @@ public NotificationMoveToRight(playerid, index, seconds, Float:pos_y, Float:max,
 
 	return 1;
 }
+
+public NOTIFICATION_ProcessText(playerid, time, alpha_min, alpha_max, bool:should_hide)
+{
+    // false = out
+    // true = in
+    static bool:td_phase[MAX_PLAYERS char];
+
+    new color = PlayerTextDrawGetColor(playerid, p_tdBeatingText{playerid});
+    new current_alpha = (color & 0xFF);
+
+    if (!should_hide)
+    {
+        if (!td_phase{playerid} && current_alpha <= alpha_min)
+        {
+            td_phase{playerid} = true;
+        }
+        else if (current_alpha >= alpha_max)
+        {
+            td_phase{playerid} = false;
+        }
+
+        if (!td_phase{playerid})
+        {
+            current_alpha -= NOTIFICATION_TEXT_BEAT_DIFF;
+        }
+        else
+        {
+            current_alpha += NOTIFICATION_TEXT_BEAT_DIFF;
+        }
+    }
+    else
+    {
+        if (current_alpha <= 0)
+        {
+            PlayerTextDrawHide(playerid, p_tdBeatingText{playerid});
+
+            td_phase{playerid} = false;
+            g_rgiTextProcessTick[playerid] = 0;
+            KillTimer(g_rgiTextProcessTimer[playerid]);
+            return 1;
+        }
+
+        current_alpha -= NOTIFICATION_TEXT_BEAT_DIFF;
+    }
+
+    color = (color & 0xFFFFFF00) | clamp(current_alpha, 0, 255);
+    PlayerTextDrawColor(playerid, p_tdBeatingText{playerid}, color);
+    PlayerTextDrawBackgroundColor(playerid, p_tdBeatingText{playerid}, current_alpha);
+    PlayerTextDrawShow(playerid, p_tdBeatingText{playerid});
+
+    if (!should_hide && time < GetTickCount() - g_rgiTextProcessTick[playerid])
+    {
+        KillTimer(g_rgiTextProcessTimer[playerid]);
+        g_rgiTextProcessTimer[playerid] = SetTimerEx("NOTIFICATION_ProcessText", 10, true, "iiiii", playerid, time, alpha_min, alpha_max, true);
+    }
+
+    return 1;
+}
