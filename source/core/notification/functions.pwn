@@ -13,16 +13,6 @@ Float:easeOutBack(Float:t)
     return 1 + (--t) * t * (2.70158 * t + 1.70158);
 }
 
-GetTextDrawLineCount(const string[]) {
-	new count = 1, pos = -3;
-
-	while ((pos = strfind(string, "~n~", true, pos + 3)) != -1) {
-		count++;
-	}
-
-	return count;
-}
-
 static GetFreeNotificationSlot(playerid)
 {
     for(new i; i < MAX_NOTIFICATIONS; ++i)
@@ -102,16 +92,35 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
     new fixed_text[512];
     new len = strcat(fixed_text, text);
 
-    new count, line_count = 1;
+    new count, last_space = -1, line_count = 1;
     for (new i = 0; i <= len; ++i)
 	{
-        if (count >= 50 && fixed_text[i] == ' ')
+        if(fixed_text[i] == '~')
         {
-            strins(fixed_text, "~n~", i + 1);
-            line_count++;
-            count = 0;
+            new other = strfind(fixed_text, "~", .pos = i + 1);
+            i = other + 1;
+            continue;
         }
-        count ++;
+        
+        count += GetTextDrawCharacterWidth(fixed_text[i], 1, true);
+        if(count >= 887)
+        {
+            for(new j = i - 1; j != -1; --j)
+            {
+                if(i - j > 20) // threshold
+                    break;
+
+                if(fixed_text[j] == ' ')
+                {
+                    last_space = j;
+                    break;
+                }
+            }
+
+            strins(fixed_text, "~n~", (last_space == -1 ? i : last_space) + 1);
+            count = 0;
+            line_count++;
+        }
     }
 
     CreateNotificationTD(playerid, index, fixed_text, color);
@@ -164,5 +173,11 @@ command notification2(playerid, const params[], "")
 command notification3(playerid, const params[], "")
 {
     Notification_Show(playerid, "Bienvenido a hyaxe roleplay.", 5);
+    return 1;
+}
+
+command nt(playerid, const params[], "")
+{
+    Notification_Show(playerid, params, 5);
     return 1;
 }
