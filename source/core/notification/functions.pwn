@@ -90,8 +90,10 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
     KillTimer(NOTIFICATION_DATA[playerid][index][notificationFrameTimer]);
 
     new fixed_text[512];
-    new len = strcat(fixed_text, text);
+    strcat(fixed_text, text);
 
+    /*
+    new len = strcat(fixed_text, text);
     new count, last_space = -1, line_count = 1;
     for (new i = 0; i <= len; ++i)
 	{
@@ -105,11 +107,8 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
         count += GetTextDrawCharacterWidth(fixed_text[i], 1, true);
         if(count >= 825)
         {
-            for(new j = i - 1; j != -1; --j)
+            for(new j = i - 1; j != -1 && i - j < 20; --j)
             {
-                if(i - j > 20) // threshold
-                    break;
-
                 if(fixed_text[j] == ' ')
                 {
                     last_space = j;
@@ -123,9 +122,12 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
             i += 3;
         }
     }
+    */
 
+    SplitTextDrawString(fixed_text, 155.0, 0.174999, 1, 0, true);
     CreateNotificationTD(playerid, index, fixed_text, color);
 
+    new line_count = GetTextDrawLineCount(fixed_text);
     NOTIFICATION_DATA[playerid][index][notificationHeight] += (line_count * 1.0) + 0.3;
     
     PlayerTextDrawLetterSize(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][0], 0.975000, NOTIFICATION_DATA[playerid][index][notificationHeight]);
