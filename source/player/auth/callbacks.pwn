@@ -190,7 +190,7 @@ dialog login(playerid, response, listitem, inputtext[])
     Bit_Set(Player_Flags(playerid), PFLAG_AUTHENTICATING, false);
     Bit_Set(Player_Flags(playerid), PFLAG_IN_GAME, true);
     
-    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYERS` SET `CURRENT_CONNECTION` = UNIX_TIMESTAMP() WHERE `ID` = %d LIMIT 1;", Player_AccountID(playerid));
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `CURRENT_CONNECTION` = UNIX_TIMESTAMP() WHERE `ID` = %d LIMIT 1;", Player_AccountID(playerid));
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
     Account_RegisterConnection(playerid);
 
