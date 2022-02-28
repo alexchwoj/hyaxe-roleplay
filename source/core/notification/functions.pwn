@@ -103,7 +103,7 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
         }
         
         count += GetTextDrawCharacterWidth(fixed_text[i], 1, true);
-        if(count >= 887)
+        if(count >= 825)
         {
             for(new j = i - 1; j != -1; --j)
             {
@@ -120,6 +120,7 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
             strins(fixed_text, "~n~", (last_space == -1 ? i : last_space) + 1);
             count = 0;
             line_count++;
+            i += 3;
         }
     }
 
