@@ -91,6 +91,7 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
 
     new fixed_text[512];
     strcat(fixed_text, text);
+    Str_FixEncoding_Ref(fixed_text);
 
     /*
     new len = strcat(fixed_text, text);

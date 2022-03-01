@@ -215,6 +215,11 @@ Player_RegisterVehicle(playerid, vehicleid)
 
 Player_SaveVehicles(playerid)
 {
+    if(!Iter_Count(PlayerVehicles[playerid]))
+        return 0;
+    
+    HYAXE_UNSAFE_HUGE_STRING[0] = '\0';
+    
     new query[800];
     foreach(new vehicleid : PlayerVehicles[playerid])
     {

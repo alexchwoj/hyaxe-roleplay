@@ -199,3 +199,100 @@ public VEHICLE_ToggleEngineTimer(playerid, vehicleid)
 
     return 1;
 }
+
+forward VEHICLE_LoadFromDatabase(playerid);
+public VEHICLE_LoadFromDatabase(playerid)
+{
+    new row_count;
+    cache_get_row_count(row_count);
+
+    for(new i = 0; i < row_count; ++i)
+    {
+        new
+            model, colorone, colortwo,
+            Float:x, Float:y, Float:z, Float:angle,
+            panels, doors, lights, tires,
+            components[70],
+            p;
+        
+        cache_get_value_name_int(i, "MODEL", model);
+        cache_get_value_name_int(i, "COLOR_ONE", colorone);
+        cache_get_value_name_int(i, "COLOR_TWO", colortwo);
+        cache_get_value_name_float(i, "POS_X", x);
+        cache_get_value_name_float(i, "POS_Y", y);
+        cache_get_value_name_float(i, "POS_Z", z);
+        cache_get_value_name_float(i, "ANGLE", angle);
+
+        new vehicleid = Vehicle_Create(model, x, y, z, angle, colorone, colortwo, -1);
+        
+        cache_get_value_name_int(i, "VEHICLE_ID", g_rgeVehicles[vehicleid][e_iVehicleDbId]);
+        g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = playerid;
+
+        cache_get_value_name_float(i, "HEALTH", g_rgeVehicles[vehicleid][e_fHealth]);
+        cache_get_value_name_float(i, "FUEL", g_rgeVehicles[vehicleid][e_fFuel]);
+        cache_get_value_name_int(i, "PANELS_STATUS", panels);
+        cache_get_value_name_int(i, "DOORS_STATUS", doors);
+        cache_get_value_name_int(i, "LIGHTS_STATUS", lights);
+        cache_get_value_name_int(i, "TIRES_STATUS", tires);
+        cache_get_value_name_int(i, "PAINTJOB", g_rgeVehicles[vehicleid][e_iPaintjob]);
+        cache_get_value_name_int(i, "INTERIOR", g_rgeVehicles[vehicleid][e_iVehInterior]);
+        cache_get_value_name_int(i, "VW", g_rgeVehicles[vehicleid][e_iVehWorld]);
+        cache_get_value_name(i, "COMPONENTS", components);
+        cache_get_value_name_int(i, "PARAMS", p);
+
+        SetVehicleHealth(vehicleid, g_rgeVehicles[vehicleid][e_fHealth]);
+        UpdateVehicleDamageStatus(vehicleid, panels, doors, lights, tires);
+        ChangeVehiclePaintjob(vehicleid, g_rgeVehicles[vehicleid][e_iPaintjob]);
+        LinkVehicleToInterior(vehicleid, g_rgeVehicles[vehicleid][e_iVehInterior]);
+        SetVehicleVirtualWorld(vehicleid, g_rgeVehicles[vehicleid][e_iVehWorld]);
+
+        sscanf(components, "p<,>a<i>[14]", g_rgeVehicles[vehicleid][e_iComponents]);
+        for(new j; j < 14; ++j)
+        {
+            if(g_rgeVehicles[vehicleid][e_iComponents][j] != 0)
+            {
+                AddVehicleComponent(vehicleid, g_rgeVehicles[vehicleid][e_iComponents][j]);
+            }
+        }
+
+        #define bit_at(%0,%1) ((%0) & (1 << (%1)))
+
+        SetVehicleParamsEx(vehicleid, bit_at(p, 0), bit_at(p, 1), bit_at(p, 2), bit_at(p, 3), bit_at(p, 4), bit_at(p, 5), bit_at(p, 6));
+
+        // Engine is ON, start updating the vehicle
+        if(bit_at(p, 0))
+        {
+            g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_UPDATE] = SetTimerEx("VEHICLE_Update", 1000, true, "i", vehicleid);
+        }
+
+        #undef bit_at
+
+        Iter_Add(PlayerVehicles[playerid], vehicleid);
+    }
+
+    return 1;
+}
+
+public OnPlayerAuthenticate(playerid)
+{
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+        SELECT * FROM `PLAYER_VEHICLES` WHERE `OWNER_ID` = %i;\
+    ", Player_AccountID(playerid));
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "VEHICLE_LoadFromDatabase", "i", playerid);
+
+    #if defined VEH_OnPlayerAuthenticate
+        return VEH_OnPlayerAuthenticate(playerid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerAuthenticate
+    #undef OnPlayerAuthenticate
+#else
+    #define _ALS_OnPlayerAuthenticate
+#endif
+#define OnPlayerAuthenticate VEH_OnPlayerAuthenticate
+#if defined VEH_OnPlayerAuthenticate
+    forward VEH_OnPlayerAuthenticate(playerid);
+#endif

@@ -194,5 +194,11 @@ dialog login(playerid, response, listitem, inputtext[])
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
     Account_RegisterConnection(playerid);
 
+    CallLocalFunction(!"OnPlayerAuthenticate", !"i", playerid);
+
+    new text[128];
+    format(text, sizeof(text), "Bienvenido a ~r~Hyaxe~w~, %s. Tu último inicio de sesión fue el ~r~%s~w~.", Player_Name(playerid), Player_LastConnection(playerid));
+    Notification_Show(playerid, text, 6);
+
     return 1;
 }

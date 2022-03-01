@@ -69,6 +69,7 @@ Account_Save(playerid)
             `CURRENT_CONNECTION` = 0 \
         WHERE `ID` = %i;\
     ", 
+        g_rgePlayerData[playerid][e_iPlayerPausedTime],
         g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ], g_rgePlayerData[playerid][e_fSpawnPosAngle],
         Player_VirtualWorld(playerid), Player_Interior(playerid), Player_Hunger(playerid), Player_Thirst(playerid),
         Player_Skin(playerid), Player_AccountID(playerid)
