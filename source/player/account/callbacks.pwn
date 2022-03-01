@@ -7,6 +7,7 @@ public OnPlayerConnect(playerid)
 {
     DEBUG_PRINT("OnPlayerConnect(%i)", playerid);
 
+    SetPlayerColor(playerid, 0xF7F7F700);
     TogglePlayerSpectating(playerid, true);
 
     GetPlayerName(playerid, Player_Name(playerid));
