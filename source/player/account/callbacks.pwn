@@ -72,6 +72,7 @@ public OnPlayerDisconnect(playerid, reason)
     Account_Save(playerid);
 
     g_rgePlayerData[playerid] = g_rgePlayerData[MAX_PLAYERS];
+    Player_ResetTemp(playerid);
     Bit_SetAll(Player_Flags(playerid), false);
 
     #if defined ACC_OnPlayerDisconnect
