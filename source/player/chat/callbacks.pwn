@@ -5,7 +5,7 @@
 
 public OnPlayerText(playerid, text[])
 {
-    if (Player_IsLogged(playerid))
+    Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME)
     {
         if (GetTickDiff(GetTickCount(), g_rgePlayerTempData[playerid][e_iPlayerChatTick]) < 350)
         {

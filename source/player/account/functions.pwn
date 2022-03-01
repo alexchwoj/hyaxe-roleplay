@@ -18,8 +18,6 @@ Account_Register(playerid, callback = -1)
     g_rgePlayerData[playerid][e_fSpawnPosZ] = PLAYER_SPAWN_Z;    
     g_rgePlayerData[playerid][e_fSpawnPosAngle] = PLAYER_SPAWN_ANGLE;
 
-    g_rgePlayerTempData[playerid][e_bPlayerLogged] = true;
-
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
         INSERT INTO `ACCOUNT` \
             (`NAME`, `EMAIL`, `EMAIL_VERIFICATION_CODE`, `PASSWORD`, `SKIN`, `SEX`, `MONEY`, `POS_X`, `POS_Y`, `POS_Z`, `ANGLE`, `CURRENT_CONNECTION`) \
@@ -108,8 +106,6 @@ Account_LoadFromCache(playerid)
     cache_unset_active();
     cache_delete(Player_Cache(playerid));
     Player_Cache(playerid) = MYSQL_INVALID_CACHE;
-
-    g_rgePlayerTempData[playerid][e_bPlayerLogged] = true;
 
     return 1;
 }
