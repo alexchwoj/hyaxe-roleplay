@@ -194,5 +194,7 @@ dialog login(playerid, response, listitem, inputtext[])
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
     Account_RegisterConnection(playerid);
 
+    CallLocalFunction(!"OnPlayerAuthenticate", !"i", playerid);
+    
     return 1;
 }

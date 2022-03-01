@@ -76,6 +76,7 @@ L1:
 #include "server/textdraws/header.pwn"
 #include "server/vehicles/header.pwn"
 #include "player/account/header.pwn"
+#include "player/auth/header.pwn"
 #include "player/needs/header.pwn"
 
 // Functions
