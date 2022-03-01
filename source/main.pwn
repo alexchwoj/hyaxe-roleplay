@@ -65,6 +65,10 @@ L1:
 ///////////
 #include "core/fixes/textdraws.pwn"
 
+// Utils
+///////////
+#include "core/utils/iterators.pwn"
+
 // Headers
 /////////////
 #include "core/utils/header.pwn"

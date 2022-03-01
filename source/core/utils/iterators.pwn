@@ -4,7 +4,7 @@
 #define _utils_iterators_
 
 new
-    IteratorArray:StreamedPlayer[MAX_PLAYERS]<MAX_PLAYERS>
+    IteratorArray:StreamedPlayer[MAX_PLAYERS]<MAX_PLAYERS>;
 
 public OnGameModeInit()
 {
