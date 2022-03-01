@@ -57,6 +57,10 @@ L1:
 #include <td-string-width>
 #include <amx/amx_header>
 
+/*
+		YSI is pozzed
+							*/
+
 // Fixes
 ///////////
 #include "core/fixes/textdraws.pwn"
