@@ -164,6 +164,130 @@ Speedometer_Update(playerid)
     return 1;
 }
 
+Player_RegisterVehicle(playerid, vehicleid)
+{
+    g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = playerid;
+
+    new panels, doors, lights, tires;
+    GetVehicleDamageStatus(vehicleid, panels, doors, lights, tires);
+
+    new params, engine, lights_p, alarm, doors_p, bonnet, boot, objective;
+    GetVehicleParamsEx(vehicleid, engine, lights_p, alarm, doors_p, bonnet, boot, objective);
+    params = engine | (lights_p << 1) | (alarm << 2) | (doors_p << 3) | (bonnet << 4) | (boot << 5) | (objective << 6);
+
+    new components[70];
+    format(components, sizeof(components), "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+        g_rgeVehicles[vehicleid][e_iComponents][0],
+        g_rgeVehicles[vehicleid][e_iComponents][1],
+        g_rgeVehicles[vehicleid][e_iComponents][2],
+        g_rgeVehicles[vehicleid][e_iComponents][3],
+        g_rgeVehicles[vehicleid][e_iComponents][4],
+        g_rgeVehicles[vehicleid][e_iComponents][5],
+        g_rgeVehicles[vehicleid][e_iComponents][6],
+        g_rgeVehicles[vehicleid][e_iComponents][7],
+        g_rgeVehicles[vehicleid][e_iComponents][8],
+        g_rgeVehicles[vehicleid][e_iComponents][9],
+        g_rgeVehicles[vehicleid][e_iComponents][10],
+        g_rgeVehicles[vehicleid][e_iComponents][11],
+        g_rgeVehicles[vehicleid][e_iComponents][12],
+        g_rgeVehicles[vehicleid][e_iComponents][13]
+    );
+
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+        INSERT INTO `PLAYER_VEHICLES` \
+            (OWNER_ID, MODEL, HEALTH, FUEL, PANELS_STATUS, DOORS_STATUS, LIGHTS_STATUS, TIRES_STATUS, COLOR_ONE, COLOR_TWO, PAINTJOB, POS_X, POS_Y, POS_Z, ANGLE, INTERIOR, VW, COMPONENTS, PARAMS) \
+        VALUES \
+            (%d, %d, %f, %f, %d, %d, %d, %d, %d, %d, %d, %f, %f, %f, %f, %d, %d, '%s', %d);\
+    ",
+        Player_AccountID(playerid),
+        GetVehicleModel(vehicleid),
+        g_rgeVehicles[vehicleid][e_fHealth], g_rgeVehicles[vehicleid][e_fFuel], panels, doors, lights, tires,
+        g_rgeVehicles[vehicleid][e_iColorOne], g_rgeVehicles[vehicleid][e_iColorTwo], g_rgeVehicles[vehicleid][e_iPaintjob],
+        g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ], g_rgeVehicles[vehicleid][e_fPosAngle],
+        g_rgeVehicles[vehicleid][e_iVehInterior] ,g_rgeVehicles[vehicleid][e_iVehWorld],
+        components, params
+    );
+
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+
+    return 1;
+}
+
+Player_SaveVehicles(playerid)
+{
+    new query[800];
+    foreach(new vehicleid : PlayerVehicles[playerid])
+    {
+        if(!g_rgeVehicles[vehicleid][e_bValid])
+            continue;
+
+        new panels, doors, lights, tires;
+        GetVehicleDamageStatus(vehicleid, panels, doors, lights, tires);
+
+        GetVehiclePos(vehicleid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
+        GetVehicleZAngle(vehicleid, g_rgeVehicles[vehicleid][e_fPosAngle]);
+
+        new engine, lights_p, alarm, doors_p, bonnet, boot, objective;
+        GetVehicleParamsEx(vehicleid, engine, lights_p, alarm, doors_p, bonnet, boot, objective);
+        new params = engine | (lights_p << 1) | (alarm << 2) | (doors_p << 3) | (bonnet << 4) | (boot << 5) | (objective << 6);
+
+        new components[70];
+        format(components, sizeof(components), "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+            g_rgeVehicles[vehicleid][e_iComponents][0],
+            g_rgeVehicles[vehicleid][e_iComponents][1],
+            g_rgeVehicles[vehicleid][e_iComponents][2],
+            g_rgeVehicles[vehicleid][e_iComponents][3],
+            g_rgeVehicles[vehicleid][e_iComponents][4],
+            g_rgeVehicles[vehicleid][e_iComponents][5],
+            g_rgeVehicles[vehicleid][e_iComponents][6],
+            g_rgeVehicles[vehicleid][e_iComponents][7],
+            g_rgeVehicles[vehicleid][e_iComponents][8],
+            g_rgeVehicles[vehicleid][e_iComponents][9],
+            g_rgeVehicles[vehicleid][e_iComponents][10],
+            g_rgeVehicles[vehicleid][e_iComponents][11],
+            g_rgeVehicles[vehicleid][e_iComponents][12],
+            g_rgeVehicles[vehicleid][e_iComponents][13]
+        );
+
+        mysql_format(g_hDatabase, query, sizeof(query), "\
+            UPDATE `PLAYER_VEHICLES` SET \
+                HEALTH = %.2f, \
+                FUEL = %.f, \
+                PANELS_STATUS = %d, \
+                DOORS_STATUS = %d, \
+                LIGHTS_STATUS = %d, \
+                TIRES_STATUS = %d, \
+                COLOR_ONE = %d, \
+                COLOR_TWO = %d, \
+                PAINTJOB = %d, \
+                POS_X = %f, \
+                POS_Y = %f, \
+                POS_Z = %f, \
+                ANGLE = %f, \
+                INTERIOR = %d, \
+                VW = %d, \
+                COMPONENTS = '%s', \
+                PARAMS = %d \
+            WHERE `VEHICLE_ID` = %d; \
+        ",
+            g_rgeVehicles[vehicleid][e_fHealth],
+            g_rgeVehicles[vehicleid][e_fFuel],
+            panels, doors, lights, tires,
+            g_rgeVehicles[vehicleid][e_iColorOne], g_rgeVehicles[vehicleid][e_iColorTwo], g_rgeVehicles[vehicleid][e_iPaintjob],
+            g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ], g_rgeVehicles[vehicleid][e_fPosAngle],
+            g_rgeVehicles[vehicleid][e_iVehInterior], g_rgeVehicles[vehicleid][e_iVehWorld],
+            components,
+            params,
+            g_rgeVehicles[vehicleid][e_iVehicleDbId]
+        );
+
+        strcat(HYAXE_UNSAFE_HUGE_STRING, query);
+    }
+
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+    return 1;
+}
+
 command veh(playerid, const params[], "Crea un vehículo")
 {
     new modelid, color1, color2;
@@ -177,12 +301,30 @@ command veh(playerid, const params[], "Crea un vehículo")
     GetPlayerFacingAngle(playerid, ang);
 
     new vehicleid = Vehicle_Create(modelid, x, y, z, ang, color1, color2, 0);
-    LinkVehicleToInterior(vehicleid, GetPlayerInterior(playerid));
-    SetVehicleVirtualWorld(vehicleid, GetPlayerVirtualWorld(playerid));
+    Vehicle_SetInterior(vehicleid, GetPlayerInterior(playerid));
+    Vehicle_SetVirtualWorld(vehicleid, GetPlayerVirtualWorld(playerid));
 
     PutPlayerInVehicle(playerid, vehicleid, 0);
 
     SendClientMessagef(playerid, 0xDADADAFF, "Se creó un {ED2B2B}%s {DADADA}(modelo {ED2B2B}%d{DADADA}) {DADADA}en tu posición.", Vehicle_GetModelName(modelid), modelid);
+
+    return 1;
+}
+
+command rvehp(playerid, const params[], "Registra un vehículo en la cuenta de un jugador")
+{
+    new vehicleid, destination;
+
+    if(sscanf(params, "ir", vehicleid, destination) || !IsValidVehicle(vehicleid))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/rvehp {DADADA}<id del vehículo> <id del destinatario>");
+        return 1;
+    }
+
+    if(Player_RegisterVehicle(destination, vehicleid))
+    {
+        SendClientMessagef(playerid, 0xED2B2BFF, "› {DADADA}Se registró un {ED2B2B}%s {DADADA}en la cuenta de {ED2B2B}%s{DADADA}.", Vehicle_GetModelName(GetVehicleModel(vehicleid)), Player_RPName(destination));
+    }
 
     return 1;
 }

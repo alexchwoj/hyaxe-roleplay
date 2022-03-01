@@ -3,6 +3,62 @@
 #endif
 #define _vehicles_callbacks_
 
+public OnGameModeInit()
+{
+    print("[veh] Initializing iterators...");
+    Iter_Init(PlayerVehicles);
+
+    #if defined VEH_OnGameModeInit
+        return VEH_OnGameModeInit();
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnGameModeInit
+    #undef OnGameModeInit
+#else
+    #define _ALS_OnGameModeInit
+#endif
+#define OnGameModeInit VEH_OnGameModeInit
+#if defined VEH_OnGameModeInit
+    forward VEH_OnGameModeInit();
+#endif
+
+public OnPlayerDisconnect(playerid, reason)
+{
+    if(g_rgiSpeedometerUpdateTimer[playerid] != -1)
+    {
+        KillTimer(g_rgiSpeedometerUpdateTimer[playerid]);
+        g_rgiSpeedometerUpdateTimer[playerid] = -1;
+    }
+
+    Player_SaveVehicles(playerid);
+
+    foreach(new v : PlayerVehicles[playerid])
+    {
+        Vehicle_Destroy(v);
+    }
+
+    Iter_Clear(PlayerVehicles[playerid]);
+
+    #if defined VEH_OnPlayerDisconnect
+        return VEH_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect VEH_OnPlayerDisconnect
+#if defined VEH_OnPlayerDisconnect
+    forward VEH_OnPlayerDisconnect(playerid, reason);
+#endif
+
 public OnPlayerStateChange(playerid, newstate, oldstate)
 {
     if(newstate == PLAYER_STATE_DRIVER)

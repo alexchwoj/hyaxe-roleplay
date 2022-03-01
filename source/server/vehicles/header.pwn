@@ -8,6 +8,9 @@ const MAX_VEHICLE_MODEL = 611;
 const MAX_VEHICLE_MODELS = MAX_VEHICLE_MODEL - MIN_VEHICLE_MODEL;
 const Float:VEHICLE_FUEL_DIVISOR = 20000.0;
 
+new
+    IteratorArray:PlayerVehicles[MAX_PLAYERS]<MAX_VEHICLES>;
+    
 enum 
 {
     VEHICLE_STATE_OFF = 0,
