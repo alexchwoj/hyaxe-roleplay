@@ -38,10 +38,11 @@ public OnPlayerConnect(playerid)
     Bit_Set(Player_Flags(playerid), PFLAG_AUTHENTICATING, true);
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-        SELECT `ACCOUNT`.*, `CONNECTION_LOG`.`DATE` AS `LAST_CONNECTION` \
-        FROM `ACCOUNT`, `CONNECTION_LOG` \
+        SELECT `ACCOUNT`.*, `PLAYER_WEAPONS`.*, `CONNECTION_LOG`.`DATE` AS `LAST_CONNECTION` \
+        FROM `ACCOUNT`, `PLAYER_WEAPONS`, `CONNECTION_LOG` \
         WHERE \
             `ACCOUNT`.`NAME` = '%e' AND \
+            `PLAYER_WEAPONS`.`ACCOUNT_ID` = `ACCOUNT`.`ID` AND \
             `CONNECTION_LOG`.`ACCOUNT_ID` = `ACCOUNT`.`ID` \
         ORDER BY `CONNECTION_LOG`.`DATE` DESC \
         LIMIT 1;\
@@ -128,13 +129,24 @@ public OnPlayerDataFetched(playerid)
     forward ACC_OnPlayerDataFetched(playerid);
 #endif
 
-forward OnAccountInserted(playerid, callback);
 public OnAccountInserted(playerid, callback)
 {
     Bit_Set(Player_Flags(playerid), PFLAG_REGISTERED, true);
     Player_AccountID(playerid) = cache_insert_id();
     Account_RegisterConnection(playerid);
 
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+        INSERT INTO `PLAYER_WEAPONS` (`ACCOUNT_ID`) VALUES (%i); \
+        INSERT INTO `CONNECTION_LOG` (`ACCOUNT_ID`, `IP_ADDRESS`) VALUES (%i, '%e');\
+    ", Player_AccountID(playerid), RawIpToString(Player_IP(playerid)), Player_AccountID(playerid));
+
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, !"OnAccountFullyInserted", !"ii", playerid, callback);
+
+    return 1;
+}
+
+public OnAccountFullyInserted(playerid, callback)
+{
     if(callback != -1)
     {
         __emit {
@@ -150,6 +162,5 @@ public OnAccountInserted(playerid, callback)
     }
 
     Notification_Show(playerid, "Felicidades, te has registrado correctamente.", 3, 0x64A752FF);
-
     return 1;
 }

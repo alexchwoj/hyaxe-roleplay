@@ -103,6 +103,8 @@ Account_LoadFromCache(playerid)
     cache_get_value_name_int(0, !"ADMIN_LEVEL", Player_AdminLevel(playerid));
     cache_get_value_name_int(0, !"PLAYED_TIME", Player_SavedPlayedTime(playerid));
 
+    Player_LoadWeaponsFromCache(playerid);
+    
     cache_unset_active();
     cache_delete(Player_Cache(playerid));
     Player_Cache(playerid) = MYSQL_INVALID_CACHE;

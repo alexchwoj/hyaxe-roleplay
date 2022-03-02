@@ -222,7 +222,8 @@ dialog login(playerid, response, listitem, inputtext[])
     SetPlayerHealth(playerid, Player_Health(playerid));
     SetPlayerArmour(playerid, Player_Armor(playerid));
     GivePlayerMoney(playerid, Player_Money(playerid));
-
+    Player_GiveAllWeapons(playerid);
+    
     Iter_Add(LoggedIn, playerid);
 
     if(Player_AdminLevel(playerid) > 0)

@@ -64,6 +64,18 @@ Vehicle_SetVirtualWorld(vehicleid, vw)
     return SetVehicleVirtualWorld(vehicleid, vw);
 }
 
+Vehicle_SetHealth(vehicleid, Float:health)
+{
+    g_rgeVehicles[vehicleid][e_fHealth] = health;
+    return SetVehicleHealth(vehicleid, health);
+}
+
+Vehicle_Repair(vehicleid)
+{
+    g_rgeVehicles[vehicleid][e_fHealth] = 1000.0;
+    return RepairVehicle(vehicleid);
+}
+
 Float:Vehicle_GetSpeed(vehicleid)
 {
     new Float:vx, Float:vy, Float:vz;
@@ -311,7 +323,7 @@ command veh(playerid, const params[], "Crea un vehículo")
 
     PutPlayerInVehicle(playerid, vehicleid, 0);
 
-    SendClientMessagef(playerid, 0xDADADAFF, "Se creó un {ED2B2B}%s {DADADA}(modelo {ED2B2B}%d{DADADA}) {DADADA}en tu posición.", Vehicle_GetModelName(modelid), modelid);
+    SendClientMessagef(playerid, 0xED2B2BFF, "› {DADADA}Se creó un {ED2B2B}%s {DADADA}(modelo {ED2B2B}%d{DADADA}) {DADADA}en tu posición.", Vehicle_GetModelName(modelid), modelid);
 
     return 1;
 }

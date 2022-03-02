@@ -84,6 +84,7 @@ L1:
 #include "player/auth/header.pwn"
 #include "player/needs/header.pwn"
 #include "player/chat/header.pwn"
+#include "player/weapons/header.pwn"
 
 // Functions
 ///////////////
@@ -97,6 +98,7 @@ L1:
 #include "player/account/functions.pwn"
 #include "player/needs/functions.pwn"
 #include "player/chat/functions.pwn"
+#include "player/weapons/functions.pwn"
 
 // Callbacks
 ///////////////

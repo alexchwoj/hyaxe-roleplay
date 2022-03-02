@@ -72,6 +72,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
     else if(oldstate == PLAYER_STATE_DRIVER)
     {
         Speedometer_Hide(playerid);
+        Notification_HideBeatingText(playerid);
     }
 
     #if defined VEH_OnPlayerStateChange
