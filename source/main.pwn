@@ -91,6 +91,7 @@ L1:
 #include "core/notification/functions.pwn"
 #include "core/dialogs/functions.pwn"
 #include "core/commands/functions.pwn"
+#include "server/anticheat/functions.pwn"
 #include "server/vehicles/functions.pwn"
 #include "server/enter_exits/functions.pwn"
 #include "player/account/functions.pwn"
@@ -111,6 +112,8 @@ L1:
 #include "player/auth/callbacks.pwn"
 #include "player/needs/callbacks.pwn"
 #include "player/chat/callbacks.pwn"
+
+#include "server/anticheat/callbacks.pwn"
 
 // Prevents runtime error 20 (invalid index)
 main() { return 0; }

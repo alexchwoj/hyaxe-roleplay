@@ -3,40 +3,6 @@
 #endif
 #define _CHAT_FUNCTIONS_
 
-stock ac_SetPlayerChatBubble(playerid, const text[], color, Float:drawdistance, expiretime)
-{
-    if(!IsPlayerConnected(playerid))
-        return 0;
-
-    new bubble_length = strlen(text);
-    if(bubble_length >= 144)
-        return 0;
-
-    new BitStream:bs = BS_New();
-    BS_WriteValue(bs,
-        PR_UINT16, playerid,
-        PR_UINT32, color,
-        PR_FLOAT, drawdistance,
-        PR_UINT32, expiretime,
-        PR_UINT8, bubble_length,
-        PR_STRING, text
-    );
-
-    foreach(new i : StreamedPlayer[playerid])
-    {
-        PR_SendRPC(bs, i, 59, PR_HIGH_PRIORITY, PR_RELIABLE);
-    }
-
-    BS_Delete(bs);
-
-    return 1;
-}
-
-#if !defined _ALS_SetPlayerChatBubble
-    #define _ALS_SetPlayerChatBubble
-#endif
-#define SetPlayerChatBubble ac_SetPlayerChatBubble
-
 Chat_SendMessageToRange(playerid, color, Float:range, string[])
 {
     // Wrap chat message
@@ -49,21 +15,26 @@ Chat_SendMessageToRange(playerid, color, Float:range, string[])
 	}
 
     // Distance check
-    new Float:x, Float:y, Float:z, virtual_world, interior;
+    new Float:x, Float:y, Float:z;
     GetPlayerPos(playerid, x, y, z);
-    virtual_world = GetPlayerVirtualWorld(playerid);
-    interior = GetPlayerInterior(playerid);
+    new virtual_world = GetPlayerVirtualWorld(playerid);
+    new interior = GetPlayerInterior(playerid);
 
     foreach(new i : LoggedIn)
     {
         if (GetPlayerVirtualWorld(i) != virtual_world && GetPlayerInterior(i) != interior)
             continue;
 
-        if (IsPlayerInRangeOfPoint(i, range, x, y, z))
-        {
-            SendClientMessage(i, color, line_one);
-            if (wrapped) SendClientMessage(i, color, line_two);
-        }
+        new Float:distance = GetPlayerDistanceFromPoint(i, x, y, z);
+        if(distance > range)
+            continue;
+        
+        new color_relative = clamp(255 - floatround(distance * 3.0), 1, 255);
+        new color_darkened = (color & 0xFFFFFF00) | color_relative;
+
+        SendClientMessage(i, color_darkened, line_one);
+        if (wrapped) 
+            SendClientMessage(i, color_darkened, line_two);
     }
     return 1;
 }
