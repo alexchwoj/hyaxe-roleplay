@@ -12,38 +12,38 @@ public OnPlayerDataLoaded(playerid)
     {
 		case 0:
 		{
-			InterpolateCameraPos(playerid, 509.115936, -1298.091186, 27.872470, 388.878723, -1362.633911, 24.143661, 60000);
-            InterpolateCameraLookAt(playerid, 504.162048, -1298.514526, 27.343421, 383.901000, -1362.185913, 23.996454, 60000);
+			InterpolateCameraPos(playerid, 155.601196, -1792.495605, 11.613841, 155.601196, -1792.495605, 11.613841, 6000);
+            InterpolateCameraLookAt(playerid, 159.406951, -1794.349121, 14.274766, 159.338470, -1789.308227, 10.679175, 6000);
 		}
 		case 1: 
 		{
-			InterpolateCameraPos(playerid, 801.774597, -1753.409667, 22.417278, 831.861389, -1616.084960, 15.833091, 60000);
-            InterpolateCameraLookAt(playerid, 802.916503, -1748.647460, 21.408624, 827.088256, -1617.500976, 16.293378, 60000);
+            InterpolateCameraPos(playerid, 1229.691040, -1382.687744, 60.129634, 1229.691040, -1382.687744, 60.129634, 6000);
+            InterpolateCameraLookAt(playerid, 1225.744873, -1384.168945, 62.819236, 1226.638183, -1379.644165, 57.596576, 6000);
 		}
 		case 2: 
 		{
-			InterpolateCameraPos(playerid, 525.820190, -1704.841064, 33.905666, 251.596237, -1722.117675, 28.061273, 60000);
-            InterpolateCameraLookAt(playerid, 521.460937, -1706.534057, 32.136253, 255.465454, -1725.190429, 27.294776, 60000);
+            InterpolateCameraPos(playerid, 2153.311035, -1309.602661, 36.734226, 2153.311035, -1309.602661, 36.734226, 6000);
+            InterpolateCameraLookAt(playerid, 2155.732177, -1312.766967, 39.754898, 2157.684814, -1307.580200, 35.400230, 6000);
 		}
 		case 3: 
 		{
-			InterpolateCameraPos(playerid, 2080.432373, -1884.629516, 22.479688, 2069.244873, -1792.745483, 20.220132, 60000);
-            InterpolateCameraLookAt(playerid, 2083.726074, -1880.930664, 21.794353, 2073.891357, -1794.237060, 19.131271, 60000);
+            InterpolateCameraPos(playerid, 2023.361816, 1125.334472, 29.830821, 2023.361816, 1125.334472, 29.830821, 6000);
+            InterpolateCameraLookAt(playerid, 2025.751708, 1121.992065, 32.679771, 2026.636230, 1129.055419, 29.172580, 6000);
 		}
 		case 4: 
 		{
-			InterpolateCameraPos(playerid, 2344.190673, -1577.935546, 34.491802, 2441.696777, -1445.531738, 38.810157, 60000);
-            InterpolateCameraLookAt(playerid, 2347.899169, -1574.590576, 34.733894, 2443.638183, -1440.932373, 38.532955, 60000);
+            InterpolateCameraPos(playerid, -64.515258, 1357.638549, 13.984993, -64.515258, 1357.638549, 13.984993, 6000);
+            InterpolateCameraLookAt(playerid, -62.672924, 1361.461914, 16.628335, -68.500961, 1360.616577, 13.489713, 6000);
 		}
 		case 5: 
 		{
-			InterpolateCameraPos(playerid, 2477.395263, -1262.481811, 44.747570, 2342.344970, -1281.661010, 45.610157, 60000);
-            InterpolateCameraLookAt(playerid, 2472.951904, -1260.542114, 43.525695, 2345.842285, -1278.217529, 44.655124, 60000);
+            InterpolateCameraPos(playerid, -2611.593750, 754.044006, 66.853324, -2611.593750, 754.044006, 66.853324, 6000);
+            InterpolateCameraLookAt(playerid, -2608.905029, 757.270751, 69.565940, -2614.431152, 758.083740, 66.059822, 6000);
 		}
     }
 
     new song_link[144];
-    format(song_link, sizeof(song_link), "https://github.com/RealAtom/hyaxe/raw/main/song/ost_intro%d.mp3", random(4));
+    format(song_link, sizeof(song_link), "https://github.com/RealAtom/hyaxe/raw/main/song/ost_intro%d.mp3", random(12));
     PlayAudioStreamForPlayer(playerid, song_link);
 
     if(!Bit_Get(Player_Flags(playerid), PFLAG_REGISTERED))
