@@ -68,6 +68,8 @@ public OnPlayerDataLoaded(playerid)
         Dialog_Show(playerid, "login", DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Ingresa a tu cuenta", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
     }
 
+    Chat_Clear();
+
     #if defined AUTH_OnPlayerDataLoaded
         return AUTH_OnPlayerDataLoaded(playerid);
     #else

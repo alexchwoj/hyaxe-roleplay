@@ -3,6 +3,44 @@
 #endif
 #define _CHAT_FUNCTIONS_
 
+Chat_Clear(playerid = INVALID_PLAYER_ID, lines = 20)
+{
+	if (playerid != INVALID_PLAYER_ID && !IsPlayerConnected(playerid))
+	{
+		return 0;
+	}
+
+	static const space[2] = " ";
+
+	#emit push.c space
+	#emit push.c 0x01
+
+	if (playerid == INVALID_PLAYER_ID)
+	{
+		#emit push.c 12
+
+		while (lines-- != -1)
+		{
+			#emit sysreq.c SendClientMessageToAll
+		}
+
+		#emit stack 12
+	}
+	else
+	{
+		#emit push.s playerid
+		#emit push.c 16
+
+		while (lines-- != -1)
+		{
+			#emit sysreq.c SendClientMessage
+		}
+
+		#emit stack 16
+	}
+	return 1;
+}
+
 Chat_SendMessageToRange(playerid, color, Float:range, const string[])
 {
     // Wrap chat message
