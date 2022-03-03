@@ -68,8 +68,7 @@ new
     g_rgePlayerData[MAX_PLAYERS + 1][ePlayerData],
     g_rgePlayerTempData[MAX_PLAYERS + 1][ePlayerTemp],
     BitArray:g_rgiPlayerFlags[MAX_PLAYERS]<MAX_PLAYER_FLAGS>,
-    Iterator:LoggedIn<MAX_PLAYERS>,
-    Iterator:Admin<MAX_PLAYERS>;
+    Iterator:LoggedIn<MAX_PLAYERS>;
 
 #define Player_ResetTemp(%0) g_rgePlayerTempData[%0] = g_rgePlayerTempData[MAX_PLAYERS]
 #define Player_Flags(%0) Bit:(g_rgiPlayerFlags[(%0)])
