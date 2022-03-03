@@ -104,10 +104,42 @@ Account_LoadFromCache(playerid)
     cache_get_value_name_int(0, !"PLAYED_TIME", Player_SavedPlayedTime(playerid));
 
     Player_LoadWeaponsFromCache(playerid);
-    
+
     cache_unset_active();
     cache_delete(Player_Cache(playerid));
     Player_Cache(playerid) = MYSQL_INVALID_CACHE;
 
     return 1;
+}
+
+Player_GiveMoney(playerid, money, bool:update = true)
+{
+    Player_Money(playerid) += money;
+
+	ResetPlayerMoney(playerid);
+	GivePlayerMoney(playerid, Player_Money(playerid));
+
+	if(update)
+	{
+        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYERS` SET `MONEY` = %i WHERE `ID` = %i;", Player_Money(playerid), Player_AccountID(playerid));
+		mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+	}
+
+	return 1;
+}
+
+Player_SetMoney(playerid, money, bool:update = true)
+{
+    Player_Money(playerid) = money;
+
+	ResetPlayerMoney(playerid);
+	GivePlayerMoney(playerid, money);
+
+	if(update)
+	{
+        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYERS` SET `MONEY` = %i WHERE `ID` = %i;", Player_Money(playerid), Player_AccountID(playerid));
+		mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+	}
+
+	return 1;
 }

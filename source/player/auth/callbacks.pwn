@@ -223,6 +223,7 @@ dialog login(playerid, response, listitem, inputtext[])
     SetPlayerArmour(playerid, Player_Armor(playerid));
     GivePlayerMoney(playerid, Player_Money(playerid));
     Player_GiveAllWeapons(playerid);
+    SetPlayerArmedWeapon(playerid, 0);
     
     Iter_Add(LoggedIn, playerid);
 
