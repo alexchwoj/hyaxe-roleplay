@@ -47,6 +47,7 @@ enum eVehicleData
     bool:e_bAlarm,
     e_iComponents[14],
     e_iVehicleGear,
+    e_iVehicleWork,
 
     e_iVehicleTimers[eVehicleTimers]
 };

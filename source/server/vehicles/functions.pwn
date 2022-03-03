@@ -5,7 +5,7 @@
 
 Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, addsiren = 0)
 {
-    new vehicleid =  CreateVehicle(vehicletype, x, y, z, rotation, color1, color2, respawn_delay, addsiren);
+    new vehicleid = CreateVehicle(vehicletype, x, y, z, rotation, color1, color2, respawn_delay, addsiren);
     if(vehicleid != INVALID_VEHICLE_ID)
     {
         g_rgeVehicles[vehicleid][e_bValid] = true;

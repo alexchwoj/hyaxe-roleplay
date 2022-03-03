@@ -109,10 +109,10 @@ public OnGameModeInit()
 
 public OnPlayerConnect(playerid)
 {
-    p_tdBeatingText{playerid} = CreatePlayerTextDraw(playerid, 324.000000, 410.000000, "_");
-    PlayerTextDrawFont(playerid, p_tdBeatingText{playerid}, 2);
-    PlayerTextDrawLetterSize(playerid, p_tdBeatingText{playerid}, 0.158333, 1.350000);
-    PlayerTextDrawTextSize(playerid, p_tdBeatingText{playerid}, 400.000000, 17.000000);
+    p_tdBeatingText{playerid} = CreatePlayerTextDraw(playerid, 319.000000, 369.000000, "_");
+    PlayerTextDrawFont(playerid, p_tdBeatingText{playerid}, 1);
+    PlayerTextDrawLetterSize(playerid, p_tdBeatingText{playerid}, 0.266667, 1.549999);
+    PlayerTextDrawTextSize(playerid, p_tdBeatingText{playerid}, 417.500000, 178.000000);
     PlayerTextDrawSetOutline(playerid, p_tdBeatingText{playerid}, 0);
     PlayerTextDrawSetShadow(playerid, p_tdBeatingText{playerid}, 1);
     PlayerTextDrawAlignment(playerid, p_tdBeatingText{playerid}, 2);
