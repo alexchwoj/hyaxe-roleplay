@@ -104,6 +104,16 @@ Vehicle_ToggleEngine(vehicleid, engstate = VEHICLE_STATE_DEFAULT)
     return 1;
 }
 
+Vehicle_ToggleLock(vehicleid)
+{
+    g_rgeVehicles[vehicleid][e_bLocked] = !g_rgeVehicles[vehicleid][e_bLocked];
+    new engine, lights, alarm, doors, bonnet, boot, objective;
+    GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+    SetVehicleParamsEx(vehicleid, engine, lights, alarm, g_rgeVehicles[vehicleid][e_bLocked], bonnet, boot, objective);
+
+    return 1;
+}
+
 Speedometer_Show(playerid)
 {
     if(g_rgiSpeedometerUpdateTimer[playerid])

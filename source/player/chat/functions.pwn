@@ -3,7 +3,7 @@
 #endif
 #define _CHAT_FUNCTIONS_
 
-Chat_SendMessageToRange(playerid, color, Float:range, string[])
+Chat_SendMessageToRange(playerid, color, Float:range, const string[])
 {
     // Wrap chat message
     new line_one[144], line_two[144], bool:wrapped;

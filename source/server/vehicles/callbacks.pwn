@@ -153,6 +153,24 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_TOGGLE_ENGINE] = SetTimerEx("VEHICLE_ToggleEngineTimer", 1000, false, "ii", playerid, vehicleid);
         }
     }
+    else if((newkeys & KEY_YES) != 0)
+    {
+        new vehicleid = (IsPlayerInAnyVehicle(playerid) ? GetPlayerVehicleID(playerid) : GetPlayerCameraTargetVehicle(playerid));
+        if(vehicleid != INVALID_VEHICLE_ID)
+        {
+            if(g_rgeVehicles[vehicleid][e_iVehicleOwnerId] == playerid)
+            {
+                Vehicle_ToggleLock(vehicleid);
+                SetPlayerChatBubble(playerid, (g_rgeVehicles[vehicleid][e_bLocked] ? "* Bloqueó su vehículo" : "* Desbloqueó su vehículo"), 0xB39B6BFF, 15.0, 5000);
+                
+                new message[55];
+                format(message, sizeof(message), "* %s %sbloqueó su vehículo", Player_RPName(playerid), (g_rgeVehicles[vehicleid][e_bLocked] ? "" : "des"));
+                Chat_SendMessageToRange(playerid, 0xB39B6BFF, 15.0, message);
+
+                return 1;
+            }
+        }
+    }
 
     #if defined VEH_OnPlayerKeyStateChange
         return VEH_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);

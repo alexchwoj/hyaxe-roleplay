@@ -27,6 +27,8 @@ public OnPlayerConnect(playerid)
         return 1;
     }
 
+    EnablePlayerCameraTarget(playerid, true);
+    
     Player_IP(playerid) = GetPlayerRawIp(playerid);
     for(new i = 0, j = GetPlayerName(playerid, Player_RPName(playerid)); i < j; ++i)
     {
