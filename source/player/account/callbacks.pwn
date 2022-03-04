@@ -139,8 +139,9 @@ public OnAccountInserted(playerid, callback)
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
         INSERT INTO `PLAYER_WEAPONS` (`ACCOUNT_ID`) VALUES (%i); \
+        INSERT INTO `BANK_ACCOUNT` (`ACCOUNT_ID`) VALUES (%i); \
         INSERT INTO `CONNECTION_LOG` (`ACCOUNT_ID`, `IP_ADDRESS`) VALUES (%i, '%e');\
-    ", Player_AccountID(playerid), RawIpToString(Player_IP(playerid)), Player_AccountID(playerid));
+    ", Player_AccountID(playerid), Player_AccountID(playerid), RawIpToString(Player_IP(playerid)), Player_AccountID(playerid));
 
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, !"OnAccountFullyInserted", !"ii", playerid, callback);
 
