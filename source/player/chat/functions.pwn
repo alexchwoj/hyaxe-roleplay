@@ -12,32 +12,39 @@ Chat_Clear(playerid = INVALID_PLAYER_ID, lines = 20)
 
 	static const space[2] = " ";
 
-	#emit push.c space
-	#emit push.c 0x01
+	__emit 
+    {
+        push.c space
+        push.c 1
+    }
 
 	if (playerid == INVALID_PLAYER_ID)
 	{
-		#emit push.c 12
+		__emit push.c 12;
 
 		while (lines-- != -1)
 		{
-			#emit sysreq.c SendClientMessageToAll
+			__emit sysreq.c SendClientMessageToAll;
 		}
 
-		#emit stack 12
+		__emit stack 12;
 	}
 	else
 	{
-		#emit push.s playerid
-		#emit push.c 16
+		__emit 
+        {
+            push.s playerid
+            push.c 16
+        }
 
 		while (lines-- != -1)
 		{
-			#emit sysreq.c SendClientMessage
+			__emit sysreq.c SendClientMessage;
 		}
 
-		#emit stack 16
+		__emit stack 16;
 	}
+
 	return 1;
 }
 
