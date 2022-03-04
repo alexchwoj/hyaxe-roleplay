@@ -32,7 +32,9 @@ stock ac_SetPlayerChatBubble(playerid, const text[], color, Float:drawdistance, 
     return 1;
 }
 
-#if !defined _ALS_SetPlayerChatBubble
+#if defined _ALS_SetPlayerChatBubble
+    #undef SetPlayerChatBubble
+#else
     #define _ALS_SetPlayerChatBubble
 #endif
 #define SetPlayerChatBubble ac_SetPlayerChatBubble

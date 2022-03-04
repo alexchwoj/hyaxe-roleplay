@@ -15,7 +15,9 @@ stock hy_fix_SelectTextDraw(playerid, hovercolor)
     return SelectTextDraw(playerid, hovercolor);
 }
 
-#if !defined _ALS_SelectTextDraw
+#if defined _ALS_SelectTextDraw
+    #undef SelectTextDraw
+#else
     #define _ALS_SelectTextDraw
 #endif
 #define SelectTextDraw hy_fix_SelectTextDraw
@@ -26,7 +28,9 @@ stock hy_fix_CancelSelectTextDraw(playerid)
     return CancelSelectTextDraw(playerid);
 }
 
-#if !defined _ALS_CancelSelectTextDraw
+#if defined _ALS_CancelSelectTextDraw
+    #undef CancelSelectTextDraw
+#else
     #define _ALS_CancelSelectTextDraw
 #endif
 #define CancelSelectTextDraw hy_fix_CancelSelectTextDraw
