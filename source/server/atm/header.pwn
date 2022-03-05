@@ -3,8 +3,6 @@
 #endif
 #define _ATM_HEADER_
 
-const HYAXE_MAX_ATMS = 32;
-
 enum eAtmInfo {
     Float:e_fAtmPosX,
     Float:e_fAtmPosY,
@@ -22,7 +20,7 @@ enum eAtmInfo {
     e_iAtmObject
 };
 
-new g_rgeATMBank[HYAXE_MAX_ATMS][eAtmInfo] = {
+new g_rgeATMBank[][eAtmInfo] = {
     {1695.597534, -1170.626586, 23.416248, 0.000000, 0.000000, 179.699966}, 
     {2115.533203, -1118.276489, 24.890859, 0.000000, 0.000000, 163.100006}, 
     {2041.569458, -1431.416992, 16.744060, 0.000000, 0.000000, 179.399993}, 
