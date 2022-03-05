@@ -302,3 +302,12 @@ SplitMessageInLines(const string[], result[][], max_lines = sizeof(result), max_
 
 	return line_count;
 }
+
+Date_ToString(year, month, day)
+{
+	static const month_names[][] = { "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre" };
+
+	new str[32];
+	format(str, sizeof(str), "%i de %s del %i", day, month_names[month], year);
+	return str;
+}

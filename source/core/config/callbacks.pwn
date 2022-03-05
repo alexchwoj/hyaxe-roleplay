@@ -31,7 +31,11 @@ public OnGameModeInit()
 
 	AddServerRule(!"versión de sa-mp", !"0.3.7");
 	AddServerRule(!"discord", !"hyaxe.com/discord");
-	AddServerRule(!"última actualización", __date);
+
+	new d, m, y;
+	getdate(y, m, d);
+
+	AddServerRule(!"última actualización", Date_ToString(y, m, d));
 
 	SetModeRestartTime(1.0);
 	YSF_EnableNightVisionFix(true);

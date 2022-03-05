@@ -5,19 +5,23 @@
 			"path": ".",
 		}
 	],
-	"build_systems": [
+	"build_systems": 
+	[
 		{
-			"name": "Compilar servidor",
-			"cmd": ["$folder/compiler/pawncc.exe", 
+			"name": "Build server",
+			"cmd": ["$folder/compiler/pawncc", 
 				"$folder\\source\\main.pwn", 
 				"-icompiler\\include", 
 				"-icompiler\\include\\amx", 
 				"-isource",  
 				"-ogamemodes/hyaxe.amx"
 			],
+			"selector": "source.pawn",
+			"working_dir": "$folder"
 		}
 	],
-	"settings": {
+	"settings": 
+	{
 		"default_encoding": "Western (Windows 1252)",
 	},
 }
