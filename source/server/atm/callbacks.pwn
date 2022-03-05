@@ -14,7 +14,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
             new info[3];
             Streamer_GetArrayData(STREAMER_TYPE_AREA, areas[0], E_STREAMER_EXTRA_ID, info);
-            if (info[0] == 0xFF0000)
+            if (info[0] == 0x41544D)
             {
                 if (IsPlayerInRangeOfPoint(playerid, 1.2, g_rgeATMBank[ info[1] ][e_fAtmPosX], g_rgeATMBank[ info[1] ][e_fAtmPosY], g_rgeATMBank[ info[1] ][e_fAtmPosZ]))
                 {
@@ -44,7 +44,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 public OnGameModeInit()
 {
-    for(new i = 0; i < sizeof g_rgeATMBank; i ++)
+    for(new i = 0; i < sizeof g_rgeATMBank; ++i)
     {
         g_rgeATMBank[i][e_iAtmObject] = CreateDynamicObject(19324,
             g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], g_rgeATMBank[i][e_fAtmPosZ],
@@ -65,7 +65,7 @@ public OnGameModeInit()
         );
 
         new info[2];
-        info[0] = 0xFF0000; // ATM
+        info[0] = 0x41544D; // ATM
         info[1] = i; // ATM ID
 
         g_rgeATMBank[i][e_iAtmArea] = CreateDynamicCircle(
