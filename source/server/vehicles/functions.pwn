@@ -237,6 +237,8 @@ Player_RegisterVehicle(playerid, vehicleid)
 
 Player_SaveVehicles(playerid)
 {
+    DEBUG_PRINT("[veh] Saving player %i vehicles", playerid);
+    
     if(!Iter_Count(PlayerVehicles[playerid]))
         return 0;
     
