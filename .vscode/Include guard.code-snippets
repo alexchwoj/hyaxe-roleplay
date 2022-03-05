@@ -1,0 +1,12 @@
+{
+	"Include guard": {
+		"prefix": [ "once", "pragma once", "#pragma once"],
+		"body": [
+			"#if defined _${1:${TM_DIRECTORY/^.+\\\\(.*)$/$1/}_${TM_FILENAME_BASE}}_",
+			"\t#endinput",
+			"#endif",
+			"#define _$1_",
+			"$0"
+		],
+	}
+}

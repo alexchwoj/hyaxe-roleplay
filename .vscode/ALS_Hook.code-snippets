@@ -1,0 +1,46 @@
+{
+	"ALS Hook": {
+		"prefix": ["_ALS", "ALS", "hook"],
+		"body": [ 
+			"public $2($3)",
+			"{",
+			"\t$0",
+			"",
+			"\t#if defined $1_$2",
+			"\t\treturn $1_$2($3);",
+			"\t#else",
+			"\t\treturn 1;",
+			"\t#endif",
+			"}",
+			"",
+			"#if defined _ALS_$2",
+			"\t#undef $2",
+			"#else",
+			"\t#define _ALS_$2",
+			"#endif",
+			"#define $2 $1_$2",
+			"#if defined $1_$2",
+			"\tforward $1_$2($3);",
+			"#endif",
+			""
+		]
+	},
+	"ALS Native Hook": {
+		"prefix": [ "hook native", "ALS" ],
+		"body": [
+			"stock $1_$2($3)",
+			"{",
+			"\t$0",
+			"\treturn $2($3);",
+			"}",
+			"",
+			"#if defined _ALS_$2",
+			"\t#undef $2",
+			"#else",
+			"\t#define _ALS_$2",
+			"#endif",
+			"#define $2 $1_$2",
+			""
+		]
+	}
+}

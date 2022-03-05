@@ -12,7 +12,7 @@
 				"$folder\\source\\main.pwn", 
 				"-icompiler\\include", 
 				"-icompiler\\include\\amx", 
-				"-isource", 
+				"-isource",  
 				"-ogamemodes/hyaxe.amx"
 			],
 		}
