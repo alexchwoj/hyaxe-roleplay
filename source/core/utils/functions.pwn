@@ -269,19 +269,6 @@ Str_FixEncoding_Ref(result[])
     }
 }
 
-static _Split_ReverseSearchSpace(const string[], idx, limit = -1)
-{
-	for(new i = idx; i != limit; --i)
-	{
-		if(string[i] == ' ')
-		{
-			return i;
-		}
-	}
-
-	return -1;
-}
-
 SplitMessageInLines(const string[], result[][], max_lines = sizeof(result), max_line_length = sizeof(result[]))
 {
 	DEBUG_PRINT("SplitMessageInLines(string[%i], result[%i][%i])", strlen(string), max_lines, max_line_length);
@@ -293,28 +280,25 @@ SplitMessageInLines(const string[], result[][], max_lines = sizeof(result), max_
 		return 1;
 	}
 
-	len--;
-
-	new line_count = 1, last_space = -1;
-	do
+	new regex_str[32];
+	format(regex_str, sizeof(regex_str), ".{1,%i}(\\s|$)", max_line_length);
+	new Regex:rgx = Regex_New(regex_str);
+	
+	new RegexMatch:match, pos, startpos, line_count;
+	while(Regex_Search(string, rgx, match, pos, startpos))
 	{
-		new old_space = last_space + 1;
-		new idx = min(len, (max_line_length * line_count));
-
-		last_space = _Split_ReverseSearchSpace(string, idx, last_space);
-		if(last_space == -1)
-		{
-			format(result[line_count - 1], max_line_length, "%s", string[(old_space != 0 ? old_space - 1 : 0)]);
-			last_space = idx - 1;
-		}
-		else
-		{
-			format(result[line_count - 1], last_space + 1, "%s", string[old_space]);
-		}
+		new length;
+		Match_GetGroup(match, 0, result[line_count], length, max_line_length);
+		if(result[line_count][length - 1] == ' ')
+			result[line_count][length - 1] = '\0';
 
 		line_count++;
+		startpos += pos + length;
+
+		Match_Free(match);
 	}
-	while(line_count <= max_lines);
+
+	Regex_Delete(rgx);
 
 	return line_count;
 }
