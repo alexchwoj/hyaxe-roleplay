@@ -8,6 +8,7 @@ public OnGameModeInit()
     print("[config] Setting up...");
     
     SetMaxPlayers(MAX_PLAYERS);
+    SetMaxNPCs(1000 - MAX_PLAYERS);
 
     for (new i = (sizeof(g_rgcAllowedNameChars) - 1); i != -1; --i)
 	{
