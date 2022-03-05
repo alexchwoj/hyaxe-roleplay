@@ -65,8 +65,11 @@ Chat_SendMessageToRange(playerid, color, Float:range, const string[])
     new virtual_world = GetPlayerVirtualWorld(playerid);
     new interior = GetPlayerInterior(playerid);
 
-    foreach(new i : LoggedIn)
+    foreach(new i : StreamedPlayer[playerid])
     {
+        if(!Bit_Get(Player_Flags(i), PFLAG_IN_GAME))
+            continue;
+            
         if (GetPlayerVirtualWorld(i) != virtual_world && GetPlayerInterior(i) != interior)
             continue;
 

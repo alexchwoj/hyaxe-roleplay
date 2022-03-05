@@ -3,12 +3,23 @@
 #endif
 #define _utils_sounds_
 
-#define Sound_Next(%0) PlayerPlaySound(%0, 14405, 0.0, 0.0, 0.0)
-#define Sound_Back(%0) PlayerPlaySound(%0, 14404, 0.0, 0.0, 0.0)
-#define Sound_Error(%0) PlayerPlaySound(%0, 1085, 0.0, 0.0, 0.0)
-#define Sound_Button(%0) PlayerPlaySound(%0, 17803, 0.0, 0.0, 0.0)
-#define Sound_Trumpet(%0) PlayerPlaySound(%0, 31205, 0.0, 0.0, 0.0)
-#define Sound_Sent(%0) PlayerPlaySound(%0, 40404, 0.0, 0.0, 0.0)
-#define Sound_Success(%0) PlayerPlaySound(%0, 1150, 0.0, 0.0, 0.0)
-#define Sound_Success1(%0) PlayerPlaySound(%0, 1137, 0.0, 0.0, 0.0)
-#define Sound_Success2(%0) PlayerPlaySound(%0, 1138, 0.0, 0.0, 0.0)
+enum _:eServerSounds
+{
+    SOUND_NEXT = 14405,
+    SOUND_BACK = 14404,
+    SOUND_ERROR = 1085,
+    SOUND_BUTTON = 17803,
+    SOUND_TRUMPET = 31205,
+    SOUND_SENT = 40404,
+    SOUND_SUCCESS = 1150,
+    SOUND_SUCCESS_ONE = 1137,
+    SOUND_SUCCESS_TWO = 1138
+};
+
+native HY_PlayerPlaySound(playerid, soundid, Float:x = 0.0, Float:y = 0.0, Float:z = 0.0) = PlayerPlaySound;
+#if defined _ALS_PlayerPlaySound
+    #undef PlayerPlaySound
+#else
+    #define _ALS_PlayerPlaySound
+#endif
+#define PlayerPlaySound HY_PlayerPlaySound

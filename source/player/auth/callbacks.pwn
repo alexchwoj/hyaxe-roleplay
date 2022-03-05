@@ -90,7 +90,7 @@ public OnPlayerDataLoaded(playerid)
 dialog register(playerid, response, listitem, inputtext[])
 {
     DEBUG_PRINT("Dialog: Register (%i, %i, %i, \"%s\")", playerid, response, listitem, inputtext);
-    Sound_Button(playerid);
+    PlayerPlaySound(playerid, SOUND_BUTTON);
 
     if(!response)
     {
@@ -127,7 +127,7 @@ dialog register(playerid, response, listitem, inputtext[])
 
 dialog register_email(playerid, response, listitem, inputtext[])
 {
-    Sound_Button(playerid);
+    PlayerPlaySound(playerid, SOUND_BUTTON);
 
     if(!response)
     {
@@ -192,7 +192,7 @@ static AccountRegistered(playerid)
 
 dialog register_sex(playerid, response, listitem, inputtext[])
 {
-    Sound_Button(playerid);
+    PlayerPlaySound(playerid, SOUND_BUTTON);
 
     Player_Sex(playerid) = response;
     Player_Skin(playerid) = (response ? 250 : 192);
@@ -205,7 +205,7 @@ dialog register_sex(playerid, response, listitem, inputtext[])
 
 dialog login(playerid, response, listitem, inputtext[])
 {
-    Sound_Button(playerid);
+    PlayerPlaySound(playerid, SOUND_BUTTON);
     
     if(!response)
         return Kick(playerid);

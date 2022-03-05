@@ -5,6 +5,8 @@
 
 static GunsmakerBuildingEvent(playerid, bool:enter, data)
 {
+    #pragma unused data
+
     if(enter)
     {
         Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Habla con el supervisor para trabajar como fabricante de armas");
@@ -22,6 +24,8 @@ static GunsmakerBuildingEvent(playerid, bool:enter, data)
 
 static GunsmakerEvent(playerid, eJobEvent:event, data)
 {
+    #pragma unused playerid, event, data
+    
     return 1;
 }
 

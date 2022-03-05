@@ -268,3 +268,53 @@ Str_FixEncoding_Ref(result[])
         }
     }
 }
+
+static _Split_ReverseSearchSpace(const string[], idx, limit = -1)
+{
+	for(new i = idx; i != limit; --i)
+	{
+		if(string[i] == ' ')
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+SplitMessageInLines(const string[], result[][], max_lines = sizeof(result), max_line_length = sizeof(result[]))
+{
+	DEBUG_PRINT("SplitMessageInLines(string[%i], result[%i][%i])", strlen(string), max_lines, max_line_length);
+
+	new len = strlen(string);
+	if(len < max_line_length)
+	{
+		strcpy(result[0], string, max_line_length);
+		return 1;
+	}
+
+	len--;
+
+	new line_count = 1, last_space = -1;
+	do
+	{
+		new old_space = last_space + 1;
+		new idx = min(len, (max_line_length * line_count));
+
+		last_space = _Split_ReverseSearchSpace(string, idx, last_space);
+		if(last_space == -1)
+		{
+			format(result[line_count - 1], max_line_length, "%s", string[(old_space != 0 ? old_space - 1 : 0)]);
+			last_space = idx - 1;
+		}
+		else
+		{
+			format(result[line_count - 1], last_space + 1, "%s", string[old_space]);
+		}
+
+		line_count++;
+	}
+	while(line_count <= max_lines);
+
+	return line_count;
+}
