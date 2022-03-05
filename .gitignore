@@ -10,3 +10,4 @@ server_log.txt
 crashinfo.txt
 /scriptfiles/*
 !/scriptfiles/schema.sql
+*.sublime-workspace

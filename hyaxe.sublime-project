@@ -1,0 +1,23 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+		}
+	],
+	"build_systems": [
+		{
+			"name": "Compilar servidor",
+			"cmd": ["$folder/compiler/pawncc.exe", 
+				"$folder\\source\\main.pwn", 
+				"-icompiler\\include", 
+				"-icompiler\\include\\amx", 
+				"-isource", 
+				"-ogamemodes/hyaxe.amx"
+			],
+		}
+	],
+	"settings": {
+		"default_encoding": "Western (Windows 1252)",
+	},
+}
