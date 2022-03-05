@@ -39,3 +39,4 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 #endif
 
 #include "core/utils/bitarray.pwn"
+#include "core/utils/sounds.pwn"

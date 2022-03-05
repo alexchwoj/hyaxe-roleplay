@@ -90,6 +90,7 @@ public OnPlayerDataLoaded(playerid)
 dialog register(playerid, response, listitem, inputtext[])
 {
     DEBUG_PRINT("Dialog: Register (%i, %i, %i, \"%s\")", playerid, response, listitem, inputtext);
+    Sound_Button(playerid);
 
     if(!response)
     {
@@ -126,6 +127,8 @@ dialog register(playerid, response, listitem, inputtext[])
 
 dialog register_email(playerid, response, listitem, inputtext[])
 {
+    Sound_Button(playerid);
+
     if(!response)
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
@@ -185,6 +188,8 @@ static AccountRegistered(playerid)
 
 dialog register_sex(playerid, response, listitem, inputtext[])
 {
+    Sound_Button(playerid);
+
     Player_Sex(playerid) = response;
     Player_Skin(playerid) = (response ? 250 : 192);
 
@@ -196,6 +201,8 @@ dialog register_sex(playerid, response, listitem, inputtext[])
 
 dialog login(playerid, response, listitem, inputtext[])
 {
+    Sound_Button(playerid);
+    
     if(!response)
         return Kick(playerid);
 
