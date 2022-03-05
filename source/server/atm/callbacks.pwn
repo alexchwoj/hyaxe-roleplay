@@ -44,7 +44,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 public OnGameModeInit()
 {
-    for(new i = 0; i < sizeof g_rgeATMBank; i ++)
+    for(new i; i < sizeof(g_rgeATMBank); ++i)
     {
         g_rgeATMBank[i][e_iAtmObject] = CreateDynamicObject(19324,
             g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], g_rgeATMBank[i][e_fAtmPosZ],

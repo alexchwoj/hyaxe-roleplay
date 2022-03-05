@@ -17,7 +17,7 @@
 				"-ogamemodes/hyaxe.amx"
 			],
 			"selector": "source.pawn",
-			"working_dir": "$folder"
+			"working_dir": "$folder",
 		}
 	],
 	"settings": 
