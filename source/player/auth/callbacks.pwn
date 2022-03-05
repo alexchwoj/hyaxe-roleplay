@@ -183,6 +183,10 @@ static AccountRegistered(playerid)
 
     StopAudioStreamForPlayer(playerid);
 
+    Iter_Add(LoggedIn, playerid);
+    
+    Notification_Show(playerid, "Felicidades, te has registrado correctamente.", 3, 0x64A752FF);
+
     return 1;
 }
 

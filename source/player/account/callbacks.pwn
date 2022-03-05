@@ -14,7 +14,7 @@ public OnPlayerConnect(playerid)
 
     static Regex:name_regex;
     if(!name_regex)
-        name_regex = Regex_New("^[A-Z][a-zA-Z]+_[A-Z][a-zA-Z]+$");
+        name_regex = Regex_New("^[A-Z][a-zA-Z]+[ _][A-Z][a-zA-Z]+$");
 
     if(!Regex_Check(Player_Name(playerid), name_regex))
     {
@@ -30,13 +30,34 @@ public OnPlayerConnect(playerid)
     EnablePlayerCameraTarget(playerid, true);
     
     Player_IP(playerid) = GetPlayerRawIp(playerid);
-    for(new i = 0, j = GetPlayerName(playerid, Player_RPName(playerid)); i < j; ++i)
+    
+    strcpy(Player_RPName(playerid), Player_Name(playerid));
+
+    new idx = 0;
+    while((idx = strfind(Player_Name(playerid), " ", .pos = idx)) != -1)
     {
-        if(g_rgePlayerData[playerid][e_szPlayerRpName][i] == '_')
-            g_rgePlayerData[playerid][e_szPlayerRpName][i] = ' ';
+        Player_Name(playerid)[idx] = '_';
+    }
+
+    idx = 0;
+    while((idx = strfind(Player_RPName(playerid), "_", .pos = idx)) != -1)
+    {
+        Player_RPName(playerid)[idx] = ' ';
     }
 
     SetPlayerNameInServerQuery(playerid, Player_RPName(playerid));
+    SetPlayerName(playerid, Player_RPName(playerid));
+
+    new BitStream:bs = BS_New();
+    BS_WriteValue(bs,
+        PR_UINT16, playerid,
+        PR_UINT8, strlen(Player_RPName(playerid)),
+        PR_STRING, Player_RPName(playerid),
+        PR_UINT8, 1
+    );
+    PR_SendRPC(bs, playerid, 11, PR_HIGH_PRIORITY, PR_RELIABLE);
+    BS_Delete(bs);
+
     Bit_Set(Player_Flags(playerid), PFLAG_AUTHENTICATING, true);
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
@@ -164,6 +185,5 @@ public OnAccountFullyInserted(playerid, callback)
         }
     }
 
-    Notification_Show(playerid, "Felicidades, te has registrado correctamente.", 3, 0x64A752FF);
     return 1;
 }
