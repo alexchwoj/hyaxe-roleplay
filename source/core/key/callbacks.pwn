@@ -28,8 +28,45 @@ public OnPlayerDisconnect(playerid, reason)
 forward KEY_HideAlert(playerid);
 public KEY_HideAlert(playerid)
 {
+    KillTimer(g_rgeKeyData[playerid][e_iKeyTimer]);
     PlayerTextDrawHide(playerid, p_tdKey_BG{playerid});
     PlayerTextDrawHide(playerid, p_tdKey_Text{playerid});
+    g_rgeKeyData[playerid][e_bKeyActived] = false;
+    return 1;
+}
+
+forward KEY_MoveToTop(playerid, Float:max, count);
+public KEY_MoveToTop(playerid, Float:max, count)
+{
+    g_rgeKeyData[playerid][e_iKeyFrameCount] -= count;
+
+    new Float:pct = floatdiv(g_rgeKeyData[playerid][e_iKeyFrameCount], max);
+    new Float:pos_y = lerp(0.0, -17.0, easeInOutCubic(pct));
+
+    PlayerTextDrawSetPos(playerid, p_tdKey_BG{playerid}, 323.000000, 6.000000 - pos_y);
+    PlayerTextDrawSetPos(playerid, p_tdKey_Text{playerid}, 323.000000, 8.000000 - pos_y);
+
+    Key_ShowAll(playerid);
+    
+	if (pct <= -1.0)
+	{
+		g_rgeKeyData[playerid][e_iKeyFrameCount] = 0;
+        KEY_HideAlert(playerid);
+	}
+
+	return 1;
+}
+
+forward KEY_WaitToTop(playerid, Float:max, count);
+public KEY_WaitToTop(playerid, Float:max, count)
+{
+    new Float:x, Float:y;
+    PlayerTextDrawGetPos(playerid, p_tdKey_BG{playerid}, x, y);
+    printf("bg: %f", y);
+    PlayerTextDrawGetPos(playerid, p_tdKey_Text{playerid}, x, y);
+    printf("text: %f", y);
+
+    g_rgeKeyData[playerid][e_iKeyTimer] = SetTimerEx("KEY_MoveToTop", 10, true, "ifd", playerid, max, count);
     return 1;
 }
 
@@ -39,10 +76,10 @@ public KEY_MoveToBottom(playerid, Float:max, count)
     g_rgeKeyData[playerid][e_iKeyFrameCount] += count;
 
     new Float:pct = floatdiv(g_rgeKeyData[playerid][e_iKeyFrameCount], max);
-    new Float:pos_y = lerp(0.0, 9.0, easeOutBack(pct));
+    new Float:pos_y = lerp(0.0, 17.0, easeOutBack(pct));
 
-    PlayerTextDrawSetPos(playerid, p_tdKey_BG{playerid}, 323.000000, 5.500000 + pos_y);
-    PlayerTextDrawSetPos(playerid, p_tdKey_Text{playerid}, 323.000000, 4.500000 + pos_y);
+    PlayerTextDrawSetPos(playerid, p_tdKey_BG{playerid}, 323.000000, -11.000000 + pos_y);
+    PlayerTextDrawSetPos(playerid, p_tdKey_Text{playerid}, 323.000000, -9.000000 + pos_y);
 
     Key_ShowAll(playerid);
     
@@ -50,11 +87,12 @@ public KEY_MoveToBottom(playerid, Float:max, count)
 	{
 		g_rgeKeyData[playerid][e_iKeyFrameCount] = 0;
 		KillTimer(g_rgeKeyData[playerid][e_iKeyTimer]);
+
+        g_rgeKeyData[playerid][e_iKeyTimer] = SetTimerEx("KEY_WaitToTop", 3000, false, "idf", playerid, max, count);
 	}
 
 	return 1;
 }
-
 
 public OnPlayerEnterDynamicArea(playerid, areaid)
 {
@@ -74,7 +112,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
 
                 if (Perfomance_IsFine(playerid))
                 {
-                    g_rgeKeyData[playerid][e_iKeyTimer] = SetTimerEx("KEY_MoveToBottom", 10, true, "ifd", playerid, 9.0, 5);
+                    g_rgeKeyData[playerid][e_iKeyTimer] = SetTimerEx("KEY_MoveToBottom", 10, true, "ifd", playerid, 300.0, 4);
                 }
                 else
                 {

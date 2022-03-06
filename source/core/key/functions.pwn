@@ -54,3 +54,9 @@ Key_Alert(Float:x, Float:y, Float:range, key, world = 0, interior = 0)
 	
     return area;
 }
+
+command cancelkey(playerid, const params[], "")
+{
+    KEY_HideAlert(playerid);
+    return 1;
+}
