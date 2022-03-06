@@ -3,6 +3,58 @@
 #endif
 #define _KEY_CALLBACKS_
 
+public OnPlayerDisconnect(playerid, reason)
+{
+    g_rgeKeyData[playerid] = g_rgeKeyData[MAX_PLAYERS];
+
+    #if defined KEY_OnPlayerDisconnect
+        return KEY_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect KEY_OnPlayerDisconnect
+#if defined KEY_OnPlayerDisconnect
+    forward KEY_OnPlayerDisconnect(playerid, reason);
+#endif
+
+
+forward KEY_HideAlert(playerid);
+public KEY_HideAlert(playerid)
+{
+    PlayerTextDrawHide(playerid, p_tdKey_BG{playerid});
+    PlayerTextDrawHide(playerid, p_tdKey_Text{playerid});
+    return 1;
+}
+
+forward KEY_MoveToBottom(playerid, Float:max, count);
+public KEY_MoveToBottom(playerid, Float:max, count)
+{
+    g_rgeKeyData[playerid][e_iKeyFrameCount] += count;
+
+    new Float:pct = floatdiv(g_rgeKeyData[playerid][e_iKeyFrameCount], max);
+    new Float:pos_y = lerp(0.0, 9.0, easeOutBack(pct));
+
+    PlayerTextDrawSetPos(playerid, p_tdKey_BG{playerid}, 323.000000, 5.500000 + pos_y);
+    PlayerTextDrawSetPos(playerid, p_tdKey_Text{playerid}, 323.000000, 4.500000 + pos_y);
+
+    Key_ShowAll(playerid);
+    
+	if (pct >= 1.0)
+	{
+		g_rgeKeyData[playerid][e_iKeyFrameCount] = 0;
+		KillTimer(g_rgeKeyData[playerid][e_iKeyTimer]);
+	}
+
+	return 1;
+}
+
 
 public OnPlayerEnterDynamicArea(playerid, areaid)
 {
@@ -12,11 +64,28 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
     {
         if (GetPlayerVirtualWorld(playerid) == info[1] && GetPlayerInterior(playerid) == info[2])
         {
-            // bg: 11.000000 text: 9.000000
             new string[64];
             format(string, sizeof(string), "PULSA ~y~\"%s\"", Key_GetName(info[3]));
             PlayerTextDrawSetString(playerid, p_tdKey_Text{playerid}, string);
-            Key_ShowAll(playerid);
+
+            if (!g_rgeKeyData[playerid][e_bKeyActived])
+            {
+                g_rgeKeyData[playerid][e_bKeyActived] = true;
+
+                if (Perfomance_IsFine(playerid))
+                {
+                    g_rgeKeyData[playerid][e_iKeyTimer] = SetTimerEx("KEY_MoveToBottom", 10, true, "ifd", playerid, 9.0, 5);
+                }
+                else
+                {
+                    PlayerTextDrawSetPos(playerid, p_tdKey_BG{playerid}, 323.000000, 11.000000);
+                    PlayerTextDrawSetPos(playerid, p_tdKey_Text{playerid}, 323.000000, 9.000000);
+                    Key_ShowAll(playerid);
+
+                    g_rgeKeyData[playerid][e_iKeyTimer] = SetTimerEx("KEY_HideAlert", 3000, false, "i", playerid);
+                }
+            }
+            else Key_ShowAll(playerid);
         }
     }
 

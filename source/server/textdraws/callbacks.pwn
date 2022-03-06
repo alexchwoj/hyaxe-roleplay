@@ -239,33 +239,33 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawSetSelectable(playerid, p_tdBankATM_ID{playerid}, 0);
 
     // KEY
-    p_tdKey_BG{playerid} = CreatePlayerTextDraw(playerid, 323.000000, 11.000000, "PULSA ~y~\"Y\"");
-    PlayerTextDrawFont(playerid, p_tdKey_BG{playerid}, 1);
-    PlayerTextDrawLetterSize(playerid, p_tdKey_BG{playerid}, 0.233333, 1.200000);
-    PlayerTextDrawTextSize(playerid, p_tdKey_BG{playerid}, 378.000000, 103.000000);
-    PlayerTextDrawSetOutline(playerid, p_tdKey_BG{playerid}, 0);
-    PlayerTextDrawSetShadow(playerid, p_tdKey_BG{playerid}, 0);
-    PlayerTextDrawAlignment(playerid, p_tdKey_BG{playerid}, 2);
-    PlayerTextDrawColor(playerid, p_tdKey_BG{playerid}, -1);
-    PlayerTextDrawBackgroundColor(playerid, p_tdKey_BG{playerid}, 255);
-    PlayerTextDrawBoxColor(playerid, p_tdKey_BG{playerid}, 993737727);
-    PlayerTextDrawUseBox(playerid, p_tdKey_BG{playerid}, 1);
-    PlayerTextDrawSetProportional(playerid, p_tdKey_BG{playerid}, 1);
-    PlayerTextDrawSetSelectable(playerid, p_tdKey_BG{playerid}, 0);
-
-    p_tdKey_Text{playerid} = CreatePlayerTextDraw(playerid, 323.000000, 9.000000, "_");
+    p_tdKey_Text{playerid} = CreatePlayerTextDraw(playerid, 323.000000, 11.000000, "PULSA ~y~\"Y\"");
     PlayerTextDrawFont(playerid, p_tdKey_Text{playerid}, 1);
-    PlayerTextDrawLetterSize(playerid, p_tdKey_Text{playerid}, 0.600000, -0.200000);
-    PlayerTextDrawTextSize(playerid, p_tdKey_Text{playerid}, 302.000000, 103.000000);
-    PlayerTextDrawSetOutline(playerid, p_tdKey_Text{playerid}, 1);
+    PlayerTextDrawLetterSize(playerid, p_tdKey_Text{playerid}, 0.233333, 1.200000);
+    PlayerTextDrawTextSize(playerid, p_tdKey_Text{playerid}, 378.000000, 103.000000);
+    PlayerTextDrawSetOutline(playerid, p_tdKey_Text{playerid}, 0);
     PlayerTextDrawSetShadow(playerid, p_tdKey_Text{playerid}, 0);
     PlayerTextDrawAlignment(playerid, p_tdKey_Text{playerid}, 2);
     PlayerTextDrawColor(playerid, p_tdKey_Text{playerid}, -1);
     PlayerTextDrawBackgroundColor(playerid, p_tdKey_Text{playerid}, 255);
-    PlayerTextDrawBoxColor(playerid, p_tdKey_Text{playerid}, -626509569);
+    PlayerTextDrawBoxColor(playerid, p_tdKey_Text{playerid}, 993737727);
     PlayerTextDrawUseBox(playerid, p_tdKey_Text{playerid}, 1);
     PlayerTextDrawSetProportional(playerid, p_tdKey_Text{playerid}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdKey_Text{playerid}, 0);
+
+    p_tdKey_BG{playerid} = CreatePlayerTextDraw(playerid, 323.000000, 9.000000, "_");
+    PlayerTextDrawFont(playerid, p_tdKey_BG{playerid}, 1);
+    PlayerTextDrawLetterSize(playerid, p_tdKey_BG{playerid}, 0.600000, -0.200000);
+    PlayerTextDrawTextSize(playerid, p_tdKey_BG{playerid}, 302.000000, 103.000000);
+    PlayerTextDrawSetOutline(playerid, p_tdKey_BG{playerid}, 1);
+    PlayerTextDrawSetShadow(playerid, p_tdKey_BG{playerid}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdKey_BG{playerid}, 2);
+    PlayerTextDrawColor(playerid, p_tdKey_BG{playerid}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdKey_BG{playerid}, 255);
+    PlayerTextDrawBoxColor(playerid, p_tdKey_BG{playerid}, -626509569);
+    PlayerTextDrawUseBox(playerid, p_tdKey_BG{playerid}, 1);
+    PlayerTextDrawSetProportional(playerid, p_tdKey_BG{playerid}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdKey_BG{playerid}, 0);
 
     #if defined TD_OnPlayerConnect
         return TD_OnPlayerConnect(playerid);
