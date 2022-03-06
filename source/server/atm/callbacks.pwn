@@ -150,7 +150,8 @@ public OnGameModeInit()
         g_rgeATMBank[i][e_iAtmObject] = CreateDynamicObject(19324,
             g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], g_rgeATMBank[i][e_fAtmPosZ],
             g_rgeATMBank[i][e_fAtmRotX], g_rgeATMBank[i][e_fAtmRotY], g_rgeATMBank[i][e_fAtmRotZ],
-            g_rgeATMBank[i][e_iAtmWorld], g_rgeATMBank[i][e_iAtmInterior]
+            g_rgeATMBank[i][e_iAtmWorld], g_rgeATMBank[i][e_iAtmInterior],
+            .streamdistance = 50.0, .drawdistance = 50.0
         );
 
         g_rgeATMBank[i][e_fAtmHealth] = 1000.0;
