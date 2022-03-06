@@ -31,6 +31,13 @@ Key_GetName(key)
     return name;
 }
 
+Key_ShowAll(playerid)
+{
+    PlayerTextDrawShow(playerid, p_tdKey_BG{playerid});
+    PlayerTextDrawShow(playerid, p_tdKey_Text{playerid});
+    return 1;
+}
+
 Key_Alert(Float:x, Float:y, Float:range, key, world = 0, interior = 0)
 {
     new info[4];

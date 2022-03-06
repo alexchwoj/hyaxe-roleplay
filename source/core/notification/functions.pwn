@@ -150,7 +150,7 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
         PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][2], 22.000000, pos_y + 1.0);
     }
 
-    if (GetPlayerPing(playerid) <= 300 || NetStats_PacketLossPercent(playerid) <= 4.5 || GetServerTickRate() >= 300)
+    if (Perfomance_IsFine(playerid))
     {
         NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationMoveToRight", 10, true, "dddffd", playerid, index, seconds, pos_y, 300.0, 5);
     }

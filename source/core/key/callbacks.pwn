@@ -12,7 +12,11 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
     {
         if (GetPlayerVirtualWorld(playerid) == info[1] && GetPlayerInterior(playerid) == info[2])
         {
-            SendClientMessage(playerid, -1, Key_GetName(info[3]));
+            // bg: 11.000000 text: 9.000000
+            new string[64];
+            format(string, sizeof(string), "PULSA ~y~\"%s\"", Key_GetName(info[3]));
+            PlayerTextDrawSetString(playerid, p_tdKey_Text{playerid}, string);
+            Key_ShowAll(playerid);
         }
     }
 
