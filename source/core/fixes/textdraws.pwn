@@ -3,7 +3,7 @@
 #endif
 #define _fixes_textdraws_
 
-forward OnPlayerCancelTextDrawSelection(playerid);
+forward OnPlayerCancelTDSelection(playerid);
 
 static
     s_TextDrawCancelTick[MAX_PLAYERS],
@@ -46,7 +46,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
     {
         if(!s_TextDrawCancelTick[playerid] || GetTickDiff(GetTickCount(), s_TextDrawCancelTick[playerid]) < 50 + GetPlayerPing(playerid))
         {
-            CallLocalFunction(!"OnPlayerCancelTextDrawSelection", !"i", playerid);
+            CallLocalFunction(!"OnPlayerCancelTDSelection", !"i", playerid);
         }
 
         s_TextDrawCancelTick[playerid] = 0;

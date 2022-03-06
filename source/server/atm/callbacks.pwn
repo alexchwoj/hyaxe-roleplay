@@ -3,6 +3,107 @@
 #endif
 #define _ATM_CALLBACKS_
 
+public OnPlayerCancelTDSelection(playerid)
+{
+    if (g_rgePlayerTempData[playerid][e_bInATM])
+        ATM_HideMenu(playerid);    
+
+    #if defined ATM_OnPlayerCancelTDSelection
+        return ATM_OnPlayerCancelTDSelection(playerid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerCancelTDSelection
+    #undef OnPlayerCancelTDSelection
+#else
+    #define _ALS_OnPlayerCancelTDSelection
+#endif
+#define OnPlayerCancelTDSelection ATM_OnPlayerCancelTDSelection
+#if defined ATM_OnPlayerCancelTDSelection
+    forward ATM_OnPlayerCancelTDSelection(playerid);
+#endif
+
+
+public OnPlayerClickTextDraw(playerid, Text:clickedid)
+{
+    if (g_rgePlayerTempData[playerid][e_bInATM])
+    {
+        // Deposit
+        if (clickedid == g_tdBankATM[3])
+        {
+            SendClientMessage(playerid, -1, "depositar");
+        }
+
+        // Withdraw
+        if (clickedid == g_tdBankATM[4])
+        {
+            SendClientMessage(playerid, -1, "retirar");
+        }
+
+        // Transfer
+        if (clickedid == g_tdBankATM[5])
+        {
+            SendClientMessage(playerid, -1, "transferir");
+        }
+    }
+
+    #if defined ATM_OnPlayerClickTextDraw
+        return ATM_OnPlayerClickTextDraw(playerid, Text:clickedid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerClickTextDraw
+    #undef OnPlayerClickTextDraw
+#else
+    #define _ALS_OnPlayerClickTextDraw
+#endif
+#define OnPlayerClickTextDraw ATM_OnPlayerClickTextDraw
+#if defined ATM_OnPlayerClickTextDraw
+    forward ATM_OnPlayerClickTextDraw(playerid, Text:clickedid);
+#endif
+
+
+forward ATM_LoadFromDatabase(playerid);
+public ATM_LoadFromDatabase(playerid)
+{
+    new row_count;
+    cache_get_row_count(row_count);
+
+    if (row_count)
+        cache_get_value_name_int(0, !"BALANCE", g_rgePlayerData[playerid][e_iPlayerBankBalance]);
+
+    return 1;
+}
+
+public OnPlayerAuthenticate(playerid)
+{
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+        SELECT * FROM `BANK_ACCOUNT` WHERE `ACCOUNT_ID` = %i;\
+    ", Player_AccountID(playerid));
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "ATM_LoadFromDatabase", "i", playerid);
+
+    #if defined ATM_OnPlayerAuthenticate
+        return ATM_OnPlayerAuthenticate(playerid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerAuthenticate
+    #undef OnPlayerAuthenticate
+#else
+    #define _ALS_OnPlayerAuthenticate
+#endif
+#define OnPlayerAuthenticate ATM_OnPlayerAuthenticate
+#if defined ATM_OnPlayerAuthenticate
+    forward ATM_OnPlayerAuthenticate(playerid);
+#endif
+
+
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if ((newkeys & KEY_YES) != 0)
@@ -16,9 +117,9 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             Streamer_GetArrayData(STREAMER_TYPE_AREA, areas[0], E_STREAMER_EXTRA_ID, info);
             if (info[0] == 0x41544D)
             {
-                if (IsPlayerInRangeOfPoint(playerid, 1.2, g_rgeATMBank[ info[1] ][e_fAtmPosX], g_rgeATMBank[ info[1] ][e_fAtmPosY], g_rgeATMBank[ info[1] ][e_fAtmPosZ]))
+                if (GetPlayerVirtualWorld(playerid) == g_rgeATMBank[ info[1] ][e_iAtmWorld] && GetPlayerInterior(playerid) == g_rgeATMBank[ info[1] ][e_iAtmInterior])
                 {
-                    SendClientMessage(playerid, -1, "banco");
+                    ATM_ShowMenu(playerid);
                 }
             }
         }

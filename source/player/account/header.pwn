@@ -39,6 +39,7 @@ enum ePlayerData
     Float:e_fPlayerHealth,
     Float:e_fPlayerArmor,
     e_iPlayerMoney,
+    e_iPlayerBankBalance,
     Float:e_fSpawnPosX,
     Float:e_fSpawnPosY,
     Float:e_fSpawnPosZ,
@@ -61,7 +62,8 @@ enum ePlayerData
 
 enum ePlayerTemp
 {
-    e_iPlayerChatTick
+    e_iPlayerChatTick,
+    e_bInATM
 };
 
 new 
