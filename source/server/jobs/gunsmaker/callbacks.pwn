@@ -35,7 +35,7 @@ public OnGameModeInit()
     CreateDynamicActor(168, 2548.1860, -1293.0232, 1045.1250, 182.7474, .worldid = 0, .interiorid = 2);
 
     // EnExs
-    EnterExit_Create(19902, "{CB3126}Fábrica de armas{DADADA}\nPresiona {CB3126}H {DADADA}para entrar", "{DADADA}Presiona {CB3126}H {DADADA}para salir", 1976.0343, -1923.4221, 13.5469, 180.1644, 0, 0, 2570.4001, -1301.9230, 1044.1250, 88.4036, 0, 2, .callback_address = __addressof(GunsmakerBuildingEvent));
+    EnterExit_Create(19902, "{CB3126}Fábrica de armas", "{DADADA}Salida", 1976.0343, -1923.4221, 13.5469, 180.1644, 0, 0, 2570.4001, -1301.9230, 1044.1250, 88.4036, 0, 2, .callback_address = __addressof(GunsmakerBuildingEvent));
 
     // Jobs
     Job_CreateSite(JOB_GUNSMAKER, 2548.1860, -1293.0232, 1044.1250, 0, 2, "{DADADA}Presiona {CB3126}Y {DADADA}para recibir tu paga");

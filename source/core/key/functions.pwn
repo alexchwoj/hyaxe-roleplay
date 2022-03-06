@@ -16,7 +16,7 @@ Key_Alert(Float:x, Float:y, Float:range, key, key_type = KEY_TYPE_FOOT, world = 
     info[0] = 0x4B4559; // KEY
     info[1] = world; // World
     info[2] = interior; // Interior
-    info[3] = key; // Key
+    info[3] = key; // Key name
     info[4] = key_type; // Key type (KEY_TYPE_FOOT, KEY_TYPE_VEHICLE)
 
     new area = CreateDynamicCircle(
@@ -26,10 +26,4 @@ Key_Alert(Float:x, Float:y, Float:range, key, key_type = KEY_TYPE_FOOT, world = 
     Streamer_SetArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_EXTRA_ID, info);
 	
     return area;
-}
-
-command cancelkey(playerid, const params[], "")
-{
-    KEY_HideAlert(playerid);
-    return 1;
 }
