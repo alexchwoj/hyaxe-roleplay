@@ -60,12 +60,6 @@ public KEY_MoveToTop(playerid, Float:max, count)
 forward KEY_WaitToTop(playerid, Float:max, count);
 public KEY_WaitToTop(playerid, Float:max, count)
 {
-    new Float:x, Float:y;
-    PlayerTextDrawGetPos(playerid, p_tdKey_BG{playerid}, x, y);
-    printf("bg: %f", y);
-    PlayerTextDrawGetPos(playerid, p_tdKey_Text{playerid}, x, y);
-    printf("text: %f", y);
-
     g_rgeKeyData[playerid][e_iKeyTimer] = SetTimerEx("KEY_MoveToTop", 10, true, "ifd", playerid, max, count);
     return 1;
 }
@@ -140,6 +134,42 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
     #define _ALS_OnPlayerEnterDynamicArea
 #endif
 #define OnPlayerEnterDynamicArea KEY_OnPlayerEnterDynamicArea
+#if defined KEY_OnPlayerEnterDynamicArea
+    forward KEY_OnPlayerEnterDynamicArea(playerid, areaid);
+#endif
+
+
+public OnPlayerLeaveDynamicArea(playerid, areaid)
+{
+    new info[4];
+    Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID, info);
+    if (info[0] == 0x4B4559)
+    {
+        if (g_rgeKeyData[playerid][e_bKeyActived])
+        {
+            if (Perfomance_IsFine(playerid))
+            {
+                g_rgeKeyData[playerid][e_iKeyFrameCount] = 0;
+		        KillTimer(g_rgeKeyData[playerid][e_iKeyTimer]);
+                g_rgeKeyData[playerid][e_iKeyTimer] = SetTimerEx("KEY_MoveToTop", 10, true, "ifd", playerid, max, count);
+            }
+            else KEY_HideAlert(playerid);
+        }
+    }
+
+    #if defined KEY_OnPlayerEnterDynamicArea
+        return KEY_OnPlayerEnterDynamicArea(playerid, areaid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerEnterDynamicArea
+    #undef OnPlayerLeaveDynamicArea
+#else
+    #define _ALS_OnPlayerEnterDynamicArea
+#endif
+#define OnPlayerLeaveDynamicArea KEY_OnPlayerEnterDynamicArea
 #if defined KEY_OnPlayerEnterDynamicArea
     forward KEY_OnPlayerEnterDynamicArea(playerid, areaid);
 #endif
