@@ -151,7 +151,7 @@ public OnGameModeInit()
             g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], g_rgeATMBank[i][e_fAtmPosZ],
             g_rgeATMBank[i][e_fAtmRotX], g_rgeATMBank[i][e_fAtmRotY], g_rgeATMBank[i][e_fAtmRotZ],
             g_rgeATMBank[i][e_iAtmWorld], g_rgeATMBank[i][e_iAtmInterior],
-            .streamdistance = 50.0, .drawdistance = 50.0
+            .streamdistance = 100.0, .drawdistance = 100.0
         );
 
         g_rgeATMBank[i][e_fAtmHealth] = 1000.0;
@@ -175,6 +175,11 @@ public OnGameModeInit()
             .worldid = g_rgeATMBank[i][e_iAtmWorld], .interiorid = g_rgeATMBank[i][e_iAtmInterior]
         );
         Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgeATMBank[i][e_iAtmArea], E_STREAMER_EXTRA_ID, info);
+    
+        Key_Alert(
+            g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], 1.2,
+            KEY_YES, g_rgeATMBank[i][e_iAtmWorld], g_rgeATMBank[i][e_iAtmInterior]
+        );
     }
 
     #if defined ATM_OnGameModeInit
