@@ -128,14 +128,18 @@ public OnPlayerLeaveDynamicArea(playerid, areaid)
 
 public OnPlayerEnterDynamicArea(playerid, areaid)
 {
-    new info[4];
+    new info[5];
     Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID, info);
     if (info[0] == 0x4B4559)
     {
         if (GetPlayerVirtualWorld(playerid) == info[1] && GetPlayerInterior(playerid) == info[2])
         {
             new string[64];
-            format(string, sizeof(string), "PULSA ~y~\"~k~~%s~\"", Key_GetName(info[3]));
+            if (info[4])
+                format(string, sizeof(string), "PULSA ~y~\"~k~~%s~\"", g_rgszKeyFootCode[ info[3] ]);
+            else
+                format(string, sizeof(string), "PULSA ~y~\"~k~~%s~\"", g_rgszKeyVehicleCode[ info[3] ]);
+
             PlayerTextDrawSetString(playerid, p_tdKey_Text{playerid}, string);
 
             if (!g_rgeKeyData[playerid][e_bKeyActived])

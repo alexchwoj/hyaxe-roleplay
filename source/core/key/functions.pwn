@@ -10,13 +10,14 @@ Key_ShowAll(playerid)
     return 1;
 }
 
-Key_Alert(Float:x, Float:y, Float:range, key, bool:on_foot = true, world = 0, interior = 0)
+Key_Alert(Float:x, Float:y, Float:range, key, key_type = KEY_TYPE_FOOT, world = 0, interior = 0)
 {
-    new info[4];
+    new info[5];
     info[0] = 0x4B4559; // KEY
     info[1] = world; // World
     info[2] = interior; // Interior
-    info[3] = key; // Key string
+    info[3] = key; // Key
+    info[4] = key_type; // Key type (KEY_TYPE_FOOT, KEY_TYPE_VEHICLE)
 
     new area = CreateDynamicCircle(
         x, y, range,

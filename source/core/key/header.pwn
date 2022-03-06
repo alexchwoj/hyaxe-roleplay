@@ -12,6 +12,11 @@ enum eKeyInfo {
 
 new g_rgeKeyData[MAX_PLAYERS + 1][eKeyInfo];
 
+enum {
+    KEY_TYPE_FOOT,
+    KEY_TYPE_VEHICLE
+}
+
 enum eKeyNames {
     KEYNAME_ACTION,
     KEYNAME_CROUCH,
