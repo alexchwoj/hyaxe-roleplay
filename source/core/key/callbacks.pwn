@@ -135,7 +135,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
         if (GetPlayerVirtualWorld(playerid) == info[1] && GetPlayerInterior(playerid) == info[2])
         {
             new string[64];
-            format(string, sizeof(string), "PULSA ~y~\"%s\"", Key_GetName(info[3]));
+            format(string, sizeof(string), "PULSA ~y~\"~k~~%s~\"", Key_GetName(info[3]));
             PlayerTextDrawSetString(playerid, p_tdKey_Text{playerid}, string);
 
             if (!g_rgeKeyData[playerid][e_bKeyActived])
