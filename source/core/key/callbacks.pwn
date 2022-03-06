@@ -32,6 +32,7 @@ public KEY_HideAlert(playerid)
     PlayerTextDrawHide(playerid, p_tdKey_BG{playerid});
     PlayerTextDrawHide(playerid, p_tdKey_Text{playerid});
     g_rgeKeyData[playerid][e_bKeyActived] = false;
+    g_rgeKeyData[playerid][e_bKeyGoingUp] = false;
     return 1;
 }
 
@@ -60,6 +61,7 @@ public KEY_MoveToTop(playerid, Float:max, count)
 forward KEY_WaitToTop(playerid, Float:max, count);
 public KEY_WaitToTop(playerid, Float:max, count)
 {
+    g_rgeKeyData[playerid][e_bKeyGoingUp] = true;
     g_rgeKeyData[playerid][e_iKeyTimer] = SetTimerEx("KEY_MoveToTop", 10, true, "ifd", playerid, max, count);
     return 1;
 }
@@ -87,6 +89,42 @@ public KEY_MoveToBottom(playerid, Float:max, count)
 
 	return 1;
 }
+
+public OnPlayerLeaveDynamicArea(playerid, areaid)
+{
+    new info[4];
+    Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID, info);
+    if (info[0] == 0x4B4559)
+    {
+        if (g_rgeKeyData[playerid][e_bKeyActived])
+        {
+            if (Perfomance_IsFine(playerid) && !g_rgeKeyData[playerid][e_bKeyGoingUp])
+            {
+                g_rgeKeyData[playerid][e_iKeyFrameCount] = 0;
+		        KillTimer(g_rgeKeyData[playerid][e_iKeyTimer]);
+                g_rgeKeyData[playerid][e_iKeyTimer] = SetTimerEx("KEY_MoveToTop", 10, true, "ifd", playerid, 300.0, 4);
+            }
+            else KEY_HideAlert(playerid);
+        }
+    }
+
+    #if defined KEY_OnPlayerLeaveDynamicArea
+        return KEY_OnPlayerLeaveDynamicArea(playerid, areaid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerLeaveDynamicArea
+    #undef OnPlayerLeaveDynamicArea
+#else
+    #define _ALS_OnPlayerLeaveDynamicArea
+#endif
+#define OnPlayerLeaveDynamicArea KEY_OnPlayerLeaveDynamicArea
+#if defined KEY_OnPlayerLeaveDynamicArea
+    forward KEY_OnPlayerLeaveDynamicArea(playerid, areaid);
+#endif
+
 
 public OnPlayerEnterDynamicArea(playerid, areaid)
 {
@@ -138,38 +176,3 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
     forward KEY_OnPlayerEnterDynamicArea(playerid, areaid);
 #endif
 
-
-public OnPlayerLeaveDynamicArea(playerid, areaid)
-{
-    new info[4];
-    Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID, info);
-    if (info[0] == 0x4B4559)
-    {
-        if (g_rgeKeyData[playerid][e_bKeyActived])
-        {
-            if (Perfomance_IsFine(playerid))
-            {
-                g_rgeKeyData[playerid][e_iKeyFrameCount] = 0;
-		        KillTimer(g_rgeKeyData[playerid][e_iKeyTimer]);
-                g_rgeKeyData[playerid][e_iKeyTimer] = SetTimerEx("KEY_MoveToTop", 10, true, "ifd", playerid, max, count);
-            }
-            else KEY_HideAlert(playerid);
-        }
-    }
-
-    #if defined KEY_OnPlayerEnterDynamicArea
-        return KEY_OnPlayerEnterDynamicArea(playerid, areaid);
-    #else
-        return 1;
-    #endif
-}
-
-#if defined _ALS_OnPlayerEnterDynamicArea
-    #undef OnPlayerLeaveDynamicArea
-#else
-    #define _ALS_OnPlayerEnterDynamicArea
-#endif
-#define OnPlayerLeaveDynamicArea KEY_OnPlayerEnterDynamicArea
-#if defined KEY_OnPlayerEnterDynamicArea
-    forward KEY_OnPlayerEnterDynamicArea(playerid, areaid);
-#endif

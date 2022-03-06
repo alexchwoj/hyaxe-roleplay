@@ -5,6 +5,7 @@
 
 enum eKeyInfo {
     bool:e_bKeyActived,
+    bool:e_bKeyGoingUp,
     e_iKeyFrameCount,
     e_iKeyTimer
 }
