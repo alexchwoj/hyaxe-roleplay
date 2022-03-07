@@ -239,7 +239,6 @@ dialog login(playerid, response, listitem, inputtext[])
     SetPlayerArmedWeapon(playerid, 0);
     
     Iter_Add(LoggedIn, playerid);
-    Iter_Add(StreamedPlayer[playerid], playerid);
 
     if (Player_AdminLevel(playerid) > 0)
         Iter_Add(Admin, playerid);

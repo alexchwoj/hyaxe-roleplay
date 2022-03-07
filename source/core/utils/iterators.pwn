@@ -4,6 +4,7 @@
 #define _utils_iterators_
 
 new
+    // Every item in this iterator must obey IsPlayerStreamedIn(<item>, forplayerid) == true;
     IteratorArray:StreamedPlayer[MAX_PLAYERS]<MAX_PLAYERS>;
 
 public OnGameModeInit()

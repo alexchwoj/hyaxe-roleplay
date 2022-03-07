@@ -98,7 +98,7 @@ public OnPlayerLeaveDynamicArea(playerid, areaid)
     {
         if (g_rgeKeyData[playerid][e_bKeyActived])
         {
-            if (Perfomance_IsFine(playerid) && !g_rgeKeyData[playerid][e_bKeyGoingUp])
+            if (Performance_IsFine(playerid) && !g_rgeKeyData[playerid][e_bKeyGoingUp])
             {
                 g_rgeKeyData[playerid][e_iKeyFrameCount] = 0;
 		        KillTimer(g_rgeKeyData[playerid][e_iKeyTimer]);
@@ -146,7 +146,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
             {
                 g_rgeKeyData[playerid][e_bKeyActived] = true;
 
-                if (Perfomance_IsFine(playerid))
+                if (Performance_IsFine(playerid))
                 {
                     g_rgeKeyData[playerid][e_iKeyTimer] = SetTimerEx("KEY_MoveToBottom", 10, true, "ifd", playerid, 300.0, 4);
                 }
