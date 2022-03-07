@@ -248,7 +248,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawAlignment(playerid, p_tdKey_Text{playerid}, 2);
     PlayerTextDrawColor(playerid, p_tdKey_Text{playerid}, -1);
     PlayerTextDrawBackgroundColor(playerid, p_tdKey_Text{playerid}, 255);
-    PlayerTextDrawBoxColor(playerid, p_tdKey_Text{playerid}, 993737727);
+    PlayerTextDrawBoxColor(playerid, p_tdKey_Text{playerid}, 454761471);
     PlayerTextDrawUseBox(playerid, p_tdKey_Text{playerid}, 1);
     PlayerTextDrawSetProportional(playerid, p_tdKey_Text{playerid}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdKey_Text{playerid}, 0);
@@ -262,7 +262,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawAlignment(playerid, p_tdKey_BG{playerid}, 2);
     PlayerTextDrawColor(playerid, p_tdKey_BG{playerid}, -1);
     PlayerTextDrawBackgroundColor(playerid, p_tdKey_BG{playerid}, 255);
-    PlayerTextDrawBoxColor(playerid, p_tdKey_BG{playerid}, 454761471);
+    PlayerTextDrawBoxColor(playerid, p_tdKey_BG{playerid}, -626509569);
     PlayerTextDrawUseBox(playerid, p_tdKey_BG{playerid}, 1);
     PlayerTextDrawSetProportional(playerid, p_tdKey_BG{playerid}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdKey_BG{playerid}, 0);
