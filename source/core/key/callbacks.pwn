@@ -5,6 +5,7 @@
 
 public OnPlayerDisconnect(playerid, reason)
 {
+    KillTimer(g_rgeKeyData[playerid][e_iKeyTimer]);
     g_rgeKeyData[playerid] = g_rgeKeyData[MAX_PLAYERS];
 
     #if defined KEY_OnPlayerDisconnect
@@ -31,7 +32,7 @@ public KEY_HideAlert(playerid)
     KillTimer(g_rgeKeyData[playerid][e_iKeyTimer]);
     PlayerTextDrawHide(playerid, p_tdKey_BG{playerid});
     PlayerTextDrawHide(playerid, p_tdKey_Text{playerid});
-    g_rgeKeyData[playerid][e_bKeyActived] = false;
+    g_rgeKeyData[playerid][e_bKeyActivated] = false;
     g_rgeKeyData[playerid][e_bKeyGoingUp] = false;
     return 1;
 }
@@ -96,7 +97,7 @@ public OnPlayerLeaveDynamicArea(playerid, areaid)
     Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID, info);
     if (info[0] == 0x4B4559)
     {
-        if (g_rgeKeyData[playerid][e_bKeyActived])
+        if (g_rgeKeyData[playerid][e_bKeyActivated])
         {
             if (Performance_IsFine(playerid) && !g_rgeKeyData[playerid][e_bKeyGoingUp])
             {
@@ -142,9 +143,9 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
 
             PlayerTextDrawSetString(playerid, p_tdKey_Text{playerid}, string);
 
-            if (!g_rgeKeyData[playerid][e_bKeyActived])
+            if (!g_rgeKeyData[playerid][e_bKeyActivated])
             {
-                g_rgeKeyData[playerid][e_bKeyActived] = true;
+                g_rgeKeyData[playerid][e_bKeyActivated] = true;
 
                 if (Performance_IsFine(playerid))
                 {

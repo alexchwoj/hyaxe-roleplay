@@ -4,7 +4,7 @@
 #define _KEYNAME_HEADER_
 
 enum eKeyInfo {
-    bool:e_bKeyActived,
+    bool:e_bKeyActivated,
     bool:e_bKeyGoingUp,
     e_iKeyFrameCount,
     e_iKeyTimer

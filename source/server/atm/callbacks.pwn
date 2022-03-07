@@ -5,11 +5,7 @@
 
 public OnPlayerCancelTDSelection(playerid)
 {
-<<<<<<< HEAD
-    if (Bit_Get(Player_Flags(playerid), PFLAG_ATM);)
-=======
     if (Bit_Get(Player_Flags(playerid), PFLAG_USING_ATM))
->>>>>>> ccd731feda1667bc6568a0412a3bc3ad463fe32e
         ATM_HideMenu(playerid);    
 
     #if defined ATM_OnPlayerCancelTDSelection
