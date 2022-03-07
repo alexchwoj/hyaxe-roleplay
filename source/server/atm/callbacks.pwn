@@ -5,7 +5,11 @@
 
 public OnPlayerCancelTDSelection(playerid)
 {
+<<<<<<< HEAD
     if (Bit_Get(Player_Flags(playerid), PFLAG_ATM);)
+=======
+    if (Bit_Get(Player_Flags(playerid), PFLAG_USING_ATM))
+>>>>>>> ccd731feda1667bc6568a0412a3bc3ad463fe32e
         ATM_HideMenu(playerid);    
 
     #if defined ATM_OnPlayerCancelTDSelection
@@ -28,22 +32,20 @@ public OnPlayerCancelTDSelection(playerid)
 
 public OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-    if (Bit_Get(Player_Flags(playerid), PFLAG_ATM))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_USING_ATM))
     {
         // Deposit
         if (clickedid == g_tdBankATM[3])
         {
             SendClientMessage(playerid, -1, "depositar");
         }
-
         // Withdraw
-        if (clickedid == g_tdBankATM[4])
+        else if (clickedid == g_tdBankATM[4])
         {
             SendClientMessage(playerid, -1, "retirar");
         }
-
         // Transfer
-        if (clickedid == g_tdBankATM[5])
+        else if (clickedid == g_tdBankATM[5])
         {
             SendClientMessage(playerid, -1, "transferir");
         }

@@ -84,6 +84,11 @@ Chat_SendMessageToRange(playerid, color, Float:range, const string[])
         if (wrapped) 
             SendClientMessage(i, color_darkened, line_two);
     }
+
+    SendClientMessage(playerid, color, line_one);
+    if (wrapped) 
+        SendClientMessage(playerid, color, line_two);
+
     return 1;
 }
 
