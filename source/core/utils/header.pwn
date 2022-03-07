@@ -41,4 +41,5 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 #define Performance_IsFine(%0) (GetPlayerPing(%0) <= 300 && NetStats_PacketLossPercent(%0) <= 4.5 && GetServerTickRate() >= 300)
 
 #include "core/utils/bitarray.pwn"
+#include "core/utils/cells.pwn"
 #include "core/utils/sounds.pwn"
