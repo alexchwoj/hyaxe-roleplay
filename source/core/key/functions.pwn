@@ -10,7 +10,7 @@ Key_ShowAll(playerid)
     return 1;
 }
 
-Key_Alert(Float:x, Float:y, Float:range, key, key_type = KEY_TYPE_FOOT, world = 0, interior = 0)
+Key_Alert(Float:x, Float:y, Float:range, key, world = 0, interior = 0, key_type = KEY_TYPE_FOOT)
 {
     new info[5];
     info[0] = 0x4B4559; // KEY
