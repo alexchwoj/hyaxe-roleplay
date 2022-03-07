@@ -5,7 +5,7 @@
 
 ATM_ShowMenu(playerid)
 {
-    g_rgePlayerTempData[playerid][e_bInATM] = true;
+    Bit_Set(Player_Flags(playerid), PFLAG_ATM, true);
 
     new string[32];
 
@@ -29,7 +29,7 @@ ATM_ShowMenu(playerid)
 
 ATM_HideMenu(playerid)
 {
-    g_rgePlayerTempData[playerid][e_bInATM] = false;
+    Bit_Set(Player_Flags(playerid), PFLAG_ATM, false);
 
     for(new i = sizeof(g_tdBankATM) - 1; i != -1; --i)
     {

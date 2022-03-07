@@ -5,7 +5,7 @@
 
 public OnPlayerCancelTDSelection(playerid)
 {
-    if (g_rgePlayerTempData[playerid][e_bInATM])
+    if (Bit_Get(Player_Flags(playerid), PFLAG_ATM);)
         ATM_HideMenu(playerid);    
 
     #if defined ATM_OnPlayerCancelTDSelection
@@ -28,7 +28,7 @@ public OnPlayerCancelTDSelection(playerid)
 
 public OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-    if (g_rgePlayerTempData[playerid][e_bInATM])
+    if (Bit_Get(Player_Flags(playerid), PFLAG_ATM))
     {
         // Deposit
         if (clickedid == g_tdBankATM[3])
