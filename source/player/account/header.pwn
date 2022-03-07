@@ -15,6 +15,7 @@ enum
     PFLAG_REGISTERED,
     PFLAG_IN_GAME,
     PFLAG_ROBBING_STORE,
+    PFLAG_USING_ATM,
     
     MAX_PLAYER_FLAGS
 }
@@ -62,8 +63,7 @@ enum ePlayerData
 
 enum ePlayerTemp
 {
-    e_iPlayerChatTick,
-    e_bInATM
+    e_iPlayerChatTick
 };
 
 new 

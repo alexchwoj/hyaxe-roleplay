@@ -175,6 +175,34 @@ public OnGameModeInit()
     TextDrawSetProportional(g_tdBankATM[5], 1);
     TextDrawSetSelectable(g_tdBankATM[5], 1);
 
+    g_tdBankATM[6] = TextDrawCreate(318.000000, 174.000000, !"$100");
+    TextDrawFont(g_tdBankATM[6], 3);
+    TextDrawLetterSize(g_tdBankATM[6], 0.329165, 1.350000);
+    TextDrawTextSize(g_tdBankATM[6], 400.000000, 201.500000);
+    TextDrawSetOutline(g_tdBankATM[6], 1);
+    TextDrawSetShadow(g_tdBankATM[6], 0);
+    TextDrawAlignment(g_tdBankATM[6], 2);
+    TextDrawColor(g_tdBankATM[6], 1688687359);
+    TextDrawBackgroundColor(g_tdBankATM[6], 255);
+    TextDrawBoxColor(g_tdBankATM[6], 50);
+    TextDrawUseBox(g_tdBankATM[6], 0);
+    TextDrawSetProportional(g_tdBankATM[6], 1);
+    TextDrawSetSelectable(g_tdBankATM[6], 0);
+
+    g_tdBankATM[7] = TextDrawCreate(318.000000, 276.000000, !"ID: 1337");
+    TextDrawFont(g_tdBankATM[7], 1);
+    TextDrawLetterSize(g_tdBankATM[7], 0.262499, 1.350000);
+    TextDrawTextSize(g_tdBankATM[7], 396.000000, 105.000000);
+    TextDrawSetOutline(g_tdBankATM[7], 0);
+    TextDrawSetShadow(g_tdBankATM[7], 0);
+    TextDrawAlignment(g_tdBankATM[7], 2);
+    TextDrawColor(g_tdBankATM[7], 909522687);
+    TextDrawBackgroundColor(g_tdBankATM[7], 255);
+    TextDrawBoxColor(g_tdBankATM[7], 50);
+    TextDrawUseBox(g_tdBankATM[7], 0);
+    TextDrawSetProportional(g_tdBankATM[7], 1);
+    TextDrawSetSelectable(g_tdBankATM[7], 0);
+
     #if defined TD_OnGameModeInit
         return TD_OnGameModeInit();
     #else
@@ -208,35 +236,6 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawUseBox(playerid, p_tdBeatingText{playerid}, 0);
     PlayerTextDrawSetProportional(playerid, p_tdBeatingText{playerid}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdBeatingText{playerid}, 0);
-
-    // BANK ATM
-    p_tdBankATM_Balance{playerid} = CreatePlayerTextDraw(playerid, 318.000000, 174.000000, !"$100.600");
-    PlayerTextDrawFont(playerid, p_tdBankATM_Balance{playerid}, 3);
-    PlayerTextDrawLetterSize(playerid, p_tdBankATM_Balance{playerid}, 0.329165, 1.350000);
-    PlayerTextDrawTextSize(playerid, p_tdBankATM_Balance{playerid}, 400.000000, 201.500000);
-    PlayerTextDrawSetOutline(playerid, p_tdBankATM_Balance{playerid}, 1);
-    PlayerTextDrawSetShadow(playerid, p_tdBankATM_Balance{playerid}, 0);
-    PlayerTextDrawAlignment(playerid, p_tdBankATM_Balance{playerid}, 2);
-    PlayerTextDrawColor(playerid, p_tdBankATM_Balance{playerid}, 1688687359);
-    PlayerTextDrawBackgroundColor(playerid, p_tdBankATM_Balance{playerid}, 255);
-    PlayerTextDrawBoxColor(playerid, p_tdBankATM_Balance{playerid}, 50);
-    PlayerTextDrawUseBox(playerid, p_tdBankATM_Balance{playerid}, 0);
-    PlayerTextDrawSetProportional(playerid, p_tdBankATM_Balance{playerid}, 1);
-    PlayerTextDrawSetSelectable(playerid, p_tdBankATM_Balance{playerid}, 0);
-
-    p_tdBankATM_ID{playerid} = CreatePlayerTextDraw(playerid, 318.000000, 276.000000, !"ID: 1337");
-    PlayerTextDrawFont(playerid, p_tdBankATM_ID{playerid}, 1);
-    PlayerTextDrawLetterSize(playerid, p_tdBankATM_ID{playerid}, 0.262499, 1.350000);
-    PlayerTextDrawTextSize(playerid, p_tdBankATM_ID{playerid}, 396.000000, 105.000000);
-    PlayerTextDrawSetOutline(playerid, p_tdBankATM_ID{playerid}, 0);
-    PlayerTextDrawSetShadow(playerid, p_tdBankATM_ID{playerid}, 0);
-    PlayerTextDrawAlignment(playerid, p_tdBankATM_ID{playerid}, 2);
-    PlayerTextDrawColor(playerid, p_tdBankATM_ID{playerid}, 909522687);
-    PlayerTextDrawBackgroundColor(playerid, p_tdBankATM_ID{playerid}, 255);
-    PlayerTextDrawBoxColor(playerid, p_tdBankATM_ID{playerid}, 50);
-    PlayerTextDrawUseBox(playerid, p_tdBankATM_ID{playerid}, 0);
-    PlayerTextDrawSetProportional(playerid, p_tdBankATM_ID{playerid}, 1);
-    PlayerTextDrawSetSelectable(playerid, p_tdBankATM_ID{playerid}, 0);
 
     // KEY
     p_tdKey_Text{playerid} = CreatePlayerTextDraw(playerid, 323.000000, 11.000000, !"_");

@@ -5,23 +5,20 @@
 
 ATM_ShowMenu(playerid)
 {
-    g_rgePlayerTempData[playerid][e_bInATM] = true;
+    Bit_Set(Player_Flags(playerid), PFLAG_USING_ATM, true);
 
     new string[32];
 
     format(string, sizeof(string), "$%d", g_rgePlayerData[playerid][e_iPlayerBankBalance]);
-    PlayerTextDrawSetString(playerid, p_tdBankATM_Balance{playerid}, string);
+    TextDrawSetString(g_tdBankATM[6], string);
 
     format(string, sizeof(string), "ID: %i", Player_AccountID(playerid));
-    PlayerTextDrawSetString(playerid, p_tdBankATM_ID{playerid}, string);
+    TextDrawSetString(g_tdBankATM[7], string);
 
     for(new i = sizeof(g_tdBankATM) - 1; i != -1; --i)
     {
         TextDrawShowForPlayer(playerid, g_tdBankATM[i]);
     }
-
-    PlayerTextDrawShow(playerid, p_tdBankATM_Balance{playerid});
-    PlayerTextDrawShow(playerid, p_tdBankATM_ID{playerid});
 
     SelectTextDraw(playerid, 0x64A752FF);
     return 1;
@@ -29,14 +26,12 @@ ATM_ShowMenu(playerid)
 
 ATM_HideMenu(playerid)
 {
-    g_rgePlayerTempData[playerid][e_bInATM] = false;
+    Bit_Set(Player_Flags(playerid), PFLAG_USING_ATM, false);
 
     for(new i = sizeof(g_tdBankATM) - 1; i != -1; --i)
     {
         TextDrawHideForPlayer(playerid, g_tdBankATM[i]);
     }
 
-    PlayerTextDrawHide(playerid, p_tdBankATM_Balance{playerid});
-    PlayerTextDrawHide(playerid, p_tdBankATM_ID{playerid});
     return 1;
 }
