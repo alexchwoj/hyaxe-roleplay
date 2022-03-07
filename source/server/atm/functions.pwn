@@ -7,13 +7,18 @@ ATM_ShowMenu(playerid)
 {
     Bit_Set(Player_Flags(playerid), PFLAG_USING_ATM, true);
 
+    new string[32];
+
+    format(string, sizeof(string), "$%d", g_rgePlayerData[playerid][e_iPlayerBankBalance]);
+    TextDrawSetString(g_tdBankATM[6], string);
+
+    format(string, sizeof(string), "ID: %i", Player_AccountID(playerid));
+    TextDrawSetString(g_tdBankATM[7], string);
+
     for(new i = sizeof(g_tdBankATM) - 1; i != -1; --i)
     {
         TextDrawShowForPlayer(playerid, g_tdBankATM[i]);
     }
-
-    TextDrawSetStringForPlayer(g_tdBankATM[6], playerid, "$%d", g_rgePlayerData[playerid][e_iPlayerBankBalance]);
-    TextDrawSetStringForPlayer(g_tdBankATM[7], playerid, "ID: %i", Player_AccountID(playerid));
 
     SelectTextDraw(playerid, 0x64A752FF);
     return 1;
