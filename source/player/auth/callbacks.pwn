@@ -239,8 +239,9 @@ dialog login(playerid, response, listitem, inputtext[])
     SetPlayerArmedWeapon(playerid, 0);
     
     Iter_Add(LoggedIn, playerid);
+    Iter_Add(StreamedPlayer[playerid], playerid);
 
-    if(Player_AdminLevel(playerid) > 0)
+    if (Player_AdminLevel(playerid) > 0)
         Iter_Add(Admin, playerid);
 
     Bit_Set(Player_Flags(playerid), PFLAG_AUTHENTICATING, false);
