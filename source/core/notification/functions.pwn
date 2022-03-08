@@ -80,6 +80,8 @@ static CreateNotificationTD(playerid, index, const text[], color)
 
 Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
 {
+    printf("Server tickrate: %d", GetServerTickRate());
+    
     new index = GetFreeNotificationSlot(playerid);
     if (index > MAX_NOTIFICATIONS)
         return 0;

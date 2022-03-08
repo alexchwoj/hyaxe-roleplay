@@ -153,8 +153,8 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
                 }
                 else
                 {
-                    PlayerTextDrawSetPos(playerid, p_tdKey_BG{playerid}, 323.000000, 11.000000);
-                    PlayerTextDrawSetPos(playerid, p_tdKey_Text{playerid}, 323.000000, 9.000000);
+                    PlayerTextDrawSetPos(playerid, p_tdKey_BG{playerid}, 323.000000, 6.000000);
+                    PlayerTextDrawSetPos(playerid, p_tdKey_Text{playerid}, 323.000000, 8.000000);
                     Key_ShowAll(playerid);
 
                     g_rgeKeyData[playerid][e_iKeyTimer] = SetTimerEx("KEY_HideAlert", 3000, false, "i", playerid);

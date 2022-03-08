@@ -155,6 +155,7 @@ public OnPlayerDataFetched(playerid)
 public OnAccountInserted(playerid, callback)
 {
     Bit_Set(Player_Flags(playerid), PFLAG_REGISTERED, true);
+    Bit_Set(Player_Flags(playerid), PFLAG_IN_GAME, true);
     Player_AccountID(playerid) = cache_insert_id();
     Account_RegisterConnection(playerid);
 
