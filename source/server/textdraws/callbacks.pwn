@@ -203,6 +203,68 @@ public OnGameModeInit()
     TextDrawSetProportional(g_tdBankATM[7], 1);
     TextDrawSetSelectable(g_tdBankATM[7], 0);
 
+    g_tdKeyGame[0] = TextDrawCreate(319.000000, 377.000000, "_");
+	TextDrawFont(g_tdKeyGame[0], 1);
+	TextDrawLetterSize(g_tdKeyGame[0], 0.600000, 0.700003);
+	TextDrawTextSize(g_tdKeyGame[0], 298.500000, 118.000000);
+	TextDrawSetOutline(g_tdKeyGame[0], 1);
+	TextDrawSetShadow(g_tdKeyGame[0], 0);
+	TextDrawAlignment(g_tdKeyGame[0], 2);
+	TextDrawColor(g_tdKeyGame[0], -1);
+	TextDrawBackgroundColor(g_tdKeyGame[0], 255);
+	TextDrawBoxColor(g_tdKeyGame[0], 168430335);
+	TextDrawUseBox(g_tdKeyGame[0], 1);
+	TextDrawSetProportional(g_tdKeyGame[0], 1);
+	TextDrawSetSelectable(g_tdKeyGame[0], 0);
+
+    g_tdKeyGame[1] = TextDrawCreate(319.200012, 379.000000, "_");
+	TextDrawFont(g_tdKeyGame[1], 1);
+	TextDrawLetterSize(g_tdKeyGame[1], 0.600000, 0.270000);
+	TextDrawTextSize(g_tdKeyGame[1], 298.500000, 115.000000);
+	TextDrawSetOutline(g_tdKeyGame[1], 1);
+	TextDrawSetShadow(g_tdKeyGame[1], 0);
+	TextDrawAlignment(g_tdKeyGame[1], 2);
+	TextDrawColor(g_tdKeyGame[1], -1);
+	TextDrawBackgroundColor(g_tdKeyGame[1], 255);
+	TextDrawBoxColor(g_tdKeyGame[1], -623191347);
+	TextDrawUseBox(g_tdKeyGame[1], 1);
+	TextDrawSetProportional(g_tdKeyGame[1], 1);
+	TextDrawSetSelectable(g_tdKeyGame[1], 0);
+
+	g_tdKeyGame[2] = TextDrawCreate(300.000000, 367.000000, "Preview_Model");
+	TextDrawFont(g_tdKeyGame[2], 5);
+	TextDrawLetterSize(g_tdKeyGame[2], 0.600000, 2.000000);
+	TextDrawTextSize(g_tdKeyGame[2], 37.000000, 42.000000);
+	TextDrawSetOutline(g_tdKeyGame[2], 0);
+	TextDrawSetShadow(g_tdKeyGame[2], 0);
+	TextDrawAlignment(g_tdKeyGame[2], 1);
+	TextDrawColor(g_tdKeyGame[2], 255);
+	TextDrawBackgroundColor(g_tdKeyGame[2], 0);
+	TextDrawBoxColor(g_tdKeyGame[2], 255);
+	TextDrawUseBox(g_tdKeyGame[2], 0);
+	TextDrawSetProportional(g_tdKeyGame[2], 1);
+	TextDrawSetSelectable(g_tdKeyGame[2], 0);
+	TextDrawSetPreviewModel(g_tdKeyGame[2], 2252);
+	TextDrawSetPreviewRot(g_tdKeyGame[2], -103.000000, 5.000000, -42.000000, 0.790000);
+	TextDrawSetPreviewVehCol(g_tdKeyGame[2], 1, 1);
+
+	g_tdKeyGame[3] = TextDrawCreate(300.000000, 367.000000, "Preview_Model");
+	TextDrawFont(g_tdKeyGame[3], 5);
+	TextDrawLetterSize(g_tdKeyGame[3], 0.600000, 2.000000);
+	TextDrawTextSize(g_tdKeyGame[3], 37.000000, 42.000000);
+	TextDrawSetOutline(g_tdKeyGame[3], 0);
+	TextDrawSetShadow(g_tdKeyGame[3], 0);
+	TextDrawAlignment(g_tdKeyGame[3], 1);
+	TextDrawColor(g_tdKeyGame[3], 255);
+	TextDrawBackgroundColor(g_tdKeyGame[3], 0);
+	TextDrawBoxColor(g_tdKeyGame[3], 255);
+	TextDrawUseBox(g_tdKeyGame[3], 0);
+	TextDrawSetProportional(g_tdKeyGame[3], 1);
+	TextDrawSetSelectable(g_tdKeyGame[3], 0);
+	TextDrawSetPreviewModel(g_tdKeyGame[3], 2252);
+	TextDrawSetPreviewRot(g_tdKeyGame[3], -103.000000, 5.000000, -16.000000, 0.790000);
+	TextDrawSetPreviewVehCol(g_tdKeyGame[3], 1, 1);
+
     #if defined TD_OnGameModeInit
         return TD_OnGameModeInit();
     #else
@@ -265,6 +327,21 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawUseBox(playerid, p_tdKey_BG{playerid}, 1);
     PlayerTextDrawSetProportional(playerid, p_tdKey_BG{playerid}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdKey_BG{playerid}, 0);
+
+    // KeyGame
+    p_tdKeyGame{playerid} = CreatePlayerTextDraw(playerid, 319.600006, 372.000000, "Y");
+	PlayerTextDrawFont(playerid, p_tdKeyGame{playerid}, 2);
+	PlayerTextDrawLetterSize(playerid, p_tdKeyGame{playerid}, 0.308333, 1.550000);
+	PlayerTextDrawTextSize(playerid, p_tdKeyGame{playerid}, 400.000000, 17.000000);
+	PlayerTextDrawSetOutline(playerid, p_tdKeyGame{playerid}, 0);
+	PlayerTextDrawSetShadow(playerid, p_tdKeyGame{playerid}, 0);
+	PlayerTextDrawAlignment(playerid, p_tdKeyGame{playerid}, 2);
+	PlayerTextDrawColor(playerid, p_tdKeyGame{playerid}, -1094795521);
+	PlayerTextDrawBackgroundColor(playerid, p_tdKeyGame{playerid}, 255);
+	PlayerTextDrawBoxColor(playerid, p_tdKeyGame{playerid}, 50);
+	PlayerTextDrawUseBox(playerid, p_tdKeyGame{playerid}, 0);
+	PlayerTextDrawSetProportional(playerid, p_tdKeyGame{playerid}, 1);
+	PlayerTextDrawSetSelectable(playerid, p_tdKeyGame{playerid}, 0);
 
     #if defined TD_OnPlayerConnect
         return TD_OnPlayerConnect(playerid);

@@ -40,6 +40,18 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 
 #define Performance_IsFine(%0) (GetPlayerPing(%0) <= 300 && NetStats_PacketLossPercent(%0) <= 4.5 && GetServerTickRate() >= 300)
 
+#if !defined GLOBAL_TAG_TYPES
+	#if defined CUSTOM_TAG_TYPES
+		#define GLOBAL_TAG_TYPES {_,Bit,Text,File,Float,Text3D,CUSTOM_TAG_TYPES}
+	#else
+		#define GLOBAL_TAG_TYPES {_,Bit,Text,File,Float,Text3D}
+	#endif
+#endif
+
+#if !defined minrand
+	#define minrand(%0,%1) (random((%1) - (%0)) + (%0))
+#endif
+
 #include "core/utils/bitarray.pwn"
 #include "core/utils/cells.pwn"
 #include "core/utils/sounds.pwn"

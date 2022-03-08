@@ -98,7 +98,7 @@ stock Cell_ReverseBits(GLOBAL_TAG_TYPES:data)
 	// return data;
 	#emit RETN
 	
-	__pragma("naked");
+	return 0;
 }
 
 /*-------------------------------------------------------------------------*//**
@@ -168,7 +168,7 @@ stock Cell_ReverseNibbles(GLOBAL_TAG_TYPES:data)
 	// return data;
 	#emit RETN
 	
-	__pragma("naked");
+	return 0;
 }
 
 /*-------------------------------------------------------------------------*//**
@@ -225,7 +225,7 @@ stock Cell_ReverseBytes(GLOBAL_TAG_TYPES:data)
 	// return data;
 	#emit RETN
 	
-	__pragma("naked");
+	return 0;
 }
 
 /*-------------------------------------------------------------------------*//**
@@ -287,7 +287,7 @@ stock Cell_CountBits(GLOBAL_TAG_TYPES:data)
 	#emit SHR.C.pri            24
 	#emit RETN
 	
-	__pragma("naked");
+	return 0;
 }
 
 /*-------------------------------------------------------------------------*//**
@@ -341,7 +341,7 @@ stock Cell_GetLowestBit(GLOBAL_TAG_TYPES:data)
 	
 	#emit RETN
 	
-	__pragma("naked");
+	return 0;
 }
 
 /*-------------------------------------------------------------------------*//**
@@ -413,7 +413,7 @@ stock Cell_GetLowestBitEx(GLOBAL_TAG_TYPES:data)
 	{} // Zero-cost bug fix.
 	#emit RETN
 	
-	__pragma("naked");
+	return 0;
 }
 
 /*-------------------------------------------------------------------------*//**
@@ -462,7 +462,7 @@ stock Cell_CountBlanks(GLOBAL_TAG_TYPES:data)
 	#emit SHR.C.pri            24
 	#emit RETN
 	
-	__pragma("naked");
+	return 0;
 }
 
 /*-------------------------------------------------------------------------*//**
@@ -501,7 +501,7 @@ stock Cell_GetLowestBlank(GLOBAL_TAG_TYPES:data)
 	
 	#emit RETN
 	
-	__pragma("naked");
+	return 0;
 }
 
 /*-------------------------------------------------------------------------*//**
@@ -540,7 +540,7 @@ stock Cell_GetLowestBlankEx(GLOBAL_TAG_TYPES:data)
 	{} // Zero-cost bug fix.
 	#emit RETN
 	
-	__pragma("naked");
+	return 0;
 }
 
 /*-------------------------------------------------------------------------*//**
@@ -798,7 +798,7 @@ stock Cell_GetLowestComponent(GLOBAL_TAG_TYPES:data)
 	#emit AND
 	#emit RETN
 	
-	__pragma("naked");
+	return 0;
 }
 
 /*-------------------------------------------------------------------------*//**
@@ -824,7 +824,7 @@ stock Cell_GetLowestEmpty(GLOBAL_TAG_TYPES:data)
 	#emit AND
 	#emit RETN
 	
-	__pragma("naked");
+	return 0;
 }
 
 /*-------------------------------------------------------------------------*//**
@@ -854,5 +854,5 @@ stock Cell_HasZeroByte(GLOBAL_TAG_TYPES:data)
 	#emit AND
 	#emit RETN
 	
-	__pragma("naked");
+	return 0;
 }
