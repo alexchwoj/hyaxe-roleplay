@@ -166,7 +166,7 @@ static GunsmakerKeyGameCallback(playerid, bool:success)
 
     if(success)
     {
-        new crafted_gun = minrand(0, sizeof(gun_names));
+        new crafted_gun = random(sizeof(gun_names));
         PlayerJob_Paycheck(playerid) += 150 * (crafted_gun + 1);
 
         new str[101];
