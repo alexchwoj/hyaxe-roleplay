@@ -4,6 +4,6 @@
 		"editor.formatOnPaste": false,
 		"editor.quickSuggestions": true,
 		"editor.suggestOnTriggerCharacters": true,
-		"editor.suggest.snippetsPreventQuickSuggestions": false
+		"editor.suggest.snippetsPreventQuickSuggestions": true
 	}
 }

@@ -2,6 +2,7 @@
 #pragma option -(+
 #pragma semicolon 1
 #pragma warning disable 239
+#pragma warning disable 214
 
 #define NDEBUG 0
 
@@ -64,6 +65,7 @@ L1:
 // Fixes
 ///////////
 #include "core/fixes/textdraws.pwn"
+#include "core/fixes/player.pwn"
 
 // Utils
 ///////////
@@ -84,12 +86,14 @@ L1:
 #include "server/actors/header.pwn"
 #include "server/atm/header.pwn"
 #include "server/jobs/header.pwn"
+#include "server/jobs/gunsmaker/header.pwn"
 #include "player/account/header.pwn"
 #include "player/admin/header.pwn"
 #include "player/auth/header.pwn"
 #include "player/needs/header.pwn"
 #include "player/chat/header.pwn"
 #include "player/weapons/header.pwn"
+#include "player/keygame/header.pwn"
 
 // Functions
 ///////////////
@@ -109,6 +113,7 @@ L1:
 #include "player/needs/functions.pwn"
 #include "player/chat/functions.pwn"
 #include "player/weapons/functions.pwn"
+#include "player/keygame/functions.pwn"
 
 // Callbacks
 ///////////////
@@ -129,6 +134,7 @@ L1:
 #include "player/auth/callbacks.pwn"
 #include "player/needs/callbacks.pwn"
 #include "player/chat/callbacks.pwn"
+#include "player/keygame/callbacks.pwn"
 
 #include "server/anticheat/callbacks.pwn"
 
