@@ -24,6 +24,14 @@ enum eVehicleTimers
     VEHICLE_TIMER_UPDATE
 }
 
+enum eVehicleType
+{
+    VEHICLE_TYPE_NONE,
+    VEHICLE_TYPE_PERSONAL,
+    VEHICLE_TYPE_WORK,
+    VEHICLE_TYPE_DEALERSHIP
+};
+
 enum eVehicleData 
 {
     bool:e_bValid,
@@ -47,7 +55,7 @@ enum eVehicleData
     bool:e_bAlarm,
     e_iComponents[14],
     e_iVehicleGear,
-    e_iVehicleWork,
+    eVehicleType:e_iVehicleType,
 
     e_iVehicleTimers[eVehicleTimers]
 };
@@ -284,6 +292,16 @@ new
 #define Vehicle_GetModelMaxSpeed(%0) (g_rgeVehicleModelData[(%0) - 400][e_iMaxSpeed])
 #define Vehicle_GetModelMaxFuel(%0) (g_rgeVehicleModelData[(%0) - 400][e_fMaxFuel])
 #define Vehicle_GetModelPrice(%0) (g_rgeVehicleModelData[(%0) - 400][e_iPrice])
+
+#define Vehicle_Type(%0) (g_rgeVehicles[(%0)][e_iVehicleType])
+#define Vehicle_Fuel(%0) (g_rgeVehicles[(%0)][e_fFuel])
+#define Vehicle_Repair(%0) (g_rgeVehicles[(%0)][e_fHealth] = 1000.0, RepairVehicle(%0))
+#define Vehicle_SetHealth(%0,%1) (g_rgeVehicles[(%0)][e_fHealth] = (%1), SetVehicleHealth((%0), (%1)))
+#define Vehicle_GetHealth(%0) (g_rgeVehicles[(%0)][e_fHealth])
+#define Vehicle_SetVirtualWorld(%0,%1) (g_rgeVehicles[(%0)][e_iVehWorld] = (%1), SetVehicleVirtualWorld((%0), (%1)))
+#define Vehicle_GetVirtualWorld(%0) (g_rgeVehicles[(%0)][e_iVehWorld])
+#define Vehicle_SetInterior(%0,%1) (g_rgeVehicles[(%0)][e_iVehInterior] = (%1), LinkVehicleToInterior((%0), (%1)))
+#define Vehicle_GetInterior(%0) (g_rgeVehicles[(%0)][e_iVehInterior])
 
 forward VEHICLE_Update(vehicleid);
 forward VEHICLE_UpdateSpeedometer(playerid);
