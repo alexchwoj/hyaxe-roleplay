@@ -25,7 +25,7 @@ add_library(hyaxe-plugin SHARED
 )
 
 target_include_directories(hyaxe-plugin PUBLIC "lib")
-target_precompile_headers(hyaxe-plugin PUBLIC "src/ptl.h")
+target_precompile_headers(hyaxe-plugin PUBLIC "src/pch.h")
 set_target_properties(hyaxe-plugin
 	PROPERTIES
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../plugins"
