@@ -71,7 +71,8 @@ enum ePlayerData
 
 enum ePlayerTemp
 {
-    e_iPlayerChatTick
+    e_iPlayerChatTick,
+    e_iPlayerBankDest
 };
 
 new 

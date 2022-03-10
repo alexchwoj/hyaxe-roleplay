@@ -207,6 +207,51 @@ public OnGameModeInit()
     forward ATM_OnGamemodeInit();
 #endif
 
+forward ATM_OnFoundBankAccount(playerid, bank_account);
+public ATM_OnFoundBankAccount(playerid, bank_account)
+{
+    new row_count;
+    cache_get_row_count(row_count);
+
+    if (row_count)
+    {
+        new name[MAX_PLAYER_NAME];
+        cache_get_value_name(0, !"NAME", name);
+
+        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+            {DADADA}Balance actual: {64A752}$%s{DADADA}\n\
+            {DADADA}Destinatario: {64A752}$%s (%d){DADADA}\n\
+            Ingrese una cantidad para transferir:\
+        ",
+            Format_Thousand(g_rgePlayerData[playerid][e_iPlayerBankBalance]),
+            name,
+            bank_account
+        );
+
+        g_rgePlayerData[playerid][e_iPlayerBankDest] = bank_account;
+
+        Dialog_Show(playerid, "bank_transfer_amount", DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Transferir", HYAXE_UNSAFE_HUGE_STRING, "Transferir", "Cancelar");
+    }
+    else
+    {
+        PlayerPlaySound(playerid, SOUND_ERROR);
+        Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "La cuenta bancaria introducida no existe.");
+    }
+    return 1;
+}
+
+forward ATM_OnFinishBankTransfer(playerid, bank_account);
+public ATM_OnFinishBankTransfer(playerid, bank_account)
+{
+    new row_count;
+    cache_get_row_count(row_count);
+
+    if (row_count)
+    {
+        // asd
+    }
+    return 1;
+}
 
 dialog bank_deposit(playerid, response, listitem, inputtext[])
 {
@@ -276,6 +321,71 @@ dialog bank_withdraw(playerid, response, listitem, inputtext[])
         PlayerPlaySound(playerid, SOUND_SUCCESS);
 
         ATM_ShowMenu(playerid);
+    }
+    else PlayerPlaySound(playerid, SOUND_BUTTON);
+
+    return 1;
+}
+
+dialog bank_transfer(playerid, response, listitem, inputtext[])
+{
+    if (response)
+    {
+        new bank_account;
+        if (sscanf(inputtext, "d", bank_account))
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Introduce un valor numérico.");
+            return 1;
+        }
+
+        if (bank_account <= 0 || bank_account == Player_AccountID(playerid))
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "ingrese una cuenta bancaria válida.");
+            return 1;
+        }
+
+        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+            SELECT `ACCOUNT`.`NAME`, `BANK_ACCOUNT`.`ACCOUNT_ID` FROM `ACCOUNT`, `BANK_ACCOUNT` WHERE `ACCOUNT`.`ID` = '%i' AND `BANK_ACCOUNT`.`ACCOUNT_ID` = `ACCOUNT`.`ID`;\
+        ", bank_account);
+        mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "ATM_OnFoundBankAccount", "id", playerid, bank_account);
+    }
+    else PlayerPlaySound(playerid, SOUND_BUTTON);
+
+    return 1;
+}
+
+dialog bank_transfer_amount(playerid, response, listitem, inputtext[])
+{
+    if (response)
+    {
+        new bank_account;
+        if (sscanf(inputtext, "d", bank_account))
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Introduce un valor numérico.");
+            return 1;
+        }
+
+        if (amount <= 0 || amount > 500000)
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Introduce un monto mayor a 0 y menor a 500.000.");
+            return 1;
+        }
+
+        if (amount > g_rgePlayerData[playerid][e_iPlayerBankBalance])
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente en el banco.");
+            return 1;
+        }
+
+        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+            SELECT `CURRENT_PLAYERID`, `CURRENT_CONNECTION` FROM `ACCOUNT` WHERE `ID` = '%i';\
+        ", g_rgePlayerData[playerid][e_iPlayerBankDest]);
+        mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "ATM_OnFinishBankTransfer", "id", playerid, g_rgePlayerData[playerid][e_iPlayerBankDest]);
     }
     else PlayerPlaySound(playerid, SOUND_BUTTON);
 

@@ -64,7 +64,7 @@ Bank_SetBalance(playerid, balance)
     return 1;
 }
 
-Bank_AddBalance(playerid, balance)
+Bank_AddBalance(playerid, balance, bool:show_notification = true)
 {
     g_rgePlayerData[playerid][e_iPlayerBankBalance] += balance;
 
@@ -75,15 +75,18 @@ Bank_AddBalance(playerid, balance)
     ", g_rgePlayerData[playerid][e_iPlayerBankBalance], Player_AccountID(playerid));
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 
-    if (balance > 0)
+    if (show_notification)
     {
-        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Sa acaban de acreditar ~g~$%s~w~ a tu cuenta bancaria.", Format_Thousand(balance));
-        Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 3000, 0x64A752FF);
-    }
-    else
-    {
-        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Sa han descontado ~y~$%s~w~ de tu cuenta bancaria.", Format_Thousand(balance));
-        Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 3000, 0xDAA838FF);
+        if (balance > 0)
+        {
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Sa acaban de acreditar ~g~$%s~w~ a tu cuenta bancaria.", Format_Thousand(balance));
+            Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 3000, 0x64A752FF);
+        }
+        else
+        {
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Sa han descontado ~y~$%s~w~ de tu cuenta bancaria.", Format_Thousand(balance));
+            Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 3000, 0xDAA838FF);
+        }
     }
     return 1;
 }

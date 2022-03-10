@@ -3,6 +3,11 @@
 #endif
 #define _ATM_HEADER_
 
+enum {
+    BANK_TRANSFER_SENT,
+    BANK_TRANSFER_RECEIVED
+}
+
 enum eAtmInfo {
     Float:e_fAtmPosX,
     Float:e_fAtmPosY,
