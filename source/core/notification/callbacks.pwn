@@ -13,6 +13,9 @@ public OnPlayerDisconnect(playerid, reason)
         }
     }
 
+    if(g_rgiTextProcessTimer[playerid])
+        KillTimer(g_rgiTextProcessTimer[playerid]);
+
     #if defined NOTI_OnPlayerDisconnect
         return NOTI_OnPlayerDisconnect(playerid, reason);
     #else
