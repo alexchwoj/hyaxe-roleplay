@@ -26,6 +26,14 @@ enum
     SEX_MALE = 1
 }
 
+enum
+{
+    RANK_LEVEL_USER,
+    RANK_LEVEL_HELPER,
+    RANK_LEVEL_MODERATOR,
+    RANK_LEVEL_ADMINISTRATOR
+};
+
 enum ePlayerData
 {
     e_iPlayerAccountId,

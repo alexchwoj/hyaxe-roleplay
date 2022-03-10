@@ -52,30 +52,6 @@ Vehicle_GetEngineState(vehicleid)
     return engine;
 }
 
-Vehicle_SetInterior(vehicleid, interior)
-{
-    g_rgeVehicles[vehicleid][e_iVehInterior] = interior;
-    return LinkVehicleToInterior(vehicleid, interior);
-}
-
-Vehicle_SetVirtualWorld(vehicleid, vw)
-{
-    g_rgeVehicles[vehicleid][e_iVehWorld] = vw;
-    return SetVehicleVirtualWorld(vehicleid, vw);
-}
-
-Vehicle_SetHealth(vehicleid, Float:health)
-{
-    g_rgeVehicles[vehicleid][e_fHealth] = health;
-    return SetVehicleHealth(vehicleid, health);
-}
-
-Vehicle_Repair(vehicleid)
-{
-    g_rgeVehicles[vehicleid][e_fHealth] = 1000.0;
-    return RepairVehicle(vehicleid);
-}
-
 Float:Vehicle_GetSpeed(vehicleid)
 {
     new Float:vx, Float:vy, Float:vz;
@@ -357,3 +333,23 @@ command rvehp(playerid, const params[], "Registra un vehículo en la cuenta de un
 
     return 1;
 }
+
+command setvehhealth(playerid, const params[], "Cambia la vida de un vehículo")
+{
+    extract params -> new vehicleid, Float:health = 1000.0; else {
+        return SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/setvehhealth {DADADA}<id del vehículo | -1 = actual> {969696}[vida = 1000.0]");
+    }
+
+    if(vehicleid == -1)
+        vehicleid = GetPlayerVehicleID(playerid);
+
+    if(!IsValidVehicle(vehicleid))
+        return SendClientMessage(playerid, 0xED2B2BFF, "› {DADADA}Vehículo inválido.");
+
+    Vehicle_SetHealth(vehicleid, health);
+    SendClientMessagef(playerid, 0xED2B2BFF, "› {DADADA}La vida del vehículo {ED2B2B}%i{DADADA} ahora es de {ED2B2B}%.1f{DADADA}.", vehicleid, health);
+
+    return 1;
+}
+alias:setvehhealth("svh", "rv", "repairveh", "repairvehicle")
+flags:setvehhealth(CMD_FLAG<RANK_LEVEL_MODERATOR>)

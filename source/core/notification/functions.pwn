@@ -5,12 +5,12 @@
 
 Float:easeInOutCubic(Float:t)
 {
-    return t < 0.5 ? 4 * t * t * t : 1 + (--t) * (2 * (--t)) * (2 * t);
+    return t < 0.5 ? 4.0 * t * t * t : 1.0 + (--t) * (2.0 * (--t)) * (2.0 * t);
 }
 
 Float:easeOutBack(Float:t)
 {
-    return 1 + (--t) * t * (2.70158 * t + 1.70158);
+    return 1.0 + (--t) * t * (2.70158 * t + 1.70158);
 }
 
 static GetFreeNotificationSlot(playerid)
