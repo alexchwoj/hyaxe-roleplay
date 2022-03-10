@@ -40,4 +40,4 @@ new const
 
 forward Job_CreateSite(eJobs:jobid, Float:x, Float:y, Float:z, vw, interior, const extra_text[] = "", cb_data = cellmin);
 forward Job_SetCallback(eJobs:jobid, callback);
-forward Job_TriggerCallback(playerid, eJobs:jobid, eJobEvent:event);
+forward Job_TriggerCallback(playerid, eJobs:jobid, eJobEvent:event, data = -1);

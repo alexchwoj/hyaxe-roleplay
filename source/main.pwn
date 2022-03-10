@@ -133,6 +133,7 @@ L1:
 #include "server/enter_exits/callbacks.pwn"
 #include "server/stores/pizza/callbacks.pwn"
 #include "server/actors/callbacks.pwn"
+#include "server/jobs/callbacks.pwn"
 #include "server/jobs/gunsmaker/callbacks.pwn"
 #include "server/atm/callbacks.pwn"
 #include "player/account/callbacks.pwn"

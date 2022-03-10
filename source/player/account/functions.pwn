@@ -37,7 +37,7 @@ Account_Register(playerid, callback = -1)
     return 1;
 }
 
-Account_Save(playerid)
+Account_Save(playerid, bool:disconnect = false)
 {
     if(!Player_AccountID(playerid))
         return 0;
@@ -65,14 +65,13 @@ Account_Save(playerid)
             `HUNGER` = %.2f, \
             `THIRST` = %.2f, \
             `SKIN` = %i, \
-            `CURRENT_PLAYERID` = %i \
-            `CURRENT_CONNECTION` = 0 \
+            `CURRENT_PLAYERID` = %i%s \
         WHERE `ID` = %i;\
     ", 
         g_rgePlayerData[playerid][e_iPlayerPausedTime],
         g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ], g_rgePlayerData[playerid][e_fSpawnPosAngle],
         Player_VirtualWorld(playerid), Player_Interior(playerid), Player_Hunger(playerid), Player_Thirst(playerid),
-        Player_Skin(playerid), playerid, Player_AccountID(playerid)
+        Player_Skin(playerid), playerid, (disconnect ? ", CURRENT_CONNECTION = 0" : ""), Player_AccountID(playerid)
     );
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 

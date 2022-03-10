@@ -94,7 +94,7 @@ public OnPlayerDisconnect(playerid, reason)
     if(Player_Cache(playerid) != MYSQL_INVALID_CACHE)
         cache_delete(Player_Cache(playerid));
 
-    Account_Save(playerid);
+    Account_Save(playerid, true);
 
     g_rgePlayerData[playerid] = g_rgePlayerData[MAX_PLAYERS];
     Player_ResetTemp(playerid);
