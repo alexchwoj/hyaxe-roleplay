@@ -230,12 +230,49 @@ dialog bank_deposit(playerid, response, listitem, inputtext[])
         if (amount > Player_Money(playerid))
         {
             PlayerPlaySound(playerid, SOUND_ERROR);
-            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el suficiente dinero en mano.");
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
             return 1;
         }
 
         Player_GiveMoney(playerid, -amount);
         Bank_AddBalance(playerid, amount);
+        PlayerPlaySound(playerid, SOUND_SUCCESS);
+
+        ATM_ShowMenu(playerid);
+    }
+    else PlayerPlaySound(playerid, SOUND_BUTTON);
+
+    return 1;
+}
+
+dialog bank_withdraw(playerid, response, listitem, inputtext[])
+{
+    if (response)
+    {
+        new amount;
+        if (sscanf(inputtext, "d", amount))
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Introduce un valor numérico.");
+            return 1;
+        }
+
+        if (amount <= 0 || amount > 500000)
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Introduce un monto mayor a 0 y menor a 500.000.");
+            return 1;
+        }
+
+        if (amount > g_rgePlayerData[playerid][e_iPlayerBankBalance])
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente en el banco.");
+            return 1;
+        }
+
+        Player_GiveMoney(playerid, amount);
+        Bank_AddBalance(playerid, -amount);
         PlayerPlaySound(playerid, SOUND_SUCCESS);
 
         ATM_ShowMenu(playerid);
