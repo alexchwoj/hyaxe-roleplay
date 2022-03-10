@@ -90,3 +90,8 @@ Bank_AddBalance(playerid, balance, bool:show_notification = true)
     }
     return 1;
 }
+
+Bank_RegisterTransaction(bank_account, type, amount, extra = 0)
+{
+    return 1;
+}

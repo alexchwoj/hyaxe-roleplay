@@ -240,15 +240,36 @@ public ATM_OnFoundBankAccount(playerid, bank_account)
     return 1;
 }
 
-forward ATM_OnFinishBankTransfer(playerid, bank_account);
-public ATM_OnFinishBankTransfer(playerid, bank_account)
+forward ATM_OnFinishBankTransfer(playerid, bank_account, amount);
+public ATM_OnFinishBankTransfer(playerid, bank_account, amount)
 {
     new row_count;
     cache_get_row_count(row_count);
 
     if (row_count)
     {
-        // asd
+        new current_playerid;
+        cache_get_value_name_int(0, !"CURRENT_PLAYERID", current_playerid);
+
+        if (IsPlayerConnected(current_playerid))
+        {
+            Bank_AddBalance(playerid, amount);
+        }
+        else
+        {
+            mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+                UPDATE `BANK_ACCOUNT` SET \
+                    `BALANCE` = `BALANCE` + %d \
+                WHERE `ACCOUNT_ID` = %i;\
+            ", amount, bank_account);
+            mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+        }
+
+        Bank_AddBalance(playerid, -amount, false);
+        PlayerPlaySound(playerid, SOUND_SUCCESS);
+
+        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Sa acaban de transferir ~g~$%s~w~ a la cuenta %d.", Format_Thousand(amount), bank_account);
+        Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 3000, 0x64A752FF);
     }
     return 1;
 }
@@ -346,6 +367,8 @@ dialog bank_transfer(playerid, response, listitem, inputtext[])
             return 1;
         }
 
+        PlayerPlaySound(playerid, SOUND_BUTTON);
+
         mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
             SELECT `ACCOUNT`.`NAME`, `BANK_ACCOUNT`.`ACCOUNT_ID` FROM `ACCOUNT`, `BANK_ACCOUNT` WHERE `ACCOUNT`.`ID` = '%i' AND `BANK_ACCOUNT`.`ACCOUNT_ID` = `ACCOUNT`.`ID`;\
         ", bank_account);
@@ -382,10 +405,12 @@ dialog bank_transfer_amount(playerid, response, listitem, inputtext[])
             return 1;
         }
 
+        PlayerPlaySound(playerid, SOUND_BUTTON);
+
         mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-            SELECT `CURRENT_PLAYERID`, `CURRENT_CONNECTION` FROM `ACCOUNT` WHERE `ID` = '%i';\
+            SELECT `CURRENT_PLAYERID` FROM `ACCOUNT` WHERE `ID` = '%i';\
         ", g_rgePlayerData[playerid][e_iPlayerBankDest]);
-        mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "ATM_OnFinishBankTransfer", "id", playerid, g_rgePlayerData[playerid][e_iPlayerBankDest]);
+        mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "ATM_OnFinishBankTransfer", "idd", playerid, g_rgePlayerData[playerid][e_iPlayerBankDest], amount);
     }
     else PlayerPlaySound(playerid, SOUND_BUTTON);
 
