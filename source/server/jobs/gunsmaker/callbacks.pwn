@@ -4,7 +4,7 @@
 #define _gunsmaker_callbacks_
 
 static
-    bool:s_rgbPlayerIsInJobCp[MAX_PLAYERS char] = {0xFF, ...};
+    bool:s_rgbPlayerIsInJobCp[MAX_PLAYERS char] = {false, ...};
 
 static GunsmakerBuildingEvent(playerid, bool:enter, data)
 {
