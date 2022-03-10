@@ -220,7 +220,7 @@ public ATM_OnFoundBankAccount(playerid, bank_account)
 
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
             {DADADA}Balance actual: {64A752}$%s{DADADA}\n\
-            {DADADA}Destinatario: {64A752}$%s (%d){DADADA}\n\
+            {DADADA}Destinatario: {64A752}%s (%d){DADADA}\n\
             Ingrese una cantidad para transferir:\
         ",
             Format_Thousand(g_rgePlayerData[playerid][e_iPlayerBankBalance]),
@@ -228,7 +228,7 @@ public ATM_OnFoundBankAccount(playerid, bank_account)
             bank_account
         );
 
-        g_rgePlayerData[playerid][e_iPlayerBankDest] = bank_account;
+        g_rgePlayerTempData[playerid][e_iPlayerBankDest] = bank_account;
 
         Dialog_Show(playerid, "bank_transfer_amount", DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Transferir", HYAXE_UNSAFE_HUGE_STRING, "Transferir", "Cancelar");
     }
@@ -248,16 +248,17 @@ public ATM_OnFinishBankTransfer(playerid, bank_account, amount)
 
     if (row_count)
     {
-        new current_playerid;
+        new current_playerid, current_connection;
         cache_get_value_name_int(0, !"CURRENT_PLAYERID", current_playerid);
+        cache_get_value_name_int(0, !"CURRENT_CONNECTION", current_playerid);
 
         Bank_RegisterTransaction(Player_AccountID(playerid), BANK_TRANSFER_SENT, amount, bank_account);
         Bank_RegisterTransaction(bank_account, BANK_TRANSFER_RECEIVED, amount, Player_AccountID(playerid));
         Bank_AddBalance(playerid, -amount, false);
 
-        if (IsPlayerConnected(current_playerid))
+        if (IsPlayerConnected(current_playerid) && current_connection)
         {
-            Bank_AddBalance(playerid, amount);
+            Bank_AddBalance(current_playerid, amount);
         }
         else
         {
@@ -385,8 +386,8 @@ dialog bank_transfer_amount(playerid, response, listitem, inputtext[])
 {
     if (response)
     {
-        new bank_account;
-        if (sscanf(inputtext, "d", bank_account))
+        new amount;
+        if (sscanf(inputtext, "d", amount))
         {
             PlayerPlaySound(playerid, SOUND_ERROR);
             Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Introduce un valor numérico.");
@@ -410,9 +411,9 @@ dialog bank_transfer_amount(playerid, response, listitem, inputtext[])
         PlayerPlaySound(playerid, SOUND_BUTTON);
 
         mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-            SELECT `CURRENT_PLAYERID` FROM `ACCOUNT` WHERE `ID` = '%i';\
-        ", g_rgePlayerData[playerid][e_iPlayerBankDest]);
-        mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "ATM_OnFinishBankTransfer", "idd", playerid, g_rgePlayerData[playerid][e_iPlayerBankDest], amount);
+            SELECT `CURRENT_PLAYERID`, `CURRENT_CONNECTION` FROM `ACCOUNT` WHERE `ID` = '%i';\
+        ", g_rgePlayerTempData[playerid][e_iPlayerBankDest]);
+        mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "ATM_OnFinishBankTransfer", "idd", playerid, g_rgePlayerTempData[playerid][e_iPlayerBankDest], amount);
     }
     else PlayerPlaySound(playerid, SOUND_BUTTON);
 
