@@ -78,7 +78,7 @@ static CreateNotificationTD(playerid, index, const text[], color)
     return 1;
 }
 
-Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
+Notification_Show(playerid, const text[], time, color = 0xCB3126FF)
 {
     printf("Server tickrate: %d", GetServerTickRate());
     
@@ -154,12 +154,12 @@ Notification_Show(playerid, const text[], seconds, color = 0xCB3126FF)
 
     if (Performance_IsFine(playerid))
     {
-        NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationMoveToRight", 10, true, "dddffd", playerid, index, seconds, pos_y, 300.0, 5);
+        NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationMoveToRight", 10, true, "dddffd", playerid, index, time, pos_y, 300.0, 5);
     }
     else
     {
         NotificationShowAll(playerid, index);
-        NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("DestroyPlayerNotification", 1000 * seconds, false, "ii", playerid, index);
+        NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("DestroyPlayerNotification", time, false, "ii", playerid, index);
     }
     return 1;
 }
@@ -206,25 +206,25 @@ Notification_HideBeatingText(playerid)
 
 command notification(playerid, const params[], "")
 {
-    Notification_Show(playerid, "Fusce et odio sagittis, tincidunt justo eget, posuere neque. Donec tempor dolor id velit viverra pellentesque. Suspendisse dictum augue ac sapien consectetur pellentesque.", 3);
+    Notification_Show(playerid, "Fusce et odio sagittis, tincidunt justo eget, posuere neque. Donec tempor dolor id velit viverra pellentesque. Suspendisse dictum augue ac sapien consectetur pellentesque.", 3000);
     return 1;
 }
 
 command notification2(playerid, const params[], "")
 {
-    Notification_Show(playerid, "Fusce et odio sagittis, tincidunt justo eget, posuere neque. Donec tempor dolor id velit viverra pellentesque. Suspendisse dictum augue ac sapien consectetur pellentesque. Aenean vestibulum varius consequat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam nec semper lectus, ut semper odio. Etiam eget dapibus dolor.", 3);
+    Notification_Show(playerid, "Fusce et odio sagittis, tincidunt justo eget, posuere neque. Donec tempor dolor id velit viverra pellentesque. Suspendisse dictum augue ac sapien consectetur pellentesque. Aenean vestibulum varius consequat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam nec semper lectus, ut semper odio. Etiam eget dapibus dolor.", 3000);
     return 1;
 }
 
 command notification3(playerid, const params[], "")
 {
-    Notification_Show(playerid, "Bienvenido a hyaxe roleplay.", 5);
+    Notification_Show(playerid, "Bienvenido a hyaxe roleplay.", 5000);
     return 1;
 }
 
 command nt(playerid, const params[], "")
 {
-    Notification_Show(playerid, params, 5);
+    Notification_Show(playerid, params, 5000);
     return 1;
 }
 

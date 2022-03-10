@@ -43,7 +43,7 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
                 else
                 {
                     Iter_Add(GunsmakerBenchQueue, playerid);
-                    Notification_Show(playerid, "Todas las mesas están usadas. Se te notificará cuando se libere una.", 5);
+                    Notification_Show(playerid, "Todas las mesas están usadas. Se te notificará cuando se libere una.", 5000);
                 }
 
                 return 1;
@@ -63,7 +63,7 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
                 
                 new str[120];
                 format(str, sizeof(str), "Te pagaron ~g~$%i~w~ por tus trabajos. Vuelve a tu mesa o presiona ~k~~CONVERSATION_YES~ para dejar de trabajar.", PlayerJob_Paycheck(playerid));
-                Notification_Show(playerid, str, 6, 0xCB3126);
+                Notification_Show(playerid, str, 6000, 0xCB3126);
                 PlayerJob_Paycheck(playerid) = 0;
 
                 return 1;
@@ -86,12 +86,12 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
                 
                 new str[120];
                 format(str, sizeof(str), "Fuiste despedido por salir de la fábrica. Te indemnizaron ~g~$%i~w~ al despedirte.", PlayerJob_Paycheck(playerid));
-                Notification_Show(playerid, str, 6, 0xCB3126);
+                Notification_Show(playerid, str, 6000, 0xCB3126);
                 PlayerJob_Paycheck(playerid) = 0;
             }
             else
             {
-                Notification_Show(playerid, "Fuiste despedido por abandonar la fábrica.", 6, 0xCB3126);
+                Notification_Show(playerid, "Fuiste despedido por abandonar la fábrica.", 6000, 0xCB3126);
             }
 
             if(g_rgiGunsmakerUsedBench{playerid} != 0xFF)
@@ -171,11 +171,11 @@ static GunsmakerKeyGameCallback(playerid, bool:success)
 
         new str[101];
         format(str, sizeof(str), "Fabricaste ~y~%s~w~. Ve con el armero para que te paguen o fabrica otra arma.", gun_names[crafted_gun]);
-        Notification_Show(playerid, str, 5);
+        Notification_Show(playerid, str, 5000);
     }
     else
     {
-        Notification_Show(playerid, "Fallaste en tu trabajo. Inténtalo nuevamente.", 5);
+        Notification_Show(playerid, "Fallaste en tu trabajo. Inténtalo nuevamente.", 5000);
     }
 
     TogglePlayerDynamicCP(playerid, g_rgiGunsmakerUsedBench{playerid}, true);

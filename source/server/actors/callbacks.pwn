@@ -64,7 +64,7 @@ public ROBBERY_Progress(playerid, actorid, phase)
 
                 new message[85];
                 format(message, sizeof(message), "Robaste la tienda y recibiste ~g~$%i~w~. Huye antes de que venga la policía.", money);
-                Notification_Show(playerid, message, 7);
+                Notification_Show(playerid, message, 7000);
             }
 
             g_rgeRobbableActors[id][e_iLastStealTick] = GetTickCount();

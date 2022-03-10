@@ -72,8 +72,8 @@ public NotificationWaitToLeft(playerid, index, Float:pos_y, Float:max, count)
 	return 1;
 }
 
-forward NotificationMoveToRight(playerid, index, seconds, Float:pos_y, Float:max, count);
-public NotificationMoveToRight(playerid, index, seconds, Float:pos_y, Float:max, count)
+forward NotificationMoveToRight(playerid, index, time, Float:pos_y, Float:max, count);
+public NotificationMoveToRight(playerid, index, time, Float:pos_y, Float:max, count)
 {
 	NOTIFICATION_DATA[playerid][index][notificationFrameCount] += count;
 
@@ -90,7 +90,7 @@ public NotificationMoveToRight(playerid, index, seconds, Float:pos_y, Float:max,
 	{
 		NOTIFICATION_DATA[playerid][index][notificationFrameCount] = 0;
 		KillTimer(NOTIFICATION_DATA[playerid][index][notificationFrameTimer]);
-        NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationWaitToLeft", 1000 * seconds, false, "ddffd", playerid, index, pos_y, 300.0, 5);
+        NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationWaitToLeft", time, false, "ddffd", playerid, index, pos_y, 300.0, 5);
 	}
 
 	return 1;

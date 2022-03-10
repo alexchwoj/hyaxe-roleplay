@@ -185,7 +185,7 @@ static AccountRegistered(playerid)
 
     Iter_Add(LoggedIn, playerid);
     
-    Notification_Show(playerid, "Felicidades, te has registrado correctamente.", 3, 0x64A752FF);
+    Notification_Show(playerid, "Felicidades, te has registrado correctamente.", 3000, 0x64A752FF);
 
     return 1;
 }
@@ -254,7 +254,7 @@ dialog login(playerid, response, listitem, inputtext[])
 
     new text[128];
     format(text, sizeof(text), "Bienvenido a ~r~Hyaxe~w~, %s. Tu último inicio de sesión fue el ~r~%s~w~.", Player_Name(playerid), Player_LastConnection(playerid));
-    Notification_Show(playerid, text, 6);
+    Notification_Show(playerid, text, 6000);
 
     StopAudioStreamForPlayer(playerid);
 

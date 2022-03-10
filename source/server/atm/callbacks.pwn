@@ -33,17 +33,21 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
         // Deposit
         if (clickedid == g_tdBankATM[3])
         {
-            SendClientMessage(playerid, -1, "depositar");
+            Dialog_Show(playerid, "bank_deposit", DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Depositar", "{DADADA}Ingrese una cantidad para depositar:", "Depositar", "Cancelar");
         }
         // Withdraw
         else if (clickedid == g_tdBankATM[4])
         {
-            SendClientMessage(playerid, -1, "retirar");
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+                {DADADA}Balance actual: {64A752}$%s{DADADA}\n\
+                Ingrese una cantidad para retirar\
+            ", Format_Thousand(g_rgePlayerData[playerid][e_iPlayerBankBalance]));
+            Dialog_Show(playerid, "bank_withdraw", DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Retirar", HYAXE_UNSAFE_HUGE_STRING, "Retirar", "Cancelar");
         }
         // Transfer
         else if (clickedid == g_tdBankATM[5])
         {
-            SendClientMessage(playerid, -1, "transferir");
+            Dialog_Show(playerid, "bank_transfer", DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Transferir", "{DADADA}Ingrese la cuenta bancaria a transferir:", "Siguiente", "Cancelar");
         }
     }
 
@@ -196,3 +200,38 @@ public OnGameModeInit()
 #if defined ATM_OnGamemodeInit
     forward ATM_OnGamemodeInit();
 #endif
+
+
+dialog bank_deposit(playerid, response, listitem, inputtext[])
+{
+    if (response)
+    {
+        new amount;
+        if (sscanf(inputtext, "d", amount))
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Introduce un valor numérico.");
+            return 1;
+        }
+
+        if (amount <= 0 || amount > 500000)
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Introduce un monto mayor a 0 y menor a 500.000.");
+            return 1;
+        }
+
+        if (amount > Player_Money(playerid))
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el suficiente dinero en mano.");
+            return 1;
+        }
+
+        Bank_AddBalance(playerid, amount);
+        PlayerPlaySound(playerid, SOUND_SUCCESS);
+    }
+    else PlayerPlaySound(playerid, SOUND_BUTTON);
+
+    return 1;
+}

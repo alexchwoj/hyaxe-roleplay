@@ -311,3 +311,24 @@ Date_ToString(year, month, day)
 	format(str, sizeof(str), "%i de %s del %i", day, month_names[month], year);
 	return str;
 }
+
+Format_Thousand(number)
+{
+	new string[32], bool:negative;
+	format(string, sizeof string, "%d", number);
+	if (number < 0)
+	{
+		negative = true;
+		strdel(string, 0, 1);
+	}
+
+	new numbers = strlen(string);
+	while(numbers > 3)
+	{
+		numbers -= 3;
+		strins(string, ".", numbers);
+	}
+
+	if (negative) strins(string, "-", 0);
+	return string;
+}

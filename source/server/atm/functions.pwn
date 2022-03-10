@@ -9,10 +9,10 @@ ATM_ShowMenu(playerid)
 
     new string[32];
 
-    format(string, sizeof(string), "$%d", g_rgePlayerData[playerid][e_iPlayerBankBalance]);
+    format(string, sizeof(string), "$%s", Format_Thousand(g_rgePlayerData[playerid][e_iPlayerBankBalance]));
     TextDrawSetString(g_tdBankATM[6], string);
 
-    format(string, sizeof(string), "ID: %i", Player_AccountID(playerid));
+    format(string, sizeof(string), "Cuenta: %i", Player_AccountID(playerid));
     TextDrawSetString(g_tdBankATM[7], string);
 
     for(new i = sizeof(g_tdBankATM) - 1; i != -1; --i)
@@ -33,5 +33,34 @@ ATM_HideMenu(playerid)
         TextDrawHideForPlayer(playerid, g_tdBankATM[i]);
     }
 
+    return 1;
+}
+
+Bank_SetBalance(playerid, balance)
+{
+    g_rgePlayerData[playerid][e_iPlayerBankBalance] = balance;
+
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+        UPDATE `BANK_ACCOUNT` SET \
+            `BALANCE` = %d \
+        WHERE `ACCOUNT_ID` = %i;\
+    ", g_rgePlayerData[playerid][e_iPlayerBankBalance], Player_AccountID(playerid));
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+    return 1;
+}
+
+Bank_AddBalance(playerid, balance)
+{
+    g_rgePlayerData[playerid][e_iPlayerBankBalance] += balance;
+
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+        UPDATE `BANK_ACCOUNT` SET \
+            `BALANCE` = %d \
+        WHERE `ACCOUNT_ID` = %i;\
+    ", g_rgePlayerData[playerid][e_iPlayerBankBalance], Player_AccountID(playerid));
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Sa acaban de acreditar ~g~$%s~w~ a tu cuenta bancaria.", Format_Thousand(balance));
+    Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 3000, 0x64A752FF);
     return 1;
 }
