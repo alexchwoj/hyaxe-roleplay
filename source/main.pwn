@@ -55,12 +55,15 @@ L1:
 #include <Pawn.RakNet>
 #include <a_mysql>
 #include <foreach>
-#include <td-string-width>
 #include <amx/amx_header>
 
 /*
 		YSI is pozzed
 							*/
+
+// Plugin
+////////////
+#include "core/interop/header.pwn"
 
 // Fixes
 ///////////
