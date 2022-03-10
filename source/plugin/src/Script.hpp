@@ -10,4 +10,6 @@ public:
 	cell n_GetTextDrawLineWidth(std::string string, int font, int outline, int proportional, int start, int end);
 	cell n_GetTextDrawStringWidth(std::string string, int font, int outline, int proportional);
 	cell n_GetTextDrawCharacterWidth(int character, int font, int proportional);
+
+	cell n_memset(cell arr, int value, int cell_count);
 };

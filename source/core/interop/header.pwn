@@ -8,3 +8,4 @@ native GetTextDrawStringWidth(const string[], font, outline = 0, bool:proportion
 native GetTextDrawLineWidth(const string[], font, outline = 0, bool:proportional = true, start = 0, end = -1);
 native GetTextDrawLineCount(const string[]);
 native bool:SplitTextDrawString(string[], Float:max_width, Float:letter_size, font, outline = 0, bool:proportional = true, size = sizeof(string));
+native memset(arr[], val, size = sizeof(arr));
