@@ -15,6 +15,8 @@
 
 #define FOREACH_NO_BOTS
 
+public const __HYAXE__ = 1;
+
 // Daniel-Cortez's Anti-DeAMX
 ////////////////////////////////
 @__beware__black_people__();
