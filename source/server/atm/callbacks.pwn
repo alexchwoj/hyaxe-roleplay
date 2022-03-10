@@ -33,14 +33,18 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
         // Deposit
         if (clickedid == g_tdBankATM[3])
         {
-            Dialog_Show(playerid, "bank_deposit", DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Depositar", "{DADADA}Ingrese una cantidad para depositar:", "Depositar", "Cancelar");
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+                {DADADA}Dinero actual: {64A752}$%s{DADADA}\n\
+                Ingrese una cantidad para depositar:\
+            ", Format_Thousand( Player_Money(playerid) ));
+            Dialog_Show(playerid, "bank_deposit", DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Depositar", HYAXE_UNSAFE_HUGE_STRING, "Depositar", "Cancelar");
         }
         // Withdraw
         else if (clickedid == g_tdBankATM[4])
         {
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
                 {DADADA}Balance actual: {64A752}$%s{DADADA}\n\
-                Ingrese una cantidad para retirar\
+                Ingrese una cantidad para retirar:\
             ", Format_Thousand(g_rgePlayerData[playerid][e_iPlayerBankBalance]));
             Dialog_Show(playerid, "bank_withdraw", DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Retirar", HYAXE_UNSAFE_HUGE_STRING, "Retirar", "Cancelar");
         }
@@ -49,6 +53,8 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
         {
             Dialog_Show(playerid, "bank_transfer", DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Transferir", "{DADADA}Ingrese la cuenta bancaria a transferir:", "Siguiente", "Cancelar");
         }
+
+        PlayerPlaySound(playerid, SOUND_BUTTON);
     }
 
     #if defined ATM_OnPlayerClickTextDraw
@@ -228,8 +234,11 @@ dialog bank_deposit(playerid, response, listitem, inputtext[])
             return 1;
         }
 
+        Player_GiveMoney(playerid, -amount);
         Bank_AddBalance(playerid, amount);
         PlayerPlaySound(playerid, SOUND_SUCCESS);
+
+        ATM_ShowMenu(playerid);
     }
     else PlayerPlaySound(playerid, SOUND_BUTTON);
 
