@@ -251,6 +251,10 @@ public ATM_OnFinishBankTransfer(playerid, bank_account, amount)
         new current_playerid;
         cache_get_value_name_int(0, !"CURRENT_PLAYERID", current_playerid);
 
+        Bank_RegisterTransaction(Player_AccountID(playerid), BANK_TRANSFER_SENT, amount, bank_account);
+        Bank_RegisterTransaction(bank_account, BANK_TRANSFER_RECEIVED, amount, Player_AccountID(playerid));
+        Bank_AddBalance(playerid, -amount, false);
+
         if (IsPlayerConnected(current_playerid))
         {
             Bank_AddBalance(playerid, amount);
@@ -265,11 +269,9 @@ public ATM_OnFinishBankTransfer(playerid, bank_account, amount)
             mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
         }
 
-        Bank_AddBalance(playerid, -amount, false);
-        PlayerPlaySound(playerid, SOUND_SUCCESS);
-
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Sa acaban de transferir ~g~$%s~w~ a la cuenta %d.", Format_Thousand(amount), bank_account);
         Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 3000, 0x64A752FF);
+        PlayerPlaySound(playerid, SOUND_SUCCESS);
     }
     return 1;
 }

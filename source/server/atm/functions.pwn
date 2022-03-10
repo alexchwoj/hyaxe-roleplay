@@ -93,5 +93,15 @@ Bank_AddBalance(playerid, balance, bool:show_notification = true)
 
 Bank_RegisterTransaction(bank_account, type, amount, extra = 0)
 {
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+        INSERT INTO `BANK_TRANSACTIONS` \
+            (ACCOUNT_ID, TRANSACTION_TYPE, AMOUNT, EXTRA) \
+        VALUES \
+            (%d, %d, %d, %d);\
+    ",
+        bank_account, type, amount, extra
+    );
+
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
     return 1;
 }
