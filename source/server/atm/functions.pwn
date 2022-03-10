@@ -7,7 +7,11 @@ ATM_ShowMenu(playerid)
 {
     Bit_Set(Player_Flags(playerid), PFLAG_USING_ATM, true);
 
+    /*
     new string[32];
+
+    SetExclusiveBroadcast(true);
+    BroadcastToPlayer(playerid, true);
 
     format(string, sizeof(string), "$%s", Format_Thousand(g_rgePlayerData[playerid][e_iPlayerBankBalance]));
     TextDrawSetString(g_tdBankATM[6], string);
@@ -15,10 +19,21 @@ ATM_ShowMenu(playerid)
     format(string, sizeof(string), "Cuenta: %i", Player_AccountID(playerid));
     TextDrawSetString(g_tdBankATM[7], string);
 
+    BroadcastToPlayer(playerid, false);
+    SetExclusiveBroadcast(false);
+    */
+    
     for(new i = sizeof(g_tdBankATM) - 1; i != -1; --i)
     {
         TextDrawShowForPlayer(playerid, g_tdBankATM[i]);
     }
+
+    new string[32];
+    format(string, sizeof(string), "$%s", Format_Thousand(g_rgePlayerData[playerid][e_iPlayerBankBalance]));
+    TextDrawSetStringForPlayer(g_tdBankATM[6], playerid, string);
+
+    format(string, sizeof(string), "Cuenta: %i", Player_AccountID(playerid));
+    TextDrawSetStringForPlayer(g_tdBankATM[7], playerid, string);
 
     SelectTextDraw(playerid, 0x64A752FF);
     return 1;
