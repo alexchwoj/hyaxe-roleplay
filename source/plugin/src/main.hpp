@@ -1,7 +1,7 @@
 #pragma once
 
 // lol
-#include "ptl.h"
+#include "pch.h"
 
 #include <samp-ptl/ptl.h>
 

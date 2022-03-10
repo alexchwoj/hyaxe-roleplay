@@ -7,6 +7,7 @@ bool Plugin::OnLoad()
 	RegisterNative<&Script::n_GetTextDrawLineWidth>("GetTextDrawLineWidth");
 	RegisterNative<&Script::n_GetTextDrawLineCount>("GetTextDrawLineCount");
 	RegisterNative<&Script::n_SplitTextDrawString>("SplitTextDrawString");
+	RegisterNative<&Script::n_memset>("memset");
 
 	Log("Loaded");
 	return true;
