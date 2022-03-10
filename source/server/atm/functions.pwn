@@ -28,12 +28,8 @@ ATM_ShowMenu(playerid)
         TextDrawShowForPlayer(playerid, g_tdBankATM[i]);
     }
 
-    new string[32];
-    format(string, sizeof(string), "$%s", Format_Thousand(g_rgePlayerData[playerid][e_iPlayerBankBalance]));
-    TextDrawSetStringForPlayer(g_tdBankATM[6], playerid, string);
-
-    format(string, sizeof(string), "Cuenta: %i", Player_AccountID(playerid));
-    TextDrawSetStringForPlayer(g_tdBankATM[7], playerid, string);
+    TextDrawSetStringForPlayer(g_tdBankATM[6], playerid, "$%s", Format_Thousand(g_rgePlayerData[playerid][e_iPlayerBankBalance]));
+    TextDrawSetStringForPlayer(g_tdBankATM[7], playerid, "Cuenta: %i", Player_AccountID(playerid));
 
     SelectTextDraw(playerid, 0x64A752FF);
     return 1;
