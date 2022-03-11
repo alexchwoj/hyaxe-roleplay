@@ -31,6 +31,7 @@ Actor_CreateRobbable(model, min_money, max_money, Float:x, Float:y, Float:z, Flo
     g_rgeRobbableActors[idx][e_iMinMoneyReward] = min_money;
     g_rgeRobbableActors[idx][e_iMaxMoneyReward] = max_money;
     g_rgeRobbableActors[idx][e_iLastStealTick] = GetTickCount();
+    g_rgeRobbableActors[idx][e_iRobbingPlayer] = INVALID_PLAYER_ID;
 
     return idx;
 }
@@ -39,7 +40,7 @@ Actor_Rob(playerid, actorid)
 {
     new id = Streamer_GetIntData(STREAMER_TYPE_ACTOR, actorid, E_STREAMER_EXTRA_ID);
 
-    if(!g_rgeRobbableActors[id][e_bValid])
+    if(!(0 <= id < sizeof(g_rgeRobbableActors)) || !g_rgeRobbableActors[id][e_bValid] || g_rgeRobbableActors[id][e_iRobbingPlayer] != INVALID_PLAYER_ID)
         return 0;
 
     Bit_Set(Player_Flags(playerid), PFLAG_ROBBING_STORE, true);

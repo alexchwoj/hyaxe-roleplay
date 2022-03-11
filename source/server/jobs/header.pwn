@@ -7,7 +7,7 @@ enum eJobs
 {
     JOB_NONE,
     JOB_GUNSMAKER,
-    JOB_POSTMAN
+    JOB_LAWNMOWER
 };
 
 enum eJobEvent
@@ -32,7 +32,7 @@ new const
     g_rgszJobNames[eJobs][] = {
         "Ninguno",
         "Fabricante de armas",
-        "Cartero"
+        "Cortacésped"
     };
 
 #define Player_Job(%0) (g_rgePlayerJobData[(%0)][e_iPlayerCurrentJob])
@@ -40,4 +40,4 @@ new const
 
 forward Job_CreateSite(eJobs:jobid, Float:x, Float:y, Float:z, vw, interior, const extra_text[] = "", cb_data = cellmin);
 forward Job_SetCallback(eJobs:jobid, callback);
-forward Job_TriggerCallback(playerid, eJobs:jobid, eJobEvent:event);
+forward Job_TriggerCallback(playerid, eJobs:jobid, eJobEvent:event, data = -1);

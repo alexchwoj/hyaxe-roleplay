@@ -56,6 +56,7 @@ L1:
 #include <Pawn.Regex>
 #include <Pawn.RakNet>
 #include <a_mysql>
+#include <colandreas>
 #include <foreach>
 #include <amx/amx_header>
 
@@ -92,6 +93,7 @@ L1:
 #include "server/atm/header.pwn"
 #include "server/jobs/header.pwn"
 #include "server/jobs/gunsmaker/header.pwn"
+#include "server/jobs/lawnmower/header.pwn"
 #include "player/account/header.pwn"
 #include "player/damage/header.pwn"
 #include "player/admin/header.pwn"
@@ -135,7 +137,9 @@ L1:
 #include "server/enter_exits/callbacks.pwn"
 #include "server/stores/pizza/callbacks.pwn"
 #include "server/actors/callbacks.pwn"
+#include "server/jobs/callbacks.pwn"
 #include "server/jobs/gunsmaker/callbacks.pwn"
+#include "server/jobs/lawnmower/callbacks.pwn"
 #include "server/atm/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/damage/callbacks.pwn"

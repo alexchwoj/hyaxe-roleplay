@@ -4,7 +4,7 @@
 #define _gunsmaker_callbacks_
 
 static
-    bool:s_rgbPlayerIsInJobCp[MAX_PLAYERS char];
+    bool:s_rgbPlayerIsInJobCp[MAX_PLAYERS char] = {false, ...};
 
 static GunsmakerBuildingEvent(playerid, bool:enter, data)
 {
@@ -27,8 +27,8 @@ static GunsmakerBuildingEvent(playerid, bool:enter, data)
 
 static GunsmakerEvent(playerid, eJobEvent:event, data)
 {
-    #pragma unused playerid, event, data
-    
+    #pragma unused data
+       
     switch(event)
     {
         case JOB_EV_JOIN:
@@ -66,7 +66,7 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
                 Notification_Show(playerid, str, 6000, 0xCB3126);
                 PlayerJob_Paycheck(playerid) = 0;
 
-                return 1;
+                return 0;
             }
 
             if(g_rgiGunsmakerUsedBench{playerid} != 0xFF)
@@ -178,16 +178,17 @@ static GunsmakerKeyGameCallback(playerid, bool:success)
         Notification_Show(playerid, "Fallaste en tu trabajo. Inténtalo nuevamente.", 5000);
     }
 
-    TogglePlayerDynamicCP(playerid, g_rgiGunsmakerUsedBench{playerid}, true);
+    TogglePlayerDynamicCP(playerid, g_rgiGunsmakerBenchCheckpoint[g_rgiGunsmakerUsedBench{playerid}], true);
     return 1;
 }
 
 public OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
+    DEBUG_PRINT("job: %i, bench: %i", Player_Job(playerid), g_rgiGunsmakerUsedBench{playerid});
     if(Player_Job(playerid) == JOB_GUNSMAKER && g_rgiGunsmakerUsedBench{playerid} != 0xFF)
     {
         new benchid = g_rgiGunsmakerUsedBench{playerid};
-        if(benchid == checkpointid)
+        if(g_rgiGunsmakerBenchCheckpoint[benchid] == checkpointid)
         {
             if(s_rgbPlayerIsInJobCp{playerid})
                 return 1;

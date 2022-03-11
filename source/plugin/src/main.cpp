@@ -2,6 +2,7 @@
 
 PLUGIN_EXPORT bool PLUGIN_CALL Load(void** ppData) 
 {
+	std::srand(std::time(0));
 	return Plugin::DoLoad(ppData);
 }
 

@@ -281,8 +281,7 @@ dialog bank_deposit(playerid, response, listitem, inputtext[])
 {
     if (response)
     {
-        new amount;
-        if (sscanf(inputtext, "d", amount))
+        extract inputtext -> new amount; else
         {
             PlayerPlaySound(playerid, SOUND_ERROR);
             Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Introduce un valor numérico.");
@@ -318,8 +317,7 @@ dialog bank_withdraw(playerid, response, listitem, inputtext[])
 {
     if (response)
     {
-        new amount;
-        if (sscanf(inputtext, "d", amount))
+        extract inputtext -> new amount; else
         {
             PlayerPlaySound(playerid, SOUND_ERROR);
             Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Introduce un valor numérico.");
@@ -355,8 +353,7 @@ dialog bank_transfer(playerid, response, listitem, inputtext[])
 {
     if (response)
     {
-        new bank_account;
-        if (sscanf(inputtext, "d", bank_account))
+        extract inputtext -> new bank_account; else
         {
             PlayerPlaySound(playerid, SOUND_ERROR);
             Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Introduce un valor numérico.");
@@ -386,8 +383,7 @@ dialog bank_transfer_amount(playerid, response, listitem, inputtext[])
 {
     if (response)
     {
-        new amount;
-        if (sscanf(inputtext, "d", amount))
+        extract inputtext -> new amount; else
         {
             PlayerPlaySound(playerid, SOUND_ERROR);
             Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Introduce un valor numérico.");

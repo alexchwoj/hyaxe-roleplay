@@ -8,6 +8,7 @@ bool Plugin::OnLoad()
 	RegisterNative<&Script::n_GetTextDrawLineCount>("GetTextDrawLineCount");
 	RegisterNative<&Script::n_SplitTextDrawString>("SplitTextDrawString");
 	RegisterNative<&Script::n_memset>("memset");
+	RegisterNative<&Script::n_RandomFloat>("RandomFloat");
 
 	Log("Loaded");
 	return true;
