@@ -1,0 +1,106 @@
+#if defined _crawl_callbacks_
+    #endinput
+#endif
+#define _crawl_callbacks_
+
+
+public OnPlayerDeath(playerid, killerid, reason)
+{
+    if (Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
+    {
+        if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+        {
+            KillTimer(g_rgeCrawlData[playerid][e_iCrawlKeyTimer]);
+            Bit_Set(Player_Flags(playerid), PFLAG_INJURED, false);
+        }
+        else
+        {
+            Bit_Set(Player_Flags(playerid), PFLAG_INJURED, true);
+
+            GetPlayerPos(playerid, g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ]);
+            GetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fSpawnPosAngle]);
+            SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ], g_rgePlayerData[playerid][e_fSpawnPosAngle], 0, 0, 0, 0, 0, 0);
+            
+            SpawnPlayer(playerid);
+            TogglePlayerSpectating(playerid, true);
+            TogglePlayerSpectating(playerid, false);
+
+            SetPlayerPos(playerid, g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ]);
+            ApplyAnimation(playerid, "SWEET", "SWEET_INJUREDLOOP", 4.1, true, false, false, 1, 0, 1);
+
+            KillTimer(g_rgeCrawlData[playerid][e_iCrawlKeyTimer]);
+            g_rgeCrawlData[playerid][e_iCrawlKeyTimer] = SetTimerEx("CRAWL_ProcessKey", 200, true, "i", playerid);
+        }
+
+        Player_SetHealth(playerid, 100);
+    }
+
+    #if defined CRAWL_OnPlayerDeath
+        return CRAWL_OnPlayerDeath(playerid, killerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDeath
+    #undef OnPlayerDeath
+#else
+    #define _ALS_OnPlayerDeath
+#endif
+#define OnPlayerDeath CRAWL_OnPlayerDeath
+#if defined CRAWL_OnPlayerDeath
+    forward CRAWL_OnPlayerDeath(playerid, killerid, reason);
+#endif
+
+forward CRAWL_ProcessKey(playerid);
+public CRAWL_ProcessKey(playerid)
+{
+    if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED) && !g_rgeCrawlData[playerid][e_bCrawlAnim])
+    {
+        new Keys, ud, lr;
+        GetPlayerKeys(playerid, Keys, ud, lr);
+
+        if (ud == KEY_UP)
+        {
+            g_rgeCrawlData[playerid][e_bCrawlAnim] = true;
+            ApplyAnimation(playerid, "PED", "CAR_CRAWLOUTRHS", 4.1, false, true, true, false, 500, false);
+            SetPlayerFacingAngle(playerid, CameraLookToAngle(playerid) + 90.0);
+
+            SetTimerEx("CRAWL_StopAnimation", 400, false, "i", playerid);
+        }
+    }
+
+    return 1;
+}
+
+forward CRAWL_StopAnimation(playerid);
+public CRAWL_StopAnimation(playerid)
+{
+    g_rgeCrawlData[playerid][e_bCrawlAnim] = false;
+    
+    ApplyAnimation(playerid, "SWEET", "SWEET_INJUREDLOOP", 4.1, true, false, false, 1, 0, 1);
+    SetPlayerFacingAngle(playerid, CameraLookToAngle(playerid));
+    return 1;
+}
+
+public OnPlayerDisconnect(playerid, reason)
+{
+    KillTimer(g_rgeCrawlData[playerid][e_iCrawlKeyTimer]);
+    g_rgeCrawlData[playerid] = g_rgeCrawlData[MAX_PLAYERS];
+
+    #if defined CRAWL_OnPlayerDisconnect
+        return CRAWL_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect CRAWL_OnPlayerDisconnect
+#if defined CRAWL_OnPlayerDisconnect
+    forward CRAWL_OnPlayerDisconnect(playerid, reason);
+#endif

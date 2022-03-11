@@ -96,7 +96,7 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 #endif
 
 
-IPacket:207(playerid, BitStream:bs)
+IPacket:PLAYER_SYNC(playerid, BitStream:bs)
 {
 	new onfoot_data[PR_OnFootSync];
 

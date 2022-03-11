@@ -94,6 +94,7 @@ L1:
 #include "server/jobs/header.pwn"
 #include "server/jobs/gunsmaker/header.pwn"
 #include "server/jobs/lawnmower/header.pwn"
+#include "server/hospital/header.pwn"
 #include "player/account/header.pwn"
 #include "player/damage/header.pwn"
 #include "player/admin/header.pwn"
@@ -102,6 +103,7 @@ L1:
 #include "player/chat/header.pwn"
 #include "player/weapons/header.pwn"
 #include "player/keygame/header.pwn"
+#include "player/crawl/header.pwn"
 
 // Functions
 ///////////////
@@ -116,6 +118,7 @@ L1:
 #include "server/actors/functions.pwn"
 #include "server/atm/functions.pwn"
 #include "server/jobs/functions.pwn"
+#include "server/hospital/functions.pwn"
 #include "player/account/functions.pwn"
 #include "player/damage/functions.pwn"
 #include "player/admin/functions.pwn"
@@ -123,6 +126,7 @@ L1:
 #include "player/chat/functions.pwn"
 #include "player/weapons/functions.pwn"
 #include "player/keygame/functions.pwn"
+#include "player/crawl/functions.pwn"
 
 // Callbacks
 ///////////////
@@ -141,12 +145,14 @@ L1:
 #include "server/jobs/gunsmaker/callbacks.pwn"
 #include "server/jobs/lawnmower/callbacks.pwn"
 #include "server/atm/callbacks.pwn"
+#include "server/hospital/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/damage/callbacks.pwn"
 #include "player/auth/callbacks.pwn"
 #include "player/needs/callbacks.pwn"
 #include "player/chat/callbacks.pwn"
 #include "player/keygame/callbacks.pwn"
+#include "player/crawl/callbacks.pwn"
 
 #include "server/anticheat/callbacks.pwn"
 

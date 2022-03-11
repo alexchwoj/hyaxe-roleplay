@@ -37,7 +37,7 @@ Damage_Send(to, from, Float:amount, weaponid)
 	{
 		if ((Player_Health(to) - damage) <= 0)
 		{
-			CallLocalFunction(!"OnPlayerDeath", !"iid", to, from, weaponid);
+			//CallLocalFunction(!"OnPlayerDeath", !"iid", to, from, weaponid);
 			Player_SetHealth(to, 0);
 		}
 		else Player_SetHealth(to, Player_Health(to) - damage);

@@ -14,3 +14,4 @@ crashinfo.txt
 *.pdb
 **/.vs
 **/out
+*.cadb

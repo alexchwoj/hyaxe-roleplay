@@ -220,3 +220,19 @@ Format_Thousand(number)
 	if (negative) strins(string, "-", 0);
 	return string;
 }
+
+Float:CameraLookToAngle(playerid)
+{
+    new Float:x, Float:y, Float:z;
+    GetPlayerCameraFrontVector(playerid, x, y, z);
+    return atan2(y, x) + 270.0;
+}
+
+Anim_Preload(playerid)
+{
+  	for(new i = 0; i < sizeof(g_rgszAnimLibs); i++)
+  	{
+        ApplyAnimation(playerid, g_rgszAnimLibs[i], "null", 4.0, 0, 0, 0, 0, 0, 1);
+  	}
+  	return 1;
+}
