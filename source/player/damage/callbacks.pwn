@@ -67,13 +67,7 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 {
     if (issuerid == INVALID_PLAYER_ID)
     {
-		new damage = g_rgiWeaponsDamage[weaponid];
-        if ((Player_Health(to) - damage) <= 0)
-		{
-			CallLocalFunction(!"OnPlayerDeath", !"iid", playerid, INVALID_PLAYER_ID, weaponid);
-			Player_SetHealth(to, 0);
-		}
-		else Player_SetHealth(to, Player_Health(to) - damage);
+        Damage_Send(playerid, INVALID_PLAYER_ID, g_rgiWeaponsDamage[weaponid], weaponid);
 	}
     else
     {

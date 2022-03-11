@@ -68,7 +68,7 @@ Account_Save(playerid)
             `HUNGER` = %.2f, \
             `THIRST` = %.2f, \
             `SKIN` = %i, \
-            `CURRENT_PLAYERID` = %i \
+            `CURRENT_PLAYERID` = %i, \
             `CURRENT_CONNECTION` = 0 \
         WHERE `ID` = %i;\
     ", 

@@ -43,7 +43,7 @@ new
         41, // 34 - Sniper
         82, // 35 - Rocket launcher
         82, // 36 - Heatseeker
-        2, // 37 - Flamethrower
+        1, // 37 - Flamethrower
         46, // 38 - Minigun
         82, // 39 - Satchel
         0, // 40 - Detonator
@@ -149,7 +149,7 @@ new
         900, // 34 - Sniper
         0, // 35 - Rocket launcher
         0, // 36 - Heatseeker
-        0, // 37 - Flamethrower
+        300, // 37 - Flamethrower
         20, // 38 - Minigun
         0, // 39 - Satchel
         0, // 40 - Detonator
