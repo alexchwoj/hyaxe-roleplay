@@ -17,7 +17,7 @@ cell Script::n_RandomFloat(float min, float max)
 {
 	std::random_device rd;
 	std::mt19937 gen{ rd() };
-	std::uniform_real_distribution<float> dis(min, max);
+	std::uniform_real_distribution<float> dis(std::min(min, max), std::max(min, max));
 	
 	float random_value = dis(gen);
 	return amx_ftoc(random_value);

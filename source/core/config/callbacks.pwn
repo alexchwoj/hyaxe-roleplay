@@ -46,10 +46,12 @@ public OnGameModeInit()
     ManualVehicleEngineAndLights();
 
     #if defined CONFIG_OnGameModeInit
-        return CONFIG_OnGameModeInit();
-    #else
-        return 1;
+        CONFIG_OnGameModeInit();
     #endif
+
+	CA_Init();
+
+	return 1;
 }
 
 #if defined _ALS_OnGameModeInit
