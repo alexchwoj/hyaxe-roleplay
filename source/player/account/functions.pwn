@@ -12,7 +12,8 @@ Account_RegisterConnection(playerid)
 Account_Register(playerid, callback = -1)
 {
     Player_Money(playerid) = PLAYER_DEFAULT_MONEY;
-    Player_Health(playerid) = 100.0;
+    Player_SetHealth(playerid, 100);
+    
     g_rgePlayerData[playerid][e_fSpawnPosX] = PLAYER_SPAWN_X;    
     g_rgePlayerData[playerid][e_fSpawnPosY] = PLAYER_SPAWN_Y;    
     g_rgePlayerData[playerid][e_fSpawnPosZ] = PLAYER_SPAWN_Z;    
@@ -62,6 +63,8 @@ Account_Save(playerid)
             `ANGLE` = %.2f, \
             `VIRTUAL_WORLD` = %i, \
             `INTERIOR` = %i, \
+            `HEALTH` = %d, \
+            `ARMOR` = %d, \
             `HUNGER` = %.2f, \
             `THIRST` = %.2f, \
             `SKIN` = %i, \
@@ -71,7 +74,7 @@ Account_Save(playerid)
     ", 
         g_rgePlayerData[playerid][e_iPlayerPausedTime],
         g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ], g_rgePlayerData[playerid][e_fSpawnPosAngle],
-        Player_VirtualWorld(playerid), Player_Interior(playerid), Player_Hunger(playerid), Player_Thirst(playerid),
+        Player_VirtualWorld(playerid), Player_Interior(playerid), Player_Health(playerid), Player_Armor(playerid), Player_Hunger(playerid), Player_Thirst(playerid),
         Player_Skin(playerid), playerid, Player_AccountID(playerid)
     );
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
@@ -90,8 +93,8 @@ Account_LoadFromCache(playerid)
     cache_get_value_name(0, !"PASSWORD", Player_Password(playerid));
     cache_get_value_name_int(0, !"SEX", Player_Sex(playerid));
     cache_get_value_name_int(0, !"MONEY", Player_Money(playerid));
-    cache_get_value_name_float(0, !"HEALTH", Player_Health(playerid));
-    cache_get_value_name_float(0, !"ARMOR", Player_Armor(playerid));
+    cache_get_value_name_int(0, !"HEALTH", Player_Health(playerid));
+    cache_get_value_name_int(0, !"ARMOR", Player_Armor(playerid));
     cache_get_value_name_float(0, !"POS_X", g_rgePlayerData[playerid][e_fSpawnPosX]);
     cache_get_value_name_float(0, !"POS_Y", g_rgePlayerData[playerid][e_fSpawnPosY]);
     cache_get_value_name_float(0, !"POS_Z", g_rgePlayerData[playerid][e_fSpawnPosZ]);

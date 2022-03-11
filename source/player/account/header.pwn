@@ -16,6 +16,7 @@ enum
     PFLAG_IN_GAME,
     PFLAG_ROBBING_STORE,
     PFLAG_USING_ATM,
+    PFLAG_INJURED,
     
     MAX_PLAYER_FLAGS
 }
@@ -45,8 +46,8 @@ enum ePlayerData
     e_szPlayerLastConnection[20],
     e_szPassword[65],
     
-    Float:e_fPlayerHealth,
-    Float:e_fPlayerArmor,
+    e_iPlayerHealth,
+    e_iPlayerArmor,
     e_iPlayerMoney,
     e_iPlayerBankBalance,
     Float:e_fSpawnPosX,
@@ -92,8 +93,8 @@ new
 #define Player_IP(%0) (g_rgePlayerData[(%0)][e_iPlayerIp])
 #define Player_GetIpString(%0) (RawIpToString(g_rgePlayerData[(%0)][e_iPlayerIp]))
 #define Player_LastConnection(%0) (g_rgePlayerData[(%0)][e_szPlayerLastConnection])
-#define Player_Health(%0) (g_rgePlayerData[(%0)][e_fPlayerHealth])
-#define Player_Armor(%0) (g_rgePlayerData[(%0)][e_fPlayerArmor])
+#define Player_Health(%0) (g_rgePlayerData[(%0)][e_iPlayerHealth])
+#define Player_Armor(%0) (g_rgePlayerData[(%0)][e_iPlayerArmor])
 #define Player_Money(%0) (g_rgePlayerData[(%0)][e_iPlayerMoney])
 #define Player_VirtualWorld(%0) (g_rgePlayerData[(%0)][e_iPlayerVirtualWorld])
 #define Player_Interior(%0) (g_rgePlayerData[(%0)][e_iPlayerInterior])

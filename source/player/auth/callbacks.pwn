@@ -175,8 +175,10 @@ static AccountRegistered(playerid)
 
     ResetPlayerMoney(playerid);
     GivePlayerMoney(playerid, Player_Money(playerid));
-    SetPlayerHealth(playerid, Player_Health(playerid));
-    SetPlayerArmour(playerid, Player_Armor(playerid));
+
+    Player_SetHealth(playerid, Player_Health(playerid));
+    Player_SetArmor(playerid, Player_Armor(playerid));
+
     SetPlayerVirtualWorld(playerid, 0);
     SetPlayerInterior(playerid, 0);
     SetCameraBehindPlayer(playerid);
@@ -232,8 +234,10 @@ dialog login(playerid, response, listitem, inputtext[])
     g_rgePlayerData[playerid][e_iCurrentConnectionTime] = gettime();
     SetPlayerVirtualWorld(playerid, Player_VirtualWorld(playerid));
     SetPlayerInterior(playerid, Player_Interior(playerid));
-    SetPlayerHealth(playerid, Player_Health(playerid));
-    SetPlayerArmour(playerid, Player_Armor(playerid));
+    
+    Player_SetHealth(playerid, Player_Health(playerid));
+    Player_SetArmor(playerid, Player_Armor(playerid));
+    
     GivePlayerMoney(playerid, Player_Money(playerid));
     Player_GiveAllWeapons(playerid);
     SetPlayerArmedWeapon(playerid, 0);
