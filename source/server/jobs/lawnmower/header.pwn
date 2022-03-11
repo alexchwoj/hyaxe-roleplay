@@ -3,6 +3,7 @@
 #endif
 #define _lawnmower_header_
 
+const MIN_GRASS_PER_AREA = 50;
 const MAX_GRASS_PER_AREA = 100;
 
 /*

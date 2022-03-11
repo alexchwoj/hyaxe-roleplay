@@ -5,7 +5,7 @@
 
 static GenerateGrassInArea(areaid)
 {
-    new grass_count = minrand(50, 100);
+    new grass_count = minrand(MIN_GRASS_PER_AREA, MAX_GRASS_PER_AREA);
     g_rgeLawnmowerAreas[areaid][e_iInitialGrassCount] =
     g_rgeLawnmowerAreas[areaid][e_iCurrentGrassCount] = grass_count;
 
