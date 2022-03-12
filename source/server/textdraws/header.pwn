@@ -6,7 +6,8 @@
 new
     Text:g_tdSpeedometer[6],
     Text:g_tdBankATM[8],
-    Text:g_tdKeyGame[4]
+    Text:g_tdKeyGame[4],
+    Text:g_tdShops[12]
 ;
 
 new

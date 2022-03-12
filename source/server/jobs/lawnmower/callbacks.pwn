@@ -135,6 +135,9 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
         new grass_id = info[1];
         new park_id = g_rgiPlayerLawnmowerArea{playerid};
 
+        if(!IsValidDynamicObject(g_rgeLawnmowerAreas[park_id][e_rgiGrassObjects][grass_id]))
+            return 1;
+            
         PlayerPlaySound(playerid, 20800);
 
         DestroyDynamicObject(g_rgeLawnmowerAreas[park_id][e_rgiGrassObjects][grass_id]);
