@@ -124,13 +124,20 @@ Speedometer_Hide(playerid)
 
 Speedometer_Update(playerid)
 {
+    if(!IsPlayerInAnyVehicle(playerid))
+    {
+        if(g_rgiSpeedometerUpdateTimer[playerid])
+        {
+            KillTimer(g_rgiSpeedometerUpdateTimer[playerid]);
+        }
+
+        return 1;
+    }
+
     const SPEED_MAX_SLASHES = 33;
     const SPEED_MAX_FLOORS = 35;
 
     new vehicleid = GetPlayerVehicleID(playerid);
-    if(vehicleid == INVALID_VEHICLE_ID)
-        return 0;
-
     new Float:kmh = Vehicle_GetSpeed(vehicleid);
 
     TextDrawSetStringForPlayer(g_tdSpeedometer[4], playerid, "%i", floatround(kmh));

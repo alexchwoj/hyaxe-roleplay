@@ -147,8 +147,9 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
         g_rgeLawnmowerAreas[park_id][e_iCurrentGrassCount]--;        
         if(!g_rgeLawnmowerAreas[park_id][e_iCurrentGrassCount])
         {
-            RemovePlayerFromVehicle(playerid);
+            StopAudioStreamForPlayer(playerid);
             Vehicle_Destroy(g_rgeLawnmowerAreas[park_id][e_iMowerId]);
+            
             Player_Job(playerid) = JOB_NONE;
 
             new money = g_rgeLawnmowerAreas[park_id][e_iInitialGrassCount] * 5;
