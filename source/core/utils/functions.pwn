@@ -228,15 +228,6 @@ Float:CameraLookToAngle(playerid)
     return atan2(y, x) + 270.0;
 }
 
-Anim_Preload(playerid)
-{
-  	for(new i; i < sizeof(g_rgszAnimLibs); ++i)
-  	{
-        ApplyAnimation(playerid, g_rgszAnimLibs[i], "null", 4.0, 0, 0, 0, 0, 0, 1);
-  	}
-  	return 1;
-}
-
 GetXYFromAngle(&Float:x, &Float:y, Float:a, Float:distance) {
 	x += (distance * floatsin(-a, degrees));
 	y += (distance * floatcos(-a, degrees));

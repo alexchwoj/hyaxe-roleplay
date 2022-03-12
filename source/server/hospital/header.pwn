@@ -34,4 +34,4 @@ new g_rgeHospitalData[HYAXE_MAX_HOSPITALS][eHospitalData] = {
     {"San Fierro Medical Center",  -2655.0667, 639.9373, 14.4545, 179.5295,  HOSPITAL_MODERN_INTERIOR, 50.0, 15.0}
 };
 
-new g_rgiHospitalHealthTimer[MAX_PLAYERS char];
+new g_rgiHospitalHealthTimer[MAX_PLAYERS];

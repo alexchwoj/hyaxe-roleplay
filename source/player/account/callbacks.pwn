@@ -7,7 +7,6 @@ public OnPlayerConnect(playerid)
 {
     DEBUG_PRINT("OnPlayerConnect(%i)", playerid);
 
-    Anim_Preload(playerid);
     SetPlayerColor(playerid, 0xF7F7F700);
     TogglePlayerSpectating(playerid, true);
 

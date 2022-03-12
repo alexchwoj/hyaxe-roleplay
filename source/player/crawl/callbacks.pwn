@@ -8,7 +8,6 @@ public OnPlayerDeath(playerid, killerid, reason)
 {
     if (Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
     {
-        SendClientMessage(playerid, -1, "dead");
         GetPlayerPos(playerid, g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ]);
         GetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fSpawnPosAngle]);
         SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ], g_rgePlayerData[playerid][e_fSpawnPosAngle], 0, 0, 0, 0, 0, 0);
@@ -21,9 +20,10 @@ public OnPlayerDeath(playerid, killerid, reason)
         SetPlayerPos(playerid, g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ]);
         SetCameraBehindPlayer(playerid);
 
+        ApplyAnimation(playerid, "SWEET", "null", 4.0, 0, 0, 0, 0, 0, 1);
+
         if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
         {
-            SendClientMessage(playerid, -1, "hospital");
             Player_SetHealth(playerid, 4);
             Bit_Set(Player_Flags(playerid), PFLAG_INJURED, false);
 
@@ -32,7 +32,6 @@ public OnPlayerDeath(playerid, killerid, reason)
         }
         else
         {
-            SendClientMessage(playerid, -1, "injured");
             Player_SetHealth(playerid, 100);
             Bit_Set(Player_Flags(playerid), PFLAG_INJURED, true);
 

@@ -5,7 +5,7 @@
 
 Player_GoToTheNearestHospital(playerid)
 {
-    KillTimer(g_rgiHospitalHealthTimer{playerid});
+    KillTimer(g_rgiHospitalHealthTimer[playerid]);
     GetPlayerPos(playerid, g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ]);
 
     new
@@ -79,6 +79,6 @@ Player_GoToTheNearestHospital(playerid)
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Estás siendo atendido en el ~b~%s~w~, el costo es de $1500.", g_rgeHospitalData[ nearest_hospital ][e_szHospitalName]);
     Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 5000, 0x415BA2FF);
 
-    g_rgiHospitalHealthTimer{playerid} = SetTimerEx("HP_HealPlayer", 1000, true, "i", playerid);
+    g_rgiHospitalHealthTimer[playerid] = SetTimerEx("HP_HealPlayer", 1000, true, "i", playerid);
     return 1;
 }

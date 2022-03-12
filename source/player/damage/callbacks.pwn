@@ -95,8 +95,8 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
     forward DAMAGE_OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart);
 #endif
 
-
-IPacket:PLAYER_SYNC(playerid, BitStream:bs)
+const damage_PLAYER_SYNC = 207;
+IPacket:damage_PLAYER_SYNC(playerid, BitStream:bs)
 {
 	new onfoot_data[PR_OnFootSync];
 

@@ -6,7 +6,7 @@
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    KillTimer(g_rgiHospitalHealthTimer{playerid});
+    KillTimer(g_rgiHospitalHealthTimer[playerid]);
 
     #if defined HP_OnPlayerDisconnect
         return HP_OnPlayerDisconnect(playerid, reason);
@@ -46,7 +46,7 @@ public HP_HealPlayer(playerid)
         SetCameraBehindPlayer(playerid);
 
         Notification_Show(playerid, "Los médicos te han dado de alta.", 3000, 0x64A752FF);
-        KillTimer(g_rgiHospitalHealthTimer{playerid});
+        KillTimer(g_rgiHospitalHealthTimer[playerid]);
         return 1;
     }
 
