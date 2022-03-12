@@ -13,7 +13,11 @@ Player_SetArmor(playerid, amount)
 Player_SetHealth(playerid, amount)
 {
 	Player_Health(playerid) = amount;
-	SetPlayerHealth(playerid, amount);
+
+	if (amount <= 0)
+		CallLocalFunction(!"OnPlayerDeath", !"iid", playerid, INVALID_PLAYER_ID, 54);
+	else
+		SetPlayerHealth(playerid, amount);
 	return 1;
 }
 
@@ -38,7 +42,9 @@ Damage_Send(to, from, Float:amount, weaponid)
 		if ((Player_Health(to) - damage) <= 0)
 		{
 			//CallLocalFunction(!"OnPlayerDeath", !"iid", to, from, weaponid);
-			Player_SetHealth(to, 0);
+			//Player_SetHealth(to, 0);
+			Player_Health(to) = 0;
+			SetPlayerHealth(to, 0);
 		}
 		else Player_SetHealth(to, Player_Health(to) - damage);
 	}

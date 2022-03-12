@@ -8,31 +8,38 @@ public OnPlayerDeath(playerid, killerid, reason)
 {
     if (Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
     {
+        SendClientMessage(playerid, -1, "dead");
+        GetPlayerPos(playerid, g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ]);
+        GetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fSpawnPosAngle]);
+        SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ], g_rgePlayerData[playerid][e_fSpawnPosAngle], 0, 0, 0, 0, 0, 0);
+            
+        SpawnPlayer(playerid);
+        TogglePlayerSpectating(playerid, true);
+        TogglePlayerSpectating(playerid, false);
+
+        RemovePlayerFromVehicle(playerid);
+        SetPlayerPos(playerid, g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ]);
+        SetCameraBehindPlayer(playerid);
+
         if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
         {
-            KillTimer(g_rgeCrawlData[playerid][e_iCrawlKeyTimer]);
+            SendClientMessage(playerid, -1, "hospital");
+            Player_SetHealth(playerid, 4);
             Bit_Set(Player_Flags(playerid), PFLAG_INJURED, false);
+
+            KillTimer(g_rgeCrawlData[playerid][e_iCrawlKeyTimer]);
+            Player_GoToTheNearestHospital(playerid);
         }
         else
         {
+            SendClientMessage(playerid, -1, "injured");
+            Player_SetHealth(playerid, 100);
             Bit_Set(Player_Flags(playerid), PFLAG_INJURED, true);
 
-            GetPlayerPos(playerid, g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ]);
-            GetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fSpawnPosAngle]);
-            SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ], g_rgePlayerData[playerid][e_fSpawnPosAngle], 0, 0, 0, 0, 0, 0);
-            
-            SpawnPlayer(playerid);
-            TogglePlayerSpectating(playerid, true);
-            TogglePlayerSpectating(playerid, false);
-
-            SetPlayerPos(playerid, g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ]);
             ApplyAnimation(playerid, "SWEET", "SWEET_INJUREDLOOP", 4.1, true, false, false, 1, 0, 1);
-
             KillTimer(g_rgeCrawlData[playerid][e_iCrawlKeyTimer]);
             g_rgeCrawlData[playerid][e_iCrawlKeyTimer] = SetTimerEx("CRAWL_ProcessKey", 200, true, "i", playerid);
         }
-
-        Player_SetHealth(playerid, 100);
     }
 
     #if defined CRAWL_OnPlayerDeath
