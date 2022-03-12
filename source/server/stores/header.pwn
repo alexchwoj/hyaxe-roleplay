@@ -60,6 +60,6 @@ new
     bool:g_rgbPlayerWaitingObjectMove[MAX_PLAYERS char],
     g_rgiPlayerShopObject[MAX_PLAYERS] = { INVALID_OBJECT_ID, ... };
 
-forward Shop_Create(const name[], const Float:position[3], world, interior, const Float:camera_pos[2][3], const Float:object_positions[3][3], buy_callback);
-forward Shop_AddItem(shop_id, const name[], model, price, const Float:rotations[3]);
+forward Shop_Create(const name[], Float:pos_x, Float:pos_y, Float:pos_z, world, interior, Float:cam_x, Float:cam_y, Float:cam_z, Float:cam_look_x, Float:cam_look_y, Float:cam_look_z, Float:object_start_x, Float:object_start_y, Float:object_start_z, Float:object_idle_x, Float:object_idle_y, Float:object_idle_z, Float:object_end_x, Float:object_end_y, Float:object_end_z, buy_callback);
+forward Shop_AddItem(shop_id, const name[], model, price, Float:rx, Float:ry, Float:rz);
 forward Player_StopShopping(playerid);
