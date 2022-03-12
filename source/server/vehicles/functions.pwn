@@ -264,7 +264,7 @@ Player_SaveVehicles(playerid)
         mysql_format(g_hDatabase, query, sizeof(query), "\
             UPDATE `PLAYER_VEHICLES` SET \
                 HEALTH = %.2f, \
-                FUEL = %.f, \
+                FUEL = %f, \
                 PANELS_STATUS = %d, \
                 DOORS_STATUS = %d, \
                 LIGHTS_STATUS = %d, \

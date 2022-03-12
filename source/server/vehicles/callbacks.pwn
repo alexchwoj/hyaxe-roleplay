@@ -274,17 +274,33 @@ public VEHICLE_LoadFromDatabase(playerid)
             }
         }
 
-        #define bit_at(%0,%1) ((%0) & (1 << (%1)))
+        new 
+            engine = (p & 1),
+            lights_p = (p >> 1) & 1,
+            alarm = (p >> 2) & 1,
+            doors_p = (p >> 3) & 1,
+            bonnet = (p >> 4) & 1,
+            boot = (p >> 5) & 1,
+            objective = (p >> 6) & 1;
 
-        SetVehicleParamsEx(vehicleid, bit_at(p, 0), bit_at(p, 1), bit_at(p, 2), bit_at(p, 3), bit_at(p, 4), bit_at(p, 5), bit_at(p, 6));
+        DEBUG_PRINT("params: %b", p);
+        DEBUG_PRINT("engine = %i", engine);
+        DEBUG_PRINT("lights = %i", lights_p);
+        DEBUG_PRINT("alarm = %i", alarm);
+        DEBUG_PRINT("doors = %i", doors_p);
+        DEBUG_PRINT("bonnet = %i", bonnet);
+        DEBUG_PRINT("boot = %i", boot);
+        DEBUG_PRINT("objective = %i", objective);
+
+        SetVehicleParamsEx(vehicleid, engine, lights_p, alarm, doors_p, bonnet, boot, objective);
+
+        g_rgeVehicles[vehicleid][e_bLocked] = !!doors_p;
 
         // Engine is ON, start updating the vehicle
-        if(bit_at(p, 0))
+        if(engine)
         {
             g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_UPDATE] = SetTimerEx("VEHICLE_Update", 1000, true, "i", vehicleid);
         }
-
-        #undef bit_at
 
         Iter_Add(PlayerVehicles[playerid], vehicleid);
     }
