@@ -1,7 +1,7 @@
-#if defined _crawl_header_
+#if defined _death_header_
     #endinput
 #endif
-#define _crawl_header_
+#define _death_header_
 
 
 enum eCrawlData

@@ -103,7 +103,7 @@ L1:
 #include "player/chat/header.pwn"
 #include "player/weapons/header.pwn"
 #include "player/keygame/header.pwn"
-#include "player/crawl/header.pwn"
+#include "player/death/header.pwn"
 
 // Functions
 ///////////////
@@ -126,7 +126,7 @@ L1:
 #include "player/chat/functions.pwn"
 #include "player/weapons/functions.pwn"
 #include "player/keygame/functions.pwn"
-#include "player/crawl/functions.pwn"
+#include "player/death/functions.pwn"
 
 // Callbacks
 ///////////////
@@ -152,7 +152,7 @@ L1:
 #include "player/needs/callbacks.pwn"
 #include "player/chat/callbacks.pwn"
 #include "player/keygame/callbacks.pwn"
-#include "player/crawl/callbacks.pwn"
+#include "player/death/callbacks.pwn"
 
 #include "server/anticheat/callbacks.pwn"
 

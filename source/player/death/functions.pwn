@@ -1,8 +1,7 @@
-#if defined _crawl_functions_
+#if defined _death_functions_
     #endinput
 #endif
-#define _crawl_functions_
-
+#define _death_functions_
 
 command kill(playerid, const params[], "Suicidarse")
 {

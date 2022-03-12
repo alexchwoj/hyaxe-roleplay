@@ -1,8 +1,7 @@
-#if defined _crawl_callbacks_
+#if defined _death_callbacks_
     #endinput
 #endif
-#define _crawl_callbacks_
-
+#define _death_callbacks_
 
 public OnPlayerDeath(playerid, killerid, reason)
 {
