@@ -164,8 +164,18 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
             g_rgeLawnmowerAreas[park_id][e_iMowerId] = INVALID_VEHICLE_ID;
             g_rgeLawnmowerAreas[park_id][e_iInitialGrassCount] = 
             g_rgeLawnmowerAreas[park_id][e_iCurrentGrassCount] = 0;
-            memset(g_rgeLawnmowerAreas[park_id][e_rgiGrassObjects], INVALID_STREAMER_ID);
-            memset(g_rgeLawnmowerAreas[park_id][e_rgiGrassAreas], INVALID_STREAMER_ID);
+            
+            for(new i; i < MAX_GRASS_PER_AREA; ++i)
+            {
+                if(IsValidDynamicObject(g_rgeLawnmowerAreas[park_id][e_rgiGrassObjects][i]))
+                {
+                    DestroyDynamicObject(g_rgeLawnmowerAreas[park_id][e_rgiGrassObjects][i]);
+                    DestroyDynamicArea(g_rgeLawnmowerAreas[park_id][e_rgiGrassAreas][i]);
+                }
+
+                g_rgeLawnmowerAreas[park_id][e_rgiGrassObjects][i] =
+                g_rgeLawnmowerAreas[park_id][e_rgiGrassAreas][i] = INVALID_STREAMER_ID;
+            }
         }
         else
         {
