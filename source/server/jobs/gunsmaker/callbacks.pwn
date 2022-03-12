@@ -75,8 +75,16 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
                 g_iGunsmakerUsedBenchs &= ~(1 << g_rgiGunsmakerUsedBench{playerid});
                 g_rgiGunsmakerUsedBench{playerid} = 0xFF;
             }
-
-            Iter_Remove(GunsmakerBenchQueue, playerid);
+            
+            if(Iter_Contains(GunsmakerBenchQueue, playerid))
+            {
+                Iter_Remove(GunsmakerBenchQueue, playerid);
+                Notification_Show(playerid, "Abandonaste la cola para trabajar como fabricante de armas.", 5000);
+            }
+            else
+            {
+                Notification_Show(playerid, "Abandonaste el trabajo de fabricante de armas.", 5000);
+            }
         }
         case JOB_EV_LEAVE_PLACE:
         {
