@@ -54,7 +54,6 @@ enum eVehicleData
     bool:e_bLocked,
     bool:e_bAlarm,
     e_iComponents[14],
-    e_iVehicleGear,
     eVehicleType:e_iVehicleType,
 
     e_iVehicleTimers[eVehicleTimers]
