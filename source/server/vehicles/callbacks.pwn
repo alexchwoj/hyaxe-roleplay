@@ -107,7 +107,7 @@ public VEHICLE_Update(vehicleid)
             return 1;
         }
 
-        g_rgeVehicles[vehicleid][e_fFuel] = fclamp((g_rgeVehicles[vehicleid][e_fFuel] - (Vehicle_GetSpeed(vehicleid) + 0.1) / VEHICLE_FUEL_DIVISOR), 0.0, Vehicle_GetModelMaxFuel(GetVehicleModel(vehicleid)));
+        g_rgeVehicles[vehicleid][e_fFuel] = fclamp((g_rgeVehicles[vehicleid][e_fFuel] - ((Vehicle_GetSpeed(vehicleid) + 0.1) / VEHICLE_FUEL_DIVISOR)), 0.0, Vehicle_GetModelMaxFuel(GetVehicleModel(vehicleid)));
 
         if(g_rgeVehicles[vehicleid][e_fFuel] <= 0.0)
         {
