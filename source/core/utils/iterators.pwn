@@ -28,6 +28,28 @@ public OnGameModeInit()
     forward HYITER_OnGameModeInit();
 #endif
 
+public OnPlayerDisconnect(playerid, reason)
+{
+    Iter_Clear(StreamedPlayer[playerid]);
+
+    #if defined HYITER_OnPlayerDisconnect
+        return HYITER_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect HYITER_OnPlayerDisconnect
+#if defined HYITER_OnPlayerDisconnect
+    forward HYITER_OnPlayerDisconnect(playerid, reason);
+#endif
+
+
 public OnPlayerStreamIn(playerid, forplayerid)
 {
     Iter_Add(StreamedPlayer[forplayerid], playerid);
