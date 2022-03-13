@@ -42,44 +42,44 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 new area[2];
                 GetPlayerDynamicAreas(playerid, area);
 
-                for(new i = sizeof(area) - 1; i != -1; ++i)
+                for(new i = sizeof(area) - 1; i != -1; --i)
                 {
                     new info[2];
                     Streamer_GetArrayData(STREAMER_TYPE_AREA, area[i], E_STREAMER_EXTRA_ID, info);
 
-                    if(info[0] != 0x73686F70)
-                        continue;
-
-                    new shop_id = info[1];
-                    Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING, true);
-                    Bit_Set(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS, false);
-                    TogglePlayerControllable(playerid, false);
-
-                    for(new j = (sizeof(g_tdShops) - 1); j != -1; --j)
+                    if(info[0] == 0x73686F70)
                     {
-                        TextDrawShowForPlayer(playerid, g_tdShops[j]);
-                    }
+                        new shop_id = info[1];
+                        Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING, true);
+                        Bit_Set(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS, false);
+                        TogglePlayerControllable(playerid, false);
 
-                    TextDrawSetStringForPlayer(g_tdShops[5], playerid, Str_FixEncoding(g_rgeShops[shop_id][e_szShopName]));
-                    TextDrawSetStringForPlayer(g_tdShops[10], playerid, "$%d", g_rgeShopItems[shop_id][0][e_iItemPrice]);
-                    TextDrawSetStringForPlayer(g_tdShops[11], playerid, Str_FixEncoding(g_rgeShopItems[shop_id][0][e_szItemName]));
+                        for(new j = (sizeof(g_tdShops) - 1); j != -1; --j)
+                        {
+                            TextDrawShowForPlayer(playerid, g_tdShops[j]);
+                        }
+
+                        TextDrawSetStringForPlayer(g_tdShops[5], playerid, Str_FixEncoding(g_rgeShops[shop_id][e_szShopName]));
+                        TextDrawSetStringForPlayer(g_tdShops[10], playerid, "$%d", g_rgeShopItems[shop_id][0][e_iItemPrice]);
+                        TextDrawSetStringForPlayer(g_tdShops[11], playerid, Str_FixEncoding(g_rgeShopItems[shop_id][0][e_szItemName]));
+                        
+                        new Float:cam_x, Float:cam_y, Float:cam_z, Float:cvec_x, Float:cvec_y, Float:cvec_z;
+                        GetPlayerCameraPos(playerid, cam_x, cam_y, cam_z);
+                        GetPlayerCameraFrontVector(playerid, cvec_x, cvec_y, cvec_z);
+                        InterpolateCameraPos(playerid, cam_x, cam_y, cam_z, g_rgeShops[shop_id][e_fShopCamX], g_rgeShops[shop_id][e_fShopCamY], g_rgeShops[shop_id][e_fShopCamZ], 1000);
+                        InterpolateCameraLookAt(playerid, cvec_x, cvec_y, cvec_z, g_rgeShops[shop_id][e_fShopCamLookX], g_rgeShops[shop_id][e_fShopCamLookY], g_rgeShops[shop_id][e_fShopCamLookZ], 1000);
                     
-                    new Float:cam_x, Float:cam_y, Float:cam_z, Float:cvec_x, Float:cvec_y, Float:cvec_z;
-                    GetPlayerCameraPos(playerid, cam_x, cam_y, cam_z);
-                    GetPlayerCameraFrontVector(playerid, cvec_x, cvec_y, cvec_z);
-                    InterpolateCameraPos(playerid, cam_x, cam_y, cam_z, g_rgeShops[shop_id][e_fShopCamX], g_rgeShops[shop_id][e_fShopCamY], g_rgeShops[shop_id][e_fShopCamZ], 1000);
-                    InterpolateCameraLookAt(playerid, cvec_x, cvec_y, cvec_z, g_rgeShops[shop_id][e_fShopCamLookX], g_rgeShops[shop_id][e_fShopCamLookY], g_rgeShops[shop_id][e_fShopCamLookZ], 1000);
-                
-                    SelectTextDraw(playerid, 0xD2B567FF);
+                        SelectTextDraw(playerid, 0xD2B567FF);
 
-                    PlayerPlaySound(playerid, 1145);
-                    g_rgiPlayerCurrentShop{playerid} = shop_id;
-                    g_rgiPlayerCurrentShopItem{playerid} = 0;
-                    g_rgbPlayerWaitingObjectMove{playerid} = true;
-                    g_rgiPlayerShopObject[playerid] = CreatePlayerObject(playerid, g_rgeShopItems[shop_id][0][e_iItemModel], g_rgeShops[shop_id][e_fShopObjectStartX], g_rgeShops[shop_id][e_fShopObjectStartY], g_rgeShops[shop_id][e_fShopObjectStartZ], g_rgeShopItems[shop_id][0][e_fRotX], g_rgeShopItems[shop_id][0][e_fRotY], g_rgeShopItems[shop_id][0][e_fRotZ]);
-                    MovePlayerObject(playerid, g_rgiPlayerShopObject[playerid], g_rgeShops[shop_id][e_fShopObjectIdleX], g_rgeShops[shop_id][e_fShopObjectIdleY], g_rgeShops[shop_id][e_fShopObjectIdleZ], 1.2);
-                
-                    return 1;
+                        PlayerPlaySound(playerid, 1145);
+                        g_rgiPlayerCurrentShop{playerid} = shop_id;
+                        g_rgiPlayerCurrentShopItem{playerid} = 0;
+                        g_rgbPlayerWaitingObjectMove{playerid} = true;
+                        g_rgiPlayerShopObject[playerid] = CreatePlayerObject(playerid, g_rgeShopItems[shop_id][0][e_iItemModel], g_rgeShops[shop_id][e_fShopObjectStartX], g_rgeShops[shop_id][e_fShopObjectStartY], g_rgeShops[shop_id][e_fShopObjectStartZ], g_rgeShopItems[shop_id][0][e_fRotX], g_rgeShopItems[shop_id][0][e_fRotY], g_rgeShopItems[shop_id][0][e_fRotZ]);
+                        MovePlayerObject(playerid, g_rgiPlayerShopObject[playerid], g_rgeShops[shop_id][e_fShopObjectIdleX], g_rgeShops[shop_id][e_fShopObjectIdleY], g_rgeShops[shop_id][e_fShopObjectIdleZ], 1.2);
+                    
+                        return 1;
+                    }
                 }
             }
         }

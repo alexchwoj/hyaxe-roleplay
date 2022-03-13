@@ -155,9 +155,9 @@ Speedometer_Update(playerid)
     const Float:GREEN_BAR_MAX = -5.570;
 
     new Float:new_y;
-    
+
     // Update speed progress bar
-    if(kmh < 0.5)
+    if(kmh > 0.5)
     {
         new Float:veh_max_speed = float(g_rgeVehicleModelData[modelid][e_iMaxSpeed]);
         new Float:max_speed_percentage = fclamp(kmh / veh_max_speed, 0.0, 1.0);
