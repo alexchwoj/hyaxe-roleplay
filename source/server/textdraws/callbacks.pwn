@@ -6,89 +6,147 @@
 public OnGameModeInit()
 {
     // SNEEDOMETER
-    g_tdSpeedometer[0] = TextDrawCreate(463.000000, 415.000000, "/////////////////////////////////~n~-----------------------------------");
+    g_tdSpeedometer[0] = TextDrawCreate(562.000000, 425.000000, "_");
     TextDrawFont(g_tdSpeedometer[0], 1);
-    TextDrawLetterSize(g_tdSpeedometer[0], 0.284166, 1.500000);
-    TextDrawTextSize(g_tdSpeedometer[0], 402.000000, 17.000000);
+    TextDrawLetterSize(g_tdSpeedometer[0], 0.600000, -5.750007);
+    TextDrawTextSize(g_tdSpeedometer[0], 294.000000, 86.500000);
     TextDrawSetOutline(g_tdSpeedometer[0], 1);
     TextDrawSetShadow(g_tdSpeedometer[0], 0);
-    TextDrawAlignment(g_tdSpeedometer[0], 1);
-    TextDrawColor(g_tdSpeedometer[0], 1296911871);
-    TextDrawBackgroundColor(g_tdSpeedometer[0], 1296911871);
-    TextDrawBoxColor(g_tdSpeedometer[0], 50);
-    TextDrawUseBox(g_tdSpeedometer[0], 0);
+    TextDrawAlignment(g_tdSpeedometer[0], 2);
+    TextDrawColor(g_tdSpeedometer[0], -1);
+    TextDrawBackgroundColor(g_tdSpeedometer[0], 255);
+    TextDrawBoxColor(g_tdSpeedometer[0], 454761471);
+    TextDrawUseBox(g_tdSpeedometer[0], 1);
     TextDrawSetProportional(g_tdSpeedometer[0], 1);
     TextDrawSetSelectable(g_tdSpeedometer[0], 0);
 
-    g_tdSpeedometer[1] = TextDrawCreate(463.000000, 415.000000, "////////////~n~------------");
+    g_tdSpeedometer[1] = TextDrawCreate(503.000000, 426.000000, "_");
     TextDrawFont(g_tdSpeedometer[1], 1);
-    TextDrawLetterSize(g_tdSpeedometer[1], 0.284166, 1.500000);
-    TextDrawTextSize(g_tdSpeedometer[1], 402.000000, 17.000000);
+    TextDrawLetterSize(g_tdSpeedometer[1], 0.600000, -5.950006);
+    TextDrawTextSize(g_tdSpeedometer[1], 285.000000, 17.500000);
     TextDrawSetOutline(g_tdSpeedometer[1], 1);
     TextDrawSetShadow(g_tdSpeedometer[1], 0);
-    TextDrawAlignment(g_tdSpeedometer[1], 1);
+    TextDrawAlignment(g_tdSpeedometer[1], 2);
     TextDrawColor(g_tdSpeedometer[1], -1);
-    TextDrawBackgroundColor(g_tdSpeedometer[1], -1);
-    TextDrawBoxColor(g_tdSpeedometer[1], 50);
-    TextDrawUseBox(g_tdSpeedometer[1], 0);
+    TextDrawBackgroundColor(g_tdSpeedometer[1], 255);
+    TextDrawBoxColor(g_tdSpeedometer[1], 454761471);
+    TextDrawUseBox(g_tdSpeedometer[1], 1);
     TextDrawSetProportional(g_tdSpeedometer[1], 1);
     TextDrawSetSelectable(g_tdSpeedometer[1], 0);
 
-    g_tdSpeedometer[2] = TextDrawCreate(614.000000, 412.000000, "////");
+    g_tdSpeedometer[2] = TextDrawCreate(503.000000, 424.000000, "_");
     TextDrawFont(g_tdSpeedometer[2], 1);
-    TextDrawLetterSize(g_tdSpeedometer[2], 0.284000, 2.849997);
-    TextDrawTextSize(g_tdSpeedometer[2], 400.000000, 17.000000);
+    TextDrawLetterSize(g_tdSpeedometer[2], 0.600000, -5.600007);
+    TextDrawTextSize(g_tdSpeedometer[2], 282.500000, 15.500000);
     TextDrawSetOutline(g_tdSpeedometer[2], 1);
     TextDrawSetShadow(g_tdSpeedometer[2], 0);
-    TextDrawAlignment(g_tdSpeedometer[2], 1);
-    TextDrawColor(g_tdSpeedometer[2], -16776961);
-    TextDrawBackgroundColor(g_tdSpeedometer[2], -16776961);
-    TextDrawBoxColor(g_tdSpeedometer[2], 50);
-    TextDrawUseBox(g_tdSpeedometer[2], 0);
+    TextDrawAlignment(g_tdSpeedometer[2], 2);
+    TextDrawColor(g_tdSpeedometer[2], -1);
+    TextDrawBackgroundColor(g_tdSpeedometer[2], 255);
+    TextDrawBoxColor(g_tdSpeedometer[2], 791621631);
+    TextDrawUseBox(g_tdSpeedometer[2], 1);
     TextDrawSetProportional(g_tdSpeedometer[2], 1);
     TextDrawSetSelectable(g_tdSpeedometer[2], 0);
 
-    g_tdSpeedometer[3] = TextDrawCreate(593.000000, 379.000000, "/");
+    // Gas green box
+    g_tdSpeedometer[3] = TextDrawCreate(503.000000, 424.000000, "_");
     TextDrawFont(g_tdSpeedometer[3], 1);
-    TextDrawLetterSize(g_tdSpeedometer[3], 0.284166, 3.500000);
-    TextDrawTextSize(g_tdSpeedometer[3], 402.000000, 17.000000);
+    TextDrawLetterSize(g_tdSpeedometer[3], 0.600000, -5.570001);
+    TextDrawTextSize(g_tdSpeedometer[3], 282.500000, 15.500000);
     TextDrawSetOutline(g_tdSpeedometer[3], 1);
     TextDrawSetShadow(g_tdSpeedometer[3], 0);
-    TextDrawAlignment(g_tdSpeedometer[3], 1);
+    TextDrawAlignment(g_tdSpeedometer[3], 2);
     TextDrawColor(g_tdSpeedometer[3], -1);
-    TextDrawBackgroundColor(g_tdSpeedometer[3], -1);
-    TextDrawBoxColor(g_tdSpeedometer[3], 50);
-    TextDrawUseBox(g_tdSpeedometer[3], 0);
+    TextDrawBackgroundColor(g_tdSpeedometer[3], 255);
+    TextDrawBoxColor(g_tdSpeedometer[3], 1688687359);
+    TextDrawUseBox(g_tdSpeedometer[3], 1);
     TextDrawSetProportional(g_tdSpeedometer[3], 1);
     TextDrawSetSelectable(g_tdSpeedometer[3], 0);
 
-    g_tdSpeedometer[4] = TextDrawCreate(515.000000, 379.000000, "23");
-    TextDrawFont(g_tdSpeedometer[4], 3);
-    TextDrawLetterSize(g_tdSpeedometer[4], 0.500832, 3.500000);
-    TextDrawTextSize(g_tdSpeedometer[4], 402.000000, 17.000000);
+    g_tdSpeedometer[4] = TextDrawCreate(503.000000, 394.000000, "GAS~n~75");
+    TextDrawFont(g_tdSpeedometer[4], 1);
+    TextDrawLetterSize(g_tdSpeedometer[4], 0.208333, 0.899999);
+    TextDrawTextSize(g_tdSpeedometer[4], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdSpeedometer[4], 0);
     TextDrawSetShadow(g_tdSpeedometer[4], 0);
-    TextDrawAlignment(g_tdSpeedometer[4], 1);
-    TextDrawColor(g_tdSpeedometer[4], -1);
-    TextDrawBackgroundColor(g_tdSpeedometer[4], -1);
+    TextDrawAlignment(g_tdSpeedometer[4], 2);
+    TextDrawColor(g_tdSpeedometer[4], -134744065);
+    TextDrawBackgroundColor(g_tdSpeedometer[4], 255);
     TextDrawBoxColor(g_tdSpeedometer[4], 50);
     TextDrawUseBox(g_tdSpeedometer[4], 0);
     TextDrawSetProportional(g_tdSpeedometer[4], 1);
     TextDrawSetSelectable(g_tdSpeedometer[4], 0);
 
-    g_tdSpeedometer[5] = TextDrawCreate(603.000000, 381.000000, "KM/H");
-    TextDrawFont(g_tdSpeedometer[5], 2);
-    TextDrawLetterSize(g_tdSpeedometer[5], 0.250833, 1.500000);
-    TextDrawTextSize(g_tdSpeedometer[5], 402.000000, 17.000000);
-    TextDrawSetOutline(g_tdSpeedometer[5], 0);
+    g_tdSpeedometer[5] = TextDrawCreate(466.000000, 426.000000, "_");
+    TextDrawFont(g_tdSpeedometer[5], 1);
+    TextDrawLetterSize(g_tdSpeedometer[5], 0.600000, -5.950006);
+    TextDrawTextSize(g_tdSpeedometer[5], 285.000000, 40.500000);
+    TextDrawSetOutline(g_tdSpeedometer[5], 1);
     TextDrawSetShadow(g_tdSpeedometer[5], 0);
-    TextDrawAlignment(g_tdSpeedometer[5], 1);
+    TextDrawAlignment(g_tdSpeedometer[5], 2);
     TextDrawColor(g_tdSpeedometer[5], -1);
-    TextDrawBackgroundColor(g_tdSpeedometer[5], -1);
-    TextDrawBoxColor(g_tdSpeedometer[5], 50);
-    TextDrawUseBox(g_tdSpeedometer[5], 0);
+    TextDrawBackgroundColor(g_tdSpeedometer[5], 255);
+    TextDrawBoxColor(g_tdSpeedometer[5], 454761471);
+    TextDrawUseBox(g_tdSpeedometer[5], 1);
     TextDrawSetProportional(g_tdSpeedometer[5], 1);
     TextDrawSetSelectable(g_tdSpeedometer[5], 0);
+
+    g_tdSpeedometer[6] = TextDrawCreate(466.000000, 424.000000, "_");
+    TextDrawFont(g_tdSpeedometer[6], 1);
+    TextDrawLetterSize(g_tdSpeedometer[6], 0.600000, -5.600007);
+    TextDrawTextSize(g_tdSpeedometer[6], 282.500000, 36.500000);
+    TextDrawSetOutline(g_tdSpeedometer[6], 1);
+    TextDrawSetShadow(g_tdSpeedometer[6], 0);
+    TextDrawAlignment(g_tdSpeedometer[6], 2);
+    TextDrawColor(g_tdSpeedometer[6], -1);
+    TextDrawBackgroundColor(g_tdSpeedometer[6], 255);
+    TextDrawBoxColor(g_tdSpeedometer[6], 791621631);
+    TextDrawUseBox(g_tdSpeedometer[6], 1);
+    TextDrawSetProportional(g_tdSpeedometer[6], 1);
+    TextDrawSetSelectable(g_tdSpeedometer[6], 0);
+
+    // Speed green box
+    g_tdSpeedometer[7] = TextDrawCreate(466.000000, 424.000000, "_");
+    TextDrawFont(g_tdSpeedometer[7], 1);
+    TextDrawLetterSize(g_tdSpeedometer[7], 0.600000, -4.419996);
+    TextDrawTextSize(g_tdSpeedometer[7], 285.500000, 36.500000);
+    TextDrawSetOutline(g_tdSpeedometer[7], 1);
+    TextDrawSetShadow(g_tdSpeedometer[7], 0);
+    TextDrawAlignment(g_tdSpeedometer[7], 2);
+    TextDrawColor(g_tdSpeedometer[7], -1);
+    TextDrawBackgroundColor(g_tdSpeedometer[7], 255);
+    TextDrawBoxColor(g_tdSpeedometer[7], 1688687359);
+    TextDrawUseBox(g_tdSpeedometer[7], 1);
+    TextDrawSetProportional(g_tdSpeedometer[7], 1);
+    TextDrawSetSelectable(g_tdSpeedometer[7], 0);
+
+    g_tdSpeedometer[8] = TextDrawCreate(466.000000, 385.000000, "323");
+    TextDrawFont(g_tdSpeedometer[8], 3);
+    TextDrawLetterSize(g_tdSpeedometer[8], 0.412499, 1.899999);
+    TextDrawTextSize(g_tdSpeedometer[8], 400.000000, 17.000000);
+    TextDrawSetOutline(g_tdSpeedometer[8], 1);
+    TextDrawSetShadow(g_tdSpeedometer[8], 0);
+    TextDrawAlignment(g_tdSpeedometer[8], 2);
+    TextDrawColor(g_tdSpeedometer[8], -134744065);
+    TextDrawBackgroundColor(g_tdSpeedometer[8], 255);
+    TextDrawBoxColor(g_tdSpeedometer[8], 50);
+    TextDrawUseBox(g_tdSpeedometer[8], 0);
+    TextDrawSetProportional(g_tdSpeedometer[8], 1);
+    TextDrawSetSelectable(g_tdSpeedometer[8], 0);
+
+    g_tdSpeedometer[9] = TextDrawCreate(466.000000, 402.000000, "KM/H");
+    TextDrawFont(g_tdSpeedometer[9], 1);
+    TextDrawLetterSize(g_tdSpeedometer[9], 0.200000, 0.949998);
+    TextDrawTextSize(g_tdSpeedometer[9], 400.000000, 17.000000);
+    TextDrawSetOutline(g_tdSpeedometer[9], 0);
+    TextDrawSetShadow(g_tdSpeedometer[9], 0);
+    TextDrawAlignment(g_tdSpeedometer[9], 2);
+    TextDrawColor(g_tdSpeedometer[9], -134744065);
+    TextDrawBackgroundColor(g_tdSpeedometer[9], 255);
+    TextDrawBoxColor(g_tdSpeedometer[9], 50);
+    TextDrawUseBox(g_tdSpeedometer[9], 0);
+    TextDrawSetProportional(g_tdSpeedometer[9], 1);
+    TextDrawSetSelectable(g_tdSpeedometer[9], 0);
 
     // BANK ATM
     g_tdBankATM[0] = TextDrawCreate(319.000000, 158.000000, "_");
@@ -439,7 +497,7 @@ public OnGameModeInit()
 	TextDrawUseBox(g_tdShops[11], 0);
 	TextDrawSetProportional(g_tdShops[11], 1);
 	TextDrawSetSelectable(g_tdShops[11], 0);
-    
+
     #if defined TD_OnGameModeInit
         return TD_OnGameModeInit();
     #else
@@ -459,6 +517,63 @@ public OnGameModeInit()
 
 public OnPlayerConnect(playerid)
 {
+    // SPEEDOMETER
+    p_tdSpeedometer[playerid]{0} = CreatePlayerTextDraw(playerid, 584.000000, 405.000000, "PUERTAS");
+    PlayerTextDrawFont(playerid, p_tdSpeedometer[playerid]{0}, 1);
+    PlayerTextDrawLetterSize(playerid, p_tdSpeedometer[playerid]{0}, 0.233333, 1.200000);
+    PlayerTextDrawTextSize(playerid, p_tdSpeedometer[playerid]{0}, 400.000000, 37.000000);
+    PlayerTextDrawSetOutline(playerid, p_tdSpeedometer[playerid]{0}, 0);
+    PlayerTextDrawSetShadow(playerid, p_tdSpeedometer[playerid]{0}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdSpeedometer[playerid]{0}, 2);
+    PlayerTextDrawColor(playerid, p_tdSpeedometer[playerid]{0}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdSpeedometer[playerid]{0}, 255);
+    PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{0}, 791621631);
+    PlayerTextDrawUseBox(playerid, p_tdSpeedometer[playerid]{0}, 1);
+    PlayerTextDrawSetProportional(playerid, p_tdSpeedometer[playerid]{0}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdSpeedometer[playerid]{0}, 0);
+
+    p_tdSpeedometer[playerid]{1} = CreatePlayerTextDraw(playerid, 540.000000, 405.000000, "VENTANA");
+    PlayerTextDrawFont(playerid, p_tdSpeedometer[playerid]{1}, 1);
+    PlayerTextDrawLetterSize(playerid, p_tdSpeedometer[playerid]{1}, 0.233333, 1.200000);
+    PlayerTextDrawTextSize(playerid, p_tdSpeedometer[playerid]{1}, 400.000000, 37.000000);
+    PlayerTextDrawSetOutline(playerid, p_tdSpeedometer[playerid]{1}, 0);
+    PlayerTextDrawSetShadow(playerid, p_tdSpeedometer[playerid]{1}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdSpeedometer[playerid]{1}, 2);
+    PlayerTextDrawColor(playerid, p_tdSpeedometer[playerid]{1}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdSpeedometer[playerid]{1}, 255);
+    PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{1}, 791621631);
+    PlayerTextDrawUseBox(playerid, p_tdSpeedometer[playerid]{1}, 1);
+    PlayerTextDrawSetProportional(playerid, p_tdSpeedometer[playerid]{1}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdSpeedometer[playerid]{1}, 0);
+
+    p_tdSpeedometer[playerid]{2} = CreatePlayerTextDraw(playerid, 540.000000, 382.000000, "MOTOR");
+    PlayerTextDrawFont(playerid, p_tdSpeedometer[playerid]{2}, 1);
+    PlayerTextDrawLetterSize(playerid, p_tdSpeedometer[playerid]{2}, 0.233333, 1.200000);
+    PlayerTextDrawTextSize(playerid, p_tdSpeedometer[playerid]{2}, 400.000000, 37.000000);
+    PlayerTextDrawSetOutline(playerid, p_tdSpeedometer[playerid]{2}, 0);
+    PlayerTextDrawSetShadow(playerid, p_tdSpeedometer[playerid]{2}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdSpeedometer[playerid]{2}, 2);
+    PlayerTextDrawColor(playerid, p_tdSpeedometer[playerid]{2}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdSpeedometer[playerid]{2}, 255);
+    PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{2}, 791621631);
+    PlayerTextDrawUseBox(playerid, p_tdSpeedometer[playerid]{2}, 1);
+    PlayerTextDrawSetProportional(playerid, p_tdSpeedometer[playerid]{2}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdSpeedometer[playerid]{2}, 0);
+
+    p_tdSpeedometer[playerid]{3} = CreatePlayerTextDraw(playerid, 584.000000, 382.000000, "LUCES");
+    PlayerTextDrawFont(playerid, p_tdSpeedometer[playerid]{3}, 1);
+    PlayerTextDrawLetterSize(playerid, p_tdSpeedometer[playerid]{3}, 0.233333, 1.200000);
+    PlayerTextDrawTextSize(playerid, p_tdSpeedometer[playerid]{3}, 400.000000, 37.000000);
+    PlayerTextDrawSetOutline(playerid, p_tdSpeedometer[playerid]{3}, 0);
+    PlayerTextDrawSetShadow(playerid, p_tdSpeedometer[playerid]{3}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdSpeedometer[playerid]{3}, 2);
+    PlayerTextDrawColor(playerid, p_tdSpeedometer[playerid]{3}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdSpeedometer[playerid]{3}, 255);
+    PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{3}, 791621631);
+    PlayerTextDrawUseBox(playerid, p_tdSpeedometer[playerid]{3}, 1);
+    PlayerTextDrawSetProportional(playerid, p_tdSpeedometer[playerid]{3}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdSpeedometer[playerid]{3}, 0);
+
     // BEATING TEXT
     p_tdBeatingText{playerid} = CreatePlayerTextDraw(playerid, 319.000000, 369.000000, !"_");
     PlayerTextDrawFont(playerid, p_tdBeatingText{playerid}, 1);

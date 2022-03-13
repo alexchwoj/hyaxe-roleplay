@@ -52,6 +52,9 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 	#define minrand(%0,%1) (random((%1) - (%0)) + (%0))
 #endif
 
+#define IS_NAN(%0) (_:((Float:0x7FFFFFFF) & (%0)) > (0x7F800000))
+#define IsNaN(%0) IS_NAN(%0)
+
 #include "core/utils/bitarray.pwn"
 #include "core/utils/cells.pwn"
 #include "core/utils/sounds.pwn"

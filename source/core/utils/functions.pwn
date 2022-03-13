@@ -228,7 +228,57 @@ Float:CameraLookToAngle(playerid)
     return atan2(y, x) + 270.0;
 }
 
-GetXYFromAngle(&Float:x, &Float:y, Float:a, Float:distance) {
+GetXYFromAngle(&Float:x, &Float:y, Float:a, Float:distance) 
+{
 	x += (distance * floatsin(-a, degrees));
 	y += (distance * floatcos(-a, degrees));
+}
+
+stock InterpolateColourLinear(startColour, endColour, Float:fraction = Float:0x7FFFFFFF)
+{
+	new a = startColour & 0xFF;
+	if (IsNaN(fraction))
+	{
+		// Extract the fraction from the second alpha.
+		fraction = (endColour & 0xFF) / 255.0;
+		// Use the first alpha for output transparency.
+	}
+	else
+	{
+		// Combine the alpha values to give a relative fraction and a final alpha.
+		a = _:((a / 255.0) * (1.0 - fraction)),
+		fraction = ((endColour & 0xFF) / 255.0) * fraction,
+
+		// The final fraction is given comes from the relative ratio of the two alphas.
+		a = _:(Float:a + fraction),
+		fraction = fraction / Float:a,
+
+		// The final alpha comes from their sum, as a fraction of 1.
+		a = floatround(Float:a * 255.0);
+	}
+	if (fraction >= 1.0)
+	{
+		return endColour;
+	}
+    if (fraction <= 0.0)
+	{
+		return startColour;
+	}
+	new
+		// Step 1: Get the starting colour components.
+		r = startColour & 0xFF000000,
+		g = startColour & 0x00FF0000,
+		b = startColour & 0x0000FF00,
+		// Manipulate the format of floats to multiply by 256 by increasing the exponent by 8.
+		stage = floatround(Float:(_:fraction + 0x04000000)); // fraction * 256.0
+	return
+		// Step 2: Interpolate between the end points, and add to the start.
+		// Step 3: Combine the individual components.
+		(((r >>> 16) + ((endColour >>> 24       ) - (r >>> 24)) * stage) << 16 & 0xFF000000) |
+		(((g >>>  8) + ((endColour >>> 16 & 0xFF) - (g >>> 16)) * stage) <<  8 & 0x00FF0000) |
+		(((b       ) + ((endColour >>>  8 & 0xFF) - (b >>>  8)) * stage)       & 0x0000FF00) |
+		(a & 0xFF);
+	// Because we use a base of 256 instead of 100 to multiply the fractions, we would adjust the
+	// numbers down via `>>> 8` instead of `/ 100`, but since we then shift them up again to their
+	// final locations in the number we can skip a manipulation stage.
 }

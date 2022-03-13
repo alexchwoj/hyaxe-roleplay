@@ -100,6 +100,11 @@ Speedometer_Show(playerid)
         TextDrawShowForPlayer(playerid, g_tdSpeedometer[i]);
     }
 
+    PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{0});
+    PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{1});
+    PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{2});
+    PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{3});
+
     Speedometer_Update(playerid);
     g_rgiSpeedometerUpdateTimer[playerid] = SetTimerEx("VEHICLE_UpdateSpeedometer", 1000, true, "i", playerid);
 
@@ -115,6 +120,11 @@ Speedometer_Hide(playerid)
     {
         TextDrawHideForPlayer(playerid, g_tdSpeedometer[i]);
     }
+
+    PlayerTextDrawHide(playerid, p_tdSpeedometer[playerid]{0});
+    PlayerTextDrawHide(playerid, p_tdSpeedometer[playerid]{1});
+    PlayerTextDrawHide(playerid, p_tdSpeedometer[playerid]{2});
+    PlayerTextDrawHide(playerid, p_tdSpeedometer[playerid]{3});
 
     KillTimer(g_rgiSpeedometerUpdateTimer[playerid]);
     g_rgiSpeedometerUpdateTimer[playerid] = 0;
@@ -134,37 +144,35 @@ Speedometer_Update(playerid)
         return 1;
     }
 
-    const SPEED_MAX_SLASHES = 33;
-    const SPEED_MAX_FLOORS = 35;
-
     new vehicleid = GetPlayerVehicleID(playerid);
+    new modelid = GetVehicleModel(vehicleid) - 400;
     new Float:kmh = Vehicle_GetSpeed(vehicleid);
 
-    TextDrawSetStringForPlayer(g_tdSpeedometer[4], playerid, "%i", floatround(kmh));
+    TextDrawSetStringForPlayer(g_tdSpeedometer[8], playerid, "%i", floatround(kmh));
+    TextDrawSetStringForPlayer(g_tdSpeedometer[4], playerid, "GAS~n~%i", floatround(Vehicle_Fuel(vehicleid)));
 
-    new veh_max_speed = g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_iMaxSpeed];
-    new max_speed_percentage = floatround(floatdiv(kmh, veh_max_speed) * 100.0);    
-    new slashes = clamp(((max_speed_percentage * SPEED_MAX_SLASHES) / 100), 0, SPEED_MAX_SLASHES);
+    const Float:GREEN_BAR_MIN = -0.370;
+    const Float:GREEN_BAR_MAX = -5.570;
 
-    new td_string[SPEED_MAX_SLASHES + SPEED_MAX_FLOORS + 3], i;
-
-    for(; i < slashes; ++i)
+    new Float:new_y;
+    
+    // Update speed progress bar
+    if(kmh < 0.5)
     {
-        td_string[i] = '/';
+        new Float:veh_max_speed = float(g_rgeVehicleModelData[modelid][e_iMaxSpeed]);
+        new Float:max_speed_percentage = fclamp(kmh / veh_max_speed, 0.0, 1.0);
+        new_y = lerp(GREEN_BAR_MIN, GREEN_BAR_MAX, max_speed_percentage);
+        TextDrawLetterSize(g_tdSpeedometer[7], 0.600, new_y);
+        TextDrawShowForPlayer(playerid, g_tdSpeedometer[7]);
     }
 
-    strcat(td_string, "~n~");
-    i += 3;
-
-    new gas_percentage = floatround((g_rgeVehicles[vehicleid][e_fFuel] / Vehicle_GetModelMaxFuel(GetVehicleModel(vehicleid))) * 100.0);
-    new floors = clamp(((gas_percentage * SPEED_MAX_FLOORS) / 100), 0, SPEED_MAX_FLOORS);
-
-    for(new j; j < floors; ++j)
-    {
-        td_string[i++] = '-';
-    }
-
-    TextDrawSetStringForPlayer(g_tdSpeedometer[1], playerid, td_string);
+    // Update gas progress bar
+    new Float:max_fuel_percentage = Vehicle_Fuel(vehicleid) / g_rgeVehicleModelData[modelid][e_fMaxFuel];
+    new_y = lerp(GREEN_BAR_MIN, GREEN_BAR_MAX, max_fuel_percentage);
+    TextDrawLetterSize(g_tdSpeedometer[3], 0.600, new_y);
+    new color = InterpolateColourLinear(0xA83225FF, 0x64A752FF, max_fuel_percentage);
+    TextDrawBoxColor(g_tdSpeedometer[3], color);
+    TextDrawShowForPlayer(playerid, g_tdSpeedometer[3]);
 
     return 1;
 }
