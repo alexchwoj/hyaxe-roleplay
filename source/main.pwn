@@ -13,7 +13,11 @@
 	#pragma option -d3
 #endif
 
-#define FOREACH_NO_BOTS
+#define FOREACH_I_Player 1
+#define FOREACH_I_Bot 0
+#define FOREACH_I_Character 0
+#define FOREACH_I_Vehicle 0
+#define FOREACH_I_Actor 0
 
 public const __HYAXE__ = 1;
 
