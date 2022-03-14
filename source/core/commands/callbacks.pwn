@@ -3,7 +3,7 @@
 #endif
 #define _commands_callbacks_
 
-public OnGameModeInit()
+on_init RegisterCommands()
 {
     new hdr[AMX_HDR], name[32];
     GetAmxHeader(hdr);

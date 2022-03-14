@@ -72,6 +72,37 @@ Chat_SendMessageToRange(playerid, color, Float:range, const string[])
     return 1;
 }
 
+ChatBuffer_Push(playerid, color, const message[])
+{    
+    if(list_size(g_rglChatBuffer[playerid]) == CHAT_BUFFER_SIZE)
+    {
+        list_remove(g_rglChatBuffer[playerid], 0);
+    }
+
+    new msg[eMessageData];
+    msg[e_iColor] = color;
+    strcat(msg[e_szMessage], message);
+    list_add_arr(g_rglChatBuffer[playerid], msg);
+
+    return 1;
+}
+
+Chat_Resend(playerid)
+{
+    g_rgbRegisterChatMessages{playerid} = false;
+
+    new msg[eMessageData];
+    for_list(i : g_rglChatBuffer[playerid])
+    {
+        iter_get_arr_safe(i, msg);
+        SendClientMessage(playerid, msg[e_iColor], msg[e_szMessage]);
+    }
+
+    g_rgbRegisterChatMessages{playerid} = true;
+
+    return 1;
+}
+
 command b(playerid, const params[], "Envia un mensaje fuera de rol")
 {
     if (isnull(params))
