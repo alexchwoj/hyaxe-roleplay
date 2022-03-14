@@ -42,7 +42,7 @@ public OnPlayerDataLoaded(playerid)
 		}
     }
 
-    new song_link[144];
+    new song_link[65];
     format(song_link, sizeof(song_link), "https://github.com/RealAtom/hyaxe/raw/main/song/ost_intro%d.mp3", random(12));
     PlayAudioStreamForPlayer(playerid, song_link);
 
@@ -189,6 +189,9 @@ static AccountRegistered(playerid)
     
     Notification_Show(playerid, "Felicidades, te has registrado correctamente.", 3000, 0x64A752FF);
 
+    Needs_ShowBars(playerid);
+    Needs_StartUpdating(playerid);
+    
     return 1;
 }
 
@@ -256,9 +259,12 @@ dialog login(playerid, response, listitem, inputtext[])
 
     CallLocalFunction(!"OnPlayerAuthenticate", !"i", playerid);
 
-    new text[128];
+    new text[116];
     format(text, sizeof(text), "Bienvenido a ~r~Hyaxe~w~, %s. Tu último inicio de sesión fue el ~r~%s~w~.", Player_Name(playerid), Player_LastConnection(playerid));
     Notification_Show(playerid, text, 6000);
+
+    Needs_ShowBars(playerid);
+    Needs_StartUpdating(playerid);
 
     StopAudioStreamForPlayer(playerid);
 

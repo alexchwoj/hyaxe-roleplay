@@ -5,7 +5,8 @@
 
 GetTickDiff(newtick, oldtick)
 {
-	if (oldtick > newtick) {
+	if (oldtick > newtick) 
+    {
 		return (cellmax - oldtick + 1) - (cellmin - newtick);
 	}
 	return newtick - oldtick;
@@ -14,7 +15,13 @@ GetTickDiff(newtick, oldtick)
 RawIpToString(rawip)
 {
 	new ip[16];
-    format(ip, 16, "%d.%d.%d.%d", (rawip & 0xFF000000), (rawip & 0xFF0000), (rawip & 0xFF00), (rawip & 0xFF));
+    format(ip, 16, "%d.%d.%d.%d", 
+        ((rawip & 0xFF000000) >>> 24), 
+        ((rawip & 0xFF0000) >> 16),
+        ((rawip & 0xFF00) >> 8), 
+        (rawip & 0xFF)
+    );
+
     return ip;
 }
 

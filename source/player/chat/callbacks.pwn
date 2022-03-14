@@ -13,7 +13,7 @@ public OnPlayerText(playerid, text[])
             return 0;
         }
 
-        new string[288];
+        new string[150];
         format(string, sizeof(string), "%s dice: %s", Player_RPName(playerid), text);
 
         Chat_SendMessageToRange(playerid, 0xDADADAFF, 30.0, string);

@@ -498,6 +498,63 @@ public OnGameModeInit()
 	TextDrawSetProportional(g_tdShops[11], 1);
 	TextDrawSetSelectable(g_tdShops[11], 0);
 
+    // (S)Need bars
+    g_tdNeedBars[0] = TextDrawCreate(539.000000, 440.000000, "_");
+    TextDrawFont(g_tdNeedBars[0], 1);
+    TextDrawLetterSize(g_tdNeedBars[0], 0.600000, -1.850007);
+    TextDrawTextSize(g_tdNeedBars[0], 285.000000, 40.500000);
+    TextDrawSetOutline(g_tdNeedBars[0], 1);
+    TextDrawSetShadow(g_tdNeedBars[0], 0);
+    TextDrawAlignment(g_tdNeedBars[0], 2);
+    TextDrawColor(g_tdNeedBars[0], -1);
+    TextDrawBackgroundColor(g_tdNeedBars[0], 255);
+    TextDrawBoxColor(g_tdNeedBars[0], 454761471);
+    TextDrawUseBox(g_tdNeedBars[0], 1);
+    TextDrawSetProportional(g_tdNeedBars[0], 1);
+    TextDrawSetSelectable(g_tdNeedBars[0], 0);
+
+    g_tdNeedBars[1] = TextDrawCreate(585.000000, 440.000000, "_");
+    TextDrawFont(g_tdNeedBars[1], 1);
+    TextDrawLetterSize(g_tdNeedBars[1], 0.600000, -1.850007);
+    TextDrawTextSize(g_tdNeedBars[1], 285.000000, 40.500000);
+    TextDrawSetOutline(g_tdNeedBars[1], 1);
+    TextDrawSetShadow(g_tdNeedBars[1], 0);
+    TextDrawAlignment(g_tdNeedBars[1], 2);
+    TextDrawColor(g_tdNeedBars[1], -1);
+    TextDrawBackgroundColor(g_tdNeedBars[1], 255);
+    TextDrawBoxColor(g_tdNeedBars[1], 454761471);
+    TextDrawUseBox(g_tdNeedBars[1], 1);
+    TextDrawSetProportional(g_tdNeedBars[1], 1);
+    TextDrawSetSelectable(g_tdNeedBars[1], 0);
+
+    g_tdNeedBars[2] = TextDrawCreate(520.000000, 439.000000, "_");
+    TextDrawFont(g_tdNeedBars[2], 1);
+    TextDrawLetterSize(g_tdNeedBars[2], 0.600000, -1.549998);
+    TextDrawTextSize(g_tdNeedBars[2], 558.000000, 75.000000);
+    TextDrawSetOutline(g_tdNeedBars[2], 1);
+    TextDrawSetShadow(g_tdNeedBars[2], 0);
+    TextDrawAlignment(g_tdNeedBars[2], 1);
+    TextDrawColor(g_tdNeedBars[2], -1);
+    TextDrawBackgroundColor(g_tdNeedBars[2], 255);
+    TextDrawBoxColor(g_tdNeedBars[2], 791621631);
+    TextDrawUseBox(g_tdNeedBars[2], 1);
+    TextDrawSetProportional(g_tdNeedBars[2], 1);
+    TextDrawSetSelectable(g_tdNeedBars[2], 0);
+
+    g_tdNeedBars[3] = TextDrawCreate(566.000000, 439.000000, "_");
+    TextDrawFont(g_tdNeedBars[3], 1);
+    TextDrawLetterSize(g_tdNeedBars[3], 0.600000, -1.549998);
+    TextDrawTextSize(g_tdNeedBars[3], 604.500000, 75.000000);
+    TextDrawSetOutline(g_tdNeedBars[3], 1);
+    TextDrawSetShadow(g_tdNeedBars[3], 0);
+    TextDrawAlignment(g_tdNeedBars[3], 1);
+    TextDrawColor(g_tdNeedBars[3], -1);
+    TextDrawBackgroundColor(g_tdNeedBars[3], 255);
+    TextDrawBoxColor(g_tdNeedBars[3], 791621631);
+    TextDrawUseBox(g_tdNeedBars[3], 1);
+    TextDrawSetProportional(g_tdNeedBars[3], 1);
+    TextDrawSetSelectable(g_tdNeedBars[3], 0);
+
     #if defined TD_OnGameModeInit
         return TD_OnGameModeInit();
     #else
@@ -632,6 +689,35 @@ public OnPlayerConnect(playerid)
 	PlayerTextDrawUseBox(playerid, p_tdKeyGame{playerid}, 0);
 	PlayerTextDrawSetProportional(playerid, p_tdKeyGame{playerid}, 1);
 	PlayerTextDrawSetSelectable(playerid, p_tdKeyGame{playerid}, 0);
+
+    // (S)Need bars
+    p_tdNeedBars[playerid]{0} = CreatePlayerTextDraw(playerid, 520.000000, 439.000000, "_");
+    PlayerTextDrawFont(playerid, p_tdNeedBars[playerid]{0}, 1);
+    PlayerTextDrawLetterSize(playerid, p_tdNeedBars[playerid]{0}, 0.554166, -1.549998);
+    PlayerTextDrawTextSize(playerid, p_tdNeedBars[playerid]{0}, 549.000000, 75.000000);
+    PlayerTextDrawSetOutline(playerid, p_tdNeedBars[playerid]{0}, 1);
+    PlayerTextDrawSetShadow(playerid, p_tdNeedBars[playerid]{0}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdNeedBars[playerid]{0}, 1);
+    PlayerTextDrawColor(playerid, p_tdNeedBars[playerid]{0}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdNeedBars[playerid]{0}, 255);
+    PlayerTextDrawBoxColor(playerid, p_tdNeedBars[playerid]{0}, 981925887);
+    PlayerTextDrawUseBox(playerid, p_tdNeedBars[playerid]{0}, 1);
+    PlayerTextDrawSetProportional(playerid, p_tdNeedBars[playerid]{0}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdNeedBars[playerid]{0}, 0);
+
+    p_tdNeedBars[playerid]{1} = CreatePlayerTextDraw(playerid, 566.000000, 439.000000, "_");
+    PlayerTextDrawFont(playerid, p_tdNeedBars[playerid]{1}, 1);
+    PlayerTextDrawLetterSize(playerid, p_tdNeedBars[playerid]{1}, 0.554166, -1.549998);
+    PlayerTextDrawTextSize(playerid, p_tdNeedBars[playerid]{1}, 572.000000, 75.000000);
+    PlayerTextDrawSetOutline(playerid, p_tdNeedBars[playerid]{1}, 1);
+    PlayerTextDrawSetShadow(playerid, p_tdNeedBars[playerid]{1}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdNeedBars[playerid]{1}, 1);
+    PlayerTextDrawColor(playerid, p_tdNeedBars[playerid]{1}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdNeedBars[playerid]{1}, 255);
+    PlayerTextDrawBoxColor(playerid, p_tdNeedBars[playerid]{1}, -511630849);
+    PlayerTextDrawUseBox(playerid, p_tdNeedBars[playerid]{1}, 1);
+    PlayerTextDrawSetProportional(playerid, p_tdNeedBars[playerid]{1}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdNeedBars[playerid]{1}, 0);
 
     #if defined TD_OnPlayerConnect
         return TD_OnPlayerConnect(playerid);
