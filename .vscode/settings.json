@@ -5,5 +5,6 @@
 		"editor.quickSuggestions": true,
 		"editor.suggestOnTriggerCharacters": true,
 		"editor.suggest.snippetsPreventQuickSuggestions": true
-	}
+	},
+	"cmake.configureOnOpen": false
 }

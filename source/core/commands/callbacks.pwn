@@ -50,7 +50,7 @@ public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
 {
     DEBUG_PRINT("OnPlayerCommandReceived(%d, \"%s\", \"%s\", %b)", playerid, cmd, params, flags);
     
-    new cmd_level = (flags & 0xFF000000);
+    new cmd_level = (flags & 0xFF000000) >> 24;
 
     if(cmd_level > Player_AdminLevel(playerid))
         return 0;
@@ -78,4 +78,29 @@ public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
 #define OnPlayerCommandReceived CMD_OnPlayerCommandReceived
 #if defined CMD_OnPlayerCommandReceived
     forward CMD_OnPlayerCommandReceived(playerid, cmd[], params[], flags);
+#endif
+
+public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags)
+{
+    if(result == -1)
+    {
+        Commands_ShowSuggestions(playerid, cmd);
+        return 0;
+    }
+
+    #if defined CMD_OnPlayerCommandPerformed
+        return CMD_OnPlayerCommandPerformed(playerid, cmd, params, result, flags);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerCommandPerformed
+    #undef OnPlayerCommandPerformed
+#else
+    #define _ALS_OnPlayerCommandPerformed
+#endif
+#define OnPlayerCommandPerformed CMD_OnPlayerCommandPerformed
+#if defined CMD_OnPlayerCommandPerformed
+    forward CMD_OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags);
 #endif

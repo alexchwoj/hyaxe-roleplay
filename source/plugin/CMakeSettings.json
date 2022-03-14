@@ -14,14 +14,13 @@
     {
       "name": "x86-Release",
       "generator": "Ninja",
-      "configurationType": "RelWithDebInfo",
+      "configurationType": "Release",
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
       "cmakeCommandArgs": "",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "clang_cl_x86" ],
-      "variables": []
+      "inheritEnvironments": [ "clang_cl_x86" ]
     }
   ]
 }

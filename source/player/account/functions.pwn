@@ -32,8 +32,7 @@ Account_Register(playerid, callback = -1)
     );
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "OnAccountInserted", !"ii", playerid, callback);
 
-    for(new i = strlen(Player_Password(playerid)) - 1; i != -1; --i)
-        g_rgePlayerData[playerid][e_szPassword][i] = '\0';
+    memset(g_rgePlayerData[playerid][e_szPassword], '\0');
 
     return 1;
 }

@@ -8,5 +8,6 @@
 #include <array>
 #include <cstdint>
 #include <random>
+#include <algorithm>
 
 #endif

@@ -10,39 +10,19 @@ Chat_Clear(playerid = INVALID_PLAYER_ID, lines = 20)
 		return 0;
 	}
 
-	static const space[2] = " ";
-
-	__emit 
-    {
-        push.c space
-        push.c 1
-    }
-
 	if (playerid == INVALID_PLAYER_ID)
 	{
-		__emit push.c 12;
-
 		while (lines-- != -1)
 		{
-			__emit sysreq.c SendClientMessageToAll;
+			SendClientMessageToAll(0, " ");
 		}
-
-		__emit stack 12;
 	}
 	else
 	{
-		__emit 
-        {
-            push.s playerid
-            push.c 16
-        }
-
 		while (lines-- != -1)
 		{
-			__emit sysreq.c SendClientMessage;
+			SendClientMessage(playerid, 0, " ");
 		}
-
-		__emit stack 16;
 	}
 
 	return 1;
@@ -100,7 +80,7 @@ command b(playerid, const params[], "Envia un mensaje fuera de rol")
         return 1;
     }
 
-    new string[288];
+    new string[200];
     format(string, sizeof(string), "{DAA838}[OOC]{DADADA} %s (%d): (( %s ))", Player_RPName(playerid), playerid, params);
     Chat_SendMessageToRange(playerid, 0xDADADAFF, 30.0, string);
 
@@ -115,7 +95,7 @@ command me(playerid, const params[], "Envia un mensaje de acción")
         return 1;
     }
 
-    new string[288];
+    new string[156];
     format(string, sizeof(string), "* %s %s", Player_RPName(playerid), params);
     Chat_SendMessageToRange(playerid, 0xB39B6BFF, 30.0, string);
 
@@ -131,7 +111,7 @@ command intentar(playerid, const params[], "Rolear un intento")
         return 1;
     }
 
-    new string[288];
+    new string[200];
     format(string, sizeof(string), "* %s intenta %s y %s.", Player_RPName(playerid), params, random(2) ? "lo logra" : "falla");
     Chat_SendMessageToRange(playerid, 0xB39B6BFF, 30.0, string);
 
@@ -146,7 +126,7 @@ command do(playerid, const params[], "Envia un mensaje de entorno")
         return 1;
     }
 
-    new string[288];
+    new string[170];
     format(string, sizeof(string), "* %s (( %s ))", Player_RPName(playerid), params);
     Chat_SendMessageToRange(playerid, 0xB39B6BFF, 30.0, string);
 
@@ -154,10 +134,9 @@ command do(playerid, const params[], "Envia un mensaje de entorno")
 }
 alias:do("entorno")
 
-command testsound(playerid, params[], "")
+command testsound(playerid, const params[], "")
 {
-	new sound;
-	if (sscanf(params, "d", sound)) return 1;
+	extract params -> new sound = 0;
 	
 	PlayerPlaySound(playerid, sound, 0.0, 0.0, 0.0);
 	return 1;

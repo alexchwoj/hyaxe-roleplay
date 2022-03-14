@@ -10,3 +10,4 @@ native GetTextDrawLineCount(const string[]);
 native bool:SplitTextDrawString(string[], Float:max_width, Float:letter_size, font, outline = 0, bool:proportional = true, size = sizeof(string));
 native memset(arr[], val, size = sizeof(arr));
 native Float:RandomFloat(Float:min, Float:max);
+native levenshtein(const string1[], const string2[]);
