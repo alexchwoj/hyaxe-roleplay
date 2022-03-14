@@ -23,8 +23,8 @@ public const __HYAXE__ = 1;
 
 // Daniel-Cortez's Anti-DeAMX
 ////////////////////////////////
-@__beware__black_people__();
-@__beware__black_people__()
+__beware__black_people__();
+__beware__black_people__()
 {
 	#emit    stack    0x7FFFFFFF
 	#emit    inc.s    cellmax
@@ -47,6 +47,9 @@ L1:
 	#emit    zero    cellmin
 }
 
+const __dada = __addressof(__beware__black_people__);
+#pragma unused __dada
+
 #include <a_samp>
 
 #undef MAX_PLAYERS
@@ -63,6 +66,7 @@ L1:
 #include <colandreas>
 #include <foreach>
 #include <amx/amx_header>
+#include <md-sort>
 
 /*
 		YSI is pozzed

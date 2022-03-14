@@ -13,4 +13,5 @@ public:
 
 	cell n_memset(cell arr, int value, int cell_count);
 	cell n_RandomFloat(float min, float max);
+	cell n_levenshtein(std::string s1, std::string s2);
 };

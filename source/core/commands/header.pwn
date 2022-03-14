@@ -24,6 +24,7 @@ enum eCommandStore
 
 new g_rgeCommandStore[HYAXE_MAX_COMMANDS][eCommandStore];
 new g_rgiPlayerCommandCooldown[MAX_PLAYERS];
+new g_rgiPlayerCommandsDialog[MAX_PLAYERS][20] = { -1, ... };
 
 #define command%4\32;%0(%1,%2,%3) \
     forward hy@cmd_%0();\

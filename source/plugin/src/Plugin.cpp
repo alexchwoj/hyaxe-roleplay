@@ -9,6 +9,7 @@ bool Plugin::OnLoad()
 	RegisterNative<&Script::n_SplitTextDrawString>("SplitTextDrawString");
 	RegisterNative<&Script::n_memset>("memset");
 	RegisterNative<&Script::n_RandomFloat>("RandomFloat");
+	RegisterNative<&Script::n_levenshtein>("levenshtein");
 
 	Log("Loaded");
 	return true;

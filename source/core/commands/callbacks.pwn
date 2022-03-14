@@ -79,3 +79,28 @@ public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
 #if defined CMD_OnPlayerCommandReceived
     forward CMD_OnPlayerCommandReceived(playerid, cmd[], params[], flags);
 #endif
+
+public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags)
+{
+    if(result == -1)
+    {
+        Commands_ShowSuggestions(playerid, cmd);
+        return 0;
+    }
+
+    #if defined CMD_OnPlayerCommandPerformed
+        return CMD_OnPlayerCommandPerformed(playerid, cmd, params, result, flags);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerCommandPerformed
+    #undef OnPlayerCommandPerformed
+#else
+    #define _ALS_OnPlayerCommandPerformed
+#endif
+#define OnPlayerCommandPerformed CMD_OnPlayerCommandPerformed
+#if defined CMD_OnPlayerCommandPerformed
+    forward CMD_OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags);
+#endif
