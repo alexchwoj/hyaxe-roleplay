@@ -53,3 +53,38 @@ public HP_HealPlayer(playerid)
     Player_SetHealth(playerid, Player_Health(playerid) + 4);
     return 1;
 }
+
+public OnGameModeInit()
+{
+    for(new i; i < sizeof(g_rgeHospitalData); ++i)
+    {
+        new int = g_rgeHospitalData[i][e_iHospitalInteriorType];
+
+        EnterExit_Create(
+            19902,
+            g_rgeHospitalData[i][e_szHospitalName], "Salida",
+            g_rgeHospitalData[i][e_fHospitalPosX], g_rgeHospitalData[i][e_fHospitalPosY], g_rgeHospitalData[i][e_fHospitalPosZ], g_rgeHospitalData[i][e_fHospitalAngle], 0, 0,
+            g_rgeHospitalInteriorData[int][e_fHospitalIntPosX], g_rgeHospitalInteriorData[int][e_fHospitalIntPosY], g_rgeHospitalInteriorData[int][e_fHospitalIntPosZ], g_rgeHospitalInteriorData[int][e_fHospitalIntAngle], 400 + 1, g_rgeHospitalInteriorData[int][e_iHospitalIntInterior],
+            -1,  0
+        );
+
+        // MapIcons
+        CreateDynamicMapIcon(g_rgeHospitalData[i][e_fHospitalPosX], g_rgeHospitalData[i][e_fHospitalPosY], g_rgeHospitalData[i][e_fHospitalPosZ], 22, -1, .worldid = 0, .interiorid = 0);
+    }
+
+    #if defined HP_OnGameModeInit
+        return HP_OnGameModeInit();
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnGameModeInit
+    #undef OnGameModeInit
+#else
+    #define _ALS_OnGameModeInit
+#endif
+#define OnGameModeInit HP_OnGameModeInit
+#if defined HP_OnGameModeInit
+    forward HP_OnGameModeInit();
+#endif
