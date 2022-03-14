@@ -61,7 +61,7 @@ public OnGameModeInit()
         new int = g_rgeHospitalData[i][e_iHospitalInteriorType];
 
         Actor_CreateRobbable(
-            minrand(274, 276), 500, 800,
+            minrand(274, 277), 500, 800,
             g_rgeHospitalInteriorData[int][e_fHospitalActorPosX], g_rgeHospitalInteriorData[int][e_fHospitalActorPosY], g_rgeHospitalInteriorData[int][e_fHospitalActorPosZ], g_rgeHospitalInteriorData[int][e_fHospitalActorPosAngle],
             .worldid = 400 + i, .interiorid = g_rgeHospitalInteriorData[int][e_iHospitalIntInterior]
         );
@@ -70,7 +70,7 @@ public OnGameModeInit()
             19902,
             g_rgeHospitalData[i][e_szHospitalName], "Salida",
             g_rgeHospitalData[i][e_fHospitalPosX], g_rgeHospitalData[i][e_fHospitalPosY], g_rgeHospitalData[i][e_fHospitalPosZ], g_rgeHospitalData[i][e_fHospitalAngle], 0, 0,
-            g_rgeHospitalInteriorData[int][e_fHospitalIntPosX], g_rgeHospitalInteriorData[int][e_fHospitalIntPosY], g_rgeHospitalInteriorData[int][e_fHospitalIntPosZ], g_rgeHospitalInteriorData[int][e_fHospitalIntAngle], 400 + 1, g_rgeHospitalInteriorData[int][e_iHospitalIntInterior],
+            g_rgeHospitalInteriorData[int][e_fHospitalIntPosX], g_rgeHospitalInteriorData[int][e_fHospitalIntPosY], g_rgeHospitalInteriorData[int][e_fHospitalIntPosZ], g_rgeHospitalInteriorData[int][e_fHospitalIntAngle], 400 + i, g_rgeHospitalInteriorData[int][e_iHospitalIntInterior],
             -1,  0
         );
 
