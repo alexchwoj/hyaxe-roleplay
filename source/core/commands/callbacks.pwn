@@ -50,7 +50,7 @@ public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
 {
     DEBUG_PRINT("OnPlayerCommandReceived(%d, \"%s\", \"%s\", %b)", playerid, cmd, params, flags);
     
-    new cmd_level = (flags & 0xFF000000);
+    new cmd_level = (flags & 0xFF000000) >> 24;
 
     if(cmd_level > Player_AdminLevel(playerid))
         return 0;
