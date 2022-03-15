@@ -180,6 +180,16 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 format(message, sizeof(message), "* %s %sbloqueó su vehículo", Player_RPName(playerid), (g_rgeVehicles[vehicleid][e_bLocked] ? "" : "des"));
                 Chat_SendMessageToRange(playerid, 0xB39B6BFF, 15.0, message);
 
+                new Float:x, Float:y, Float:z, vw = GetPlayerVirtualWorld(playerid), int = GetPlayerInterior(playerid);
+                GetVehiclePos(vehicleid, x, y, z);
+
+                foreach(new i : LoggedIn)
+                {
+                    if(GetPlayerVirtualWorld(i) != vw || GetPlayerInterior(i) != int || !IsPlayerInRangeOfPoint(i, 10.0, x, y, z))
+                        continue;
+
+                    PlayerPlaySound(i, SOUND_CAR_DOORS, x, y, z);
+                }
                 return 1;
             }
         }

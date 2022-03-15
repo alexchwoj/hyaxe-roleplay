@@ -166,18 +166,30 @@ Notification_Show(playerid, const text[], time, color = 0xCB3126FF)
 
 Notification_ShowBeatingText(playerid, time, color, alpha_min, alpha_max, const text[])
 {
-    if(g_rgiTextProcessTimer[playerid])
-    {
-        KillTimer(g_rgiTextProcessTimer[playerid]);
-    }
-
     new string[128];
-    strcat(string, Str_FixEncoding(text));
+    strcat(string, text);
+    Str_FixEncoding_Ref(string);
 
     for(new i = strlen(string) - 1; i != -1; --i)
     {
         if(string[i] == ' ')
             string[i] = '_';
+    }
+
+    if(IsPlayerTextDrawVisible(playerid, p_tdBeatingText{playerid}))
+    {
+        new td_string[128];
+        PlayerTextDrawGetString(playerid, p_tdBeatingText{playerid}, td_string);
+
+        if(!strcmp(td_string, string))
+        {
+            return 0;
+        }
+    }
+
+    if(g_rgiTextProcessTimer[playerid])
+    {
+        KillTimer(g_rgiTextProcessTimer[playerid]);
     }
 
     new td_color = (color << 8) ^ alpha_max;

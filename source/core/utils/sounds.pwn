@@ -13,7 +13,8 @@ enum _:eServerSounds
     SOUND_SENT = 40404,
     SOUND_SUCCESS = 1150,
     SOUND_SUCCESS_ONE = 1137,
-    SOUND_SUCCESS_TWO = 1138
+    SOUND_SUCCESS_TWO = 1138,
+    SOUND_CAR_DOORS = 24600
 };
 
 native HY_PlayerPlaySound(playerid, soundid, Float:x = 0.0, Float:y = 0.0, Float:z = 0.0) = PlayerPlaySound;
