@@ -40,20 +40,19 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
                 if(info[2])
                 {
-                    SetPlayerPos(playerid, g_rgeEnterExits[id][e_fExitX], g_rgeEnterExits[id][e_fExitY], g_rgeEnterExits[id][e_fExitZ]);
+                    Streamer_UpdateEx(playerid, g_rgeEnterExits[id][e_fExitX], g_rgeEnterExits[id][e_fExitY], g_rgeEnterExits[id][e_fExitZ], .worldid = g_rgeEnterExits[id][e_iExitWorld], .interiorid = g_rgeEnterExits[id][e_iExitInterior], .compensatedtime = 1, .freezeplayer = true);
+                    //SetPlayerPos(playerid, g_rgeEnterExits[id][e_fExitX], g_rgeEnterExits[id][e_fExitY], g_rgeEnterExits[id][e_fExitZ]);
                     SetPlayerFacingAngle(playerid, g_rgeEnterExits[id][e_fExitAngle]);
                     SetPlayerInterior(playerid, g_rgeEnterExits[id][e_iExitInterior]);
                     SetPlayerVirtualWorld(playerid, g_rgeEnterExits[id][e_iExitWorld]);
-                    Streamer_Update(playerid);
                 }
                 else
                 {
-                    Streamer_UpdateEx(playerid, g_rgeEnterExits[id][e_fEnterX], g_rgeEnterExits[id][e_fEnterY], g_rgeEnterExits[id][e_fEnterZ], g_rgeEnterExits[id][e_iEnterWorld], g_rgeEnterExits[id][e_iEnterInterior]);
-                    SetPlayerPos(playerid, g_rgeEnterExits[id][e_fEnterX], g_rgeEnterExits[id][e_fEnterY], g_rgeEnterExits[id][e_fEnterZ]);
+                    Streamer_UpdateEx(playerid, g_rgeEnterExits[id][e_fEnterX], g_rgeEnterExits[id][e_fEnterY], g_rgeEnterExits[id][e_fEnterZ], .worldid = g_rgeEnterExits[id][e_iEnterWorld], .interiorid = g_rgeEnterExits[id][e_iEnterInterior], .compensatedtime = 1, .freezeplayer = 1);
+                    //SetPlayerPos(playerid, g_rgeEnterExits[id][e_fEnterX], g_rgeEnterExits[id][e_fEnterY], g_rgeEnterExits[id][e_fEnterZ]);
                     SetPlayerFacingAngle(playerid, g_rgeEnterExits[id][e_fEnterAngle]);
                     SetPlayerInterior(playerid, g_rgeEnterExits[id][e_iEnterInterior]);
                     SetPlayerVirtualWorld(playerid, g_rgeEnterExits[id][e_iEnterWorld]);
-                    Streamer_Update(playerid);
                 }
             }
         }
