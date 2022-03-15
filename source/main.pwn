@@ -19,6 +19,10 @@
 #define FOREACH_I_Vehicle 0
 #define FOREACH_I_Actor 0
 
+#define PP_SYNTAX_ON_INIT
+#define PP_SYNTAX_ON_EXIT
+#define PP_SYNTAX_FOR_LIST
+
 public const __HYAXE__ = 1;
 
 // Daniel-Cortez's Anti-DeAMX
@@ -62,6 +66,7 @@ const __dada = __addressof(__beware__black_people__);
 #include <Pawn.CMD>
 #include <Pawn.Regex>
 #include <Pawn.RakNet>
+#include <PawnPlus>
 #include <a_mysql>
 #include <colandreas>
 #include <foreach>

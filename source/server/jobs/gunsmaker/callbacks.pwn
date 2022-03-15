@@ -170,7 +170,7 @@ static GunsmakerKeyGameCallback(playerid, bool:success)
     ClearAnimations(playerid);
     TogglePlayerControllable(playerid, true);
     TogglePlayerWidescreen(playerid, false);
-    // Chat_Resend(playerid)
+    Chat_Resend(playerid);
 
     if(success)
     {
@@ -205,7 +205,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
             TogglePlayerDynamicCP(playerid, checkpointid, false);
             TogglePlayerControllable(playerid, false);
             TogglePlayerWidescreen(playerid, true);
-            // Chat_Resend(playerid);
+            Chat_Resend(playerid);
 
             SetPlayerPos(playerid, g_rgfGunsmakerBenchSites[benchid][0], g_rgfGunsmakerBenchSites[benchid][1], g_rgfGunsmakerBenchSites[benchid][2]);
             SetPlayerFacingAngle(playerid, g_rgfGunsmakerBenchSites[benchid][3]);
