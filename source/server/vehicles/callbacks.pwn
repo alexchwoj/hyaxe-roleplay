@@ -132,7 +132,7 @@ public VEHICLE_UpdateSpeedometer(playerid)
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if((newkeys & KEY_NO) != 0)
+    if((newkeys & KEY_NO) != 0 && !(newkeys & KEY_HANDBRAKE))
     {
         if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
         {
@@ -147,6 +147,12 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 format(notif_str, sizeof(notif_str), "El vehículo ya se está %s", (Vehicle_GetEngineState(vehicleid) ? "apagando" : "encendiendo"));
                 Notification_ShowBeatingText(playerid, 1000, 0xED2B2B, 100, 255, notif_str);
                 return 1;
+            }
+
+            if(Speedometer_Shown(playerid))
+            {
+                PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{2}, 0xE69F2EFF);
+                PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{2});
             }
 
             format(notif_str, sizeof(notif_str), "%s motor", (Vehicle_GetEngineState(vehicleid) == VEHICLE_STATE_ON ? "Apagando" : "Encendiendo"));
@@ -164,12 +170,36 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 Vehicle_ToggleLock(vehicleid);
                 SetPlayerChatBubble(playerid, (g_rgeVehicles[vehicleid][e_bLocked] ? "* Bloqueó su vehículo" : "* Desbloqueó su vehículo"), 0xB39B6BFF, 15.0, 5000);
                 
+                if(Speedometer_Shown(playerid))
+                {
+                    PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{0}, (g_rgeVehicles[vehicleid][e_bLocked] ? 0xA83225FF : 0x64A752FF));
+                    PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{0});
+                }
+
                 new message[55];
                 format(message, sizeof(message), "* %s %sbloqueó su vehículo", Player_RPName(playerid), (g_rgeVehicles[vehicleid][e_bLocked] ? "" : "des"));
                 Chat_SendMessageToRange(playerid, 0xB39B6BFF, 15.0, message);
 
                 return 1;
             }
+        }
+    }
+    else if((newkeys & (KEY_HANDBRAKE | KEY_NO)) == KEY_HANDBRAKE | KEY_NO)
+    {
+        if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+        {
+            new vehicleid = GetPlayerVehicleID(playerid);
+            if(vehicleid)
+            {
+                new lights = Vehicle_ToggleLights(vehicleid);
+                if(Speedometer_Shown(playerid))
+                {
+                    PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{3}, (lights ? 0x64A752FF : 0x2F2F2FFF));
+                    PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{3});
+                }
+            }
+
+            return 1;
         }
     }
 
@@ -196,6 +226,12 @@ public VEHICLE_ToggleEngineTimer(playerid, vehicleid)
     
     if(g_rgeVehicles[vehicleid][e_fHealth] <= 375.0)
     {
+        if(Speedometer_Shown(playerid))
+        {
+            PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{2}, 0xA83225FF);
+            PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{2});
+        }
+
         Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Motor averiado. Llama a un mecánico");
         return 1;
     }
@@ -211,10 +247,20 @@ public VEHICLE_ToggleEngineTimer(playerid, vehicleid)
     if(Vehicle_GetEngineState(vehicleid))
     {
         Notification_ShowBeatingText(playerid, 3000, 0x98D952, 100, 255, "Motor encendido");
+        if(Speedometer_Shown(playerid))
+        {
+            PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{2}, 0x64A752FF);
+            PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{2});
+        }
     }
     else
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Motor apagado");
+        if(Speedometer_Shown(playerid))
+        {
+            PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{2}, 0x2F2F2FFF);
+            PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{2});
+        }
     }
 
     return 1;

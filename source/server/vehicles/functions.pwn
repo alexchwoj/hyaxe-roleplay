@@ -90,19 +90,49 @@ Vehicle_ToggleLock(vehicleid)
     return 1;
 }
 
+Vehicle_ToggleLights(vehicleid, status = VEHICLE_STATE_DEFAULT)
+{
+    new engine, lights, alarm, doors, bonnet, boot, objective;
+    GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+    lights = (status != VEHICLE_STATE_DEFAULT ? status : _:!lights);
+    SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+    return lights;
+}
+
+Vehicle_GetLightsStatus(vehicleid)
+{
+    new dummy, lights;
+    GetVehicleParamsEx(vehicleid, dummy, lights, dummy, dummy, dummy, dummy, dummy);
+    return lights;
+}
+
 Speedometer_Show(playerid)
 {
     if(g_rgiSpeedometerUpdateTimer[playerid])
        return 0;
 
+    if(!IsPlayerInAnyVehicle(playerid))
+        return 0;
+    
     for(new i = sizeof(g_tdSpeedometer) - 1; i != -1; --i)
     {
         TextDrawShowForPlayer(playerid, g_tdSpeedometer[i]);
     }
 
+    new vehicleid = GetPlayerVehicleID(playerid);
+    PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{0}, (g_rgeVehicles[vehicleid][e_bLocked] ? 0xA83225FF : 0x64A752FF));
     PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{0});
     PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{1});
+    if(Vehicle_GetHealth(vehicleid) <= 375.0 || !Vehicle_Fuel(vehicleid))
+    {
+        PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{2}, 0xA83225FF);
+    }
+    else
+    {
+        PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{2}, (Vehicle_GetEngineState(vehicleid) ? 0x64A752FF : 0x2F2F2FFF));
+    }
     PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{2});
+    PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{3}, (Vehicle_GetLightsStatus(vehicleid) ? 0x64A752FF : 0x2F2F2FFF));
     PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{3});
 
     Speedometer_Update(playerid);
@@ -157,14 +187,11 @@ Speedometer_Update(playerid)
     new Float:new_y;
 
     // Update speed progress bar
-    if(kmh > 0.5)
-    {
-        new Float:veh_max_speed = float(g_rgeVehicleModelData[modelid][e_iMaxSpeed]);
-        new Float:max_speed_percentage = fclamp(kmh / veh_max_speed, 0.0, 1.0);
-        new_y = lerp(GREEN_BAR_MIN, GREEN_BAR_MAX, max_speed_percentage);
-        TextDrawLetterSize(g_tdSpeedometer[7], 0.600, new_y);
-        TextDrawShowForPlayer(playerid, g_tdSpeedometer[7]);
-    }
+    new Float:veh_max_speed = float(g_rgeVehicleModelData[modelid][e_iMaxSpeed]);
+    new Float:max_speed_percentage = fclamp(kmh / veh_max_speed, 0.0, 1.0);
+    new_y = lerp(GREEN_BAR_MIN, GREEN_BAR_MAX, max_speed_percentage);
+    TextDrawLetterSize(g_tdSpeedometer[7], 0.600, new_y);
+    TextDrawShowForPlayer(playerid, g_tdSpeedometer[7]);
 
     // Update gas progress bar
     new Float:max_fuel_percentage = Vehicle_Fuel(vehicleid) / g_rgeVehicleModelData[modelid][e_fMaxFuel];
@@ -361,7 +388,16 @@ command setvehhealth(playerid, const params[], "Cambia la vida de un vehículo")
     if(!IsValidVehicle(vehicleid))
         return SendClientMessage(playerid, 0xED2B2BFF, "› {DADADA}Vehículo inválido.");
 
-    Vehicle_SetHealth(vehicleid, health);
+    health = fclamp(health, 0.0, 1000.0);
+    if(health == 1000.0)
+    {
+        Vehicle_Repair(vehicleid);
+    }
+    else
+    {
+        Vehicle_SetHealth(vehicleid, health);
+    }
+
     SendClientMessagef(playerid, 0xED2B2BFF, "› {DADADA}La vida del vehículo {ED2B2B}%i{DADADA} ahora es de {ED2B2B}%.1f{DADADA}.", vehicleid, health);
 
     return 1;

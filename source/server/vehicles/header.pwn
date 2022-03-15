@@ -6,7 +6,7 @@
 const MIN_VEHICLE_MODEL = 400;
 const MAX_VEHICLE_MODEL = 611;
 const MAX_VEHICLE_MODELS = MAX_VEHICLE_MODEL - MIN_VEHICLE_MODEL;
-const Float:VEHICLE_FUEL_DIVISOR = 100.0;
+const Float:VEHICLE_FUEL_DIVISOR = 20000.0;
 
 new
     IteratorArray:PlayerVehicles[MAX_PLAYERS]<MAX_VEHICLES>;
@@ -301,6 +301,8 @@ new
 #define Vehicle_GetVirtualWorld(%0) (g_rgeVehicles[(%0)][e_iVehWorld])
 #define Vehicle_SetInterior(%0,%1) (g_rgeVehicles[(%0)][e_iVehInterior] = (%1), LinkVehicleToInterior((%0), (%1)))
 #define Vehicle_GetInterior(%0) (g_rgeVehicles[(%0)][e_iVehInterior])
+
+#define Speedometer_Shown(%0) (IsTextDrawVisibleForPlayer(playerid, g_tdSpeedometer[0]))
 
 forward VEHICLE_Update(vehicleid);
 forward VEHICLE_UpdateSpeedometer(playerid);
