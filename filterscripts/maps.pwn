@@ -34,8 +34,8 @@ public OnFilterScriptInit()
     SetDynamicObjectMaterial(tmpobjid, 0, 1426, "break_scaffold", "CJ_BLUE_WOOD", 0);
     tmpobjid = CreateDynamicObjectEx(19370,1171.694,-1325.270,1001.844,0.000,0.000,0.000,777.700,777.700);
     SetDynamicObjectMaterial(tmpobjid, 0, 8391, "ballys01", "vgncorpdoor1_512", 0);
-    tmpobjid = CreateDynamicObjectEx(19325,1150.104,-1325.577,998.934,0.000,0.000,-178.400,777.700,777.700);
-    SetDynamicObjectMaterialText(tmpobjid, 0, "REGISTRY", 140, "Calibri", 45, 1, -16777216, 0, 2);
+    //tmpobjid = CreateDynamicObjectEx(19325,1150.104,-1325.577,998.934,0.000,0.000,-178.400,777.700,777.700);
+    //SetDynamicObjectMaterialText(tmpobjid, 0, "REGISTRY", 140, "Calibri", 45, 1, -16777216, 0, 2);
     tmpobjid = CreateDynamicObjectEx(19325,1145.731,-1323.934,1002.344,0.000,0.000,179.999,777.700,777.700);
     SetDynamicObjectMaterialText(tmpobjid, 0, "HYAXE", 140, "Ariel", 35, 1, -1, 0, 1);
     tmpobjid = CreateDynamicObjectEx(19325,1145.751,-1323.838,1001.870,0.000,0.000,-179.900,777.700,777.700);
@@ -1868,7 +1868,7 @@ public OnFilterScriptInit()
     tmpobjid = CreateDynamicObject(18980, 653.307007, -347.794006, -77.911003, 0.000000, 0.000000, 0.000000, -1, 1, -1, STREAMER_OBJECT_SD, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 16639, "a51_labs", "ws_trainstationwin1", 0); 
     tmpobjid = CreateDynamicObject(19477, 644.736023, -339.628998, -95.147003, 0.000000, 0.000000, 0.000000, -1, 1, -1, STREAMER_OBJECT_SD, 300.0);
-    SetDynamicObjectMaterialText(tmpobjid, 0, "REGISTRY", 130, "Ariel", 45, 0, 0xFFFFFFFF, 0, 1); 
+    SetDynamicObjectMaterialText(tmpobjid, 0, "HYAXE", 130, "Ariel", 45, 0, 0xFFFFFFFF, 0, 1); 
     CreateDynamicObject(2332, 647.296021, -350.760010, -94.535004, 0.000000, 0.000000, 270.000000, -1, 1, -1, STREAMER_OBJECT_SD, 300.0);
     tmpobjid = CreateDynamicObject(18066, 644.671997, -339.618011, -95.156998, 0.000000, 0.000000, -89.800003, -1, 1, -1, STREAMER_OBJECT_SD, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 18646, "matcolours", "grey-60-percent", 0xFFA9A9A9); 
