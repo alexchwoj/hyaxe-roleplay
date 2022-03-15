@@ -86,7 +86,7 @@ static LawnMowerEvent(playerid, eJobEvent:event, areaid)
             g_rgeLawnmowerAreas[parkid][e_iMowingPlayer] = INVALID_PLAYER_ID;
             g_rgiPlayerLawnmowerArea{playerid} = 0xFF;
 
-            Notification_Show(playerid, "El capataz te vio fuera del cortacésped y te ~r~despidió~w~.", 5);
+            Notification_Show(playerid, "El capataz te vio fuera del cortacésped y te ~r~despidió~w~.", 5000);
         }
     }
     #pragma unused playerid, event, areaid

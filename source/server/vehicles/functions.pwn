@@ -9,6 +9,7 @@ Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, c
     if(vehicleid != INVALID_VEHICLE_ID)
     {
         g_rgeVehicles[vehicleid][e_bValid] = true;
+        g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = INVALID_PLAYER_ID;
         g_rgeVehicles[vehicleid][e_fPosX] = x;
         g_rgeVehicles[vehicleid][e_fPosY] = y;
         g_rgeVehicles[vehicleid][e_fPosZ] = z;
@@ -31,6 +32,9 @@ Vehicle_Destroy(vehicleid)
 
     Vehicle_StopUpdating(vehicleid);
     g_rgeVehicles[vehicleid][e_bValid] = false;
+    g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = INVALID_PLAYER_ID;
+    g_rgeVehicles[vehicleid][e_iVehicleDbId] = 0;
+
     return 1;
 }
 
