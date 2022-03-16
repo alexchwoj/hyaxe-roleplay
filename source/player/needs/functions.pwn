@@ -85,6 +85,26 @@ Needs_ShowBars(playerid)
     return 1;
 }
 
+Player_Puke(playerid)
+{
+    DEBUG_PRINT("Player_Puke(playerid = %i)", playerid);
+
+    Player_StopShopping(playerid);
+    g_rgePlayerTempData[playerid][e_iPlayerEatCount] = 0;
+    g_rgePlayerTempData[playerid][e_iPlayerPukeTick] = GetTickCount();
+    Bit_Set(Player_Flags(playerid), PFLAG_IS_PUKING, true);
+
+    SetPlayerFacingAngle(playerid, 0.0);
+    new Float:x, Float:y, Float:z;
+    GetPlayerPos(playerid, x, y, z);
+
+    ApplyAnimation(playerid, "FOOD", "EAT_VOMIT_P", 4.1, false, false, false, true, 0);
+    PlayerPlaySound(playerid, 1169, x, y, z);
+
+    g_rgeNeedsTimers[playerid][e_iNeedsTimerVomit] = SetTimerEx("NEEDS_VomitStepOne", 4000, false, !"i", playerid);
+    return 1;
+}
+
 command set_thirst(playerid, const params[], "Asigna la sed de un jugador")
 {
     new destination, Float:thirst;

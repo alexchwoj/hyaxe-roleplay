@@ -7,6 +7,51 @@ static Pizza_OnBuy(playerid, shop_id, item_id)
 {
     #pragma unused shop_id
 
+    if(g_rgePlayerTempData[playerid][e_iPlayerEatTick] && GetTickDiff(GetTickCount(), g_rgePlayerTempData[playerid][e_iPlayerEatTick]) >= 120000)
+    {
+        g_rgePlayerTempData[playerid][e_iPlayerEatCount] = 0;
+    }
+
+    if(g_rgePlayerTempData[playerid][e_iPlayerPukeTick])
+    {
+        new diff = GetTickDiff(GetTickCount(), g_rgePlayerTempData[playerid][e_iPlayerPukeTick]);
+        if(diff <= 300000)
+        {
+            SendClientMessagef(playerid, 0xDADADAFF, "Vomitaste hace poco y la comida te caera mal. Espera {CB3126}%i minutos{DADADA} antes de volver a comer.", ((300000 - diff) / 60000));
+            return 0;
+        }
+    }
+
+    g_rgePlayerTempData[playerid][e_iPlayerPukeTick] = 0;
+    g_rgePlayerTempData[playerid][e_iPlayerEatCount]++;
+    g_rgePlayerTempData[playerid][e_iPlayerEatTick] = GetTickCount();
+
+    switch(item_id)
+    {
+        case 0:
+        {
+            SendClientMessage(playerid, 0xDADADAFF, "Compraste una {CB3126}porción de pizza pepperoni{DADADA}.");
+            Player_AddHunger(playerid, -10.0);
+            Player_AddThirst(playerid, 1.0);
+        }
+    }
+
+    if(g_rgePlayerTempData[playerid][e_iPlayerEatCount] >= 5)
+    {
+        Player_Puke(playerid);
+        return 0;
+    }
+
+    return 1;
+}
+
+static PreloadPizzaPlaceAnims(playerid, bool:enter)
+{
+    if(enter)
+    {
+        ApplyAnimation(playerid, "FOOD", "null", 4.1, 0, 0, 0, 0, 0, 0);
+    }
+
     return 1;
 }
 
@@ -16,7 +61,7 @@ public OnGameModeInit()
     Actor_CreateRobbable(155, 500, 750, 373.7393, -117.2236, 1002.4995, 175.4680, .worldid = 1, .interiorid = 5);
 
     // EnExs
-    EnterExit_Create(19902, "{ED2B2B}Ugi's Pizza", "{DADADA}Salida", 2105.0681, -1806.4565, 13.5547, 91.9755, 0, 0, 372.4150, -133.3214, 1001.4922, 355.1316, 1, 5, -1, 0);
+    EnterExit_Create(19902, "{ED2B2B}Ugi's Pizza", "{DADADA}Salida", 2105.0681, -1806.4565, 13.5547, 91.9755, 0, 0, 372.4150, -133.3214, 1001.4922, 355.1316, 1, 5, .callback_address = __addressof(PreloadPizzaPlaceAnims));
 
     // MapIcons
     CreateDynamicMapIcon(2105.0681, -1806.4565, 13.5547, 29, -1, .worldid = 0, .interiorid = 0);

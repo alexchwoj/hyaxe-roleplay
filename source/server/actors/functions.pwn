@@ -46,6 +46,8 @@ Actor_Rob(playerid, actorid)
     Bit_Set(Player_Flags(playerid), PFLAG_ROBBING_STORE, true);
     g_rgeRobbableActors[id][e_iRobbingPlayer] = playerid;
 
+    ApplyDynamicActorAnimation(actorid, "SHOP", "null", 4.1, false, false, false, false, 0);
+    
     if((random(100) + 1) % 2)
     {
         ApplyDynamicActorAnimation(actorid, "SHOP", "SHP_ROB_REACT", 4.1, false, false, false, true, 0);
