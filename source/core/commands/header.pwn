@@ -29,6 +29,7 @@ new g_rgiPlayerCommandsDialog[MAX_PLAYERS][20] = { -1, ... };
 #define command%4\32;%0(%1,%2,%3) \
     forward hy@cmd_%0();\
     public hy@cmd_%0() {\
+        DEBUG_PRINT("[cmd] Registering command \"%s\"", #%0);\
         new id = Commands_GetFreeIndex();\
         strcpy(g_rgeCommandStore[id][e_szCommandName], #%0);\
         strcpy(g_rgeCommandStore[id][e_szCommandDescription], %3);\

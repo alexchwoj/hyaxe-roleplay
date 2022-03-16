@@ -70,7 +70,7 @@ const __dada = __addressof(__beware__black_people__);
 #include <a_mysql>
 #include <colandreas>
 #include <foreach>
-#include <amx/amx_header>
+//#include <amx/amx_header>
 #include <md-sort>
 
 /*

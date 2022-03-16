@@ -15,13 +15,11 @@ Commands_GetFreeIndex()
     
     // Assume no free index found
 
-    new hdr[AMX_HDR], name[32], est_new;
-    GetAmxHeader(hdr);
+    new name[32], est_new;
 
-    for(new i = GetNumPublics(hdr); i != -1; --i)
+    for(new i = amx_num_publics() - 1; i != -1; --i)
     {
-        if(!GetPublicNameFromIndex(i, name))
-            continue;
+        amx_public_name(i, name);
 
         if(!strcmp("hy@cmd_", name, true, 7))
             est_new++;
