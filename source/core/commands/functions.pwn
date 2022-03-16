@@ -91,7 +91,7 @@ Commands_ShowSuggestions(playerid, const command[])
     {
         new cmd_flags = PC_GetFlags(cmd_name);
         new cmdid = distances[i][2];
-        g_rgiPlayerCommandsDialog[playerid][i] = cmdid;
+        g_rgiPlayerCommandsDialog[playerid][(distances_length - 1) - i] = cmdid;
 
         new description[50] = "Sin descripción";
         if(!isnull(g_rgeCommandStore[cmdid][e_szCommandDescription]))
