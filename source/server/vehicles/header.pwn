@@ -29,7 +29,8 @@ enum eVehicleType
     VEHICLE_TYPE_NONE,
     VEHICLE_TYPE_PERSONAL,
     VEHICLE_TYPE_WORK,
-    VEHICLE_TYPE_DEALERSHIP
+    VEHICLE_TYPE_DEALERSHIP,
+    VEHICLE_TYPE_ADMIN
 };
 
 enum eVehicleData 
@@ -305,5 +306,5 @@ new
 #define Speedometer_Shown(%0) (IsTextDrawVisibleForPlayer(playerid, g_tdSpeedometer[0]))
 
 forward VEHICLE_Update(vehicleid);
-forward VEHICLE_UpdateSpeedometer(playerid);
+forward Speedometer_Update(playerid);
 forward VEHICLE_ToggleEngineTimer(playerid, vehicleid);

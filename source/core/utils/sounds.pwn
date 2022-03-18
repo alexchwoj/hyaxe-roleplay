@@ -14,7 +14,9 @@ enum _:eServerSounds
     SOUND_SUCCESS = 1150,
     SOUND_SUCCESS_ONE = 1137,
     SOUND_SUCCESS_TWO = 1138,
-    SOUND_CAR_DOORS = 24600
+    SOUND_CAR_DOORS = 24600,
+    SOUND_EAT = 32200,
+    SOUND_PUKE = 32201
 };
 
 native HY_PlayerPlaySound(playerid, soundid, Float:x = 0.0, Float:y = 0.0, Float:z = 0.0) = PlayerPlaySound;
@@ -24,3 +26,28 @@ native HY_PlayerPlaySound(playerid, soundid, Float:x = 0.0, Float:y = 0.0, Float
     #define _ALS_PlayerPlaySound
 #endif
 #define PlayerPlaySound HY_PlayerPlaySound
+
+Sound_PlayInRange(soundid, Float:range, Float:x, Float:y, Float:z, worldid = -1, interiorid = -1)
+{
+    foreach(new i : Player)
+    {
+        if(worldid != -1)
+        {
+            if(GetPlayerVirtualWorld(i) != worldid)
+                continue;
+        }
+
+        if(interiorid != -1)
+        {
+            if(GetPlayerInterior(i) != interiorid)
+                continue;
+        }
+
+        if(!IsPlayerInRangeOfPoint(i, range, x, y, z))
+            continue;
+
+        PlayerPlaySound(i, soundid, x, y, z);
+    }
+
+    return 1;
+}

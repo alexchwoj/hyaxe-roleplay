@@ -149,7 +149,7 @@ Player_RemoveLocalWeapons(playerid)
 
 Player_LoadWeaponsFromCache(playerid)
 {
-    new szSlot[8];
+    new szSlot[9];
 
     for(new i = 1; i < MAX_WEAPON_SLOTS; ++i)
     {
@@ -187,14 +187,12 @@ command giveweapon(playerid, const params[], "Le da un arma a un jugador")
     new weapon_name[20];
     GetWeaponName(weaponid, weapon_name);
 
-    if(playerid == destination)
+    if(playerid != destination)
     {
         SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Le diste un(a) {ED2B2B}%s{DADADA} con {ED2B2B}%i balas{DADADA} a {ED2B2B}%s{DADADA}.", weapon_name, ammo, Player_RPName(destination));
     }
-    else
-    {
-        SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Se te asignó un(a) {ED2B2B}%s{DADADA} con {ED2B2B}%i balas{DADADA}.", weapon_name, ammo);
-    }
+    
+    SendClientMessagef(destination, 0xED2B2BFF, "›{DADADA} Se te asignó un(a) {ED2B2B}%s{DADADA} con {ED2B2B}%i balas{DADADA}.", weapon_name, ammo);
 
     return 1;
 }

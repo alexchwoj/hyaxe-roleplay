@@ -99,9 +99,9 @@ Player_Puke(playerid)
     GetPlayerPos(playerid, x, y, z);
 
     ApplyAnimation(playerid, "FOOD", "EAT_VOMIT_P", 4.1, false, false, false, true, 0);
-    PlayerPlaySound(playerid, 1169, x, y, z);
+    Sound_PlayInRange(SOUND_PUKE, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid));
 
-    g_rgeNeedsTimers[playerid][e_iNeedsTimerVomit] = SetTimerEx("NEEDS_VomitStepOne", 4000, false, !"i", playerid);
+    g_rgeNeedsTimers[playerid][e_iNeedsTimerVomit] = SetTimerEx("NEEDS_VomitStepOne", 3500, false, !"i", playerid);
     return 1;
 }
 

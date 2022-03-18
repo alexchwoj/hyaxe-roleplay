@@ -124,12 +124,6 @@ public VEHICLE_Update(vehicleid)
     return 1;
 }
 
-public VEHICLE_UpdateSpeedometer(playerid)
-{
-    Speedometer_Update(playerid);
-    return 1;
-}
-
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if((newkeys & KEY_NO) != 0 && !(newkeys & KEY_HANDBRAKE))
@@ -165,7 +159,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         new vehicleid = (IsPlayerInAnyVehicle(playerid) ? GetPlayerVehicleID(playerid) : GetPlayerCameraTargetVehicle(playerid));
         if(vehicleid != INVALID_VEHICLE_ID)
         {
-            if(g_rgeVehicles[vehicleid][e_iVehicleOwnerId] == playerid)
+            if(g_rgeVehicles[vehicleid][e_iVehicleOwnerId] == playerid || Vehicle_Type(vehicleid) == VEHICLE_TYPE_ADMIN)
             {
                 Vehicle_ToggleLock(vehicleid);
                 SetPlayerChatBubble(playerid, (g_rgeVehicles[vehicleid][e_bLocked] ? "* Bloqueó su vehículo" : "* Desbloqueó su vehículo"), 0xB39B6BFF, 15.0, 5000);
@@ -183,13 +177,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 new Float:x, Float:y, Float:z, vw = GetPlayerVirtualWorld(playerid), int = GetPlayerInterior(playerid);
                 GetVehiclePos(vehicleid, x, y, z);
 
-                foreach(new i : LoggedIn)
-                {
-                    if(GetPlayerVirtualWorld(i) != vw || GetPlayerInterior(i) != int || !IsPlayerInRangeOfPoint(i, 10.0, x, y, z))
-                        continue;
+                Sound_PlayInRange(SOUND_CAR_DOORS, 10.0, x, y, z, vw, int);
 
-                    PlayerPlaySound(i, SOUND_CAR_DOORS, x, y, z);
-                }
                 return 1;
             }
         }

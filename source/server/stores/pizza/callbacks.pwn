@@ -42,6 +42,10 @@ static Pizza_OnBuy(playerid, shop_id, item_id)
         return 0;
     }
 
+    new Float:x, Float:y, Float:z;
+    GetPlayerPos(playerid, x, y, z);
+    Sound_PlayInRange(SOUND_EAT, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid));
+
     return 1;
 }
 
