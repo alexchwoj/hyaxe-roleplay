@@ -22,6 +22,11 @@
 #define PP_SYNTAX_ON_INIT
 #define PP_SYNTAX_ON_EXIT
 #define PP_SYNTAX_FOR_LIST
+#define PP_SYNTAX_GENERIC
+#define PP_SYNTAX_FOR_MAP
+#define PP_SYNTAX_@
+
+#define FCNPC_DISABLE_VERSION_CHECK
 
 public const __HYAXE__ = 1;
 
@@ -57,7 +62,8 @@ const __dada = __addressof(__beware__black_people__);
 #include <a_samp>
 
 #undef MAX_PLAYERS
-#define MAX_PLAYERS 422
+#define MAX_PLAYERS 500
+const HYAXE_MAX_NPCS = 100;
 
 #include <jit>
 #include <streamer>
@@ -70,8 +76,10 @@ const __dada = __addressof(__beware__black_people__);
 #include <a_mysql>
 #include <colandreas>
 #include <foreach>
-//#include <amx/amx_header>
 #include <md-sort>
+#include <amx/frame_info>
+#include <amx/amx_memory>
+#include <FCNPC>
 
 /*
 		YSI is pozzed
@@ -81,18 +89,19 @@ const __dada = __addressof(__beware__black_people__);
 ////////////
 #include "core/interop/header.pwn"
 
+// Utils
+///////////
+#include "core/utils/header.pwn"
+
 // Fixes
 ///////////
 #include "core/fixes/textdraws.pwn"
 #include "core/fixes/player.pwn"
-
-// Utils
-///////////
-#include "core/utils/iterators.pwn"
+#include "core/fixes/bots.pwn"
 
 // Headers
 /////////////
-#include "core/utils/header.pwn"
+#include "core/utils/iterators.pwn"
 #include "core/database/header.pwn"
 #include "core/config/header.pwn"
 #include "core/notification/header.pwn"
@@ -109,6 +118,7 @@ const __dada = __addressof(__beware__black_people__);
 #include "server/jobs/gunsmaker/header.pwn"
 #include "server/jobs/lawnmower/header.pwn"
 #include "server/hospital/header.pwn"
+#include "server/hookers/header.pwn"
 #include "player/account/header.pwn"
 #include "player/damage/header.pwn"
 #include "player/admin/header.pwn"
@@ -162,6 +172,7 @@ const __dada = __addressof(__beware__black_people__);
 #include "server/jobs/gunsmaker/callbacks.pwn"
 #include "server/jobs/lawnmower/callbacks.pwn"
 #include "server/atm/callbacks.pwn"
+#include "server/hookers/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/damage/callbacks.pwn"
 #include "player/auth/callbacks.pwn"

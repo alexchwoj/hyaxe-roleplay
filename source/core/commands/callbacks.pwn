@@ -5,6 +5,14 @@
 
 on_init RegisterCommands()
 {
+    /*
+    __emit
+    {
+        const.pri 0
+        sctrl 0xFE
+    }
+    */
+
     new name[32];
 
     for(new i = amx_num_publics() - 1; i != -1; --i)
@@ -26,6 +34,14 @@ on_init RegisterCommands()
             }
         }
     }
+
+    /*
+    __emit
+    {
+        const.pri 2
+        sctrl 0xFF
+    }
+    */
 
     #if defined CMD_OnGameModeInit
         return CMD_OnGameModeInit();

@@ -7,7 +7,7 @@ Commands_GetFreeIndex()
 {
     for(new i; i < HYAXE_MAX_COMMANDS; ++i)
     {
-        if(isnull(g_rgeCommandStore[i][e_szCommandName]))
+        if(g_rgeCommandStore[i][e_szCommandName][0] == '\0')
         {
             return i;
         }
