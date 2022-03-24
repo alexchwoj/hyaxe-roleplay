@@ -15,7 +15,7 @@ static EnterExit_FindFreeIndex()
 }
 
 EnterExit_Create(pickup_model, const enter_text[], const exit_text[], Float:enter_x, Float:enter_y, Float:enter_z, Float:enter_ang, enter_world, enter_interior, Float:exit_x, Float:exit_y, Float:exit_z, Float:exit_ang, exit_world, exit_interior, extra_data = -1, callback_address = 0)
-{
+{    
     new i = EnterExit_FindFreeIndex();
     if(i == -1)
     {
@@ -23,7 +23,7 @@ EnterExit_Create(pickup_model, const enter_text[], const exit_text[], Float:ente
         return -1;
     }
 
-    printf("[enterexit] Creating with ID %d", i);
+    DEBUG_PRINT("[enterexit] Creating with ID %d", i);
     new info[3];
     info[0] = 0x4545; // EE
     info[1] = i; // EnEx ID
