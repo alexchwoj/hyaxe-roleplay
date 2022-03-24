@@ -78,25 +78,3 @@ public OnPlayerDisconnect(playerid, reason)
 #if defined INV_OnPlayerDisconnect
     forward INV_OnPlayerDisconnect(playerid, reason);
 #endif
-
-
-public OnGameModeInit()
-{
-    Server_RegisterItem(ITEM_MEDIC_KIT, "Botiquín", 11738, true);
-
-    #if defined INV_OnGameModeInit
-        return INV_OnGameModeInit();
-    #else
-        return 1;
-    #endif
-}
-
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
-#else
-    #define _ALS_OnGameModeInit
-#endif
-#define OnGameModeInit INV_OnGameModeInit
-#if defined INV_OnGameModeInit
-    forward INV_OnGameModeInit();
-#endif
