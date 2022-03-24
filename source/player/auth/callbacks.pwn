@@ -5,7 +5,7 @@
 
 public OnPlayerDataLoaded(playerid)
 {
-    DEBUG_PRINT("OnPlayerDataLoaded(%d)", playerid);
+    log_function();
 
     // Intro camera
     switch (random(6))

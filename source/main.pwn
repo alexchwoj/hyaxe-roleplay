@@ -189,5 +189,6 @@ main() { return 0; }
 
 public OnJITCompile()
 {
+	log_function();
 	return 1;
 }

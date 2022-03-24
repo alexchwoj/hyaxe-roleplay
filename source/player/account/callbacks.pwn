@@ -5,7 +5,7 @@
 
 public OnPlayerConnect(playerid)
 {
-    LogThisFunction();
+    log_function();
 
     SetPlayerColor(playerid, 0xF7F7F700);
     TogglePlayerSpectating(playerid, true);
@@ -119,7 +119,7 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerDataFetched(playerid)
 {
-    DEBUG_PRINT("OnPlayerDataFetched(%i)", playerid);
+    log_function();
 
     new rowc;
     cache_get_row_count(rowc);
