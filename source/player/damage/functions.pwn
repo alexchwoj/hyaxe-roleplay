@@ -12,7 +12,7 @@ Player_SetArmor(playerid, amount)
 
 Player_SetHealth(playerid, amount)
 {
-	Player_Health(playerid) = amount;
+	Player_Health(playerid) = clamp(amount, 0, 100);
 
 	if (amount <= 0)
 		CallLocalFunction(!"OnPlayerDeath", !"iid", playerid, INVALID_PLAYER_ID, 54);

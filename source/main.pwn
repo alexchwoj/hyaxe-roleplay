@@ -23,7 +23,7 @@
 #define PP_SYNTAX_ON_EXIT
 #define PP_SYNTAX_FOR_LIST
 #define PP_SYNTAX_GENERIC
-#define PP_SYNTAX_FOR_MAP
+#define PP_SYNTAX_FOR_LIST
 #define PP_SYNTAX_@
 
 #define FCNPC_DISABLE_VERSION_CHECK
@@ -77,9 +77,9 @@ const HYAXE_MAX_NPCS = 100;
 #include <colandreas>
 #include <foreach>
 #include <md-sort>
+#include <FCNPC>
 #include <amx/frame_info>
 #include <amx/amx_memory>
-#include <FCNPC>
 
 /*
 		YSI is pozzed

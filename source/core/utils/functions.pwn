@@ -302,6 +302,43 @@ String:Str_Random(len)
     return s;
 }
 
+binary_search(const arr[], value, start = 0, end = -1, size = sizeof(arr))
+{
+    if(end == -1)
+        end = size - 1;
+    
+    while(start <= end)
+    {
+        new middle = start + (end - start) / 2;
+        if(arr[middle] == value)
+            return middle;
+
+        if(arr[middle] < value)
+            start = middle + 1;
+        else
+            end = middle - 1;
+    }
+
+    return -1;
+}
+
+List:GetPlayerAllDynamicAreas(playerid)
+{
+    new List:l = list_new();
+
+    if(!IsPlayerInAnyDynamicArea(playerid))
+        return l;
+
+    static areas[128];
+    new count = GetPlayerDynamicAreas(playerid, areas);
+    list_reserve(l, count);
+
+    for(new i; i < count; ++i)
+        list_add(l, areas[i]);
+
+    return l;
+}
+
 static enum eLoggerVarData
 {
     String:e_sVarName,
