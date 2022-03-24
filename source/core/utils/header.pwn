@@ -8,9 +8,10 @@ const cellbytes = (cellbits / charbits);
 const HYAXE_UNSAFE_HUGE_LENGTH = 1024;
 new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 
-#if !defined isnull
-	#define isnull(%0) ((%0[(%0[0])=='\1'])=='\0')
+#if defined isnull
+	#undef isnull
 #endif
+#define isnull(%0) ((%0[(%0[0])=='\1'])=='\0')
 
 #if !defined strcpy
 	#define strcpy(%0,%1) strcat((%0[0] = '\0', %0), %1)

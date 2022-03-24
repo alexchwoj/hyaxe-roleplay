@@ -145,6 +145,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/atm/functions.pwn"
 #include "server/jobs/functions.pwn"
 #include "server/hospital/functions.pwn"
+#include "server/hookers/functions.pwn"
 #include "player/account/functions.pwn"
 #include "player/damage/functions.pwn"
 #include "player/inventory/functions.pwn"
@@ -188,3 +189,9 @@ const HYAXE_MAX_NPCS = 100;
 
 // Prevents runtime error 20 (invalid index)
 main() { return 0; }
+
+public OnJITCompile()
+{
+	log_function();
+	return 1;
+}

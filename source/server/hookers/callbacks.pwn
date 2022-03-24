@@ -7,9 +7,15 @@ public OnGameModeInit()
 {    
     for(new i = HYAXE_MAX_HOOKERS - 1; i != -1; --i)
     {
-        new String:name = Str_Random(24);
-        g_rgiHookers[i] = FCNPC_Create_s(name);
-        str_delete(name);
+        g_rgiHookers[i] = FCNPC_Create_s(Str_Random(24));
+        
+        g_rgiHookerAreas[i] = CreateDynamicCircle(g_rgfHookerPos[i][0], g_rgfHookerPos[i][1], 5.0, .worldid = 0, .interiorid = 0);
+        AttachDynamicAreaToPlayer(g_rgiHookerAreas[i], g_rgiHookers[i]);
+        new info[2] = { 0x57484F52 };
+        info[1] = i;
+        Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgiHookerAreas[i], E_STREAMER_EXTRA_ID, info);
+        
+        Hooker_Spawn(i);
     }
 
     #if defined HOOKERS_OnGameModeInit

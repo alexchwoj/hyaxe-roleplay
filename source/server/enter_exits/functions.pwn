@@ -23,7 +23,7 @@ EnterExit_Create(pickup_model, const enter_text[], const exit_text[], Float:ente
         return -1;
     }
 
-    printf("[enterexit] Creating with ID %d", i);
+    DEBUG_PRINT("[enterexit] Creating with ID %d", i);
     new info[3];
     info[0] = 0x4545; // EE
     info[1] = i; // EnEx ID
