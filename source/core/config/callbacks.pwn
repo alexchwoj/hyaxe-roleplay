@@ -3,12 +3,12 @@
 #endif
 #define _config_callbacks_
 
-public OnGameModeInit()
+on_init 00SetupServerConfig()
 {
     print("[config] Setting up...");
     
     SetMaxPlayers(MAX_PLAYERS);
-    SetMaxNPCs(1000 - MAX_PLAYERS);
+    SetMaxNPCs(HYAXE_MAX_NPCS);
 
     for (new i = (sizeof(g_rgcAllowedNameChars) - 1); i != -1; --i)
 	{
@@ -44,22 +44,17 @@ public OnGameModeInit()
     DisableInteriorEnterExits();
     EnableStuntBonusForAll(false);
     ManualVehicleEngineAndLights();
+	
+	print("[config] Server config done");
+	printf("[config] maxplayers = %i (MAX_PLAYERS = "#MAX_PLAYERS")", GetMaxPlayers());
+	printf("[config] maxnpc     = %i", GetConsoleVarAsInt("maxnpc"));
 
-    #if defined CONFIG_OnGameModeInit
-        CONFIG_OnGameModeInit();
-    #endif
+	// Wait for full initialization
+	wait_ticks(1);
+
+	print("[config] Initializing ColAndreas...");
 
 	CA_Init();
 
 	return 1;
 }
-
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
-#else
-    #define _ALS_OnGameModeInit
-#endif
-#define OnGameModeInit CONFIG_OnGameModeInit
-#if defined CONFIG_OnGameModeInit
-    forward CONFIG_OnGameModeInit();
-#endif

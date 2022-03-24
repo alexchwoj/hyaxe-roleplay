@@ -1297,7 +1297,7 @@ public OnFilterScriptInit()
     SetDynamicObjectMaterial(tmpobjid, 0, 9515, "bigboxtemp1", "patiodr_law", 0); 
     tmpobjid = CreateDynamicObject(19477, 674.216003, -339.631989, -92.707001, 0.000000, 0.000000, -179.899994, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterialText(tmpobjid, 0, "EXIT", 130, "Ariel", 35, 0, 0xFFFFFFFF, 0, 1); 
-    tmpobjid = CreateDynamicObject(11707, 669.445007, -334.954987, -94.426003, 0.000000, 0.000000, 180.000000, -1, 1, -1, -1, 300.0, 300.0);
+    tmpobjid = CreateDynamicObject(11707, 669.445007, -334.954987, -94.426003, 0.000000, 0.000000, 180.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 2, 8480, "csrspalace01", "black32", 0); 
     SetDynamicObjectMaterial(tmpobjid, 1, 8480, "csrspalace01", "black32", 0); 
     SetDynamicObjectMaterial(tmpobjid, 0, 8480, "csrspalace01", "black32", 0xFFFFFFFF); 
@@ -1347,7 +1347,7 @@ public OnFilterScriptInit()
     SetDynamicObjectMaterial(tmpobjid, 0, 18646, "matcolours", "grey-70-percent", 0); 
     tmpobjid = CreateDynamicObject(19358, 675.989990, -341.143005, -94.712997, 90.000000, 90.000000, 179.994003, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 18646, "matcolours", "grey-70-percent", 0); 
-    tmpobjid = CreateDynamicObject(1946, 664.617981, -339.795013, -91.810997, 0.000000, 0.000000, 0.000000, -1, 1, -1, -1, 300.0, 300.0);
+    tmpobjid = CreateDynamicObject(1946, 664.617981, -339.795013, -91.810997, 0.000000, 0.000000, 0.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 3922, "bistro", "mp_snow", 0xFFFFFFFF); 
     CreateDynamicObject(1789, 671.929016, -345.523010, -95.241997, 0.000000, 0.000000, 190.464996, -1, 1, -1, 300.0, 300.0);
     tmpobjid = CreateDynamicObject(19325, 665.481995, -335.181000, -93.722000, 90.000000, 0.000000, 270.000000, -1, 1, -1, 300.0, 300.0);
@@ -1378,7 +1378,7 @@ public OnFilterScriptInit()
     CreateDynamicObject(1569, 676.734985, -342.303009, -95.574997, 0.000000, 0.000000, 0.000000, -1, 1, -1, 300.0, 300.0);
     CreateDynamicObject(2261, 666.554016, -345.851013, -94.031998, 0.000000, 0.000000, 270.000000, -1, 1, -1, 300.0, 300.0);
     CreateDynamicObject(11738, 668.132019, -332.454010, -94.713997, 0.000000, 0.000000, 118.791000, -1, 1, -1, 300.0, 300.0);
-    tmpobjid = CreateDynamicObject(2132, 668.119019, -332.428009, -95.800003, 0.000000, 0.000000, 90.000000, -1, 1, -1, -1, 300.0, 300.0);
+    tmpobjid = CreateDynamicObject(2132, 668.119019, -332.428009, -95.800003, 0.000000, 0.000000, 90.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 2, 10101, "2notherbuildsfe", "ferry_build14", 0); 
     SetDynamicObjectMaterial(tmpobjid, 0, 8480, "csrspalace01", "black32", 0); 
     tmpobjid = CreateDynamicObject(18030, 662.526001, -339.766998, -93.417000, 0.000000, 0.000000, 0.000000, -1, 1, -1, 300.0, 300.0);
@@ -1406,7 +1406,7 @@ public OnFilterScriptInit()
     CreateDynamicObject(19814, 667.065979, -347.306000, -94.641998, 0.000000, 0.000000, 270.000000, -1, 1, -1, 300.0, 300.0);
     tmpobjid = CreateDynamicObject(18633, 670.911011, -331.325012, -93.056000, 0.000000, 0.000000, 90.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 8480, "csrspalace01", "black32", 0); 
-    tmpobjid = CreateDynamicObject(18633, 671.031006, -331.324005, -93.056000, 0.000000, 0.000000, 270.000000, -1, 1, -1, -1, 300.0, 300.0);
+    tmpobjid = CreateDynamicObject(18633, 671.031006, -331.324005, -93.056000, 0.000000, 0.000000, 270.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 8480, "csrspalace01", "black32", 0); 
     tmpobjid = CreateDynamicObject(11723, 671.408020, -331.328003, -93.259003, 180.000000, 0.000000, 90.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 10101, "2notherbuildsfe", "ferry_build14", 0xFFFFFFFF); 
@@ -1458,7 +1458,7 @@ public OnFilterScriptInit()
     CreateDynamicObject(2524, 673.804016, -348.209015, -95.785004, 0.000000, 0.000000, 270.000000, -1, 1, -1, 300.0, 300.0);
     tmpobjid = CreateDynamicObject(19462, 676.900024, -346.252014, -95.025002, 0.000000, 0.000000, 90.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 16640, "a51", "ws_stationfloor", 0xFFA9A9A9); 
-    tmpobjid = CreateDynamicObject(2167, 667.533997, -348.678009, -95.803001, 0.000000, 0.000000, 90.000000, -1, 1, -1, -1, 300.0, 300.0);
+    tmpobjid = CreateDynamicObject(2167, 667.533997, -348.678009, -95.803001, 0.000000, 0.000000, 90.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 1, 3440, "airportpillar", "metalic_64", 0); 
     SetDynamicObjectMaterial(tmpobjid, 0, 3629, "arprtxxref_las", "dirtywhite", 0xFFFFFFFF); 
     tmpobjid = CreateDynamicObject(19462, 667.528015, -330.233002, -94.035004, 0.000000, 0.000000, 0.000000, -1, 1, -1, 300.0, 300.0);
@@ -1560,7 +1560,7 @@ public OnFilterScriptInit()
     SetDynamicObjectMaterial(tmpobjid, 3, 8480, "csrspalace01", "black32", 0); 
     SetDynamicObjectMaterial(tmpobjid, 2, 19267, "mapmarkers", "mapicon22", 0); 
     SetDynamicObjectMaterial(tmpobjid, 1, 8480, "csrspalace01", "black32", 0); 
-    tmpobjid = CreateDynamicObject(19903, 671.685974, -352.007996, -95.799004, 0.000000, 0.000000, 90.000000, -1, 1, -1, -1, 300.0, 300.0);
+    tmpobjid = CreateDynamicObject(19903, 671.685974, -352.007996, -95.799004, 0.000000, 0.000000, 90.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 1, 10101, "2notherbuildsfe", "ferry_build14", 0); 
     tmpobjid = CreateDynamicObject(19903, 668.244995, -352.009003, -95.799004, 0.000000, 0.000000, 90.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 1, 10101, "2notherbuildsfe", "ferry_build14", 0); 
@@ -1611,9 +1611,9 @@ public OnFilterScriptInit()
     SetDynamicObjectMaterial(tmpobjid, 2, 18646, "matcolours", "grey-20-percent", 0xFFA9A9A9); 
     tmpobjid = CreateDynamicObject(19462, 671.994019, -352.565002, -90.602997, 0.000000, 0.000000, 90.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 16640, "a51", "ws_stationfloor", 0xFFA9A9A9); 
-    tmpobjid = CreateDynamicObject(1796, 663.052979, -327.639008, -95.814003, 0.000000, 0.000000, 90.000000, -1, 1, -1, -1, 300.0, 300.0);
+    tmpobjid = CreateDynamicObject(1796, 663.052979, -327.639008, -95.814003, 0.000000, 0.000000, 90.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 2, 18646, "matcolours", "grey-20-percent", 0xFFA9A9A9); 
-    tmpobjid = CreateDynamicObject(1796, 663.590027, -351.683990, -95.814003, 0.000000, 0.000000, 270.000000, -1, 1, -1, -1, 300.0, 300.0);
+    tmpobjid = CreateDynamicObject(1796, 663.590027, -351.683990, -95.814003, 0.000000, 0.000000, 270.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 2, 18646, "matcolours", "grey-20-percent", 0xFFA9A9A9); 
     tmpobjid = CreateDynamicObject(2267, 659.809021, -348.765015, -93.577003, 0.000000, 0.000000, 90.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 1, 14489, "carlspics", "AH_landscap1", 0); 
@@ -1656,7 +1656,7 @@ public OnFilterScriptInit()
     tmpobjid = CreateDynamicObject(948, 655.505005, -343.355011, -95.833000, 0.000000, 0.000000, 0.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 3, 10101, "2notherbuildsfe", "ferry_build14", 0); 
     SetDynamicObjectMaterial(tmpobjid, 1, 18646, "matcolours", "orange", 0); 
-    tmpobjid = CreateDynamicObject(19446, 663.934998, -353.406006, -93.805000, 0.000000, 0.000000, 90.000000, -1, 1, -1, -1, 300.0, 300.0);
+    tmpobjid = CreateDynamicObject(19446, 663.934998, -353.406006, -93.805000, 0.000000, 0.000000, 90.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 3820, "boxhses_sfsx", "ws_boxhouse_wins5", 0); 
     tmpobjid = CreateDynamicObject(1742, 662.887024, -325.812988, -95.801003, 0.000000, 0.000000, 0.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 2, 3440, "airportpillar", "metalic_64", 0); 
@@ -1672,7 +1672,7 @@ public OnFilterScriptInit()
     SetDynamicObjectMaterial(tmpobjid, 0, 1419, "break_fence3", "CJ_FRAME_Glass", 0xFF000000); 
     tmpobjid = CreateDynamicObject(19325, 654.374023, -344.040985, -93.722000, 90.000000, 0.000000, 270.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 1419, "break_fence3", "CJ_FRAME_Glass", 0xFF000000); 
-    tmpobjid = CreateDynamicObject(19087, 654.612000, -339.808990, -89.321999, 0.000000, 0.000000, 0.000000, -1, 1, -1, -1, 300.0, 300.0);
+    tmpobjid = CreateDynamicObject(19087, 654.612000, -339.808990, -89.321999, 0.000000, 0.000000, 0.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 8480, "csrspalace01", "black32", 0); 
     tmpobjid = CreateDynamicObject(18980, 672.611023, -334.091003, -79.327003, 0.000000, 0.000000, 0.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 16639, "a51_labs", "ws_trainstationwin1", 0); 
@@ -1723,7 +1723,7 @@ public OnFilterScriptInit()
     SetDynamicObjectMaterialText(tmpobjid, 0, "CHAMBER ¹2", 130, "Ariel", 35, 0, 0xFFFFFFFF, 0, 1); 
     tmpobjid = CreateDynamicObject(18066, 651.568970, -343.920013, -92.847000, 0.000000, 0.000000, 0.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 18646, "matcolours", "grey-60-percent", 0xFFA9A9A9); 
-    tmpobjid = CreateDynamicObject(18980, 665.512024, -331.488007, -77.888000, 0.000000, 0.000000, 0.000000, -1, 1, -1, -1, 300.0, 300.0);
+    tmpobjid = CreateDynamicObject(18980, 665.512024, -331.488007, -77.888000, 0.000000, 0.000000, 0.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 16639, "a51_labs", "ws_trainstationwin1", 0); 
     tmpobjid = CreateDynamicObject(18980, 665.669006, -347.794006, -77.911003, 0.000000, 0.000000, 0.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 0, 16639, "a51_labs", "ws_trainstationwin1", 0); 
@@ -1734,7 +1734,7 @@ public OnFilterScriptInit()
     CreateDynamicObject(2021, 653.890015, -328.924011, -95.785004, 0.000000, 0.000000, 269.989014, -1, 1, -1, 300.0, 300.0);
     tmpobjid = CreateDynamicObject(1796, 651.708984, -345.808990, -95.814003, 0.000000, 0.000000, 270.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 2, 18646, "matcolours", "grey-20-percent", 0xFFA9A9A9); 
-    tmpobjid = CreateDynamicObject(1796, 651.489990, -333.399994, -95.814003, 0.000000, 0.000000, 90.000000, -1, 1, -1, -1, 300.0, 300.0);
+    tmpobjid = CreateDynamicObject(1796, 651.489990, -333.399994, -95.814003, 0.000000, 0.000000, 90.000000, -1, 1, -1, 300.0, 300.0);
     SetDynamicObjectMaterial(tmpobjid, 2, 18646, "matcolours", "grey-20-percent", 0xFFA9A9A9); 
     CreateDynamicObject(2021, 653.757019, -350.398010, -95.793999, 0.000000, 0.000000, 269.989014, -1, 1, -1, 300.0, 300.0);
     tmpobjid = CreateDynamicObject(18980, 671.025024, -351.092010, -78.598999, 0.000000, 0.000000, 0.000000, -1, 1, -1, 300.0, 300.0);

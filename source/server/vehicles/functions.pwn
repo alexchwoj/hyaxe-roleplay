@@ -140,7 +140,7 @@ Speedometer_Show(playerid)
     PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{3});
 
     Speedometer_Update(playerid);
-    g_rgiSpeedometerUpdateTimer[playerid] = SetTimerEx("VEHICLE_UpdateSpeedometer", 1000, true, "i", playerid);
+    g_rgiSpeedometerUpdateTimer[playerid] = SetTimerEx("Speedometer_Update", 1000, true, "i", playerid);
 
     return 1;
 }
@@ -166,7 +166,7 @@ Speedometer_Hide(playerid)
     return 1;
 }
 
-Speedometer_Update(playerid)
+public Speedometer_Update(playerid)
 {
     if(!IsPlayerInAnyVehicle(playerid))
     {

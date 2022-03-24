@@ -150,7 +150,6 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     forward ATM_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 #endif
 
-
 public OnGameModeInit()
 {
     for(new i; i < sizeof(g_rgeATMBank); ++i)
@@ -197,14 +196,14 @@ public OnGameModeInit()
     #endif
 }
 
-#if defined _ALS_OnGamemodeInit
-    #undef OnGamemodeInit
+#if defined _ALS_OnGameModeInit
+    #undef OnGameModeInit
 #else
-    #define _ALS_OnGamemodeInit
+    #define _ALS_OnGameModeInit
 #endif
-#define OnGamemodeInit ATM_OnGamemodeInit
-#if defined ATM_OnGamemodeInit
-    forward ATM_OnGamemodeInit();
+#define OnGameModeInit ATM_OnGameModeInit
+#if defined ATM_OnGameModeInit
+    forward ATM_OnGameModeInit();
 #endif
 
 forward ATM_OnFoundBankAccount(playerid, bank_account);

@@ -7,7 +7,7 @@ Commands_GetFreeIndex()
 {
     for(new i; i < HYAXE_MAX_COMMANDS; ++i)
     {
-        if(isnull(g_rgeCommandStore[i][e_szCommandName]))
+        if(g_rgeCommandStore[i][e_szCommandName][0] == '\0')
         {
             return i;
         }
@@ -15,13 +15,11 @@ Commands_GetFreeIndex()
     
     // Assume no free index found
 
-    new hdr[AMX_HDR], name[32], est_new;
-    GetAmxHeader(hdr);
+    new name[32], est_new;
 
-    for(new i = GetNumPublics(hdr); i != -1; --i)
+    for(new i = amx_num_publics() - 1; i != -1; --i)
     {
-        if(!GetPublicNameFromIndex(i, name))
-            continue;
+        amx_public_name(i, name);
 
         if(!strcmp("hy@cmd_", name, true, 7))
             est_new++;
@@ -93,7 +91,7 @@ Commands_ShowSuggestions(playerid, const command[])
     {
         new cmd_flags = PC_GetFlags(cmd_name);
         new cmdid = distances[i][2];
-        g_rgiPlayerCommandsDialog[playerid][i] = cmdid;
+        g_rgiPlayerCommandsDialog[playerid][(distances_length - 1) - i] = cmdid;
 
         new description[50] = "Sin descripción";
         if(!isnull(g_rgeCommandStore[cmdid][e_szCommandDescription]))

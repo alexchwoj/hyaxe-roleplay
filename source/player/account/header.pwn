@@ -76,7 +76,10 @@ enum ePlayerData
 enum ePlayerTemp
 {
     e_iPlayerChatTick,
-    e_iPlayerBankDest
+    e_iPlayerBankDest,
+    e_iPlayerEatTick,
+    e_iPlayerEatCount,
+    e_iPlayerPukeTick
 };
 
 new 
@@ -85,7 +88,7 @@ new
     BitArray:g_rgiPlayerFlags[MAX_PLAYERS]<MAX_PLAYER_FLAGS>,
     Iterator:LoggedIn<MAX_PLAYERS>;
 
-#define Player_ResetTemp(%0) g_rgePlayerTempData[%0] = g_rgePlayerTempData[MAX_PLAYERS]
+#define Player_ResetTemp(%0) g_rgePlayerTempData[(%0)] = g_rgePlayerTempData[MAX_PLAYERS]
 #define Player_Flags(%0) Bit:(g_rgiPlayerFlags[(%0)])
 #define Player_Cache(%0) (g_rgePlayerData[(%0)][e_hDataCache])
 #define Player_AccountID(%0) (g_rgePlayerData[(%0)][e_iPlayerAccountId])

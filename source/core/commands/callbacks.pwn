@@ -5,17 +5,23 @@
 
 on_init RegisterCommands()
 {
-    new hdr[AMX_HDR], name[32];
-    GetAmxHeader(hdr);
-
-    for(new i = GetNumPublics(hdr); i != -1; --i)
+    /*
+    __emit
     {
-        if(!GetPublicNameFromIndex(i, name))
-            continue;
+        const.pri 0
+        sctrl 0xFE
+    }
+    */
+
+    new name[32];
+
+    for(new i = amx_num_publics() - 1; i != -1; --i)
+    {
+        amx_public_name(i, name);
 
         if(!strcmp("hy@cmd_", name, true, 7))
         {
-            new addr = GetPublicAddressFromIndex(i);
+            new addr = amx_public_addr(i);
             __emit
             {
                 push.c 0
@@ -28,6 +34,14 @@ on_init RegisterCommands()
             }
         }
     }
+
+    /*
+    __emit
+    {
+        const.pri 2
+        sctrl 0xFF
+    }
+    */
 
     #if defined CMD_OnGameModeInit
         return CMD_OnGameModeInit();

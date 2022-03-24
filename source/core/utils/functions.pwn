@@ -289,3 +289,129 @@ stock InterpolateColourLinear(startColour, endColour, Float:fraction = Float:0x7
 	// numbers down via `>>> 8` instead of `/ 100`, but since we then shift them up again to their
 	// final locations in the number we can skip a manipulation stage.
 }
+
+String:Str_Random(len)
+{
+    new String:s = str_new_buf(len);
+    
+    for(new i = len - 1; i != -1; --i)
+    {
+        str_setc(s, i, random(2) ? (random(26) + (random(2) ? 'a' : 'A')) : (random(10) + '0'));
+    }
+
+    return s;
+}
+
+static enum eLoggerVarData
+{
+    String:e_sVarName,
+    bool:e_bReference,
+    bool:e_bArray,
+    e_iTagId,
+    e_aValue // a[ny]
+};
+
+LogThisFunction()
+{
+#if !NDEBUG
+    new prev_fun = __emit(load.s.pri 4);
+    new prev_fun_frm = GetCurrentFramePreviousFrame();
+
+    new Symbol:fun = debug_func(prev_fun);
+    new String:fun_name = debug_symbol_name_s(fun);
+
+    new vars[32][eLoggerVarData], varcount;
+    new Iter:fun_vars = debug_symbol_variables(fun);
+    iter_to_last(fun_vars);
+
+    for(new i = 0, j = GetFrameParameterCount(prev_fun_frm); i < j && iter_inside(fun_vars); ++i, iter_move_previous(fun_vars))
+    {
+        new Symbol:sym = Symbol:iter_get(fun_vars);
+    
+        new val = GetFrameParameter(prev_fun_frm, i);
+        new symbol_kind:type = debug_symbol_kind(sym);
+        new tag = debug_symbol_tag(sym);
+        
+        if(type == symbol_kind_reference || type == symbol_kind_array_reference)
+        {
+            vars[i][e_bReference] = true;
+        }
+
+        if(type == symbol_kind_array || type == symbol_kind_array_reference)
+        {
+            vars[i][e_bArray] = true;
+        }
+
+        vars[i][e_iTagId] = (tag == cellmin ? (tagof(_:)) : tag);
+        vars[i][e_aValue] = val;
+        vars[i][e_sVarName] = str_acquire(debug_symbol_name_s(sym));
+        varcount++;
+    }
+
+    iter_delete(fun_vars);
+
+    new String:full_line = str_format("[log] %S(", fun_name);
+
+    for(new i; i < varcount; ++i)
+    {
+        new String:varname = str_release(vars[i][e_sVarName]);
+
+        if(vars[i][e_bReference] && !vars[i][e_bArray])
+        {
+            str_append(full_line, @("&"));
+        }
+
+        new tagname[32];
+        tag_name(tag_uid(vars[i][e_iTagId]), tagname);
+        if(tagname[0] && tagname[0] != '_')
+        {
+            full_line += str_format("%s:", tagname);
+        }
+
+        if(vars[i][e_bArray])
+        {
+            full_line += str_format("%s%S[], ", (vars[i][e_bReference] ? "" : "const "), varname);
+        }
+        else
+        {
+            full_line += str_format("%S = ", varname);
+
+            if(vars[i][e_bReference])
+            {
+                full_line += str_format("[0x%x] -> ", vars[i][e_aValue]);
+            }
+
+            new value = vars[i][e_aValue];
+            if(vars[i][e_bReference])
+            {
+                new dummy[1];
+                dummy = deref(value);
+                value = dummy[0];
+            }
+
+            switch(vars[i][e_iTagId])
+            {
+                case (tagof(Float:)):
+                {
+                    full_line += str_format("%f, ", value);
+                }
+                default:
+                {
+                    full_line += str_format("%i, ", value);
+                }
+            }
+        }
+
+        str_delete(varname);
+    }
+
+    str_del(full_line, str_len(full_line) - 2);
+    full_line += @(");");
+
+    print_s(full_line);
+
+    str_delete(full_line);
+#endif
+
+    return 1;
+}
