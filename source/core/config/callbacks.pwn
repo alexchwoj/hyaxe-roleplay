@@ -20,7 +20,9 @@ on_init 00SetupServerConfig()
 	SendRconCommand(!"hostname Hyaxe Roleplay [Rol en español]");
 	SendRconCommand(!"language Español / Spanish");
 	SendRconCommand(!"gamemodetext Roleplay / RPG");
+	SendRconCommand_s(str_format("password %S", Str_Random(6)));
 
+ 
 	SetServerRule(!"lagcomp", "skinshot");
 	SetServerRule(!"weburl", "hyaxe.com");
 
@@ -58,6 +60,8 @@ on_init 00SetupServerConfig()
 	print("[config] Initializing ColAndreas...");
 
 	CA_Init();
+	
+	SendRconCommand(!"password 0");
 
 	return 1;
 }

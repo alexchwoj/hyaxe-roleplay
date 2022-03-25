@@ -292,9 +292,9 @@ stock InterpolateColourLinear(startColour, endColour, Float:fraction = Float:0x7
 
 String:Str_Random(len)
 {
-    new String:s = str_new_buf(len);
+    new String:s = str_new_buf(len + 1);
     
-    for(new i = len - 1; i != -1; --i)
+    for(new i = len; i != -1; --i)
     {
         str_setc(s, i, random(2) ? (random(26) + (random(2) ? 'a' : 'A')) : (random(10) + '0'));
     }

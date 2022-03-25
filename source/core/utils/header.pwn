@@ -59,6 +59,7 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 #define on_init%2\32;%0() forward _pp@on_init@%0(); public _pp@on_init@%0()
 #define on_exit%2\32;%0() forward _pp@on_exit@%0(); public _pp@on_exit@%0()
 
+native SendRconCommand_s(ConstAmxString:command) = SendRconCommand;
 native FCNPC_Create_s(ConstAmxString:name) = FCNPC_Create;
 
 #include "core/utils/bitarray.pwn"

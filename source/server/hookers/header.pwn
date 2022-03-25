@@ -3,8 +3,6 @@
 #endif
 #define _hookers_header_
 
-const HYAXE_MAX_HOOKERS = 14;
-
 enum eHookerAction
 {
     HOOKER_NONE,
@@ -17,18 +15,9 @@ enum eHookerAction
     HOOKER_WALK_BACK_TO_SITE,
 };
 
-new 
-    g_rgiHookers[HYAXE_MAX_HOOKERS] = { INVALID_PLAYER_ID, ... },
-    g_rgiHookerAreas[HYAXE_MAX_HOOKERS] = { INVALID_STREAMER_ID, ... },
-    g_rgbHookerAvailable[HYAXE_MAX_HOOKERS char],
-    g_rgiHookerInteractingPlayer[HYAXE_MAX_HOOKERS] = { INVALID_PLAYER_ID, ... },
-    g_rgiPlayerInteractingHooker[MAX_PLAYERS] = { INVALID_PLAYER_ID, ... },
-    g_rgiHookerUpdateTimer[HYAXE_MAX_HOOKERS],
-    eHookerAction:g_rgiHookerPendingTask[HYAXE_MAX_HOOKERS char];
-
 new const 
     g_rgiHookerSkins[] = { 63, 64, 75, 90, 152, 237, 238, 243, 245, 256 },
-    Float:g_rgfHookerPos[HYAXE_MAX_HOOKERS][4] = {
+    Float:g_rgfHookerPos[][4] = {
         { 2209.7964, -1137.6082, 25.8063, 352.5046 },
         { 2157.7563, -1310.4421, 23.9802, 316.2672 }, 
         { 1961.9397, -1332.3245, 23.3618, 179.1913 }, 
@@ -45,4 +34,12 @@ new const
         { 2162.6855, 2032.0566, 10.8203, 116.9441 }
     };
 
-    
+const HYAXE_MAX_HOOKERS = sizeof(g_rgfHookerPos);
+new 
+    g_rgiHookers[HYAXE_MAX_HOOKERS] = { INVALID_PLAYER_ID, ... },
+    g_rgiHookerAreas[HYAXE_MAX_HOOKERS] = { INVALID_STREAMER_ID, ... },
+    g_rgbHookerAvailable[HYAXE_MAX_HOOKERS char],
+    g_rgiHookerInteractingPlayer[HYAXE_MAX_HOOKERS] = { INVALID_PLAYER_ID, ... },
+    g_rgiPlayerInteractingHooker[MAX_PLAYERS] = { INVALID_PLAYER_ID, ... },
+    g_rgiHookerUpdateTimer[HYAXE_MAX_HOOKERS],
+    eHookerAction:g_rgiHookerPendingTask[HYAXE_MAX_HOOKERS char];
