@@ -14,6 +14,7 @@ public OnGameModeInit()
         new info[2] = { 0x57484F52 }; // WHOR
         info[1] = i;
         Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgiHookerAreas[i], E_STREAMER_EXTRA_ID, info);
+        Key_Alert(g_rgfHookerPos[i][0], g_rgfHookerPos[i][1], 5.0, KEYNAME_CTRL_BACK);
         
         Hooker_Spawn(i);
     }
@@ -295,7 +296,7 @@ public HOOKER_Update(hookerid)
     if(g_rgiHookerPendingTask[hookerid] == HOOKER_WAIT_FOR_AREA)
     {
         new playerid = g_rgiHookerInteractingPlayer[hookerid];
-        FCNPC_GoToPlayer(npcid, playerid);
+        FCNPC_GoToPlayer(npcid, playerid, .pathfinding = FCNPC_MOVE_PATHFINDING_RAYCAST);
     }
 
     return 1;
