@@ -12,6 +12,7 @@ enum eHookerAction
     HOOKER_WALK_TO_VEHICLE,
     HOOKER_ASK_DRIVER,
     HOOKER_WAIT_FOR_AREA,
+    HOOKER_WALK_TO_PLAYER,
     HOOKER_BLOWJOB,
     HOOKER_WALK_BACK_TO_SITE,
 };
@@ -22,6 +23,7 @@ new
     g_rgbHookerAvailable[HYAXE_MAX_HOOKERS char],
     g_rgiHookerInteractingPlayer[HYAXE_MAX_HOOKERS] = { INVALID_PLAYER_ID, ... },
     g_rgiPlayerInteractingHooker[MAX_PLAYERS] = { INVALID_PLAYER_ID, ... },
+    g_rgiHookerUpdateTimer[HYAXE_MAX_HOOKERS],
     eHookerAction:g_rgiHookerPendingTask[HYAXE_MAX_HOOKERS char];
 
 new const 
