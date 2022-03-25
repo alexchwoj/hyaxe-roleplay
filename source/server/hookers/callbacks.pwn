@@ -232,12 +232,13 @@ public FCNPC_OnReachDestination(npcid)
         if(g_rgiHookerPendingTask[hookerid] == HOOKER_KISS_ONFOOT)
         {
             new playerid = g_rgiHookerInteractingPlayer[hookerid];
+            TogglePlayerControllable(playerid, true);
 
             FCNPC_AimAtPlayer(npcid, playerid);
             FCNPC_ApplyAnimation(npcid, "KISSING", "GRLFRD_KISS_03", 4.0, 0, 0, 0, 0, -1);
             ApplyAnimation(playerid, "KISSING", "PLAYA_KISS_03", 4.1, false, false, false, true, 0, 1);
 
-            SetTimerEx("HOOKER_KissingDone", 5000, false, "ii", playerid, hookerid);
+            SetTimerEx("HOOKER_KissingDone", 5500, false, "ii", playerid, hookerid);
         }
         else if(g_rgiHookerPendingTask[hookerid] == HOOKER_WALK_BACK_TO_SITE)
         {
@@ -274,7 +275,7 @@ forward HOOKER_KissingDone(playerid, hookerid);
 public HOOKER_KissingDone(playerid, hookerid)
 {
     g_rgbHookerAvailable{hookerid} = true;
-    TogglePlayerControllable(playerid, true);
+    ClearAnimations(playerid);
 
     FCNPC_StopAim(g_rgiHookers[hookerid]);
     FCNPC_GoTo(g_rgiHookers[hookerid], g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2]);
