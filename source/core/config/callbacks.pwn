@@ -44,11 +44,14 @@ on_init 00SetupServerConfig()
     DisableInteriorEnterExits();
     EnableStuntBonusForAll(false);
     ManualVehicleEngineAndLights();
+	FCNPC_SetTickRate(GetConsoleVarAsInt("sleep"));
 	
 	print("[config] Server config done");
-	printf("[config] maxplayers = %i (MAX_PLAYERS = "#MAX_PLAYERS")", GetMaxPlayers());
-	printf("[config] maxnpc     = %i", GetConsoleVarAsInt("maxnpc"));
-
+	printf("[config] maxplayers     = %i (MAX_PLAYERS = "#MAX_PLAYERS")", GetMaxPlayers());
+	printf("[config] maxnpc         = %i", GetConsoleVarAsInt("maxnpc"));
+	printf("[config] sleep          = %i", GetConsoleVarAsInt("sleep"));
+	printf("[config] FCNPC tickrate = %i", FCNPC_GetTickRate());
+	
 	// Wait for full initialization
 	wait_ticks(1);
 
