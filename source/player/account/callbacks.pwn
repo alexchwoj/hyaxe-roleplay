@@ -10,7 +10,7 @@ public OnPlayerConnect(playerid)
     SetPlayerColor(playerid, 0xF7F7F700);
     TogglePlayerSpectating(playerid, true);
 
-    GetPlayerName(playerid, Player_Name(playerid));
+    new name_len = GetPlayerName(playerid, Player_Name(playerid));
 
     static Regex:name_regex;
     if(!name_regex)
@@ -33,30 +33,26 @@ public OnPlayerConnect(playerid)
     
     strcpy(Player_RPName(playerid), Player_Name(playerid));
 
-    new idx = 0;
-    while((idx = strfind(Player_Name(playerid), " ", .pos = idx)) != -1)
+    new space_idx = strfind(Player_Name(playerid), !"_");
+    if(space_idx != -1)
     {
-        Player_Name(playerid)[idx] = '_';
+        Player_RPName(playerid)[space_idx] = ' ';
     }
-
-    idx = 0;
-    while((idx = strfind(Player_RPName(playerid), "_", .pos = idx)) != -1)
+    else
     {
-        Player_RPName(playerid)[idx] = ' ';
+        space_idx = strfind(Player_RPName(playerid), !" ");
+        Player_Name(playerid)[space_idx] = '_';
     }
 
     SetPlayerNameInServerQuery(playerid, Player_RPName(playerid));
     SetPlayerName(playerid, Player_RPName(playerid));
 
-    new BitStream:bs = BS_New();
-    BS_WriteValue(bs,
-        PR_UINT16, playerid,
-        PR_UINT8, strlen(Player_RPName(playerid)),
-        PR_STRING, Player_RPName(playerid),
-        PR_UINT8, 1
+    SendRPC(playerid, 11,
+        BS_UNSIGNEDSHORT, playerid,
+        BS_UNSIGNEDCHAR, name_len,
+        BS_STRING, Player_RPName(playerid),
+        BS_UNSIGNEDCHAR, 1
     );
-    PR_SendRPC(bs, playerid, 11, PR_HIGH_PRIORITY, PR_RELIABLE);
-    BS_Delete(bs);
 
     Bit_Set(Player_Flags(playerid), PFLAG_AUTHENTICATING, true);
 

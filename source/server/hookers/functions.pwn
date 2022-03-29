@@ -30,10 +30,3 @@ Hooker_Spawn(hookerid)
 
     return 1;
 }
-
-command anim(playerid, const params[], "Reproduce una animación")
-{
-    ApplyAnimation(playerid, "BLOWJOBZ", "BJ_STAND_START_W", 4.1, 0, 0, 0, 1, 0, 0);
-
-    return 1;
-}

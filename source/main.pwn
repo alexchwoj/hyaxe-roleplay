@@ -24,6 +24,7 @@
 #define PP_SYNTAX_FOR_LIST
 #define PP_SYNTAX_GENERIC
 #define PP_SYNTAX_FOR_LIST
+#define PP_SYNTAX_AWAIT
 #define PP_SYNTAX_@
 
 #define FCNPC_DISABLE_VERSION_CHECK
@@ -102,6 +103,7 @@ const HYAXE_MAX_NPCS = 100;
 // Headers
 /////////////
 #include "core/utils/iterators.pwn"
+#include "core/async/header.pwn"
 #include "core/database/header.pwn"
 #include "core/config/header.pwn"
 #include "core/notification/header.pwn"
@@ -133,6 +135,7 @@ const HYAXE_MAX_NPCS = 100;
 // Functions
 ///////////////
 #include "core/utils/functions.pwn"
+#include "core/async/functions.pwn"
 #include "core/notification/functions.pwn"
 #include "core/dialogs/functions.pwn"
 #include "core/commands/functions.pwn"
@@ -158,6 +161,7 @@ const HYAXE_MAX_NPCS = 100;
 
 // Callbacks
 ///////////////
+#include "core/async/callbacks.pwn"
 #include "core/database/callbacks.pwn"
 #include "core/config/callbacks.pwn"
 #include "core/notification/callbacks.pwn"

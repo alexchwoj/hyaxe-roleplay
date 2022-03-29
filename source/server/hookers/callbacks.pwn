@@ -14,7 +14,7 @@ public OnGameModeInit()
         new info[2] = { 0x57484F52 }; // WHOR
         info[1] = i;
         Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgiHookerAreas[i], E_STREAMER_EXTRA_ID, info);
-        Key_Alert(g_rgfHookerPos[i][0], g_rgfHookerPos[i][1], 5.0, KEYNAME_CTRL_BACK);
+        Key_Alert(g_rgfHookerPos[i][0], g_rgfHookerPos[i][1], 5.0, KEYNAME_CTRL_BACK, .attachedplayer = g_rgiHookers[i]);
         
         Hooker_Spawn(i);
     }

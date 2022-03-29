@@ -20,7 +20,7 @@ on_init 00SetupServerConfig()
 	SendRconCommand(!"hostname Hyaxe Roleplay [Rol en español]");
 	SendRconCommand(!"language Español / Spanish");
 	SendRconCommand(!"gamemodetext Roleplay / RPG");
-	SendRconCommand_s(str_format("password %S", Str_Random(6)));
+	SendRconCommand_s(@f("password %S", Str_Random(6)));
 
  
 	SetServerRule(!"lagcomp", "skinshot");
