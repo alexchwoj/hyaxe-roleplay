@@ -197,13 +197,7 @@ const HYAXE_MAX_NPCS = 100;
 
 // Prevents runtime error 20 (invalid index)
 
-main()
-{ 
-	new Cache:c = await<Cache> MySQL_QueryAsync(g_hDatabase, "SELECT 1;");
-	new Cache:a = await<Cache> MySQL_QueryAsync(g_hDatabase, "SELECT 2;");
-	#pragma unused c, a
-	return 0;
-}
+main() { return 0; }
 
 public OnJITCompile()
 {
