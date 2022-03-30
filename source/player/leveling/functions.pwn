@@ -10,7 +10,7 @@ static Levels_AnimateBar(playerid, start_xp, bool:new_level = false)
     new required_xp = Level_GetRequiredXP(Player_Level(playerid));
     new Float:initial_x = lerp(LEVEL_BAR_MIN_X, LEVEL_BAR_MAX_X, floatdiv(start_xp, required_xp));
     new Float:end_x = (new_level ? LEVEL_BAR_MAX_X : lerp(LEVEL_BAR_MIN_X, LEVEL_BAR_MAX_X, floatdiv(Player_XP(playerid), required_xp)));
-    
+
     g_rgiLevelingBarSteps{playerid} = 0;
     g_rgiLevelingTimer[playerid] = SetTimerEx("LEVELS_InterpolateTo", 15, true, "iffi", playerid, initial_x, end_x, new_level);
 }
@@ -106,6 +106,8 @@ Player_SetLevel(playerid, level)
         Player_Level(playerid) = level;
         Levels_AnimateBar(playerid, old_xp, true);
     }
+
+    return 1;
 }
 
 command add_xp(playerid, const params[], "Dar experiencia a un jugador")
