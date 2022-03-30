@@ -125,3 +125,52 @@ public OnPlayerDisconnect(playerid, reason)
 #if defined INV_OnPlayerDisconnect
     forward INV_OnPlayerDisconnect(playerid, reason);
 #endif
+
+
+public OnPlayerClickTextDraw(playerid, Text:clickedid)
+{
+    if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
+    {
+        printf("[public] clicked: %d", clickedid);
+    }
+
+    #if defined INV_OnPlayerClickTextDraw
+        return INV_OnPlayerClickTextDraw(playerid, Text:clickedid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerClickTextDraw
+    #undef OnPlayerClickTextDraw
+#else
+    #define _ALS_OnPlayerClickTextDraw
+#endif
+#define OnPlayerClickTextDraw INV_OnPlayerClickTextDraw
+#if defined INV_OnPlayerClickTextDraw
+    forward INV_OnPlayerClickTextDraw(playerid, Text:clickedid);
+#endif
+
+public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
+{
+    if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
+    {
+        printf("[player] clicked: %d", playertextid);
+    }
+
+    #if defined INV_OnPlayerClickPlayerTD
+        return INV_OnPlayerClickPlayerTD(playerid, PlayerText:playertextid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerClickPlayerTD
+    #undef OnPlayerClickPlayerTextDraw
+#else
+    #define _ALS_OnPlayerClickPlayerTD
+#endif
+#define OnPlayerClickPlayerTextDraw INV_OnPlayerClickPlayerTD
+#if defined INV_OnPlayerClickPlayerTD
+    forward INV_OnPlayerClickPlayerTD(playerid, PlayerText:playertextid);
+#endif

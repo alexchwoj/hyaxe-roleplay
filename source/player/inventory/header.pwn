@@ -4,6 +4,8 @@
 #define _inventory_header_
 
 const HYAXE_MAX_INVENTORY_SLOTS = 21;
+const Float:EXP_BAR_MIN_X = 220.500;
+const Float:EXP_BAR_MAX_X = 408.0;
 
 enum _:eItems {
     ITEM_MEDIC_KIT,

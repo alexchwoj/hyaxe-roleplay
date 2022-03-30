@@ -33,23 +33,23 @@ Inventory_Hide(playerid)
 	TextDrawHideForPlayer(playerid, g_tdInventoryUsername);
 	PlayerTextDrawHide(playerid, p_tdInventorySkin{playerid});
 	PlayerTextDrawHide(playerid, p_tdInventoryExpBar{playerid});
+	PlayerTextDrawHide(playerid, p_tdInventoryExpText{playerid});
 
 	Bit_Set(Player_Flags(playerid), PFLAG_USING_INV, false);
+	CancelSelectTextDraw(playerid);
 	return 1;
 }
 
 Inventory_Show(playerid)
 {
+	Bit_Set(Player_Flags(playerid), PFLAG_USING_INV, true);
+
 	// Backgrounds
 	for(new i; i < sizeof(g_tdInventoryBG); ++i)
 		TextDrawShowForPlayer(playerid, g_tdInventoryBG[i]);
 
 	// Username
 	TextDrawShowForPlayer(playerid, g_tdInventoryUsername);
-
-	// Experience bars
-	for(new i; i < sizeof(g_tdInventoryExp); ++i)
-		TextDrawShowForPlayer(playerid, g_tdInventoryExp[i]);
 
 	// Toys view
 	for(new i; i < 6; ++i)
@@ -87,12 +87,22 @@ Inventory_Show(playerid)
 	PlayerTextDrawShow(playerid, p_tdInventorySkin{playerid});
 	PlayerTextDrawSetPreviewModel(playerid, p_tdInventorySkin{playerid}, Player_Skin(playerid));
 
-	// Set experience bars
-	PlayerTextDrawShow(playerid, p_tdInventoryExpBar{playerid});
-	TextDrawSetStringForPlayer(g_tdInventoryExp[2], playerid, "EXPERIENCIA: 65/100");
-	TextDrawShowForPlayer(playerid, g_tdInventoryExp[2]);
+	// Experience bars
+	TextDrawShowForPlayer(playerid, g_tdInventoryExp[0]);
+	TextDrawShowForPlayer(playerid, g_tdInventoryExp[1]);
 
-	SelectTextDraw(playerid, 0xF7F7F7FF);
-	Bit_Set(Player_Flags(playerid), PFLAG_USING_INV, true);
+	new exp_string[64];
+	format(exp_string, sizeof(exp_string), "EXPERIENCIA: %d/%d", Player_XP(playerid), Level_GetRequiredXP(Player_Level(playerid)));
+	PlayerTextDrawSetString(playerid, p_tdInventoryExpText{playerid}, exp_string);
+
+	PlayerTextDrawTextSize(
+		playerid, p_tdInventoryExpBar{playerid},
+		lerp(EXP_BAR_MIN_X, EXP_BAR_MAX_X, floatdiv(Player_XP(playerid), Level_GetRequiredXP(Player_Level(playerid)))), 188.500000
+	);
+
+	PlayerTextDrawShow(playerid, p_tdInventoryExpBar{playerid});
+	PlayerTextDrawShow(playerid, p_tdInventoryExpText{playerid});
+
+	SelectTextDraw(playerid, 0xDAA838FF);
 	return 1;
 }

@@ -625,20 +625,6 @@ public OnGameModeInit()
     TextDrawSetProportional(g_tdInventoryExp[1], 1);
     TextDrawSetSelectable(g_tdInventoryExp[1], 0);
 
-    g_tdInventoryExp[2] = TextDrawCreate(316.000000, 251.000000, "EXPERIENCIA: 65/100");
-    TextDrawFont(g_tdInventoryExp[2], 1);
-    TextDrawLetterSize(g_tdInventoryExp[2], 0.187499, 0.949998);
-    TextDrawTextSize(g_tdInventoryExp[2], 400.000000, 302.500000);
-    TextDrawSetOutline(g_tdInventoryExp[2], 0);
-    TextDrawSetShadow(g_tdInventoryExp[2], 0);
-    TextDrawAlignment(g_tdInventoryExp[2], 2);
-    TextDrawColor(g_tdInventoryExp[2], -1989532417);
-    TextDrawBackgroundColor(g_tdInventoryExp[2], 255);
-    TextDrawBoxColor(g_tdInventoryExp[2], 50);
-    TextDrawUseBox(g_tdInventoryExp[2], 0);
-    TextDrawSetProportional(g_tdInventoryExp[2], 1);
-    TextDrawSetSelectable(g_tdInventoryExp[2], 0);
-
     g_tdInventoryUsername = TextDrawCreate(316.000000, 61.000000, "_");
     TextDrawFont(g_tdInventoryUsername, 1);
     TextDrawLetterSize(g_tdInventoryUsername, 0.191666, 1.000000);
@@ -919,6 +905,20 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawSetProportional(playerid, p_tdInventoryExpBar{playerid}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdInventoryExpBar{playerid}, 0);
 
+    p_tdInventoryExpText{playerid} = CreatePlayerTextDraw(playerid, 316.000000, 251.000000, "EXPERIENCIA: 65/100");
+    PlayerTextDrawFont(playerid, p_tdInventoryExpText{playerid}, 1);
+    PlayerTextDrawLetterSize(playerid, p_tdInventoryExpText{playerid}, 0.187499, 0.949998);
+    PlayerTextDrawTextSize(playerid, p_tdInventoryExpText{playerid}, 400.000000, 302.500000);
+    PlayerTextDrawSetOutline(playerid, p_tdInventoryExpText{playerid}, 0);
+    PlayerTextDrawSetShadow(playerid, p_tdInventoryExpText{playerid}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdInventoryExpText{playerid}, 2);
+    PlayerTextDrawColor(playerid, p_tdInventoryExpText{playerid}, -1989532417);
+    PlayerTextDrawBackgroundColor(playerid, p_tdInventoryExpText{playerid}, 255);
+    PlayerTextDrawBoxColor(playerid, p_tdInventoryExpText{playerid}, 50);
+    PlayerTextDrawUseBox(playerid, p_tdInventoryExpText{playerid}, 0);
+    PlayerTextDrawSetProportional(playerid, p_tdInventoryExpText{playerid}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdInventoryExpText{playerid}, 0);
+
     p_tdToyView[playerid]{0} = CreatePlayerTextDraw(playerid, 368.000000, 63.000000, "Preview_Model");
     PlayerTextDrawFont(playerid, p_tdToyView[playerid]{0}, 5);
     PlayerTextDrawLetterSize(playerid, p_tdToyView[playerid]{0}, 0.600000, 2.000000);
@@ -1071,6 +1071,7 @@ public OnPlayerConnect(playerid)
 
         ++column;
     }
+
     p_tdLevelingBar[playerid]{0} = CreatePlayerTextDraw(playerid, 231.500000, 16.500000, !"20");
     PlayerTextDrawFont(playerid, p_tdLevelingBar[playerid]{0}, 3);
     PlayerTextDrawLetterSize(playerid, p_tdLevelingBar[playerid]{0}, 0.233333, 1.250000);
