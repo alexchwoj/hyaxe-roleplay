@@ -131,7 +131,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
     if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
     {
-        printf("[public] clicked: %d", clickedid);
+        printf("[public] clicked: %d", _:clickedid);
     }
 
     #if defined INV_OnPlayerClickTextDraw
@@ -155,7 +155,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 {
     if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
     {
-        printf("[player] clicked: %d", playertextid);
+        printf("[player] clicked: %d", _:playertextid);
     }
 
     #if defined INV_OnPlayerClickPlayerTD
