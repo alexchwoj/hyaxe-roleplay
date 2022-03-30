@@ -87,7 +87,7 @@ Needs_ShowBars(playerid)
 
 Player_Puke(playerid)
 {
-    DEBUG_PRINT("Player_Puke(playerid = %i)", playerid);
+    log_function();
 
     Player_StopShopping(playerid);
     g_rgePlayerTempData[playerid][e_iPlayerEatCount] = 0;

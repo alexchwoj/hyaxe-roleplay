@@ -31,6 +31,7 @@ public NPC_HandleConnection(&ret, playerid)
 
     if(FCNPC_IsValid(playerid) || IsPlayerNPC(playerid))
     {
+        SetPlayerColor(playerid, 0xF7F7F700);
         printf("[npcs] Player %i ignored because it's a bot", playerid);
         return 1;
     }

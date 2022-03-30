@@ -94,3 +94,5 @@ new g_rgszKeyVehicleCode[][] = {
     "VEHICLE_STEERLEFT",
     "VEHICLE_STEERRIGHT"
 };
+
+forward Key_Alert(Float:x, Float:y, Float:range, key, world = -1, interior = -1, key_type = KEY_TYPE_FOOT, attachedplayer = INVALID_PLAYER_ID);

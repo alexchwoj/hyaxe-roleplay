@@ -14,6 +14,7 @@ public OnGameModeInit()
         new info[2] = { 0x57484F52 }; // WHOR
         info[1] = i;
         Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgiHookerAreas[i], E_STREAMER_EXTRA_ID, info);
+        Key_Alert(g_rgfHookerPos[i][0], g_rgfHookerPos[i][1], 5.0, KEYNAME_CTRL_BACK, .attachedplayer = g_rgiHookers[i]);
         
         Hooker_Spawn(i);
     }
@@ -79,22 +80,62 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     continue;
 
                 new hookerid = info[1];
+                DEBUG_PRINT("Player %i interacted with hooker %i", playerid, hookerid);
 
                 if(!g_rgbHookerAvailable{hookerid})
                     return 1;
 
+                DEBUG_PRINT("Hooker is available");
+
+                g_rgbHookerAvailable{hookerid} = false;
                 g_rgiPlayerInteractingHooker[playerid] = hookerid;
+                g_rgiHookerInteractingPlayer[hookerid] = playerid;
 
                 if(!IsPlayerInAnyVehicle(playerid))
                 {
                     FCNPC_AimAtPlayer(g_rgiHookers[hookerid], playerid);
                     FCNPC_SetAnimationByName(g_rgiHookers[hookerid], "KISSING:GF_STREETARGUE_02", 4.1, 1, 0, 0, 0, 0);
-                    Dialog_Show(playerid, "hooker_kiss", DIALOG_STYLE_MSGBOX, "Prostituta", "{DADADA}La prostituta te ofrecio darte un beso por {64A752}50${DADADA}.", "Veni mamucha", "Todas putas");
+                    Dialog_Show(playerid, "hooker_accept", DIALOG_STYLE_TABLIST_HEADERS, 
+                            "Prostituta", 
+                                "{DADADA}Hablaste con la prostituta y te dio sus precios.\t \n\
+                                Beso\t{64A752}50${DADADA}\n\
+                                Mamada\t{64A752}200${DADADA}", 
+                            "Veni mamucha", "Todas putas"
+                    );
                 }
                 else if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
                 {
 
                 }
+
+                return 1;
+            }
+        }
+    }
+    else if((newkeys & KEY_YES) != 0)
+    {
+        if(g_rgiPlayerInteractingHooker[playerid] != INVALID_PLAYER_ID)
+        {
+            new hookerid = g_rgiPlayerInteractingHooker[playerid];
+            if(g_rgiHookerPendingTask[hookerid] == HOOKER_WAIT_FOR_AREA)
+            {
+                KillTimer(g_rgiHookerUpdateTimer[hookerid]);
+                g_rgiHookerUpdateTimer[hookerid] = 0;
+
+                // TogglePlayerControllable(playerid, false);
+
+                new Float:x, Float:y, Float:z, Float:angle;
+                GetPlayerPos(playerid, x, y, z);
+                GetPlayerFacingAngle(playerid, angle);
+
+                x += (0.8 * floatsin(-angle, degrees));
+                y += (0.8 * floatcos(-angle, degrees));
+
+                FCNPC_AimAtPlayer(g_rgiHookers[hookerid], playerid);
+                FCNPC_GoTo(g_rgiHookers[hookerid], x, y, z, FCNPC_MOVE_TYPE_WALK);
+                g_rgiHookerPendingTask[hookerid] = HOOKER_BLOWJOB;
+
+                ApplyAnimation(g_rgiHookerInteractingPlayer[hookerid], "BLOWJOBZ", "BJ_STAND_START_P", 4.1, 0, 0, 0, 1, 0);
 
                 return 1;
             }
@@ -118,17 +159,19 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     forward HOOKERS_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 #endif
 
-dialog hooker_kiss(playerid, response, listitem, inputtext[])
+dialog hooker_accept(playerid, response, listitem, inputtext[])
 {
     new hookerid = g_rgiPlayerInteractingHooker[playerid];
     new npcid = g_rgiHookers[hookerid];
 
     FCNPC_ResetAnimation(npcid);
+    FCNPC_ClearAnimations(npcid);
     FCNPC_Stop(npcid);
 
     if(!response)
     {
         FCNPC_StopAim(g_rgiHookers[hookerid]);
+        g_rgbHookerAvailable{hookerid} = true;
 
         if(g_rgiHookerPendingTask[hookerid] == HOOKER_WALK_BACK_TO_SITE)
         {
@@ -145,21 +188,39 @@ dialog hooker_kiss(playerid, response, listitem, inputtext[])
         return 1;
     }
 
-    g_rgbHookerAvailable{hookerid} = false;
-    Player_GiveMoney(playerid, -50);
+    switch(listitem)
+    {
+        case 0:
+        {
+            Player_GiveMoney(playerid, -50);
 
-    new Float:x, Float:y, Float:z, Float:angle;
-    GetPlayerPos(playerid, x, y, z);
-    GetPlayerFacingAngle(playerid, angle);
+            new Float:x, Float:y, Float:z, Float:angle;
+            GetPlayerPos(playerid, x, y, z);
+            GetPlayerFacingAngle(playerid, angle);
 
-    x += (0.8 * floatsin(-angle, degrees));
-    y += (0.8 * floatcos(-angle, degrees));
+            x += (0.9 * floatsin(-angle, degrees));
+            y += (0.9 * floatcos(-angle, degrees));
 
-    FCNPC_GoTo(npcid, x, y, z, FCNPC_MOVE_TYPE_WALK);
-    TogglePlayerControllable(playerid, false);
-    g_rgiHookerPendingTask[hookerid] = HOOKER_KISS_ONFOOT;
-    g_rgiHookerInteractingPlayer[hookerid] = playerid;
-    ApplyAnimation(playerid, "KISSING", "null", 4.1, 0, 0, 0, 0, 0, 0);
+            FCNPC_GoTo(npcid, x, y, z, FCNPC_MOVE_TYPE_WALK);
+            TogglePlayerControllable(playerid, false);
+            g_rgiHookerPendingTask[hookerid] = HOOKER_KISS_ONFOOT;
+            ApplyAnimation(playerid, "KISSING", "null", 4.1, 0, 0, 0, 0, 0, 0);
+        }
+        case 1:
+        {
+            FCNPC_StopAim(g_rgiHookers[hookerid]);
+            g_rgiHookerPendingTask[hookerid] = HOOKER_WAIT_FOR_AREA;
+            g_rgiHookerUpdateTimer[hookerid] = SetTimerEx("HOOKER_Update", 750, true, "i", hookerid);
+            FCNPC_ResetAnimation(npcid);
+
+            Notification_Show(playerid, "La prostituta te seguirá a un lugar alejado. Usa ~r~Y~w~ para empezar. Si lo haces en un lugar público podras ser multado por obscenidad.", 8000);
+            FCNPC_ApplyAnimation(g_rgiHookers[hookerid], "BLOWJOBZ", "null", 4.1, 0, 0, 0, 0, 0);
+            FCNPC_ApplyAnimation(g_rgiHookers[hookerid], "KISSING", "null", 4.1, 0, 0, 0, 0, 0);
+            ApplyAnimation(playerid, "BLOWJOBZ", "null", 4.1, 0, 0, 0, 0, 0, 0);
+            ApplyAnimation(playerid, "FOOD", "null", 4.1, 0, 0, 0, 0, 0, 0);
+            ApplyAnimation(playerid, "KISSING", "null", 4.1, 0, 0, 0, 0, 0, 0);
+        }
+    }
 
     return 1;
 }
@@ -172,18 +233,25 @@ public FCNPC_OnReachDestination(npcid)
         if(g_rgiHookerPendingTask[hookerid] == HOOKER_KISS_ONFOOT)
         {
             new playerid = g_rgiHookerInteractingPlayer[hookerid];
+            TogglePlayerControllable(playerid, true);
 
             FCNPC_AimAtPlayer(npcid, playerid);
             FCNPC_ApplyAnimation(npcid, "KISSING", "GRLFRD_KISS_03", 4.0, 0, 0, 0, 0, -1);
-            ApplyAnimation(playerid, "KISSING", "PLAYA_KISS_03", 4.1, false, false, false, false, 0, 1);
+            ApplyAnimation(playerid, "KISSING", "PLAYA_KISS_03", 4.1, false, false, false, true, 0, 1);
 
-            SetTimerEx("HOOKER_KissingDone", 8000, false, "ii", playerid, hookerid);
+            SetTimerEx("HOOKER_KissingDone", 5500, false, "ii", playerid, hookerid);
         }
         else if(g_rgiHookerPendingTask[hookerid] == HOOKER_WALK_BACK_TO_SITE)
         {
             FCNPC_SetAngle(npcid, g_rgfHookerPos[hookerid][3]);
             FCNPC_SetAnimationByName(npcid, "BAR:BARCUSTOM_LOOP", 4.1, 1, 0, 0, 0, 0);
             g_rgiHookerPendingTask[hookerid] = HOOKER_NONE;
+        }
+        else if(g_rgiHookerPendingTask[hookerid] == HOOKER_BLOWJOB)
+        {
+            FCNPC_StopAim(g_rgiHookers[hookerid]);
+            FCNPC_ApplyAnimation(npcid, "BLOWJOBZ", "BJ_STAND_START_W", 4.1, 0, 0, 0, 1, 0);
+            g_rgiHookerUpdateTimer[hookerid] = SetTimerEx("HOOKER_StartBlowing", 2000, false, "ii", hookerid, g_rgiHookerInteractingPlayer[hookerid]);
         }
     }
 
@@ -208,14 +276,90 @@ forward HOOKER_KissingDone(playerid, hookerid);
 public HOOKER_KissingDone(playerid, hookerid)
 {
     g_rgbHookerAvailable{hookerid} = true;
-    TogglePlayerControllable(playerid, true);
+    ClearAnimations(playerid);
 
     FCNPC_StopAim(g_rgiHookers[hookerid]);
     FCNPC_GoTo(g_rgiHookers[hookerid], g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2]);
     g_rgiHookerPendingTask[hookerid] = HOOKER_WALK_BACK_TO_SITE;
 
-    g_rgiHookerInteractingPlayer[hookerid] = INVALID_PLAYER_ID;
+    g_rgiHookerInteractingPlayer[hookerid] = 
     g_rgiPlayerInteractingHooker[playerid] = INVALID_PLAYER_ID;
+
+    return 1;
+}
+
+forward HOOKER_Update(hookerid);
+public HOOKER_Update(hookerid)
+{
+    new npcid = g_rgiHookers[hookerid];
+
+    if(g_rgiHookerPendingTask[hookerid] == HOOKER_WAIT_FOR_AREA)
+    {
+        new playerid = g_rgiHookerInteractingPlayer[hookerid];
+        FCNPC_GoToPlayer(npcid, playerid, .pathfinding = FCNPC_MOVE_PATHFINDING_RAYCAST);
+    }
+
+    return 1;
+}
+
+forward HOOKER_StartBlowing(hookerid, playerid);
+public HOOKER_StartBlowing(hookerid, playerid)
+{
+    FCNPC_ApplyAnimation(g_rgiHookers[hookerid], "BLOWJOBZ", "BJ_STAND_LOOP_W", 4.1, 1, 0, 0, 1, 0);
+    ApplyAnimation(playerid, "BLOWJOBZ", "BJ_STAND_LOOP_P", 4.1, 1, 0, 0, 1, 0);
+    g_rgiHookerUpdateTimer[hookerid] = SetTimerEx("HOOKER_FinishBlowing", math_random(15000, 30000), false, "ii", hookerid, playerid);
+    return 1;
+}
+
+forward HOOKER_FinishBlowing(hookerid, playerid);
+public HOOKER_FinishBlowing(hookerid, playerid)
+{
+    FCNPC_ApplyAnimation(g_rgiHookers[hookerid], "BLOWJOBZ", "BJ_STAND_END_W", 4.1, 0, 0, 0, 1, 0);
+    ApplyAnimation(playerid, "BLOWJOBZ", "BJ_STAND_END_P", 4.1, 0, 0, 0, 1, 0);
+    g_rgiHookerUpdateTimer[hookerid] = SetTimerEx("HOOKER_FinishBlowingAnim", 4000, false, "ii", hookerid, playerid);
+    return 1;
+}
+
+forward HOOKER_FinishBlowingAnim(hookerid, playerid);
+public HOOKER_FinishBlowingAnim(hookerid, playerid)
+{
+    new bool:kiss = (random(100) % 2) == 0;
+    
+    if(kiss)
+    {
+        FCNPC_ApplyAnimation(g_rgiHookers[hookerid], "KISSING", "GRLFRD_KISS_02", 4.1, 0, 0, 0, 0, 0);
+        ApplyAnimation(playerid, "KISSING", "PLAYA_KISS_02", 4.1, 0, 0, 0, 1, 0);
+        g_rgiHookerUpdateTimer[hookerid] = SetTimerEx("HOOKER_BlowingEnd", 6000, false, "ii", hookerid, playerid);
+    }
+    else
+    {
+        ClearAnimations(playerid);
+        
+        g_rgbHookerAvailable{hookerid} = true;
+        FCNPC_GoTo(g_rgiHookers[hookerid], g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2]);
+        g_rgiHookerPendingTask[hookerid] = HOOKER_WALK_BACK_TO_SITE;
+
+        g_rgiHookerInteractingPlayer[hookerid] = 
+        g_rgiPlayerInteractingHooker[playerid] = INVALID_PLAYER_ID;
+        g_rgiHookerUpdateTimer[hookerid] = 0;
+
+        // TogglePlayerControllable(playerid, true);
+    }
+
+    return 1;
+}
+
+forward HOOKER_BlowingEnd(hookerid, playerid);
+public HOOKER_BlowingEnd(hookerid, playerid)
+{
+    Player_Puke(playerid);
+    FCNPC_GoTo(g_rgiHookers[hookerid], g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2]);
+    g_rgiHookerPendingTask[hookerid] = HOOKER_WALK_BACK_TO_SITE;
+
+    g_rgiHookerInteractingPlayer[hookerid] = 
+    g_rgiPlayerInteractingHooker[playerid] = INVALID_PLAYER_ID;
+    g_rgiHookerUpdateTimer[hookerid] = 0;
+    g_rgbHookerAvailable{hookerid} = true;
 
     return 1;
 }

@@ -292,9 +292,9 @@ stock InterpolateColourLinear(startColour, endColour, Float:fraction = Float:0x7
 
 String:Str_Random(len)
 {
-    new String:s = str_new_buf(len);
+    new String:s = str_new_buf(len + 1);
     
-    for(new i = len - 1; i != -1; --i)
+    for(new i = len; i != -1; --i)
     {
         str_setc(s, i, random(2) ? (random(26) + (random(2) ? 'a' : 'A')) : (random(10) + '0'));
     }
@@ -386,17 +386,17 @@ static enum eLoggerVarData
 
             vars[i][e_iTagId] = (tag == cellmin ? (tagof(_:)) : tag);
             vars[i][e_aValue] = val;
-            vars[i][e_sVarName] = str_acquire(debug_symbol_name_s(sym));
+            vars[i][e_sVarName] = debug_symbol_name_s(sym);
             varcount++;
         }
 
         iter_delete(fun_vars);
 
-        new String:full_line = str_format("[log] %S(", fun_name);
+        new String:full_line = @f("[log] %S(", fun_name);
 
         for(new i; i < varcount; ++i)
         {
-            new String:varname = str_release(vars[i][e_sVarName]);
+            new String:varname = vars[i][e_sVarName];
 
             if(vars[i][e_bReference] && !vars[i][e_bArray])
             {
@@ -407,20 +407,20 @@ static enum eLoggerVarData
             tag_name(tag_uid(vars[i][e_iTagId]), tagname);
             if(tagname[0] && tagname[0] != '_')
             {
-                full_line += str_format("%s:", tagname);
+                full_line += @f("%s:", tagname);
             }
 
             if(vars[i][e_bArray])
             {
-                full_line += str_format("%s%S[], ", (vars[i][e_bReference] ? "" : "const "), varname);
+                full_line += @f("%s%S[], ", (vars[i][e_bReference] ? "" : "const "), varname);
             }
             else
             {
-                full_line += str_format("%S = ", varname);
+                full_line += @f("%S = ", varname);
 
                 if(vars[i][e_bReference])
                 {
-                    full_line += str_format("[0x%x] -> ", vars[i][e_aValue]);
+                    full_line += @f("[0x%x] -> ", vars[i][e_aValue]);
                 }
 
                 new value = vars[i][e_aValue];
@@ -435,11 +435,11 @@ static enum eLoggerVarData
                 {
                     case (tagof(Float:)):
                     {
-                        full_line += str_format("%f, ", value);
+                        full_line += @f("%f, ", value);
                     }
                     default:
                     {
-                        full_line += str_format("%i, ", value);
+                        full_line += @f("%i, ", value);
                     }
                 }
             }
