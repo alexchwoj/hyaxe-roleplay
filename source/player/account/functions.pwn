@@ -75,7 +75,7 @@ Account_Save(playerid, bool:disconnect = false)
         g_rgePlayerData[playerid][e_iPlayerPausedTime],
         g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ], g_rgePlayerData[playerid][e_fSpawnPosAngle],
         Player_VirtualWorld(playerid), Player_Interior(playerid), Player_Health(playerid), Player_Armor(playerid), Player_Hunger(playerid), Player_Thirst(playerid),
-        Player_Skin(playerid), Player_Level(playerid), Player_XP(playerid), (disconnect ? playerid : -1), 
+        Player_Skin(playerid), Player_Level(playerid), Player_XP(playerid), (disconnect ? -1 : playerid), 
         (disconnect ? ", CURRENT_CONNECTION = 0" : ""), Player_AccountID(playerid)
     );
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
