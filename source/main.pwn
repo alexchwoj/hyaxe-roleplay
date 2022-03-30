@@ -26,6 +26,7 @@
 #define PP_SYNTAX_FOR_LIST
 #define PP_SYNTAX_AWAIT
 #define PP_SYNTAX_@
+#define PP_ADDITIONAL_TAGS Cache
 
 #define FCNPC_DISABLE_VERSION_CHECK
 
@@ -124,6 +125,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/account/header.pwn"
 #include "player/damage/header.pwn"
 #include "player/admin/header.pwn"
+#include "player/leveling/header.pwn"
 #include "player/auth/header.pwn"
 #include "player/inventory/header.pwn"
 #include "player/needs/header.pwn"
@@ -153,6 +155,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/damage/functions.pwn"
 #include "player/inventory/functions.pwn"
 #include "player/admin/functions.pwn"
+#include "player/leveling/functions.pwn"
 #include "player/needs/functions.pwn"
 #include "player/chat/functions.pwn"
 #include "player/weapons/functions.pwn"
@@ -182,6 +185,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/hookers/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/damage/callbacks.pwn"
+#include "player/leveling/callbacks.pwn"
 #include "player/auth/callbacks.pwn"
 #include "player/inventory/callbacks.pwn"
 #include "player/needs/callbacks.pwn"
@@ -192,7 +196,14 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/anticheat/callbacks.pwn"
 
 // Prevents runtime error 20 (invalid index)
-main() { return 0; }
+
+main()
+{ 
+	new Cache:c = await<Cache> MySQL_QueryAsync(g_hDatabase, "SELECT 1;");
+	new Cache:a = await<Cache> MySQL_QueryAsync(g_hDatabase, "SELECT 2;");
+	#pragma unused c, a
+	return 0;
+}
 
 public OnJITCompile()
 {

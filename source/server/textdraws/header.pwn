@@ -11,7 +11,8 @@ new
     Text:g_tdNeedBars[4],
     Text:g_tdInventoryBG[3],
     Text:g_tdInventoryExp[3],
-    Text:g_tdInventoryUsername
+    Text:g_tdInventoryUsername,
+    Text:g_tdLevelingBar[5]
 ;
 
 new
@@ -25,5 +26,6 @@ new
     PlayerText:p_tdItemCount[MAX_PLAYERS][21 char],
     PlayerText:p_tdInventorySkin[MAX_PLAYERS char],
     PlayerText:p_tdInventoryExpBar[MAX_PLAYERS char],
-    PlayerText:p_tdToyView[MAX_PLAYERS][6 char]
+    PlayerText:p_tdToyView[MAX_PLAYERS][6 char],
+    PlayerText:p_tdLevelingBar[MAX_PLAYERS][2 char]
 ;

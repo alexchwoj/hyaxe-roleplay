@@ -461,3 +461,9 @@ static enum eLoggerVarData
         return 1;
     }
 #endif
+
+Timer_Kill(&timerid)
+{
+    KillTimer(timerid);
+    return timerid = 0;
+}
