@@ -1072,7 +1072,7 @@ public OnPlayerConnect(playerid)
         ++column;
     }
 
-    p_tdLevelingBar[playerid]{0} = CreatePlayerTextDraw(playerid, 231.500000, 16.500000, !"20");
+    p_tdLevelingBar[playerid]{0} = CreatePlayerTextDraw(playerid, 230.500000, 16.500000, !"20");
     PlayerTextDrawFont(playerid, p_tdLevelingBar[playerid]{0}, 3);
     PlayerTextDrawLetterSize(playerid, p_tdLevelingBar[playerid]{0}, 0.233333, 1.250000);
     PlayerTextDrawTextSize(playerid, p_tdLevelingBar[playerid]{0}, 402.000000, 14.500000);
