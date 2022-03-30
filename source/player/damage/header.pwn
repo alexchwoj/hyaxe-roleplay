@@ -160,7 +160,13 @@ new
         0, // 45 - Infrared
         0, // 46 - Parachute
         0, // 47 - Fake pistol
-        400 // 48 - Pistol whip (custom)
+        400, // 48 - Pistol whip (custom)
+        500, // 49 - Vehicle
+        500, // 50 - Helicopter blades
+        500, // 51 - Explosion
+        500, // 52 - Car park (custom)
+        1, // 53 - Drowning
+        1  // 54 - Splat
     }
 ;
 

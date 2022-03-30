@@ -65,7 +65,7 @@ Inventory_Show(playerid)
 			if (!Item_SingleSlot( InventorySlot_Type(playerid, i) ))
 			{
 				new string[8];
-				format(string, sizeof(string), "%d", InventorySlot_Amount(playerid, i));
+				valstr(string, InventorySlot_Amount(playerid, i));
 				PlayerTextDrawSetString(playerid, p_tdItemCount[playerid]{i}, string);
 			}
 			else PlayerTextDrawSetString(playerid, p_tdItemCount[playerid]{i}, "_");
