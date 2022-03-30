@@ -32,6 +32,7 @@ on_init ConnectDatabase()
 	}
 
 	print("[db] Database initialization completed.");
+	return 1;
 }
 
 on_exit DisconnectDatabase()
