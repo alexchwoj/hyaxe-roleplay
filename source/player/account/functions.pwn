@@ -103,6 +103,8 @@ Account_LoadFromCache(playerid)
     cache_get_value_name_int(0, !"SKIN", Player_Skin(playerid));
     cache_get_value_name_float(0, !"HUNGER", Player_Hunger(playerid));
     cache_get_value_name_float(0, !"THIRST", Player_Thirst(playerid));
+    cache_get_value_name_int(0, !"XP", Player_XP(playerid));
+    cache_get_value_name_int(0, !"LEVEL", Player_Level(playerid));
     cache_get_value_name_int(0, !"ADMIN_LEVEL", Player_AdminLevel(playerid));
     cache_get_value_name_int(0, !"PLAYED_TIME", Player_SavedPlayedTime(playerid));
 

@@ -64,7 +64,9 @@ enum ePlayerData
     e_iPlayerSkin,
     Float:e_fPlayerHunger,
     Float:e_fPlayerThirst,
-
+    e_iPlayerXp,
+    e_iPlayerLevel,
+    
     e_iAdminLevel,
     e_iPlayedTime,
     

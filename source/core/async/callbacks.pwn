@@ -26,7 +26,10 @@ public hy@AsyncQueryDone(Handle<Task>:task_handle)
         new Task:t = handle_get<Task>(task_handle);
         new Cache:c = cache_save();
         cache_set_active(c);
-        pawn_guard(_:c, .tag_id = tagof(Cache:));
+
+        new Handle<Cache>:h = handle_new<Cache>(c);
+        pawn_guard(_:h, tagof(h));
+
         task_set_result(t, _:c);
     }
 
