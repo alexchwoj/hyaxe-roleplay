@@ -555,6 +555,104 @@ public OnGameModeInit()
     TextDrawSetProportional(g_tdNeedBars[3], 1);
     TextDrawSetSelectable(g_tdNeedBars[3], 0);
 
+    g_tdInventoryBG[0] = TextDrawCreate(316.000000, 377.000000, "_");
+    TextDrawFont(g_tdInventoryBG[0], 1);
+    TextDrawLetterSize(g_tdInventoryBG[0], 0.600000, -36.699996);
+    TextDrawTextSize(g_tdInventoryBG[0], 364.000000, 195.500000);
+    TextDrawSetOutline(g_tdInventoryBG[0], 1);
+    TextDrawSetShadow(g_tdInventoryBG[0], 0);
+    TextDrawAlignment(g_tdInventoryBG[0], 2);
+    TextDrawColor(g_tdInventoryBG[0], -1);
+    TextDrawBackgroundColor(g_tdInventoryBG[0], 255);
+    TextDrawBoxColor(g_tdInventoryBG[0], 791621631);
+    TextDrawUseBox(g_tdInventoryBG[0], 1);
+    TextDrawSetProportional(g_tdInventoryBG[0], 1);
+    TextDrawSetSelectable(g_tdInventoryBG[0], 0);
+
+    g_tdInventoryBG[1] = TextDrawCreate(316.000000, 372.000000, "_");
+    TextDrawFont(g_tdInventoryBG[1], 1);
+    TextDrawLetterSize(g_tdInventoryBG[1], 0.600000, -12.100027);
+    TextDrawTextSize(g_tdInventoryBG[1], 362.000000, 188.500000);
+    TextDrawSetOutline(g_tdInventoryBG[1], 1);
+    TextDrawSetShadow(g_tdInventoryBG[1], 0);
+    TextDrawAlignment(g_tdInventoryBG[1], 2);
+    TextDrawColor(g_tdInventoryBG[1], -1);
+    TextDrawBackgroundColor(g_tdInventoryBG[1], 255);
+    TextDrawBoxColor(g_tdInventoryBG[1], 454761471);
+    TextDrawUseBox(g_tdInventoryBG[1], 1);
+    TextDrawSetProportional(g_tdInventoryBG[1], 1);
+    TextDrawSetSelectable(g_tdInventoryBG[1], 0);
+
+    g_tdInventoryBG[2] = TextDrawCreate(316.000000, 248.000000, "_");
+    TextDrawFont(g_tdInventoryBG[2], 1);
+    TextDrawLetterSize(g_tdInventoryBG[2], 0.600000, -21.850015);
+    TextDrawTextSize(g_tdInventoryBG[2], 362.000000, 188.500000);
+    TextDrawSetOutline(g_tdInventoryBG[2], 1);
+    TextDrawSetShadow(g_tdInventoryBG[2], 0);
+    TextDrawAlignment(g_tdInventoryBG[2], 2);
+    TextDrawColor(g_tdInventoryBG[2], -1);
+    TextDrawBackgroundColor(g_tdInventoryBG[2], 255);
+    TextDrawBoxColor(g_tdInventoryBG[2], 454761471);
+    TextDrawUseBox(g_tdInventoryBG[2], 1);
+    TextDrawSetProportional(g_tdInventoryBG[2], 1);
+    TextDrawSetSelectable(g_tdInventoryBG[2], 0);
+
+    g_tdInventoryExp[0] = TextDrawCreate(316.000000, 265.000000, "_");
+    TextDrawFont(g_tdInventoryExp[0], 1);
+    TextDrawLetterSize(g_tdInventoryExp[0], 0.600000, -2.100017);
+    TextDrawTextSize(g_tdInventoryExp[0], 362.000000, 188.500000);
+    TextDrawSetOutline(g_tdInventoryExp[0], 1);
+    TextDrawSetShadow(g_tdInventoryExp[0], 0);
+    TextDrawAlignment(g_tdInventoryExp[0], 2);
+    TextDrawColor(g_tdInventoryExp[0], -1);
+    TextDrawBackgroundColor(g_tdInventoryExp[0], 255);
+    TextDrawBoxColor(g_tdInventoryExp[0], 454761471);
+    TextDrawUseBox(g_tdInventoryExp[0], 1);
+    TextDrawSetProportional(g_tdInventoryExp[0], 1);
+    TextDrawSetSelectable(g_tdInventoryExp[0], 0);
+
+    g_tdInventoryExp[1] = TextDrawCreate(224.000000, 263.000000, "_");
+    TextDrawFont(g_tdInventoryExp[1], 1);
+    TextDrawLetterSize(g_tdInventoryExp[1], 0.600000, -1.650017);
+    TextDrawTextSize(g_tdInventoryExp[1], 408.500000, 188.500000);
+    TextDrawSetOutline(g_tdInventoryExp[1], 1);
+    TextDrawSetShadow(g_tdInventoryExp[1], 0);
+    TextDrawAlignment(g_tdInventoryExp[1], 1);
+    TextDrawColor(g_tdInventoryExp[1], -1);
+    TextDrawBackgroundColor(g_tdInventoryExp[1], 255);
+    TextDrawBoxColor(g_tdInventoryExp[1], 791621631);
+    TextDrawUseBox(g_tdInventoryExp[1], 1);
+    TextDrawSetProportional(g_tdInventoryExp[1], 1);
+    TextDrawSetSelectable(g_tdInventoryExp[1], 0);
+
+    g_tdInventoryExp[2] = TextDrawCreate(316.000000, 251.000000, "EXPERIENCIA: 65/100");
+    TextDrawFont(g_tdInventoryExp[2], 1);
+    TextDrawLetterSize(g_tdInventoryExp[2], 0.187499, 0.949998);
+    TextDrawTextSize(g_tdInventoryExp[2], 400.000000, 302.500000);
+    TextDrawSetOutline(g_tdInventoryExp[2], 0);
+    TextDrawSetShadow(g_tdInventoryExp[2], 0);
+    TextDrawAlignment(g_tdInventoryExp[2], 2);
+    TextDrawColor(g_tdInventoryExp[2], -1989532417);
+    TextDrawBackgroundColor(g_tdInventoryExp[2], 255);
+    TextDrawBoxColor(g_tdInventoryExp[2], 50);
+    TextDrawUseBox(g_tdInventoryExp[2], 0);
+    TextDrawSetProportional(g_tdInventoryExp[2], 1);
+    TextDrawSetSelectable(g_tdInventoryExp[2], 0);
+
+    g_tdInventoryUsername = TextDrawCreate(316.000000, 61.000000, "_");
+    TextDrawFont(g_tdInventoryUsername, 1);
+    TextDrawLetterSize(g_tdInventoryUsername, 0.191666, 1.000000);
+    TextDrawTextSize(g_tdInventoryUsername, 400.000000, 302.500000);
+    TextDrawSetOutline(g_tdInventoryUsername, 0);
+    TextDrawSetShadow(g_tdInventoryUsername, 0);
+    TextDrawAlignment(g_tdInventoryUsername, 2);
+    TextDrawColor(g_tdInventoryUsername, -858993409);
+    TextDrawBackgroundColor(g_tdInventoryUsername, 255);
+    TextDrawBoxColor(g_tdInventoryUsername, 50);
+    TextDrawUseBox(g_tdInventoryUsername, 0);
+    TextDrawSetProportional(g_tdInventoryUsername, 1);
+    TextDrawSetSelectable(g_tdInventoryUsername, 0);
+
     #if defined TD_OnGameModeInit
         return TD_OnGameModeInit();
     #else
@@ -718,6 +816,191 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawUseBox(playerid, p_tdNeedBars[playerid]{1}, 1);
     PlayerTextDrawSetProportional(playerid, p_tdNeedBars[playerid]{1}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdNeedBars[playerid]{1}, 0);
+
+    // Inventory
+    p_tdInventorySkin{playerid} = CreatePlayerTextDraw(playerid, 246.000000, 64.000000, "Preview_Model");
+    PlayerTextDrawFont(playerid, p_tdInventorySkin{playerid}, 5);
+    PlayerTextDrawLetterSize(playerid, p_tdInventorySkin{playerid}, 0.600000, 2.000000);
+    PlayerTextDrawTextSize(playerid, p_tdInventorySkin{playerid}, 141.000000, 182.000000);
+    PlayerTextDrawSetOutline(playerid, p_tdInventorySkin{playerid}, 0);
+    PlayerTextDrawSetShadow(playerid, p_tdInventorySkin{playerid}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdInventorySkin{playerid}, 1);
+    PlayerTextDrawColor(playerid, p_tdInventorySkin{playerid}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdInventorySkin{playerid}, 0);
+    PlayerTextDrawBoxColor(playerid, p_tdInventorySkin{playerid}, 0);
+    PlayerTextDrawUseBox(playerid, p_tdInventorySkin{playerid}, 0);
+    PlayerTextDrawSetProportional(playerid, p_tdInventorySkin{playerid}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdInventorySkin{playerid}, 0);
+    PlayerTextDrawSetPreviewModel(playerid, p_tdInventorySkin{playerid}, 5);
+    PlayerTextDrawSetPreviewRot(playerid, p_tdInventorySkin{playerid}, -10.000000, 0.000000, -20.000000, 1.000000);
+    PlayerTextDrawSetPreviewVehCol(playerid, p_tdInventorySkin{playerid}, 1, 1);
+    
+    p_tdInventoryExpBar{playerid} = CreatePlayerTextDraw(playerid, 224.000000, 263.000000, "_");
+    PlayerTextDrawFont(playerid, p_tdInventoryExpBar{playerid}, 1);
+    PlayerTextDrawLetterSize(playerid, p_tdInventoryExpBar{playerid}, 0.600000, -1.650017);
+    PlayerTextDrawTextSize(playerid, p_tdInventoryExpBar{playerid}, 362.000000, 188.500000);
+    PlayerTextDrawSetOutline(playerid, p_tdInventoryExpBar{playerid}, 1);
+    PlayerTextDrawSetShadow(playerid, p_tdInventoryExpBar{playerid}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdInventoryExpBar{playerid}, 1);
+    PlayerTextDrawColor(playerid, p_tdInventoryExpBar{playerid}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdInventoryExpBar{playerid}, 255);
+    PlayerTextDrawBoxColor(playerid, p_tdInventoryExpBar{playerid}, -626509569);
+    PlayerTextDrawUseBox(playerid, p_tdInventoryExpBar{playerid}, 1);
+    PlayerTextDrawSetProportional(playerid, p_tdInventoryExpBar{playerid}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdInventoryExpBar{playerid}, 0);
+
+    p_tdToyView[playerid]{0} = CreatePlayerTextDraw(playerid, 368.000000, 63.000000, "Preview_Model");
+    PlayerTextDrawFont(playerid, p_tdToyView[playerid]{0}, 5);
+    PlayerTextDrawLetterSize(playerid, p_tdToyView[playerid]{0}, 0.600000, 2.000000);
+    PlayerTextDrawTextSize(playerid, p_tdToyView[playerid]{0}, 38.000000, 44.500000);
+    PlayerTextDrawSetOutline(playerid, p_tdToyView[playerid]{0}, 0);
+    PlayerTextDrawSetShadow(playerid, p_tdToyView[playerid]{0}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdToyView[playerid]{0}, 1);
+    PlayerTextDrawColor(playerid, p_tdToyView[playerid]{0}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdToyView[playerid]{0}, 791621631);
+    PlayerTextDrawBoxColor(playerid, p_tdToyView[playerid]{0}, 255);
+    PlayerTextDrawUseBox(playerid, p_tdToyView[playerid]{0}, 0);
+    PlayerTextDrawSetProportional(playerid, p_tdToyView[playerid]{0}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdToyView[playerid]{0}, 1);
+    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{0}, 19553);
+    PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{0}, -100.000000, -15.000000, -103.000000, 0.740000);
+    PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{0}, 1, 1);
+
+    p_tdToyView[playerid]{1} = CreatePlayerTextDraw(playerid, 368.000000, 115.000000, "Preview_Model");
+    PlayerTextDrawFont(playerid, p_tdToyView[playerid]{1}, 5);
+    PlayerTextDrawLetterSize(playerid, p_tdToyView[playerid]{1}, 0.600000, 2.000000);
+    PlayerTextDrawTextSize(playerid, p_tdToyView[playerid]{1}, 38.000000, 44.500000);
+    PlayerTextDrawSetOutline(playerid, p_tdToyView[playerid]{1}, 0);
+    PlayerTextDrawSetShadow(playerid, p_tdToyView[playerid]{1}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdToyView[playerid]{1}, 1);
+    PlayerTextDrawColor(playerid, p_tdToyView[playerid]{1}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdToyView[playerid]{1}, 791621631);
+    PlayerTextDrawBoxColor(playerid, p_tdToyView[playerid]{1}, 255);
+    PlayerTextDrawUseBox(playerid, p_tdToyView[playerid]{1}, 0);
+    PlayerTextDrawSetProportional(playerid, p_tdToyView[playerid]{1}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdToyView[playerid]{1}, 1);
+    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{1}, 19553);
+    PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{1}, -100.000000, -15.000000, -103.000000, 0.740000);
+    PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{1}, 1, 1);
+
+    p_tdToyView[playerid]{2} = CreatePlayerTextDraw(playerid, 368.000000, 167.000000, "Preview_Model");
+    PlayerTextDrawFont(playerid, p_tdToyView[playerid]{2}, 5);
+    PlayerTextDrawLetterSize(playerid, p_tdToyView[playerid]{2}, 0.600000, 2.000000);
+    PlayerTextDrawTextSize(playerid, p_tdToyView[playerid]{2}, 38.000000, 44.500000);
+    PlayerTextDrawSetOutline(playerid, p_tdToyView[playerid]{2}, 0);
+    PlayerTextDrawSetShadow(playerid, p_tdToyView[playerid]{2}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdToyView[playerid]{2}, 1);
+    PlayerTextDrawColor(playerid, p_tdToyView[playerid]{2}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdToyView[playerid]{2}, 791621631);
+    PlayerTextDrawBoxColor(playerid, p_tdToyView[playerid]{2}, 255);
+    PlayerTextDrawUseBox(playerid, p_tdToyView[playerid]{2}, 0);
+    PlayerTextDrawSetProportional(playerid, p_tdToyView[playerid]{2}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdToyView[playerid]{2}, 1);
+    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{2}, 19553);
+    PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{2}, -100.000000, -15.000000, -103.000000, 0.740000);
+    PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{2}, 1, 1);
+
+    p_tdToyView[playerid]{3} = CreatePlayerTextDraw(playerid, 227.000000, 63.000000, "Preview_Model");
+    PlayerTextDrawFont(playerid, p_tdToyView[playerid]{3}, 5);
+    PlayerTextDrawLetterSize(playerid, p_tdToyView[playerid]{3}, 0.600000, 2.000000);
+    PlayerTextDrawTextSize(playerid, p_tdToyView[playerid]{3}, 38.000000, 44.500000);
+    PlayerTextDrawSetOutline(playerid, p_tdToyView[playerid]{3}, 0);
+    PlayerTextDrawSetShadow(playerid, p_tdToyView[playerid]{3}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdToyView[playerid]{3}, 1);
+    PlayerTextDrawColor(playerid, p_tdToyView[playerid]{3}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdToyView[playerid]{3}, 791621631);
+    PlayerTextDrawBoxColor(playerid, p_tdToyView[playerid]{3}, 255);
+    PlayerTextDrawUseBox(playerid, p_tdToyView[playerid]{3}, 0);
+    PlayerTextDrawSetProportional(playerid, p_tdToyView[playerid]{3}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdToyView[playerid]{3}, 1);
+    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{3}, 19553);
+    PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{3}, -100.000000, -15.000000, -103.000000, 0.740000);
+    PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{3}, 1, 1);
+
+    p_tdToyView[playerid]{4} = CreatePlayerTextDraw(playerid, 227.000000, 114.000000, "Preview_Model");
+    PlayerTextDrawFont(playerid, p_tdToyView[playerid]{4}, 5);
+    PlayerTextDrawLetterSize(playerid, p_tdToyView[playerid]{4}, 0.600000, 2.000000);
+    PlayerTextDrawTextSize(playerid, p_tdToyView[playerid]{4}, 38.000000, 44.500000);
+    PlayerTextDrawSetOutline(playerid, p_tdToyView[playerid]{4}, 0);
+    PlayerTextDrawSetShadow(playerid, p_tdToyView[playerid]{4}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdToyView[playerid]{4}, 1);
+    PlayerTextDrawColor(playerid, p_tdToyView[playerid]{4}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdToyView[playerid]{4}, 791621631);
+    PlayerTextDrawBoxColor(playerid, p_tdToyView[playerid]{4}, 255);
+    PlayerTextDrawUseBox(playerid, p_tdToyView[playerid]{4}, 0);
+    PlayerTextDrawSetProportional(playerid, p_tdToyView[playerid]{4}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdToyView[playerid]{4}, 1);
+    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{4}, 19553);
+    PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{4}, -100.000000, -15.000000, -103.000000, 0.740000);
+    PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{4}, 1, 1);
+
+    p_tdToyView[playerid]{5} = CreatePlayerTextDraw(playerid, 227.000000, 165.000000, "Preview_Model");
+    PlayerTextDrawFont(playerid, p_tdToyView[playerid]{5}, 5);
+    PlayerTextDrawLetterSize(playerid, p_tdToyView[playerid]{5}, 0.600000, 2.000000);
+    PlayerTextDrawTextSize(playerid, p_tdToyView[playerid]{5}, 38.000000, 44.500000);
+    PlayerTextDrawSetOutline(playerid, p_tdToyView[playerid]{5}, 0);
+    PlayerTextDrawSetShadow(playerid, p_tdToyView[playerid]{5}, 0);
+    PlayerTextDrawAlignment(playerid, p_tdToyView[playerid]{5}, 1);
+    PlayerTextDrawColor(playerid, p_tdToyView[playerid]{5}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdToyView[playerid]{5}, 791621631);
+    PlayerTextDrawBoxColor(playerid, p_tdToyView[playerid]{5}, 255);
+    PlayerTextDrawUseBox(playerid, p_tdToyView[playerid]{5}, 0);
+    PlayerTextDrawSetProportional(playerid, p_tdToyView[playerid]{5}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdToyView[playerid]{5}, 1);
+    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{5}, 19553);
+    PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{5}, -100.000000, -15.000000, -103.000000, 0.740000);
+    PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{5}, 1, 1);
+
+    // Inventory slots
+    // 21 = 257 (count) - 336 (slot)
+    new
+        Float:slot_x = 223.000000,
+        Float:slot_y = 336.000000,
+        row, column
+    ;  
+
+    for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+	{
+        if (column >= 7)
+        {
+            column = 0;
+            slot_x = 223.000000;
+            ++row;
+        }
+
+        p_tdItemView[playerid]{i} = CreatePlayerTextDraw(playerid, slot_x + (27.0 * column), slot_y - (33.0 * row), "Preview_Model");
+        PlayerTextDrawFont(playerid, p_tdItemView[playerid]{i}, 5);
+        PlayerTextDrawLetterSize(playerid, p_tdItemView[playerid]{i}, 0.600000, 2.000000);
+        PlayerTextDrawTextSize(playerid, p_tdItemView[playerid]{i}, 24.500000, 30.000000);
+        PlayerTextDrawSetOutline(playerid, p_tdItemView[playerid]{i}, 0);
+        PlayerTextDrawSetShadow(playerid, p_tdItemView[playerid]{i}, 0);
+        PlayerTextDrawAlignment(playerid, p_tdItemView[playerid]{i}, 1);
+        PlayerTextDrawColor(playerid, p_tdItemView[playerid]{i}, -1);
+        PlayerTextDrawBackgroundColor(playerid, p_tdItemView[playerid]{i}, 791621631);
+        PlayerTextDrawBoxColor(playerid, p_tdItemView[playerid]{i}, 255);
+        PlayerTextDrawUseBox(playerid, p_tdItemView[playerid]{i}, 0);
+        PlayerTextDrawSetProportional(playerid, p_tdItemView[playerid]{i}, 1);
+        PlayerTextDrawSetSelectable(playerid, p_tdItemView[playerid]{i}, 1);
+        PlayerTextDrawSetPreviewModel(playerid, p_tdItemView[playerid]{i}, 19482);
+        PlayerTextDrawSetPreviewRot(playerid, p_tdItemView[playerid]{i}, 2.000000, 0.000000, -34.000000, 0.740000);
+        PlayerTextDrawSetPreviewVehCol(playerid, p_tdItemView[playerid]{i}, 1, 1);
+
+        p_tdItemCount[playerid]{i} = CreatePlayerTextDraw(playerid, slot_x + (27.0 * column), (slot_y + 21.0) - (33.0 * row), "_");
+        PlayerTextDrawFont(playerid, p_tdItemCount[playerid]{i}, 1);
+        PlayerTextDrawLetterSize(playerid, p_tdItemCount[playerid]{i}, 0.170833, 0.949998);
+        PlayerTextDrawTextSize(playerid, p_tdItemCount[playerid]{i}, 400.000000, 17.000000);
+        PlayerTextDrawSetOutline(playerid, p_tdItemCount[playerid]{i}, 0);
+        PlayerTextDrawSetShadow(playerid, p_tdItemCount[playerid]{i}, 0);
+        PlayerTextDrawAlignment(playerid, p_tdItemCount[playerid]{i}, 1);
+        PlayerTextDrawColor(playerid, p_tdItemCount[playerid]{i}, -1);
+        PlayerTextDrawBackgroundColor(playerid, p_tdItemCount[playerid]{i}, 255);
+        PlayerTextDrawBoxColor(playerid, p_tdItemCount[playerid]{i}, 50);
+        PlayerTextDrawUseBox(playerid, p_tdItemCount[playerid]{i}, 0);
+        PlayerTextDrawSetProportional(playerid, p_tdItemCount[playerid]{i}, 1);
+        PlayerTextDrawSetSelectable(playerid, p_tdItemCount[playerid]{i}, 0);
+
+        ++column;
+    }
 
     #if defined TD_OnPlayerConnect
         return TD_OnPlayerConnect(playerid);

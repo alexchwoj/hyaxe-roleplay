@@ -8,7 +8,10 @@ new
     Text:g_tdBankATM[8],
     Text:g_tdKeyGame[4],
     Text:g_tdShops[12],
-    Text:g_tdNeedBars[4]
+    Text:g_tdNeedBars[4],
+    Text:g_tdInventoryBG[3],
+    Text:g_tdInventoryExp[3],
+    Text:g_tdInventoryUsername
 ;
 
 new
@@ -17,5 +20,10 @@ new
     PlayerText:p_tdKey_BG[MAX_PLAYERS char],
     PlayerText:p_tdKey_Text[MAX_PLAYERS char],
     PlayerText:p_tdKeyGame[MAX_PLAYERS char],
-    PlayerText:p_tdNeedBars[MAX_PLAYERS][2 char]
+    PlayerText:p_tdNeedBars[MAX_PLAYERS][2 char],
+    PlayerText:p_tdItemView[MAX_PLAYERS][21 char],
+    PlayerText:p_tdItemCount[MAX_PLAYERS][21 char],
+    PlayerText:p_tdInventorySkin[MAX_PLAYERS char],
+    PlayerText:p_tdInventoryExpBar[MAX_PLAYERS char],
+    PlayerText:p_tdToyView[MAX_PLAYERS][6 char]
 ;

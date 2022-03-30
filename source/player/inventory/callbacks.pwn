@@ -4,6 +4,53 @@
 #define _inventory_callbacks_
 
 
+public OnPlayerCancelTDSelection(playerid)
+{
+    if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
+        Inventory_Hide(playerid);
+
+    #if defined INV_OnPlayerCancelTDSelection
+        return INV_OnPlayerCancelTDSelection(playerid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerCancelTDSelection
+    #undef OnPlayerCancelTDSelection
+#else
+    #define _ALS_OnPlayerCancelTDSelection
+#endif
+#define OnPlayerCancelTDSelection INV_OnPlayerCancelTDSelection
+#if defined INV_OnPlayerCancelTDSelection
+    forward INV_OnPlayerCancelTDSelection(playerid);
+#endif
+
+public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
+{
+    if ((newkeys & KEY_NO) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
+    {
+        Inventory_Show(playerid);
+    }
+
+    #if defined INV_OnPlayerKeyStateChange
+        return INV_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerKeyStateChange
+    #undef OnPlayerKeyStateChange
+#else
+    #define _ALS_OnPlayerKeyStateChange
+#endif
+#define OnPlayerKeyStateChange INV_OnPlayerKeyStateChange
+#if defined INV_OnPlayerKeyStateChange
+    forward INV_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
+#endif
+
+
 forward INV_LoadFromDatabase(playerid);
 public INV_LoadFromDatabase(playerid)
 {
