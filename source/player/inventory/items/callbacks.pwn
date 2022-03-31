@@ -20,8 +20,8 @@ public OnGameModeInit()
 {
     Item_Callback(ITEM_MEDICINE) = __addressof(Medicine_OnUse);
 
-    #if defined MDC_OnGameModeInit
-        return MDC_OnGameModeInit();
+    #if defined ITEM_OnGameModeInit
+        return ITEM_OnGameModeInit();
     #else
         return 1;
     #endif
@@ -32,7 +32,7 @@ public OnGameModeInit()
 #else
     #define _ALS_OnGameModeInit
 #endif
-#define OnGameModeInit MDC_OnGameModeInit
-#if defined MDC_OnGameModeInit
-    forward MDC_OnGameModeInit();
+#define OnGameModeInit ITEM_OnGameModeInit
+#if defined ITEM_OnGameModeInit
+    forward ITEM_OnGameModeInit();
 #endif

@@ -140,9 +140,9 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
                 if (callback != -1)
                 {
                     __emit {
-                        push.s playerid
                         push.s i
-                        push.c 4
+                        push.s playerid
+                        push.c 8
                         lctrl 6
                         add.c 0x24
                         lctrl 8

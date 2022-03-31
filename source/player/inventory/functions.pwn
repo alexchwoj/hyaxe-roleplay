@@ -129,9 +129,9 @@ InventorySlot_Subtract(playerid, slot, amount = 1)
 {
 	if (InventorySlot_IsValid(playerid, slot))
 	{
-		if (!Item_SingleSlot( InventorySlot_Type(playerid, i) ))
+		if (!Item_SingleSlot( InventorySlot_Type(playerid, slot) ))
 		{
-			InventorySlot_Amount(playerid, slot) -= 1;
+			InventorySlot_Amount(playerid, slot) -= amount;
 			if (InventorySlot_Amount(playerid, slot) <= 0)
 				InventorySlot_Delete(playerid, slot);
 			else
