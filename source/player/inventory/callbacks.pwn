@@ -132,7 +132,27 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 {
     if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
     {
-        printf("[player] clicked: %d", playertextid);
+        for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+	    {
+            if (playertextid == p_tdItemView[playerid]{i})
+            {
+                new callback = Item_Callback( InventorySlot_Type(playerid, i) );
+                if (callback != -1)
+                {
+                    __emit {
+                        push.s playerid
+                        push.c 4
+                        lctrl 6
+                        add.c 0x24
+                        lctrl 8
+                        push.pri
+                        load.s.pri callback
+                        sctrl 6
+                    }
+                }
+                break;
+            }
+        }
     }
 
     #if defined INV_OnPlayerClickPlayerTD

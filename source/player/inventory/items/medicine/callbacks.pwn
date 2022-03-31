@@ -1,0 +1,32 @@
+#if defined _medicine_callbacks_
+    #endinput
+#endif
+#define _medicine_callbacks_
+
+static Medicine_OnUse(playerid)
+{
+    Notification_ShowBeatingText(playerid, 2000, 0xF7F7F7, 100, 255, "Has usado un medicamento (~g~+10~w~ de salud)");
+    Player_SetHealth(playerid, Player_Health(playerid) + 10);
+    return 1;
+}
+
+public OnGameModeInit()
+{
+    Item_Callback(ITEM_MEDICINE) = __addressof(Medicine_OnUse);
+
+    #if defined MDC_OnGameModeInit
+        return MDC_OnGameModeInit();
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnGameModeInit
+    #undef OnGameModeInit
+#else
+    #define _ALS_OnGameModeInit
+#endif
+#define OnGameModeInit MDC_OnGameModeInit
+#if defined MDC_OnGameModeInit
+    forward MDC_OnGameModeInit();
+#endif

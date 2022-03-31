@@ -43,7 +43,8 @@ enum _:eItems {
 enum eItemData {
     e_szName[64],
     e_iModelID,
-    bool:e_bSingleSlot
+    bool:e_bSingleSlot,
+    e_iCallback
 }
 
 enum ePlayerInventory {
@@ -56,36 +57,36 @@ enum ePlayerInventory {
 
 new 
     g_rgeItemData[eItems][eItemData] = {
-		{"Botiquín", 11738, true}, // ITEM_MEDIC_KIT
-		{"Medicamento", 11736, false}, // ITEM_MEDICINE
-		{"Crack", 1575, false}, // ITEM_CRACK
-		{"Bidón de gasolina", 1650, true}, // ITEM_PETROL_CAN
-		{"Celular", 18866, true}, // ITEM_PHONE
-		{"Kit de reparación", 19921, true}, // ITEM_REPAIR_KIT
-		{"Porro", 3027, false}, // ITEM_PORRETE
-		{"Burrito", 2769, false}, // ITEM_BURRITO
-		{"Hamburguesa", 2703, false}, // ITEM_BURGER
-		{"Carne cruda", 2804, false}, // ITEM_MEAT
-		{"Jamon", 19847, false}, // ITEM_HAM
-		{"Naranja", 19574, false}, // ITEM_ORANGE
-		{"Tostada", 19883, false}, // ITEM_TOAST
-		{"Leche", 19569, false}, // ITEM_MILK
-		{"Jugo de naranja", 19563, false}, // ITEM_ORANGE_JUICE
-		{"Jugo de manzana", 19564, false}, // ITEM_APPLE_JUICE
-		{"Ketchup", 11722, false}, // ITEM_KETCHUP
-		{"Helado de chocolate", 19567, true}, // ITEM_CHOCOLATE_ICE_CREAM
-		{"Helado de frutilla", 19568, true}, // ITEM_STRAWBERRY_ICE_CREAM
-		{"Pizza", 2814, true}, // ITEM_PIZZA
-		{"Cepita", 19564, false}, // ITEM_CEPITA
-		{"Cerveza", 1484, false}, // ITEM_BEER
-		{"Wisky", 19823, false}, // ITEM_WISKY
-		{"Champagne", 19824, false}, // ITEM_CHAMPAGNE
-		{"Cerveza artesanal", 1544, false}, // ITEM_CRAFT_BEER
-		{"Pollo", 2768, false}, // ITEM_CHICKEN
-		{"Cafe", 19835, false}, // ITEM_COFFE
-		{"Sanguche de milanesa", 2703, false}, // ITEM_SANGUCHEDEMILANESA
+		{"Botiquín", 11738, true, -1}, // ITEM_MEDIC_KIT
+		{"Medicamento", 11736, false, -1}, // ITEM_MEDICINE
+		{"Crack", 1575, false, -1}, // ITEM_CRACK
+		{"Bidón de gasolina", 1650, true, -1}, // ITEM_PETROL_CAN
+		{"Celular", 18866, true, -1}, // ITEM_PHONE
+		{"Kit de reparación", 19921, true, -1}, // ITEM_REPAIR_KIT
+		{"Porro", 3027, true, -1}, // ITEM_PORRETE
+		{"Burrito", 2769, true, -1}, // ITEM_BURRITO
+		{"Hamburguesa", 2703, true, -1}, // ITEM_BURGER
+		{"Carne cruda", 2804, true, -1}, // ITEM_MEAT
+		{"Jamon", 19847, true, -1}, // ITEM_HAM
+		{"Naranja", 19574, true, -1}, // ITEM_ORANGE
+		{"Tostada", 19883, true, -1}, // ITEM_TOAST
+		{"Leche", 19569, true, -1}, // ITEM_MILK
+		{"Jugo de naranja", 19563, true, -1}, // ITEM_ORANGE_JUICE
+		{"Jugo de manzana", 19564, true, -1}, // ITEM_APPLE_JUICE
+		{"Ketchup", 11722, true, -1}, // ITEM_KETCHUP
+		{"Helado de chocolate", 19567, true, -1}, // ITEM_CHOCOLATE_ICE_CREAM
+		{"Helado de frutilla", 19568, true, -1}, // ITEM_STRAWBERRY_ICE_CREAM
+		{"Pizza", 2814, true, -1}, // ITEM_PIZZA
+		{"Cepita", 19564, true, -1}, // ITEM_CEPITA
+		{"Cerveza", 1484, true, -1}, // ITEM_BEER
+		{"Wisky", 19823, true, -1}, // ITEM_WISKY
+		{"Champagne", 19824, true, -1}, // ITEM_CHAMPAGNE
+		{"Cerveza artesanal", 1544, true, -1}, // ITEM_CRAFT_BEER
+		{"Pollo", 2768, true, -1}, // ITEM_CHICKEN
+		{"Cafe", 19835, true, -1}, // ITEM_COFFE
+		{"Sanguche de milanesa", 2703, true, -1}, // ITEM_SANGUCHEDEMILANESA
 
-		{"Invalid item", 18631, false} // ITEM_INVALID
+		{"Invalid item", 18631, false, -1} // ITEM_INVALID
 	},
     g_rgePlayerInventory[MAX_PLAYERS + 1][HYAXE_MAX_INVENTORY_SLOTS][ePlayerInventory]
 ;
@@ -93,6 +94,7 @@ new
 #define Item_Name(%0) (g_rgeItemData[%0][e_szName])
 #define Item_ModelID(%0) (g_rgeItemData[%0][e_iModelID])
 #define Item_SingleSlot(%0) (g_rgeItemData[%0][e_bSingleSlot])
+#define Item_Callback(%0) (g_rgeItemData[%0][e_iCallback])
 #define InventorySlot_Amount(%0,%1) (g_rgePlayerInventory[%0][%1][e_iAmount])
 #define InventorySlot_Type(%0,%1) (g_rgePlayerInventory[%0][%1][e_iType])
 #define InventorySlot_Extra(%0,%1) (g_rgePlayerInventory[%0][%1][e_iExtra])

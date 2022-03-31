@@ -188,6 +188,8 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/leveling/callbacks.pwn"
 #include "player/auth/callbacks.pwn"
 #include "player/inventory/callbacks.pwn"
+#include "player/inventory/items/medic_kit/callbacks.pwn"
+#include "player/inventory/items/medicine/callbacks.pwn"
 #include "player/needs/callbacks.pwn"
 #include "player/chat/callbacks.pwn"
 #include "player/keygame/callbacks.pwn"
