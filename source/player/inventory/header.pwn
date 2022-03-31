@@ -48,6 +48,7 @@ enum eItemData {
 
 enum ePlayerInventory {
     bool:e_bValid,
+    e_iID,
     e_iType,
     e_iAmount,
     e_iExtra

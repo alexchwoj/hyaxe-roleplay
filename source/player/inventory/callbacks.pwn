@@ -63,8 +63,9 @@ public INV_LoadFromDatabase(playerid)
         if (slot < HYAXE_MAX_INVENTORY_SLOTS)
         {
             g_rgePlayerInventory[playerid][slot][e_bValid] = true;
-            cache_get_value_name_int(i, "ITEM_TYPE", g_rgePlayerInventory[playerid][slot][e_iType]); 
-            cache_get_value_name_int(i, "AMOUNT", g_rgePlayerInventory[playerid][slot][e_iAmount]); 
+            cache_get_value_name_int(i, "ID", g_rgePlayerInventory[playerid][slot][e_iID]);
+            cache_get_value_name_int(i, "ITEM_TYPE", g_rgePlayerInventory[playerid][slot][e_iType]);
+            cache_get_value_name_int(i, "AMOUNT", g_rgePlayerInventory[playerid][slot][e_iAmount]);
             cache_get_value_name_int(i, "EXTRA", g_rgePlayerInventory[playerid][slot][e_iExtra]);
 
             DEBUG_PRINT("type: %d (%s)", g_rgePlayerInventory[playerid][slot][e_iType], g_rgeItemData[ g_rgePlayerInventory[playerid][slot][e_iType] ][e_szName]);
@@ -126,30 +127,6 @@ public OnPlayerDisconnect(playerid, reason)
     forward INV_OnPlayerDisconnect(playerid, reason);
 #endif
 
-
-public OnPlayerClickTextDraw(playerid, Text:clickedid)
-{
-    if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
-    {
-        printf("[public] clicked: %d", clickedid);
-    }
-
-    #if defined INV_OnPlayerClickTextDraw
-        return INV_OnPlayerClickTextDraw(playerid, Text:clickedid);
-    #else
-        return 1;
-    #endif
-}
-
-#if defined _ALS_OnPlayerClickTextDraw
-    #undef OnPlayerClickTextDraw
-#else
-    #define _ALS_OnPlayerClickTextDraw
-#endif
-#define OnPlayerClickTextDraw INV_OnPlayerClickTextDraw
-#if defined INV_OnPlayerClickTextDraw
-    forward INV_OnPlayerClickTextDraw(playerid, Text:clickedid);
-#endif
 
 public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 {
