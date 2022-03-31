@@ -26,8 +26,6 @@ public OnPlayerDisconnect(playerid, reason)
 
 public LEVELS_InterpolateTo(playerid, Float:init_x, Float:end_x, Float:start_xp, start_level, bool:new_level)
 {
-    log_function();
-
     g_rgiLevelingBarSteps{playerid}++;
     new Float:t = floatdiv(g_rgiLevelingBarSteps{playerid}, LEVEL_BAR_ANIMATION_STEPS);
     new Float:x = lerp(init_x, end_x, t);
@@ -53,6 +51,10 @@ public LEVELS_InterpolateTo(playerid, Float:init_x, Float:end_x, Float:start_xp,
             new Float:new_end_x = lerp(LEVEL_BAR_MIN_X, LEVEL_BAR_MAX_X, floatdiv(Player_XP(playerid), Level_GetRequiredXP(Player_Level(playerid))));
             if(new_end_x == LEVEL_BAR_MIN_X)
             {
+                TextDrawTextSize(g_tdLevelingBar[3], LEVEL_BAR_MIN_X, 75.500000);
+                TextDrawShowForPlayer(playerid, g_tdLevelingBar[3]);
+                TextDrawSetStringForPlayer(g_tdLevelingBar[5], playerid, "0/%i", Level_GetRequiredXP(Player_Level(playerid)));
+
                 g_rgiLevelingTimer[playerid] = SetTimerEx("LEVELS_HideAllBars", 10000, false, "i", playerid);
             }
             else

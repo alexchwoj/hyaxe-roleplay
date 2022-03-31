@@ -5,8 +5,6 @@
 
 public FADINGS_FadeTextDraw(playerid, PlayerText:textdraw, rounds, interval, Task:t)
 {
-    log_function();
-
     new color = PlayerTextDrawGetColor(playerid, textdraw);
     new alpha = (color & 0xFF);
 
@@ -20,7 +18,6 @@ public FADINGS_FadeTextDraw(playerid, PlayerText:textdraw, rounds, interval, Tas
     }
 
     new alpha_new = clamp(alpha, 0, 255);
-    DEBUG_PRINT("alpha_new = %i", alpha_new);
     PlayerTextDrawColor(playerid, textdraw, (color & 0xFFFFFF00) | alpha_new);
     PlayerTextDrawShow(playerid, textdraw);
 

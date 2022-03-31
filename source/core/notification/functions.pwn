@@ -95,38 +95,6 @@ Notification_Show(playerid, const text[], time, color = 0xCB3126FF)
     strcat(fixed_text, text);
     Str_FixEncoding_Ref(fixed_text);
 
-    /*
-    new len = strcat(fixed_text, text);
-    new count, last_space = -1, line_count = 1;
-    for (new i = 0; i <= len; ++i)
-	{
-        if(fixed_text[i] == '~')
-        {
-            new other = strfind(fixed_text, "~", .pos = i + 1);
-            i = other + 1;
-            continue;
-        }
-        
-        count += GetTextDrawCharacterWidth(fixed_text[i], 1, true);
-        if(count >= 825)
-        {
-            for(new j = i - 1; j != -1 && i - j < 20; --j)
-            {
-                if(fixed_text[j] == ' ')
-                {
-                    last_space = j;
-                    break;
-                }
-            }
-
-            strins(fixed_text, "~n~", (last_space == -1 ? i : last_space) + 1);
-            count = 0;
-            line_count++;
-            i += 3;
-        }
-    }
-    */
-
     SplitTextDrawString(fixed_text, 155.0, 0.174999, 1, 0, true);
     CreateNotificationTD(playerid, index, fixed_text, color);
 
@@ -152,7 +120,7 @@ Notification_Show(playerid, const text[], time, color = 0xCB3126FF)
         PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][2], 22.000000, pos_y + 1.0);
     }
 
-    if (Performance_IsFine(playerid))
+    if (!Bit_Get(Player_Config(playerid), CONFIG_PERFORMANCE_MODE) && Performance_IsFine(playerid))
     {
         NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationMoveToRight", 10, true, "dddffd", playerid, index, time, pos_y, 300.0, 5);
     }

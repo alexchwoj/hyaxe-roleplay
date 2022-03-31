@@ -52,8 +52,12 @@ Player_AddXP(playerid, xp)
     }
 
     new max_xp = Level_GetRequiredXP(Player_Level(playerid));
-    
-    Levels_ShowBarToPlayer(playerid);
+    new const bool:animate = !Bit_Get(Player_Config(playerid), CONFIG_PERFORMANCE_MODE) && Performance_IsFine(playerid);
+
+    if(animate)
+    {
+        Levels_ShowBarToPlayer(playerid);
+    }
 
     new current_xp = Player_XP(playerid);
     new new_xp = clamp(current_xp + xp, 0, max_xp);
@@ -70,12 +74,27 @@ Player_AddXP(playerid, xp)
         while(total_xp >= Level_GetRequiredXP(Player_Level(playerid)));
 
         Player_XP(playerid) = total_xp;
-        Levels_AnimateBar(playerid, current_xp, .start_level = current_level, .new_level = true);
+
+        if(animate)
+            Levels_AnimateBar(playerid, current_xp, .start_level = current_level, .new_level = true);
+        else
+        {
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Subiste al nivel ~r~%i~w~.", Player_Level(playerid));
+            Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 10);
+        }
     }
     else
     {
         Player_XP(playerid) = new_xp;
-        Levels_AnimateBar(playerid, current_xp);
+        
+        if(animate)
+            Levels_AnimateBar(playerid, current_xp);
+    }
+
+    if(!animate)
+    {
+        Levels_ShowBarToPlayer(playerid);
+        g_rgiLevelingTimer[playerid] = SetTimerEx("LEVELS_HideAllBars", 10000, false, "i", playerid);
     }
 
     return 1;
@@ -104,12 +123,14 @@ Player_SetLevel(playerid, level)
     else
     {
         new old_xp = Player_XP(playerid);
-        
+        new old_level = Player_Level(playerid);
+
         Levels_ShowBarToPlayer(playerid);
 
         Player_XP(playerid) = 0;
         Player_Level(playerid) = level;
-        Levels_AnimateBar(playerid, old_xp, true);
+
+        Levels_AnimateBar(playerid, old_xp, old_level, true);
     }
 
     return 1;
