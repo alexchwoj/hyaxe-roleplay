@@ -11,6 +11,7 @@ Account_RegisterConnection(playerid)
 
 Account_Register(playerid, callback = -1)
 {
+    Config_ResetDefaults(playerid);
     Player_Money(playerid) = PLAYER_DEFAULT_MONEY;
     Player_SetHealth(playerid, 100);
     
@@ -21,14 +22,14 @@ Account_Register(playerid, callback = -1)
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
         INSERT INTO `ACCOUNT` \
-            (`NAME`, `EMAIL`, `EMAIL_VERIFICATION_CODE`, `PASSWORD`, `SKIN`, `SEX`, `MONEY`, `POS_X`, `POS_Y`, `POS_Z`, `ANGLE`, `CURRENT_CONNECTION`, `CURRENT_PLAYERID`) \
+            (`NAME`, `EMAIL`, `EMAIL_VERIFICATION_CODE`, `PASSWORD`, `SKIN`, `SEX`, `MONEY`, `POS_X`, `POS_Y`, `POS_Z`, `ANGLE`, `CURRENT_CONNECTION`, `CURRENT_PLAYERID`, `CONFIG_BITS`) \
         VALUES \
-            ('%e', '%e', REPLACE(UUID(), '-', ''), SHA2('%e', 256), %i, %i, %i, %.2f, %.2f, %.2f, %.2f, UNIX_TIMESTAMP(), %i);\
+            ('%e', '%e', REPLACE(UUID(), '-', ''), SHA2('%e', 256), %i, %i, %i, %.2f, %.2f, %.2f, %.2f, UNIX_TIMESTAMP(), %i, '%s');\
         ",
         Player_Name(playerid), Player_Email(playerid), Player_Password(playerid),
         Player_Skin(playerid), Player_Sex(playerid), PLAYER_DEFAULT_MONEY, 
         PLAYER_SPAWN_X, PLAYER_SPAWN_Y, PLAYER_SPAWN_Z, PLAYER_SPAWN_ANGLE,
-        playerid
+        playerid, _:str_addr(Config_ToString(playerid))
     );
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "OnAccountInserted", !"ii", playerid, callback);
 
@@ -112,6 +113,7 @@ Account_LoadFromCache(playerid)
     cache_get_value_name_int(0, !"PLAYED_TIME", Player_SavedPlayedTime(playerid));
 
     Player_LoadWeaponsFromCache(playerid);
+    Config_LoadFromCache(playerid);
 
     cache_unset_active();
     cache_delete(Player_Cache(playerid));

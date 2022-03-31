@@ -12,7 +12,7 @@ new
     Text:g_tdInventoryBG[3],
     Text:g_tdInventoryExp[2],
     Text:g_tdInventoryUsername,
-    Text:g_tdLevelingBar[5]
+    Text:g_tdLevelingBar[6]
 ;
 
 new

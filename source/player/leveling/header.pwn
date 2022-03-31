@@ -20,5 +20,5 @@ forward Level_GetRequiredXP(level);
 #define Player_Level(%0) (g_rgePlayerData[(%0)][e_iPlayerLevel])
 #define Player_XP(%0) (g_rgePlayerData[(%0)][e_iPlayerXp])
 
-forward LEVELS_InterpolateTo(playerid, Float:init_x, Float:end_x, bool:new_level);
+forward LEVELS_InterpolateTo(playerid, Float:init_x, Float:end_x, Float:start_xp, start_level, bool:new_level);
 forward LEVELS_HideAllBars(playerid);
