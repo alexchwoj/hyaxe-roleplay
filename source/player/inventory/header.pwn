@@ -98,6 +98,7 @@ new
 #define Item_ModelID(%0) (g_rgeItemData[%0][e_iModelID])
 #define Item_SingleSlot(%0) (g_rgeItemData[%0][e_bSingleSlot])
 #define Item_Callback(%0) (g_rgeItemData[%0][e_iCallback])
+#define InventorySlot_ID(%0,%1) (g_rgePlayerInventory[%0][%1][e_iID])
 #define InventorySlot_Amount(%0,%1) (g_rgePlayerInventory[%0][%1][e_iAmount])
 #define InventorySlot_Type(%0,%1) (g_rgePlayerInventory[%0][%1][e_iType])
 #define InventorySlot_Extra(%0,%1) (g_rgePlayerInventory[%0][%1][e_iExtra])

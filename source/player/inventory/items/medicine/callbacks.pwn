@@ -11,6 +11,7 @@ static Medicine_OnUse(playerid, slot)
     Notification_ShowBeatingText(playerid, 2000, 0xF7F7F7, 100, 255, "Has usado un medicamento (~g~+10~w~ de salud)");
     Player_SetHealth(playerid, Player_Health(playerid) + 10);
 
+    InventorySlot_Subtract(playerid, slot);
     Inventory_Update(playerid);
     return 1;
 }

@@ -116,3 +116,31 @@ Inventory_Show(playerid)
 	SelectTextDraw(playerid, 0xDAA838FF);
 	return 1;
 }
+
+InventorySlot_Delete(playerid, slot)
+{
+	mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `PLAYER_INVENTORY` WHERE `ID` = %d;", InventorySlot_ID(playerid, slot));
+	mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+	memset(g_rgePlayerInventory[playerid][slot], 0);
+	return 1;
+}
+
+InventorySlot_Subtract(playerid, slot, amount = 1)
+{
+	if (InventorySlot_IsValid(playerid, slot))
+	{
+		if (!Item_SingleSlot( InventorySlot_Type(playerid, i) ))
+		{
+			InventorySlot_Amount(playerid, slot) -= 1;
+			if (InventorySlot_Amount(playerid, slot) <= 0)
+				InventorySlot_Delete(playerid, slot);
+			else
+			{
+				mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYER_INVENTORY` SET `AMOUNT` = '%d' WHERE `ID` = %d;", InventorySlot_Amount(playerid, slot), InventorySlot_ID(playerid, slot));
+				mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+			}
+		}
+		else InventorySlot_Delete(playerid, slot);
+	}
+	return 1;
+}
