@@ -266,20 +266,15 @@ Format_Thousand(number)
 {
 	new string[32], bool:negative;
 	format(string, sizeof string, "%d", number);
+
 	if (number < 0)
-	{
 		negative = true;
-		strdel(string, 0, 1);
-	}
 
-	new numbers = strlen(string);
-	while(numbers > 3)
+	for(new i = strlen(string) - 3; i > (negative ? 1 : 0); i -= 3)
 	{
-		numbers -= 3;
-		strins(string, ".", numbers);
+		strins(string, ".", i);
 	}
 
-	if (negative) strins(string, "-", 0);
 	return string;
 }
 
@@ -486,17 +481,7 @@ static enum eLoggerVarData
                     value = dummy[0];
                 }
 
-                switch(vars[i][e_iTagId])
-                {
-                    case (tagof(Float:)):
-                    {
-                        full_line += @f("%f, ", value);
-                    }
-                    default:
-                    {
-                        full_line += @f("%i, ", value);
-                    }
-                }
+                full_line += @f("{0:P}, ", pawn_arg_pack(value, vars[i][e_iTagId]));
             }
 
             str_delete(varname);

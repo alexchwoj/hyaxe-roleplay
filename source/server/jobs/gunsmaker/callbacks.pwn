@@ -176,6 +176,7 @@ static GunsmakerKeyGameCallback(playerid, bool:success)
     {
         new crafted_gun = random(sizeof(gun_names));
         PlayerJob_Paycheck(playerid) += 150 * (crafted_gun + 1);
+        Player_AddXP(playerid, crafted_gun + 11);
 
         new str[101];
         format(str, sizeof(str), "Fabricaste ~y~%s~w~. Ve con el armero para que te paguen o fabrica otra arma.", gun_names[crafted_gun]);

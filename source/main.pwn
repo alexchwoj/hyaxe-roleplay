@@ -26,7 +26,7 @@
 #define PP_SYNTAX_FOR_LIST
 #define PP_SYNTAX_AWAIT
 #define PP_SYNTAX_@
-#define PP_ADDITIONAL_TAGS Cache
+#define PP_ADDITIONAL_TAGS Cache,ArgTag
 
 #define FCNPC_DISABLE_VERSION_CHECK
 

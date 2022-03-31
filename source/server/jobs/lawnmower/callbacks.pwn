@@ -161,6 +161,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
             new string[80];
             format(string, sizeof(string), "Terminaste tu trabajo como cortacésped y te pagaron ~g~$%s~w~ por tu labor.", Format_Thousand(money));
             Notification_Show(playerid, string, 6000);
+            Player_AddXP(playerid, g_rgeLawnmowerAreas[park_id][e_iInitialGrassCount]);
 
             g_rgiPlayerLawnmowerArea{playerid} = 0xFF;
             g_rgeLawnmowerAreas[park_id][e_iMowingPlayer] = INVALID_PLAYER_ID;
