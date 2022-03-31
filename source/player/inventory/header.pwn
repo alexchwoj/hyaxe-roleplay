@@ -7,7 +7,8 @@ const HYAXE_MAX_INVENTORY_SLOTS = 21;
 const Float:EXP_BAR_MIN_X = 220.500;
 const Float:EXP_BAR_MAX_X = 408.0;
 
-enum _:eItems {
+enum _:eItems 
+{
     ITEM_MEDIC_KIT,
     ITEM_MEDICINE,
     ITEM_CRACK,
@@ -38,16 +39,18 @@ enum _:eItems {
     ITEM_SANGUCHEDEMILANESA,
 
 	ITEM_INVALID
-}
+};
 
-enum eItemData {
+enum eItemData 
+{
     e_szName[64],
     e_iModelID,
     bool:e_bSingleSlot,
     e_iCallback
 }
 
-enum ePlayerInventory {
+enum ePlayerInventory 
+{
     bool:e_bValid,
     e_iID,
     e_iType,

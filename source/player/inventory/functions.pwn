@@ -81,11 +81,11 @@ Inventory_Show(playerid)
 	}
 
 	// Set username
-	TextDrawSetStringForPlayer(g_tdInventoryUsername, playerid, "%s (%i)", Player_RPName(playerid), playerid);
+	TextDrawSetStringForPlayer(g_tdInventoryUsername, playerid, "%s_(%i)", Player_Name(playerid), playerid);
 
 	// Skin
-	PlayerTextDrawShow(playerid, p_tdInventorySkin{playerid});
 	PlayerTextDrawSetPreviewModel(playerid, p_tdInventorySkin{playerid}, Player_Skin(playerid));
+	PlayerTextDrawShow(playerid, p_tdInventorySkin{playerid});
 
 	// Experience bars
 	TextDrawShowForPlayer(playerid, g_tdInventoryExp[0]);
@@ -101,7 +101,8 @@ Inventory_Show(playerid)
 	);
 
 	PlayerTextDrawShow(playerid, p_tdInventoryExpBar{playerid});
-	PlayerTextDrawShow(playerid, p_tdInventoryExpText{playerid});
+	if(!IsPlayerTextDrawVisible(playerid, p_tdInventoryExpText{playerid}))
+		PlayerTextDrawShow(playerid, p_tdInventoryExpText{playerid});
 
 	SelectTextDraw(playerid, 0xDAA838FF);
 	return 1;

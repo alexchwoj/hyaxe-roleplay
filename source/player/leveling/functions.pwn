@@ -3,7 +3,7 @@
 #endif
 #define _leveling_functions_
 
-static Levels_AnimateBar(playerid, start_xp, bool:new_level = false)
+static Levels_AnimateBar(playerid, start_xp, start_level = -1, bool:new_level = false)
 {
     log_function();
 
@@ -12,12 +12,12 @@ static Levels_AnimateBar(playerid, start_xp, bool:new_level = false)
     new Float:end_x = (new_level ? LEVEL_BAR_MAX_X : lerp(LEVEL_BAR_MIN_X, LEVEL_BAR_MAX_X, floatdiv(Player_XP(playerid), required_xp)));
 
     g_rgiLevelingBarSteps{playerid} = 0;
-    g_rgiLevelingTimer[playerid] = SetTimerEx("LEVELS_InterpolateTo", 15, true, "iffi", playerid, initial_x, end_x, new_level);
+    g_rgiLevelingTimer[playerid] = SetTimerEx("LEVELS_InterpolateTo", 15, true, "ifffii", playerid, initial_x, end_x, float(start_xp), (start_level == -1 ? Player_Level(playerid) : start_level), new_level);
 }
 
 Level_GetRequiredXP(level)
 {
-    return floatround(((float(level) * 1024.0) * 1.5) / 2.0);
+    return floatround((float(level * 2048) * 1.5) / 2.0);
 }
 
 Levels_ShowBarToPlayer(playerid)
@@ -30,18 +30,16 @@ Levels_ShowBarToPlayer(playerid)
         TextDrawShowForPlayer(playerid, g_tdLevelingBar[i]);
     }
 
-    new number[4];
-    valstr(number, Player_Level(playerid));
-    PlayerTextDrawSetString(playerid, p_tdLevelingBar[playerid]{0}, number);
-
-    valstr(number, Player_Level(playerid) + 1);
-    PlayerTextDrawSetString(playerid, p_tdLevelingBar[playerid]{1}, number);
+    PlayerTextDrawSetString_s(playerid, p_tdLevelingBar[playerid]{0}, @f("%i", Player_Level(playerid)));
+    PlayerTextDrawSetString_s(playerid, p_tdLevelingBar[playerid]{1}, @f("%i", Player_Level(playerid) + 1));
 
     if(!IsPlayerTextDrawVisible(playerid, p_tdLevelingBar[playerid]{0}))
     {
         PlayerTextDrawShow(playerid, p_tdLevelingBar[playerid]{0});
         PlayerTextDrawShow(playerid, p_tdLevelingBar[playerid]{1});
     }
+
+    TextDrawSetStringForPlayer(g_tdLevelingBar[5], playerid, "%i/%i", Player_XP(playerid), Level_GetRequiredXP(Player_Level(playerid)));
 
     return 1;
 }
@@ -54,13 +52,19 @@ Player_AddXP(playerid, xp)
     }
 
     new max_xp = Level_GetRequiredXP(Player_Level(playerid));
-    
-    Levels_ShowBarToPlayer(playerid);
+    new const bool:animate = !Bit_Get(Player_Config(playerid), CONFIG_PERFORMANCE_MODE) && Performance_IsFine(playerid);
+
+    if(animate)
+    {
+        Levels_ShowBarToPlayer(playerid);
+    }
 
     new current_xp = Player_XP(playerid);
     new new_xp = clamp(current_xp + xp, 0, max_xp);
     if(new_xp == max_xp)
     {
+        new current_level = Player_Level(playerid);
+
         new total_xp = current_xp + xp;
         do
         {
@@ -70,12 +74,27 @@ Player_AddXP(playerid, xp)
         while(total_xp >= Level_GetRequiredXP(Player_Level(playerid)));
 
         Player_XP(playerid) = total_xp;
-        Levels_AnimateBar(playerid, current_xp, .new_level = true);
+
+        if(animate)
+            Levels_AnimateBar(playerid, current_xp, .start_level = current_level, .new_level = true);
+        else
+        {
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Subiste al nivel ~r~%i~w~.", Player_Level(playerid));
+            Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 10);
+        }
     }
     else
     {
         Player_XP(playerid) = new_xp;
-        Levels_AnimateBar(playerid, current_xp);
+        
+        if(animate)
+            Levels_AnimateBar(playerid, current_xp);
+    }
+
+    if(!animate)
+    {
+        Levels_ShowBarToPlayer(playerid);
+        g_rgiLevelingTimer[playerid] = SetTimerEx("LEVELS_HideAllBars", 10000, false, "i", playerid);
     }
 
     return 1;
@@ -89,6 +108,11 @@ Player_SetLevel(playerid, level)
     if(Player_Level(playerid) == level)
         return 0;
 
+    if(g_rgiLevelingTimer[playerid])
+    {
+        KillTimer(g_rgiLevelingTimer[playerid]);
+    }
+
     if(Player_Level(playerid) > level)
     {
         Player_XP(playerid) = 0;
@@ -99,12 +123,14 @@ Player_SetLevel(playerid, level)
     else
     {
         new old_xp = Player_XP(playerid);
-        
+        new old_level = Player_Level(playerid);
+
         Levels_ShowBarToPlayer(playerid);
 
         Player_XP(playerid) = 0;
         Player_Level(playerid) = level;
-        Levels_AnimateBar(playerid, old_xp, true);
+
+        Levels_AnimateBar(playerid, old_xp, old_level, true);
     }
 
     return 1;

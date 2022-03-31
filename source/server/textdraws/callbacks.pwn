@@ -709,6 +709,20 @@ public OnGameModeInit()
     TextDrawSetProportional(g_tdLevelingBar[4], 1);
     TextDrawSetSelectable(g_tdLevelingBar[4], 0);
 
+    g_tdLevelingBar[5] = TextDrawCreate(317.000000, 28.000000, !"422/40224");
+    TextDrawFont(g_tdLevelingBar[5], 2);
+    TextDrawLetterSize(g_tdLevelingBar[5], 0.129166, 0.800000);
+    TextDrawTextSize(g_tdLevelingBar[5], 400.000000, 17.000000);
+    TextDrawSetOutline(g_tdLevelingBar[5], 0);
+    TextDrawSetShadow(g_tdLevelingBar[5], 1);
+    TextDrawAlignment(g_tdLevelingBar[5], 2);
+    TextDrawColor(g_tdLevelingBar[5], -1);
+    TextDrawBackgroundColor(g_tdLevelingBar[5], 255);
+    TextDrawBoxColor(g_tdLevelingBar[5], 50);
+    TextDrawUseBox(g_tdLevelingBar[5], 0);
+    TextDrawSetProportional(g_tdLevelingBar[5], 1);
+    TextDrawSetSelectable(g_tdLevelingBar[5], 0);
+
     #if defined TD_OnGameModeInit
         return TD_OnGameModeInit();
     #else
