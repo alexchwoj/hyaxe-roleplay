@@ -3,14 +3,14 @@
 #endif
 #define _player_config_functions_
 
-String:Config_ToString(playerid)
+Config_ToString(playerid)
 {
-    new String:s = str_new_buf((CONFIG_MAX * 2) + 1);
+    new str[144];
     for(new i; i < CONFIG_MAX; ++i)
     {
-        str_append_format(s, "%i", Bit_Get(g_rgbsPlayerConfig[playerid], i));
+        format(str, sizeof(str), "%s%i", str, Bit_Get(g_rgbsPlayerConfig[playerid], i));
     }
-    return s;
+    return str;
 }
 
 Config_ResetDefaults(playerid)
@@ -23,13 +23,7 @@ Config_ResetDefaults(playerid)
 
 Config_Save(playerid)
 {
-    // to-do: rewrite without pawnplus
-
-    new String:s = Config_ToString(playerid);
-
-    mysql_tquery_s(g_hDatabase, @f("UPDATE `ACCOUNT` SET `CONFIG_BITS` = '%S' WHERE `ID` = %i;", s, Player_AccountID(playerid)));
-    
-    str_delete(s);
+    mysql_tquery_s(g_hDatabase, @f("UPDATE `ACCOUNT` SET `CONFIG_BITS` = '%s' WHERE `ID` = %i;", Config_ToString(playerid), Player_AccountID(playerid)));
     return 1;
 }
 
@@ -86,6 +80,6 @@ dialog player_config(playerid, response, listitem, inputtext[])
     Dialog_Show(playerid, "player_config", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Hyaxe {DADADA}- Configuración", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Salir");
 
     Config_Save(playerid);
-    
+
     return 1;
 }

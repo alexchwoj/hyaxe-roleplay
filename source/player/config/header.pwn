@@ -40,7 +40,7 @@ new const
 
 new BitArray:g_rgbsPlayerConfig[MAX_PLAYERS]<CONFIG_MAX>;
 
-forward String:Config_ToString(playerid);
+forward Config_ToString(playerid);
 forward Config_ResetDefaults(playerid);
 forward Config_Save(playerid);
 forward Config_LoadFromCache(playerid);

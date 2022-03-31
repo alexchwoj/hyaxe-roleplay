@@ -49,6 +49,20 @@ stock Bit_SetAll(BitArray:array<>, bool:set, size = sizeof(array))
     memset(_:array, set ? 0xFFFFFFFF : 0, size);
 }
 
+stock Bit_Display(const BitArray:array<>, size = sizeof (array))
+{
+	new
+		ret[144],
+		val = 0;
+	while (size--)
+	{
+		val = _:array[size];
+		format(ret, sizeof (ret), "%s%016b%016b", ret, val >>> 16, val & 0xFFFF);
+	}
+	//P:7("Bit_Display called: %s, %i", ret, size);
+	return ret;
+}
+
 #define bits<%0> Bit_Bits(%0)
 
 #undef BitArray

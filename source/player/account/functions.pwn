@@ -29,7 +29,7 @@ Account_Register(playerid, callback = -1)
         Player_Name(playerid), Player_Email(playerid), Player_Password(playerid),
         Player_Skin(playerid), Player_Sex(playerid), PLAYER_DEFAULT_MONEY, 
         PLAYER_SPAWN_X, PLAYER_SPAWN_Y, PLAYER_SPAWN_Z, PLAYER_SPAWN_ANGLE,
-        playerid, _:str_addr(Config_ToString(playerid))
+        playerid, Config_ToString(playerid)
     );
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "OnAccountInserted", !"ii", playerid, callback);
 
