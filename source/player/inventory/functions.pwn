@@ -13,6 +13,37 @@ Inventory_GetFreeSlot(playerid)
     return HYAXE_MAX_INVENTORY_SLOTS + 1;
 }
 
+Inventory_Update(playerid)
+{
+	if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
+    {
+		for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+		{
+			if (InventorySlot_IsValid(playerid, i))
+			{
+				PlayerTextDrawSetPreviewModel(playerid, p_tdItemView[playerid]{i}, Item_ModelID( InventorySlot_Type(playerid, i) ));
+				
+				if (!Item_SingleSlot( InventorySlot_Type(playerid, i) ))
+				{
+					new string[8];
+					valstr(string, InventorySlot_Amount(playerid, i));
+					PlayerTextDrawSetString(playerid, p_tdItemCount[playerid]{i}, string);
+				}
+				else PlayerTextDrawSetString(playerid, p_tdItemCount[playerid]{i}, "_");
+			}
+			else
+			{
+				PlayerTextDrawSetString(playerid, p_tdItemCount[playerid]{i}, "_");
+				PlayerTextDrawSetPreviewModel(playerid, p_tdItemView[playerid]{i}, 19482);
+			}
+
+			PlayerTextDrawShow(playerid, p_tdItemView[playerid]{i});
+			PlayerTextDrawShow(playerid, p_tdItemCount[playerid]{i});
+		}
+	}
+	return 1;
+}
+
 Inventory_Hide(playerid)
 {
 	for(new i; i < sizeof(g_tdInventoryBG); ++i)
@@ -56,29 +87,7 @@ Inventory_Show(playerid)
 		PlayerTextDrawShow(playerid, p_tdToyView[playerid]{i});
 
 	// Item slots
-	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
-	{
-		if (InventorySlot_IsValid(playerid, i))
-		{
-			PlayerTextDrawSetPreviewModel(playerid, p_tdItemView[playerid]{i}, Item_ModelID( InventorySlot_Type(playerid, i) ));
-			
-			if (!Item_SingleSlot( InventorySlot_Type(playerid, i) ))
-			{
-				new string[8];
-				valstr(string, InventorySlot_Amount(playerid, i));
-				PlayerTextDrawSetString(playerid, p_tdItemCount[playerid]{i}, string);
-			}
-			else PlayerTextDrawSetString(playerid, p_tdItemCount[playerid]{i}, "_");
-		}
-		else
-		{
-			PlayerTextDrawSetString(playerid, p_tdItemCount[playerid]{i}, "_");
-			PlayerTextDrawSetPreviewModel(playerid, p_tdItemView[playerid]{i}, 19482);
-		}
-
-		PlayerTextDrawShow(playerid, p_tdItemView[playerid]{i});
-		PlayerTextDrawShow(playerid, p_tdItemCount[playerid]{i});
-	}
+	Inventory_Update(playerid);
 
 	// Set username
 	TextDrawSetStringForPlayer(g_tdInventoryUsername, playerid, "%s_(%i)", Player_Name(playerid), playerid);
