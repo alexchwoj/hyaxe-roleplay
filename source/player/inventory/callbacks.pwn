@@ -141,6 +141,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
                 {
                     __emit {
                         push.s playerid
+                        push.s i
                         push.c 4
                         lctrl 6
                         add.c 0x24
@@ -149,6 +150,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
                         load.s.pri callback
                         sctrl 6
                     }
+                    
                 }
                 break;
             }
