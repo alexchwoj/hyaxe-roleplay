@@ -10,7 +10,7 @@ public OnPlayerConnect(playerid)
     SetPlayerColor(playerid, 0xF7F7F700);
     TogglePlayerSpectating(playerid, true);
 
-    new name_len = GetPlayerName(playerid, Player_Name(playerid));
+    GetPlayerName(playerid, Player_Name(playerid));
 
     static Regex:name_regex;
     if(!name_regex)
@@ -30,7 +30,6 @@ public OnPlayerConnect(playerid)
     EnablePlayerCameraTarget(playerid, true);
     
     Player_IP(playerid) = GetPlayerRawIp(playerid);
-    
     strcpy(Player_RPName(playerid), Player_Name(playerid));
 
     new space_idx = strfind(Player_Name(playerid), !"_");
@@ -45,28 +44,27 @@ public OnPlayerConnect(playerid)
     }
 
     SetPlayerNameInServerQuery(playerid, Player_RPName(playerid));
-    SetPlayerName(playerid, Player_RPName(playerid));
-
-    SendRPC(playerid, 11,
-        BS_UNSIGNEDSHORT, playerid,
-        BS_UNSIGNEDCHAR, name_len,
-        BS_STRING, Player_RPName(playerid),
-        BS_UNSIGNEDCHAR, 1
-    );
 
     Bit_Set(Player_Flags(playerid), PFLAG_AUTHENTICATING, true);
 
+    new ip[17];
+    GetPlayerIp(playerid, ip);
+
+    // Check if the user is banned
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-        SELECT `ACCOUNT`.*, `PLAYER_WEAPONS`.*, `CONNECTION_LOG`.`DATE` AS `LAST_CONNECTION` \
-        FROM `ACCOUNT`, `PLAYER_WEAPONS`, `CONNECTION_LOG` \
-        WHERE \
-            `ACCOUNT`.`NAME` = '%e' AND \
-            `PLAYER_WEAPONS`.`ACCOUNT_ID` = `ACCOUNT`.`ID` AND \
-            `CONNECTION_LOG`.`ACCOUNT_ID` = `ACCOUNT`.`ID` \
-        ORDER BY `CONNECTION_LOG`.`DATE` DESC \
-        LIMIT 1;\
-    ", Player_Name(playerid));
-    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, !"OnPlayerDataFetched", !"i", playerid);
+        SELECT \
+            `BANS`.*, \
+            `ACCOUNT`.`NAME` AS `ADMIN_NAME`, \
+            CURRENT_TIMESTAMP() AS `CURRENT_TIME`, \
+            (`EXPIRATION_DATE` > CURRENT_TIMESTAMP()) AS `STILL_VALID` \
+        FROM `BANS` \
+            LEFT JOIN `ACCOUNT` \
+                ON `BANS`.`ADMIN_ID` = `ACCOUNT`.`ID` \
+            WHERE `BANS`.`BANNED_USER` = '%e' OR `BANS`.`BANNED_IP` = '%e';\
+    ", 
+        Player_Name(playerid), ip
+    );
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "ACCOUNT_CheckForBans", "i", playerid);
 
     #if defined ACC_OnPlayerConnect
         return ACC_OnPlayerConnect(playerid);
@@ -84,6 +82,100 @@ public OnPlayerConnect(playerid)
 #if defined ACC_OnPlayerConnect
     forward ACC_OnPlayerConnect(playerid);
 #endif
+
+public ACCOUNT_CheckForBans(playerid)
+{
+    new rowc;
+    cache_get_row_count(rowc);
+
+    if(rowc)
+    {
+        new bool:still_valid_null;
+        cache_is_value_name_null(0, !"STILL_VALID", still_valid_null);
+
+        new bool:still_valid = still_valid_null;
+        if(!still_valid_null)
+        {
+            cache_get_value_name_int(0, !"STILL_VALID", _:still_valid);
+        }
+
+        if(still_valid)
+        {
+            new bool:is_anticheat, admin_account_id_string[40], admin_name[24] = "Anticheat";
+            cache_is_value_name_null(0, !"ADMIN_ID", is_anticheat);
+            if(!is_anticheat)
+            {
+                new admin_account_id;
+                cache_get_value_name_int(0, !"ADMIN_ID", admin_account_id);
+                format(admin_account_id_string, sizeof(admin_account_id_string), "(ID {CB3126}%i{DADADA})", admin_account_id);
+                cache_get_value_name(0, !"ADMIN_NAME", admin_name);
+            }
+
+            new banned_name[25], issued_date[21], expiration_date[21] = "Indefinida", reason[51];
+            cache_get_value_name(0, !"ISSUED_DATE", issued_date);
+            cache_get_value_name(0, !"REASON", reason);
+
+            new bool:is_permanent;
+            cache_is_value_name_null(0, !"EXPIRATION_DATE", is_permanent);
+            if(!is_permanent)
+                cache_get_value_name(0, !"EXPIRATION_DATE", expiration_date);
+
+            new bool:is_name_banned;
+            cache_is_value_name_null(0, !"BANNED_IP", is_name_banned);
+            if(!is_name_banned)
+            {
+                cache_get_value_name(0, !"BANNED_IP", banned_name);
+            }
+            else
+            {
+                strcat(banned_name, Player_RPName(playerid));
+            }
+
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+                {DADADA}Esta %s está expulsada %s del servidor.\n\n\
+                \t{CB3126}%s: {DADADA}%s\n\
+                \t{CB3126}Administrador: {DADADA}%s %s\n\
+                \t{CB3126}Razón: {DADADA}%s\n\
+                \t{CB3126}Fecha de expulsión: {DADADA}%s\n\
+                \t{CB3126}Fecha de expiración: {DADADA}%s\n\
+            ",
+                (is_name_banned ? "cuenta" : "dirección IP"), (is_permanent ? "permanentemente" : "temporalmente"),
+                (is_name_banned ? "Cuenta" : "Dirección IP"), banned_name, admin_name, admin_account_id_string,
+                reason, issued_date, expiration_date
+            );
+            Dialog_Show(playerid, "kick", DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe {DADADA}- Expulsión", HYAXE_UNSAFE_HUGE_STRING, "Salir");
+            KickTimed(playerid, 500);
+
+            return 1;
+        }
+
+        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `BANS` WHERE `BANNED_USER` = '%e' OR `BANNED_IP` = '%e';", Player_Name(playerid), Player_IP(playerid));
+        mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+    }
+
+    SetPlayerName(playerid, Player_RPName(playerid));
+
+    SendRPC(playerid, 11,
+        BS_UNSIGNEDSHORT, playerid,
+        BS_UNSIGNEDCHAR, strlen(Player_RPName(playerid)),
+        BS_STRING, Player_RPName(playerid),
+        BS_UNSIGNEDCHAR, 1
+    );
+
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+        SELECT `ACCOUNT`.*, `PLAYER_WEAPONS`.*, `CONNECTION_LOG`.`DATE` AS `LAST_CONNECTION` \
+        FROM `ACCOUNT`, `PLAYER_WEAPONS`, `CONNECTION_LOG` \
+        WHERE \
+            `ACCOUNT`.`NAME` = '%e' AND \
+            `PLAYER_WEAPONS`.`ACCOUNT_ID` = `ACCOUNT`.`ID` AND \
+            `CONNECTION_LOG`.`ACCOUNT_ID` = `ACCOUNT`.`ID` \
+        ORDER BY `CONNECTION_LOG`.`DATE` DESC \
+        LIMIT 1;\
+    ", Player_Name(playerid));
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, !"OnPlayerDataFetched", !"i", playerid);
+
+    return 1;
+}
 
 public OnPlayerDisconnect(playerid, reason)
 {

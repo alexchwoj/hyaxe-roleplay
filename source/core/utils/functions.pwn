@@ -264,13 +264,12 @@ Date_ToString(year, month, day)
 
 Format_Thousand(number)
 {
-	new string[32], bool:negative;
+	new string[32];
 	format(string, sizeof string, "%d", number);
 
-	if (number < 0)
-		negative = true;
+	new const bool:negative = (number < 0);
 
-	for(new i = strlen(string) - 3; i > (negative ? 1 : 0); i -= 3)
+	for(new i = strlen(string) - 3; i > _:negative; i -= 3)
 	{
 		strins(string, ".", i);
 	}
