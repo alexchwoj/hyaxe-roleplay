@@ -9,4 +9,5 @@ new g_rgszPlayerDialogName[MAX_PLAYERS][32];
 
 #define Dialog_Shown(%0) (g_rgszPlayerDialogName[(%0)][0] != '\0')
 forward Dialog_Show(playerid, const dialogname[], style, const caption[], const info[], const button1[], const button2[] = "");
+forward Dialog_Show_s(playerid, const dialogname[], style, ConstString:caption, ConstString:info, const button1[], const button2[] = "");
 forward Dialog_Hide(playerid);

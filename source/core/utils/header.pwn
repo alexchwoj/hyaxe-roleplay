@@ -65,6 +65,8 @@ native SendRconCommand_s(ConstAmxString:command) = SendRconCommand;
 native FCNPC_Create_s(ConstAmxString:name) = FCNPC_Create;
 native PlayerTextDrawSetString_s(playerid, PlayerText:text, ConstAmxString:string) = PlayerTextDrawSetString;
 native mysql_tquery_s(MySQL:handle, ConstAmxString:query, const callback[] = "", const format[] = "", {Float,_}:...) = mysql_tquery;
+native SendClientMessage_s(playerid, color, ConstAmxString:message) = SendClientMessage;
+native ShowPlayerDialog_s(playerid, dialogid, style, ConstAmxString:caption, ConstAmxString:info, const button1[], const button2[]) = ShowPlayerDialog;
 
 #include "core/utils/bitarray.pwn"
 #include "core/utils/cells.pwn"
