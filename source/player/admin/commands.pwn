@@ -25,7 +25,7 @@ command ban(playerid, const params[], "Veta a un jugador")
     }
 
     Player_Ban(banned, playerid, reason, time);
-    
+
     Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, 
         @f("{DADADA}El jugador {415BA2}%s{DADADA} ({415BA2}%i{DADADA}-{415BA2}%i{DADADA}) fue vetada por el %s {415BA2}%s{DADADA}.", 
             Player_RPName(banned), banned, Player_AccountID(banned), g_rgszRankLevelNames[Player_AdminLevel(playerid)], Player_RPName(playerid)
@@ -34,6 +34,8 @@ command ban(playerid, const params[], "Veta a un jugador")
 
     return 1;
 }
+alias:ban("vetar", "banear")
+flags:ban(CMD_FLAG<RANK_LEVEL_MODERATOR> | CMD_DONT_LOG_COMMAND)
 
 command kick(playerid, const params[], "Expulsa a un jugador")
 {
@@ -86,6 +88,8 @@ command kick(playerid, const params[], "Expulsa a un jugador")
 
     return 1;
 }
+alias:kick("expulsar")
+flags:kick(CMD_FLAG<RANK_LEVEL_MODERATOR> | CMD_DONT_LOG_COMMAND)
 
 command ban_account(playerid, const params[], "Veta a una cuenta offline")
 {

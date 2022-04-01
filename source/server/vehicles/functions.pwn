@@ -361,6 +361,8 @@ command veh(playerid, const params[], "Crea un vehículo")
 
     return 1;
 }
+flags:veh(CMD_FLAG<RANK_LEVEL_MODERATOR>)
+
 
 command rvehp(playerid, const params[], "Registra un vehículo en la cuenta de un jugador")
 {
@@ -379,8 +381,9 @@ command rvehp(playerid, const params[], "Registra un vehículo en la cuenta de un
 
     return 1;
 }
+flags:rvehp(CMD_FLAG<RANK_LEVEL_ADMINISTRATOR>)
 
-command setvehhealth(playerid, const params[], "Cambia la vida de un vehículo")
+command set_veh_health(playerid, const params[], "Cambia la vida de un vehículo")
 {
     extract params -> new vehicleid, Float:health = 1000.0; else {
         return SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/setvehhealth {DADADA}<id del vehículo | -1 = actual> {969696}[vida = 1000.0]");
@@ -406,5 +409,5 @@ command setvehhealth(playerid, const params[], "Cambia la vida de un vehículo")
 
     return 1;
 }
-alias:setvehhealth("svh", "rv", "repairveh", "repairvehicle")
+alias:setvehhealth("setvehhealth", "svh", "rv", "repairveh", "repairvehicle")
 flags:setvehhealth(CMD_FLAG<RANK_LEVEL_MODERATOR>)

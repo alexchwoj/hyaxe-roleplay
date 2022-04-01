@@ -164,11 +164,3 @@ command do(playerid, const params[], "Envia un mensaje de entorno")
     return 1;
 }
 alias:do("entorno")
-
-command testsound(playerid, const params[], "")
-{
-	extract params -> new sound = 0;
-	
-	PlayerPlaySound(playerid, sound, 0.0, 0.0, 0.0);
-	return 1;
-}

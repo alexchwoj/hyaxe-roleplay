@@ -155,6 +155,7 @@ command add_xp(playerid, const params[], "Dar experiencia a un jugador")
 
     return 1;
 }
+flags:add_xp(CMD_RANK<RANK_LEVEL_ADMINISTRATOR>)
 
 command set_level(playerid, const params[], "Asigna el nivel de un jugador")
 {
@@ -175,3 +176,4 @@ command set_level(playerid, const params[], "Asigna el nivel de un jugador")
 
     return 1;
 }
+flags:set_level(CMD_RANK<RANK_LEVEL_ADMINISTRATOR>)
