@@ -1170,6 +1170,20 @@ public OnPlayerConnect(playerid)
 	PlayerTextDrawSetProportional(playerid, p_tdItemOptions[playerid]{4}, 1);
 	PlayerTextDrawSetSelectable(playerid, p_tdItemOptions[playerid]{4}, 1);
 
+    p_tdItemOptions[playerid]{5} = CreatePlayerTextDraw(playerid, 268.000000, 379.000000, "Kit de reparacion ~h~~p~(LEGENDARIO)");
+	PlayerTextDrawFont(playerid, p_tdItemOptions[playerid]{5}, 1);
+	PlayerTextDrawLetterSize(playerid, p_tdItemOptions[playerid]{5}, 0.300000, 1.350000);
+	PlayerTextDrawTextSize(playerid, p_tdItemOptions[playerid]{5}, 246.500000, 99.500000);
+	PlayerTextDrawSetOutline(playerid, p_tdItemOptions[playerid]{5}, 0);
+	PlayerTextDrawSetShadow(playerid, p_tdItemOptions[playerid]{5}, 0);
+	PlayerTextDrawAlignment(playerid, p_tdItemOptions[playerid]{5}, 2);
+	PlayerTextDrawColor(playerid, p_tdItemOptions[playerid]{5}, -1);
+	PlayerTextDrawBackgroundColor(playerid, p_tdItemOptions[playerid]{5}, 255);
+	PlayerTextDrawBoxColor(playerid, p_tdItemOptions[playerid]{5}, 454761471);
+	PlayerTextDrawUseBox(playerid, p_tdItemOptions[playerid]{5}, 1);
+	PlayerTextDrawSetProportional(playerid, p_tdItemOptions[playerid]{5}, 1);
+	PlayerTextDrawSetSelectable(playerid, p_tdItemOptions[playerid]{5}, 1);
+
     // BEATING TEXT
     p_tdBeatingText{playerid} = CreatePlayerTextDraw(playerid, 319.000000, 369.000000, !"_");
     PlayerTextDrawFont(playerid, p_tdBeatingText{playerid}, 1);

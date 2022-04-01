@@ -167,6 +167,9 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
                 PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{0});
                 PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{1});
 
+                PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{5});
+                PlayerTextDrawSetString_s(playerid, p_tdItemOptions[playerid]{5}, @f("%s (%s~W~)", Item_Name( InventorySlot_Type(playerid, i) ));
+
                 if (!Item_SingleSlot( InventorySlot_Type(playerid, i) ))
                 {
                     PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{2}, "1");

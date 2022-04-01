@@ -29,5 +29,5 @@ new
     PlayerText:p_tdInventoryExpText[MAX_PLAYERS char],
     PlayerText:p_tdToyView[MAX_PLAYERS][6 char],
     PlayerText:p_tdLevelingBar[MAX_PLAYERS][2 char],
-    PlayerText:p_tdItemOptions[MAX_PLAYERS][5 char]
+    PlayerText:p_tdItemOptions[MAX_PLAYERS][6 char]
 ;

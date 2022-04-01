@@ -42,12 +42,21 @@ enum _:eItems
 	ITEM_INVALID
 };
 
+enum RarityLevels {
+    RARITY_COMMON,
+    RARITY_RARE,
+    RARITY_EPIC,
+    RARITY_LEGENDARY,
+    RARITY_MYTHIC
+}
+
 enum eItemData 
 {
     e_szName[64],
     e_iModelID,
     bool:e_bSingleSlot,
-    e_iCallback
+    e_iCallback,
+    e_iRarityLevel
 }
 
 enum ePlayerInventory 

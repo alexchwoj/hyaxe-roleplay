@@ -41,7 +41,7 @@ Inventory_Update(playerid)
 			PlayerTextDrawShow(playerid, p_tdItemCount[playerid]{i});
 		}
 
-		for(new i; i < 5; ++i)
+		for(new i; i < 6; ++i)
 			PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{i});
 	}
 	return 1;
@@ -106,7 +106,7 @@ Inventory_Hide(playerid)
 	for(new i; i < 6; ++i)
 		PlayerTextDrawHide(playerid, p_tdToyView[playerid]{i});
 
-	for(new i; i < 5; ++i)
+	for(new i; i < 6; ++i)
 		PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{i});
 
 	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
