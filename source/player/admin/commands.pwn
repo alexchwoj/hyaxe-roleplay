@@ -81,3 +81,58 @@ command kick(playerid, const params[], "Expulsa a un jugador")
 
     return 1;
 }
+
+command ban_account(playerid, const params[], "Veta a una cuenta offline")
+{
+    new account_id, account_name[25], reason[51], time_seconds;
+    if(!sscanf(params, "iI(-1)S(No especificada)[50]", account_id, time_seconds, reason))
+    {
+        if(account_id < 1)
+        {
+            SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} Para banear una cuenta offline por ID, la ID proveída debe ser mayor a 0.");
+            return 1;
+        }
+
+        new Cache:c = await<Cache> MySQL_QueryAsync_s(g_hDatabase, @f("SELECT `NAME` FROM `ACCOUNT` WHERE `ID` = %i LIMIT 1;", account_id));
+        
+        new rowc;
+        cache_get_row_count(rowc);
+        if(!rowc)
+        {
+            SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} No hay una cuenta asociada a la ID {ED2B2B}%i{DADADA}.", account_id);
+            return 1;
+        }
+
+        cache_get_value_name(0, !"NAME", account_name);
+    }
+    else if(sscanf(params, "s[24]I(-1)S(No especificada)[50]", account_name, time_seconds, reason))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/ban_account {DADADA}<id o nombre> {969696}[tiempo en segundos = -1 (permanente)] [razón = \"No especificada\"]");
+        return 1;
+    }
+
+    if(!account_id)
+    {
+        new Cache:c = await<Cache> MySQL_QueryAsync_s(g_hDatabase, @f("SELECT `ID` FROM `ACCOUNT` WHERE `NAME` = '%e' LIMIT 1;", account_name));
+
+        new rowc;
+        cache_get_row_count(rowc);
+        if(!rowc)
+        {
+            SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} No hay una cuenta asociada al nombre {ED2B2B}%s{DADADA}.", account_name);
+            return 1;
+        }
+
+        cache_get_value_name_int(0, !"ID", account_id);
+    }
+
+    Account_Ban(account_name, playerid, reason, time_seconds);
+
+    Admins_SendMessage_s(RANK_LEVEL_HELPER, 0xED2B2BFF, 
+        @f("› {DADADA}La cuenta {ED2B2B}%s{DADADA} ({ED2B2B}%i{DADADA}) fue vetada por el %s {ED2B2B}%s{DADADA}.", 
+            account_name, account_id, g_rgszRankLevelNames[Player_AdminLevel(playerid)], Player_RPName(playerid)
+        )
+    );
+
+    return 1;
+}

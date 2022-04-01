@@ -16,10 +16,10 @@ RawIpToString(rawip)
 {
 	new ip[16];
     format(ip, 16, "%d.%d.%d.%d", 
-        ((rawip & 0xFF000000) >>> 24), 
+        (rawip & 0xFF),
+        ((rawip & 0xFF00) >> 8),
         ((rawip & 0xFF0000) >> 16),
-        ((rawip & 0xFF00) >> 8), 
-        (rawip & 0xFF)
+        ((rawip & 0xFF000000) >>> 24)
     );
 
     return ip;

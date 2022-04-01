@@ -107,7 +107,7 @@ public ACCOUNT_CheckForBans(playerid)
             {
                 new admin_account_id;
                 cache_get_value_name_int(0, !"ADMIN_ID", admin_account_id);
-                format(admin_account_id_string, sizeof(admin_account_id_string), "(ID {CB3126}%i{DADADA})", admin_account_id);
+                format(admin_account_id_string, sizeof(admin_account_id_string), "({CB3126}%i{DADADA})", admin_account_id);
                 cache_get_value_name(0, !"ADMIN_NAME", admin_name);
             }
 
