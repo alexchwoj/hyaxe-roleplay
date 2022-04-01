@@ -7,3 +7,4 @@ new
     Iterator:Admin<MAX_PLAYERS>;
 
 forward Admins_SendMessage(level, color, const message[]);
+forward Admins_SendMessage_s(level, color, ConstString:message);

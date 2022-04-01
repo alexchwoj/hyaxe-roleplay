@@ -9,6 +9,8 @@ const Float:PLAYER_SPAWN_Y = -1174.8977;
 const Float:PLAYER_SPAWN_Z = 23.8315;
 const Float:PLAYER_SPAWN_ANGLE = 45.1207;
 
+const ADMIN_ID_ANTICHEAT = cellmin;
+
 enum 
 {
     PFLAG_AUTHENTICATING = 0,
@@ -31,12 +33,19 @@ enum
     SEX_MALE = 1
 }
 
-enum
+enum _:eRankLevels
 {
     RANK_LEVEL_USER,
     RANK_LEVEL_HELPER,
     RANK_LEVEL_MODERATOR,
     RANK_LEVEL_ADMINISTRATOR
+};
+
+new const g_rgszRankLevelNames[eRankLevels][] = {
+    "Usuario",
+    "Ayudante",
+    "Moderador",
+    "Administrador"
 };
 
 enum ePlayerData

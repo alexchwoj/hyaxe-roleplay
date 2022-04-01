@@ -9,6 +9,13 @@ Dialog_Show(playerid, const dialogname[], style, const caption[], const info[], 
     return ShowPlayerDialog(playerid, 422, style, caption, info, button1, button2);
 }
 
+Dialog_Show_s(playerid, const dialogname[], style, ConstString:caption, ConstString:info, const button1[], const button2[] = "")
+{
+    strcpy(g_rgszPlayerDialogName[playerid], dialogname);
+    return ShowPlayerDialog_s(playerid, 422, style, caption, info, button1, button2);
+}
+
+
 Dialog_Hide(playerid)
 {
     g_rgszPlayerDialogName[playerid][0] = '\0';

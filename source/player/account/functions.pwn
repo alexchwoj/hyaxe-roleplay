@@ -63,10 +63,10 @@ Account_Save(playerid, bool:disconnect = false)
             `ANGLE` = %.2f, \
             `VIRTUAL_WORLD` = %i, \
             `INTERIOR` = %i, \
-            `HEALTH` = %d, \
-            `ARMOR` = %d, \
-            `HUNGER` = %.2f, \
-            `THIRST` = %.2f, \
+            `HEALTH` = %i, \
+            `ARMOR` = %i, \
+            `HUNGER` = %f, \
+            `THIRST` = %f, \
             `SKIN` = %i, \
             `LEVEL` = %i, \
             `XP` = %i, \
@@ -122,6 +122,100 @@ Account_LoadFromCache(playerid)
     return 1;
 }
 
+Player_Ban(playerid, adminid, const reason[] = "No especificada", time_seconds = -1)
+{
+    new admin_db[24] = "NULL";
+    if(adminid != ADMIN_ID_ANTICHEAT)
+        format(admin_db, sizeof(admin_db), "%i", Player_AccountID(adminid));
+
+    new expiration_db[80] = "NULL";
+    if(time_seconds > 0)
+        format(expiration_db, sizeof(expiration_db), "DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL %i SECOND)", time_seconds);
+
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+        INSERT INTO `BANS` \
+            (`BANNED_USER`, `BANNED_IP`, `ADMIN_ID`, `REASON`, `EXPIRATION_DATE`) \
+        VALUES \
+            ('%e', '%e', %s, '%e', %s);\
+    ",
+        Player_Name(playerid), RawIpToString(Player_IP(playerid)), admin_db, reason, expiration_db
+    );
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+
+    new year, month, day, hour, minute, second;
+    gettime(hour, minute, second);
+    getdate(year, month, day);
+
+    new String:dialog_str = @f(
+        "{DADADA}Tu cuenta fue vetada %s del servidor.\n\n\
+        {CB3126}Administrador\n\
+        \t{DADADA}\
+    ",
+        (time_seconds < 0 ? "permanentemente" : "temporalmente")
+    );
+
+    if(adminid == ADMIN_ID_ANTICHEAT)
+    {
+        dialog_str += @("Anticheat\n\n");
+    }
+    else
+    {
+        dialog_str += @f("%s (Cuenta ID {CB3126}%i{DADADA})\n\n", Player_RPName(adminid), Player_AccountID(adminid));
+    }
+
+    dialog_str += @f("\
+        {CB3126}Razón de expulsión\n\t{DADADA} %s\n\n\
+        {CB3126}Fecha de expulsión\n\t{DADADA}%i/%i/%i %i:%i:%i\n\n\
+        {CB3126}Expira en\n\t{DADADA}\
+    ", 
+        reason,
+        day, month, year, hour, minute, second
+    );
+
+    if(time_seconds < 0)
+    {
+        dialog_str += @("Nunca");
+    }
+    else
+    {
+        new seconds = (time_seconds % 60);
+        new minutes = (time_seconds % 3600) / 60;
+        new hours = (time_seconds % 86400) / 3600;
+        new days = (time_seconds % (86400 * 30)) / 86400;
+
+        new bool:has_previous = false;
+
+        if(days)
+        {
+            dialog_str += @f("%i día%s", days, (days > 1 ? "s" : ""));
+            has_previous = true;
+        }
+
+        if(hours)
+        {
+            dialog_str += @f("%s%i hora%s", (has_previous ? ", " : ""), hours, (hours > 1 ? "s" : ""));
+            has_previous = true;
+        }
+
+        if(minutes)
+        {
+            dialog_str += @f("%s%i minuto%s", (has_previous ? ", " : ""), minutes, (minutes > 1 ? "s" : ""));
+            has_previous = true;
+        }
+
+        if(seconds)
+        {
+            dialog_str += @f("%s%i segundo%s", (has_previous ? " y " : ""), seconds, (seconds > 1 ? "s" : ""));
+        }
+    }
+
+    Dialog_Show_s(playerid, "kick", DIALOG_STYLE_MSGBOX, @("{CB3126}Hyaxe {DADADA}- Expulsión"), dialog_str, "Salir");
+
+    KickTimed(playerid, 500);
+
+    return 1;
+}
+
 Player_GiveMoney(playerid, money, bool:update = true)
 {
     Player_Money(playerid) += money;
@@ -152,4 +246,71 @@ Player_SetMoney(playerid, money, bool:update = true)
 	}
 
 	return 1;
+}
+
+command ban(playerid, const params[], "Veta a un jugador")
+{
+    new banned, time, reason[51];
+    if(sscanf(params, "rI(-1)S(No especificada)[50]", banned, time, reason))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/ban {DADADA}<jugador> {969696}[tiempo en segundos = -1 (permanente)] [razón = \"No especificada\"]");
+        return 1;
+    }
+
+    if(banned == playerid)
+    {
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No puedes vetarte a ti mismo.");
+        return 1;
+    }
+
+    Player_Ban(banned, playerid, reason, time);
+    SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Jugador {ED2B2B}%s{DADADA} (Cuenta ID {ED2B2B}%i{DADADA}) vetado.", Player_RPName(banned), Player_AccountID(banned));
+
+    return 1;
+}
+
+command kick(playerid, const params[], "Expulsa a un jugador")
+{
+    new kicked, reason[51];
+    if(sscanf(params, "rS(No especificada)[50]", kicked, reason))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/kick {DADADA}<jugador> {969696}[razón = \"No especificada\"]");
+        return 1;
+    }
+
+    if(kicked == playerid)
+    {
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No puedes expulsarte a ti mismo.");
+        return 1;
+    }
+
+    new year, month, day, hour, minute, second;
+    gettime(hour, minute, second);
+    getdate(year, month, day);
+
+    Dialog_Show_s(playerid, "kick", DIALOG_STYLE_MSGBOX, @("{CB3126}Hyaxe {DADADA}- Expulsión"),
+        @f(
+            "{DADADA}Fuiste expulsado del servidor.\n\n\
+            {CB3126}Razón de la expulsión\n\
+                \t{DADADA}%s\n\n\
+            {CB3126}Administrador encargado\n\
+                \t{DADADA}%s ({CB3126}%i{DADADA})\n\n\
+            {CB3126}Fecha\n\
+                \t{DADADA}%i/%i/%i %i:%i:%i\
+        ",
+            reason, Player_RPName(playerid), Player_AccountID(playerid),
+            day, month, year, hour, minute, second
+        ),
+        "Salir"
+    );
+
+    KickTimed(playerid, 500);
+
+    Admins_SendMessage_s(RANK_LEVEL_HELPER, 0xED2B2BFF, 
+        @f("› {DADADA}El jugador {ED2B2B}%s {DADADA}(ID {ED2B2B}%i{DADADA}) fue expulsado por el %s {ED2B2B}%s{DADADA}.", 
+            Player_RPName(kicked), kicked, g_rgszRankLevelNames[Player_AdminLevel(playerid)], Player_RPName(playerid)
+        )
+    );
+
+    return 1;
 }

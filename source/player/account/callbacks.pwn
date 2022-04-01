@@ -133,11 +133,11 @@ public ACCOUNT_CheckForBans(playerid)
 
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
                 {DADADA}Esta %s está expulsada %s del servidor.\n\n\
-                \t{CB3126}%s: {DADADA}%s\n\
-                \t{CB3126}Administrador: {DADADA}%s %s\n\
-                \t{CB3126}Razón: {DADADA}%s\n\
-                \t{CB3126}Fecha de expulsión: {DADADA}%s\n\
-                \t{CB3126}Fecha de expiración: {DADADA}%s\n\
+                {CB3126}%s\n\t{DADADA}%s\n\n\
+                {CB3126}Administrador\n\t{DADADA}%s %s\n\n\
+                {CB3126}Razón de la expulsión\n\t{DADADA}%s\n\n\
+                {CB3126}Fecha de expulsión\n\t{DADADA}%s\n\n\
+                {CB3126}Fecha de expiración\n\t{DADADA}%s\
             ",
                 (is_name_banned ? "cuenta" : "dirección IP"), (is_permanent ? "permanentemente" : "temporalmente"),
                 (is_name_banned ? "Cuenta" : "Dirección IP"), banned_name, admin_name, admin_account_id_string,
