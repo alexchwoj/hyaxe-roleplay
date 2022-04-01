@@ -48,6 +48,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 {
                     PlayerPlaySound(playerid, SOUND_DRESSING);
                     ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 2500, 1);
+                    DroppedItem_Delete(areas[0]);
                 }
                 else return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes el inventario lleno.");
             }
@@ -228,6 +229,9 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 
         if (playertextid == p_tdItemOptions[playerid]{0})
         {
+            for(new j; j < 5; ++j)
+		        PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{j});
+
             PlayerPlaySound(playerid, SOUND_DRESSING);
             ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 2500, 1);
 
@@ -244,6 +248,8 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
             );
 
             InventorySlot_Subtract(playerid, g_rgePlayerTempData[playerid][e_iPlayerItemSlot], g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount]);
+        
+            g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] = 1;
         }
     }
 
@@ -305,6 +311,7 @@ public OnGameModeInit()
 forward INV_OnItemInserted(playerid, slot, type, amount, extra);
 public INV_OnItemInserted(playerid, slot, type, amount, extra)
 {
+    g_rgePlayerInventory[playerid][slot][e_bValid] = true;
     g_rgePlayerInventory[playerid][slot][e_iID] = cache_insert_id();
     g_rgePlayerInventory[playerid][slot][e_iType] = type;
     g_rgePlayerInventory[playerid][slot][e_iAmount] = amount;

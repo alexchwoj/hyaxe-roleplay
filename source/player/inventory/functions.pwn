@@ -202,15 +202,47 @@ InventorySlot_Subtract(playerid, slot, amount = 1)
 	return 1;
 }
 
-Inventory_AddItem(playerid, type, amount, extra)
+Inventory_InsertItem(playerid, type, amount, extra)
 {
 	new slot = Inventory_GetFreeSlot(playerid);
     if (slot < HYAXE_MAX_INVENTORY_SLOTS)
 	{
 		mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-			INSERT INTO `PLAYER_INVENTORY` (`ITEM_TYPE`, `AMOUNT`, `EXTRA`) VALUES (%d, %d, %d) WHERE `ACCOUNT_ID` = '%i';\
+			INSERT INTO `PLAYER_INVENTORY` (`ITEM_TYPE`, `AMOUNT`, `EXTRA`, `ACCOUNT_ID`) VALUES (%d, %d, %d, %i);\
 		", type, amount, extra, Player_AccountID(playerid));
 		mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "INV_OnItemInserted", !"idddd", playerid, slot, type, amount, extra);
+		return 1;
+	}
+	return 0;
+}
+
+Inventory_AddItem(playerid, type, amount, extra)
+{
+	new slot = Inventory_GetFreeSlot(playerid);
+    if (slot < HYAXE_MAX_INVENTORY_SLOTS)
+	{
+		if (Item_SingleSlot(type))
+			Inventory_InsertItem(playerid, type, amount, extra);
+		else
+		{
+			for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+			{
+				if (InventorySlot_IsValid(playerid, i))
+				{
+					if (InventorySlot_Type(playerid, i) == type)
+					{
+						InventorySlot_Amount(playerid, i) += amount;
+						mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+						UPDATE `PLAYER_INVENTORY` SET `AMOUNT` = %d WHERE `ID` = %i;\
+						", InventorySlot_Amount(playerid, i), InventorySlot_ID(playerid, i));
+						mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+						return 1;
+					}
+				}
+			}
+
+			Inventory_InsertItem(playerid, type, amount, extra);
+		}
 		return 1;
 	}
 	return 0;
