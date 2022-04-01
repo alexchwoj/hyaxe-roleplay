@@ -409,5 +409,5 @@ command set_veh_health(playerid, const params[], "Cambia la vida de un vehículo"
 
     return 1;
 }
-alias:setvehhealth("setvehhealth", "svh", "rv", "repairveh", "repairvehicle")
-flags:setvehhealth(CMD_FLAG<RANK_LEVEL_MODERATOR>)
+alias:set_veh_health("setvehhealth", "svh", "rv", "repairveh", "repairvehicle")
+flags:set_veh_health(CMD_FLAG<RANK_LEVEL_MODERATOR>)
