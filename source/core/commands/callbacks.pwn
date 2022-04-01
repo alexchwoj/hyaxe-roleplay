@@ -62,9 +62,9 @@ on_init RegisterCommands()
 
 public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
 {
-    DEBUG_PRINT("OnPlayerCommandReceived(%d, \"%s\", \"%s\", %b)", playerid, cmd, params, flags);
+    log_function();
     
-    new cmd_level = (flags & 0xFF000000) >> 24;
+    new cmd_level = (flags >>> 24);
 
     if(cmd_level > Player_AdminLevel(playerid))
         return 0;
@@ -76,7 +76,7 @@ public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
     }
 
     g_rgiPlayerCommandCooldown[playerid] = GetTickCount();
-    
+
     #if defined CMD_OnPlayerCommandReceived
         return CMD_OnPlayerCommandReceived(playerid, cmd, params, flags);
     #else
@@ -96,10 +96,17 @@ public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
 
 public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags)
 {
+    log_function();
+
     if(result == -1)
     {
         Commands_ShowSuggestions(playerid, cmd);
         return 0;
+    }
+
+    if((flags >>> 24) > RANK_LEVEL_USER && !(flags & CMD_DONT_LOG_COMMAND))
+    {
+        Admins_SendMessage_s(Player_AdminLevel(playerid), 0x415BA2FF, @f("{DADADA}El %s {415BA2}%s{DADADA} usó el comando {415BA2}/%s{DADADA}.", g_rgszRankLevelNames[Player_AdminLevel(playerid)], Player_RPName(playerid), cmd));
     }
 
     #if defined CMD_OnPlayerCommandPerformed

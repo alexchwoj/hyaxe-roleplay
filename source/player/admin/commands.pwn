@@ -25,7 +25,12 @@ command ban(playerid, const params[], "Veta a un jugador")
     }
 
     Player_Ban(banned, playerid, reason, time);
-    SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Jugador {ED2B2B}%s{DADADA} (Cuenta ID {ED2B2B}%i{DADADA}) vetado.", Player_RPName(banned), Player_AccountID(banned));
+    
+    Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, 
+        @f("{DADADA}El jugador {415BA2}%s{DADADA} ({415BA2}%i{DADADA}-{415BA2}%i{DADADA}) fue vetada por el %s {415BA2}%s{DADADA}.", 
+            Player_RPName(banned), banned, Player_AccountID(banned), g_rgszRankLevelNames[Player_AdminLevel(playerid)], Player_RPName(playerid)
+        )
+    );
 
     return 1;
 }
@@ -73,8 +78,8 @@ command kick(playerid, const params[], "Expulsa a un jugador")
 
     KickTimed(playerid, 500);
 
-    Admins_SendMessage_s(RANK_LEVEL_HELPER, 0xED2B2BFF, 
-        @f("› {DADADA}El jugador {ED2B2B}%s {DADADA}(ID {ED2B2B}%i{DADADA}) fue expulsado por el %s {ED2B2B}%s{DADADA}.", 
+    Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, 
+        @f("› {DADADA}El jugador {415BA2}%s {DADADA}(ID {415BA2}%i{DADADA}) fue expulsado por el %s {415BA2}%s{DADADA}.", 
             Player_RPName(kicked), kicked, g_rgszRankLevelNames[Player_AdminLevel(playerid)], Player_RPName(playerid)
         )
     );
@@ -128,11 +133,13 @@ command ban_account(playerid, const params[], "Veta a una cuenta offline")
 
     Account_Ban(account_name, playerid, reason, time_seconds);
 
-    Admins_SendMessage_s(RANK_LEVEL_HELPER, 0xED2B2BFF, 
-        @f("› {DADADA}La cuenta {ED2B2B}%s{DADADA} ({ED2B2B}%i{DADADA}) fue vetada por el %s {ED2B2B}%s{DADADA}.", 
+    Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, 
+        @f("{DADADA}La cuenta {415BA2}%s{DADADA} ({415BA2}%i{DADADA}) fue vetada por el %s {415BA2}%s{DADADA}.", 
             account_name, account_id, g_rgszRankLevelNames[Player_AdminLevel(playerid)], Player_RPName(playerid)
         )
     );
 
     return 1;
 }
+alias:ban_account("banoff")
+flags:ban_account(CMD_FLAG<RANK_LEVEL_MODERATOR> | CMD_DONT_LOG_COMMAND)

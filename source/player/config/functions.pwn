@@ -5,7 +5,7 @@
 
 Config_ToString(playerid)
 {
-    new str[144];
+    new str[CONFIG_MAX + 1];
     for(new i; i < CONFIG_MAX; ++i)
     {
         format(str, sizeof(str), "%s%i", str, Bit_Get(g_rgbsPlayerConfig[playerid], i));

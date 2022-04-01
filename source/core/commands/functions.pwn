@@ -58,7 +58,7 @@ Commands_ShowSuggestions(playerid, const command[])
         if((cmd_flags & CMD_HIDDEN) != 0)
             continue;
 
-        new cmd_admin_level = (cmd_flags >> 24);
+        new cmd_admin_level = (cmd_flags >>> 24);
         if(cmd_admin_level > Player_AdminLevel(playerid))
             continue;
 
@@ -89,8 +89,9 @@ Commands_ShowSuggestions(playerid, const command[])
     new line[128];
     for(new i = distances_length - 1; i != -1; --i)
     {
-        new cmd_flags = PC_GetFlags(cmd_name);
         new cmdid = distances[i][2];
+        new cmd_flags = PC_GetFlags(g_rgeCommandStore[cmdid][e_szCommandName]);
+                
         g_rgiPlayerCommandsDialog[playerid][(distances_length - 1) - i] = cmdid;
 
         new description[50] = "Sin descripción";
@@ -100,8 +101,8 @@ Commands_ShowSuggestions(playerid, const command[])
         format(
             line, 
             sizeof(line), 
-            "{ED2B2B}› %s{DADADA}/%s\t%s\n", 
-            ((cmd_flags >>> 24) > RANK_LEVEL_USER ? !"{C22323}(ADMIN) " : ""), 
+            "{%x}› {DADADA}/%s\t%s\n", 
+            ((cmd_flags >>> 24) > RANK_LEVEL_USER ? 0x3A86FF : 0xCB3126), 
             g_rgeCommandStore[cmdid][e_szCommandName],
             description
         );
