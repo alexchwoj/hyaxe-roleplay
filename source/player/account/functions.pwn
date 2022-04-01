@@ -263,6 +263,12 @@ command ban(playerid, const params[], "Veta a un jugador")
         return 1;
     }
 
+    if(Player_AdminLevel(banned) > Player_AdminLevel(playerid))
+    {
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No puedes vetar a alguien superior a ti.");
+        return 1;
+    }
+
     Player_Ban(banned, playerid, reason, time);
     SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Jugador {ED2B2B}%s{DADADA} (Cuenta ID {ED2B2B}%i{DADADA}) vetado.", Player_RPName(banned), Player_AccountID(banned));
 
@@ -281,6 +287,12 @@ command kick(playerid, const params[], "Expulsa a un jugador")
     if(kicked == playerid)
     {
         SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No puedes expulsarte a ti mismo.");
+        return 1;
+    }
+
+    if(Player_AdminLevel(kicked) > Player_AdminLevel(playerid))
+    {
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No puedes expulsar a alguien superior a ti.");
         return 1;
     }
 
