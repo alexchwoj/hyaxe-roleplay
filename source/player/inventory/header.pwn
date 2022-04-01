@@ -4,6 +4,7 @@
 #define _inventory_header_
 
 const HYAXE_MAX_INVENTORY_SLOTS = 21;
+const HYAXE_MAX_DROPPED_ITEMS = 2048;
 const Float:EXP_BAR_MIN_X = 220.500;
 const Float:EXP_BAR_MAX_X = 408.0;
 
@@ -91,7 +92,8 @@ new
 
 		{"Invalid item", 18631, false, -1} // ITEM_INVALID
 	},
-    g_rgePlayerInventory[MAX_PLAYERS + 1][HYAXE_MAX_INVENTORY_SLOTS][ePlayerInventory]
+    g_rgePlayerInventory[MAX_PLAYERS + 1][HYAXE_MAX_INVENTORY_SLOTS][ePlayerInventory],
+    Iterator:DroppedItems<HYAXE_MAX_DROPPED_ITEMS>
 ;
 
 #define Item_Name(%0) (g_rgeItemData[%0][e_szName])

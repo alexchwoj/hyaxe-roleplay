@@ -42,7 +42,7 @@ EnterExit_Create(pickup_model, const enter_text[], const exit_text[], Float:ente
     g_rgeEnterExits[i][e_iEnterPickup] = CreateDynamicPickup(pickup_model, 1, enter_x, enter_y, enter_z - 0.5, .worldid = enter_world, .interiorid = enter_interior);
     g_rgeEnterExits[i][e_iEnterArea] = CreateDynamicCircle(enter_x, enter_y, 1.0, .worldid = enter_world, .interiorid = enter_interior);
     Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgeEnterExits[i][e_iEnterArea], E_STREAMER_EXTRA_ID, info);
-    Key_Alert(enter_x, enter_y, 1.0, KEYNAME_CTRL_BACK, enter_world, enter_interior);
+    Key_Alert(enter_x, enter_y, enter_z, 1.0, KEYNAME_CTRL_BACK, enter_world, enter_interior);
 
     // Exit
     info[2] = 0; // Exit
@@ -56,7 +56,7 @@ EnterExit_Create(pickup_model, const enter_text[], const exit_text[], Float:ente
     g_rgeEnterExits[i][e_iExitPickup] = CreateDynamicPickup(pickup_model, 1, exit_x, exit_y, exit_z - 0.5, .worldid = exit_world, .interiorid = exit_interior);
     g_rgeEnterExits[i][e_iExitArea] = CreateDynamicCircle(exit_x, exit_y, 1.0, .worldid = exit_world, .interiorid = exit_interior);
     Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgeEnterExits[i][e_iExitArea], E_STREAMER_EXTRA_ID, info);
-    Key_Alert(exit_x, exit_y, 1.0, KEYNAME_CTRL_BACK, exit_world, exit_interior);
+    Key_Alert(exit_x, exit_y, exit_z, 1.0, KEYNAME_CTRL_BACK, exit_world, exit_interior);
 
     g_rgeEnterExits[i][e_iEnterExitData] = extra_data;
     g_rgeEnterExits[i][e_iEnterExitCallback] = callback_address;

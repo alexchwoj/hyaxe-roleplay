@@ -39,7 +39,7 @@ Shop_Create(const name[], Float:pos_x, Float:pos_y, Float:pos_z, world, interior
     strcpy(g_rgeShops[idx][e_szShopName], name);
     g_rgeShops[idx][e_iShopLabel] = CreateDynamic3DTextLabel(name, 0xCB3126FF, pos_x, pos_y, pos_z, 10.0, .testlos = 1, .worldid = world, .interiorid = interior);
     g_rgeShops[idx][e_iShopArea] = CreateDynamicCircle(pos_x, pos_y, 0.5, .worldid = world, .interiorid = interior);
-    Key_Alert(pos_x, pos_y, 1.0, KEYNAME_YES, world, interior);
+    Key_Alert(pos_x, pos_y, pos_z, 1.0, KEYNAME_YES, world, interior);
 
     new info[2] = { 0x73686F70 };
     info[1] = idx;

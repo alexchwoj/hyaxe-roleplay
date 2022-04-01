@@ -184,7 +184,7 @@ public OnGameModeInit()
         Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgeATMBank[i][e_iAtmArea], E_STREAMER_EXTRA_ID, info);
     
         Key_Alert(
-            g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], 1.2,
+            g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], g_rgeATMBank[i][e_fAtmPosZ], 1.2,
             KEYNAME_YES, g_rgeATMBank[i][e_iAtmWorld], g_rgeATMBank[i][e_iAtmInterior]
         );
     }

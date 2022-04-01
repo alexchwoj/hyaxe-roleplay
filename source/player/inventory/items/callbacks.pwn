@@ -9,6 +9,7 @@ static Medicine_OnUse(playerid, slot)
         return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Tienes 50 de salud, consigue un botiquín para curarte completamente.");
 
     ApplyAnimation(playerid, "FOOD", "EAT_Pizza", 4.1, false, true, true, false, 1000);
+    PlayerPlaySound(playerid, SOUND_EAT);
 
     Notification_ShowBeatingText(playerid, 2000, 0xF7F7F7, 100, 255, "Has usado un medicamento (~g~+10~w~ de salud)");
     Player_SetHealth(playerid, Player_Health(playerid) + 10);

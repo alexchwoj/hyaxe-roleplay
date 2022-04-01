@@ -227,3 +227,40 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 #if defined INV_OnPlayerClickPlayerTD
     forward INV_OnPlayerClickPlayerTD(playerid, PlayerText:playertextid);
 #endif
+
+
+forward INV_RefreshDroppedItems();
+public INV_RefreshDroppedItems()
+{
+    foreach(new i : DroppedItems)
+    {
+        new info[6];
+        Streamer_GetArrayData(STREAMER_TYPE_AREA, i, E_STREAMER_EXTRA_ID, info);
+
+        if (gettime() > info[5])
+            DroppedItem_Delete(i);
+    }
+    return 1;
+}
+
+
+public OnGameModeInit()
+{
+    SetTimer("INV_RefreshDroppedItems", 270000, true);
+
+    #if defined INV_OnGameModeInit
+        return INV_OnGameModeInit();
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnGameModeInit
+    #undef OnGameModeInit
+#else
+    #define _ALS_OnGameModeInit
+#endif
+#define OnGameModeInit INV_OnGameModeInit
+#if defined INV_OnGameModeInit
+    forward INV_OnGameModeInit();
+#endif

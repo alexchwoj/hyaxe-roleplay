@@ -201,3 +201,66 @@ InventorySlot_Subtract(playerid, slot, amount = 1)
 	}
 	return 1;
 }
+
+DroppedItem_Create(type, amount, Float:x, Float:y, Float:z, world = 0, interior = 0, playerid = INVALID_PLAYER_ID)
+{
+	new objectid = CreateDynamicObject(
+		Item_ModelID(type), x, y, z + 0.9,
+		0.0, 0.0, 0.0,
+		world, interior, .streamdistance = 50.0, .drawdistance = 50.0
+	);
+
+	if (playerid != INVALID_PLAYER_ID)
+		Streamer_UpdateEx(playerid, x, y, z, world, interior, .freezeplayer = 0);
+
+	new Float:dest_z = z;
+	if (!interior)
+	{
+		CA_FindZ_For2DCoord(x, y, dest_z);
+		if ( dest_z > z )
+			dest_z = z - 0.9;
+	}
+
+	format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s (%d)", Item_Name(type), amount);
+	new Text3D:labelid = CreateDynamic3DTextLabel(HYAXE_UNSAFE_HUGE_STRING, 0xF7F7F7AA, x, y, dest_z + 0.4, 5.0, .testlos = 1, .worldid = world, .interiorid = interior);
+
+	MoveDynamicObject(objectid, x, y, dest_z, 10.0, 0.0, 0.0, 0.0);
+
+	new info[6];
+	info[0] = 0x49544d; // ITM
+	info[1] = type; // Item type
+	info[2] = amount; // Amount
+	info[3] = objectid; // Object ID
+	info[4] = _:labelid; // Label ID
+	info[5] = (gettime() + 300); // Time
+
+	new area_id = CreateDynamicSphere(x, y, z, 1.0, world, interior);
+	Streamer_SetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, info);
+
+	Iter_Add(DroppedItems, area_id);
+	return 1;
+}
+
+DroppedItem_Delete(area_id)
+{
+	new info[6];
+    Streamer_GetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, info);
+
+	DestroyDynamicObject(info[3]);
+	DestroyDynamic3DTextLabel(Text3D:info[4]);
+	DestroyDynamicArea(area_id);
+
+	Iter_Remove(DroppedItems, area_id);
+	return 1;
+}
+
+command dropitem(playerid, const params[], "")
+{
+	new Float:x, Float:y, Float:z, Float:angle;
+	GetPlayerPos(playerid, x, y, z);
+	GetPlayerFacingAngle(playerid, angle);
+
+	GetXYFromAngle(x, y, angle, 0.8);
+	DroppedItem_Create(ITEM_MEDIC_KIT, 1, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
+	return 1;
+}
