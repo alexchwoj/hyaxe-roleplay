@@ -201,8 +201,11 @@ const HYAXE_MAX_NPCS = 100;
 
 #include "server/anticheat/callbacks.pwn"
 
-// Prevents runtime error 20 (invalid index)
+// Commands
+//////////////
+#include "player/admin/commands.pwn"
 
+// Prevents runtime error 20 (invalid index)
 main() { return 0; }
 
 public OnJITCompile()
