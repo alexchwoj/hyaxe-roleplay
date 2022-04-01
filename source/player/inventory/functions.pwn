@@ -202,7 +202,21 @@ InventorySlot_Subtract(playerid, slot, amount = 1)
 	return 1;
 }
 
-DroppedItem_Create(type, amount, Float:x, Float:y, Float:z, world = 0, interior = 0, playerid = INVALID_PLAYER_ID)
+Inventory_AddItem(playerid, type, amount, extra)
+{
+	new slot = Inventory_GetFreeSlot(playerid);
+    if (slot < HYAXE_MAX_INVENTORY_SLOTS)
+	{
+		mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+			INSERT INTO `PLAYER_INVENTORY` (`ITEM_TYPE`, `AMOUNT`, `EXTRA`) VALUES (%d, %d, %d) WHERE `ACCOUNT_ID` = '%i';\
+		", type, amount, extra, Player_AccountID(playerid));
+		mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "INV_OnItemInserted", !"idddd", playerid, slot, type, amount, extra);
+		return 1;
+	}
+	return 0;
+}
+
+DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, interior = 0, playerid = INVALID_PLAYER_ID)
 {
 	new objectid = CreateDynamicObject(
 		Item_ModelID(type), x, y, z + 0.9,
@@ -226,13 +240,14 @@ DroppedItem_Create(type, amount, Float:x, Float:y, Float:z, world = 0, interior 
 
 	MoveDynamicObject(objectid, x, y, dest_z, 10.0, 0.0, 0.0, 0.0);
 
-	new info[6];
+	new info[7];
 	info[0] = 0x49544d; // ITM
 	info[1] = type; // Item type
 	info[2] = amount; // Amount
 	info[3] = objectid; // Object ID
 	info[4] = _:labelid; // Label ID
 	info[5] = (gettime() + 300); // Time
+	info[6] = extra; // Extra
 
 	new area_id = CreateDynamicSphere(x, y, z, 1.0, world, interior);
 	Streamer_SetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, info);
@@ -243,7 +258,7 @@ DroppedItem_Create(type, amount, Float:x, Float:y, Float:z, world = 0, interior 
 
 DroppedItem_Delete(area_id)
 {
-	new info[6];
+	new info[7];
     Streamer_GetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, info);
 
 	DestroyDynamicObject(info[3]);
@@ -254,13 +269,24 @@ DroppedItem_Delete(area_id)
 	return 1;
 }
 
-command dropitem(playerid, const params[], "")
+command burger(playerid, const params[], "")
 {
 	new Float:x, Float:y, Float:z, Float:angle;
 	GetPlayerPos(playerid, x, y, z);
 	GetPlayerFacingAngle(playerid, angle);
 
 	GetXYFromAngle(x, y, angle, 0.8);
-	DroppedItem_Create(ITEM_MEDIC_KIT, 1, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
+	DroppedItem_Create(ITEM_BURGER, 1, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
+	return 1;
+}
+
+command medicine(playerid, const params[], "")
+{
+	new Float:x, Float:y, Float:z, Float:angle;
+	GetPlayerPos(playerid, x, y, z);
+	GetPlayerFacingAngle(playerid, angle);
+
+	GetXYFromAngle(x, y, angle, 0.8);
+	DroppedItem_Create(ITEM_MEDICINE, 5, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
 	return 1;
 }

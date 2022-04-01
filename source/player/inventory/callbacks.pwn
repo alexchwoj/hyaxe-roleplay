@@ -33,6 +33,23 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         Inventory_Show(playerid);
     }
 
+    if ((newkeys & KEY_WALK) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
+    {
+        if (GetPlayerNumberDynamicAreas(playerid) > 0)
+        {
+            new areas[1];
+            GetPlayerDynamicAreas(playerid, areas);
+
+            new info[7];
+            Streamer_GetArrayData(STREAMER_TYPE_AREA, areas[0], E_STREAMER_EXTRA_ID, info);
+            if (info[0] == 0x49544d)
+            {
+                if (!Inventory_AddItem(playerid, info[1], info[2], info[6]))
+                    return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes el inventario lleno.");
+            }
+        }
+    }
+
     #if defined INV_OnPlayerKeyStateChange
         return INV_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
     #else
@@ -234,7 +251,7 @@ public INV_RefreshDroppedItems()
 {
     foreach(new i : DroppedItems)
     {
-        new info[6];
+        new info[7];
         Streamer_GetArrayData(STREAMER_TYPE_AREA, i, E_STREAMER_EXTRA_ID, info);
 
         if (gettime() > info[5])
@@ -264,3 +281,14 @@ public OnGameModeInit()
 #if defined INV_OnGameModeInit
     forward INV_OnGameModeInit();
 #endif
+
+
+forward INV_OnItemInserted(playerid, slot, type, amount, extra);
+public INV_OnItemInserted(playerid, slot, type, amount, extra)
+{
+    g_rgePlayerInventory[playerid][slot][e_iID] = cache_insert_id();
+    g_rgePlayerInventory[playerid][slot][e_iType] = type;
+    g_rgePlayerInventory[playerid][slot][e_iAmount] = amount;
+    g_rgePlayerInventory[playerid][slot][e_iExtra] = extra;
+    return 1;
+}
