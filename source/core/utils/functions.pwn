@@ -264,22 +264,16 @@ Date_ToString(year, month, day)
 
 Format_Thousand(number)
 {
-	new string[32], bool:negative;
+	new string[32];
 	format(string, sizeof string, "%d", number);
-	if (number < 0)
+
+	new const bool:negative = (number < 0);
+
+	for(new i = strlen(string) - 3; i > _:negative; i -= 3)
 	{
-		negative = true;
-		strdel(string, 0, 1);
+		strins(string, ".", i);
 	}
 
-	new numbers = strlen(string);
-	while(numbers > 3)
-	{
-		numbers -= 3;
-		strins(string, ".", numbers);
-	}
-
-	if (negative) strins(string, "-", 0);
 	return string;
 }
 
@@ -486,17 +480,7 @@ static enum eLoggerVarData
                     value = dummy[0];
                 }
 
-                switch(vars[i][e_iTagId])
-                {
-                    case (tagof(Float:)):
-                    {
-                        full_line += @f("%f, ", value);
-                    }
-                    default:
-                    {
-                        full_line += @f("%i, ", value);
-                    }
-                }
+                full_line += @f("{0:P}, ", pawn_arg_pack(value, vars[i][e_iTagId]));
             }
 
             str_delete(varname);

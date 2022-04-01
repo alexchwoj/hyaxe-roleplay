@@ -27,15 +27,15 @@ Job_SetCallback(eJobs:jobid, callback)
 
 Job_TriggerCallback(playerid, eJobs:jobid, eJobEvent:event, data = -1)
 {
-    DEBUG_PRINT("Job_TriggerCallback(%i, %i, %i, %i)", playerid, _:jobid, _:event, data);
+    log_function();
 
     if(g_rgePlayerJobCallbacks[jobid] != -1)
     {
         new cb_addr = g_rgePlayerJobCallbacks[jobid];
 
         // For some reason, placing a "retn" opcode gives runtime error 5 (Invalid memory access)
-        new ret = __emit(
-            push.c 0,
+        return __emit(
+            push.s data,
             push.s event,
             push.s playerid,
             push.c 12,
@@ -46,8 +46,6 @@ Job_TriggerCallback(playerid, eJobs:jobid, eJobEvent:event, data = -1)
             load.s.pri cb_addr,
             sctrl 6
         );
-
-        return ret;
     }
 
     return 1;

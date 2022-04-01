@@ -25,7 +25,7 @@ public OnPlayerDisconnect(playerid, reason)
 #endif
 
 public LEVELS_InterpolateTo(playerid, Float:init_x, Float:end_x, Float:start_xp, start_level, bool:new_level)
-{
+{    
     g_rgiLevelingBarSteps{playerid}++;
     new Float:t = floatdiv(g_rgiLevelingBarSteps{playerid}, LEVEL_BAR_ANIMATION_STEPS);
     new Float:x = lerp(init_x, end_x, t);
