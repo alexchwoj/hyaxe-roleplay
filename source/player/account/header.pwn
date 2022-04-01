@@ -82,7 +82,9 @@ enum ePlayerTemp
     e_iPlayerBankDest,
     e_iPlayerEatTick,
     e_iPlayerEatCount,
-    e_iPlayerPukeTick
+    e_iPlayerPukeTick,
+    e_iPlayerDropItemAmount,
+    e_iPlayerItemSlot
 };
 
 new 

@@ -40,6 +40,9 @@ Inventory_Update(playerid)
 			PlayerTextDrawShow(playerid, p_tdItemView[playerid]{i});
 			PlayerTextDrawShow(playerid, p_tdItemCount[playerid]{i});
 		}
+
+		for(new i; i < 5; ++i)
+			PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{i});
 	}
 	return 1;
 }
@@ -61,6 +64,37 @@ Inventory_UpdateSlot(playerid, slot)
 	return 1;
 }
 
+Inventory_UpdateDropCount(playerid)
+{
+	new string[8];
+	valstr(string, g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount]);
+	PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{2}, string);
+
+	if (g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] == 1)
+	{
+		PlayerTextDrawBoxColor(playerid, p_tdItemOptions[playerid]{3}, 0x1B1B1B44);
+		PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{3});
+	}
+	else
+	{
+		PlayerTextDrawBoxColor(playerid, p_tdItemOptions[playerid]{3}, 454761471);
+		PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{3});
+	}
+
+	if (g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] == InventorySlot_Amount(playerid, g_rgePlayerTempData[playerid][e_iPlayerItemSlot]))
+	{
+		PlayerTextDrawBoxColor(playerid, p_tdItemOptions[playerid]{4}, 0x1B1B1B44);
+		PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{4});
+	}
+	else
+	{
+		PlayerTextDrawBoxColor(playerid, p_tdItemOptions[playerid]{4}, 454761471);
+		PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{4});
+	}
+
+	return 1;
+}
+
 Inventory_Hide(playerid)
 {
 	for(new i; i < sizeof(g_tdInventoryBG); ++i)
@@ -71,6 +105,9 @@ Inventory_Hide(playerid)
 
 	for(new i; i < 6; ++i)
 		PlayerTextDrawHide(playerid, p_tdToyView[playerid]{i});
+
+	for(new i; i < 5; ++i)
+		PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{i});
 
 	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{

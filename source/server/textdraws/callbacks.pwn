@@ -1114,6 +1114,77 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawSetProportional(playerid, p_tdLevelingBar[playerid]{1}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdLevelingBar[playerid]{1}, 0);
 
+    // Items options
+    p_tdItemOptions[playerid]{0} = CreatePlayerTextDraw(playerid, 394.000000, 379.000000, "TIRAR");
+	PlayerTextDrawFont(playerid, p_tdItemOptions[playerid]{0}, 1);
+	PlayerTextDrawLetterSize(playerid, p_tdItemOptions[playerid]{0}, 0.300000, 1.350000);
+	PlayerTextDrawTextSize(playerid, p_tdItemOptions[playerid]{0}, 8.500000, 40.500000);
+	PlayerTextDrawSetOutline(playerid, p_tdItemOptions[playerid]{0}, 0);
+	PlayerTextDrawSetShadow(playerid, p_tdItemOptions[playerid]{0}, 0);
+	PlayerTextDrawAlignment(playerid, p_tdItemOptions[playerid]{0}, 2);
+	PlayerTextDrawColor(playerid, p_tdItemOptions[playerid]{0}, -1);
+	PlayerTextDrawBackgroundColor(playerid, p_tdItemOptions[playerid]{0}, 255);
+	PlayerTextDrawBoxColor(playerid, p_tdItemOptions[playerid]{0}, 454761471);
+	PlayerTextDrawUseBox(playerid, p_tdItemOptions[playerid]{0}, 1);
+	PlayerTextDrawSetProportional(playerid, p_tdItemOptions[playerid]{0}, 1);
+	PlayerTextDrawSetSelectable(playerid, p_tdItemOptions[playerid]{0}, 1);
+
+	p_tdItemOptions[playerid]{1} = CreatePlayerTextDraw(playerid, 346.000000, 379.000000, "USAR");
+	PlayerTextDrawFont(playerid, p_tdItemOptions[playerid]{1}, 1);
+	PlayerTextDrawLetterSize(playerid, p_tdItemOptions[playerid]{1}, 0.300000, 1.350000);
+	PlayerTextDrawTextSize(playerid, p_tdItemOptions[playerid]{1}, 8.500000, 40.000000);
+	PlayerTextDrawSetOutline(playerid, p_tdItemOptions[playerid]{1}, 0);
+	PlayerTextDrawSetShadow(playerid, p_tdItemOptions[playerid]{1}, 0);
+	PlayerTextDrawAlignment(playerid, p_tdItemOptions[playerid]{1}, 2);
+	PlayerTextDrawColor(playerid, p_tdItemOptions[playerid]{1}, -1);
+	PlayerTextDrawBackgroundColor(playerid, p_tdItemOptions[playerid]{1}, 255);
+	PlayerTextDrawBoxColor(playerid, p_tdItemOptions[playerid]{1}, 454761471);
+	PlayerTextDrawUseBox(playerid, p_tdItemOptions[playerid]{1}, 1);
+	PlayerTextDrawSetProportional(playerid, p_tdItemOptions[playerid]{1}, 1);
+	PlayerTextDrawSetSelectable(playerid, p_tdItemOptions[playerid]{1}, 1);
+
+	p_tdItemOptions[playerid]{2} = CreatePlayerTextDraw(playerid, 370.000000, 400.000000, "9999");
+	PlayerTextDrawFont(playerid, p_tdItemOptions[playerid]{2}, 1);
+	PlayerTextDrawLetterSize(playerid, p_tdItemOptions[playerid]{2}, 0.300000, 1.350000);
+	PlayerTextDrawTextSize(playerid, p_tdItemOptions[playerid]{2}, 8.500000, 54.000000);
+	PlayerTextDrawSetOutline(playerid, p_tdItemOptions[playerid]{2}, 0);
+	PlayerTextDrawSetShadow(playerid, p_tdItemOptions[playerid]{2}, 0);
+	PlayerTextDrawAlignment(playerid, p_tdItemOptions[playerid]{2}, 2);
+	PlayerTextDrawColor(playerid, p_tdItemOptions[playerid]{2}, -1);
+	PlayerTextDrawBackgroundColor(playerid, p_tdItemOptions[playerid]{2}, 255);
+	PlayerTextDrawBoxColor(playerid, p_tdItemOptions[playerid]{2}, 454761471);
+	PlayerTextDrawUseBox(playerid, p_tdItemOptions[playerid]{2}, 1);
+	PlayerTextDrawSetProportional(playerid, p_tdItemOptions[playerid]{2}, 1);
+	PlayerTextDrawSetSelectable(playerid, p_tdItemOptions[playerid]{2}, 0);
+
+	p_tdItemOptions[playerid]{3} = CreatePlayerTextDraw(playerid, 331.000000, 400.000000, "-");
+	PlayerTextDrawFont(playerid, p_tdItemOptions[playerid]{3}, 1);
+	PlayerTextDrawLetterSize(playerid, p_tdItemOptions[playerid]{3}, 0.300000, 1.350000);
+	PlayerTextDrawTextSize(playerid, p_tdItemOptions[playerid]{3}, 400.000000, 10.500000);
+	PlayerTextDrawSetOutline(playerid, p_tdItemOptions[playerid]{3}, 0);
+	PlayerTextDrawSetShadow(playerid, p_tdItemOptions[playerid]{3}, 0);
+	PlayerTextDrawAlignment(playerid, p_tdItemOptions[playerid]{3}, 2);
+	PlayerTextDrawColor(playerid, p_tdItemOptions[playerid]{3}, -1);
+	PlayerTextDrawBackgroundColor(playerid, p_tdItemOptions[playerid]{3}, 255);
+	PlayerTextDrawBoxColor(playerid, p_tdItemOptions[playerid]{3}, 454761471);
+	PlayerTextDrawUseBox(playerid, p_tdItemOptions[playerid]{3}, 1);
+	PlayerTextDrawSetProportional(playerid, p_tdItemOptions[playerid]{3}, 1);
+	PlayerTextDrawSetSelectable(playerid, p_tdItemOptions[playerid]{3}, 1);
+
+	p_tdItemOptions[playerid]{4} = CreatePlayerTextDraw(playerid, 409.000000, 400.000000, "+");
+	PlayerTextDrawFont(playerid, p_tdItemOptions[playerid]{4}, 1);
+	PlayerTextDrawLetterSize(playerid, p_tdItemOptions[playerid]{4}, 0.300000, 1.350000);
+	PlayerTextDrawTextSize(playerid, p_tdItemOptions[playerid]{4}, 400.000000, 10.500000);
+	PlayerTextDrawSetOutline(playerid, p_tdItemOptions[playerid]{4}, 0);
+	PlayerTextDrawSetShadow(playerid, p_tdItemOptions[playerid]{4}, 0);
+	PlayerTextDrawAlignment(playerid, p_tdItemOptions[playerid]{4}, 2);
+	PlayerTextDrawColor(playerid, p_tdItemOptions[playerid]{4}, -1);
+	PlayerTextDrawBackgroundColor(playerid, p_tdItemOptions[playerid]{4}, 255);
+	PlayerTextDrawBoxColor(playerid, p_tdItemOptions[playerid]{4}, 454761471);
+	PlayerTextDrawUseBox(playerid, p_tdItemOptions[playerid]{4}, 1);
+	PlayerTextDrawSetProportional(playerid, p_tdItemOptions[playerid]{4}, 1);
+	PlayerTextDrawSetSelectable(playerid, p_tdItemOptions[playerid]{4}, 1);
+
     #if defined TD_OnPlayerConnect
         return TD_OnPlayerConnect(playerid);
     #else

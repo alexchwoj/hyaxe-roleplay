@@ -136,24 +136,78 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 	    {
             if (playertextid == p_tdItemView[playerid]{i})
             {
-                new callback = Item_Callback( InventorySlot_Type(playerid, i) );
-                if (callback != -1)
+                g_rgePlayerTempData[playerid][e_iPlayerItemSlot] = i;
+                g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] = 1;
+
+                for(new j; j < 5; ++j)
+		            PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{j});
+
+                PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{0});
+                PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{1});
+
+                if (!Item_SingleSlot( InventorySlot_Type(playerid, i) ))
                 {
-                    __emit {
-                        push.s i
-                        push.s playerid
-                        push.c 8
-                        lctrl 6
-                        add.c 0x24
-                        lctrl 8
-                        push.pri
-                        load.s.pri callback
-                        sctrl 6
-                    }
-                    
+                    PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{2}, "1");
+                    PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{2});
+
+                    PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{3});
+                    PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{4});
+
+                    Inventory_UpdateDropCount(playerid);
                 }
                 break;
             }
+        }
+
+        if (playertextid == p_tdItemOptions[playerid]{4})
+        {
+            ++g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount];
+            if (g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] > InventorySlot_Amount(playerid, g_rgePlayerTempData[playerid][e_iPlayerItemSlot]))
+                g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] = InventorySlot_Amount(playerid, g_rgePlayerTempData[playerid][e_iPlayerItemSlot]);
+        
+            Inventory_UpdateDropCount(playerid);
+            PlayerPlaySound(playerid, SOUND_BACK);
+        }
+
+        if (playertextid == p_tdItemOptions[playerid]{3})
+        {
+            --g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount];
+            if (g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] < 1)
+                g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] = 1;
+
+            Inventory_UpdateDropCount(playerid);
+            PlayerPlaySound(playerid, SOUND_NEXT);
+        }
+
+        if (playertextid == p_tdItemOptions[playerid]{1})
+        {
+            new
+                callback = Item_Callback( InventorySlot_Type(playerid, g_rgePlayerTempData[playerid][e_iPlayerItemSlot]) ),
+                slot = g_rgePlayerTempData[playerid][e_iPlayerItemSlot]
+            ;
+            
+            if (callback != -1)
+            {
+                g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] = 1;
+                Inventory_UpdateDropCount(playerid);
+
+                __emit {
+                    push.s slot
+                    push.s playerid
+                    push.c 8
+                    lctrl 6
+                    add.c 0x24
+                    lctrl 8
+                    push.pri
+                    load.s.pri callback
+                    sctrl 6
+                }        
+            }
+        }
+
+        if (playertextid == p_tdItemOptions[playerid]{0})
+        {
+            // tirar
         }
     }
 
