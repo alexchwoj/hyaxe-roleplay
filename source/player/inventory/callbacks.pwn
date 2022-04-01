@@ -44,8 +44,12 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             Streamer_GetArrayData(STREAMER_TYPE_AREA, areas[0], E_STREAMER_EXTRA_ID, info);
             if (info[0] == 0x49544d)
             {
-                if (!Inventory_AddItem(playerid, info[1], info[2], info[6]))
-                    return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes el inventario lleno.");
+                if (Inventory_AddItem(playerid, info[1], info[2], info[6]))
+                {
+                    PlayerPlaySound(playerid, SOUND_DRESSING);
+                    ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 2500, 1);
+                }
+                else return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes el inventario lleno.");
             }
         }
     }
@@ -224,7 +228,22 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 
         if (playertextid == p_tdItemOptions[playerid]{0})
         {
-            // tirar
+            PlayerPlaySound(playerid, SOUND_DRESSING);
+            ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 2500, 1);
+
+            new Float:x, Float:y, Float:z, Float:angle;
+            GetPlayerPos(playerid, x, y, z);
+            GetPlayerFacingAngle(playerid, angle);
+
+            GetXYFromAngle(x, y, angle, 0.8);
+            DroppedItem_Create(
+                InventorySlot_Type(playerid, g_rgePlayerTempData[playerid][e_iPlayerItemSlot]),
+                g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount],
+                InventorySlot_Extra(playerid, g_rgePlayerTempData[playerid][e_iPlayerItemSlot]),
+                x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid
+            );
+
+            InventorySlot_Subtract(playerid, g_rgePlayerTempData[playerid][e_iPlayerItemSlot], g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount]);
         }
     }
 
