@@ -799,21 +799,6 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawSetProportional(playerid, p_tdSpeedometer[playerid]{3}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdSpeedometer[playerid]{3}, 0);
 
-    // BEATING TEXT
-    p_tdBeatingText{playerid} = CreatePlayerTextDraw(playerid, 319.000000, 369.000000, !"_");
-    PlayerTextDrawFont(playerid, p_tdBeatingText{playerid}, 1);
-    PlayerTextDrawLetterSize(playerid, p_tdBeatingText{playerid}, 0.266667, 1.549999);
-    PlayerTextDrawTextSize(playerid, p_tdBeatingText{playerid}, 417.500000, 178.000000);
-    PlayerTextDrawSetOutline(playerid, p_tdBeatingText{playerid}, 0);
-    PlayerTextDrawSetShadow(playerid, p_tdBeatingText{playerid}, 1);
-    PlayerTextDrawAlignment(playerid, p_tdBeatingText{playerid}, 2);
-    PlayerTextDrawColor(playerid, p_tdBeatingText{playerid}, -1);
-    PlayerTextDrawBackgroundColor(playerid, p_tdBeatingText{playerid}, 255);
-    PlayerTextDrawBoxColor(playerid, p_tdBeatingText{playerid}, 50);
-    PlayerTextDrawUseBox(playerid, p_tdBeatingText{playerid}, 0);
-    PlayerTextDrawSetProportional(playerid, p_tdBeatingText{playerid}, 1);
-    PlayerTextDrawSetSelectable(playerid, p_tdBeatingText{playerid}, 0);
-
     // KEY
     p_tdKey_Text{playerid} = CreatePlayerTextDraw(playerid, 323.000000, 11.000000, !"_");
     PlayerTextDrawFont(playerid, p_tdKey_Text{playerid}, 1);
@@ -1184,6 +1169,21 @@ public OnPlayerConnect(playerid)
 	PlayerTextDrawUseBox(playerid, p_tdItemOptions[playerid]{4}, 1);
 	PlayerTextDrawSetProportional(playerid, p_tdItemOptions[playerid]{4}, 1);
 	PlayerTextDrawSetSelectable(playerid, p_tdItemOptions[playerid]{4}, 1);
+
+    // BEATING TEXT
+    p_tdBeatingText{playerid} = CreatePlayerTextDraw(playerid, 319.000000, 369.000000, !"_");
+    PlayerTextDrawFont(playerid, p_tdBeatingText{playerid}, 1);
+    PlayerTextDrawLetterSize(playerid, p_tdBeatingText{playerid}, 0.266667, 1.549999);
+    PlayerTextDrawTextSize(playerid, p_tdBeatingText{playerid}, 417.500000, 178.000000);
+    PlayerTextDrawSetOutline(playerid, p_tdBeatingText{playerid}, 0);
+    PlayerTextDrawSetShadow(playerid, p_tdBeatingText{playerid}, 1);
+    PlayerTextDrawAlignment(playerid, p_tdBeatingText{playerid}, 2);
+    PlayerTextDrawColor(playerid, p_tdBeatingText{playerid}, -1);
+    PlayerTextDrawBackgroundColor(playerid, p_tdBeatingText{playerid}, 255);
+    PlayerTextDrawBoxColor(playerid, p_tdBeatingText{playerid}, 50);
+    PlayerTextDrawUseBox(playerid, p_tdBeatingText{playerid}, 0);
+    PlayerTextDrawSetProportional(playerid, p_tdBeatingText{playerid}, 1);
+    PlayerTextDrawSetSelectable(playerid, p_tdBeatingText{playerid}, 0);
 
     #if defined TD_OnPlayerConnect
         return TD_OnPlayerConnect(playerid);
