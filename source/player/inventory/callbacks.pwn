@@ -46,7 +46,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             {
                 if (Inventory_AddItem(playerid, info[1], info[2], info[6]))
                 {
-                    PlayerPlaySound(playerid, SOUND_DRESSING);
+                    PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
                     ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
                     DroppedItem_Delete(areas[0]);
                 }
@@ -240,7 +240,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
             for(new j; j < 6; ++j)
 		        PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{j});
 
-            PlayerPlaySound(playerid, SOUND_DRESSING);
+            PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
             ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
 
             new Float:x, Float:y, Float:z, Float:angle;
@@ -326,3 +326,35 @@ public INV_OnItemInserted(playerid, slot, type, amount, extra)
     g_rgePlayerInventory[playerid][slot][e_iExtra] = extra;
     return 1;
 }
+
+public OnDynamicObjectMoved(objectid)
+{
+    new info[3];
+    Streamer_GetArrayData(STREAMER_TYPE_OBJECT, objectid, E_STREAMER_EXTRA_ID, info);
+
+    if (info[0] == 0x49544d)
+    {
+        new Float:x, Float:y, Float:z;
+        GetDynamicObjectPos(objectid, x, y, z);
+        Sound_PlayInRange(
+            g_rgeDropSounds[ random(sizeof(g_rgeDropSounds)) ],
+            50.0, x, y, z, info[1], info[2]
+        );
+    }
+
+    #if defined INV_OnDynamicObjectMoved
+        return INV_OnDynamicObjectMoved(objectid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnDynamicObjectMoved
+    #undef OnDynamicObjectMoved
+#else
+    #define _ALS_OnDynamicObjectMoved
+#endif
+#define OnDynamicObjectMoved INV_OnDynamicObjectMoved
+#if defined INV_OnDynamicObjectMoved
+    forward INV_OnDynamicObjectMoved(objectid);
+#endif

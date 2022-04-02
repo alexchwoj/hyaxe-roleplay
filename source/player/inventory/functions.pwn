@@ -252,17 +252,23 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 {
 	new objectid = CreateDynamicObject(
 		Item_ModelID(type), x, y, z + 0.9,
-		0.0, 0.0, 0.0,
+		RandomFloat(-180.0, 180.0), RandomFloat(-180.0, 180.0), RandomFloat(-180.0, 180.0),
 		world, interior, .streamdistance = 50.0, .drawdistance = 50.0
 	);
 
 	if (playerid != INVALID_PLAYER_ID)
 		Streamer_UpdateEx(playerid, x, y, z, world, interior, .freezeplayer = 0);
 
-	new Float:dest_z = z;
+	new object_info[3];
+	object_info[0] = 0x49544d; // ITM
+	object_info[1] = world; // Virtual world
+	object_info[2] = interior; // Interior
+	Streamer_SetArrayData(STREAMER_TYPE_OBJECT, objectid, E_STREAMER_EXTRA_ID, object_info);
+
+	new Float:dest_z = z, Float:rx, Float:ry, Float:rz;
 	if (!interior)
 	{
-		CA_FindZ_For2DCoord(x, y, dest_z);
+		CA_RayCastLineAngle(x, y, 700.0, x, y, -1000.0, x, y, dest_z, rx, ry, rz);
 		if ( dest_z > z )
 			dest_z = z - 0.9;
 	}
@@ -270,19 +276,19 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 	format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s (%d)", Item_Name(type), amount);
 	new Text3D:labelid = CreateDynamic3DTextLabel(HYAXE_UNSAFE_HUGE_STRING, 0xF7F7F7AA, x, y, dest_z + 0.4, 5.0, .testlos = 1, .worldid = world, .interiorid = interior);
 
-	MoveDynamicObject(objectid, x, y, dest_z, 10.0, 0.0, 0.0, 0.0);
+	MoveDynamicObject(objectid, x, y, dest_z, 10.0, rx, ry, rz);
 
-	new info[7];
-	info[0] = 0x49544d; // ITM
-	info[1] = type; // Item type
-	info[2] = amount; // Amount
-	info[3] = objectid; // Object ID
-	info[4] = _:labelid; // Label ID
-	info[5] = (gettime() + 300); // Time
-	info[6] = extra; // Extra
+	new area_info[7];
+	area_info[0] = 0x49544d; // ITM
+	area_info[1] = type; // Item type
+	area_info[2] = amount; // Amount
+	area_info[3] = objectid; // Object ID
+	area_info[4] = _:labelid; // Label ID
+	area_info[5] = (gettime() + 300); // Time
+	area_info[6] = extra; // Extra
 
-	new area_id = CreateDynamicSphere(x, y, z, 1.0, world, interior);
-	Streamer_SetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, info);
+	new area_id = CreateDynamicSphere(x, y, dest_z + 0.9, 1.0, world, interior);
+	Streamer_SetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, area_info);
 
 	Iter_Add(DroppedItems, area_id);
 	return 1;
@@ -320,5 +326,16 @@ command medicine(playerid, const params[], "")
 
 	GetXYFromAngle(x, y, angle, 0.8);
 	DroppedItem_Create(ITEM_MEDICINE, 5, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
+	return 1;
+}
+
+command medickit(playerid, const params[], "")
+{
+	new Float:x, Float:y, Float:z, Float:angle;
+	GetPlayerPos(playerid, x, y, z);
+	GetPlayerFacingAngle(playerid, angle);
+
+	GetXYFromAngle(x, y, angle, 0.8);
+	DroppedItem_Create(ITEM_MEDIC_KIT, 5, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
 	return 1;
 }

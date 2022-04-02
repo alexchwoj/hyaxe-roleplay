@@ -38,14 +38,16 @@ enum _:eRankLevels
     RANK_LEVEL_USER,
     RANK_LEVEL_HELPER,
     RANK_LEVEL_MODERATOR,
-    RANK_LEVEL_ADMINISTRATOR
+    RANK_LEVEL_ADMINISTRATOR,
+    RANK_LEVEL_DEV
 };
 
 new const g_rgszRankLevelNames[eRankLevels][] = {
     "Usuario",
     "Ayudante",
     "Moderador",
-    "Administrador"
+    "Administrador",
+    "Dev"
 };
 
 enum ePlayerData

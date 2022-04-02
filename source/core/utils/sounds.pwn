@@ -20,6 +20,11 @@ enum _:eServerSounds
     SOUND_DRESSING = 20800
 };
 
+new
+    g_rgeDressingSounds[] = {20800, 5602, 5601, 5600},
+    g_rgeDropSounds[] = {17805, 4603}
+;
+
 native HY_PlayerPlaySound(playerid, soundid, Float:x = 0.0, Float:y = 0.0, Float:z = 0.0) = PlayerPlaySound;
 #if defined _ALS_PlayerPlaySound
     #undef PlayerPlaySound
