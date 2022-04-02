@@ -120,6 +120,7 @@ command set_thirst(playerid, const params[], "Asigna la sed de un jugador")
 
     return 1;
 }
+flags:set_thirst(CMD_RANK<RANK_LEVEL_MODERATOR>)
 
 command set_hunger(playerid, const params[], "Asigna el hambre de un jugador")
 {
@@ -136,3 +137,4 @@ command set_hunger(playerid, const params[], "Asigna el hambre de un jugador")
 
     return 1;
 }
+flags:set_hunger(CMD_RANK<RANK_LEVEL_MODERATOR>)

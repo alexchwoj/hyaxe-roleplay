@@ -10,6 +10,7 @@ enum _:eCommandFlags(<<=1)
 {
     CMD_HIDDEN = 1,
     CMD_NO_COOLDOWN,
+    CMD_DONT_LOG_COMMAND,
 
     CMD_INVALID_FLAG
 };

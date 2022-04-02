@@ -183,33 +183,3 @@ Notification_HideBeatingText(playerid)
 
     return 1;
 }
-
-command notification(playerid, const params[], "")
-{
-    Notification_Show(playerid, "Fusce et odio sagittis, tincidunt justo eget, posuere neque. Donec tempor dolor id velit viverra pellentesque. Suspendisse dictum augue ac sapien consectetur pellentesque.", 3000);
-    return 1;
-}
-
-command notification2(playerid, const params[], "")
-{
-    Notification_Show(playerid, "Fusce et odio sagittis, tincidunt justo eget, posuere neque. Donec tempor dolor id velit viverra pellentesque. Suspendisse dictum augue ac sapien consectetur pellentesque. Aenean vestibulum varius consequat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam nec semper lectus, ut semper odio. Etiam eget dapibus dolor.", 3000);
-    return 1;
-}
-
-command notification3(playerid, const params[], "")
-{
-    Notification_Show(playerid, "Bienvenido a hyaxe roleplay.", 5000);
-    return 1;
-}
-
-command nt(playerid, const params[], "")
-{
-    Notification_Show(playerid, params, 5000);
-    return 1;
-}
-
-command bt(playerid, const params[], "")
-{
-    Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, params);
-    return 1;
-}
