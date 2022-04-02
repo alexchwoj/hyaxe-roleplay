@@ -94,4 +94,4 @@ command pos(playerid, const params[], "Ir a unas coordenadas")
     SetPlayerPos(playerid, x, y, z);
     return 1;
 }
-flags:pos(CMD_RANK<RANK_LEVEL_MODERATOR>)
+flags:pos(CMD_FLAG<RANK_LEVEL_MODERATOR>)

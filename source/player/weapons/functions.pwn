@@ -196,4 +196,4 @@ command giveweapon(playerid, const params[], "Le da un arma a un jugador")
 
     return 1;
 }
-flags:giveweapon(CMD_RANK<RANK_LEVEL_MODERATOR>)
+flags:giveweapon(CMD_FLAG<RANK_LEVEL_MODERATOR>)
