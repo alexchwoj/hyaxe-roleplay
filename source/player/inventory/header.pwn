@@ -42,7 +42,7 @@ enum _:eItems
 	ITEM_INVALID
 };
 
-enum RarityLevels {
+enum _:eRarityLevels {
     RARITY_COMMON,
     RARITY_RARE,
     RARITY_EPIC,
@@ -102,6 +102,9 @@ new
 		{"Invalid item", 18631, false, -1} // ITEM_INVALID
 	},
     g_rgePlayerInventory[MAX_PLAYERS + 1][HYAXE_MAX_INVENTORY_SLOTS][ePlayerInventory],
+    g_rgszRarityName[][] = {
+        "~h~~g~COMÚN", "~h~~p~RARO", "~h~~b~ÉPICO", "~h~~y~LEGENDARIO", "~h~~r~MÍTICO"
+    },
     Iterator:DroppedItems<HYAXE_MAX_DROPPED_ITEMS>
 ;
 
@@ -109,6 +112,8 @@ new
 #define Item_ModelID(%0) (g_rgeItemData[%0][e_iModelID])
 #define Item_SingleSlot(%0) (g_rgeItemData[%0][e_bSingleSlot])
 #define Item_Callback(%0) (g_rgeItemData[%0][e_iCallback])
+#define Item_RarityName(%0) (g_rgszRarityName[%0])
+#define Item_Rarity(%0) (g_rgeItemData[%0][e_iRarityLevel])
 #define InventorySlot_ID(%0,%1) (g_rgePlayerInventory[%0][%1][e_iID])
 #define InventorySlot_Amount(%0,%1) (g_rgePlayerInventory[%0][%1][e_iAmount])
 #define InventorySlot_Type(%0,%1) (g_rgePlayerInventory[%0][%1][e_iType])

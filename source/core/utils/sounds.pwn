@@ -17,7 +17,7 @@ enum _:eServerSounds
     SOUND_CAR_DOORS = 24600,
     SOUND_EAT = 32200,
     SOUND_PUKE = 32201,
-    SOUND_DRESSING = 20802
+    SOUND_DRESSING = 20800
 };
 
 native HY_PlayerPlaySound(playerid, soundid, Float:x = 0.0, Float:y = 0.0, Float:z = 0.0) = PlayerPlaySound;

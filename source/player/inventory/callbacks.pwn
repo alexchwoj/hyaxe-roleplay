@@ -47,7 +47,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 if (Inventory_AddItem(playerid, info[1], info[2], info[6]))
                 {
                     PlayerPlaySound(playerid, SOUND_DRESSING);
-                    ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 2500, 1);
+                    ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
                     DroppedItem_Delete(areas[0]);
                 }
                 else return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes el inventario lleno.");
@@ -161,26 +161,31 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
                 g_rgePlayerTempData[playerid][e_iPlayerItemSlot] = i;
                 g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] = 1;
 
-                for(new j; j < 5; ++j)
-		            PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{j});
+                for(new j; j < 6; ++j)
+                    PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{j});
 
-                PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{0});
-                PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{1});
-
-                PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{5});
-                PlayerTextDrawSetString_s(playerid, p_tdItemOptions[playerid]{5}, @f("%s (%s~W~)", Item_Name( InventorySlot_Type(playerid, i) ));
-
-                if (!Item_SingleSlot( InventorySlot_Type(playerid, i) ))
+                if ( InventorySlot_IsValid(playerid, i) )
                 {
-                    PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{2}, "1");
-                    PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{2});
+                    PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{0});
+                    PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{1});
 
-                    PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{3});
-                    PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{4});
+                    PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{5});
+                    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s ~n~~w~(%s~w~)", Item_Name( InventorySlot_Type(playerid, i) ), Item_RarityName( Item_Rarity( InventorySlot_Type(playerid, i) ) ));
+                    Str_FixEncoding_Ref(HYAXE_UNSAFE_HUGE_STRING);
+                    PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{5}, HYAXE_UNSAFE_HUGE_STRING);
 
-                    Inventory_UpdateDropCount(playerid);
+                    if (!Item_SingleSlot( InventorySlot_Type(playerid, i) ))
+                    {
+                        PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{2}, "1");
+                        PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{2});
+
+                        PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{3});
+                        PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{4});
+
+                        Inventory_UpdateDropCount(playerid);
+                    }
+                    break;
                 }
-                break;
             }
         }
 
@@ -232,11 +237,11 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 
         if (playertextid == p_tdItemOptions[playerid]{0})
         {
-            for(new j; j < 5; ++j)
+            for(new j; j < 6; ++j)
 		        PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{j});
 
             PlayerPlaySound(playerid, SOUND_DRESSING);
-            ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 2500, 1);
+            ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
 
             new Float:x, Float:y, Float:z, Float:angle;
             GetPlayerPos(playerid, x, y, z);

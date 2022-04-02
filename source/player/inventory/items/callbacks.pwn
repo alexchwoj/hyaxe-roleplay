@@ -20,7 +20,17 @@ static Medicine_OnUse(playerid, slot)
 
 public OnGameModeInit()
 {
+    // Medicine
     Item_Callback(ITEM_MEDICINE) = __addressof(Medicine_OnUse);
+
+    // Crack
+    Item_Rarity(ITEM_CRACK) = RARITY_RARE;
+
+    // Cepita del valle...
+    Item_Rarity(ITEM_CEPITA) = RARITY_LEGENDARY;
+
+    // Sanguche de milanesa
+    Item_Rarity(ITEM_SANGUCHEDEMILANESA) = RARITY_MYTHIC;
 
     #if defined ITEM_OnGameModeInit
         return ITEM_OnGameModeInit();

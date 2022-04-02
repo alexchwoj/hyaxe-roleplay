@@ -931,7 +931,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawUseBox(playerid, p_tdToyView[playerid]{0}, 0);
     PlayerTextDrawSetProportional(playerid, p_tdToyView[playerid]{0}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdToyView[playerid]{0}, 1);
-    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{0}, 19553);
+    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{0}, 19482);
     PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{0}, -100.000000, -15.000000, -103.000000, 0.740000);
     PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{0}, 1, 1);
 
@@ -948,7 +948,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawUseBox(playerid, p_tdToyView[playerid]{1}, 0);
     PlayerTextDrawSetProportional(playerid, p_tdToyView[playerid]{1}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdToyView[playerid]{1}, 1);
-    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{1}, 19553);
+    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{1}, 19482);
     PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{1}, -100.000000, -15.000000, -103.000000, 0.740000);
     PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{1}, 1, 1);
 
@@ -965,7 +965,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawUseBox(playerid, p_tdToyView[playerid]{2}, 0);
     PlayerTextDrawSetProportional(playerid, p_tdToyView[playerid]{2}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdToyView[playerid]{2}, 1);
-    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{2}, 19553);
+    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{2}, 19482);
     PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{2}, -100.000000, -15.000000, -103.000000, 0.740000);
     PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{2}, 1, 1);
 
@@ -982,7 +982,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawUseBox(playerid, p_tdToyView[playerid]{3}, 0);
     PlayerTextDrawSetProportional(playerid, p_tdToyView[playerid]{3}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdToyView[playerid]{3}, 1);
-    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{3}, 19553);
+    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{3}, 19482);
     PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{3}, -100.000000, -15.000000, -103.000000, 0.740000);
     PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{3}, 1, 1);
 
@@ -999,7 +999,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawUseBox(playerid, p_tdToyView[playerid]{4}, 0);
     PlayerTextDrawSetProportional(playerid, p_tdToyView[playerid]{4}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdToyView[playerid]{4}, 1);
-    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{4}, 19553);
+    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{4}, 19482);
     PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{4}, -100.000000, -15.000000, -103.000000, 0.740000);
     PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{4}, 1, 1);
 
@@ -1016,7 +1016,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawUseBox(playerid, p_tdToyView[playerid]{5}, 0);
     PlayerTextDrawSetProportional(playerid, p_tdToyView[playerid]{5}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdToyView[playerid]{5}, 1);
-    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{5}, 19553);
+    PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{5}, 19482);
     PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{5}, -100.000000, -15.000000, -103.000000, 0.740000);
     PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{5}, 1, 1);
 
