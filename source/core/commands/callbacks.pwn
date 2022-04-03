@@ -106,7 +106,7 @@ public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags)
 
     if((flags >>> 24) > RANK_LEVEL_USER && !(flags & CMD_DONT_LOG_COMMAND))
     {
-        Admins_SendMessage_s(Player_AdminLevel(playerid), 0x415BA2FF, @f("{DADADA}El %s {415BA2}%s{DADADA} usó el comando {415BA2}/%s{DADADA}.", g_rgszRankLevelNames[Player_AdminLevel(playerid)], Player_RPName(playerid), cmd));
+        Admins_SendMessage_s(Player_AdminLevel(playerid), 0x415BA2FF, @f("{DADADA}%s %s {415BA2}%s{DADADA} usó el comando {415BA2}/%s{DADADA}.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_GetRankName(playerid), Player_RPName(playerid), cmd));
     }
 
     #if defined CMD_OnPlayerCommandPerformed

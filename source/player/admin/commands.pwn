@@ -27,8 +27,8 @@ command ban(playerid, const params[], "Veta a un jugador")
     Player_Ban(banned, playerid, reason, time);
 
     Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, 
-        @f("{DADADA}El jugador {415BA2}%s{DADADA} ({415BA2}%i{DADADA}-{415BA2}%i{DADADA}) fue vetado por el %s {415BA2}%s{DADADA}.", 
-            Player_RPName(banned), banned, Player_AccountID(banned), g_rgszRankLevelNames[Player_AdminLevel(playerid)], Player_RPName(playerid)
+        @f("{DADADA}%s {415BA2}%s{DADADA} ({415BA2}%i{DADADA}-{415BA2}%i{DADADA}) fue vetado por %s %s {415BA2}%s{DADADA}.", 
+            (Player_Sex(banned) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(banned), banned, Player_AccountID(banned), (Player_Sex(playerid) == SEX_MALE ? "el" : "la"), Player_GetRankName(playerid), Player_RPName(playerid)
         )
     );
 
@@ -64,7 +64,7 @@ command kick(playerid, const params[], "Expulsa a un jugador")
 
     Dialog_Show_s(playerid, "kick", DIALOG_STYLE_MSGBOX, @("{CB3126}Hyaxe {DADADA}- Expulsión"),
         @f(
-            "{DADADA}Fuiste expulsado del servidor.\n\n\
+            "{DADADA}Fuiste expulsad%c del servidor.\n\n\
             {CB3126}Razón de la expulsión\n\
                 \t{DADADA}%s\n\n\
             {CB3126}Administrador encargado\n\
@@ -72,7 +72,7 @@ command kick(playerid, const params[], "Expulsa a un jugador")
             {CB3126}Fecha\n\
                 \t{DADADA}%i/%i/%i %i:%i:%i\
         ",
-            reason, Player_RPName(playerid), Player_AccountID(playerid),
+            (Player_Sex(kicked) == SEX_MALE ? 'o' : 'a'), reason, Player_RPName(playerid), Player_AccountID(playerid),
             day, month, year, hour, minute, second
         ),
         "Salir"
@@ -81,8 +81,8 @@ command kick(playerid, const params[], "Expulsa a un jugador")
     KickTimed(playerid, 500);
 
     Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, 
-        @f("› {DADADA}El jugador {415BA2}%s {DADADA}(ID {415BA2}%i{DADADA}) fue expulsado por el %s {415BA2}%s{DADADA}.", 
-            Player_RPName(kicked), kicked, g_rgszRankLevelNames[Player_AdminLevel(playerid)], Player_RPName(playerid)
+        @f("› {DADADA}%s {415BA2}%s {DADADA}(ID {415BA2}%i{DADADA}) fue expulsado por %s %s {415BA2}%s{DADADA}.", 
+            (Player_Sex(kicked) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(kicked), kicked, (Player_Sex(playerid) == SEX_MALE ? "el" : "la"), Player_GetRankName(playerid), Player_RPName(playerid)
         )
     );
 
@@ -138,8 +138,8 @@ command ban_account(playerid, const params[], "Veta a una cuenta offline")
     Account_Ban(account_name, playerid, reason, time_seconds);
 
     Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, 
-        @f("{DADADA}La cuenta {415BA2}%s{DADADA} ({415BA2}%i{DADADA}) fue vetada por el %s {415BA2}%s{DADADA}.", 
-            account_name, account_id, g_rgszRankLevelNames[Player_AdminLevel(playerid)], Player_RPName(playerid)
+        @f("{DADADA}La cuenta {415BA2}%s{DADADA} ({415BA2}%i{DADADA}) fue vetada por %s %s {415BA2}%s{DADADA}.", 
+            account_name, account_id, (Player_Sex(playerid) == SEX_MALE ? "el" : "la"), Player_GetRankName(playerid), Player_RPName(playerid)
         )
     );
 
