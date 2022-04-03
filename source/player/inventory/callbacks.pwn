@@ -170,7 +170,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
                     PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{1});
 
                     PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{5});
-                    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s ~n~~w~(%s~w~)", Item_Name( InventorySlot_Type(playerid, i) ), Item_RarityName( Item_Rarity( InventorySlot_Type(playerid, i) ) ));
+                    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s~n~~w~(%s~w~)", Item_Name( InventorySlot_Type(playerid, i) ), Item_RarityName( Item_Rarity( InventorySlot_Type(playerid, i) ) ));
                     Str_FixEncoding_Ref(HYAXE_UNSAFE_HUGE_STRING);
                     PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{5}, HYAXE_UNSAFE_HUGE_STRING);
 

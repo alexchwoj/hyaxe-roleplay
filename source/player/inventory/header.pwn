@@ -56,7 +56,11 @@ enum eItemData
     e_iModelID,
     bool:e_bSingleSlot,
     e_iCallback,
-    e_iRarityLevel
+    e_iRarityLevel,
+    Float:e_fRotX,
+    Float:e_fRotY,
+    Float:e_fRotZ,
+    Float:e_fZoom
 }
 
 enum ePlayerInventory 

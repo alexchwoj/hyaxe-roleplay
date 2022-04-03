@@ -3,6 +3,15 @@
 #endif
 #define _inventory_functions_
 
+Item_SetPreviewRot(type, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fZoom = 1.0)
+{
+	g_rgeItemData[type][e_fRotX] = fRotX;
+	g_rgeItemData[type][e_fRotY] = fRotY;
+	g_rgeItemData[type][e_fRotZ] = fRotZ;
+	g_rgeItemData[type][e_fZoom] = fZoom;
+	return 1;
+}
+
 Inventory_GetFreeSlot(playerid)
 {
     for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
@@ -22,7 +31,14 @@ Inventory_Update(playerid)
 			if (InventorySlot_IsValid(playerid, i))
 			{
 				PlayerTextDrawSetPreviewModel(playerid, p_tdItemView[playerid]{i}, Item_ModelID( InventorySlot_Type(playerid, i) ));
-				
+				PlayerTextDrawSetPreviewRot(
+					playerid, p_tdItemView[playerid]{i},
+					g_rgeItemData[ InventorySlot_Type(playerid, i) ][e_fRotX],
+					g_rgeItemData[ InventorySlot_Type(playerid, i) ][e_fRotY],
+					g_rgeItemData[ InventorySlot_Type(playerid, i) ][e_fRotZ],
+					g_rgeItemData[ InventorySlot_Type(playerid, i) ][e_fZoom]
+				);
+
 				if (!Item_SingleSlot( InventorySlot_Type(playerid, i) ))
 				{
 					new string[8];
@@ -297,7 +313,7 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 DroppedItem_Delete(area_id)
 {
 	new info[7];
-    Streamer_GetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, info);
+	Streamer_GetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, info);
 
 	DestroyDynamicObject(info[3]);
 	DestroyDynamic3DTextLabel(Text3D:info[4]);
