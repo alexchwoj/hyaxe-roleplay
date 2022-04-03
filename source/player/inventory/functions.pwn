@@ -297,8 +297,9 @@ DroppedItem_Delete(area_id)
 	DestroyDynamic3DTextLabel(Text3D:info[4]);
 	DestroyDynamicArea(area_id);
 
-	Iter_Remove(DroppedItems, area_id);
-	return 1;
+	new next;
+	Iter_SafeRemove(DroppedItems, area_id, next);
+	return next;
 }
 
 command burger(playerid, const params[], "")

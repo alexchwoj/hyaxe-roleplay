@@ -59,6 +59,51 @@ public OnPlayerDisconnect(playerid, reason)
     forward VEH_OnPlayerDisconnect(playerid, reason);
 #endif
 
+public OnVehicleDeath(vehicleid, killerid)
+{
+    g_rgeVehicles[vehicleid][e_bSpawned] = false;
+    g_rgeVehicles[vehicleid][e_fHealth] = 1000.0;
+    g_rgeVehicles[vehicleid][e_fFuel] = g_rgeVehicleModelData[GetVehicleModel(vehicleid)][e_fMaxFuel];
+
+    #if defined VEH_OnVehicleDeath
+        return VEH_OnVehicleDeath(vehicleid, killerid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnVehicleDeath
+    #undef OnVehicleDeath
+#else
+    #define _ALS_OnVehicleDeath
+#endif
+#define OnVehicleDeath VEH_OnVehicleDeath
+#if defined VEH_OnVehicleDeath
+    forward VEH_OnVehicleDeath(vehicleid, killerid);
+#endif
+
+public OnVehicleSpawn(vehicleid)
+{
+    g_rgeVehicles[vehicleid][e_bSpawned] = true;
+    SetVehicleHealth(vehicleid, g_rgeVehicles[vehicleid][e_fHealth]);
+
+    #if defined VEH_OnVehicleSpawn
+        return VEH_OnVehicleSpawn(vehicleid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnVehicleSpawn
+    #undef OnVehicleSpawn
+#else
+    #define _ALS_OnVehicleSpawn
+#endif
+#define OnVehicleSpawn VEH_OnVehicleSpawn
+#if defined VEH_OnVehicleSpawn
+    forward VEH_OnVehicleSpawn(vehicleid);
+#endif
+
 public OnPlayerStateChange(playerid, newstate, oldstate)
 {
     if(newstate == PLAYER_STATE_DRIVER)

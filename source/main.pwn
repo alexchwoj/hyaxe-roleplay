@@ -112,6 +112,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "core/dialogs/header.pwn"
 #include "core/commands/header.pwn"
 #include "core/key/header.pwn"
+#include "server/anticheat/header.pwn"
 #include "server/textdraws/header.pwn"
 #include "server/vehicles/header.pwn"
 #include "server/enter_exits/header.pwn"
@@ -176,6 +177,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "core/dialogs/callbacks.pwn"
 #include "core/commands/callbacks.pwn"
 #include "core/key/callbacks.pwn"
+#include "server/anticheat/callbacks.pwn"
 #include "server/textdraws/callbacks.pwn"
 #include "server/vehicles/callbacks.pwn"
 #include "server/enter_exits/callbacks.pwn"
@@ -199,7 +201,10 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/keygame/callbacks.pwn"
 #include "player/death/callbacks.pwn"
 
-#include "server/anticheat/callbacks.pwn"
+// Anticheat
+///////////////
+#include "server/anticheat/detections/repaircar.pwn"
+#include "server/anticheat/detections/money.pwn"
 
 // Commands
 //////////////

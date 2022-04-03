@@ -57,7 +57,8 @@ enum eVehicleData
     e_iComponents[14],
     eVehicleType:e_iVehicleType,
 
-    e_iVehicleTimers[eVehicleTimers]
+    e_iVehicleTimers[eVehicleTimers],
+    bool:e_bSpawned
 };
 
 new g_rgeVehicles[MAX_VEHICLES][eVehicleData];
@@ -295,8 +296,8 @@ new
 
 #define Vehicle_Type(%0) (g_rgeVehicles[(%0)][e_iVehicleType])
 #define Vehicle_Fuel(%0) (g_rgeVehicles[(%0)][e_fFuel])
-#define Vehicle_Repair(%0) (g_rgeVehicles[(%0)][e_fHealth] = 1000.0, RepairVehicle(%0))
-#define Vehicle_SetHealth(%0,%1) (g_rgeVehicles[(%0)][e_fHealth] = (%1), SetVehicleHealth((%0), (%1)))
+forward Vehicle_SetHealth(vehicleid, Float:health);
+forward Vehicle_Repair(vehicleid);
 #define Vehicle_GetHealth(%0) (g_rgeVehicles[(%0)][e_fHealth])
 #define Vehicle_SetVirtualWorld(%0,%1) (g_rgeVehicles[(%0)][e_iVehWorld] = (%1), SetVehicleVirtualWorld((%0), (%1)))
 #define Vehicle_GetVirtualWorld(%0) (g_rgeVehicles[(%0)][e_iVehWorld])

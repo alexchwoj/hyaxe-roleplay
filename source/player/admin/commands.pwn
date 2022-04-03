@@ -27,7 +27,7 @@ command ban(playerid, const params[], "Veta a un jugador")
     Player_Ban(banned, playerid, reason, time);
 
     Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, 
-        @f("{DADADA}El jugador {415BA2}%s{DADADA} ({415BA2}%i{DADADA}-{415BA2}%i{DADADA}) fue vetada por el %s {415BA2}%s{DADADA}.", 
+        @f("{DADADA}El jugador {415BA2}%s{DADADA} ({415BA2}%i{DADADA}-{415BA2}%i{DADADA}) fue vetado por el %s {415BA2}%s{DADADA}.", 
             Player_RPName(banned), banned, Player_AccountID(banned), g_rgszRankLevelNames[Player_AdminLevel(playerid)], Player_RPName(playerid)
         )
     );

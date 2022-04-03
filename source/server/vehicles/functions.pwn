@@ -8,7 +8,8 @@ Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, c
     new vehicleid = CreateVehicle(vehicletype, x, y, z, rotation, color1, color2, respawn_delay, addsiren);
     if(vehicleid != INVALID_VEHICLE_ID)
     {
-        g_rgeVehicles[vehicleid][e_bValid] = true;
+        g_rgeVehicles[vehicleid][e_bValid] =
+        g_rgeVehicles[vehicleid][e_bSpawned] = true;
         g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = INVALID_PLAYER_ID;
         g_rgeVehicles[vehicleid][e_fPosX] = x;
         g_rgeVehicles[vehicleid][e_fPosY] = y;
@@ -108,6 +109,42 @@ Vehicle_GetLightsStatus(vehicleid)
     new dummy, lights;
     GetVehicleParamsEx(vehicleid, dummy, lights, dummy, dummy, dummy, dummy, dummy);
     return lights;
+}
+
+Vehicle_SetHealth(vehicleid, Float:health)
+{
+    if(SetVehicleHealth(vehicleid, health))
+    {
+        g_rgeVehicles[vehicleid][e_fHealth] = health;
+
+        if(IsVehicleOccupied(vehicleid))
+        {
+            new playerid = GetVehicleLastDriver(vehicleid);
+            Player_SetImmunityForCheat(playerid, CHEAT_REPAIR_CAR, 1000 + GetPlayerPing(playerid));
+        }
+
+        return 1;
+    }
+
+    return 0;
+}
+
+Vehicle_Repair(vehicleid)
+{
+    if(RepairVehicle(vehicleid))
+    {
+        g_rgeVehicles[vehicleid][e_fHealth] = 1000.0;
+
+        if(IsVehicleOccupied(vehicleid))
+        {
+            new playerid = GetVehicleLastDriver(vehicleid);
+            Player_SetImmunityForCheat(playerid, CHEAT_REPAIR_CAR, 1000 + GetPlayerPing(playerid));
+        }
+
+        return 1;
+    }
+
+    return 0;
 }
 
 Speedometer_Show(playerid)
