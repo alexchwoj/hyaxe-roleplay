@@ -48,8 +48,6 @@ public OnPlayerDataLoaded(playerid)
 
     if(!Bit_Get(Player_Flags(playerid), PFLAG_REGISTERED))
     {
-        DEBUG_PRINT("Player is not registered");
-
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
             {DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta no está registrada.\n\n\
             \t{E3E3E3}1. Contraseña\n\
@@ -62,8 +60,6 @@ public OnPlayerDataLoaded(playerid)
     }
     else
     {
-        DEBUG_PRINT("Player is registered");
-
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta ya está registrada.\n\nContraseña:", Player_RPName(playerid));
         Dialog_Show(playerid, "login", DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Ingresa a tu cuenta", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
     }
@@ -99,7 +95,7 @@ dialog register(playerid, response, listitem, inputtext[])
     }
 
     new pw_len = strlen(inputtext);
-    if(NOT_IN_RANGE(pw_len, 6, 18))
+    if(!(6 <= pw_len <= 18))
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
             {DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta no está registrada.\n\n\
@@ -217,10 +213,6 @@ dialog login(playerid, response, listitem, inputtext[])
 
     new hash[65];
     SHA256_PassHash(inputtext, "", hash);
-
-    DEBUG_PRINT("Login: Comparing hashes from %i", playerid);
-    DEBUG_PRINT("Original: %s", Player_Password(playerid));
-    DEBUG_PRINT("Input: %s", hash);
 
     if(strcmp(Player_Password(playerid), hash, .ignorecase = true))
     {

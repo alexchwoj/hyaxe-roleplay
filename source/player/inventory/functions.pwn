@@ -304,7 +304,14 @@ DroppedItem_Delete(area_id)
 	DestroyDynamicObject(info[3]);
 	DestroyDynamic3DTextLabel(Text3D:info[4]);
 	DestroyDynamicArea(area_id);
+<<<<<<< HEAD
 	return 1;
+=======
+
+	new next;
+	Iter_SafeRemove(DroppedItems, area_id, next);
+	return next;
+>>>>>>> 9962ebf75d595c572a8123a0d6debade8f183eb7
 }
 
 command randomitem(playerid, const params[], "")
