@@ -288,7 +288,10 @@ public INV_RefreshDroppedItems()
         Streamer_GetArrayData(STREAMER_TYPE_AREA, i, E_STREAMER_EXTRA_ID, info);
 
         if (gettime() > info[5])
+        {
+            DEBUG_PRINT("Expired item: %d", i);
             DroppedItem_Delete(i);
+        }
     }
     return 1;
 }
@@ -296,7 +299,7 @@ public INV_RefreshDroppedItems()
 
 public OnGameModeInit()
 {
-    SetTimer("INV_RefreshDroppedItems", 270000, true);
+    SetTimer("INV_RefreshDroppedItems", 180000, true);
 
     #if defined INV_OnGameModeInit
         return INV_OnGameModeInit();

@@ -296,46 +296,24 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 
 DroppedItem_Delete(area_id)
 {
+	Iter_Remove(DroppedItems, area_id);
+
 	new info[7];
     Streamer_GetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, info);
 
 	DestroyDynamicObject(info[3]);
 	DestroyDynamic3DTextLabel(Text3D:info[4]);
 	DestroyDynamicArea(area_id);
-
-	Iter_Remove(DroppedItems, area_id);
 	return 1;
 }
 
-command burger(playerid, const params[], "")
+command randomitem(playerid, const params[], "")
 {
 	new Float:x, Float:y, Float:z, Float:angle;
 	GetPlayerPos(playerid, x, y, z);
 	GetPlayerFacingAngle(playerid, angle);
 
 	GetXYFromAngle(x, y, angle, 0.8);
-	DroppedItem_Create(ITEM_BURGER, 1, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
-	return 1;
-}
-
-command medicine(playerid, const params[], "")
-{
-	new Float:x, Float:y, Float:z, Float:angle;
-	GetPlayerPos(playerid, x, y, z);
-	GetPlayerFacingAngle(playerid, angle);
-
-	GetXYFromAngle(x, y, angle, 0.8);
-	DroppedItem_Create(ITEM_MEDICINE, 5, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
-	return 1;
-}
-
-command medickit(playerid, const params[], "")
-{
-	new Float:x, Float:y, Float:z, Float:angle;
-	GetPlayerPos(playerid, x, y, z);
-	GetPlayerFacingAngle(playerid, angle);
-
-	GetXYFromAngle(x, y, angle, 0.8);
-	DroppedItem_Create(ITEM_MEDIC_KIT, 5, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
+	DroppedItem_Create(random(ITEM_VALID), 5, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
 	return 1;
 }
