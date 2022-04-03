@@ -296,22 +296,16 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 
 DroppedItem_Delete(area_id)
 {
-	Iter_Remove(DroppedItems, area_id);
-
 	new info[7];
     Streamer_GetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, info);
 
 	DestroyDynamicObject(info[3]);
 	DestroyDynamic3DTextLabel(Text3D:info[4]);
 	DestroyDynamicArea(area_id);
-<<<<<<< HEAD
-	return 1;
-=======
 
 	new next;
 	Iter_SafeRemove(DroppedItems, area_id, next);
 	return next;
->>>>>>> 9962ebf75d595c572a8123a0d6debade8f183eb7
 }
 
 command randomitem(playerid, const params[], "")
@@ -321,6 +315,6 @@ command randomitem(playerid, const params[], "")
 	GetPlayerFacingAngle(playerid, angle);
 
 	GetXYFromAngle(x, y, angle, 0.8);
-	DroppedItem_Create(random(ITEM_VALID), 5, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
+	DroppedItem_Create(random(ITEM_INVALID), 5, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
 	return 1;
 }
