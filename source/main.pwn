@@ -227,8 +227,7 @@ SSCANF:boolean(string[])
 	}
 	else if(!strcmp(string, "true", true)) return 1;
 	else if(!strcmp(string, "false", true)) return 0;
-	else if(!strcmp(string, "sí", true)) return 1;
-	else if(!strcmp(string, "si", true)) return 1;
+	else if(!strcmp(string, "sí", true) || !strcmp(string, "si", true)) return 1;
 	else if(!strcmp(string, "no", true)) return 0;
 
 	return 0;

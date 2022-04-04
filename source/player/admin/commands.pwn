@@ -156,13 +156,15 @@ command manage_admins(playerid, const params[], "Abre el panel de administradore
     s_rgszSelectedAdmin[playerid][0] = '\0';
 
     new Task<Cache>:t = MySQL_QueryAsync(g_hDatabase, 
-        "SELECT `ACCOUNT`.`NAME`, `ACCOUNT`.`ID`, `ACCOUNT`.`CURRENT_PLAYERID`, `ACCOUNT`.`SEX`, `ACCOUNT`.`ADMIN_LEVEL`, GROUP_CONCAT(`CONNECTION_LOG`.`DATE` ORDER BY `CONNECTION_LOG`.`DATE` DESC) AS `DATE`\
-            FROM `ACCOUNT` \
-                LEFT JOIN `CONNECTION_LOG` \
-                    ON `ACCOUNT`.`ID` = `CONNECTION_LOG`.`ACCOUNT_ID` \
-            WHERE `ADMIN_LEVEL` > 0 \
-            ORDER BY `ACCOUNT`.`ADMIN_LEVEL` DESC;\
-    ");
+        "\
+            SELECT `ACCOUNT`.`NAME`, `ACCOUNT`.`ID`, `ACCOUNT`.`CURRENT_PLAYERID`, `ACCOUNT`.`SEX`, `ACCOUNT`.`ADMIN_LEVEL`, MAX(`CONNECTION_LOG`.`DATE`) AS `DATE` \
+                FROM `ACCOUNT` \
+                    INNER JOIN `CONNECTION_LOG` \
+                        ON `ACCOUNT`.`ID` = `CONNECTION_LOG`.`ACCOUNT_ID` \
+                WHERE `ADMIN_LEVEL` > 0 \
+                GROUP BY `ACCOUNT`.`ID` \
+                ORDER BY `ACCOUNT`.`ADMIN_LEVEL` DESC;\
+        ");
 
     new Cache:c = await<Cache> t;
 
@@ -180,16 +182,17 @@ command manage_admins(playerid, const params[], "Abre el panel de administradore
     new line[128];
     for(new i; i < rowc; ++i)
     {
-        new admin_name[25], admin_playerid, admin_level, admin_sex, last_connection[24];
+        new admin_name[25], admin_accountid, admin_playerid, admin_level, admin_sex, last_connection[24];
         cache_get_value_name(i, "NAME", admin_name);
+        cache_get_value_name_int(i, "ID", admin_accountid);
         cache_get_value_name_int(i, "CURRENT_PLAYERID", admin_playerid);
         cache_get_value_name_int(i, "ADMIN_LEVEL", admin_level);
         cache_get_value_name_int(i, "SEX", admin_sex);
         cache_get_value_name(i, "DATE", last_connection);
 
         format(line, sizeof(line), 
-            "{DADADA}%s\t{DADADA}%s\t{%x}%s\n", 
-            admin_name, g_rgszRankLevelNames[admin_level][admin_sex], (admin_playerid == -1 ? 0xDADADA : 0x64A752), (admin_playerid == -1 ? last_connection : "En línea")
+            "{DADADA}%s ({415BA2}%i{DADADA})\t{DADADA}%s\t{%x}%s\n", 
+            admin_name, admin_accountid, g_rgszRankLevelNames[admin_level][admin_sex], (admin_playerid == -1 ? 0xDADADA : 0x64A752), (admin_playerid == -1 ? last_connection : "En línea")
         );
 
         strcat(HYAXE_UNSAFE_HUGE_STRING, line);
@@ -206,7 +209,14 @@ dialog manage_admins(playerid, response, listitem, const inputtext[])
     if(!response)
         return 1;
 
-    strcpy(s_rgszSelectedAdmin[playerid], inputtext);
+    new space;
+    for(; space < 24; ++space)
+    {
+        if(inputtext[space] == ' ')
+            break;
+    }
+
+    strcat(s_rgszSelectedAdmin[playerid], inputtext, space + 1);
     Dialog_Show_s(playerid, "manage_admin_options", DIALOG_STYLE_LIST, @f("Opciones para {415BA2}%s{DADADA}...", s_rgszSelectedAdmin[playerid]), @("{DADADA}Cambiar rango administrativo"), "Continuar", "Atrás");
 
     return 1;
@@ -262,9 +272,9 @@ dialog manage_admin_new_rank(playerid, response, listitem, const inputtext[])
 
                     SendClientMessagef(playerid, 0x415BA2FF, "›{DADADA} Tu nivel administrativo fue %s a {415BA2}%s{DADADA}.", (is_lower ? "descendido" : "ascendido"), Player_GetRankName(i));
                     Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, @f("›{DADADA} %s ahora es %s {415BA2}%s{DADADA}.", Player_RPName(i), (Player_Sex(i) == SEX_MALE ? "un" : "una"), Player_GetRankName(i)));
-                
-                    reported = true;
                 }
+
+                reported = true;
 
                 break;
             }

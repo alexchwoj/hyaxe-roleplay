@@ -59,7 +59,6 @@ stock Bit_Display(const BitArray:array<>, size = sizeof (array))
 		val = _:array[size];
 		format(ret, sizeof (ret), "%s%016b%016b", ret, val >>> 16, val & 0xFFFF);
 	}
-	//P:7("Bit_Display called: %s, %i", ret, size);
 	return ret;
 }
 

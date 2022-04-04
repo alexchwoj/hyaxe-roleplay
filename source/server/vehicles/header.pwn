@@ -56,6 +56,7 @@ enum eVehicleData
     bool:e_bAlarm,
     e_iComponents[14],
     eVehicleType:e_iVehicleType,
+    eJobs:e_iVehicleWork,
 
     e_iVehicleTimers[eVehicleTimers],
     bool:e_bSpawned

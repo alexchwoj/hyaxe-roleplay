@@ -20,7 +20,7 @@ public OnPlayerConnect(playerid)
     {
         ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe", 
             "{DADADA}Tu nombre no es adecuado, usa: {CB3126}N{DADADA}ombre_{CB3126}A{DADADA}pellido.\n\
-            Recuerda que los nombres como Miguel_Gamer o que contengan insultos\n\
+            Recuerda que los nombres como {CB3126}Miguel_Gamer{DADADA} o que contengan insultos\n\
             no están permitidos, procura ponerte un nombre que parezca real.",
         "Entendido", "");
         KickTimed(playerid, 500);
@@ -60,7 +60,8 @@ public OnPlayerConnect(playerid)
         FROM `BANS` \
             LEFT JOIN `ACCOUNT` \
                 ON `BANS`.`ADMIN_ID` = `ACCOUNT`.`ID` \
-            WHERE `BANS`.`BANNED_USER` = '%e' OR `BANS`.`BANNED_IP` = '%e';\
+            WHERE `BANS`.`BANNED_USER` = '%e' OR `BANS`.`BANNED_IP` = '%e '\
+        LIMIT 1;\
     ", 
         Player_Name(playerid), ip
     );

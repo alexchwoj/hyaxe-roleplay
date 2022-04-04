@@ -49,8 +49,6 @@ public hy@AsyncQueryDone(Handle<Task>:task_handle)
 
 stock operator~(const Cache:caches[], len)
 {
-    log_function();
-    
     for(new i; i < len; ++i)
     {
         if(cache_is_valid(caches[i]))
