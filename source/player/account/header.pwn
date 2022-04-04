@@ -43,7 +43,7 @@ enum _:eRankLevels
     RANK_LEVEL_SUPERADMIN
 };
 
-new const g_rgszRankLevelNames[eRankLevels][2][] = {
+new const g_rgszRankLevelNames[eRankLevels][2][24] = {
     { "Usuario", "Usuario" },
     { "Ayudante", "Ayudante" },
     { "Moderadora", "Moderador" },

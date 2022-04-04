@@ -147,3 +147,50 @@ command ban_account(playerid, const params[], "Veta a una cuenta offline")
 }
 alias:ban_account("banoff")
 flags:ban_account(CMD_FLAG<RANK_LEVEL_MODERATOR> | CMD_DONT_LOG_COMMAND)
+
+command manage_admins(playerid, const params[], "Abre el panel de administradores")
+{
+    new Task<Cache>:t = MySQL_QueryAsync(g_hDatabase, 
+        "SELECT `ACCOUNT`.`NAME`, `ACCOUNT`.`CURRENT_PLAYERID`, `ACCOUNT`.`SEX`, `ACCOUNT`.`ADMIN_LEVEL`, GROUP_CONCAT(`CONNECTION_LOG`.`DATE` ORDER BY `CONNECTION_LOG`.`DATE` DESC) AS `DATE`\
+            FROM `ACCOUNT` \
+                LEFT JOIN `CONNECTION_LOG` \
+                    ON `ACCOUNT`.`ID` = `CONNECTION_LOG`.`ACCOUNT_ID` \
+            WHERE `ADMIN_LEVEL` > 0 \
+            ORDER BY `ACCOUNT`.`ADMIN_LEVEL` DESC;\
+    ");
+
+    new Cache:c = await<Cache> t;
+
+    new rowc;
+    cache_get_row_count(rowc);
+
+    if(!rowc)
+    {
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No se pudo encontrar a ningun administrador en la base de datos.");
+        return 1;
+    }
+
+    strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Nombre\t{DADADA}Rango administrativo\t{DADADA}Última conexión\n");
+
+    new line[128];
+    for(new i; i < rowc; ++i)
+    {
+        new admin_name[25], admin_playerid, admin_level, admin_sex, last_connection[24];
+        cache_get_value_name(i, "NAME", admin_name);
+        cache_get_value_name_int(i, "CURRENT_PLAYERID", admin_playerid);
+        cache_get_value_name_int(i, "ADMIN_LEVEL", admin_level);
+        cache_get_value_name_int(i, "SEX", admin_sex);
+        cache_get_value_name(i, "DATE", last_connection);
+
+        format(line, sizeof(line), 
+            "{DADADA}%s\t{DADADA}%s\t{%x}%s\n", 
+            admin_name, g_rgszRankLevelNames[admin_level][admin_sex], (admin_playerid == -1 ? 0xDADADA : 0x64A752), (admin_playerid == -1 ? last_connection : "En línea")
+        );
+
+        strcat(HYAXE_UNSAFE_HUGE_STRING, line);
+    }
+
+    Dialog_Show(playerid, "manage_admins", DIALOG_STYLE_TABLIST_HEADERS, "{415BA2}Hyaxe {DADADA}- Administradores", HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Salir");
+
+    return 1;
+}
