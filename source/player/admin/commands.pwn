@@ -148,10 +148,15 @@ command ban_account(playerid, const params[], "Veta a una cuenta offline")
 alias:ban_account("banoff")
 flags:ban_account(CMD_FLAG<RANK_LEVEL_MODERATOR> | CMD_DONT_LOG_COMMAND)
 
+static 
+    s_rgszSelectedAdmin[MAX_PLAYERS][24];
+
 command manage_admins(playerid, const params[], "Abre el panel de administradores")
 {
+    s_rgszSelectedAdmin[playerid][0] = '\0';
+
     new Task<Cache>:t = MySQL_QueryAsync(g_hDatabase, 
-        "SELECT `ACCOUNT`.`NAME`, `ACCOUNT`.`CURRENT_PLAYERID`, `ACCOUNT`.`SEX`, `ACCOUNT`.`ADMIN_LEVEL`, GROUP_CONCAT(`CONNECTION_LOG`.`DATE` ORDER BY `CONNECTION_LOG`.`DATE` DESC) AS `DATE`\
+        "SELECT `ACCOUNT`.`NAME`, `ACCOUNT`.`ID`, `ACCOUNT`.`CURRENT_PLAYERID`, `ACCOUNT`.`SEX`, `ACCOUNT`.`ADMIN_LEVEL`, GROUP_CONCAT(`CONNECTION_LOG`.`DATE` ORDER BY `CONNECTION_LOG`.`DATE` DESC) AS `DATE`\
             FROM `ACCOUNT` \
                 LEFT JOIN `CONNECTION_LOG` \
                     ON `ACCOUNT`.`ID` = `CONNECTION_LOG`.`ACCOUNT_ID` \
@@ -192,5 +197,85 @@ command manage_admins(playerid, const params[], "Abre el panel de administradore
 
     Dialog_Show(playerid, "manage_admins", DIALOG_STYLE_TABLIST_HEADERS, "{415BA2}Hyaxe {DADADA}- Administradores", HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Salir");
 
+    return 1;
+}
+flags:manage_admins(CMD_FLAG<RANK_LEVEL_MODERATOR>)
+
+dialog manage_admins(playerid, response, listitem, const inputtext[])
+{
+    if(!response)
+        return 1;
+
+    strcpy(s_rgszSelectedAdmin[playerid], inputtext);
+    Dialog_Show_s(playerid, "manage_admin_options", DIALOG_STYLE_LIST, @f("Opciones para {415BA2}%s{DADADA}...", s_rgszSelectedAdmin[playerid]), @("{DADADA}Cambiar rango administrativo"), "Continuar", "Atrás");
+
+    return 1;
+}
+
+dialog manage_admin_options(playerid, response, listitem, const inputtext[])
+{
+    if(!response)
+    {
+        PC_EmulateCommand(playerid, "/manage_admins");
+        return 1;
+    }
+
+    switch(listitem)
+    {
+        case 0:
+        {
+            HYAXE_UNSAFE_HUGE_STRING[0] = '\0';
+            new line[64];
+            for(new i = RANK_LEVEL_USER; i <= RANK_LEVEL_SUPERADMIN; ++i)
+            {
+                format(line, sizeof(line), "%s\n", g_rgszRankLevelNames[i][SEX_MALE]); // Assume it's a man because I won't save anything else than the name
+                strcat(HYAXE_UNSAFE_HUGE_STRING, line);
+            }
+
+            format(line, sizeof(line), "Selecciona el nuevo rango de {415BA2}%s", s_rgszSelectedAdmin[playerid]);
+            Dialog_Show(playerid, "manage_admin_new_rank", DIALOG_STYLE_LIST, line, HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Atrás");
+        }
+    }
+
+    return 1;
+}
+
+dialog manage_admin_new_rank(playerid, response, listitem, const inputtext[])
+{
+    if(response)
+    {
+        if(!(RANK_LEVEL_USER <= listitem <= RANK_LEVEL_SUPERADMIN))
+            return 1;
+
+        mysql_tquery_s(g_hDatabase, @f("UPDATE `ACCOUNT` SET `ADMIN_LEVEL` = %i WHERE `NAME` = '%e' LIMIT 1;", listitem, s_rgszSelectedAdmin[playerid]));
+        
+        new bool:reported = false;
+        
+        foreach(new i : LoggedIn)
+        {
+            if(!strcmp(s_rgszSelectedAdmin[playerid], Player_Name(i)))
+            {
+                if(Player_AdminLevel(i) != listitem)
+                {
+                    new const bool:is_lower = (Player_AdminLevel(i) > listitem);
+                    Player_AdminLevel(i) = listitem;
+
+                    SendClientMessagef(playerid, 0x415BA2FF, "›{DADADA} Tu nivel administrativo fue %s a {415BA2}%s{DADADA}.", (is_lower ? "descendido" : "ascendido"), Player_GetRankName(i));
+                    Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, @f("›{DADADA} %s ahora es %s {415BA2}%s{DADADA}.", Player_RPName(i), (Player_Sex(i) == SEX_MALE ? "un" : "una"), Player_GetRankName(i)));
+                
+                    reported = true;
+                }
+
+                break;
+            }
+        }
+
+        if(!reported)
+        {
+            Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, @f("›{DADADA} %s ahora es un {415BA2}%s{DADADA}.", s_rgszSelectedAdmin[playerid], g_rgszRankLevelNames[listitem][SEX_MALE]));
+        }
+    }
+
+    PC_EmulateCommand(playerid, "/manage_admins");
     return 1;
 }

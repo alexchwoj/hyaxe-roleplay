@@ -40,7 +40,7 @@ enum _:eRankLevels
     RANK_LEVEL_MODERATOR,
     RANK_LEVEL_MANAGER,
     RANK_LEVEL_ADMINISTRATOR,
-    RANK_LEVEL_SUPERADMIN
+    RANK_LEVEL_SUPERADMIN,
 };
 
 new const g_rgszRankLevelNames[eRankLevels][2][24] = {
