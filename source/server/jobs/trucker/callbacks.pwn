@@ -79,6 +79,8 @@ public OnGameModeInit()
     Job_CreateSite(JOB_TRUCKER, 125.2116, -285.1135, 1.5781, 0, 0, .cb_data = 1);
     Job_SetCallback(JOB_TRUCKER, __addressof(Trucker_JobEvent));
 
+    CreateDynamicMapIcon(125.2116, -285.1135, 1.5781, 51, -1, .worldid = 0, .interiorid = 0);
+
     #if defined J_TRK_OnGameModeInit
         return J_TRK_OnGameModeInit();
     #else

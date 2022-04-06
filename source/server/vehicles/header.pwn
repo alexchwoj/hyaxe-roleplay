@@ -295,6 +295,7 @@ new
 #define Vehicle_GetModelMaxFuel(%0) (g_rgeVehicleModelData[(%0) - 400][e_fMaxFuel])
 #define Vehicle_GetModelPrice(%0) (g_rgeVehicleModelData[(%0) - 400][e_iPrice])
 
+forward Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, addsiren = 0, bool:static_veh = false);
 #define Vehicle_OwnerId(%0) (g_rgeVehicles[(%0)][e_iVehicleOwnerId])
 #define Vehicle_Type(%0) (g_rgeVehicles[(%0)][e_iVehicleType])
 #define Vehicle_Job(%0) (g_rgeVehicles[(%0)][e_iVehicleWork])
