@@ -339,11 +339,11 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         GetVehicleZAngle(g_rgiPlayerUsingTruck[playerid], angle);
 
                         new Float:part_x, Float:part_y, Float:part_z;
-                        GetVehicleModelInfo(499, VEHICLE_MODEL_INFO_SIZE, part_x, part_y, part_z);
-                        x += (part_y / 2.0 - 0.5) * floatsin(-angle, degrees);
-                        y += (part_y / 2.0 - 0.5) * floatcos(-angle, degrees);
+                        GetVehicleModelInfo(499, VEHICLE_MODEL_INFO_WHEELSREAR, part_x, part_y, part_z);
+                        x += (part_x + 0.5) * floatsin(-angle + 180.0, degrees) + (part_y * floatsin(-angle, degrees));
+                        y += (part_x + 0.5) * floatcos(-angle + 180.0, degrees) + (part_y * floatcos(-angle, degrees));
 
-                        g_rgiPlayerTruckCheckpoint[playerid] = CreateDynamicCP(x, y, z, 7.0, .playerid = playerid);
+                        g_rgiPlayerTruckCheckpoint[playerid] = CreateDynamicCP(x, y, z, 2.0, .playerid = playerid);
                     }
 
                     TogglePlayerDynamicCP(playerid, g_rgiPlayerTruckCheckpoint[playerid], true);
