@@ -7,7 +7,8 @@ enum eJobs
 {
     JOB_NONE,
     JOB_GUNSMAKER,
-    JOB_LAWNMOWER
+    JOB_LAWNMOWER,
+    JOB_TRUCKER
 };
 
 enum eJobEvent
@@ -32,7 +33,8 @@ new const
     g_rgszJobNames[eJobs][] = {
         "Ninguno",
         "Fabricante de armas",
-        "Cortacésped"
+        "Cortacésped",
+        "Camionero"
     };
 
 #define Player_Job(%0) (g_rgePlayerJobData[(%0)][e_iPlayerCurrentJob])

@@ -7,6 +7,8 @@ on_init 00SetupServerConfig()
 {
     print("[config] Setting up...");
     
+	pp_public_min_index(0);
+
     SetMaxPlayers(MAX_PLAYERS);
     SetMaxNPCs(HYAXE_MAX_NPCS);
 
@@ -14,8 +16,6 @@ on_init 00SetupServerConfig()
 	{
 		AllowNickNameCharacter(g_rgcAllowedNameChars[i], true);
 	}
-
-    SetNameTagDrawDistance(20.0);
 
 	SendRconCommand(!"hostname Hyaxe Roleplay [Rol en español]");
 	SendRconCommand(!"language Español / Spanish");
@@ -46,6 +46,8 @@ on_init 00SetupServerConfig()
     DisableInteriorEnterExits();
     EnableStuntBonusForAll(false);
     ManualVehicleEngineAndLights();
+	SetNameTagDrawDistance(20.0);
+	ShowPlayerMarkers(PLAYER_MARKERS_MODE_GLOBAL);
 	FCNPC_SetTickRate(GetConsoleVarAsInt("sleep"));
 	
 	print("[config] Server config done");

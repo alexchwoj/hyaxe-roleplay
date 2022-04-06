@@ -3,9 +3,9 @@
 #endif
 #define _vehicles_functions_
 
-Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, addsiren = 0)
+Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, addsiren = 0, bool:static_veh = false)
 {
-    new vehicleid = CreateVehicle(vehicletype, x, y, z, rotation, color1, color2, respawn_delay, addsiren);
+    new vehicleid = (static_veh ? AddStaticVehicleEx(vehicletype, x, y, z, rotation, color1, color2, respawn_delay, addsiren) : CreateVehicle(vehicletype, x, y, z, rotation, color1, color2, respawn_delay, addsiren));
     if(vehicleid != INVALID_VEHICLE_ID)
     {
         g_rgeVehicles[vehicleid][e_bValid] =
@@ -145,6 +145,12 @@ Vehicle_Repair(vehicleid)
     }
 
     return 0;
+}
+
+Vehicle_Respawn(vehicleid)
+{
+    g_rgeVehicles[vehicleid][e_bSpawned] = false;
+    return SetVehicleToRespawn(vehicleid);
 }
 
 Speedometer_Show(playerid)

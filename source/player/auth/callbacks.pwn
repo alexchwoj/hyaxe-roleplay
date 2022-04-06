@@ -252,7 +252,7 @@ dialog login(playerid, response, listitem, inputtext[])
     CallLocalFunction(!"OnPlayerAuthenticate", !"i", playerid);
 
     new text[116];
-    format(text, sizeof(text), "Bienvenido a ~r~Hyaxe~w~, %s. Tu último inicio de sesión fue el ~r~%s~w~.", Player_Name(playerid), Player_LastConnection(playerid));
+    format(text, sizeof(text), "Bienvenid%c a ~r~Hyaxe~w~, %s. Tu último inicio de sesión fue el ~r~%s~w~.", (Player_Sex(playerid) == SEX_MALE ? 'o' : 'a'), Player_Name(playerid), Player_LastConnection(playerid));
     Notification_Show(playerid, text, 6000);
 
     Needs_ShowBars(playerid);

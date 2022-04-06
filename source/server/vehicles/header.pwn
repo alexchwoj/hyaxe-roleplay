@@ -295,7 +295,9 @@ new
 #define Vehicle_GetModelMaxFuel(%0) (g_rgeVehicleModelData[(%0) - 400][e_fMaxFuel])
 #define Vehicle_GetModelPrice(%0) (g_rgeVehicleModelData[(%0) - 400][e_iPrice])
 
+#define Vehicle_OwnerId(%0) (g_rgeVehicles[(%0)][e_iVehicleOwnerId])
 #define Vehicle_Type(%0) (g_rgeVehicles[(%0)][e_iVehicleType])
+#define Vehicle_Job(%0) (g_rgeVehicles[(%0)][e_iVehicleWork])
 #define Vehicle_Fuel(%0) (g_rgeVehicles[(%0)][e_fFuel])
 forward Vehicle_SetHealth(vehicleid, Float:health);
 forward Vehicle_Repair(vehicleid);
@@ -304,6 +306,7 @@ forward Vehicle_Repair(vehicleid);
 #define Vehicle_GetVirtualWorld(%0) (g_rgeVehicles[(%0)][e_iVehWorld])
 #define Vehicle_SetInterior(%0,%1) (g_rgeVehicles[(%0)][e_iVehInterior] = (%1), LinkVehicleToInterior((%0), (%1)))
 #define Vehicle_GetInterior(%0) (g_rgeVehicles[(%0)][e_iVehInterior])
+forward Vehicle_Respawn(vehicleid);
 
 #define Speedometer_Shown(%0) (IsTextDrawVisibleForPlayer(playerid, g_tdSpeedometer[0]))
 

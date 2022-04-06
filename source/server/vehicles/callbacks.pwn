@@ -84,6 +84,14 @@ public OnVehicleDeath(vehicleid, killerid)
 
 public OnVehicleSpawn(vehicleid)
 {
+    if(g_rgeVehicles[vehicleid][e_iVehicleType] == VEHICLE_TYPE_WORK && g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != INVALID_PLAYER_ID)
+    {
+        Job_TriggerCallback(g_rgeVehicles[vehicleid][e_iVehicleOwnerId], g_rgeVehicles[vehicleid][e_iVehicleWork], JOB_EV_LEAVE_VEHICLE);
+        g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = INVALID_PLAYER_ID;
+        g_rgeVehicles[vehicleid][e_fHealth] = 1000.0;
+        g_rgeVehicles[vehicleid][e_bLocked] = false;
+    }
+
     g_rgeVehicles[vehicleid][e_bSpawned] = true;
     SetVehicleHealth(vehicleid, g_rgeVehicles[vehicleid][e_fHealth]);
 

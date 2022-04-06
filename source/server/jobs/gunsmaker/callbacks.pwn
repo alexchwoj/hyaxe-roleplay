@@ -193,7 +193,6 @@ static GunsmakerKeyGameCallback(playerid, bool:success)
 
 public OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
-    DEBUG_PRINT("job: %i, bench: %i", Player_Job(playerid), g_rgiGunsmakerUsedBench{playerid});
     if(Player_Job(playerid) == JOB_GUNSMAKER && g_rgiGunsmakerUsedBench{playerid} != 0xFF)
     {
         new benchid = g_rgiGunsmakerUsedBench{playerid};
