@@ -17,8 +17,19 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
         {
             Player_Job(playerid) = JOB_NONE;
 
+            if(g_rgbPlayerHasBoxInHands{playerid})
+            {
+                RemovePlayerAttachedObject(playerid, 0);    
+            }
+
             if(g_rgiPlayerUsingTruck[playerid])
             {
+                SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 0, 0);
+
+                new engine, lights, alarm, doors, bonnet, boot, objective;
+                GetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, doors, bonnet, boot, objective);
+                SetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, doors, bonnet, 0, objective);
+
                 Vehicle_OwnerId(g_rgiPlayerUsingTruck[playerid]) = INVALID_PLAYER_ID;
 
                 Vehicle_Respawn(g_rgiPlayerUsingTruck[playerid]);
@@ -49,7 +60,7 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
         case JOB_EV_LEAVE_VEHICLE:
         {
             Trucker_JobEvent(playerid, JOB_EV_LEAVE, cellmin);
-            Notification_Show(playerid, "Abandonaste el camión por mucho tiempo. La remolcadora se lo llevó a la central y devolvió la carga al almacen.", 10000);
+            Notification_Show(playerid, "Abandonaste el camión por mucho tiempo. La remolcadora se lo llevó a la central y devolvió la carga al almacén.", 10000);
         }
     }
 
