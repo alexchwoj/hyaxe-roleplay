@@ -97,6 +97,7 @@ const HYAXE_MAX_NPCS = 100;
 
 // Fixes
 ///////////
+#include "core/fixes/streamer.pwn"
 #include "core/fixes/textdraws.pwn"
 #include "core/fixes/player.pwn"
 #include "core/fixes/bots.pwn"

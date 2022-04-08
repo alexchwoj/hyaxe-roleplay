@@ -12,18 +12,17 @@ Key_ShowAll(playerid)
 
 Key_Alert(Float:x, Float:y, Float:z, Float:range, key, world = -1, interior = -1, key_type = KEY_TYPE_FOOT, attachedplayer = INVALID_PLAYER_ID)
 {
-    new info[5];
-    info[0] = 0x4B4559; // KEY
-    info[1] = world; // World
-    info[2] = interior; // Interior
-    info[3] = key; // Key name
-    info[4] = key_type; // Key type (KEY_TYPE_FOOT, KEY_TYPE_VEHICLE)
+    new info[4];
+    info[0] = world; // World
+    info[1] = interior; // Interior
+    info[2] = key; // Key name
+    info[3] = key_type; // Key type (KEY_TYPE_FOOT, KEY_TYPE_VEHICLE)
 
     new area = CreateDynamicSphere(
         x, y, z, range,
         .worldid = world, .interiorid = interior
     );
-    Streamer_SetArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_EXTRA_ID, info);
+    Streamer_SetArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x4B4559), info);
     
     if(attachedplayer != INVALID_PLAYER_ID)
     {

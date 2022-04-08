@@ -24,10 +24,9 @@ EnterExit_Create(pickup_model, const enter_text[], const exit_text[], Float:ente
     }
 
     DEBUG_PRINT("[enterexit] Creating with ID %d", i);
-    new info[3];
-    info[0] = 0x4545; // EE
-    info[1] = i; // EnEx ID
-    info[2] = 1; // Enter
+    new info[2];
+    info[0] = i; // EnEx ID
+    info[1] = 1; // Enter
 
     g_rgeEnterExits[i][e_bValid] = true;
     
@@ -41,11 +40,11 @@ EnterExit_Create(pickup_model, const enter_text[], const exit_text[], Float:ente
     g_rgeEnterExits[i][e_iEnterLabel] = CreateDynamic3DTextLabel(enter_text, -1, enter_x, enter_y, enter_z, 10.0, .testlos = 1, .worldid = enter_world, .interiorid = enter_interior);
     g_rgeEnterExits[i][e_iEnterPickup] = CreateDynamicPickup(pickup_model, 1, enter_x, enter_y, enter_z - 0.5, .worldid = enter_world, .interiorid = enter_interior);
     g_rgeEnterExits[i][e_iEnterArea] = CreateDynamicCircle(enter_x, enter_y, 1.0, .worldid = enter_world, .interiorid = enter_interior);
-    Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgeEnterExits[i][e_iEnterArea], E_STREAMER_EXTRA_ID, info);
+    Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgeEnterExits[i][e_iEnterArea], E_STREAMER_CUSTOM(0x4545), info);
     Key_Alert(enter_x, enter_y, enter_z, 1.0, KEYNAME_CTRL_BACK, enter_world, enter_interior);
 
     // Exit
-    info[2] = 0; // Exit
+    info[1] = 0; // Exit
     g_rgeEnterExits[i][e_fExitX] = exit_x;
     g_rgeEnterExits[i][e_fExitY] = exit_y;
     g_rgeEnterExits[i][e_fExitZ] = exit_z;
@@ -55,7 +54,7 @@ EnterExit_Create(pickup_model, const enter_text[], const exit_text[], Float:ente
     g_rgeEnterExits[i][e_iExitLabel] = CreateDynamic3DTextLabel(exit_text, -1, exit_x, exit_y, exit_z, 10.0, .testlos = 1, .worldid = exit_world, .interiorid = exit_interior);
     g_rgeEnterExits[i][e_iExitPickup] = CreateDynamicPickup(pickup_model, 1, exit_x, exit_y, exit_z - 0.5, .worldid = exit_world, .interiorid = exit_interior);
     g_rgeEnterExits[i][e_iExitArea] = CreateDynamicCircle(exit_x, exit_y, 1.0, .worldid = exit_world, .interiorid = exit_interior);
-    Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgeEnterExits[i][e_iExitArea], E_STREAMER_EXTRA_ID, info);
+    Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgeEnterExits[i][e_iExitArea], E_STREAMER_CUSTOM(0x4545), info);
     Key_Alert(exit_x, exit_y, exit_z, 1.0, KEYNAME_CTRL_BACK, exit_world, exit_interior);
 
     g_rgeEnterExits[i][e_iEnterExitData] = extra_data;

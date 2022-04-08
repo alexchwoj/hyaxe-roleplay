@@ -45,7 +45,7 @@ static LawnMowerEvent(playerid, eJobEvent:event, areaid)
         {
             if(g_rgeLawnmowerAreas[areaid][e_iMowingPlayer] != INVALID_PLAYER_ID)
             {
-                Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Ya hay alguien trabajando este parque. Dirígete a otro o espera.");
+                Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Ya hay alguien trabajando este parque. Diríjete a otro o espera.");
                 return 0;
             }
 
@@ -101,7 +101,7 @@ public OnGameModeInit()
         Streamer_SetIntData(STREAMER_TYPE_AREA, g_rgeLawnmowerAreas[i][e_iAreaId], E_STREAMER_EXTRA_ID, 0x4C4D5F50); // LM_P(ARK)
 
         Job_CreateSite(JOB_LAWNMOWER, g_rgeLawnmowerAreas[i][e_fPedContractorX], g_rgeLawnmowerAreas[i][e_fPedContractorY], g_rgeLawnmowerAreas[i][e_fPedContractorZ], 0, 0, .cb_data = i);
-
+ 
         g_rgeLawnmowerAreas[i][e_iPedContractorId] = CreateDynamicActor(16, g_rgeLawnmowerAreas[i][e_fPedContractorX], g_rgeLawnmowerAreas[i][e_fPedContractorY], g_rgeLawnmowerAreas[i][e_fPedContractorZ], g_rgeLawnmowerAreas[i][e_fPedContractorAngle], .worldid = 0, .interiorid = 0);
         ApplyDynamicActorAnimation(g_rgeLawnmowerAreas[i][e_iPedContractorId], "SMOKING", "null", 4.1, 0, 0, 0, 0, 0);
         ApplyDynamicActorAnimation(g_rgeLawnmowerAreas[i][e_iPedContractorId], "SMOKING", "M_SMKLEAN_LOOP", 4.1, 1, 0, 0, 1, 0);

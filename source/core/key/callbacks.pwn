@@ -93,16 +93,14 @@ public KEY_MoveToBottom(playerid, Float:max, count)
 
 public OnPlayerLeaveDynamicArea(playerid, areaid)
 {
-    new info[4];
-    Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID, info);
-    if (info[0] == 0x4B4559)
+    if(Streamer_HasArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4B4559)))
     {
         if (g_rgeKeyData[playerid][e_bKeyActivated])
         {
             if (Performance_IsFine(playerid) && !g_rgeKeyData[playerid][e_bKeyGoingUp])
             {
                 g_rgeKeyData[playerid][e_iKeyFrameCount] = 0;
-		        KillTimer(g_rgeKeyData[playerid][e_iKeyTimer]);
+                KillTimer(g_rgeKeyData[playerid][e_iKeyTimer]);
                 g_rgeKeyData[playerid][e_iKeyTimer] = SetTimerEx("KEY_MoveToTop", 10, true, "ifd", playerid, 300.0, 4);
             }
             else KEY_HideAlert(playerid);
@@ -129,17 +127,15 @@ public OnPlayerLeaveDynamicArea(playerid, areaid)
 
 public OnPlayerEnterDynamicArea(playerid, areaid)
 {
-    new info[5];
-    Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID, info);
-    if (info[0] == 0x4B4559)
+    if (Streamer_HasArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4B4559)))
     {
-        if (GetPlayerVirtualWorld(playerid) == info[1] && GetPlayerInterior(playerid) == info[2])
+        new info[4];
+        Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4B4559), info);
+        
+        if (GetPlayerVirtualWorld(playerid) == info[0] && GetPlayerInterior(playerid) == info[1])
         {
             new string[64];
-            if (info[4])
-                format(string, sizeof(string), "PULSA ~y~\"~k~~%s~\"", g_rgszKeyFootCode[ info[3] ]);
-            else
-                format(string, sizeof(string), "PULSA ~y~\"~k~~%s~\"", g_rgszKeyVehicleCode[ info[3] ]);
+            format(string, sizeof(string), "PULSA ~y~\"~k~~%s~\"", (info[3] == KEY_TYPE_FOOT ? g_rgszKeyFootCode[ info[2] ] : g_rgszKeyVehicleCode[ info[2] ]));
 
             PlayerTextDrawSetString(playerid, p_tdKey_Text{playerid}, string);
 
