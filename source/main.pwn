@@ -138,6 +138,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/weapons/header.pwn"
 #include "player/keygame/header.pwn"
 #include "player/death/header.pwn"
+#include "player/police/header.pwn"
 
 // Functions
 ///////////////
@@ -168,6 +169,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/weapons/functions.pwn"
 #include "player/keygame/functions.pwn"
 #include "player/death/functions.pwn"
+#include "player/police/functions.pwn"
 
 // Callbacks
 ///////////////
@@ -203,6 +205,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/chat/callbacks.pwn"
 #include "player/keygame/callbacks.pwn"
 #include "player/death/callbacks.pwn"
+#include "player/police/callbacks.pwn"
 
 // Anticheat
 ///////////////
@@ -212,6 +215,7 @@ const HYAXE_MAX_NPCS = 100;
 // Commands
 //////////////
 #include "player/admin/commands.pwn"
+#include "player/police/commands.pwn"
 
 // Prevents runtime error 20 (invalid index)
 main() { return 0; }

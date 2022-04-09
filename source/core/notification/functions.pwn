@@ -99,7 +99,7 @@ Notification_Show(playerid, const text[], time, color = 0xCB3126FF)
     CreateNotificationTD(playerid, index, fixed_text, color);
 
     new line_count = GetTextDrawLineCount(fixed_text);
-    NOTIFICATION_DATA[playerid][index][notificationHeight] += (line_count * 1.0) + 0.3;
+    NOTIFICATION_DATA[playerid][index][notificationHeight] += float(line_count) + 0.3;
     
     PlayerTextDrawLetterSize(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][0], 0.975000, NOTIFICATION_DATA[playerid][index][notificationHeight]);
     PlayerTextDrawLetterSize(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][1], 0.975000, NOTIFICATION_DATA[playerid][index][notificationHeight]);

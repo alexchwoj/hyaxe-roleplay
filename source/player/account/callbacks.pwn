@@ -189,6 +189,17 @@ public OnPlayerDisconnect(playerid, reason)
     Player_ResetTemp(playerid);
     Bit_SetAll(Player_Flags(playerid), false);
 
+    if(Iter_Contains(LoggedIn, playerid))
+    {
+        if(Iter_Contains(Admin, playerid))
+            Iter_Remove(Admin, playerid);
+
+        if(Iter_Contains(Police, playerid))
+            Iter_Remove(Police, playerid);
+
+        Iter_Remove(LoggedIn, playerid);
+    }
+
     #if defined ACC_OnPlayerDisconnect
         return ACC_OnPlayerDisconnect(playerid, reason);
     #else
