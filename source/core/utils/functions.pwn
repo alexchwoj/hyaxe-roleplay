@@ -219,7 +219,7 @@ stock Str_FixEncoding_s(String:result)
     }
 }
 
-SplitMessageInLines(const string[], result[][], max_lines = sizeof(result), max_line_length = sizeof(result[]))
+SplitChatMessageInLines(const string[], result[][], max_lines = sizeof(result), max_line_length = sizeof(result[]))
 {
 	DEBUG_PRINT("SplitMessageInLines(string[%i], result[%i][%i])", strlen(string), max_lines, max_line_length);
 
@@ -230,9 +230,9 @@ SplitMessageInLines(const string[], result[][], max_lines = sizeof(result), max_
 		return 1;
 	}
 
-	new regex_str[32];
-	format(regex_str, sizeof(regex_str), ".{1,%i}(\\s|$)", max_line_length);
-	new Regex:rgx = Regex_New(regex_str);
+	static Regex:rgx;
+    if(!rgx)
+        rgx = Regex_New(".{1,144}(\\s|$)");
 	
 	new RegexMatch:match, pos, startpos, line_count;
 	while(Regex_Search(string, rgx, match, pos, startpos))
@@ -247,8 +247,6 @@ SplitMessageInLines(const string[], result[][], max_lines = sizeof(result), max_
 
 		Match_Free(match);
 	}
-
-	Regex_Delete(rgx);
 
 	return line_count;
 }

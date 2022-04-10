@@ -201,6 +201,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/auth/callbacks.pwn"
 #include "player/inventory/callbacks.pwn"
 #include "player/inventory/items/callbacks.pwn"
+#include "player/admin/callbacks.pwn"
 #include "player/needs/callbacks.pwn"
 #include "player/chat/callbacks.pwn"
 #include "player/keygame/callbacks.pwn"

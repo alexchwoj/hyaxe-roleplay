@@ -98,16 +98,12 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 const damage_PLAYER_SYNC = 207;
 IPacket:damage_PLAYER_SYNC(playerid, BitStream:bs)
 {
-	new onfoot_data[PR_OnFootSync];
+	BS_SetWriteOffset(bs, 280);
+    BS_WriteValue(bs,
+        PR_UINT8, Player_Health(playerid),
+        PR_UINT8, Player_Armor(playerid)
+    );
 
-	BS_IgnoreBits(bs, 8);
-	BS_ReadOnFootSync(bs, onfoot_data);
-
-	onfoot_data[PR_health] = Player_Health(playerid);
-	onfoot_data[PR_armour] = Player_Armor(playerid);
-
-	BS_SetWriteOffset(bs, 8);
-	BS_WriteOnFootSync(bs, onfoot_data);
 	return 1;
 }
 

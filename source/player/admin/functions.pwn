@@ -7,9 +7,12 @@ Admins_SendMessage(level, color, const message[])
 {
     foreach(new i : Admin)
     {
-        if(Player_AdminLevel(i) >= level)
+        if(!Bit_Get(Player_Config(i), CONFIG_DISABLE_ADMIN_MESSAGES))
         {
-            SendClientMessage(i, color, message);
+            if(Player_AdminLevel(i) >= level)
+            {
+                SendClientMessage(i, color, message);
+            }
         }
     }
 
@@ -22,9 +25,12 @@ Admins_SendMessage_s(level, color, ConstString:message)
 
     foreach(new i : Admin)
     {
-        if(Player_AdminLevel(i) >= level)
+        if(!Bit_Get(Player_Config(i), CONFIG_DISABLE_ADMIN_MESSAGES))
         {
-            SendClientMessage_s(i, color, addr);
+            if(Player_AdminLevel(i) >= level)
+            {
+                SendClientMessage_s(i, color, addr);
+            }
         }
     }
 

@@ -59,7 +59,7 @@ public OnGameModeInit()
 
             g_rgeDetectionData[id][e_bDetectionEnabled] = bool:db_get_field_assoc_int(res, "ENABLED");
             g_rgeDetectionData[id][e_ePunishmentType] = ePunishment:db_get_field_assoc_int(res, "PUNISHMENT");
-            g_rgeDetectionData[id][e_iMaxTriggers] = ePunishment:db_get_field_assoc_int(res, "MAX_TRIGGERS");
+            g_rgeDetectionData[id][e_iMaxTriggers] = db_get_field_assoc_int(res, "MAX_TRIGGERS");
         } 
         while(db_next_row(res));
 

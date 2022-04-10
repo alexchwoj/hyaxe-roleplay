@@ -48,4 +48,4 @@ forward Config_ResetDefaults(playerid);
 forward Config_Save(playerid);
 forward Config_LoadFromCache(playerid);
 
-#define Player_Config(%0) Bit:(g_rgbsPlayerConfig[playerid])
+#define Player_Config(%0) Bit:(g_rgbsPlayerConfig[(%0)])
