@@ -2,6 +2,7 @@
 
 #include <a_samp>
 #include <streamer>
+#include <colandreas>
 
 public OnFilterScriptInit()
 {
@@ -2200,8 +2201,10 @@ public OnFilterScriptInit()
     CreateDynamicObject(2991, 86.58958, -304.67133, 2.44082,   0.00000, 0.00000, 0.00000);
     CreateDynamicObject(3015, 95.36265, -300.33118, 1.50304,   0.00000, 0.00000, 0.00000);
     CreateDynamicObject(2654, 95.62053, -308.16589, 0.87298,   0.00000, 0.00000, 0.00000);
-
-
+    CA_RemoveBuilding(13192, 164.7109, -234.1875, 0.4766, 0.25);
+    CA_RemoveBuilding(12956, 96.3281, -261.1953, 3.8594, 0.25);
+    CA_RemoveBuilding(12860, 164.7109, -234.1875, 0.4766, 0.25);
+    
     return 1;
 }
 
