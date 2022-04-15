@@ -126,6 +126,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/jobs/trucker/header.pwn"
 #include "server/hospital/header.pwn"
 #include "server/hookers/header.pwn"
+#include "server/gangs/header.pwn"
 #include "player/account/header.pwn"
 #include "player/config/header.pwn"
 #include "player/damage/header.pwn"
@@ -195,6 +196,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/jobs/trucker/callbacks.pwn"
 #include "server/atm/callbacks.pwn"
 #include "server/hookers/callbacks.pwn"
+#include "server/gangs/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/damage/callbacks.pwn"
 #include "player/leveling/callbacks.pwn"
@@ -215,6 +217,7 @@ const HYAXE_MAX_NPCS = 100;
 
 // Commands
 //////////////
+#include "player/needs/commands.pwn"
 #include "player/admin/commands.pwn"
 #include "player/police/commands.pwn"
 
