@@ -15,3 +15,5 @@ new
     List:g_rglChatBuffer[MAX_PLAYERS],
     bool:g_rgbRegisterChatMessages[MAX_PLAYERS char] = { bool:0x01010101, ... },
     NativeHook:g_hChatBufHook;
+
+forward Chat_SendMessageToRange(playerid, color, Float:range, const string[]);

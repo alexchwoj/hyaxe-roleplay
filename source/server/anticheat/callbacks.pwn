@@ -40,15 +40,16 @@ public OnGameModeInit()
     ));
 
     new DBResult:res = db_query(g_hAnticheatDatabase, "SELECT * FROM `DETECTIONS`;");
+    new rowc = db_num_rows(res);
 
-    if(!db_num_rows(res))
+    if(!rowc)
     {
         Anticheat_PopulateDatabase();
         print("[ac] Created default detection options in database.");
     }
     else
     {
-        if(db_num_rows(res) != sizeof(g_rgeDetectionData))
+        if(rowc != sizeof(g_rgeDetectionData))
             Anticheat_PopulateDatabase();
 
         do

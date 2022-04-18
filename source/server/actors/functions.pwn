@@ -24,7 +24,7 @@ Actor_CreateRobbable(model, min_money, max_money, Float:x, Float:y, Float:z, Flo
     }
 
     new id = CreateDynamicActor(model, x, y, z, angle, .worldid = worldid, .interiorid = interiorid);
-    Streamer_SetIntData(STREAMER_TYPE_ACTOR, id, E_STREAMER_EXTRA_ID, idx);
+    Streamer_SetIntData(STREAMER_TYPE_ACTOR, id, E_STREAMER_CUSTOM(0x524F42), idx);
 
     g_rgeRobbableActors[idx][e_bValid] = true;
     g_rgeRobbableActors[idx][e_iActorId] = id;
@@ -38,6 +38,9 @@ Actor_CreateRobbable(model, min_money, max_money, Float:x, Float:y, Float:z, Flo
 
 Actor_Rob(playerid, actorid)
 {
+    if(!Streamer_HasIntData(STREAMER_TYPE_ACTOR, actorid, E_STREAMER_CUSTOM(0x524F42)))
+        return 0;
+        
     new id = Streamer_GetIntData(STREAMER_TYPE_ACTOR, actorid, E_STREAMER_EXTRA_ID);
 
     if(!(0 <= id < sizeof(g_rgeRobbableActors)) || !g_rgeRobbableActors[id][e_bValid] || g_rgeRobbableActors[id][e_iRobbingPlayer] != INVALID_PLAYER_ID)

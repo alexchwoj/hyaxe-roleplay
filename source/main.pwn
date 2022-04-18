@@ -127,6 +127,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/hospital/header.pwn"
 #include "server/hookers/header.pwn"
 #include "server/gangs/header.pwn"
+#include "server/church/header.pwn"
 #include "player/account/header.pwn"
 #include "player/config/header.pwn"
 #include "player/damage/header.pwn"
@@ -159,6 +160,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/jobs/functions.pwn"
 #include "server/hospital/functions.pwn"
 #include "server/hookers/functions.pwn"
+#include "server/church/functions.pwn"
 #include "player/account/functions.pwn"
 #include "player/config/functions.pwn"
 #include "player/damage/functions.pwn"
@@ -197,6 +199,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/atm/callbacks.pwn"
 #include "server/hookers/callbacks.pwn"
 #include "server/gangs/callbacks.pwn"
+#include "server/church/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/damage/callbacks.pwn"
 #include "player/leveling/callbacks.pwn"
@@ -220,6 +223,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/needs/commands.pwn"
 #include "player/admin/commands.pwn"
 #include "player/police/commands.pwn"
+#include "server/church/commands.pwn"
 
 // Prevents runtime error 20 (invalid index)
 main() { return 0; }

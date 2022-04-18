@@ -3,7 +3,6 @@
 #endif
 #define _actors_callbacks_
 
-
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if((newkeys & KEY_CTRL_BACK) != 0)
@@ -35,7 +34,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 public ROBBERY_Progress(playerid, actorid, phase)
 {
-    new id = Streamer_GetIntData(STREAMER_TYPE_ACTOR, actorid, E_STREAMER_EXTRA_ID);
+    new id = Streamer_GetIntData(STREAMER_TYPE_ACTOR, actorid, E_STREAMER_CUSTOM(0x524F42));
 
     switch(phase)
     {

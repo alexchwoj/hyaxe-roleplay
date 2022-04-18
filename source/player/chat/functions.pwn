@@ -31,49 +31,74 @@ Chat_Clear(playerid = INVALID_PLAYER_ID, lines = 20)
 Chat_SendMessageToRange(playerid, color, Float:range, const string[])
 {
     // Wrap chat message
-    new line_one[144], line_two[144], bool:wrapped;
-    format(line_one, 96, "%s", string);
-    if (strlen(string) > 96)
-	{
-		format(line_two, sizeof(line_two), "- %s", string[96]);
-		wrapped = true;
-	}
+    static messages[10][144];
+    new count = SplitChatMessageInLines(string, messages);
+
+    new const bool:is_npc = FCNPC_IsValid(playerid);
 
     // Distance check
+    new virtual_world = (is_npc ? FCNPC_GetVirtualWorld(playerid) : GetPlayerVirtualWorld(playerid));
+    new interior = (is_npc ? FCNPC_GetInterior(playerid) : GetPlayerInterior(playerid));
+
     new Float:x, Float:y, Float:z;
-    GetPlayerPos(playerid, x, y, z);
-    new virtual_world = GetPlayerVirtualWorld(playerid);
-    new interior = GetPlayerInterior(playerid);
-
-    foreach(new i : StreamedPlayer[playerid])
+    if(is_npc)
     {
-        if (!Bit_Get(Player_Flags(i), PFLAG_IN_GAME))
-            continue;
+        FCNPC_GetPosition(playerid, x, y, z);
+
+        foreach(new i : LoggedIn)
+        {
+            if (!Bit_Get(Player_Flags(i), PFLAG_IN_GAME))
+                continue;
+                
+            if (GetPlayerVirtualWorld(i) != virtual_world && GetPlayerInterior(i) != interior)
+                continue;
+
+            new Float:distance = GetPlayerDistanceFromPoint(i, x, y, z);
+            if(distance > range)
+                continue;
             
-        if (GetPlayerVirtualWorld(i) != virtual_world && GetPlayerInterior(i) != interior)
-            continue;
+            new color_relative = clamp(255 - floatround(distance * 3.0), 1, 255);
+            new color_darkened = (color & 0xFFFFFF00) | color_relative;
 
-        new Float:distance = GetPlayerDistanceFromPoint(i, x, y, z);
-        if(distance > range)
-            continue;
-        
-        new color_relative = clamp(255 - floatround(distance * 3.0), 1, 255);
-        new color_darkened = (color & 0xFFFFFF00) | color_relative;
+            for(new j; j < count; ++j)
+                SendClientMessage(i, color_darkened, messages[j]);
+        }
+    }
+    else
+    {
+        GetPlayerPos(playerid, x, y, z);
 
-        SendClientMessage(i, color_darkened, line_one);
-        if (wrapped) 
-            SendClientMessage(i, color_darkened, line_two);
+        foreach(new i : StreamedPlayer[playerid])
+        {
+            if (!Bit_Get(Player_Flags(i), PFLAG_IN_GAME))
+                continue;
+                
+            if (GetPlayerVirtualWorld(i) != virtual_world && GetPlayerInterior(i) != interior)
+                continue;
+
+            new Float:distance = GetPlayerDistanceFromPoint(i, x, y, z);
+            if(distance > range)
+                continue;
+            
+            new color_relative = clamp(255 - floatround(distance * 3.0), 1, 255);
+            new color_darkened = (color & 0xFFFFFF00) | color_relative;
+
+            for(new j; j < count; ++j)
+                SendClientMessage(i, color_darkened, messages[j]);
+        }
     }
 
-    SendClientMessage(playerid, color, line_one);
-    if (wrapped) 
-        SendClientMessage(playerid, color, line_two);
+    for(new j; j < count; ++j)
+        SendClientMessage(playerid, color, messages[j]);
 
     return 1;
 }
 
 ChatBuffer_Push(playerid, color, const message[])
 {    
+    if(FCNPC_IsValid(playerid))
+        return 0;
+
     if(list_size(g_rglChatBuffer[playerid]) == CHAT_BUFFER_SIZE)
     {
         list_remove(g_rglChatBuffer[playerid], 0);
@@ -89,6 +114,9 @@ ChatBuffer_Push(playerid, color, const message[])
 
 Chat_Resend(playerid)
 {
+    if(FCNPC_IsValid(playerid))
+        return 0;
+
     g_rgbRegisterChatMessages{playerid} = false;
 
     new msg[eMessageData];
