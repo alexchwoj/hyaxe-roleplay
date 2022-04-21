@@ -12,7 +12,9 @@ new
     Text:g_tdInventoryBG[3],
     Text:g_tdInventoryExp[2],
     Text:g_tdInventoryUsername,
-    Text:g_tdLevelingBar[6]
+    Text:g_tdLevelingBar[6],
+    Text:g_tdGangs[9],
+    Text:g_tdGangMemberSlots[7][4]
 ;
 
 new
