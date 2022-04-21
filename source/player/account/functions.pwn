@@ -21,17 +21,26 @@ Account_Register(playerid, callback = -1)
     g_rgePlayerData[playerid][e_fSpawnPosAngle] = PLAYER_SPAWN_ANGLE;
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+        START TRANSACTION;\
         INSERT INTO `ACCOUNT` \
             (`NAME`, `EMAIL`, `EMAIL_VERIFICATION_CODE`, `PASSWORD`, `SKIN`, `SEX`, `MONEY`, `POS_X`, `POS_Y`, `POS_Z`, `ANGLE`, `CURRENT_CONNECTION`, `CURRENT_PLAYERID`, `CONFIG_BITS`) \
         VALUES \
-            ('%e', '%e', REPLACE(UUID(), '-', ''), SHA2('%e', 256), %i, %i, %i, %.2f, %.2f, %.2f, %.2f, UNIX_TIMESTAMP(), %i, '%s');\
+            ('%e', '%e', REPLACE(UUID(), '-', ''), SHA2('%e', 256), %i, %i, %i, %.2f, %.2f, %.2f, %.2f, UNIX_TIMESTAMP(), %i, '%s'); \
+        \
+        SET @accid = LAST_INSERT_ID();\
+        INSERT INTO `PLAYER_WEAPONS` (`ACCOUNT_ID`) VALUES (@accid); \
+        INSERT INTO `BANK_ACCOUNT` (`ACCOUNT_ID`) VALUES (@accid); \
+        INSERT INTO `CONNECTION_LOG` (`ACCOUNT_ID`, `IP_ADDRESS`) VALUES (@accid, '%e');\
+        COMMIT;\
         ",
         Player_Name(playerid), Player_Email(playerid), Player_Password(playerid),
         Player_Skin(playerid), Player_Sex(playerid), PLAYER_DEFAULT_MONEY, 
         PLAYER_SPAWN_X, PLAYER_SPAWN_Y, PLAYER_SPAWN_Z, PLAYER_SPAWN_ANGLE,
-        playerid, Config_ToString(playerid)
+        playerid, Config_ToString(playerid), 
+        RawIpToString(Player_IP(playerid))
     );
-    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "OnAccountInserted", !"ii", playerid, callback);
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+    mysql_tquery(g_hDatabase, "SELECT @accid AS `ACCOUNT_ID`;", "OnAccountInserted", !"ii", playerid, callback);
 
     memset(g_rgePlayerData[playerid][e_szPassword], '\0');
 

@@ -256,22 +256,14 @@ public OnAccountInserted(playerid, callback)
 {
     Bit_Set(Player_Flags(playerid), PFLAG_REGISTERED, true);
     Bit_Set(Player_Flags(playerid), PFLAG_IN_GAME, true);
-    Player_AccountID(playerid) = cache_insert_id();
-    Account_RegisterConnection(playerid);
 
-    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-        INSERT INTO `PLAYER_WEAPONS` (`ACCOUNT_ID`) VALUES (%i); \
-        INSERT INTO `BANK_ACCOUNT` (`ACCOUNT_ID`) VALUES (%i); \
-        INSERT INTO `CONNECTION_LOG` (`ACCOUNT_ID`, `IP_ADDRESS`) VALUES (%i, '%e');\
-    ", Player_AccountID(playerid), Player_AccountID(playerid), RawIpToString(Player_IP(playerid)), Player_AccountID(playerid));
+    new rowc;
+    cache_get_row_count(rowc);
+    DEBUG_PRINT("rowc = %i", rowc);
+    
+    cache_get_value_name_int(0, "ACCOUNT_ID", Player_AccountID(playerid));
+    DEBUG_PRINT("[account] Registered player %i with account ID %i", playerid, Player_AccountID(playerid));
 
-    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, !"OnAccountFullyInserted", !"ii", playerid, callback);
-
-    return 1;
-}
-
-public OnAccountFullyInserted(playerid, callback)
-{
     if(callback != -1)
     {
         __emit {

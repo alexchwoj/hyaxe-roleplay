@@ -135,5 +135,4 @@ forward ACCOUNT_CheckForBans(playerid);
 forward OnPlayerDataFetched(playerid);
 forward OnPlayerDataLoaded(playerid);
 
-forward OnAccountInserted(playerid, callback); // first step: insert to main account table
-forward OnAccountFullyInserted(playerid, callback); // second step: insert to other tables that rely on the account id
+forward OnAccountInserted(playerid, callback);
