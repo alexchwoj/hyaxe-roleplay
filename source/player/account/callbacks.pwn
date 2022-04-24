@@ -256,11 +256,7 @@ public OnAccountInserted(playerid, callback)
 {
     Bit_Set(Player_Flags(playerid), PFLAG_REGISTERED, true);
     Bit_Set(Player_Flags(playerid), PFLAG_IN_GAME, true);
-
-    new rowc;
-    cache_get_row_count(rowc);
-    DEBUG_PRINT("rowc = %i", rowc);
-    
+ 
     cache_get_value_name_int(0, "ACCOUNT_ID", Player_AccountID(playerid));
     DEBUG_PRINT("[account] Registered player %i with account ID %i", playerid, Player_AccountID(playerid));
 

@@ -50,7 +50,7 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 #endif
 
 #if !defined minrand
-	#define minrand(%0,%1) (random((%1) - (%0)) + (%0))
+	native minrand(min, max) = math_random;
 #endif
 
 #define IS_NAN(%0) (_:((Float:0x7FFFFFFF) & (%0)) > (0x7F800000))

@@ -504,3 +504,10 @@ Timer_Kill(&timerid)
     KillTimer(timerid);
     return timerid = 0;
 }
+
+cache_is_value_name_null_ret(row_idx, const column_name[])
+{
+    new bool:result;
+    cache_is_value_name_null(row_idx, column_name, result);
+    return result;
+}

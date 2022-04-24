@@ -121,6 +121,23 @@ Account_LoadFromCache(playerid)
     cache_get_value_name_int(0, !"ADMIN_LEVEL", Player_AdminLevel(playerid));
     cache_get_value_name_int(0, !"PLAYED_TIME", Player_SavedPlayedTime(playerid));
 
+    new bool:no_gang;
+    cache_is_value_name_null(0, "GANG_ID", no_gang);
+    if(!no_gang)
+    {
+        new gang;
+        cache_get_value_name_int(0, !"GANG_ID", gang);
+
+        if(map_has_key(g_mapGangIds, gang))
+        {
+            Player_Gang(playerid) = map_get(g_mapGangIds, gang);
+
+            new rank;
+            cache_get_value_name_int(0, !"GANG_RANK", rank);
+            Player_GangRank(playerid) = rank;
+        }
+    }
+
     Player_LoadWeaponsFromCache(playerid);
     Config_LoadFromCache(playerid);
 

@@ -161,6 +161,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/hospital/functions.pwn"
 #include "server/hookers/functions.pwn"
 #include "server/church/functions.pwn"
+#include "server/gangs/functions.pwn"
 #include "player/account/functions.pwn"
 #include "player/config/functions.pwn"
 #include "player/damage/functions.pwn"

@@ -811,7 +811,7 @@ public OnGameModeInit()
     g_tdGangs[6] = TextDrawCreate(317.000000, 360.000000, "Configurar banda");
     TextDrawFont(g_tdGangs[6], 1);
     TextDrawLetterSize(g_tdGangs[6], 0.237498, 1.149999);
-    TextDrawTextSize(g_tdGangs[6], 400.000000, 131.000000);
+    TextDrawTextSize(g_tdGangs[6], 10.000000, 131.000000);
     TextDrawSetOutline(g_tdGangs[6], 0);
     TextDrawSetShadow(g_tdGangs[6], 0);
     TextDrawAlignment(g_tdGangs[6], 2);
@@ -825,7 +825,7 @@ public OnGameModeInit()
     g_tdGangs[7] = TextDrawCreate(283.000000, 336.000000, "<");
     TextDrawFont(g_tdGangs[7], 3);
     TextDrawLetterSize(g_tdGangs[7], 0.237498, 1.149999);
-    TextDrawTextSize(g_tdGangs[7], 400.000000, 57.500000);
+    TextDrawTextSize(g_tdGangs[7], 7.000000, 57.500000);
     TextDrawSetOutline(g_tdGangs[7], 0);
     TextDrawSetShadow(g_tdGangs[7], 0);
     TextDrawAlignment(g_tdGangs[7], 2);
@@ -839,7 +839,7 @@ public OnGameModeInit()
     g_tdGangs[8] = TextDrawCreate(351.000000, 336.000000, ">");
     TextDrawFont(g_tdGangs[8], 3);
     TextDrawLetterSize(g_tdGangs[8], 0.237498, 1.149999);
-    TextDrawTextSize(g_tdGangs[8], 400.000000, 57.500000);
+    TextDrawTextSize(g_tdGangs[8], 7.000000, 57.500000);
     TextDrawSetOutline(g_tdGangs[8], 0);
     TextDrawSetShadow(g_tdGangs[8], 0);
     TextDrawAlignment(g_tdGangs[8], 2);
@@ -891,7 +891,7 @@ public OnGameModeInit()
     TextDrawBoxColor(g_tdGangMemberSlots[0][2], 50);
     TextDrawUseBox(g_tdGangMemberSlots[0][2], 0);
     TextDrawSetProportional(g_tdGangMemberSlots[0][2], 1);
-    TextDrawSetSelectable(g_tdGangMemberSlots[0][2], 0);
+    TextDrawSetSelectable(g_tdGangMemberSlots[0][2], 1);
 
     g_tdGangMemberSlots[0][3] = TextDrawCreate(263.000000, 151.000000, "EL GORDO SUPREMO");
     TextDrawFont(g_tdGangMemberSlots[0][3], 1);
@@ -947,7 +947,7 @@ public OnGameModeInit()
     TextDrawBoxColor(g_tdGangMemberSlots[1][2], 50);
     TextDrawUseBox(g_tdGangMemberSlots[1][2], 0);
     TextDrawSetProportional(g_tdGangMemberSlots[1][2], 1);
-    TextDrawSetSelectable(g_tdGangMemberSlots[1][2], 0);
+    TextDrawSetSelectable(g_tdGangMemberSlots[1][2], 1);
 
     g_tdGangMemberSlots[1][3] = TextDrawCreate(263.000000, 179.000000, "EL GORDO SUPREMO");
     TextDrawFont(g_tdGangMemberSlots[1][3], 1);
@@ -1003,7 +1003,7 @@ public OnGameModeInit()
     TextDrawBoxColor(g_tdGangMemberSlots[2][2], 50);
     TextDrawUseBox(g_tdGangMemberSlots[2][2], 0);
     TextDrawSetProportional(g_tdGangMemberSlots[2][2], 1);
-    TextDrawSetSelectable(g_tdGangMemberSlots[2][2], 0);
+    TextDrawSetSelectable(g_tdGangMemberSlots[2][2], 1);
 
     g_tdGangMemberSlots[2][3] = TextDrawCreate(263.000000, 207.000000, "EL GORDO SUPREMO");
     TextDrawFont(g_tdGangMemberSlots[2][3], 1);
@@ -1059,7 +1059,7 @@ public OnGameModeInit()
     TextDrawBoxColor(g_tdGangMemberSlots[3][2], 50);
     TextDrawUseBox(g_tdGangMemberSlots[3][2], 0);
     TextDrawSetProportional(g_tdGangMemberSlots[3][2], 1);
-    TextDrawSetSelectable(g_tdGangMemberSlots[3][2], 0);
+    TextDrawSetSelectable(g_tdGangMemberSlots[3][2], 1);
 
     g_tdGangMemberSlots[3][3] = TextDrawCreate(263.000000, 235.000000, "EL GORDO SUPREMO");
     TextDrawFont(g_tdGangMemberSlots[3][3], 1);
@@ -1115,7 +1115,7 @@ public OnGameModeInit()
     TextDrawBoxColor(g_tdGangMemberSlots[4][2], 50);
     TextDrawUseBox(g_tdGangMemberSlots[4][2], 0);
     TextDrawSetProportional(g_tdGangMemberSlots[4][2], 1);
-    TextDrawSetSelectable(g_tdGangMemberSlots[4][2], 0);
+    TextDrawSetSelectable(g_tdGangMemberSlots[4][2], 1);
 
     g_tdGangMemberSlots[4][3] = TextDrawCreate(263.000000, 263.000000, "EL GORDO SUPREMO");
     TextDrawFont(g_tdGangMemberSlots[4][3], 1);
@@ -1171,7 +1171,7 @@ public OnGameModeInit()
     TextDrawBoxColor(g_tdGangMemberSlots[5][2], 50);
     TextDrawUseBox(g_tdGangMemberSlots[5][2], 0);
     TextDrawSetProportional(g_tdGangMemberSlots[5][2], 1);
-    TextDrawSetSelectable(g_tdGangMemberSlots[5][2], 0);
+    TextDrawSetSelectable(g_tdGangMemberSlots[5][2], 1);
 
     g_tdGangMemberSlots[5][3] = TextDrawCreate(263.000000, 291.000000, "EL GORDO SUPREMO");
     TextDrawFont(g_tdGangMemberSlots[5][3], 1);
@@ -1227,7 +1227,7 @@ public OnGameModeInit()
     TextDrawBoxColor(g_tdGangMemberSlots[6][2], 50);
     TextDrawUseBox(g_tdGangMemberSlots[6][2], 0);
     TextDrawSetProportional(g_tdGangMemberSlots[6][2], 1);
-    TextDrawSetSelectable(g_tdGangMemberSlots[6][2], 0);
+    TextDrawSetSelectable(g_tdGangMemberSlots[6][2], 1);
 
     g_tdGangMemberSlots[6][3] = TextDrawCreate(263.000000, 319.000000, "EL GORDO SUPREMO");
     TextDrawFont(g_tdGangMemberSlots[6][3], 1);
