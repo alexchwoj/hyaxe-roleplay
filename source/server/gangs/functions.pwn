@@ -28,9 +28,13 @@ Gangs_OpenPanel(playerid)
 Gangs_PanelForward(playerid)
 {
     g_rgiGangPanelPage{playerid}++;
+    if(!IsTextDrawVisibleForPlayer(playerid, g_tdGangs[7]))
+    {
+        TextDrawShowForPlayer(playerid, g_tdGangs[7]);
+    }
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, 
-        "SELECT `CURRENT_PLAYERID`, `NAME`, `GANG_RANK` \
+        "SELECT `CURRENT_PLAYERID`, `NAME`, `GANG_RANK`, COUNT(*) OVER() AS `MEMBER_COUNT` \
             FROM `ACCOUNT` \
             WHERE \
                 `ACCOUNT`.`GANG_ID` = %i \
@@ -45,6 +49,10 @@ Gangs_PanelForward(playerid)
 Gangs_PanelBackwards(playerid)
 {
     g_rgiGangPanelPage{playerid}--;
+    if(g_rgiGangPanelPage{playerid} == 0)
+    {
+        TextDrawHideForPlayer(playerid, g_tdGangs[7]);
+    }
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, 
         "SELECT `CURRENT_PLAYERID`, `NAME`, `GANG_RANK` \

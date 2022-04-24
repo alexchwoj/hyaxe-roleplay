@@ -144,9 +144,15 @@ public GANGS_PanelDataFetched(playerid)
 
 public GANGS_PanelMembersFetched(playerid)
 {
-    new rowc;
+    new rowc, member_count;
     cache_get_row_count(rowc);
+    cache_get_value_name_int(0, "MEMBER_COUNT", member_count);
 
+    if(member_count < (g_rgiGangPanelPage{playerid} * 7))
+    {
+        TextDrawHideForPlayer(playerid, g_tdGangs[8]);
+    }
+    
     for(new i; i < rowc; ++i)
     {
         new current_playerid, name[25], rank;
