@@ -186,7 +186,6 @@ public OnPlayerDisconnect(playerid, reason)
     Account_Save(playerid, true);
 
     g_rgePlayerData[playerid] = g_rgePlayerData[MAX_PLAYERS];
-    Player_Gang(playerid) = -1;
     Player_ResetTemp(playerid);
     Bit_SetAll(Player_Flags(playerid), false);
 
@@ -199,7 +198,10 @@ public OnPlayerDisconnect(playerid, reason)
             Iter_Remove(Police, playerid);
 
         if(Player_Gang(playerid) != -1)
+        {
             Iter_Remove(GangMember[Player_Gang(playerid)], playerid);
+            Player_Gang(playerid) = -1;
+        }
 
         Iter_Remove(LoggedIn, playerid);
     }
