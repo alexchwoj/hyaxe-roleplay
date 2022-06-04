@@ -15,6 +15,26 @@ enum eGangData
 new g_rgeGangs[HYAXE_MAX_GANGS][eGangData],
     Map:g_mapGangIds;
 
+enum eGangRankPermissions(<<=1)
+{
+    GANG_PERM_CHANGE_COLOR = 1,
+    GANG_PERM_CHANGE_NAME,
+    GANG_PERM_CHANGE_ICON,
+    GANG_PERM_CHANGE_ROLES,
+    GANG_PERM_KICK_MEMBERS,
+    GANG_PERM_EDIT_MEMBERS,
+
+    GANG_PERM_LAST
+};
+new g_rgszGangPermNames[][32] = {
+    "Cambiar color",
+    "Cambiar nombre",
+    "Cambiar ícono",
+    "Cambiar roles",
+    "Expulsar miembros",
+    "Editar miembros"
+};
+
 enum eGangRankData
 {
     e_iRankId,

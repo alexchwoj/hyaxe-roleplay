@@ -5,6 +5,7 @@
 
 public OnGameModeInit()
 {
+    Iter_Init(GangMember);
     g_mapGangIds = map_new();
 
     new Cache:gangs_cache = mysql_query(g_hDatabase, "SELECT * FROM `GANGS`;", .use_cache = true);
@@ -190,6 +191,37 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
         Gangs_PanelForward(playerid);
         return 1;
     }
+    else if(clickedid == g_tdGangs[6])
+    {
+        Gangs_ClosePanel(playerid);
+
+        new rank_data[eGangRankData];
+        list_get_arr(g_rglGangRanks[Player_Gang(playerid)], Player_GangRank(playerid), rank_data);
+
+        new caption[128];
+        format(caption, sizeof(caption), "{CB3126}>>{DADADA} Banda: {%0.6x}%s", Gang_Data(Player_Gang(playerid))[e_iGangColor] >>> 8, Gang_Data(Player_Gang(playerid))[e_szGangName]);
+        
+        printf("gang perms: %b", rank_data[e_iRankPermisionFlags]);
+
+        if(!(rank_data[e_iRankPermisionFlags] & _:(GANG_PERM_KICK_MEMBERS | GANG_PERM_EDIT_MEMBERS)))
+        {
+            Dialog_Show(playerid, "null", DIALOG_STYLE_MSGBOX, caption, "{DADADA}No tienes permisos para modificar esta banda.", "Entendido");
+            return 1;
+        }
+
+        HYAXE_UNSAFE_HUGE_STRING[0] = '\0';
+
+        new temp[40];
+        for(new i = 1; i < _:GANG_PERM_LAST; i <<= 1)
+        {
+            new normal_idx = Cell_GetLowestBit(i);
+            format(temp, sizeof(temp), "{CB3126}>{DADADA} %s\n", g_rgszGangPermNames[normal_idx]);
+            strcat(HYAXE_UNSAFE_HUGE_STRING, temp);
+        }
+
+        Dialog_Show(playerid, "modify_gang", DIALOG_STYLE_LIST, caption, HYAXE_UNSAFE_HUGE_STRING, "Siguiente", "Cancelar");
+        return 1;
+    }
 
     #if defined GANGS_OnPlayerClickTextDraw
         return GANGS_OnPlayerClickTextDraw(playerid, clickedid);
@@ -207,6 +239,107 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 #if defined GANGS_OnPlayerClickTextDraw
     forward GANGS_OnPlayerClickTextDraw(playerid, Text:clickedid);
 #endif
+
+dialog modify_gang(playerid, response, listitem, inputtext[])
+{
+    if(!response)
+    {
+        Gangs_OpenPanel(playerid);
+        return 1;
+    }
+
+    new perm = 1 << listitem;
+    new rank_data[eGangRankData];
+    list_get_arr(g_rglGangRanks[Player_Gang(playerid)], Player_GangRank(playerid), rank_data);
+
+    new caption[40];
+    format(caption, sizeof(caption), "{CB3126}>>{DADADA} %s", g_rgszGangPermNames[listitem]);
+
+    if(!(rank_data[e_iRankPermisionFlags] & perm))
+    {
+        Dialog_Show(playerid, "null", DIALOG_STYLE_MSGBOX, caption, "{DADADA}No tienes permisos para usar esta opción.", "Entendido");
+        return 1;
+    }
+
+    HYAXE_UNSAFE_HUGE_STRING[0] = '\0';
+
+    switch(perm)
+    {
+        case GANG_PERM_CHANGE_COLOR:
+        {
+            Dialog_Show(playerid, "gang_change_color", DIALOG_STYLE_INPUT, caption, "{DADADA}Introduce el nuevo color de la banda en el formato #{FF0000}RR{00FF00}GG{0000FF}BB{DADADA}. Cada color debe ser un número hexadecimal válido.", "Cambiar", "Cancelar");
+        }
+        case GANG_PERM_CHANGE_NAME:
+        {
+            Dialog_Show(playerid, "gang_change_name", DIALOG_STYLE_INPUT, caption, "{DADADA}Introduce el nuevo nombre de la banda. Debe tener una longitud entre {CB3126}1{DADADA} y {CB3126}64{DADADA} caracteres.", "Cambiar", "Cancelar");
+        }
+        case GANG_PERM_KICK_MEMBERS, GANG_PERM_EDIT_MEMBERS:
+        {
+            Dialog_Show(playerid, "null", DIALOG_STYLE_MSGBOX, caption, "{DADADA}Para editar o expulsar a algun miembro de la banda, presiona su nombre en el panel de banda.", "Entendido");
+        }
+    }
+
+    return 1;
+}
+
+dialog gang_change_color(playerid, response, listitem, inputtext[])
+{
+    if(!response)
+    {
+        Gangs_OpenPanel(playerid);
+        return 1;
+    }
+
+    new new_color;
+    if(sscanf(inputtext, "?<SSCANF_COLOUR_FORMS=2>m", new_color))
+    {
+        Dialog_Show(playerid, "gang_change_color", DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Cambiar color", "{DADADA}Introduce el nuevo color de la banda en el formato #{FF0000}RR{00FF00}GG{0000FF}BB{DADADA}. Cada color debe ser un número hexadecimal válido.", "Cambiar", "Cancelar");
+        return 1;
+    }
+
+    printf("new_color = %i (%x)", new_color, new_color);
+
+    Gang_Data(Player_Gang(playerid))[e_iGangColor] = new_color;
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+        UPDATE `GANGS` SET `GANG_COLOR` = %i WHERE `GANG_ID` = %i;\
+    ", new_color, Gang_Data(Player_Gang(playerid))[e_iGangDbId]);
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "[BANDA] {DADADA}%s cambió el color de la {%06x}banda{DADADA}.", Player_RPName(playerid), new_color >>> 8);
+    Gang_SendMessage(Player_Gang(playerid), HYAXE_UNSAFE_HUGE_STRING);
+
+    Gangs_OpenPanel(playerid);
+    return 1;
+}
+
+dialog gang_change_name(playerid, response, listitem, inputtext[])
+{
+    if(!response)
+    {
+        Gangs_OpenPanel(playerid);
+        return 1;
+    }
+
+    new new_name[64];
+    if(sscanf(inputtext, "s[64]", new_name))
+    {
+        Dialog_Show(playerid, "gang_change_name", DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Cambiar nombre", "{DADADA}Introduce el nuevo nombre de la banda. Debe tener una longitud entre {CB3126}1{DADADA} y {CB3126}64{DADADA} caracteres.", "Cambiar", "Cancelar");
+        return 1;
+    }
+
+    strcpy(Gang_Data(Player_Gang(playerid))[e_szGangName], new_name);
+
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "[BANDA] {DADADA}%s cambió el nombre de la banda a %s.", Player_RPName(playerid), new_name);
+    Gang_SendMessage(Player_Gang(playerid), HYAXE_UNSAFE_HUGE_STRING);
+
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+        UPDATE `GANGS` SET `GANG_NAME` = '%e' WHERE `GANG_ID` = %i;\
+    ", new_name, Gang_Data(Player_Gang(playerid))[e_iGangDbId]);
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+    
+    Gangs_OpenPanel(playerid);
+    return 1;
+}
 
 public OnPlayerCancelTDSelection(playerid)
 {

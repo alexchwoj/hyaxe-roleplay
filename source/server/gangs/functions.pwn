@@ -82,4 +82,28 @@ Gangs_ClosePanel(playerid)
         TextDrawHideForPlayer(playerid, g_tdGangMemberSlots[i][2]);
         TextDrawHideForPlayer(playerid, g_tdGangMemberSlots[i][3]);
     }
+
+    CancelSelectTextDraw(playerid);
+}
+
+Gang_SendMessage(gangid, const message[])
+{
+    foreach(new i : GangMember[gangid])
+    {
+        SendClientMessage(i, g_rgeGangs[gangid][e_iGangColor], message);
+    }
+
+    return 1;
+}
+
+Gang_SendMessage_s(gangid, ConstString:message)
+{
+    new ConstAmxString:msg_address = str_addr_const(message);
+    
+    foreach(new i : GangMember[gangid])
+    {
+        SendClientMessage_s(i, g_rgeGangs[gangid][e_iGangColor], msg_address);
+    }
+
+    return 1;
 }
