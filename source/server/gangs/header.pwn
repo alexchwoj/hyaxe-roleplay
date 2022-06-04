@@ -10,7 +10,8 @@ enum eGangData
 {
     e_iGangDbId,
     e_szGangName[64],
-    e_iGangColor
+    e_iGangColor,
+    e_iGangIcon
 };
 new g_rgeGangs[HYAXE_MAX_GANGS][eGangData],
     Map:g_mapGangIds;
@@ -26,7 +27,7 @@ enum eGangRankPermissions(<<=1)
 
     GANG_PERM_LAST
 };
-new g_rgszGangPermNames[][32] = {
+new const g_rgszGangPermNames[][32] = {
     "Cambiar color",
     "Cambiar nombre",
     "Cambiar ícono",
@@ -43,6 +44,28 @@ enum eGangRankData
     e_iRankPermisionFlags
 };
 new List:g_rglGangRanks[HYAXE_MAX_GANGS];
+
+new const g_rgszGangIcons[][2][32] = {
+    { "Hamburguesa", "hud:radar_burgershot" },
+    { "Dinero", "hud:radar_cash" },
+    { "Gota", "hud:radar_centre"},
+    { "Pistola", "hud:radar_emmetgun" },
+    { "Bandera roja", "hud:radar_enemyattack" },
+    { "Bandera de carreras", "hud:radar_flag" },
+    { "Azul", "hud:radar_gangb" },
+    { "Verde", "hud:radar_gangg" },
+    { "Morado", "hud:radar_gangp" },
+    { "Amarillo", "hud:radar_gangy" },
+    { "Auto", "hud:radar_impound" },
+    { "Calavera", "hud:radar_locosyndicate" },
+    { "Dado", "hud:radar_mafiacasino" },
+    { "Dos dados", "ld_tatt:11dice" },
+    { "Trofeo", "hud:radar_race" },
+    { "Abeja", "ld_grav:bee1" },
+    { "Cohete", "ld_spac:rockshp" },
+    { "Mono en cohete", "ld_shtr:ship" },
+    { "Platano volador", "ld_shtr:ufo" }
+};
 
 new
     g_rgiPlayerGang[MAX_PLAYERS] = { -1, ... },

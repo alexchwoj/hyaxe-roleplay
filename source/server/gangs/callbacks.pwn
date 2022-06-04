@@ -19,6 +19,7 @@ public OnGameModeInit()
         cache_get_value_name_int(i, "GANG_ID", g_rgeGangs[i][e_iGangDbId]);
         cache_get_value_name(i, "GANG_NAME", g_rgeGangs[i][e_szGangName]);
         cache_get_value_name_int(i, "GANG_COLOR", g_rgeGangs[i][e_iGangColor]);
+        cache_get_value_name_int(i, "GANG_ICON", g_rgeGangs[i][e_iGangIcon]);
         map_add(g_mapGangIds, g_rgeGangs[i][e_iGangDbId], i);
         g_rglGangRanks[i] = list_new();
 
@@ -116,6 +117,7 @@ public GANGS_PanelDataFetched(playerid)
 
     TextDrawSetStringForPlayer(g_tdGangs[2], playerid, Gang_Data(Player_Gang(playerid))[e_szGangName]);
     TextDrawSetStringForPlayer(g_tdGangs[3], playerid, "Miembros: %i", member_count);
+    TextDrawSetStringForPlayer(g_tdGangs[4], playerid, "%s", g_rgszGangIcons[Gang_Data(Player_Gang(playerid))[e_iGangIcon]][1]);
 
     new rowc;
     cache_get_row_count(rowc);
@@ -261,8 +263,6 @@ dialog modify_gang(playerid, response, listitem, inputtext[])
         return 1;
     }
 
-    HYAXE_UNSAFE_HUGE_STRING[0] = '\0';
-
     switch(perm)
     {
         case GANG_PERM_CHANGE_COLOR:
@@ -272,6 +272,18 @@ dialog modify_gang(playerid, response, listitem, inputtext[])
         case GANG_PERM_CHANGE_NAME:
         {
             Dialog_Show(playerid, "gang_change_name", DIALOG_STYLE_INPUT, caption, "{DADADA}Introduce el nuevo nombre de la banda. Debe tener una longitud entre {CB3126}1{DADADA} y {CB3126}64{DADADA} caracteres.", "Cambiar", "Cancelar");
+        }
+        case GANG_PERM_CHANGE_ICON:
+        {
+            HYAXE_UNSAFE_HUGE_STRING[0] = '\0';
+
+            for(new i = 0; i < sizeof(g_rgszGangIcons); ++i)
+            {
+                strcat(HYAXE_UNSAFE_HUGE_STRING, g_rgszGangIcons[i][0]);
+                strcat(HYAXE_UNSAFE_HUGE_STRING, "\n");
+            }
+
+            Dialog_Show(playerid, "gang_change_icon", DIALOG_STYLE_LIST, caption, HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Cancelar");
         }
         case GANG_PERM_KICK_MEMBERS, GANG_PERM_EDIT_MEMBERS:
         {
@@ -338,6 +350,26 @@ dialog gang_change_name(playerid, response, listitem, inputtext[])
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
     
     Gangs_OpenPanel(playerid);
+    return 1;
+}
+
+dialog gang_change_icon(playerid, response, listitem, inputtext[])
+{
+    if(!response)
+    {
+        Gangs_OpenPanel(playerid);
+        return 1;
+    }
+
+    Gang_Data(Player_Gang(playerid))[e_iGangIcon] = listitem;
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+        UPDATE `GANGS` SET `GANG_ICON` = %i WHERE `GANG_ID` = %i;\
+    ", listitem, Gang_Data(Player_Gang(playerid))[e_iGangDbId]);
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "[BANDA] {DADADA}%s cambió el ícono de la banda.", Player_RPName(playerid));
+    Gang_SendMessage(Player_Gang(playerid), HYAXE_UNSAFE_HUGE_STRING);
+
     return 1;
 }
 
