@@ -135,7 +135,7 @@ Account_LoadFromCache(playerid)
             
             new rank;
             cache_get_value_name_int(0, !"GANG_RANK", rank);
-            Player_GangRank(playerid) = rank;
+            Player_GangRank(playerid) = rank - 1;
         }
     }
 

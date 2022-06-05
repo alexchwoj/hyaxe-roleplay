@@ -21,30 +21,39 @@ public OnGameModeInit()
         cache_get_value_name_int(i, "GANG_COLOR", g_rgeGangs[i][e_iGangColor]);
         cache_get_value_name_int(i, "GANG_ICON", g_rgeGangs[i][e_iGangIcon]);
         map_add(g_mapGangIds, g_rgeGangs[i][e_iGangDbId], i);
-        g_rglGangRanks[i] = list_new();
 
-        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "SELECT `RANK_ID`, `RANK_NAME`, `RANK_HIERARCHY`, `RANK_PERMISSIONS` FROM `GANG_RANKS` WHERE `GANG_ID` = %i;", g_rgeGangs[i][e_iGangDbId]);
+        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "SELECT `RANK_ID`, `RANK_NAME`, `RANK_HIERARCHY`, `RANK_PERMISSIONS` FROM `GANG_RANKS` WHERE `GANG_ID` = %i ORDER BY `RANK_HIERARCHY` DESC;", g_rgeGangs[i][e_iGangDbId]);
         new Cache:rank_cache = mysql_query(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, .use_cache = true);
         #pragma nodestruct rank_cache
         cache_set_active(rank_cache);
 
         new ranks;
         cache_get_row_count(ranks);
-        for(new j; j < ranks; ++j)
+        for(new j; j < ranks && j < sizeof(g_rgeGangRanks[]); ++j)
         {
-            new rank[eGangRankData];
-            cache_get_value_name_int(j, "RANK_ID", rank[e_iRankId]);
-            cache_get_value_name(j, "RANK_NAME", rank[e_szRankName]);
-            cache_get_value_name_int(j, "RANK_HIERARCHY", rank[e_iRankHierarchy]);
-            cache_get_value_name_int(j, "RANK_PERMISSIONS", rank[e_iRankPermisionFlags]);
+            new slot;
+            cache_get_value_name_int(j, "RANK_HIERARCHY", slot);
+            if(!(1 <= slot <= 10))
+            {
+                printf("[gangs!] Invalid rank slot caught in gang ID %i (expected number between 1 and 10, got %i)", g_rgeGangs[i][e_iGangDbId], slot);
+                continue;
+            }
+            
+            slot--;
 
-            list_add_arr(g_rglGangRanks[i], rank);
+            if(g_rgeGangRanks[i][slot][e_iRankId] != 0)
+            {
+                printf("[gangs!] Duplicate rank slot caught in gang ID %i (gang slot %i is already occupied by rank '%s')", g_rgeGangs[i][e_iGangDbId], slot, g_rgeGangRanks[i][slot][e_szRankName]);
+                continue;
+            }
+            
+            cache_get_value_name_int(j, "RANK_ID", g_rgeGangRanks[i][slot][e_iRankId]);
+            cache_get_value_name(j, "RANK_NAME", g_rgeGangRanks[i][slot][e_szRankName]);
+            cache_get_value_name_int(j, "RANK_PERMISSIONS", g_rgeGangRanks[i][slot][e_iRankPermisionFlags]);
         }
 
         cache_delete(rank_cache);
         cache_set_active(gangs_cache);
-
-        list_sort(g_rglGangRanks[i], e_iRankHierarchy);
     }
 
     cache_delete(gangs_cache);
@@ -136,10 +145,7 @@ public GANGS_PanelDataFetched(playerid)
 
         TextDrawSetStringForPlayer(g_tdGangMemberSlots[i][1], playerid, (current_playerid == -1 ? "~r~." : "~g~."));
         TextDrawSetStringForPlayer(g_tdGangMemberSlots[i][2], playerid, name);
-
-        new rank_data[eGangRankData];
-        list_get_arr(g_rglGangRanks[Player_Gang(playerid)], Player_GangRank(playerid), rank_data);
-        TextDrawSetStringForPlayer(g_tdGangMemberSlots[i][3], playerid, rank_data[e_szRankName]);
+        TextDrawSetStringForPlayer(g_tdGangMemberSlots[i][3], playerid, g_rgeGangRanks[Player_Gang(playerid)][rank - 1][e_szRankName]);
     }
 
     return 1;
@@ -170,10 +176,7 @@ public GANGS_PanelMembersFetched(playerid)
 
         TextDrawSetStringForPlayer(g_tdGangMemberSlots[i][1], playerid, (current_playerid == -1 ? "~r~." : "~g~."));
         TextDrawSetStringForPlayer(g_tdGangMemberSlots[i][2], playerid, name);
-
-        new rank_data[eGangRankData];
-        list_get_arr(g_rglGangRanks[Player_Gang(playerid)], Player_GangRank(playerid), rank_data);
-        TextDrawSetStringForPlayer(g_tdGangMemberSlots[i][3], playerid, rank_data[e_szRankName]);
+        TextDrawSetStringForPlayer(g_tdGangMemberSlots[i][3], playerid, g_rgeGangRanks[Player_Gang(playerid)][rank - 1][e_szRankName]);
     }
 
     return 1;
@@ -197,15 +200,10 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
     {
         Gangs_ClosePanel(playerid);
 
-        new rank_data[eGangRankData];
-        list_get_arr(g_rglGangRanks[Player_Gang(playerid)], Player_GangRank(playerid), rank_data);
-
         new caption[128];
         format(caption, sizeof(caption), "{CB3126}>>{DADADA} Banda: {%0.6x}%s", Gang_Data(Player_Gang(playerid))[e_iGangColor] >>> 8, Gang_Data(Player_Gang(playerid))[e_szGangName]);
         
-        printf("gang perms: %b", rank_data[e_iRankPermisionFlags]);
-
-        if(!(rank_data[e_iRankPermisionFlags] & _:(GANG_PERM_KICK_MEMBERS | GANG_PERM_EDIT_MEMBERS)))
+        if(!(Player_GangRankData(playerid)[e_iRankPermisionFlags] & _:(GANG_PERM_KICK_MEMBERS | GANG_PERM_EDIT_MEMBERS)))
         {
             Dialog_Show(playerid, "null", DIALOG_STYLE_MSGBOX, caption, "{DADADA}No tienes permisos para modificar esta banda.", "Entendido");
             return 1;
@@ -251,13 +249,10 @@ dialog modify_gang(playerid, response, listitem, inputtext[])
     }
 
     new perm = 1 << listitem;
-    new rank_data[eGangRankData];
-    list_get_arr(g_rglGangRanks[Player_Gang(playerid)], Player_GangRank(playerid), rank_data);
-
     new caption[40];
     format(caption, sizeof(caption), "{CB3126}>>{DADADA} %s", g_rgszGangPermNames[listitem]);
 
-    if(!(rank_data[e_iRankPermisionFlags] & perm))
+    if(!(Player_GangRankData(playerid)[e_iRankPermisionFlags] & perm))
     {
         Dialog_Show(playerid, "null", DIALOG_STYLE_MSGBOX, caption, "{DADADA}No tienes permisos para usar esta opción.", "Entendido");
         return 1;
@@ -284,6 +279,27 @@ dialog modify_gang(playerid, response, listitem, inputtext[])
             }
 
             Dialog_Show(playerid, "gang_change_icon", DIALOG_STYLE_LIST, caption, HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Cancelar");
+        }
+        case GANG_PERM_CHANGE_ROLES:
+        {
+            strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Los roles están ordenados por su importancia jerárquica\t \n");
+
+            new line[90];
+            for(new i = sizeof(g_rgeGangRanks[]) - 1; i != -1; --i)
+            {
+                if(g_rgeGangRanks[Player_Gang(playerid)][i][e_iRankId])
+                {
+                    format(line, sizeof(line), "{DADADA}%2i {CB3126}>{DADADA} %s\t \n", i + 1, g_rgeGangRanks[Player_Gang(playerid)][i][e_szRankName]);
+                }
+                else
+                {
+                    format(line, sizeof(line), "{DADADA}%2i {CB3126}>{969696} Vacío\t \n", i + 1);
+                }
+
+                strcat(HYAXE_UNSAFE_HUGE_STRING, line);
+            }
+
+            Dialog_Show(playerid, "gang_change_role", DIALOG_STYLE_TABLIST_HEADERS, caption, HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Cancelar");
         }
         case GANG_PERM_KICK_MEMBERS, GANG_PERM_EDIT_MEMBERS:
         {

@@ -43,7 +43,7 @@ enum eGangRankData
     e_szRankName[32],
     e_iRankPermisionFlags
 };
-new List:g_rglGangRanks[HYAXE_MAX_GANGS];
+new g_rgeGangRanks[HYAXE_MAX_GANGS][10][eGangRankData];
 
 new const g_rgszGangIcons[][2][32] = {
     { "Hamburguesa", "hud:radar_burgershot" },
@@ -76,6 +76,7 @@ new
 #define Gang_Data(%0) (g_rgeGangs[(%0)])
 #define Player_Gang(%0) (g_rgiPlayerGang[(%0)])
 #define Player_GangRank(%0) (g_rgiPlayerGangRank{(%0)})
+#define Player_GangRankData(%0) (g_rgeGangRanks[g_rgiPlayerGang[(%0)]][g_rgiPlayerGangRank{(%0)}])
 
 forward Gangs_PanelForward(playerid);
 forward Gangs_PanelBackwards(playerid);
