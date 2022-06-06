@@ -150,7 +150,9 @@ flags:ban_account(CMD_FLAG<RANK_LEVEL_MODERATOR> | CMD_DONT_LOG_COMMAND)
 
 static 
     bool:s_rgbHasBeenTeleported[MAX_PLAYERS char],
-    Float:s_rgfPreviousPositions[MAX_PLAYERS][4];
+    Float:s_rgfPreviousPositions[MAX_PLAYERS][4],
+    s_rgiPreviousInteriors[MAX_PLAYERS],
+    s_rgiPreviousWorlds[MAX_PLAYERS];
 
 command tp(playerid, const params[], "Teletransportate a la posición de un jugador")
 {
@@ -166,11 +168,15 @@ command tp(playerid, const params[], "Teletransportate a la posición de un jugad
 
     GetPlayerPos(playerid, s_rgfPreviousPositions[playerid][0], s_rgfPreviousPositions[playerid][1], s_rgfPreviousPositions[playerid][2]);
     GetPlayerFacingAngle(playerid, s_rgfPreviousPositions[playerid][3]);
+    s_rgiPreviousInteriors[playerid] = GetPlayerInterior(playerid);
+    s_rgiPreviousWorlds[playerid] = GetPlayerVirtualWorld(playerid);
     s_rgbHasBeenTeleported{playerid} = true;
 
     new Float:x, Float:y, Float:z;
     GetPlayerPos(destination, x, y, z);
     SetPlayerPos(playerid, x, y, z);
+    SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(destination));
+    SetPlayerInterior(playerid, GetPlayerInterior(destination));
 
     SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Te teletransportaste a la posición de {ED2B2B}%s{DADADA}.", Player_RPName(destination));
     return 1;
@@ -193,6 +199,8 @@ command back(playerid, const params[], "Devuelve a un jugador a su posición orig
     s_rgbHasBeenTeleported{destination} = false;
     SetPlayerPos(destination, s_rgfPreviousPositions[destination][0], s_rgfPreviousPositions[destination][1], s_rgfPreviousPositions[destination][2]);
     SetPlayerFacingAngle(destination, s_rgfPreviousPositions[destination][3]);
+    SetPlayerInterior(destination, s_rgiPreviousInteriors[destination]);
+    SetPlayerVirtualWorld(destination, s_rgiPreviousWorlds[destination]);
 
     if(destination != playerid)
         SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} %s fue devuelto a su posición original.", Player_RPName(playerid));
@@ -213,11 +221,15 @@ command bring(playerid, const params[], "Trae a un jugador a tu posición")
 
     GetPlayerPos(destination, s_rgfPreviousPositions[destination][0], s_rgfPreviousPositions[destination][1], s_rgfPreviousPositions[destination][2]);
     GetPlayerFacingAngle(destination, s_rgfPreviousPositions[destination][3]);
+    s_rgiPreviousInteriors[destination] = GetPlayerInterior(destination);
+    s_rgiPreviousWorlds[destination] = GetPlayerVirtualWorld(destination);
     s_rgbHasBeenTeleported{destination} = true;
 
     new Float:x, Float:y, Float:z;
     GetPlayerPos(playerid, x, y, z);
     SetPlayerPos(destination, x, y, z);
+    SetPlayerInterior(destination, GetPlayerInterior(playerid));
+    SetPlayerVirtualWorld(destination, GetPlayerVirtualWorld(playerid));
 
     SendClientMessage(destination, 0xED2B2BFF, "›{DADADA} Fuiste teletransportado a la posición de {ED2B2B}un administrador{DADADA}.");
     SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Trajiste a {ED2B2B}%s{DADADA} a tu posición.", Player_RPName(destination));
