@@ -203,7 +203,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
         new caption[128];
         format(caption, sizeof(caption), "{CB3126}>>{DADADA} Banda: {%06x}%s", Gang_Data(Player_Gang(playerid))[e_iGangColor] >>> 8, Gang_Data(Player_Gang(playerid))[e_szGangName]);
         
-        if(!(Player_GangRankData(playerid)[e_iRankPermisionFlags] & _:(GANG_PERM_KICK_MEMBERS | GANG_PERM_EDIT_MEMBERS)))
+        if(!(Player_GangRankData(playerid)[e_iRankPermisionFlags] & (~(GANG_PERM_KICK_MEMBERS | GANG_PERM_EDIT_MEMBERS))))
         {
             Dialog_Show(playerid, "null", DIALOG_STYLE_MSGBOX, caption, "{DADADA}No tienes permisos para modificar esta banda.", "Entendido");
             return 1;
