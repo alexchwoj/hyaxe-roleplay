@@ -157,3 +157,26 @@ GangPanel_OpenRolePermissions(playerid)
     Dialog_Show(playerid, "gang_role_change_perms", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}>>{DADADA} Permisos", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Atrás");
     return 1;
 }
+
+GangPanel_OpenRoleSwap(playerid)
+{
+    strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Selecciona el rango para intercambiar sus posiciones\t \n");
+
+    new line[90];
+    for(new i = sizeof(g_rgeGangRanks[]) - 1; i != -1; --i)
+    {
+        if(g_rgeGangRanks[Player_Gang(playerid)][i][e_iRankId])
+        {
+            format(line, sizeof(line), "{DADADA}%2i {CB3126}>{%06x} %s\t \n", i + 1, (g_rgiPanelSelectedRole{playerid} == i ? 0xCB3126 : (Player_GangRank(playerid) > i ? 0xDADADA : 0x969696)), g_rgeGangRanks[Player_Gang(playerid)][i][e_szRankName]);
+        }
+        else
+        {
+            format(line, sizeof(line), "{DADADA}%2i {CB3126}>{%06x} Vacío\t \n", i + 1, (Player_GangRank(playerid) > i ? 0xBFBDBD : 0x969696));
+        }
+
+        strcat(HYAXE_UNSAFE_HUGE_STRING, line);
+    }
+
+    Dialog_Show(playerid, "gang_exchange_slot", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}>>{DADADA} Intercambiar posiciones", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Atrás");
+    return 1;
+}

@@ -25,7 +25,7 @@
     {
       "name": "WSL-Clang-Release",
       "generator": "Ninja",
-      "configurationType": "Release",
+      "configurationType": "Debug",
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
       "cmakeExecutable": "cmake",
@@ -34,7 +34,18 @@
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "linux_clang_x64" ],
       "wslPath": "${defaultWSLPath}",
-      "variables": []
+      "variables": [
+        {
+          "name": "CMAKE_C_FLAGS",
+          "value": "-fno-limit-debug-info -m32",
+          "type": "STRING"
+        },
+        {
+          "name": "CMAKE_CXX_FLAGS",
+          "value": "-fno-limit-debug-info -m32",
+          "type": "STRING"
+        }
+      ]
     }
   ]
 }

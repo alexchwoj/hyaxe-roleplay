@@ -203,7 +203,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
         new caption[128];
         format(caption, sizeof(caption), "{CB3126}>>{DADADA} Banda: {%06x}%s", Gang_Data(Player_Gang(playerid))[e_iGangColor] >>> 8, Gang_Data(Player_Gang(playerid))[e_szGangName]);
         
-        if(!(Player_GangRankData(playerid)[e_iRankPermisionFlags] & (~(GANG_PERM_KICK_MEMBERS | GANG_PERM_EDIT_MEMBERS))))
+        if(!(Player_GangRankData(playerid)[e_iRankPermisionFlags] & _:(~(GANG_PERM_KICK_MEMBERS | GANG_PERM_EDIT_MEMBERS))))
         {
             Dialog_Show(playerid, "null", DIALOG_STYLE_MSGBOX, caption, "{DADADA}No tienes permisos para modificar esta banda.", "Entendido");
             return 1;
@@ -476,7 +476,7 @@ dialog gang_role_modify_option(playerid, response, listitem, inputtext[])
         }
         case 2:
         {
-
+            GangPanel_OpenRoleSwap(playerid);
         }
     }
     
@@ -540,6 +540,53 @@ dialog gang_role_change_perms(playerid, response, listitem, inputtext[])
 dialog gang_cant_change_perm(playerid, response, listitem, inputtext[])
 {
     GangPanel_OpenRolePermissions(playerid);
+    return 1;
+}
+
+dialog gang_exchange_slot(playerid, response, listitem, inputtext[])
+{
+    if(!response)
+    {
+        GangPanel_OpenRoleOptions(playerid);
+        return 1;
+    }
+
+    if(!(0 <= listitem < sizeof(g_rgeGangRanks[])))
+        return 1;
+
+    new rankid = 9 - listitem;
+    if(rankid > Player_GangRank(playerid))
+    {
+        GangPanel_OpenRoleSwap(playerid);
+        return 1;
+    }
+
+    new copy[eGangRankData];
+    copy = g_rgeGangRanks[Player_Gang(playerid)][rankid];
+
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+        UPDATE `GANG_RANKS` \
+        SET `RANK_HIERARCHY` = CASE `RANK_ID` \
+        WHEN %i THEN %i \
+        WHEN %i THEN %i \
+        ELSE `RANK_HIERARCHY` END WHERE `RANK_ID` IN(%i, %i);\
+    ",
+        copy[e_iRankId], g_rgiPanelSelectedRole{playerid} + 1,
+        g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankId], rankid + 1,
+        copy[e_iRankId], g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankId]
+    );
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+
+    g_rgeGangRanks[Player_Gang(playerid)][rankid] = g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}];
+    g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}] = copy;
+
+    Dialog_Show(playerid, "gang_role_swap_success", DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Roles intercambiados", "{DADADA}Los roles fueron intercambiados con éxito.", "Entendido");
+    return 1;
+}
+
+dialog gang_role_swap_success(playerid, response, listitem, inputtext[])
+{
+    GangPanel_OpenRoles(playerid);
     return 1;
 }
 
