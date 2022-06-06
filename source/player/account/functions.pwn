@@ -131,10 +131,11 @@ Account_LoadFromCache(playerid)
         if(map_has_key(g_mapGangIds, gang))
         {
             Player_Gang(playerid) = map_get(g_mapGangIds, gang);
-
+            Iter_Add(GangMember[Player_Gang(playerid)], playerid);
+            
             new rank;
             cache_get_value_name_int(0, !"GANG_RANK", rank);
-            Player_GangRank(playerid) = rank;
+            Player_GangRank(playerid) = rank - 1;
         }
     }
 
