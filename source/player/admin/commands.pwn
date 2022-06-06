@@ -149,6 +149,77 @@ alias:ban_account("banoff")
 flags:ban_account(CMD_FLAG<RANK_LEVEL_MODERATOR> | CMD_DONT_LOG_COMMAND)
 
 static 
+    bool:s_rgbHasBeenTeleported[MAX_PLAYERS char],
+    Float:s_rgfPreviousPositions[MAX_PLAYERS][4];
+
+command tp(playerid, const params[], "Teletransportate a la posición de un jugador")
+{
+    new destination, player_two;
+    if(sscanf(params, "rR(-1)", destination, player_two))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/tp{DADADA} <jugador de destino> {969696][jugador]");
+        return 1;
+    }
+
+    if(player_two != -1 && player_two != INVALID_PLAYER_ID)
+        playerid = player_two;
+
+    GetPlayerPos(playerid, s_rgfPreviousPositions[playerid][0], s_rgfPreviousPositions[playerid][1], s_rgfPreviousPositions[playerid][2]);
+    GetPlayerFacingAngle(playerid, s_rgfPreviousPositions[playerid][3]);
+    s_rgbHasBeenTeleported{playerid} = true;
+
+    new Float:x, Float:y, Float:z;
+    GetPlayerPos(destination, x, y, z);
+    SetPlayerPos(playerid, x, y, z);
+
+    SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Te teletransportaste a la posición de {ED2B2B}%s{DADADA}.", Player_RPName(destination));
+    return 1;
+}
+flags:tp(CMD_FLAG<RANK_LEVEL_HELPER>)
+
+command back(playerid, const params[], "Devuelve a un jugador a su posición original")
+{
+    new destination = -1;
+    sscanf(params, "R(-1)", destination);
+    if(!IsPlayerConnected(destination))
+        destination = playerid;
+
+    s_rgbHasBeenTeleported{destination} = false;
+    SetPlayerPos(destination, s_rgfPreviousPositions[destination][0], s_rgfPreviousPositions[destination][1], s_rgfPreviousPositions[destination][2]);
+    SetPlayerFacingAngle(destination, s_rgfPreviousPositions[destination][3]);
+
+    if(destination != playerid)
+        SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} %s fue devuelto a su posición original.", Player_RPName(playerid));
+
+    SendClientMessagef(destination, 0xED2B2BFF, "›{DADADA} Fuiste devuelto a tu posición original.");
+    return 1;
+}
+flags:back(CMD_FLAG<RANK_LEVEL_HELPER>)
+
+command bring(playerid, const params[], "Trae a un jugador a tu posición")
+{
+    new destination;
+    if(sscanf(params, "r", destination))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/bring{DADADA} <jugador>");
+        return 1;
+    }
+
+    GetPlayerPos(destination, s_rgfPreviousPositions[destination][0], s_rgfPreviousPositions[destination][1], s_rgfPreviousPositions[destination][2]);
+    GetPlayerFacingAngle(destination, s_rgfPreviousPositions[destination][3]);
+    s_rgbHasBeenTeleported{destination} = true;
+
+    new Float:x, Float:y, Float:z;
+    GetPlayerPos(playerid, x, y, z);
+    SetPlayerPos(destination, x, y, z);
+
+    SendClientMessage(destination, 0xED2B2BFF, "›{DADADA} Fuiste teletransportado a la posición de {ED2B2B}un administrador{DADADA}.");
+    SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Trajiste a {ED2B2B}%s{DADADA} a tu posición.", Player_RPName(destination));
+    return 1;
+}
+flags:bring(CMD_FLAG<RANK_LEVEL_HELPER>)
+
+static 
     s_rgszSelectedAdmin[MAX_PLAYERS][24];
 
 command manage_admins(playerid, const params[], "Abre el panel de administradores")
