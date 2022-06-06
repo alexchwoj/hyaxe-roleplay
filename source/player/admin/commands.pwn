@@ -157,7 +157,7 @@ command tp(playerid, const params[], "Teletransportate a la posición de un jugad
     new destination, player_two;
     if(sscanf(params, "rR(-1)", destination, player_two))
     {
-        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/tp{DADADA} <jugador de destino> {969696][jugador]");
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/tp{DADADA} <jugador de destino> {969696}[jugador]");
         return 1;
     }
 
@@ -189,7 +189,7 @@ command back(playerid, const params[], "Devuelve a un jugador a su posición orig
         SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} El jugador no ha sido teletransportado por un administrador.");
         return 1;
     }
-    
+
     s_rgbHasBeenTeleported{destination} = false;
     SetPlayerPos(destination, s_rgfPreviousPositions[destination][0], s_rgfPreviousPositions[destination][1], s_rgfPreviousPositions[destination][2]);
     SetPlayerFacingAngle(destination, s_rgfPreviousPositions[destination][3]);
