@@ -39,7 +39,6 @@ new const g_rgszGangPermNames[][32] = {
 enum eGangRankData
 {
     e_iRankId,
-    e_iRankHierarchy,
     e_szRankName[32],
     e_iRankPermisionFlags
 };
@@ -71,7 +70,8 @@ new
     g_rgiPlayerGang[MAX_PLAYERS] = { -1, ... },
     g_rgiPlayerGangRank[MAX_PLAYERS char],
     IteratorArray:GangMember[HYAXE_MAX_GANGS]<MAX_PLAYERS>,
-    g_rgiGangPanelPage[MAX_PLAYERS char];
+    g_rgiGangPanelPage[MAX_PLAYERS char],
+    g_rgiPanelSelectedRole[MAX_PLAYERS char] = { 0xFFFFFFFF, ... };
 
 #define Gang_Data(%0) (g_rgeGangs[(%0)])
 #define Player_Gang(%0) (g_rgiPlayerGang[(%0)])
@@ -82,3 +82,4 @@ forward Gangs_PanelForward(playerid);
 forward Gangs_PanelBackwards(playerid);
 forward GANGS_PanelDataFetched(playerid);
 forward GANGS_PanelMembersFetched(playerid);
+forward GANGS_RoleCreated(playerid);

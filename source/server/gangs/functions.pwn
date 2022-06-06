@@ -107,3 +107,53 @@ Gang_SendMessage_s(gangid, ConstString:message)
 
     return 1;
 }
+
+GangPanel_OpenRoles(playerid)
+{
+    strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Los roles están ordenados por su importancia jerárquica\t \n");
+
+    new line[90];
+    for(new i = sizeof(g_rgeGangRanks[]) - 1; i != -1; --i)
+    {
+        if(g_rgeGangRanks[Player_Gang(playerid)][i][e_iRankId])
+        {
+            format(line, sizeof(line), "{DADADA}%2i {CB3126}>{DADADA} %s\t \n", i + 1, g_rgeGangRanks[Player_Gang(playerid)][i][e_szRankName]);
+        }
+        else
+        {
+            format(line, sizeof(line), "{DADADA}%2i {CB3126}>{969696} Vacío\t \n", i + 1);
+        }
+
+        strcat(HYAXE_UNSAFE_HUGE_STRING, line);
+    }
+
+    Dialog_Show(playerid, "gang_change_role", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}>>{DADADA} Cambiar roles", HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Cancelar");
+    return 1;
+}
+
+GangPanel_OpenRoleOptions(playerid)
+{
+    new caption[64];
+    format(caption, sizeof(caption), "{CB3126}>>{DADADA} Modificando rol {CB3126}%s", g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_szRankName]);
+    Dialog_Show(playerid, "gang_role_modify_option", DIALOG_STYLE_LIST, caption, "\
+        {CB3126}>{DADADA} Cambiar nombre\n\
+        {CB3126}>{DADADA} Modificar permisos\n\
+        {CB3126}>{DADADA} Cambiar de posición\n\
+    ", "Seleccionar", "Atrás");
+    return 1;
+}
+
+GangPanel_OpenRolePermissions(playerid)
+{
+    strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Permiso\t{DADADA}Estado\n");
+
+    new line[92];
+    for(new i; i < sizeof(g_rgszGangPermNames); ++i)
+    {
+        format(line, sizeof(line), "{DADADA}%s\t%s\n", g_rgszGangPermNames[i], ((g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankPermisionFlags] & (1 << i)) != 0 ? "{64A752}+" : "{A83225}-"));
+        strcat(HYAXE_UNSAFE_HUGE_STRING, line);
+    }
+
+    Dialog_Show(playerid, "gang_role_change_perms", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}>>{DADADA} Permisos", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Atrás");
+    return 1;
+}

@@ -201,7 +201,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
         Gangs_ClosePanel(playerid);
 
         new caption[128];
-        format(caption, sizeof(caption), "{CB3126}>>{DADADA} Banda: {%0.6x}%s", Gang_Data(Player_Gang(playerid))[e_iGangColor] >>> 8, Gang_Data(Player_Gang(playerid))[e_szGangName]);
+        format(caption, sizeof(caption), "{CB3126}>>{DADADA} Banda: {%06x}%s", Gang_Data(Player_Gang(playerid))[e_iGangColor] >>> 8, Gang_Data(Player_Gang(playerid))[e_szGangName]);
         
         if(!(Player_GangRankData(playerid)[e_iRankPermisionFlags] & _:(GANG_PERM_KICK_MEMBERS | GANG_PERM_EDIT_MEMBERS)))
         {
@@ -282,24 +282,7 @@ dialog modify_gang(playerid, response, listitem, inputtext[])
         }
         case GANG_PERM_CHANGE_ROLES:
         {
-            strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Los roles están ordenados por su importancia jerárquica\t \n");
-
-            new line[90];
-            for(new i = sizeof(g_rgeGangRanks[]) - 1; i != -1; --i)
-            {
-                if(g_rgeGangRanks[Player_Gang(playerid)][i][e_iRankId])
-                {
-                    format(line, sizeof(line), "{DADADA}%2i {CB3126}>{DADADA} %s\t \n", i + 1, g_rgeGangRanks[Player_Gang(playerid)][i][e_szRankName]);
-                }
-                else
-                {
-                    format(line, sizeof(line), "{DADADA}%2i {CB3126}>{969696} Vacío\t \n", i + 1);
-                }
-
-                strcat(HYAXE_UNSAFE_HUGE_STRING, line);
-            }
-
-            Dialog_Show(playerid, "gang_change_role", DIALOG_STYLE_TABLIST_HEADERS, caption, HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Cancelar");
+            GangPanel_OpenRoles(playerid);
         }
         case GANG_PERM_KICK_MEMBERS, GANG_PERM_EDIT_MEMBERS:
         {
@@ -388,6 +371,202 @@ dialog gang_change_icon(playerid, response, listitem, inputtext[])
 
     return 1;
 }
+
+dialog gang_change_role(playerid, response, listitem, inputtext[])
+{
+    if(!response)
+    {
+        Gangs_OpenPanel(playerid);
+        return 1;
+    }
+
+    if(!(0 <= listitem < sizeof(g_rgeGangRanks[])))
+        return 1;
+
+    new rankid = 9 - listitem;
+
+    if(!g_rgeGangRanks[Player_Gang(playerid)][rankid][e_iRankId])
+    {
+        g_rgiPanelSelectedRole{playerid} = rankid;
+        g_rgeGangRanks[Player_Gang(playerid)][rankid][e_iRankId] = -1;
+        Dialog_Show(playerid, "gang_create_role", DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Crear nuevo rol", "{DADADA}Introduce el nombre del rol a crear. No debe contener más de {CB3126}32{DADADA} caracteres.", "Siguiente", "Cancelar");
+    }
+    else if(g_rgeGangRanks[Player_Gang(playerid)][rankid][e_iRankId] == -1)
+    {
+        Dialog_Show(playerid, "gang_role_being_created", DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Crear nuevo rol", "{DADADA}Otro jugador ya está creando este rol, podrás modificarlo cuando termine de crearlo.", "Entendido");
+    }
+    else
+    {
+        g_rgiPanelSelectedRole{playerid} = rankid;
+        GangPanel_OpenRoleOptions(playerid);
+    }
+
+    return 1;
+}
+
+dialog gang_role_being_created(playerid, response, listitem, inputtext[])
+{
+    GangPanel_OpenRoles(playerid);
+    return 1;
+}
+
+dialog gang_create_role(playerid, response, listitem, inputtext[])
+{
+    if(!response)
+    {
+        g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankId] = 0;
+        g_rgiPanelSelectedRole{playerid} = 0xFF;
+        Gangs_OpenPanel(playerid);
+        return 1;
+    }
+
+    if(isnull(inputtext) || strlen(inputtext) > 32)
+    {
+        Dialog_Show(playerid, "gang_create_role", DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Crear nuevo rol", "{DADADA}Introduce el nombre del rol a crear. No debe contener más de {CB3126}32{DADADA} caracteres.", "Siguiente", "Cancelar");
+        return 1;
+    }
+
+    strcpy(g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_szRankName], inputtext);
+    g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankPermisionFlags] = 0;
+
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+        INSERT INTO `GANG_RANKS` \
+            (`GANG_ID`, `RANK_NAME`, `RANK_HIERARCHY`, `RANK_PERMISSIONS`) \
+        VALUES \
+            (%i, '%e', %i, 0);\
+        ",
+    Gang_Data(Player_Gang(playerid))[e_iGangDbId], inputtext, g_rgiPanelSelectedRole{playerid} + 1);
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "GANGS_RoleCreated", "i", playerid);
+
+    return 1;
+}
+
+public GANGS_RoleCreated(playerid)
+{
+    g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankId] = cache_insert_id();
+    g_rgiPanelSelectedRole{playerid} = 0xFF;
+    Dialog_Show(playerid, "gang_role_created", DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Rol creado", "{DADADA}El rol fue creado exitosamente. Dirígete al panel de roles para editar sus permisos.", "Entendido");
+    return 1;
+}
+
+dialog gang_role_created(playerid, response, listitem, inputtext[])
+{
+    GangPanel_OpenRoles(playerid);
+    return 1;
+}
+
+dialog gang_role_modify_option(playerid, response, listitem, inputtext[])
+{
+    if(!response)
+    {
+        GangPanel_OpenRoles(playerid);
+        g_rgiPanelSelectedRole{playerid} = 0xFF;
+        return 1;
+    }
+
+    switch(listitem)
+    {
+        case 0:
+        {
+            Dialog_Show(playerid, "gang_role_change_name", DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Cambiar nombre del rol", "{DADADA}Introduce el nuevo nombre del rol a crear. No debe contener más de {CB3126}32{DADADA} caracteres.", "Cambiar", "Cancelar");
+        }
+        case 1:
+        {
+            GangPanel_OpenRolePermissions(playerid);
+        }
+        case 2:
+        {
+
+        }
+    }
+    
+    return 1;
+}
+
+dialog gang_role_change_name(playerid, response, listitem, inputtext[])
+{
+    if(!response)
+    {
+        GangPanel_OpenRoleOptions(playerid);
+        return 1;
+    }
+
+    if(isnull(inputtext) || strlen(inputtext) > 32)
+    {
+        Dialog_Show(playerid, "gang_role_change_name", DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Cambiar nombre del rol", "{DADADA}Introduce el nuevo nombre del rol a crear. No debe contener más de {CB3126}32{DADADA} caracteres.", "Cambiar", "Atrás");
+        return 1;
+    }
+
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "[BANDA]{DADADA} %s cambió el nombre del rango '%s' a '%s'.", Player_RPName(playerid), g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_szRankName], inputtext);
+    Gang_SendMessage(Player_Gang(playerid), HYAXE_UNSAFE_HUGE_STRING);
+
+    strcpy(g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_szRankName], inputtext);
+
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, 
+        "UPDATE `GANG_RANKS` SET `RANK_NAME` = '%e' WHERE `RANK_ID` = %i;",
+    inputtext, g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankId]);
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+
+    GangPanel_OpenRoleOptions(playerid);
+    return 1;
+}
+
+dialog gang_role_change_perms(playerid, response, listitem, inputtext[])
+{
+    if(!response)
+    {
+        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, 
+            "UPDATE `GANG_RANKS` SET `RANK_PERMISSIONS` = %i WHERE `RANK_ID` = %i;",
+            g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankPermisionFlags],
+            g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankId]
+        );
+        mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+
+        GangPanel_OpenRoleOptions(playerid);
+        return 1;
+    }
+
+    if((1 << listitem) == _:GANG_PERM_CHANGE_ROLES && Player_GangRank(playerid) == g_rgiPanelSelectedRole{playerid})
+    {
+        Dialog_Show(playerid, "gang_cant_change_perm", DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Permisos", "{DADADA}No puedes deshabilitar este permiso para tu rango actual.", "Entendido");
+        return 1;
+    }
+
+    g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankPermisionFlags] ^= (1 << listitem);
+    GangPanel_OpenRolePermissions(playerid);
+    return 1;
+}
+
+dialog gang_cant_change_perm(playerid, response, listitem, inputtext[])
+{
+    GangPanel_OpenRolePermissions(playerid);
+    return 1;
+}
+
+public OnPlayerDisconnect(playerid, reason)
+{
+    if(g_rgiPanelSelectedRole{playerid} != 0xFF && g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankId] == -1)
+    {
+        g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankId] = 0;
+        g_rgiPanelSelectedRole{playerid} = 0xFF;
+    }
+
+    #if defined GANGS_OnPlayerDisconnect
+        return GANGS_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect GANGS_OnPlayerDisconnect
+#if defined GANGS_OnPlayerDisconnect
+    forward GANGS_OnPlayerDisconnect(playerid, reason);
+#endif
 
 public OnPlayerCancelTDSelection(playerid)
 {

@@ -180,6 +180,10 @@ public ACCOUNT_CheckForBans(playerid)
 
 public OnPlayerDisconnect(playerid, reason)
 {
+    #if defined ACC_OnPlayerDisconnect
+        ACC_OnPlayerDisconnect(playerid, reason);
+    #endif
+
     if(Player_Cache(playerid) != MYSQL_INVALID_CACHE)
         cache_delete(Player_Cache(playerid));
 
@@ -206,11 +210,7 @@ public OnPlayerDisconnect(playerid, reason)
         Iter_Remove(LoggedIn, playerid);
     }
 
-    #if defined ACC_OnPlayerDisconnect
-        return ACC_OnPlayerDisconnect(playerid, reason);
-    #else
-        return 1;
-    #endif
+    return 1;
 }
 
 #if defined _ALS_OnPlayerDisconnect
