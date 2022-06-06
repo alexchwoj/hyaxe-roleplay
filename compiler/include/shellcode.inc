@@ -1,4 +1,4 @@
-// Copyright (C) 2013-2015 Zeex
+// Copyright (C) 2012 Zeex
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -18,51 +18,33 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-#if defined JIT_INC
+#if defined SHELLCODE_INC
 	#endinput
 #endif
-#define JIT_INC
+#define SHELLCODE_INC
 
-//
-// This variable will be set to true if the JIT plugin is loaded.
-//
-public const bool:__JIT = false;
+/**
+ * <library name="amx_assembly shellcode" summary="AMX Assembly Library: Execute arbitrary x86 assembly.">
+ *   <summary pawndoc="true">
+ *     This library uses the enhanced <em>pawndoc.xsl</em> from
+ *     <a href="https://github.com/pawn-lang/pawndoc">pawn-lang/pawndoc</a>.
+ *     This XSL has features such as library and markdown support, and will not
+ *     render this message when used.
+ *   </summary>
+ * </library>
+ */
 
-//
-// OnJITCompile() is called when the script is about to be compiled by
-// the JIT plugin
-//
-forward OnJITCompile();
+/// <p/>
 
-//
-// OnJITError() is called when an error occurs during JIT compilation.
-// See your server log for additional error information.
-//
-forward OnJITError();
+#include "amx_header"
+#include "dynamic_call"
+#include "phys_memory"
 
-//
-// Checks if the script is currently running in JIT mode. This function
-// will return false in OnJITCompile().
-//
-stock bool:IsJITPresent() {
-	#emit zero.pri
-	#emit lctrl 7
-	#emit retn
-	return false; // make compiler happy
-}
-
-//
-// Checks if the JIT plugin supports the fast jumps feature that was added
-// in version 2.1.
-//
-// https://github.com/Zeex/samp-plugin-jit/issues/51
-//
-stock bool:IsJITASMJumpCapable() {
-	#emit lctrl 6
-	#emit move.alt
-	#emit lctrl 8
-	#emit neq
-	#emit retn
-	return false; // make compiler happy
+/// <library>amx_assembly shellcode</library>
+stock RunShellcode(code_ptr, bool:align = true) {
+	if (align) {
+		code_ptr = ((code_ptr + 15) >>> 4) << 4;
+	}
+	return SysreqD(code_ptr);
 }
 
