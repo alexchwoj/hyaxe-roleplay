@@ -186,7 +186,8 @@ public OnPlayerDisconnect(playerid, reason)
 
     if(Player_Cache(playerid) != MYSQL_INVALID_CACHE)
         cache_delete(Player_Cache(playerid));
-
+    
+    g_rgbPlayerKicked{playerid} = false;
     Account_Save(playerid, true);
 
     g_rgePlayerData[playerid] = g_rgePlayerData[MAX_PLAYERS];

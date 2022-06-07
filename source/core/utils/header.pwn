@@ -34,7 +34,7 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 #define memset_single(%0,%1,%2) __emit(addr.u.alt %0[0], const.pri %1, fill (%2 * cellbytes))
 
 #if !NDEBUG
-	#define DEBUG_PRINT(%1) printf(%1)
+	#define DEBUG_PRINT(%1) printf("[dbg] "%1)
 #else
 	#define DEBUG_PRINT(%1);
 #endif

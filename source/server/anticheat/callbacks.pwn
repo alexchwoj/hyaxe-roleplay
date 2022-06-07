@@ -107,3 +107,47 @@ public OnGameModeExit()
 #if defined AC_OnGameModeExit
     forward AC_OnGameModeExit();
 #endif
+
+public OnIncomingPacket(playerid, packetid, BitStream:bs)
+{
+    if(g_rgbPlayerKicked{playerid})
+        return 0;
+
+    #if defined AC_OnIncomingPacket
+        return AC_OnIncomingPacket(playerid, packetid, bs);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnIncomingPacket
+    #undef OnIncomingPacket
+#else
+    #define _ALS_OnIncomingPacket
+#endif
+#define OnIncomingPacket AC_OnIncomingPacket
+#if defined AC_OnIncomingPacket
+    forward AC_OnIncomingPacket(playerid, packetid, BitStream:bs);
+#endif
+
+public OnIncomingRPC(playerid, rpcid, BitStream:bs)
+{
+    if(g_rgbPlayerKicked{playerid})
+        return 0;
+
+    #if defined AC_OnIncomingRPC
+        return AC_OnIncomingRPC(playerid, rpcid, bs);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnIncomingRPC
+    #undef OnIncomingRPC
+#else
+    #define _ALS_OnIncomingRPC
+#endif
+#define OnIncomingRPC AC_OnIncomingRPC
+#if defined AC_OnIncomingRPC
+    forward AC_OnIncomingRPC(playerid, rpcid, BitStream:bs);
+#endif

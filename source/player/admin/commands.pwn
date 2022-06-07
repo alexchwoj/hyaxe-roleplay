@@ -81,8 +81,8 @@ command kick(playerid, const params[], "Expulsa a un jugador")
     KickTimed(playerid, 500);
 
     Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, 
-        @f("› {DADADA}%s {415BA2}%s {DADADA}(ID {415BA2}%i{DADADA}) fue expulsado por %s %s {415BA2}%s{DADADA}.", 
-            (Player_Sex(kicked) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(kicked), kicked, (Player_Sex(playerid) == SEX_MALE ? "el" : "la"), Player_GetRankName(playerid), Player_RPName(playerid)
+        @f("› {DADADA}%s {415BA2}%s {DADADA}(ID {415BA2}%i{DADADA}) fue expulsad%c por %s %s {415BA2}%s{DADADA}.", 
+            (Player_Sex(kicked) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(kicked), kicked, (Player_Sex(kicked) == SEX_MALE ? 'o' : 'a'), (Player_Sex(playerid) == SEX_MALE ? "el" : "la"), Player_GetRankName(playerid), Player_RPName(playerid)
         )
     );
 
