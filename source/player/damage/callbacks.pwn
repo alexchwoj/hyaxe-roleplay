@@ -65,13 +65,15 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 
 public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 {
+    // Damage self-inflicted
     if (issuerid == INVALID_PLAYER_ID)
     {
         Damage_Send(playerid, INVALID_PLAYER_ID, g_rgiWeaponsDamage[weaponid], weaponid);
 	}
+    // Damage by player
     else
     {
-        if (issuerid != INVALID_PLAYER_ID && weaponid < 50 && weaponid != WEAPON_FLAMETHROWER)
+        if (weaponid > 50 || weaponid == WEAPON_FLAMETHROWER)
 	        return 0;
 
         CallLocalFunction(!"OnPlayerDamage", !"iidii", playerid, issuerid, floatround(amount), weaponid, bodypart);

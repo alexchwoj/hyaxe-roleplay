@@ -5,6 +5,7 @@
 
 new
     g_rgiLastDamageTick[MAX_PLAYERS + 1][55],
+    g_rgiLastDeathTick[MAX_PLAYERS + 1],
     g_rgiWeaponsDamage[] = {
         1, // 0 - Fist
         1, // 1 - Brass knuckles

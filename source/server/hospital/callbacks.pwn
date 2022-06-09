@@ -47,6 +47,8 @@ public HP_HealPlayer(playerid)
 
         Notification_Show(playerid, "Los médicos te han dado de alta.", 3000, 0x64A752FF);
         KillTimer(g_rgiHospitalHealthTimer[playerid]);
+
+        Bit_Set(Player_Flags(playerid), PFLAG_HOSPITAL, false);
         return 1;
     }
 

@@ -5,6 +5,8 @@
 
 Player_GoToTheNearestHospital(playerid)
 {
+    Bit_Set(Player_Flags(playerid), PFLAG_HOSPITAL, true);
+
     KillTimer(g_rgiHospitalHealthTimer[playerid]);
     GetPlayerPos(playerid, g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ]);
 

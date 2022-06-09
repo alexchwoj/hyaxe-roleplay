@@ -15,9 +15,17 @@ Player_SetHealth(playerid, amount)
 	Player_Health(playerid) = clamp(amount, 0, 100);
 
 	if (amount <= 0)
+	{
+		if (GetTickCount() < g_rgiLastDeathTick[playerid] || Bit_Get(Player_Flags(playerid), PFLAG_HOSPITAL))
+			return 0;
+
+		ApplyAnimation(playerid, "KNIFE", "KILL_Knife_Ped_Die", 4.1, false, false, true, false, 0, false);
+		PlayerPlaySound(playerid, 1163);
 		CallLocalFunction(!"OnPlayerDeath", !"iid", playerid, INVALID_PLAYER_ID, 54);
-	else
-		SetPlayerHealth(playerid, amount);
+		g_rgiLastDeathTick[playerid] = GetTickCount() + 1000;
+	}
+	else SetPlayerHealth(playerid, amount);
+
 	return 1;
 }
 
@@ -39,13 +47,9 @@ Damage_Send(to, from, Float:amount, weaponid)
 	}
 	else
 	{
-		if ((Player_Health(to) - damage) <= 0)
+		if ((Player_Health(to) - damage) <= 5)
 		{
 			Player_SetHealth(to, 0);
-			//CallLocalFunction(!"OnPlayerDeath", !"iid", to, from, weaponid);
-			//Player_SetHealth(to, 0);
-			//Player_Health(to) = 0;
-			//SetPlayerHealth(to, 0.0);
 		}
 		else Player_SetHealth(to, Player_Health(to) - damage);
 	}
@@ -59,3 +63,30 @@ Weapon_SetDamage(weapon_id, damage)
 	g_rgiWeaponsDamage[weapon_id] = damage;
 	return 1;
 }
+
+command revive(playerid, const params[], "Revivir a un jugador")
+{
+    extract params -> new player:destination = 0xFFFF, health = 100; else {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/revive {DADADA}[jugador = tú] [vida = 100]");
+        return 1;
+    }
+
+	if (destination == INVALID_PLAYER_ID)
+        destination = playerid;
+
+	Player_SetHealth(destination, health);
+	Bit_Set(Player_Flags(destination), PFLAG_INJURED, false);
+
+	KillTimer(g_rgeCrawlData[destination][e_iCrawlKeyTimer]);
+	ClearAnimations(destination);
+
+    if (playerid != destination)
+    {
+        SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Reviviste a {ED2B2B}%s{DADADA} con la vida a {ED2B2B}%d{DADADA}.", Player_RPName(destination), health);
+    }
+    
+    SendClientMessagef(destination, 0xED2B2BFF, "›{DADADA} Te reviviste con la vida a {ED2B2B}%d{DADADA}.", health);
+
+    return 1;
+}
+flags:revive(CMD_FLAG<RANK_LEVEL_MODERATOR>)
