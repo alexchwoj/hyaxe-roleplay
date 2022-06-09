@@ -134,7 +134,7 @@ Chat_Resend(playerid)
 Chat_SendAction(playerid, const message[])
 {
     new string[156];
-    format(string, sizeof(string), "* %s %s", Player_RPName(playerid), message);
+    format(string, sizeof(string), "* %s %s.", Player_RPName(playerid), message);
     Chat_SendMessageToRange(playerid, 0xB39B6BFF, 30.0, string);
     return 1;
 }
