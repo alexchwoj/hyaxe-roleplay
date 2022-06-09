@@ -4,7 +4,7 @@
 #pragma warning disable 239
 #pragma warning disable 214
 
-#define NDEBUG 1
+#define NDEBUG 0
 
 #if NDEBUG
 	#pragma option -d0
