@@ -19,6 +19,7 @@ Player_SetHealth(playerid, amount)
 		if (GetTickCount() < g_rgiLastDeathTick[playerid] || Bit_Get(Player_Flags(playerid), PFLAG_HOSPITAL))
 			return 0;
 
+		SetPlayerDrunkLevel(playerid, 4000);
 		ApplyAnimation(playerid, "KNIFE", "KILL_Knife_Ped_Die", 4.1, false, false, true, false, 0, false);
 		PlayerPlaySound(playerid, 1163);
 		CallLocalFunction(!"OnPlayerDeath", !"iid", playerid, INVALID_PLAYER_ID, 54);

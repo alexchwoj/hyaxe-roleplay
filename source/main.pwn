@@ -174,6 +174,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/keygame/functions.pwn"
 #include "player/death/functions.pwn"
 #include "player/police/functions.pwn"
+#include "player/animation/functions.pwn"
 
 // Callbacks
 ///////////////

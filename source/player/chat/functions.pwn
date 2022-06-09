@@ -131,6 +131,14 @@ Chat_Resend(playerid)
     return 1;
 }
 
+Chat_SendAction(playerid, const message[])
+{
+    new string[156];
+    format(string, sizeof(string), "* %s %s", Player_RPName(playerid), message);
+    Chat_SendMessageToRange(playerid, 0xB39B6BFF, 30.0, string);
+    return 1;
+}
+
 command b(playerid, const params[], "Envia un mensaje fuera de rol")
 {
     if (isnull(params))
@@ -154,10 +162,7 @@ command me(playerid, const params[], "Envia un mensaje de acción")
         return 1;
     }
 
-    new string[156];
-    format(string, sizeof(string), "* %s %s", Player_RPName(playerid), params);
-    Chat_SendMessageToRange(playerid, 0xB39B6BFF, 30.0, string);
-
+    Chat_SendAction(playerid, params);
     return 1;
 }
 alias:me("y")

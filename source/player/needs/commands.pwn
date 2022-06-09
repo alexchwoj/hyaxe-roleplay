@@ -20,6 +20,7 @@ command cagar(playerid, const params[], "Echa un cago")
     ApplyAnimation(playerid, "PED", "SEAT_IDLE", 4.1, false, false, false, true, 0, false);
     SetTimerEx("SHIT_StepOne", 2000, false, "i", playerid);
 
+    Chat_SendAction(playerid, "echa un cago");
     return 1;
 }
 
