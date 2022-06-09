@@ -64,6 +64,52 @@ Weapon_SetDamage(weapon_id, damage)
 	return 1;
 }
 
+command setarmor(playerid, const params[], "Darle chaleco a un jugador")
+{
+    extract params -> new armor = 100, player:destination = 0xFFFF; else {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/setarmour {DADADA}[chaleco = 100] [jugador = tú]");
+        return 1;
+    }
+
+	if (destination == INVALID_PLAYER_ID)
+        destination = playerid;
+
+	Player_SetArmor(destination, armor);
+
+    if (playerid != destination)
+    {
+        SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Le diste {ED2B2B}%d{DADADA} puntos de chaleco a {ED2B2B}%s{DADADA}.", armor, Player_RPName(destination));
+    }
+    
+    SendClientMessagef(destination, 0xED2B2BFF, "›{DADADA} Se te asignó el chaleco a {ED2B2B}%d{DADADA}.", armor);
+
+    return 1;
+}
+flags:setarmor(CMD_FLAG<RANK_LEVEL_MODERATOR>)
+
+command sethealth(playerid, const params[], "Darle salud a un jugador")
+{
+    extract params -> new health = 100, player:destination = 0xFFFF; else {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/sethealth {DADADA}[vida = 100] [jugador = tú]");
+        return 1;
+    }
+
+	if (destination == INVALID_PLAYER_ID)
+        destination = playerid;
+
+	Player_SetHealth(destination, health);
+
+    if (playerid != destination)
+    {
+        SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Le diste {ED2B2B}%d{DADADA} puntos de salud a {ED2B2B}%s{DADADA}.", health, Player_RPName(destination));
+    }
+    
+    SendClientMessagef(destination, 0xED2B2BFF, "›{DADADA} Se te asignó la salud a {ED2B2B}%d{DADADA}.", health);
+
+    return 1;
+}
+flags:sethealth(CMD_FLAG<RANK_LEVEL_MODERATOR>)
+
 command revive(playerid, const params[], "Revivir a un jugador")
 {
     extract params -> new player:destination = 0xFFFF, health = 100; else {
