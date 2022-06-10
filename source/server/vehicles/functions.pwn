@@ -174,7 +174,7 @@ Speedometer_Show(playerid)
     }
 
     new vehicleid = GetPlayerVehicleID(playerid);
-    PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{0}, (g_rgeVehicles[vehicleid][e_bLocked] ? 0xA83225FF : 0x64A752FF));
+    PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{0}, (g_rgeVehicles[vehicleid][e_bLocked] ? 0xA83225FF : (Vehicle_HasAnyDoorRemoved(vehicleid) ? 0xE69F2EFF : 0x64A752FF)));
     PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{0});
     PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{1});
     if(Vehicle_GetHealth(vehicleid) <= 375.0 || !Vehicle_Fuel(vehicleid))
