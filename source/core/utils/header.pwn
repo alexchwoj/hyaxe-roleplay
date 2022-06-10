@@ -53,6 +53,9 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 	native minrand(min, max) = math_random;
 #endif
 
+#define _HexToRGBA(%1,%2,%3,%4) (((%4) & 0xFF) | (((%3) & 0xFF) << 8) | (((%2) & 0xFF) << 16) | ((%1) << 24))
+#define _RGBAToHex(%0,%1,%2,%3,%4) (((%1) = ((%0) >>> 24)),((%2) = (((%0) >>> 16) & 0xFF)),((%3) = (((%0) >>> 8) & 0xFF)),((%4) = ((%0) & 0xFF)))
+
 #define IS_NAN(%0) (_:((Float:0x7FFFFFFF) & (%0)) > (0x7F800000))
 #define IsNaN(%0) IS_NAN(%0)
 
