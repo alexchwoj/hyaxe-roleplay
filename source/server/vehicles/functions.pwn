@@ -428,11 +428,11 @@ flags:rvehp(CMD_FLAG<RANK_LEVEL_ADMINISTRATOR>)
 
 command set_veh_health(playerid, const params[], "Cambia la vida de un vehículo")
 {
-    extract params -> new vehicleid, Float:health = 1000.0; else {
-        return SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/setvehhealth {DADADA}<id del vehículo | -1 = actual> {969696}[vida = 1000.0]");
+    extract params -> new vehicleid = 0, Float:health = 1000.0; else {
+        return SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/repairveh {969696}[id del vehículo = 0 | 0 = (actual)] {969696}[vida = 1000.0]");
     }
 
-    if(vehicleid == -1)
+    if(!vehicleid)
         vehicleid = GetPlayerVehicleID(playerid);
 
     if(!IsValidVehicle(vehicleid))

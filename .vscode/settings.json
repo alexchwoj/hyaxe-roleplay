@@ -2,7 +2,11 @@
 	"[pawn]": {
 		"files.encoding": "windows1252",
 		"editor.formatOnPaste": false,
-		"editor.quickSuggestions": true,
+		"editor.quickSuggestions": {
+			"comments": "on",
+			"strings": "on",
+			"other": "on"
+		},
 		"editor.suggestOnTriggerCharacters": true,
 		"editor.suggest.snippetsPreventQuickSuggestions": true
 	},
