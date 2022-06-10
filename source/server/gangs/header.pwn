@@ -3,7 +3,7 @@
 #endif
 #define _gangs_header_
 
-const HYAXE_MAX_GANGS = 512;
+const HYAXE_MAX_GANGS = 2048;
 const HYAXE_MAX_GANG_RANKS = 25;
 
 enum eGangData

@@ -41,7 +41,7 @@ Actor_Rob(playerid, actorid)
     if(!Streamer_HasIntData(STREAMER_TYPE_ACTOR, actorid, E_STREAMER_CUSTOM(0x524F42)))
         return 0;
         
-    new id = Streamer_GetIntData(STREAMER_TYPE_ACTOR, actorid, E_STREAMER_EXTRA_ID);
+    new id = Streamer_GetIntData(STREAMER_TYPE_ACTOR, actorid, E_STREAMER_CUSTOM(0x524F42));
 
     if(!(0 <= id < sizeof(g_rgeRobbableActors)) || !g_rgeRobbableActors[id][e_bValid] || g_rgeRobbableActors[id][e_iRobbingPlayer] != INVALID_PLAYER_ID)
         return 0;
