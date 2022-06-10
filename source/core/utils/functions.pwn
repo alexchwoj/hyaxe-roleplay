@@ -512,3 +512,14 @@ cache_is_value_name_null_ret(row_idx, const column_name[])
     cache_is_value_name_null(row_idx, column_name, result);
     return result;
 }
+
+stock ReplaceStringByRegex(const str[], const regexp[], const fmt[], dest[], size = sizeof dest)
+{
+    new Regex:r = Regex_New(regexp);
+
+    if (r)
+    {
+        Regex_Replace(str, r, fmt, dest, MATCH_DEFAULT, size);
+        Regex_Delete(r);
+    }
+}

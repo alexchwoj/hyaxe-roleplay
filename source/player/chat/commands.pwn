@@ -108,22 +108,22 @@ command id(playerid, const params[], "Ver los datos de un jugador")
         Player_Level(destination)
     );
 
-    if (Player_AdminLevel(playerid) <= Player_AdminLevel(destination))
-    {
-        SendClientMessagef(
-            playerid, 0x415BA2FF,
-            "›{DADADA} Admin: IP: %s, %dB sent, %dB received",
-            RawIpToString(Player_IP(destination)),
-            NetStats_BytesSent(destination),
-            NetStats_BytesReceived(destination)
-        );
-    }
-
     SendClientMessagef(
         playerid, 0xED2B2BFF,
         "›{DADADA} Duración de la sesión actual: {ED2B2B}%d minuto(s)",
         (NetStats_GetConnectedTime(destination) / 60000)
     );
+
+    if (Player_AdminLevel(playerid) <= Player_AdminLevel(destination))
+    {
+        SendClientMessagef(
+            playerid, 0x415BA2FF,
+            "›{DADADA} Admin:{BBBBBB} IP: %s, %dB sent, %dB received",
+            RawIpToString(Player_IP(destination)),
+            NetStats_BytesSent(destination),
+            NetStats_BytesReceived(destination)
+        );
+    }
     return 1;
 }
 alias:id("jugador")

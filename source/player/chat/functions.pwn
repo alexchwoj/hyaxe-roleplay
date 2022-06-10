@@ -150,6 +150,9 @@ Chat_SendDoubt(playerid, const message[])
         message
     );
 
+    ReplaceStringByRegex(string, "\\B@(\\w+)", "{91B787}@$1{DADADA}", string);
+	ReplaceStringByRegex(string, "\\B/(\\w+)", "{DAA838}/$1{DADADA}", string);
+
     foreach(new i : LoggedIn)
     {
         if (!Bit_Get(Player_Flags(i), PFLAG_IN_GAME) || !Bit_Get(Player_Config(i), CONFIG_SHOW_DOUBT_CHANNEL))
