@@ -222,6 +222,7 @@ const HYAXE_MAX_NPCS = 100;
 
 // Commands
 //////////////
+#include "player/chat/commands.pwn"
 #include "player/needs/commands.pwn"
 #include "player/admin/commands.pwn"
 #include "player/police/commands.pwn"
