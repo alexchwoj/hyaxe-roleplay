@@ -62,6 +62,22 @@ command do(playerid, const params[], "Envia un mensaje de entorno")
 }
 alias:do("entorno")
 
+command duda(playerid, const params[], "Envia un mensaje al canal de dudas")
+{
+    if (isnull(params))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/duda {DADADA}<texto>");
+        return 1;
+    }
+
+    if (!Bit_Get(Player_Config(playerid), CONFIG_SHOW_DOUBT_CHANNEL))
+        return SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} Activa el canal de dudas para poder usarlo.");
+
+    Chat_SendDoubt(playerid, params);
+    return 1;
+}
+alias:duda("n")
+
 command id(playerid, const params[], "Ver los datos de un jugador")
 {
     extract params -> new player:destination = 0xFFFF; else {
@@ -95,8 +111,8 @@ command id(playerid, const params[], "Ver los datos de un jugador")
     if (Player_AdminLevel(playerid) <= Player_AdminLevel(destination))
     {
         SendClientMessagef(
-            playerid, 0xED2B2BFF,
-            "›{DADADA} información privilegiada: IP: %s, %dB sent, %dB received",
+            playerid, 0x415BA2FF,
+            "›{DADADA} Admin: IP: %s, %dB sent, %dB received",
             RawIpToString(Player_IP(destination)),
             NetStats_BytesSent(destination),
             NetStats_BytesReceived(destination)

@@ -138,3 +138,24 @@ Chat_SendAction(playerid, const message[])
     Chat_SendMessageToRange(playerid, 0xB39B6BFF, 30.0, string);
     return 1;
 }
+
+Chat_SendDoubt(playerid, const message[])
+{
+    new string[144];
+    format(
+        string, sizeof(string), "[Dudas]{DADADA} %s %s (%d): %s",
+        g_rgszRankLevelNames[ Player_AdminLevel(playerid) ][ Player_Sex(playerid) ],
+        Player_RPName(playerid),
+        playerid,
+        message
+    );
+
+    foreach(new i : LoggedIn)
+    {
+        if (!Bit_Get(Player_Flags(i), PFLAG_IN_GAME) || !Bit_Get(Player_Config(i), CONFIG_SHOW_DOUBT_CHANNEL))
+            continue;
+
+        SendClientMessage(i, 0x91B787FF, string);
+    }
+    return 1;
+}
