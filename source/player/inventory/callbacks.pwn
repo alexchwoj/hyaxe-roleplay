@@ -28,7 +28,7 @@ public OnPlayerCancelTDSelection(playerid)
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if ((newkeys & KEY_NO) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
+    if ((newkeys & KEY_NO) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT || !Bit_Get(Player_Flags(playerid), PFLAG_IN_KEYGAME))
     {
         Inventory_Show(playerid);
     }

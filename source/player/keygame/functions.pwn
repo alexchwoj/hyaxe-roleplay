@@ -5,6 +5,8 @@
 
 Player_StartKeyGame(playerid, cb, Float:key_percentage_up = 9.9, Float:decrease_sec = 2.5)
 {
+    Bit_Set(Player_Flags(playerid), PFLAG_IN_KEYGAME, true);
+
     g_rgeKeyGameData[playerid][e_iKgCurrentKey] = random(sizeof(g_rgiRandomKeys));
 
     TextDrawTextSize(g_tdKeyGame[1], 298.500, KEYGAME_BAR_MIN_Y);
@@ -32,6 +34,8 @@ Player_StartKeyGame(playerid, cb, Float:key_percentage_up = 9.9, Float:decrease_
 
 Player_StopKeyGame(playerid)
 {
+    Bit_Set(Player_Flags(playerid), PFLAG_IN_KEYGAME, false);
+
     KillTimer(g_rgeKeyGameData[playerid][e_iKgTimers][KG_TIMER_DECREASE_BAR]);
     KillTimer(g_rgeKeyGameData[playerid][e_iKgTimers][KG_TIMER_PROCESS_KEY]);
 
