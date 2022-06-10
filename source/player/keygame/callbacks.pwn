@@ -44,7 +44,13 @@ public KEYGAME_ProcessKey(playerid)
         }
         else
         {
-            g_rgeKeyGameData[playerid][e_iKgCurrentKey] = random(sizeof(g_rgiRandomKeys));
+            new next_key = random(sizeof(g_rgiRandomKeys));
+            while(next_key == g_rgeKeyGameData[playerid][e_iKgCurrentKey])
+                next_key = random(sizeof(g_rgiRandomKeys));
+
+            g_rgeKeyGameData[playerid][e_iKgCurrentKey] = next_key;
+            PlayerPlaySound(playerid, 11200);
+
             PlayerTextDrawSetString(playerid, p_tdKeyGame{playerid}, g_rgszKeyNames[g_rgeKeyGameData[playerid][e_iKgCurrentKey]]);
             g_rgeKeyGameData[playerid][e_iKgLastKeyAppearance] = GetTickCount();
         }
