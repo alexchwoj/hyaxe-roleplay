@@ -83,6 +83,10 @@ const HYAXE_MAX_NPCS = 100;
 #include <amx/frame_info>
 #include <amx/amx_memory>
 
+#define user_EXTRO:%0##%1,%2|||%3=%9|||%4,%5) EXTRY:%0##%1r"("#%9")"#,%2,%3|||%4|||%5)
+#define user_EXTRN:%0##%1,%2|||%3|||%4,%5) EXTRY:%0##%1r,%2,%3|||%4|||%5)
+#define user_EXTRW:%0##%1,%2|||%3[%7]|||%4,%5) EXTRY:%0##%1a<r>[*],%2,(%7),%3|||%4|||%5)
+
 /*
 		YSI is pozzed
 							*/
