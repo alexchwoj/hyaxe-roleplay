@@ -212,6 +212,12 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         new vehicleid = (IsPlayerInAnyVehicle(playerid) ? GetPlayerVehicleID(playerid) : GetPlayerCameraTargetVehicle(playerid));
         if(vehicleid != INVALID_VEHICLE_ID)
         {
+            if(Vehicle_HasAnyDoorRemoved(vehicleid))
+            {
+                Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes usar los seguros de este vehículo porque le falta una puerta.");
+                return 1;
+            }
+
             if(g_rgeVehicles[vehicleid][e_iVehicleOwnerId] == playerid || Vehicle_Type(vehicleid) == VEHICLE_TYPE_ADMIN)
             {
                 Vehicle_ToggleLock(vehicleid);
@@ -429,4 +435,52 @@ public OnPlayerAuthenticate(playerid)
 #define OnPlayerAuthenticate VEH_OnPlayerAuthenticate
 #if defined VEH_OnPlayerAuthenticate
     forward VEH_OnPlayerAuthenticate(playerid);
+#endif
+
+public OnVehicleDamageStatusUpdate(vehicleid, playerid)
+{
+    static old_doors[MAX_VEHICLES];
+
+    new panels, doors, lights, tires;
+    GetVehicleDamageStatus(vehicleid, panels, doors, lights, tires);
+
+    if(doors & 0x4040404 && !(old_doors[vehicleid] & 0x4040404))
+    {
+        g_rgeVehicles[vehicleid][e_bLocked] = false;
+        new engine, lights_p, alarm, doors_p, bonnet, boot, objective;
+        GetVehicleParamsEx(vehicleid, engine, lights_p, alarm, doors_p, bonnet, boot, objective);
+        SetVehicleParamsEx(vehicleid, engine, lights_p, alarm, false, bonnet, boot, objective);
+
+        if(GetPlayerVehicleID(playerid) == vehicleid && Speedometer_Shown(playerid))
+        {
+            PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{0}, 0xE69F2EFF);
+            PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{0});
+        }
+    }
+    else if((old_doors[vehicleid] & 0x4040404) && !(doors & 0x4040404))
+    {
+        if(GetPlayerVehicleID(playerid) == vehicleid && Speedometer_Shown(playerid))
+        {
+            PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{0}, 0x64A752FF);
+            PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{0});
+        }
+    }
+
+    old_doors[vehicleid] = doors;
+
+    #if defined VEH_OnVehicleDamageStatusUpdate
+        return VEH_OnVehicleDamageStatusUpdate(vehicleid, playerid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnVehicleDamageStatusUpd
+    #undef OnVehicleDamageStatusUpdate
+#else
+    #define _ALS_OnVehicleDamageStatusUpd
+#endif
+#define OnVehicleDamageStatusUpdate VEH_OnVehicleDamageStatusUpdate
+#if defined VEH_OnVehicleDamageStatusUpdate
+    forward VEH_OnVehicleDamageStatusUpdate(vehicleid, playerid);
 #endif

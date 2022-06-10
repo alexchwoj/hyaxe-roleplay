@@ -153,6 +153,13 @@ Vehicle_Respawn(vehicleid)
     return SetVehicleToRespawn(vehicleid);
 }
 
+bool:Vehicle_HasAnyDoorRemoved(vehicleid)
+{
+    new panels, doors, lights, tires;
+    GetVehicleDamageStatus(vehicleid, panels, doors, lights, tires);
+    return (doors & 0b00000100000001000000010000000100) != 0;
+}
+
 Speedometer_Show(playerid)
 {
     if(g_rgiSpeedometerUpdateTimer[playerid])
