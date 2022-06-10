@@ -92,7 +92,7 @@ command id(playerid, const params[], "Ver los datos de un jugador")
         Player_Level(destination)
     );
 
-    if (Player_AdminLevel(playerid) >= 4)
+    if (Player_AdminLevel(playerid) <= Player_AdminLevel(destination))
     {
         SendClientMessagef(
             playerid, 0xED2B2BFF,
