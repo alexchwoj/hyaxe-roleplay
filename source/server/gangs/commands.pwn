@@ -34,6 +34,5 @@ command banda(playerid, const params[], "Abre el panel de creación de una banda"
 
 dialog gang_create(playerid, response, listitem, const inputtext[])
 {
-    
     return 1;
 }
