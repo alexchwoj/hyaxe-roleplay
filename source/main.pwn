@@ -77,9 +77,9 @@ const HYAXE_MAX_NPCS = 100;
 #include <PawnPlus>
 #include <a_mysql>
 #include <colandreas>
+#include <FCNPC>
 #include <foreach>
 #include <md-sort>
-#include <FCNPC>
 #include <amx/frame_info>
 #include <amx/amx_memory>
 
@@ -100,7 +100,6 @@ const HYAXE_MAX_NPCS = 100;
 #include "core/fixes/streamer.pwn"
 #include "core/fixes/textdraws.pwn"
 #include "core/fixes/player.pwn"
-#include "core/fixes/bots.pwn"
 
 // Headers
 /////////////

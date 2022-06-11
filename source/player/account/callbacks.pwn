@@ -8,6 +8,10 @@ public OnPlayerConnect(playerid)
     log_function();
 
     SetPlayerColor(playerid, 0xF7F7F700);
+
+    if(FCNPC_IsValid(playerid))
+        return 1;
+        
     TogglePlayerSpectating(playerid, true);
 
     GetPlayerName(playerid, Player_Name(playerid));

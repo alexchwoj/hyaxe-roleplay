@@ -44,9 +44,12 @@ public KEYGAME_ProcessKey(playerid)
         }
         else
         {
-            new next_key = random(sizeof(g_rgiRandomKeys));
-            while(next_key == g_rgeKeyGameData[playerid][e_iKgCurrentKey])
+            new next_key;
+            do
+            {
                 next_key = random(sizeof(g_rgiRandomKeys));
+            } 
+            while(next_key == g_rgeKeyGameData[playerid][e_iKgCurrentKey]);
 
             g_rgeKeyGameData[playerid][e_iKgCurrentKey] = next_key;
             PlayerPlaySound(playerid, 11200);

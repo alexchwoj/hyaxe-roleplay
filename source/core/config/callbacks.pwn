@@ -63,6 +63,15 @@ on_init 00SetupServerConfig()
 
 	CA_Init();
 	
+	print("[config] Setting default NPC colors");
+	for(new i = MAX_PLAYERS - 1; i != -1; --i)
+	{
+		if(!FCNPC_IsValid(i))
+			continue;
+
+		SetPlayerColor(i, 0xF7F7F700);
+	}
+
 	SendRconCommand(!"password 0");
 
 	return 1;

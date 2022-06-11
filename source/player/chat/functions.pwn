@@ -150,8 +150,18 @@ Chat_SendDoubt(playerid, const message[])
         message
     );
 
-    ReplaceStringByRegex(string, "\\B@(\\w+)", "{91B787}@$1{DADADA}", string);
-	ReplaceStringByRegex(string, "\\B/(\\w+)", "{DAA838}/$1{DADADA}", string);
+    static 
+        Regex:tag_regex,
+        Regex:command_regex;
+    
+    if(!tag_regex)
+        tag_regex = Regex_New("\\B@(\\w+)");
+
+    if(!command_regex)
+        command_regex = Regex_New("\\B/(\\w+)");
+
+    Regex_Replace(string, tag_regex, "{91B787}@$1{DADADA}", string);
+    Regex_Replace(string, command_regex, "{DAA838}/$1{DADADA}", string);
 
     foreach(new i : LoggedIn)
     {

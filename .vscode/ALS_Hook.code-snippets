@@ -42,5 +42,15 @@
 			"#define $2 $1_$2",
 			""
 		]
+	},
+	"Dialog": {
+		"prefix": ["dialog"],
+		"body": [
+			"dialog $1(playerid, response, listitem, const inputtext[])",
+			"{",
+			"\t$0",
+			"\treturn 1;",
+			"}"
+		]
 	}
 }
