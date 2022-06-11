@@ -16,9 +16,9 @@ static GenerateGrassInArea(areaid)
         
         do
         {
-            x = RandomFloat(g_rgeLawnmowerAreas[areaid][e_fAreaMinX], g_rgeLawnmowerAreas[areaid][e_fAreaMaxX]);
-            y = RandomFloat(g_rgeLawnmowerAreas[areaid][e_fAreaMinY], g_rgeLawnmowerAreas[areaid][e_fAreaMaxY]);
-            z = RandomFloat(g_rgeLawnmowerAreas[areaid][e_fAreaMinZ], g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ]);
+            x = math_random_float(g_rgeLawnmowerAreas[areaid][e_fAreaMinX], g_rgeLawnmowerAreas[areaid][e_fAreaMaxX]);
+            y = math_random_float(g_rgeLawnmowerAreas[areaid][e_fAreaMinY], g_rgeLawnmowerAreas[areaid][e_fAreaMaxY]);
+            z = math_random_float(g_rgeLawnmowerAreas[areaid][e_fAreaMinZ], g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ]);
             is_above_water = CA_RayCastLine(x, y, 100.0, x, y, -100.0, x, y, z) == WATER_OBJECT;
 
             // FIXME

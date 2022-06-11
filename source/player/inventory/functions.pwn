@@ -268,7 +268,7 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 {
 	new objectid = CreateDynamicObject(
 		Item_ModelID(type), x, y, z + 0.9,
-		RandomFloat(-180.0, 180.0), RandomFloat(-180.0, 180.0), RandomFloat(-180.0, 180.0),
+		math_random_float(-180.0, 180.0), math_random_float(-180.0, 180.0), math_random_float(-180.0, 180.0),
 		world, interior, .streamdistance = 50.0, .drawdistance = 50.0
 	);
 
