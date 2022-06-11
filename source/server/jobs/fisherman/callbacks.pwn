@@ -22,10 +22,10 @@ public OnGameModeInit()
     // Rod store
     CreateDynamicActor(34, 2157.2991, -107.2062, 2.6883, 115.4688, .worldid = 0, .interiorid = 0);
     CreateDynamic3DTextLabel("{CB3126}Caña de pescar{DADADA}\nPresiona {CB3126}Y{DADADA} para comprar", 0xDADADAFF, 2154.5454, -108.4645, 2.6524, 10.0, .testlos = 1, .worldid = 0, .interiorid = 0);
-    Key_Alert(2154.5454, -108.4645, 2.6524, 3.5, KEYNAME_YES, 0, 0);
+    Key_Alert(2154.5454, -108.4645, 2.6524, 2.6, KEYNAME_YES, 0, 0);
 	
     area_info[0] = 0x726f64; // ROD
-	area_id = CreateDynamicSphere(2154.5454, -108.4645, 2.6524, 3.5, 0, 0);
+	area_id = CreateDynamicSphere(2154.5454, -108.4645, 2.6524, 2.5, 0, 0);
 	Streamer_SetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, area_info);
 
     // Fish store
@@ -60,12 +60,10 @@ public OnGameModeInit()
 static Fisherman_KeyGameCallback(playerid, bool:success)
 {
     TogglePlayerControllable(playerid, true);
-    TogglePlayerWidescreen(playerid, false);
-    Chat_Resend(playerid);
 
     if (success)
     {
-        Inventory_AddFixedItem(playerid, ITEM_FISH, 1, 0)
+        Inventory_AddFixedItem(playerid, ITEM_FISH, 1, 0);
 
         Notification_Show(playerid, "¡Bien ahí! Has pescado un pez.", 3000, 0x64A752FF);
         ApplyAnimation(playerid, "OTB", "WTCHRACE_WIN", 4.1, false, false, false, false, 0, true);
@@ -83,6 +81,7 @@ static Fisherman_KeyGameCallback(playerid, bool:success)
 FishingRod_OnUse(playerid, slot)
 {
     #pragma unused slot
+    Inventory_Hide(playerid);
 
     if ( CA_IsPlayerFacingWater(playerid) )
     {
@@ -90,11 +89,7 @@ FishingRod_OnUse(playerid, slot)
         ApplyAnimation(playerid, "OTB", "null", 4.1, 0, 0, 0, 0, 0, 0);
         ApplyAnimation(playerid, "SWORD", "null", 4.1, 0, 0, 0, 0, 0, 0);
 
-        Inventory_Hide(playerid);
-
         TogglePlayerControllable(playerid, false);
-        TogglePlayerWidescreen(playerid, true);
-        Chat_Resend(playerid);
 
         SetPlayerAttachedObject(playerid, 9, 18632, 6, 0.0620, 0.0199, 0.0149, 9.1999, 171.9999, 103.0999, 0.8920, 0.9029, 1.0589, 0xFFFFFFFF, 0xFFFFFFFF);
 
@@ -114,19 +109,22 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     {
         if (GetPlayerNumberDynamicAreas(playerid) > 0)
         {
-            new areas[1];
+            new areas[3];
             GetPlayerDynamicAreas(playerid, areas);
 
-            new info[3];
-            Streamer_GetArrayData(STREAMER_TYPE_AREA, areas[0], E_STREAMER_EXTRA_ID, info);
-            if (info[0] == 0x726f64)
+            for(new i; i < sizeof(areas); ++i)
             {
-                Dialog_Show(playerid, "buy_fishing_rod", DIALOG_STYLE_MSGBOX, !"{CB3126}Caña de pescar", !"{DADADA}¿Quieres comprar una caña de pescar por {64A752}$75{DADADA}?", !"Comprar", !"Cerrar");
-            }
+                new info[1];
+                Streamer_GetArrayData(STREAMER_TYPE_AREA, areas[i], E_STREAMER_EXTRA_ID, info);
+                if (info[0] == 0x726f64)
+                {
+                    Dialog_Show(playerid, "buy_fishing_rod", DIALOG_STYLE_MSGBOX, !"{CB3126}Caña de pescar", !"{DADADA}¿Quieres comprar una caña de pescar por {64A752}$75{DADADA}?", !"Comprar", !"Cerrar");
+                }
 
-            if (info[0] == 0x534653)
-            {
-                // fish
+                if (info[0] == 0x534653)
+                {
+                    // fish
+                }
             }
         }
     }
@@ -151,8 +149,20 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 dialog buy_fishing_rod(playerid, response, listitem, inputtext[])
 {
     if (response)
-    {      
-        
+    {
+        if (75 > Player_Money(playerid))
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+            return 1;
+        }
+
+        Inventory_AddFixedItem(playerid, ITEM_FISHING_ROD, 1, 0);
+
+        Player_GiveMoney(playerid, -75);
+        PlayerPlaySound(playerid, SOUND_SUCCESS);
+
+        Notification_Show(playerid, "Has comprado una caña de pescar. Vaya a cualquier lugar con agua para usarla.", 4000, 0x64A752FF);
     }
     return 1;
 }

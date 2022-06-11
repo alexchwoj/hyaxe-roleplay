@@ -1353,7 +1353,7 @@ public OnPlayerConnect(playerid)
 	PlayerTextDrawFont(playerid, p_tdKeyGame{playerid}, 2);
 	PlayerTextDrawLetterSize(playerid, p_tdKeyGame{playerid}, 0.308333, 1.550000);
 	PlayerTextDrawTextSize(playerid, p_tdKeyGame{playerid}, 400.000000, 17.000000);
-	PlayerTextDrawSetOutline(playerid, p_tdKeyGame{playerid}, 0);
+	PlayerTextDrawSetOutline(playerid, p_tdKeyGame{playerid}, 1);
 	PlayerTextDrawSetShadow(playerid, p_tdKeyGame{playerid}, 0);
 	PlayerTextDrawAlignment(playerid, p_tdKeyGame{playerid}, 2);
 	PlayerTextDrawColor(playerid, p_tdKeyGame{playerid}, -1094795521);
