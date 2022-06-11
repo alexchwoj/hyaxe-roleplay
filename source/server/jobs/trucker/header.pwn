@@ -7,8 +7,6 @@ enum eTruckerRoute
 {
     e_szRouteName[24],
     e_iBoxCount,
-    e_iPaymentMin,
-    e_iPaymentMax,
     Float:e_fTruckCpX,
     Float:e_fTruckCpY,
     Float:e_fTruckCpZ,
@@ -21,7 +19,7 @@ enum eTruckerRoute
 
 new g_rgeTruckerRoutes[][eTruckerRoute] = {
     { 
-        "Insumos de pesca", 4, 500, 650, 
+        "Insumos de pesca", 4,
         2792.2153, -2418.1289, 13.6326, INVALID_STREAMER_ID, 
         2794.8582, -2410.6621, 13.6319, INVALID_STREAMER_ID
     }

@@ -19,3 +19,4 @@ new
 forward Dialog_Show(playerid, const dialogname[], style, const caption[], const info[], const button1[], const button2[] = "");
 forward Dialog_Show_s(playerid, const dialogname[], style, ConstString:caption, ConstString:info, const button1[], const button2[] = "");
 forward Dialog_Hide(playerid);
+forward Task<eDialogResponse>:Dialog_ShowAsync(playerid, style, const caption[], const info[], const button1[], const button2[] = "");
