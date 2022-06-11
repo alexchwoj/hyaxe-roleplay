@@ -38,6 +38,8 @@ enum _:eItems
     ITEM_CHICKEN,
     ITEM_COFFE,
     ITEM_SANGUCHEDEMILANESA,
+    ITEM_FISHING_ROD,
+    ITEM_FISH,
 
 	ITEM_INVALID
 };
@@ -102,6 +104,8 @@ new
 		{"Pollo", 2768, true, -1}, // ITEM_CHICKEN
 		{"Cafe", 19835, true, -1}, // ITEM_COFFE
 		{"Sanguche de milanesa", 2703, true, -1}, // ITEM_SANGUCHEDEMILANESA
+        {"Caña de pescar", 18632, true, -1}, // ITEM_FISHING_ROD
+        {"Pescado", 19630, false, -1}, // ITEM_FISH
 
 		{"Invalid item", 18631, false, -1} // ITEM_INVALID
 	},
