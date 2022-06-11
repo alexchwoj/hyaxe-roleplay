@@ -3,15 +3,27 @@
 #endif
 #define _fisherman_callbacks_
 
+static Fisherman_JobEvent(playerid, eJobEvent:event, data)
+{
+    Notification_Show(playerid, "Compra una caña de pescar en la tienda de al lado para empezar a trabajar. Puedes pescar en cualquier lugar con agua y luego puedes vender el pescado en la pescadería de al lado.", 7000);
+    return 1;
+}
+
 public OnGameModeInit()
 {
+    Job_CreateSite(JOB_FISHERMAN, 2156.9067, -97.8114, 3.1911, 0, 0);
+    Job_SetCallback(JOB_FISHERMAN, __addressof(Fisherman_JobEvent));
+
     CreateDynamicActor(34, 2157.2991, -107.2062, 2.6883, 115.4688, .worldid = 0, .interiorid = 0);
     CreateDynamicActor(44, 2154.6438, -102.8098, 2.6685, 128.2921, .worldid = 0, .interiorid = 0);
     CreateDynamicActor(222, 2137.2734, -49.2241, 3.3297, 103.5150, .worldid = 0, .interiorid = 0);
     CreateDynamicActor(77, 2134.7053, -42.9645, 3.0114, 111.9517, .worldid = 0, .interiorid = 0);
 
+    CreateDynamic3DTextLabel("{CB3126}Caña de pescar{DADADA}\nPresiona {CB3126}Y{DADADA} para comprar", 0xDADADAFF, 2154.5454, -108.4645, 2.6524, 10.0, .testlos = 1, .worldid = 0, .interiorid = 0);
+    CreateDynamic3DTextLabel("{CB3126}Pescadería{DADADA}\nPresiona {CB3126}Y{DADADA} para vender", 0xDADADAFF, 2152.4070, -104.5057, 2.6569, 10.0, .testlos = 1, .worldid = 0, .interiorid = 0);
+    
     #if defined FISH_OnGameModeInit
-        return FISH_OnGameModeInit();
+        return FISH_OnGameModeInit(); 
     #else
         return 1;
     #endif

@@ -8,7 +8,8 @@ enum eJobs
     JOB_NONE,
     JOB_GUNSMAKER,
     JOB_LAWNMOWER,
-    JOB_TRUCKER
+    JOB_TRUCKER,
+    JOB_FISHERMAN
 };
 
 enum eJobEvent
@@ -34,7 +35,8 @@ new const
         "Ninguno",
         "Fabricante de armas",
         "Cortacésped",
-        "Camionero"
+        "Camionero",
+        "Pescador"
     };
 
 #define Player_Job(%0) (g_rgePlayerJobData[(%0)][e_iPlayerCurrentJob])

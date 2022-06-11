@@ -16,6 +16,7 @@ Job_CreateSite(eJobs:jobid, Float:x, Float:y, Float:z, vw, interior, const extra
     info[2] = cb_data;
     Streamer_SetArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_EXTRA_ID, info);
 
+    Key_Alert(x, y, z, 3.5, KEYNAME_YES, vw, interior);
     return 1;
 }
 
