@@ -197,6 +197,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/jobs/gunsmaker/callbacks.pwn"
 #include "server/jobs/lawnmower/callbacks.pwn"
 #include "server/jobs/trucker/callbacks.pwn"
+#include "server/jobs/fisherman/callbacks.pwn"
 #include "server/atm/callbacks.pwn"
 #include "server/hookers/callbacks.pwn"
 #include "server/gangs/callbacks.pwn"

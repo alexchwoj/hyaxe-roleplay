@@ -1,0 +1,80 @@
+#if defined _fisherman_callbacks_
+    #endinput
+#endif
+#define _fisherman_callbacks_
+
+public OnGameModeInit()
+{
+    CreateDynamicActor(34, 2157.2991, -107.2062, 2.6883, 115.4688, .worldid = 0, .interiorid = 0);
+    CreateDynamicActor(44, 2154.6438, -102.8098, 2.6685, 128.2921, .worldid = 0, .interiorid = 0);
+    CreateDynamicActor(222, 2137.2734, -49.2241, 3.3297, 103.5150, .worldid = 0, .interiorid = 0);
+    CreateDynamicActor(77, 2134.7053, -42.9645, 3.0114, 111.9517, .worldid = 0, .interiorid = 0);
+
+    #if defined FISH_OnGameModeInit
+        return FISH_OnGameModeInit();
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnGameModeInit
+    #undef OnGameModeInit
+#else
+    #define _ALS_OnGameModeInit
+#endif
+#define OnGameModeInit FISH_OnGameModeInit
+#if defined FISH_OnGameModeInit
+    forward FISH_OnGameModeInit();
+#endif
+
+static Fisherman_KeyGameCallback(playerid, bool:success)
+{
+    TogglePlayerControllable(playerid, true);
+    TogglePlayerWidescreen(playerid, false);
+    Chat_Resend(playerid);
+
+    if (success)
+    {
+        if (!Inventory_AddItem(playerid, ITEM_FISH, 1, 0))
+            DroppedItem_CreateFrontPlayer(playerid, ITEM_FISH, 1, 0);
+
+        Notification_Show(playerid, "¡Bien ahí! Has pescado un pez.", 3000, 0x64A752FF);
+        ApplyAnimation(playerid, "OTB", "WTCHRACE_WIN", 4.1, false, false, false, false, 0, true);
+    }
+    else
+    {
+        ApplyAnimation(playerid, "OTB", "WTCHRACE_LOSE", 4.1, false, false, false, false, 0, true);
+        Notification_Show(playerid, "¡Fallaste! el pez se te escapó", 3000);
+    }
+
+    RemovePlayerAttachedObject(playerid, 9);
+    return 1;
+}
+
+FishingRod_OnUse(playerid, slot)
+{
+    #pragma unused slot
+
+    if ( CA_IsPlayerFacingWater(playerid) )
+    {
+        // Preload animations
+        ApplyAnimation(playerid, "OTB", "null", 4.1, 0, 0, 0, 0, 0, 0);
+        ApplyAnimation(playerid, "SWORD", "null", 4.1, 0, 0, 0, 0, 0, 0);
+
+        Inventory_Hide(playerid);
+
+        TogglePlayerControllable(playerid, false);
+        TogglePlayerWidescreen(playerid, true);
+        Chat_Resend(playerid);
+
+        SetPlayerAttachedObject(playerid, 9, 18632, 6, 0.0620, 0.0199, 0.0149, 9.1999, 171.9999, 103.0999, 0.8920, 0.9029, 1.0589, 0xFFFFFFFF, 0xFFFFFFFF);
+
+        ApplyAnimation(playerid, "SWORD", "SWORD_IDLE", 4.1, true, false, false, false, 0, true);
+
+        Player_StartKeyGame(playerid, __addressof(Fisherman_KeyGameCallback), 9.9, 2.5);
+    }
+    else
+        Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes que estar frente al agua para poder pescar.");
+
+    return 1;
+}

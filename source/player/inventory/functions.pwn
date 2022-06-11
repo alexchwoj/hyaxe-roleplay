@@ -264,6 +264,16 @@ Inventory_AddItem(playerid, type, amount, extra)
 	return 0;
 }
 
+DroppedItem_CreateFrontPlayer(playerid, type, amount, extra)
+{
+	new Float:x, Float:y, Float:z, Float:angle;
+	GetPlayerPos(playerid, x, y, z);
+	GetPlayerFacingAngle(playerid, angle);
+
+	GetXYFromAngle(x, y, angle, 0.8);
+	DroppedItem_Create(type, amount, extra, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
+}
+
 DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, interior = 0, playerid = INVALID_PLAYER_ID)
 {
 	new objectid = CreateDynamicObject(
@@ -343,5 +353,27 @@ command medicineitem(playerid, const params[], "")
 
 	GetXYFromAngle(x, y, angle, 0.8);
 	DroppedItem_Create(ITEM_MEDICINE, 15, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
+	return 1;
+}
+
+command cania(playerid, const params[], "")
+{
+	new Float:x, Float:y, Float:z, Float:angle;
+	GetPlayerPos(playerid, x, y, z);
+	GetPlayerFacingAngle(playerid, angle);
+
+	GetXYFromAngle(x, y, angle, 0.8);
+	DroppedItem_Create(ITEM_FISHING_ROD, 1, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
+	return 1;
+}
+
+command pescao(playerid, const params[], "")
+{
+	new Float:x, Float:y, Float:z, Float:angle;
+	GetPlayerPos(playerid, x, y, z);
+	GetPlayerFacingAngle(playerid, angle);
+
+	GetXYFromAngle(x, y, angle, 0.8);
+	DroppedItem_Create(ITEM_FISH, 5, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
 	return 1;
 }

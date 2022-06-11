@@ -108,6 +108,13 @@ public OnGameModeInit()
     Item_Rarity(ITEM_SANGUCHEDEMILANESA) = RARITY_MYTHIC;
     Item_SetPreviewRot(ITEM_SANGUCHEDEMILANESA, -79.000000, 0.000000, -14.000000, 1.000000);
 
+    // Fishing rod
+    Item_Callback(ITEM_FISHING_ROD) = __addressof(FishingRod_OnUse);
+    Item_SetPreviewRot(ITEM_FISHING_ROD, -2.000000, 8.000000, -138.000000, 1.000000);
+
+    // Fish
+    Item_SetPreviewRot(ITEM_FISH, -19.000000, 49.000000, -171.000000, 0.770000);
+
     #if defined ITEM_OnGameModeInit
         return ITEM_OnGameModeInit();
     #else
