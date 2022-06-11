@@ -264,6 +264,17 @@ Inventory_AddItem(playerid, type, amount, extra)
 	return 0;
 }
 
+Inventory_AddFixedItem(playerid, type, amount, extra)
+{
+	if (!Inventory_AddItem(playerid, type, amount, extra))
+	{
+		DroppedItem_CreateFrontPlayer(playerid, type, amount, extra);
+		return 0;
+	}
+	
+	return 1;
+}
+
 DroppedItem_CreateFrontPlayer(playerid, type, amount, extra)
 {
 	new Float:x, Float:y, Float:z, Float:angle;
