@@ -13,7 +13,7 @@ static GangCreation_ShowDialog(playerid)
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
         {CB3126}>{DADADA} Nombre: %s\n\
         {CB3126}>{DADADA} Icono: %s\n\
-        {CB3126}>{DADADA} Color: #{%06x}%x\n\
+        {CB3126}>{DADADA} Color: #{%06x}%06x\n\
         {CB3126}>{DADADA} Crear",
         s_rgszGangCreationName[playerid], g_rgszGangIcons[s_rgiGangCreationIcon{playerid}][0], s_rgiGangCreationColor[playerid] >>> 8, s_rgiGangCreationColor[playerid] >>> 8
     );
