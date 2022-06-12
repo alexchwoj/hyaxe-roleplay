@@ -5,13 +5,17 @@
 
 Dialog_Show(playerid, const dialogname[], style, const caption[], const info[], const button1[], const button2[] = "")
 {
-    strcpy(g_rgszPlayerDialogName[playerid], dialogname);
+    if(!isnull(dialogname))
+        strcpy(g_rgszPlayerDialogName[playerid], dialogname);
+
     return ShowPlayerDialog(playerid, 422, style, caption, info, button1, button2);
 }
 
 Dialog_Show_s(playerid, const dialogname[], style, ConstString:caption, ConstString:info, const button1[], const button2[] = "")
 {
-    strcpy(g_rgszPlayerDialogName[playerid], dialogname);
+    if(!isnull(dialogname))
+        strcpy(g_rgszPlayerDialogName[playerid], dialogname);
+        
     return ShowPlayerDialog_s(playerid, 422, style, caption, info, button1, button2);
 }
 

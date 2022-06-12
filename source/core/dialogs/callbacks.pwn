@@ -42,12 +42,16 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         new pubname[32];
         format(pubname, sizeof(pubname), "_hydg@%s", g_rgszPlayerDialogName[playerid]);
+        g_rgszPlayerDialogName[playerid][0] = '\0';
+
         CallLocalFunction(pubname, !"iiis", playerid, response, listitem, (isnull(inputtext) ? "\1" : inputtext));
 
         return 1;
     }
     else if(dialogid == 423 && task_valid<eDialogResponse>(g_rgtPlayerDialogs[playerid]))
     {
+        g_rgszPlayerDialogName[playerid][0] = '\0';
+        
         new info[eDialogResponse];
         info[e_bResponse] = response;
         info[e_iListItem] = listitem;

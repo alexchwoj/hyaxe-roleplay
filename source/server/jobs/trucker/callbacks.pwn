@@ -291,7 +291,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
             new pay_subtracted = 0;
             if(truck_health < 900.0)
             {
-                pay -= (pay_subtracted = floatround(100000.0 / truck_health));
+                pay -= (pay_subtracted = (100000 / floatround(truck_health)));
             }
             
             Job_TriggerCallback(playerid, JOB_TRUCKER, JOB_EV_LEAVE);
