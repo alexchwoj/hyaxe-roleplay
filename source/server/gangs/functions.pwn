@@ -3,6 +3,17 @@
 #endif
 #define _gangs_functions_
 
+Gangs_FindFreeIndex()
+{
+    for(new i; i < HYAXE_MAX_GANGS; ++i)
+    {
+        if(!g_rgeGangs[i][e_iGangDbId])
+            return i;
+    }
+
+    return -1;
+}
+
 Gangs_OpenPanel(playerid)
 {
     if(Bit_Get(Player_Flags(playerid), PFLAG_GANG_PANEL_OPEN))

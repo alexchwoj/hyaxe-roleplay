@@ -95,6 +95,8 @@ Account_Save(playerid, bool:disconnect = false)
 
 Account_LoadFromCache(playerid)
 {
+    log_function();
+    
     if(Player_Cache(playerid) == MYSQL_INVALID_CACHE)
         return 0;
 
@@ -146,6 +148,8 @@ Account_LoadFromCache(playerid)
     cache_delete(Player_Cache(playerid));
     Player_Cache(playerid) = MYSQL_INVALID_CACHE;
 
+    log_function();
+    
     return 1;
 }
 
