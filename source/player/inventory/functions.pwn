@@ -197,6 +197,25 @@ InventorySlot_Delete(playerid, slot)
 	return 1;
 }
 
+Inventory_DeleteItemByType(playerid, type)
+{
+	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+	{
+		if (InventorySlot_IsValid(playerid, i))
+		{
+			if (InventorySlot_Type(playerid, i) == type)
+			{
+				mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `PLAYER_INVENTORY` WHERE `ID` = %d;", InventorySlot_ID(playerid, i));
+				mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+				memset(g_rgePlayerInventory[playerid][i], 0);
+			}
+		}
+	}
+
+	//Inventory_Update(playerid);
+	return 1;
+}
+
 InventorySlot_Subtract(playerid, slot, amount = 1)
 {
 	if (InventorySlot_IsValid(playerid, slot))
@@ -260,6 +279,19 @@ Inventory_AddItem(playerid, type, amount, extra)
 			Inventory_InsertItem(playerid, type, amount, extra);
 		}
 		return 1;
+	}
+	return 0;
+}
+
+Inventory_GetItemAmount(playerid, type)
+{
+	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+	{
+		if (InventorySlot_IsValid(playerid, i))
+		{
+			if (InventorySlot_Type(playerid, i) == type)
+				return InventorySlot_Amount(playerid, i);
+		}
 	}
 	return 0;
 }
@@ -364,27 +396,5 @@ command medicineitem(playerid, const params[], "")
 
 	GetXYFromAngle(x, y, angle, 0.8);
 	DroppedItem_Create(ITEM_MEDICINE, 15, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
-	return 1;
-}
-
-command cania(playerid, const params[], "")
-{
-	new Float:x, Float:y, Float:z, Float:angle;
-	GetPlayerPos(playerid, x, y, z);
-	GetPlayerFacingAngle(playerid, angle);
-
-	GetXYFromAngle(x, y, angle, 0.8);
-	DroppedItem_Create(ITEM_FISHING_ROD, 1, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
-	return 1;
-}
-
-command pescao(playerid, const params[], "")
-{
-	new Float:x, Float:y, Float:z, Float:angle;
-	GetPlayerPos(playerid, x, y, z);
-	GetPlayerFacingAngle(playerid, angle);
-
-	GetXYFromAngle(x, y, angle, 0.8);
-	DroppedItem_Create(ITEM_FISH, 5, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
 	return 1;
 }

@@ -31,10 +31,10 @@ public OnGameModeInit()
     // Fish store
     CreateDynamicActor(44, 2154.6438, -102.8098, 2.6685, 128.2921, .worldid = 0, .interiorid = 0);
     CreateDynamic3DTextLabel("{CB3126}Pescadería{DADADA}\nPresiona {CB3126}Y{DADADA} para vender", 0xDADADAFF, 2152.4070, -104.5057, 2.6569, 10.0, .testlos = 1, .worldid = 0, .interiorid = 0);
-    Key_Alert(2152.4070, -104.5057, 2.6569, 3.5, KEYNAME_YES, 0, 0);
+    Key_Alert(2152.4070, -104.5057, 2.6569, 2.6, KEYNAME_YES, 0, 0);
 	
     area_info[0] = 0x534653; // SFS
-	area_id = CreateDynamicSphere(2154.5454, -108.4645, 2.6524, 3.5, 0, 0);
+	area_id = CreateDynamicSphere(2152.4070, -104.5057, 2.6569, 2.5, 0, 0);
 	Streamer_SetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, area_info);
 
     CreateDynamicActor(222, 2137.2734, -49.2241, 3.3297, 103.5150, .worldid = 0, .interiorid = 0);
@@ -85,17 +85,12 @@ FishingRod_OnUse(playerid, slot)
 
     if ( CA_IsPlayerFacingWater(playerid) )
     {
-        // Preload animations
-        ApplyAnimation(playerid, "OTB", "null", 4.1, 0, 0, 0, 0, 0, 0);
-        ApplyAnimation(playerid, "SWORD", "null", 4.1, 0, 0, 0, 0, 0, 0);
-
         TogglePlayerControllable(playerid, false);
-
         SetPlayerAttachedObject(playerid, 9, 18632, 6, 0.0620, 0.0199, 0.0149, 9.1999, 171.9999, 103.0999, 0.8920, 0.9029, 1.0589, 0xFFFFFFFF, 0xFFFFFFFF);
 
-        ApplyAnimation(playerid, "SWORD", "SWORD_IDLE", 4.1, true, false, false, false, 0, true);
-
         Player_StartKeyGame(playerid, __addressof(Fisherman_KeyGameCallback), 9.9, 2.5);
+
+        ApplyAnimation(playerid, "SWORD", "SWORD_IDLE", 4.1, true, false, false, false, 0, true);
     }
     else
         Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes que estar frente al agua para poder pescar.");
@@ -123,7 +118,13 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
                 if (info[0] == 0x534653)
                 {
-                    // fish
+                    new amount = Inventory_GetItemAmount(playerid, ITEM_FISH);
+                    if (amount)
+                    {
+                        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}¿Quieres vender %d peces por {64A752}$%d{DADADA}?", amount, 2 * amount);
+                        Dialog_Show(playerid, "sell_fish", DIALOG_STYLE_MSGBOX, !"{CB3126}Pescadería", HYAXE_UNSAFE_HUGE_STRING, !"Vender", !"Cerrar");
+                    }
+                    else Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes peces para vender.");
                 }
             }
         }
@@ -145,6 +146,23 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 #if defined FISH_OnPlayerKeyStateChange
     forward FISH_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 #endif
+
+dialog sell_fish(playerid, response, listitem, inputtext[])
+{
+    if (response)
+    {
+        new amount = Inventory_GetItemAmount(playerid, ITEM_FISH);
+        
+        Player_GiveMoney(playerid, 2 * amount);
+        PlayerPlaySound(playerid, SOUND_SUCCESS);
+
+        Inventory_DeleteItemByType(playerid, ITEM_FISH);
+
+        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Vendiste tus %d peces por $%d", amount, 2 * amount);
+        Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 4000, 0x64A752FF);
+    }
+    return 1;
+}
 
 dialog buy_fishing_rod(playerid, response, listitem, inputtext[])
 {
