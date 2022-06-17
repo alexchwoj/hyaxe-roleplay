@@ -15,7 +15,7 @@ static GenerateGrassInArea(areaid)
         new Float:x, Float:y, Float:z;
 
         // LOL
-        new 
+        new const
             Float:min_x = (g_rgeLawnmowerAreas[areaid][e_fAreaMinX] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxX] ? g_rgeLawnmowerAreas[areaid][e_fAreaMinX] : g_rgeLawnmowerAreas[areaid][e_fAreaMaxX]),
             Float:max_x = (g_rgeLawnmowerAreas[areaid][e_fAreaMinX] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxX] ? g_rgeLawnmowerAreas[areaid][e_fAreaMaxX] : g_rgeLawnmowerAreas[areaid][e_fAreaMinX]),
             Float:min_y = (g_rgeLawnmowerAreas[areaid][e_fAreaMinY] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxY] ? g_rgeLawnmowerAreas[areaid][e_fAreaMinY] : g_rgeLawnmowerAreas[areaid][e_fAreaMaxY]),
@@ -37,10 +37,7 @@ static GenerateGrassInArea(areaid)
 
         g_rgeLawnmowerAreas[areaid][e_rgiGrassObjects][i] = CreateDynamicObject(817, x, y, z + 0.6, 0.0, 0.0, 0.0, .worldid = 0, .interiorid = 0);
         g_rgeLawnmowerAreas[areaid][e_rgiGrassAreas][i] = CreateDynamicCircle(x, y, 1.2, .worldid = 0, .interiorid = 0, .playerid = g_rgeLawnmowerAreas[areaid][e_iMowingPlayer]);
-        new info[2];
-        info[0] = 0x4D4F57;
-        info[1] = i;
-        Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgeLawnmowerAreas[areaid][e_rgiGrassAreas][i], E_STREAMER_EXTRA_ID, info);
+        Streamer_SetIntData(STREAMER_TYPE_AREA, g_rgeLawnmowerAreas[areaid][e_rgiGrassAreas][i], E_STREAMER_CUSTOM(0x4D4F57), i);
     }
 
     return 1;
@@ -137,11 +134,9 @@ public OnGameModeInit()
 
 public OnPlayerEnterDynamicArea(playerid, areaid)
 {
-    new info[2];
-    Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID, info);
-    if(info[0] == 0x4D4F57)
+    if(Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4D4F57)))
     {
-        new grass_id = info[1];
+        new grass_id = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4D4F57));
         new park_id = g_rgiPlayerLawnmowerArea{playerid};
 
         if(!IsValidDynamicObject(g_rgeLawnmowerAreas[park_id][e_rgiGrassObjects][grass_id]))
