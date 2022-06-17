@@ -7,9 +7,9 @@ static PistolShop_OnBuy(playerid, shop_id, item_id)
 {
     switch(item_id)
     {
-        case 0: Player_GiveWeapon(playerid, 22, 9999);
-        case 1: Player_GiveWeapon(playerid, 23, 9999);
-        case 2: Player_GiveWeapon(playerid, 24, 9999);
+        case 0: Player_GiveWeapon(playerid, 22, 99999);
+        case 1: Player_GiveWeapon(playerid, 23, 99999);
+        case 2: Player_GiveWeapon(playerid, 24, 99999);
     }
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Compraste un(a) %s a ~g~$%d", g_rgeShopItems[shop_id][item_id][e_szItemName], g_rgeShopItems[shop_id][item_id][e_iItemPrice]);
@@ -35,6 +35,15 @@ public OnGameModeInit()
     Shop_AddItem(pistol_shop, "9mm", 346, 600, 90.899719, 0.000000, -20.800004);
     Shop_AddItem(pistol_shop, "Silenced 9mm", 347, 700, 90.899719, 0.000000, -20.800004);
     Shop_AddItem(pistol_shop, "Desert Eagle", 348, 2500, 90.899719, 0.000000, -20.800004);
+
+    // Shotgun shop
+    CreateDynamicActor(121, 2440.9241, -1964.0116, 13.5469, 272.5686, .worldid = 0, .interiorid = 0);
+
+    // Submachine shop
+    CreateDynamicActor(122, 2451.5879, -1963.2706, 13.5539, 184.8346, .worldid = 0, .interiorid = 0);
+
+    // Rifle shop
+    //CreateDynamicActor(161, 2447.4807, -1980.9473, 13.5469, 0.2792, .worldid = 0, .interiorid = 0);
 
     #if defined BMARKET_OnGameModeInit
         return BMARKET_OnGameModeInit();
