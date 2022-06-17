@@ -35,11 +35,11 @@ new
         3, // 25 - Shotgun
         3, // 26 - Sawed-off
         4, // 27 - Spas
-        6, // 28 - UZI
+        8, // 28 - UZI
         8, // 29 - MP5
         9, // 30 - AK47
-        9, // 31 - M4
-        6, // 32 - Tec9
+        12, // 31 - M4
+        5, // 32 - Tec9
         24, // 33 - Cuntgun
         41, // 34 - Sniper
         82, // 35 - Rocket launcher
