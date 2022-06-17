@@ -5,6 +5,13 @@
 
 static PistolShop_OnBuy(playerid, shop_id, item_id)
 {
+    if (Player_Money(playerid) < g_rgeShopItems[shop_id][item_id][e_iItemPrice])
+    {
+        PlayerPlaySound(playerid, SOUND_ERROR);
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+        return 0;
+    }
+
     switch(item_id)
     {
         case 0: Player_GiveWeapon(playerid, 22, 99999);
