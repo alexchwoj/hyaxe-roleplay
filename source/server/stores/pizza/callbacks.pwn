@@ -63,12 +63,39 @@ public OnGameModeInit()
 {
     // Actors
     Actor_CreateRobbable(155, 500, 750, 373.7393, -117.2236, 1002.4995, 175.4680, .worldid = 1, .interiorid = 5);
+    Actor_CreateRobbable(155, 500, 750, 373.7393, -117.2236, 1002.4995, 175.4680, .worldid = 2, .interiorid = 5);
+    Actor_CreateRobbable(155, 500, 750, 373.7393, -117.2236, 1002.4995, 175.4680, .worldid = 3, .interiorid = 5);
+    Actor_CreateRobbable(155, 500, 750, 373.7393, -117.2236, 1002.4995, 175.4680, .worldid = 4, .interiorid = 5);
+    Actor_CreateRobbable(155, 500, 750, 373.7393, -117.2236, 1002.4995, 175.4680, .worldid = 5, .interiorid = 5);
+    Actor_CreateRobbable(155, 500, 750, 373.7393, -117.2236, 1002.4995, 175.4680, .worldid = 6, .interiorid = 5);
+    Actor_CreateRobbable(155, 500, 750, 373.7393, -117.2236, 1002.4995, 175.4680, .worldid = 7, .interiorid = 5);
+    Actor_CreateRobbable(155, 500, 750, 373.7393, -117.2236, 1002.4995, 175.4680, .worldid = 8, .interiorid = 5);
+    Actor_CreateRobbable(155, 500, 750, 373.7393, -117.2236, 1002.4995, 175.4680, .worldid = 9, .interiorid = 5);
+    Actor_CreateRobbable(155, 500, 750, 373.7393, -117.2236, 1002.4995, 175.4680, .worldid = 10, .interiorid = 5);
 
     // EnExs
-    EnterExit_Create(19902, "{ED2B2B}Ugi's Pizza", "{DADADA}Salida", 2105.0681, -1806.4565, 13.5547, 91.9755, 0, 0, 372.4150, -133.3214, 1001.4922, 355.1316, 1, 5, .callback_address = __addressof(PreloadPizzaPlaceAnims));
+    EnterExit_Create(19902, "{ED2B2B}Ugi's Pizza", "{DADADA}Salida", 2105.234619, -1806.479614, 13.554687, 90.0, 0, 0, 372.4150, -133.3214, 1001.4922, 355.1316, 1, 5, .callback_address = __addressof(PreloadPizzaPlaceAnims));
+    EnterExit_Create(19902, "{ED2B2B}Ugi's Pizza", "{DADADA}Salida", 1366.856079, 248.451507, 19.566932, 90.0, 0, 0, 372.4150, -133.3214, 1001.4922, 355.1316, 2, 5, .callback_address = __addressof(PreloadPizzaPlaceAnims));
+    EnterExit_Create(19902, "{ED2B2B}Ugi's Pizza", "{DADADA}Salida", 2333.892333, 74.830787, 26.620975, 90.0, 0, 0, 372.4150, -133.3214, 1001.4922, 355.1316, 3, 5, .callback_address = __addressof(PreloadPizzaPlaceAnims));
+    EnterExit_Create(19902, "{ED2B2B}Ugi's Pizza", "{DADADA}Salida", 2637.8176, 1849.6595, 11.0234, 91.669, 0, 0, 372.4150, -133.3214, 1001.4922, 355.1316, 4, 5, .callback_address = __addressof(PreloadPizzaPlaceAnims));
+    EnterExit_Create(19902, "{ED2B2B}Ugi's Pizza", "{DADADA}Salida", 2540.3069, 2150.0823, 10.8203, 92.0697, 0, 0, 372.4150, -133.3214, 1001.4922, 355.1316, 5, 5, .callback_address = __addressof(PreloadPizzaPlaceAnims));
+    EnterExit_Create(19902, "{ED2B2B}Ugi's Pizza", "{DADADA}Salida", 2469.5881, 2124.7515, 10.8203, 2.2244, 0, 0, 372.4150, -133.3214, 1001.4922, 355.1316, 6, 5, .callback_address = __addressof(PreloadPizzaPlaceAnims));
+    EnterExit_Create(19902, "{ED2B2B}Ugi's Pizza", "{DADADA}Salida", 2083.4851, 2224.2705, 11.0234, 181.7665, 0, 0, 372.4150, -133.3214, 1001.4922, 355.1316, 7, 5, .callback_address = __addressof(PreloadPizzaPlaceAnims));
+    EnterExit_Create(19902, "{ED2B2B}Ugi's Pizza", "{DADADA}Salida", 2351.9446, 2532.8774, 10.8203, 184.0101, 0, 0, 372.4150, -133.3214, 1001.4922, 355.1316, 8, 5, .callback_address = __addressof(PreloadPizzaPlaceAnims));
+    EnterExit_Create(19902, "{ED2B2B}Ugi's Pizza", "{DADADA}Salida", 2756.3547, 2477.1909, 11.0625, 140.568, 0, 0, 372.4150, -133.3214, 1001.4922, 355.1316, 9, 5, .callback_address = __addressof(PreloadPizzaPlaceAnims));
+    EnterExit_Create(19902, "{ED2B2B}Ugi's Pizza", "{DADADA}Salida", -1808.33, 945.7053, 24.8906, 219.7702, 0, 0, 372.4150, -133.3214, 1001.4922, 355.1316, 10, 5, .callback_address = __addressof(PreloadPizzaPlaceAnims));
 
     // MapIcons
-    CreateDynamicMapIcon(2105.0681, -1806.4565, 13.5547, 29, -1, .worldid = 0, .interiorid = 0);
+    CreateDynamicMapIcon(2105.234619, -1806.479614, 13.554687, 29, -1, .worldid = 0, .interiorid = 0);
+    CreateDynamicMapIcon(1366.856079, 248.451507, 19.566932, 29, -1, .worldid = 0, .interiorid = 0);
+    CreateDynamicMapIcon(2333.892333, 74.830787, 26.620975, 29, -1, .worldid = 0, .interiorid = 0);
+    CreateDynamicMapIcon(2637.8176, 1849.6595, 11.0234, 29, -1, .worldid = 0, .interiorid = 0);
+    CreateDynamicMapIcon(2540.3069, 2150.0823, 10.8203, 29, -1, .worldid = 0, .interiorid = 0);
+    CreateDynamicMapIcon(2469.5881, 2124.7515, 10.8203, 29, -1, .worldid = 0, .interiorid = 0);
+    CreateDynamicMapIcon(2083.4851, 2224.2705, 11.0234, 29, -1, .worldid = 0, .interiorid = 0);
+    CreateDynamicMapIcon(2351.9446, 2532.8774, 10.8203, 29, -1, .worldid = 0, .interiorid = 0);
+    CreateDynamicMapIcon(2756.3547, 2477.1909, 11.0625, 29, -1, .worldid = 0, .interiorid = 0);
+    CreateDynamicMapIcon(-1808.33, 945.7053, 24.8906, 29, -1, .worldid = 0, .interiorid = 0);
 
     new ugis = Shop_Create("Ugi's Pizza", 373.7325, -119.4309, 1001.4922, -1, 5, 
         372.986755, -118.988250, 1002.399780, 

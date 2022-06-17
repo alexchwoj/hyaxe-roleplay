@@ -180,7 +180,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
                 cb_address = g_rgeShops[shop_id][e_iShopCallback],
                 ret = 1;
 
-            if(Player_Money(playerid) < g_rgeShopItems[shop_id][item_id][e_iItemPrice])
+            if (Player_Money(playerid) < g_rgeShopItems[shop_id][item_id][e_iItemPrice])
             {
                 PlayerPlaySound(playerid, SOUND_ERROR);
                 Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
