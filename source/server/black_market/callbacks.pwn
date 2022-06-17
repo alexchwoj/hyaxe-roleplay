@@ -14,7 +14,7 @@ static PistolShop_OnBuy(playerid, shop_id, item_id)
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Compraste un(a) %s a ~g~$%d", g_rgeShopItems[shop_id][item_id][e_szItemName], g_rgeShopItems[shop_id][item_id][e_iItemPrice]);
     Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 4000, 0x64A752FF);
-    return SHOP_SELL_ON_CREDIT;
+    return 1;
 }
 
 static ShotgunShop_OnBuy(playerid, shop_id, item_id)
