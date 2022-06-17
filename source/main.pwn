@@ -202,6 +202,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/hookers/callbacks.pwn"
 #include "server/gangs/callbacks.pwn"
 #include "server/church/callbacks.pwn"
+#include "server/black_market/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/damage/callbacks.pwn"
 #include "player/leveling/callbacks.pwn"

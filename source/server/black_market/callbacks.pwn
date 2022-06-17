@@ -1,0 +1,45 @@
+#if defined _black_market_callbacks_
+    #endinput
+#endif
+#define _black_market_callbacks_
+
+static PistolShop_OnBuy(playerid, shop_id, item_id)
+{
+    return 1;
+}
+
+public OnGameModeInit()
+{
+    CreateDynamicMapIcon(2453.5684, -1971.7292, 13.5469, 18, -1, .worldid = 0, .interiorid = 0);
+
+    // Pistol shop
+    CreateDynamicActor(73, 2447.4807, -1980.9473, 13.5469, 0.2792, .worldid = 0, .interiorid = 0);
+
+    new pistol_shop = Shop_Create("Comprar pistolas", 2447.4788, -1978.4786, 13.5469, 0, 0, 
+        2447.466796, -1978.812622, 14.167802, // Cam pos
+        2447.482177, -1983.038085, 11.494686, // Cam look
+        2446.174560, -1979.767089, 13.320656, // Start
+        2447.413330, -1979.805541, 13.326949, // Idle
+        2448.734619, -1979.768676, 13.334807, // End
+        __addressof(PistolShop_OnBuy)
+    );
+    Shop_AddItem(pistol_shop, "9mm", 346, 600, 90.899719, 0.000000, -20.800004);
+    Shop_AddItem(pistol_shop, "Silenced 9mm", 347, 700, 90.899719, 0.000000, -20.800004);
+    Shop_AddItem(pistol_shop, "Desert Eagle", 348, 2500, 90.899719, 0.000000, -20.800004);
+
+    #if defined BMARKET_OnGameModeInit
+        return BMARKET_OnGameModeInit();
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnGameModeInit
+    #undef OnGameModeInit
+#else
+    #define _ALS_OnGameModeInit
+#endif
+#define OnGameModeInit BMARKET_OnGameModeInit
+#if defined BMARKET_OnGameModeInit
+    forward BMARKET_OnGameModeInit();
+#endif
