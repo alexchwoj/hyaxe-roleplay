@@ -215,6 +215,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/keygame/callbacks.pwn"
 #include "player/death/callbacks.pwn"
 #include "player/police/callbacks.pwn"
+#include "player/weapons/callbacks.pwn"
 
 // Anticheat
 ///////////////
