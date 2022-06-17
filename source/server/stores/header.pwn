@@ -3,7 +3,6 @@
 #endif
 #define _stores_header_
 
-#define SHOP_SELL_ON_CREDIT cellmin
 const HYAXE_MAX_SHOPS = 25;
 const HYAXE_MAX_SHOP_ITEMS = 10;
 
