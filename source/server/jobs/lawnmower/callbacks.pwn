@@ -5,7 +5,7 @@
 
 static GenerateGrassInArea(areaid)
 {
-    new grass_count = minrand(MIN_GRASS_PER_AREA, MAX_GRASS_PER_AREA);
+    new grass_count = math_random(MIN_GRASS_PER_AREA, MAX_GRASS_PER_AREA);
     g_rgeLawnmowerAreas[areaid][e_iInitialGrassCount] =
     g_rgeLawnmowerAreas[areaid][e_iCurrentGrassCount] = grass_count;
 
@@ -13,12 +13,21 @@ static GenerateGrassInArea(areaid)
     {
         new bool:is_above_water = false;
         new Float:x, Float:y, Float:z;
-        
+
+        // LOL
+        new 
+            Float:min_x = (g_rgeLawnmowerAreas[areaid][e_fAreaMinX] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxX] ? g_rgeLawnmowerAreas[areaid][e_fAreaMinX] : g_rgeLawnmowerAreas[areaid][e_fAreaMaxX]),
+            Float:max_x = (g_rgeLawnmowerAreas[areaid][e_fAreaMinX] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxX] ? g_rgeLawnmowerAreas[areaid][e_fAreaMaxX] : g_rgeLawnmowerAreas[areaid][e_fAreaMinX]),
+            Float:min_y = (g_rgeLawnmowerAreas[areaid][e_fAreaMinY] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxY] ? g_rgeLawnmowerAreas[areaid][e_fAreaMinY] : g_rgeLawnmowerAreas[areaid][e_fAreaMaxY]),
+            Float:max_y = (g_rgeLawnmowerAreas[areaid][e_fAreaMinY] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxY] ? g_rgeLawnmowerAreas[areaid][e_fAreaMaxY] : g_rgeLawnmowerAreas[areaid][e_fAreaMinY]),
+            Float:min_z = (g_rgeLawnmowerAreas[areaid][e_fAreaMinZ] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ] ? g_rgeLawnmowerAreas[areaid][e_fAreaMinZ] : g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ]),
+            Float:max_z = (g_rgeLawnmowerAreas[areaid][e_fAreaMinZ] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ] ? g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ] : g_rgeLawnmowerAreas[areaid][e_fAreaMinZ]);
+
         do
         {
-            x = math_random_float(g_rgeLawnmowerAreas[areaid][e_fAreaMinX], g_rgeLawnmowerAreas[areaid][e_fAreaMaxX]);
-            y = math_random_float(g_rgeLawnmowerAreas[areaid][e_fAreaMinY], g_rgeLawnmowerAreas[areaid][e_fAreaMaxY]);
-            z = math_random_float(g_rgeLawnmowerAreas[areaid][e_fAreaMinZ], g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ]);
+            x = math_random_float(min_x, max_x);
+            y = math_random_float(min_y, max_y);
+            z = math_random_float(min_z, max_z);
             is_above_water = CA_RayCastLine(x, y, 100.0, x, y, -100.0, x, y, z) == WATER_OBJECT;
 
             // FIXME
