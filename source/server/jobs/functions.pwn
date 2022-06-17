@@ -9,14 +9,14 @@ Job_CreateSite(eJobs:jobid, Float:x, Float:y, Float:z, vw, interior, const extra
     format(labelstring, sizeof(labelstring), "Trabajo de {CB3126}%s{DADADA}\nPresiona {CB3126}Y{DADADA} para empezar a trabajar\n%s", g_rgszJobNames[jobid], extra_text);
 
     CreateDynamic3DTextLabel(labelstring, 0xDADADAFF, x, y, z, 10.0, .testlos = 1, .worldid = vw, .interiorid = interior);
-    new area = CreateDynamicCircle(x, y, 1.0, .worldid = vw, .interiorid = interior);
+    new area = CreateDynamicCircle(x, y, 3.0, .worldid = vw, .interiorid = interior);
     new info[3];
     info[0] = 0x4A4F42; // 'JOB'
     info[1] = _:jobid;
     info[2] = cb_data;
     Streamer_SetArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_EXTRA_ID, info);
 
-    Key_Alert(x, y, z, 3.5, KEYNAME_YES, vw, interior);
+    Key_Alert(x, y, z, 1.5, KEYNAME_YES, vw, interior);
     return 1;
 }
 

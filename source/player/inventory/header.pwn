@@ -54,15 +54,24 @@ enum _:eRarityLevels {
 
 enum eItemData 
 {
+    // General parameters
     e_szName[64],
     e_iModelID,
     bool:e_bSingleSlot,
     e_iCallback,
     e_iRarityLevel,
+
+    // Textdraw parameters
     Float:e_fRotX,
     Float:e_fRotY,
     Float:e_fRotZ,
-    Float:e_fZoom
+    Float:e_fZoom,
+
+    // Food parameters
+    bool:e_bPuke,
+    e_iDrunkLevel,
+    Float:e_fHunger,
+    Float:e_fThirst
 }
 
 enum ePlayerInventory 
@@ -120,6 +129,10 @@ new
 #define Item_ModelID(%0) (g_rgeItemData[%0][e_iModelID])
 #define Item_SingleSlot(%0) (g_rgeItemData[%0][e_bSingleSlot])
 #define Item_Callback(%0) (g_rgeItemData[%0][e_iCallback])
+#define Item_Hunger(%0) (g_rgeItemData[%0][e_fHunger])
+#define Item_Thirst(%0) (g_rgeItemData[%0][e_fThirst])
+#define Item_Puke(%0) (g_rgeItemData[%0][e_bPuke])
+#define Item_DrunkLevel(%0) (g_rgeItemData[%0][e_iDrunkLevel])
 #define Item_RarityName(%0) (g_rgszRarityName[%0])
 #define Item_Rarity(%0) (g_rgeItemData[%0][e_iRarityLevel])
 #define InventorySlot_ID(%0,%1) (g_rgePlayerInventory[%0][%1][e_iID])
