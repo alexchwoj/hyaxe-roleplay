@@ -136,7 +136,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
 {
     if(Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4D4F57)))
     {
-        new grass_id = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4D4F57))
+        new grass_id = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4D4F57));
         new park_id = g_rgiPlayerLawnmowerArea{playerid};
 
         if(!IsValidDynamicObject(g_rgeLawnmowerAreas[park_id][e_rgiGrassObjects][grass_id]))
