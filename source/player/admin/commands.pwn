@@ -237,6 +237,29 @@ command bring(playerid, const params[], "Trae a un jugador a tu posición")
 }
 flags:bring(CMD_FLAG<RANK_LEVEL_HELPER>)
 
+command givemoney(playerid, const params[], "Le da dinero a un jugador")
+{
+    extract params -> new money = 422, player:destination = 0xFFFF; else {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/givemoney {DADADA}[dinero = 100] [jugador = tú]");
+        return 1;
+    }
+
+	if (destination == INVALID_PLAYER_ID)
+        destination = playerid;
+
+	Player_GiveMoney(destination, money);
+
+    if (playerid != destination)
+    {
+        SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Le diste {ED2B2B}$%d{DADADA} a {ED2B2B}%s{DADADA}.", money, Player_RPName(destination));
+    }
+    
+    SendClientMessagef(destination, 0xED2B2BFF, "›{DADADA} Se te asignó {ED2B2B}$%d{DADADA}.", money);
+
+    return 1;
+}
+flags:givemoney(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)
+
 static 
     s_rgszSelectedAdmin[MAX_PLAYERS][24];
 
