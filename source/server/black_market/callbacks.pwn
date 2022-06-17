@@ -31,6 +31,34 @@ static ShotgunShop_OnBuy(playerid, shop_id, item_id)
     return 1;
 }
 
+static SubmachineShop_OnBuy(playerid, shop_id, item_id)
+{
+    switch(item_id)
+    {
+        case 0: Player_GiveWeapon(playerid, 28, 99999);
+        case 1: Player_GiveWeapon(playerid, 29, 99999);
+        case 2: Player_GiveWeapon(playerid, 32, 99999);
+    }
+
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Compraste un(a) %s a ~g~$%d", g_rgeShopItems[shop_id][item_id][e_szItemName], g_rgeShopItems[shop_id][item_id][e_iItemPrice]);
+    Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 4000, 0x64A752FF);
+    return 1;
+}
+
+static RifleShop_OnBuy(playerid, shop_id, item_id)
+{
+    switch(item_id)
+    {
+        case 0: Player_GiveWeapon(playerid, 30, 99999);
+        case 1: Player_GiveWeapon(playerid, 31, 99999);
+        case 2: Player_GiveWeapon(playerid, 33, 99999);
+    }
+
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Compraste un(a) %s a ~g~$%d", g_rgeShopItems[shop_id][item_id][e_szItemName], g_rgeShopItems[shop_id][item_id][e_iItemPrice]);
+    Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 4000, 0x64A752FF);
+    return 1;
+}
+
 public OnGameModeInit()
 {
     CreateDynamicMapIcon(2453.5684, -1971.7292, 13.5469, 18, -1, .worldid = 0, .interiorid = 0);
@@ -66,9 +94,31 @@ public OnGameModeInit()
 
     // Submachine shop
     CreateDynamicActor(122, 2451.5879, -1963.2706, 13.5539, 184.8346, .worldid = 0, .interiorid = 0);
+    new submachine_shop = Shop_Create("Comprar metralletas", 2451.8999, -1965.7794, 13.5539, 0, 0, 
+        2451.927246, -1965.705200, 14.296304, // Cam pos
+        2451.856445, -1961.570312, 11.486007, // Cam look
+        2453.073486, -1964.491821, 13.364885, // Start
+        2451.844970, -1964.523193, 13.387802, // Idle
+        2450.502685, -1964.619384, 13.411356, // End
+        __addressof(SubmachineShop_OnBuy)
+    );
+    Shop_AddItem(submachine_shop, "Micro SMG/Uzi", 352, 1100, -88.199981, 0.000000, 37.900032);
+    Shop_AddItem(submachine_shop, "MP5", 353, 2400, -88.199981, 0.000000, 37.900032);
+    Shop_AddItem(submachine_shop, "Tec-9", 372, 900, -88.199981, 0.000000, 37.900032);
 
     // Rifle shop
-    //CreateDynamicActor(161, 2447.4807, -1980.9473, 13.5469, 0.2792, .worldid = 0, .interiorid = 0);
+    CreateDynamicActor(161, 2458.5735, -1969.5461, 13.4984, 91.5895, .worldid = 0, .interiorid = 0);
+    new rifle_shop = Shop_Create("Comprar rifles", 2455.9763, -1969.6743, 13.5482, 0, 0, 
+        2456.080322, -1969.684692, 14.325413, // Cam pos
+        2460.118652, -1969.831420, 11.380958, // Cam look
+        2457.427246, -1971.318725, 13.331473, // Start
+        2457.138916, -1969.966308, 13.440942, // Idle
+        2456.884521, -1968.482543, 13.564177, // End
+        __addressof(RifleShop_OnBuy)
+    );
+    Shop_AddItem(rifle_shop, "AK-47", 355, 10000, 84.000061, -39.400012, 150.699996);
+    Shop_AddItem(rifle_shop, "M4", 356, 16000, 84.000061, -39.400012, 150.699996);
+    Shop_AddItem(rifle_shop, "Country Rifle", 357, 5000, 84.000061, -39.400012, 150.699996);
 
     #if defined BMARKET_OnGameModeInit
         return BMARKET_OnGameModeInit();
