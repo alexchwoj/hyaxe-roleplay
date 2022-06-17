@@ -5,6 +5,15 @@
 
 static PistolShop_OnBuy(playerid, shop_id, item_id)
 {
+    switch(item_id)
+    {
+        case 0: Player_GiveWeapon(playerid, 22, 9999);
+        case 1: Player_GiveWeapon(playerid, 23, 9999);
+        case 2: Player_GiveWeapon(playerid, 24, 9999);
+    }
+
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Compraste un(a) %s a ~g~$%d", g_rgeShopItems[shop_id][item_id][e_szItemName], g_rgeShopItems[shop_id][item_id][e_iItemPrice]);
+    Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 4000, 0x64A752FF);
     return 1;
 }
 
