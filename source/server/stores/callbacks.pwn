@@ -197,6 +197,13 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 
             if(ret)
             {
+                if(ret != SHOP_SELL_ON_CREDIT && Player_Money(playerid) < g_rgeShopItems[shop_id][item_id][e_iItemPrice])
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 0;
+                }
+                
                 Player_GiveMoney(playerid, -(g_rgeShopItems[shop_id][item_id][e_iItemPrice]), true);
                 PlayerPlaySound(playerid, 1054);
             }

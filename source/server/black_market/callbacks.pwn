@@ -5,13 +5,6 @@
 
 static PistolShop_OnBuy(playerid, shop_id, item_id)
 {
-    if (Player_Money(playerid) < g_rgeShopItems[shop_id][item_id][e_iItemPrice])
-    {
-        PlayerPlaySound(playerid, SOUND_ERROR);
-        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
-        return 0;
-    }
-
     switch(item_id)
     {
         case 0: Player_GiveWeapon(playerid, 22, 99999);
@@ -21,18 +14,11 @@ static PistolShop_OnBuy(playerid, shop_id, item_id)
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Compraste un(a) %s a ~g~$%d", g_rgeShopItems[shop_id][item_id][e_szItemName], g_rgeShopItems[shop_id][item_id][e_iItemPrice]);
     Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 4000, 0x64A752FF);
-    return 1;
+    return SHOP_SELL_ON_CREDIT;
 }
 
 static ShotgunShop_OnBuy(playerid, shop_id, item_id)
 {
-    if (Player_Money(playerid) < g_rgeShopItems[shop_id][item_id][e_iItemPrice])
-    {
-        PlayerPlaySound(playerid, SOUND_ERROR);
-        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
-        return 0;
-    }
-
     switch(item_id)
     {
         case 0: Player_GiveWeapon(playerid, 25, 99999);
