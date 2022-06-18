@@ -130,7 +130,7 @@ dialog fuel_station_manual(playerid, response, listitem, inputtext[])
             return 1;
         }
 
-        new price = floatround(3 * liters);
+        new price = 3 * liters;
         if (price > Player_Money(playerid))
         {
             PlayerPlaySound(playerid, SOUND_ERROR);
