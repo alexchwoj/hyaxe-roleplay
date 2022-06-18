@@ -24,6 +24,7 @@ enum eGangRankPermissions(<<=1)
     GANG_PERM_CHANGE_ROLES,
     GANG_PERM_KICK_MEMBERS,
     GANG_PERM_EDIT_MEMBERS,
+    GANG_PERM_INVITE_MEMBERS,
 
     GANG_PERM_LAST
 };
@@ -80,6 +81,9 @@ new
 
 forward Gangs_PanelForward(playerid);
 forward Gangs_PanelBackwards(playerid);
+forward Gang_SendMessage(gangid, const message[]);
+forward Gang_SendMessage_s(gangid, ConstString:message);
+forward Gang_GetLowestRank(gangid);
 forward GANGS_PanelDataFetched(playerid);
 forward GANGS_PanelMembersFetched(playerid);
 forward GANGS_RoleCreated(playerid);
