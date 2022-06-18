@@ -197,7 +197,7 @@ Gang_GetLowestRank(gangid)
     for(new i; i < sizeof(g_rgeGangRanks[]); ++i)
     {
         if(g_rgeGangRanks[gangid][i][e_iRankId])
-            return 1;
+            return i;
     }
     return -1;
 }
