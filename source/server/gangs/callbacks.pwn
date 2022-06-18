@@ -635,7 +635,13 @@ dialog gang_invite_member(playerid, response, listitem, const inputtext[])
     }
 
     SetPVarInt(recruit, "gang:invite_id", Player_Gang(playerid));
-    Dialog_Show_s(recruit, "gang_invite_notice", DIALOG_STYLE_MSGBOX, @("{CB3126}>{DADADA} Invitación a banda"), @f("{DADADA}Fuiste invitad%c para unirte a la banda {%06x}%s{DADADA} con el rango de %s.", (Player_Sex(recruit) == SEX_MALE ? 'o' : 'a'), g_rgeGangs[Player_Gang(playerid)][e_iGangColor], g_rgeGangs[Player_Gang(playerid)][e_szGangName], g_rgeGangRanks[Player_Gang(playerid)][Gang_GetLowestRank(Player_Gang(playerid))][e_szRankName]), "Aceptar", "Rechazar");
+    Dialog_Show_s(recruit, "gang_invite_notice", DIALOG_STYLE_MSGBOX, @("{CB3126}>{DADADA} Invitación a banda"), 
+        @f("%{DADADA%}Fuiste invitad%c para unirte a la banda %{%06x%}%s%{DADADA%} con el rango de %s.", 
+            (Player_Sex(recruit) == SEX_MALE ? 'o' : 'a'), 
+            g_rgeGangs[Player_Gang(playerid)][e_iGangColor] >>> 8, 
+            g_rgeGangs[Player_Gang(playerid)][e_szGangName], 
+            g_rgeGangRanks[Player_Gang(playerid)][Gang_GetLowestRank(Player_Gang(playerid))][e_szRankName]
+        ), "Aceptar", "Rechazar");
     Dialog_Show_s(playerid, "", DIALOG_STYLE_MSGBOX, @f("{CB3126}>{DADADA} %s", (Player_Sex(recruit) == SEX_MALE ? "Jugador invitado" : "Jugadora invitada")), @f("{DADADA}%s {CB3126}%s{DADADA} fue invitado a la banda. Espera a que acepte.", (Player_Sex(recruit) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(recruit)), "Entendido");
 
     return 1;
@@ -649,7 +655,7 @@ dialog gang_invite_notice(playerid, response, listitem, const inputtext[])
         Player_Gang(playerid) = gangid;
         Player_GangRank(playerid) = Gang_GetLowestRank(gangid);
         Gang_SendMessage_s(gangid, @f("[MIEMBRO]{DADADA} %s %s se unio a la banda con el rango %s.", (Player_Sex(playerid) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(playerid), g_rgeGangRanks[gangid][Player_GangRank(playerid)][e_szRankName]));
-        mysql_tquery_s(g_hDatabase, @f("UPDATE `ACCOUNT` SET `GANG_ID` = %i, `GANG_RANK` = %i WHERE `ID` = %i;", gangid, Player_GangRank(playerid) + 1, Player_AccountID(playerid)));
+        mysql_tquery_s(g_hDatabase, @f("UPDATE `ACCOUNT` SET `GANG_ID` = %i, `GANG_RANK` = %i WHERE `ID` = %i;", g_rgeGangs[gangid][e_iGangDbId], Player_GangRank(playerid) + 1, Player_AccountID(playerid)));
     }
 
     DeletePVar(playerid, "gang:invite_id");
