@@ -115,10 +115,12 @@ public GANGS_PanelDataFetched(playerid)
     cache_get_value_name_int(0, "MEMBER_COUNT", member_count);
     printf("member_count = %i", member_count);
 
+    SetExclusiveBroadcast(true);
     TextDrawSetString(g_tdGangs[2], Gang_Data(Player_Gang(playerid))[e_szGangName]);
     TextDrawSetString_s(g_tdGangs[3], @f("Miembros: %i", member_count));
     TextDrawSetString(g_tdGangs[4], g_rgszGangIcons[Gang_Data(Player_Gang(playerid))[e_iGangIcon]][1]);
-
+    SetExclusiveBroadcast(false);
+    
     for(new i = sizeof(g_tdGangs) - 3; i != -1; --i)
     {
         TextDrawShowForPlayer(playerid, g_tdGangs[i]);

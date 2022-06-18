@@ -143,7 +143,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
             {
                 g_rgeKeyData[playerid][e_bKeyActivated] = true;
 
-                if (Performance_IsFine(playerid))
+                if (Performance_IsFine(playerid) && !Bit_Get(Player_Config(playerid), CONFIG_PERFORMANCE_MODE))
                 {
                     g_rgeKeyData[playerid][e_iKeyTimer] = SetTimerEx("KEY_MoveToBottom", 10, true, "ifd", playerid, 300.0, 4);
                 }
