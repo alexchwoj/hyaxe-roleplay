@@ -597,10 +597,40 @@ dialog gang_role_swap_success(playerid, response, listitem, inputtext[])
 
 dialog gang_invite_member(playerid, response, listitem, const inputtext[])
 {
+    if(!response)
+    {
+        Gangs_OpenPanel(playerid);
+        return 1;
+    }
+
     new recruit;
     if(sscanf(inputtext, "r", recruit))
     {
         Dialog_Show(playerid, "gang_invite_member", DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Usuario inválido o desconectado", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
+        return 1;
+    }
+
+    if(recruit == playerid)
+    {
+        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "No te puedes invitar a ti mism%c", (Player_Sex(recruit) == SEX_MALE ? 'o' : 'a'));
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
+        Dialog_Show(playerid, "gang_invite_member", DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Invitar jugadores", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
+        return 1;
+    }
+
+    if(Player_Gang(recruit) == Player_Gang(playerid))
+    {
+        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s ya está en tu banda", (Player_Sex(recruit) == SEX_MALE ? "El jugador" : "La jugadora"));
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
+        Dialog_Show(playerid, "gang_invite_member", DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Invitar jugadores", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
+        return 1;
+    }
+
+    if(Player_Gang(playerid) != -1)
+    {
+        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s ya está en otra banda", (Player_Sex(recruit) == SEX_MALE ? "El jugador" : "La jugadora"));
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
+        Dialog_Show(playerid, "gang_invite_member", DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Invitar jugadores", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
         return 1;
     }
 

@@ -34,7 +34,8 @@ new const g_rgszGangPermNames[][32] = {
     "Cambiar ícono",
     "Cambiar roles",
     "Expulsar miembros",
-    "Editar miembros"
+    "Editar miembros",
+    "Invitar jugadores"
 };
 
 enum eGangRankData
