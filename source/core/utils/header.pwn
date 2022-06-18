@@ -70,6 +70,7 @@ native PlayerTextDrawSetString_s(playerid, PlayerText:text, ConstAmxString:strin
 native mysql_tquery_s(MySQL:handle, ConstAmxString:query, const callback[] = "", const format[] = "", {Float,_}:...) = mysql_tquery;
 native SendClientMessage_s(playerid, color, ConstAmxString:message) = SendClientMessage;
 native ShowPlayerDialog_s(playerid, dialogid, style, ConstAmxString:caption, ConstAmxString:info, const button1[], const button2[]) = ShowPlayerDialog;
+native TextDrawSetString_s(Text:text, ConstAmxString:string) = TextDrawSetString;
 
 #include "core/utils/bitarray.pwn"
 #include "core/utils/cells.pwn"

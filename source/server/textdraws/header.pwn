@@ -14,7 +14,7 @@ new
     Text:g_tdInventoryUsername,
     Text:g_tdLevelingBar[6],
     Text:g_tdGangs[9],
-    Text:g_tdGangMemberSlots[7][4]
+    Text:g_tdGangMemberSlotBg[7]
 ;
 
 new
@@ -31,5 +31,6 @@ new
     PlayerText:p_tdInventoryExpText[MAX_PLAYERS char],
     PlayerText:p_tdToyView[MAX_PLAYERS][6 char],
     PlayerText:p_tdLevelingBar[MAX_PLAYERS][2 char],
-    PlayerText:p_tdItemOptions[MAX_PLAYERS][6 char]
+    PlayerText:p_tdItemOptions[MAX_PLAYERS][6 char],
+    PlayerText:p_tdGangMemberSlots[MAX_PLAYERS][7][3 char]
 ;

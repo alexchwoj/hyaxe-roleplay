@@ -114,6 +114,12 @@ public GANGS_PanelDataFetched(playerid)
     new member_count;
     cache_get_value_name_int(0, "MEMBER_COUNT", member_count);
     printf("member_count = %i", member_count);
+
+    SetExclusiveBroadcast(true);
+    TextDrawSetString(g_tdGangs[2], Gang_Data(Player_Gang(playerid))[e_szGangName]);
+    TextDrawSetString_s(g_tdGangs[3], @f("Miembros: %i", member_count));
+    TextDrawSetString(g_tdGangs[4], g_rgszGangIcons[Gang_Data(Player_Gang(playerid))[e_iGangIcon]][1]);
+    SetExclusiveBroadcast(false);
     
     for(new i = sizeof(g_tdGangs) - 3; i != -1; --i)
     {
@@ -125,10 +131,6 @@ public GANGS_PanelDataFetched(playerid)
 
     SelectTextDraw(playerid, 0xCB3126FF);
 
-    TextDrawSetStringForPlayer(g_tdGangs[2], playerid, Gang_Data(Player_Gang(playerid))[e_szGangName]);
-    TextDrawSetStringForPlayer(g_tdGangs[3], playerid, "Miembros: %i", member_count);
-    TextDrawSetStringForPlayer(g_tdGangs[4], playerid, "%s", g_rgszGangIcons[Gang_Data(Player_Gang(playerid))[e_iGangIcon]][1]);
-
     new rowc;
     cache_get_row_count(rowc);
 
@@ -139,14 +141,13 @@ public GANGS_PanelDataFetched(playerid)
         cache_get_value_name(i, "NAME", name);
         cache_get_value_name_int(i, "GANG_RANK", rank);
 
-        TextDrawShowForPlayer(playerid, g_tdGangMemberSlots[i][0]);
-        TextDrawShowForPlayer(playerid, g_tdGangMemberSlots[i][1]);
-        TextDrawShowForPlayer(playerid, g_tdGangMemberSlots[i][2]);
-        TextDrawShowForPlayer(playerid, g_tdGangMemberSlots[i][3]);
-
-        TextDrawSetStringForPlayer(g_tdGangMemberSlots[i][1], playerid, (current_playerid == -1 ? "~r~." : "~g~."));
-        TextDrawSetStringForPlayer(g_tdGangMemberSlots[i][2], playerid, name);
-        TextDrawSetStringForPlayer(g_tdGangMemberSlots[i][3], playerid, g_rgeGangRanks[Player_Gang(playerid)][rank - 1][e_szRankName]);
+        TextDrawShowForPlayer(playerid, g_tdGangMemberSlotBg[i]);
+        PlayerTextDrawSetString(playerid, p_tdGangMemberSlots[playerid][i]{0}, (current_playerid == -1 ? "~r~." : "~g~."));
+        PlayerTextDrawShow(playerid, p_tdGangMemberSlots[playerid][i]{0});
+        PlayerTextDrawSetString(playerid, p_tdGangMemberSlots[playerid][i]{1}, name);
+        PlayerTextDrawShow(playerid, p_tdGangMemberSlots[playerid][i]{1});
+        PlayerTextDrawSetString(playerid, p_tdGangMemberSlots[playerid][i]{2}, g_rgeGangRanks[Player_Gang(playerid)][rank - 1][e_szRankName]);
+        PlayerTextDrawShow(playerid, p_tdGangMemberSlots[playerid][i]{2});
     }
 
     return 1;
@@ -158,9 +159,21 @@ public GANGS_PanelMembersFetched(playerid)
     cache_get_row_count(rowc);
     cache_get_value_name_int(0, "MEMBER_COUNT", member_count);
 
+    DEBUG_PRINT("@ fun GANGS_PanelMembersFetched(playerid = %i)", playerid);
+    DEBUG_PRINT("      rowc = %i", rowc);
+    DEBUG_PRINT("      member_count = %i", member_count);
+    DEBUG_PRINT("[ext] g_rgiPanelPage{%i} = %i", playerid, g_rgiGangPanelPage{playerid});
+
     if(member_count < (g_rgiGangPanelPage{playerid} * 7))
     {
         TextDrawHideForPlayer(playerid, g_tdGangs[8]);
+    }
+    else
+    {
+        if(!IsTextDrawVisibleForPlayer(playerid, g_tdGangs[8]))
+        {
+            TextDrawShowForPlayer(playerid, g_tdGangs[8]);
+        }
     }
     
     for(new i; i < rowc; ++i)
@@ -170,14 +183,24 @@ public GANGS_PanelMembersFetched(playerid)
         cache_get_value_name(i, "NAME", name);
         cache_get_value_name_int(i, "GANG_RANK", rank);
 
-        TextDrawShowForPlayer(playerid, g_tdGangMemberSlots[i][0]);
-        TextDrawShowForPlayer(playerid, g_tdGangMemberSlots[i][1]);
-        TextDrawShowForPlayer(playerid, g_tdGangMemberSlots[i][2]);
-        TextDrawShowForPlayer(playerid, g_tdGangMemberSlots[i][3]);
+        TextDrawShowForPlayer(playerid, g_tdGangMemberSlotBg[i]);
+        PlayerTextDrawSetString(playerid, p_tdGangMemberSlots[playerid][i]{0}, (current_playerid == -1 ? "~r~." : "~g~."));
+        PlayerTextDrawSetString(playerid, p_tdGangMemberSlots[playerid][i]{1}, name);
+        PlayerTextDrawSetString(playerid, p_tdGangMemberSlots[playerid][i]{2}, g_rgeGangRanks[Player_Gang(playerid)][rank - 1][e_szRankName]);
+        if(!IsPlayerTextDrawVisible(playerid, p_tdGangMemberSlots[playerid][i]{0}))
+        {
+            PlayerTextDrawShow(playerid, p_tdGangMemberSlots[playerid][i]{0});
+            PlayerTextDrawShow(playerid, p_tdGangMemberSlots[playerid][i]{1});
+            PlayerTextDrawShow(playerid, p_tdGangMemberSlots[playerid][i]{2});
+        }
+    }
 
-        TextDrawSetStringForPlayer(g_tdGangMemberSlots[i][1], playerid, (current_playerid == -1 ? "~r~." : "~g~."));
-        TextDrawSetStringForPlayer(g_tdGangMemberSlots[i][2], playerid, name);
-        TextDrawSetStringForPlayer(g_tdGangMemberSlots[i][3], playerid, g_rgeGangRanks[Player_Gang(playerid)][rank - 1][e_szRankName]);
+    for(new i = rowc; i < sizeof(p_tdGangMemberSlots[]); ++i)
+    {
+        TextDrawHideForPlayer(playerid, g_tdGangMemberSlotBg[i]);
+        PlayerTextDrawHide(playerid, p_tdGangMemberSlots[playerid][i]{0});
+        PlayerTextDrawHide(playerid, p_tdGangMemberSlots[playerid][i]{1});
+        PlayerTextDrawHide(playerid, p_tdGangMemberSlots[playerid][i]{2});
     }
 
     return 1;
@@ -626,7 +649,7 @@ dialog gang_invite_member(playerid, response, listitem, const inputtext[])
         return 1;
     }
 
-    if(Player_Gang(playerid) != -1)
+    if(Player_Gang(recruit) != -1)
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s ya está en otra banda", (Player_Sex(recruit) == SEX_MALE ? "El jugador" : "La jugadora"));
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
@@ -635,7 +658,13 @@ dialog gang_invite_member(playerid, response, listitem, const inputtext[])
     }
 
     SetPVarInt(recruit, "gang:invite_id", Player_Gang(playerid));
-    Dialog_Show_s(recruit, "gang_invite_notice", DIALOG_STYLE_MSGBOX, @("{CB3126}>{DADADA} Invitación a banda"), @f("{DADADA}Fuiste invitad%c para unirte a la banda {%06x}%s{DADADA} con el rango de %s.", (Player_Sex(recruit) == SEX_MALE ? 'o' : 'a'), g_rgeGangs[Player_Gang(playerid)][e_iGangColor], g_rgeGangs[Player_Gang(playerid)][e_szGangName], g_rgeGangRanks[Player_Gang(playerid)][Gang_GetLowestRank(Player_Gang(playerid))][e_szRankName]), "Aceptar", "Rechazar");
+    Dialog_Show_s(recruit, "gang_invite_notice", DIALOG_STYLE_MSGBOX, @("{CB3126}>{DADADA} Invitación a banda"), 
+        @f("%{DADADA%}Fuiste invitad%c para unirte a la banda %{%06x%}%s%{DADADA%} con el rango de %s.", 
+            (Player_Sex(recruit) == SEX_MALE ? 'o' : 'a'), 
+            g_rgeGangs[Player_Gang(playerid)][e_iGangColor] >>> 8, 
+            g_rgeGangs[Player_Gang(playerid)][e_szGangName], 
+            g_rgeGangRanks[Player_Gang(playerid)][Gang_GetLowestRank(Player_Gang(playerid))][e_szRankName]
+        ), "Aceptar", "Rechazar");
     Dialog_Show_s(playerid, "", DIALOG_STYLE_MSGBOX, @f("{CB3126}>{DADADA} %s", (Player_Sex(recruit) == SEX_MALE ? "Jugador invitado" : "Jugadora invitada")), @f("{DADADA}%s {CB3126}%s{DADADA} fue invitado a la banda. Espera a que acepte.", (Player_Sex(recruit) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(recruit)), "Entendido");
 
     return 1;
@@ -649,7 +678,7 @@ dialog gang_invite_notice(playerid, response, listitem, const inputtext[])
         Player_Gang(playerid) = gangid;
         Player_GangRank(playerid) = Gang_GetLowestRank(gangid);
         Gang_SendMessage_s(gangid, @f("[MIEMBRO]{DADADA} %s %s se unio a la banda con el rango %s.", (Player_Sex(playerid) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(playerid), g_rgeGangRanks[gangid][Player_GangRank(playerid)][e_szRankName]));
-        mysql_tquery_s(g_hDatabase, @f("UPDATE `ACCOUNT` SET `GANG_ID` = %i, `GANG_RANK` = %i WHERE `ID` = %i;", gangid, Player_GangRank(playerid) + 1, Player_AccountID(playerid)));
+        mysql_tquery_s(g_hDatabase, @f("UPDATE `ACCOUNT` SET `GANG_ID` = %i, `GANG_RANK` = %i WHERE `ID` = %i;", g_rgeGangs[gangid][e_iGangDbId], Player_GangRank(playerid) + 1, Player_AccountID(playerid)));
     }
 
     DeletePVar(playerid, "gang:invite_id");
