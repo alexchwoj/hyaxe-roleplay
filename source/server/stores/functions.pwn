@@ -96,6 +96,7 @@ Shop_AddItem(shop_id, const name[], model, price, Float:rx, Float:ry, Float:rz)
 
 Player_StopShopping(playerid)
 {
+    printf("Player_StopShopping");
     Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING, false);
     Bit_Set(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS, false);
 

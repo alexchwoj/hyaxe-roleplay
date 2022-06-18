@@ -235,6 +235,7 @@ public OnPlayerCancelTDSelection(playerid)
 {
     if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING))
     {
+        KillTimer(g_rgiRotateSkinTimer[playerid]);
         Player_StopShopping(playerid);
         return 1;
     }

@@ -64,6 +64,14 @@ public OnGameModeInit()
     EnterExit_Create(19902, "{ED2B2B}ZIP", "{DADADA}Salida", -1882.4941, 866.1361, 35.1719, 135.4828, 0, 0, 161.401184, -96.887367, 1001.804687, 0.0, 4, 18);
     CreateDynamicMapIcon(-1882.4941, 866.1361, 35.1719, 45, -1, .worldid = 0, .interiorid = 0);
 
+    // Areas
+    Clothing_CreateArea(CLOTHING_BINCO, 207.733657, -100.633468, 1005.257812, 15);
+    Clothing_CreateArea(CLOTHING_SUBURBAN, 203.905395, -43.450450, 1001.804687, 1);
+    Clothing_CreateArea(CLOTHING_PROLAPS, 207.049148, -129.177581, 1003.507812, 3);
+    Clothing_CreateArea(CLOTHING_DIDIER_SACHS, 204.348281, -159.493728, 1000.523437, 14);
+    Clothing_CreateArea(CLOTHING_VICTIM, 206.374328, -7.241514, 1001.210937, 5);
+    Clothing_CreateArea(CLOTHING_ZIP, 161.443634, -83.589271, 1001.804687, 18);
+
     #if defined CLOTH_OnGameModeInit
         return CLOTH_OnGameModeInit();
     #else
@@ -79,4 +87,102 @@ public OnGameModeInit()
 #define OnGameModeInit CLOTH_OnGameModeInit
 #if defined CLOTH_OnGameModeInit
     forward CLOTH_OnGameModeInit();
+#endif
+
+public OnPlayerDisconnect(playerid, reason)
+{
+    KillTimer(g_rgiRotateSkinTimer[playerid]);
+
+    #if defined CLOTH_OnPlayerDisconnect
+        return CLOTH_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect CLOTH_OnPlayerDisconnect
+#if defined CLOTH_OnPlayerDisconnect
+    forward CLOTH_OnPlayerDisconnect(playerid, reason);
+#endif
+
+forward CLOTH_RotatePlayerSkin(playerid, Float:delta);
+public CLOTH_RotatePlayerSkin(playerid, Float:delta)
+{
+    new Float:angle;
+    GetPlayerFacingAngle(playerid, angle);
+    angle += delta;
+    if (angle < 0.0 || angle > 360.0)
+        angle = 0.0;
+
+    SetPlayerFacingAngle(playerid, angle);
+    return 1;
+}
+
+public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
+{
+    if((newkeys & KEY_YES) != 0)
+    {
+        if(!Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING))
+        {
+            if(IsPlayerInAnyDynamicArea(playerid))
+            {
+                new area[2];
+                GetPlayerDynamicAreas(playerid, area);
+
+                for(new i = sizeof(area) - 1; i != -1; --i)
+                {
+                    new info[2];
+                    Streamer_GetArrayData(STREAMER_TYPE_AREA, area[i], E_STREAMER_EXTRA_ID, info);
+
+                    if(info[0] == 0x434c53)
+                    {
+                        Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING, true);
+                        TogglePlayerControllable(playerid, false);
+
+                        new Float:x, Float:y, Float:z, Float:angle;
+                        GetPlayerPos(playerid, x, y, z);
+                        GetPlayerFacingAngle(playerid, angle);
+                        GetXYFromAngle(x, y, angle, 2.0);
+
+                        InterpolateCameraPos(playerid, x, y, z + 1.0, x, y, z + 1.0, 1000);
+                        GetPlayerPos(playerid, x, y, z);
+                        InterpolateCameraLookAt(playerid, x, y, z + 0.5, x, y, z, 1000);
+
+                        g_rgiRotateSkinTimer[playerid] = SetTimerEx("CLOTH_RotatePlayerSkin", 50, true, "if", playerid, 2.5);
+
+                        for(new j = (sizeof(g_tdShops) - 1); j != -1; --j)
+                        {
+                            TextDrawShowForPlayer(playerid, g_tdShops[j]);
+                        }
+
+                        TextDrawSetStringForPlayer(g_tdShops[5], playerid, "Comprar ropa");
+
+                        SelectTextDraw(playerid, 0xD2B567FF);
+                        PlayerPlaySound(playerid, 1145);
+                    }
+                }
+            }
+        }
+    }
+
+    #if defined CLOTH_OnPlayerKeyStateChange
+        return CLOTH_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerKeyStateChange
+    #undef OnPlayerKeyStateChange
+#else
+    #define _ALS_OnPlayerKeyStateChange
+#endif
+#define OnPlayerKeyStateChange CLOTH_OnPlayerKeyStateChange
+#if defined CLOTH_OnPlayerKeyStateChange
+    forward CLOTH_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 #endif
