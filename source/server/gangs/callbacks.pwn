@@ -626,7 +626,7 @@ dialog gang_invite_member(playerid, response, listitem, const inputtext[])
         return 1;
     }
 
-    if(Player_Gang(playerid) != -1)
+    if(Player_Gang(recruit) != -1)
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s ya está en otra banda", (Player_Sex(recruit) == SEX_MALE ? "El jugador" : "La jugadora"));
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
