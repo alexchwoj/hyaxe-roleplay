@@ -20,7 +20,7 @@ Gangs_OpenPanel(playerid)
         return 0;
 
     Bit_Set(Player_Flags(playerid), PFLAG_GANG_PANEL_OPEN, true);
-    g_rgiGangPanelPage{playerid} = 0;
+    g_rgiGangPanelPage{playerid} = 1;
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, 
         "SELECT `CURRENT_PLAYERID`, `NAME`, `GANG_RANK`, COUNT(*) OVER() AS `MEMBER_COUNT` \
@@ -52,7 +52,7 @@ Gangs_PanelForward(playerid)
             ORDER BY `GANG_RANK` DESC \
             LIMIT 7 OFFSET %i;",
         Gang_Data(Player_Gang(playerid))[e_iGangDbId],
-        (7 * g_rgiGangPanelPage{playerid})
+        (7 * (g_rgiGangPanelPage{playerid} - 1))
     );
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "GANGS_PanelMembersFetched", "i", playerid);
 }
@@ -60,20 +60,20 @@ Gangs_PanelForward(playerid)
 Gangs_PanelBackwards(playerid)
 {
     g_rgiGangPanelPage{playerid}--;
-    if(g_rgiGangPanelPage{playerid} == 0)
+    if(g_rgiGangPanelPage{playerid} == 1)
     {
         TextDrawHideForPlayer(playerid, g_tdGangs[7]);
     }
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, 
-        "SELECT `CURRENT_PLAYERID`, `NAME`, `GANG_RANK` \
+        "SELECT `CURRENT_PLAYERID`, `NAME`, `GANG_RANK`, COUNT(*) OVER() AS `MEMBER_COUNT` \
             FROM `ACCOUNT` \
             WHERE \
                 `ACCOUNT`.`GANG_ID` = %i \
             ORDER BY `GANG_RANK` DESC \
             LIMIT 7 OFFSET %i;",
         Gang_Data(Player_Gang(playerid))[e_iGangDbId],
-        (7 * g_rgiGangPanelPage{playerid})
+        (7 * (g_rgiGangPanelPage{playerid} - 1))
     );
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "GANGS_PanelMembersFetched", "i", playerid);
 }
@@ -81,17 +81,17 @@ Gangs_PanelBackwards(playerid)
 Gangs_ClosePanel(playerid)
 {
     Bit_Set(Player_Flags(playerid), PFLAG_GANG_PANEL_OPEN, false);
-    for(new i = sizeof(g_tdGangs) - 3; i != -1; --i)
+    for(new i = sizeof(g_tdGangs) - 1; i != -1; --i)
     {
         TextDrawHideForPlayer(playerid, g_tdGangs[i]);
     }
 
-    for(new i = sizeof(g_tdGangMemberSlots) - 1; i != -1; --i)
+    for(new i = sizeof(p_tdGangMemberSlots[]) - 1; i != -1; --i)
     {
-        TextDrawHideForPlayer(playerid, g_tdGangMemberSlots[i][0]);
-        TextDrawHideForPlayer(playerid, g_tdGangMemberSlots[i][1]);
-        TextDrawHideForPlayer(playerid, g_tdGangMemberSlots[i][2]);
-        TextDrawHideForPlayer(playerid, g_tdGangMemberSlots[i][3]);
+        PlayerTextDrawHide(playerid, p_tdGangMemberSlots[playerid][i]{0});
+        PlayerTextDrawHide(playerid, p_tdGangMemberSlots[playerid][i]{1});
+        PlayerTextDrawHide(playerid, p_tdGangMemberSlots[playerid][i]{2});
+        TextDrawHideForPlayer(playerid, g_tdGangMemberSlotBg[i]);
     }
 
     CancelSelectTextDraw(playerid);
