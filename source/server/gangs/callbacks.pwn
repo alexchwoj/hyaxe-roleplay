@@ -289,6 +289,10 @@ dialog modify_gang(playerid, response, listitem, inputtext[])
         {
             Dialog_Show(playerid, "null", DIALOG_STYLE_MSGBOX, caption, "{DADADA}Para editar o expulsar a algun miembro de la banda, presiona su nombre en el panel de banda.", "Entendido");
         }
+        case GANG_PERM_INVITE_MEMBERS:
+        {
+            Dialog_Show(playerid, "gang_invite_member", DIALOG_STYLE_INPUT, caption, "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
+        }
     }
 
     return 1;
@@ -591,6 +595,67 @@ dialog gang_role_swap_success(playerid, response, listitem, inputtext[])
     return 1;
 }
 
+dialog gang_invite_member(playerid, response, listitem, const inputtext[])
+{
+    if(!response)
+    {
+        Gangs_OpenPanel(playerid);
+        return 1;
+    }
+
+    new recruit;
+    if(sscanf(inputtext, "r", recruit))
+    {
+        Dialog_Show(playerid, "gang_invite_member", DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Usuario inválido o desconectado", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
+        return 1;
+    }
+
+    if(recruit == playerid)
+    {
+        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "No te puedes invitar a ti mism%c", (Player_Sex(recruit) == SEX_MALE ? 'o' : 'a'));
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
+        Dialog_Show(playerid, "gang_invite_member", DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Invitar jugadores", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
+        return 1;
+    }
+
+    if(Player_Gang(recruit) == Player_Gang(playerid))
+    {
+        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s ya está en tu banda", (Player_Sex(recruit) == SEX_MALE ? "El jugador" : "La jugadora"));
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
+        Dialog_Show(playerid, "gang_invite_member", DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Invitar jugadores", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
+        return 1;
+    }
+
+    if(Player_Gang(playerid) != -1)
+    {
+        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s ya está en otra banda", (Player_Sex(recruit) == SEX_MALE ? "El jugador" : "La jugadora"));
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
+        Dialog_Show(playerid, "gang_invite_member", DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Invitar jugadores", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
+        return 1;
+    }
+
+    SetPVarInt(recruit, "gang:invite_id", Player_Gang(playerid));
+    Dialog_Show_s(recruit, "gang_invite_notice", DIALOG_STYLE_MSGBOX, @("{CB3126}>{DADADA} Invitación a banda"), @f("{DADADA}Fuiste invitad%c para unirte a la banda {%06x}%s{DADADA} con el rango de %s.", (Player_Sex(recruit) == SEX_MALE ? 'o' : 'a'), g_rgeGangs[Player_Gang(playerid)][e_iGangColor], g_rgeGangs[Player_Gang(playerid)][e_szGangName], g_rgeGangRanks[Player_Gang(playerid)][Gang_GetLowestRank(Player_Gang(playerid))][e_szRankName]), "Aceptar", "Rechazar");
+    Dialog_Show_s(playerid, "", DIALOG_STYLE_MSGBOX, @f("{CB3126}>{DADADA} %s", (Player_Sex(recruit) == SEX_MALE ? "Jugador invitado" : "Jugadora invitada")), @f("{DADADA}%s {CB3126}%s{DADADA} fue invitado a la banda. Espera a que acepte.", (Player_Sex(recruit) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(recruit)), "Entendido");
+
+    return 1;
+}
+
+dialog gang_invite_notice(playerid, response, listitem, const inputtext[])
+{
+    if(response)
+    {
+        new gangid = GetPVarInt(playerid, "gang:invite_id"); 
+        Player_Gang(playerid) = gangid;
+        Player_GangRank(playerid) = Gang_GetLowestRank(gangid);
+        Gang_SendMessage_s(gangid, @f("[MIEMBRO]{DADADA} %s %s se unio a la banda con el rango %s.", (Player_Sex(playerid) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(playerid), g_rgeGangRanks[gangid][Player_GangRank(playerid)][e_szRankName]));
+        mysql_tquery_s(g_hDatabase, @f("UPDATE `ACCOUNT` SET `GANG_ID` = %i, `GANG_RANK` = %i WHERE `ID` = %i;", gangid, Player_GangRank(playerid) + 1, Player_AccountID(playerid)));
+    }
+
+    DeletePVar(playerid, "gang:invite_id");
+    return 1;
+}
+
 public OnPlayerDisconnect(playerid, reason)
 {
     if(g_rgiPanelSelectedRole{playerid} != 0xFF && g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankId] == -1)
@@ -598,6 +663,8 @@ public OnPlayerDisconnect(playerid, reason)
         g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankId] = 0;
         g_rgiPanelSelectedRole{playerid} = 0xFF;
     }
+
+    DeletePVar(playerid, "gang:invite_id");
 
     #if defined GANGS_OnPlayerDisconnect
         return GANGS_OnPlayerDisconnect(playerid, reason);

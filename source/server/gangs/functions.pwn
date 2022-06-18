@@ -191,3 +191,13 @@ GangPanel_OpenRoleSwap(playerid)
     Dialog_Show(playerid, "gang_exchange_slot", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}>>{DADADA} Intercambiar posiciones", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Atrás");
     return 1;
 }
+
+Gang_GetLowestRank(gangid)
+{
+    for(new i; i < sizeof(g_rgeGangRanks[]); ++i)
+    {
+        if(g_rgeGangRanks[gangid][i][e_iRankId])
+            return i;
+    }
+    return -1;
+}
