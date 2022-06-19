@@ -114,7 +114,7 @@ command id(playerid, const params[], "Ver los datos de un jugador")
         (NetStats_GetConnectedTime(destination) / 60000)
     );
 
-    if (Player_AdminLevel(playerid) <= Player_AdminLevel(destination))
+    if (Player_AdminLevel(playerid) > RANK_LEVEL_USER && Player_AdminLevel(playerid) >= Player_AdminLevel(destination))
     {
         SendClientMessagef(
             playerid, 0x415BA2FF,
