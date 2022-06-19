@@ -519,7 +519,7 @@ dialog gang_abandon(playerid, response, listitem, const inputtext[])
 
     if(Player_IsGangOwner(playerid))
     {
-        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `GANGS` WHERE `GANG_ID` = %i;", Player_Gang(playerid));
+        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `GANGS` WHERE `GANG_ID` = %i;", Gang_Data(Player_Gang(playerid))[e_iGangDbId]);
         mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 
         Gang_SendMessage(Player_Gang(playerid), "[BANDA]{DADADA} La banda fue eliminada.");
@@ -918,7 +918,7 @@ dialog gang_invite_notice(playerid, response, listitem, const inputtext[])
         Player_Gang(playerid) = gangid;
         Player_GangRank(playerid) = Gang_GetLowestRank(gangid);
         Iter_Add(GangMember[gangid], playerid);
-        
+
         Gang_SendMessage_s(gangid, @f("[MIEMBRO]{DADADA} %s %s se unio a la banda con el rango %s.", (Player_Sex(playerid) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(playerid), g_rgeGangRanks[gangid][Player_GangRank(playerid)][e_szRankName]));
         mysql_tquery_s(g_hDatabase, @f("UPDATE `ACCOUNT` SET `GANG_ID` = %i, `GANG_RANK` = %i WHERE `ID` = %i;", g_rgeGangs[gangid][e_iGangDbId], Player_GangRank(playerid) + 1, Player_AccountID(playerid)));
     }
