@@ -158,7 +158,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         GetPlayerPos(playerid, x, y, z);
                         InterpolateCameraLookAt(playerid, x, y, z + 0.5, x, y, z, 1000);
 
-                        g_rgiRotateSkinTimer[playerid] = SetTimerEx("CLOTH_RotatePlayerSkin", 50, true, "if", playerid, 2.5);
+                        g_rgiRotateSkinTimer[playerid] = SetTimerEx("CLOTH_RotatePlayerSkin", 75, true, "if", playerid, 5.0);
 
                         for(new j = (sizeof(g_tdShops) - 1); j != -1; --j)
                         {

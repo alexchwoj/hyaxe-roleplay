@@ -100,6 +100,7 @@ enum ePlayerTemp
     e_iPlayerEatTick,
     e_iPlayerEatCount,
     e_iPlayerPukeTick,
+    e_iPlayerFootTick,
     e_iPlayerDropItemAmount,
     e_iPlayerItemSlot,
     e_iPlayerLastWorld
