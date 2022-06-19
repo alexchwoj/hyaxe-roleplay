@@ -127,7 +127,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if((newkeys & KEY_YES) != 0)
     {
-        if(!Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING))
+        if(!Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES))
         {
             if(IsPlayerInAnyDynamicArea(playerid))
             {
@@ -141,8 +141,13 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
                     if(info[0] == 0x434c53)
                     {
-                        Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING, true);
+                        Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES, true);
                         TogglePlayerControllable(playerid, false);
+
+                        g_rgePlayerTempData[playerid][e_iPlayerLastWorld] = GetPlayerVirtualWorld(playerid);
+                        SetPlayerVirtualWorld(playerid, playerid);
+
+                        g_rgiPlayerClothingStore[playerid] = info[1];
 
                         new Float:x, Float:y, Float:z, Float:angle;
                         GetPlayerPos(playerid, x, y, z);
@@ -164,6 +169,9 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
                         SelectTextDraw(playerid, 0xD2B567FF);
                         PlayerPlaySound(playerid, 1145);
+
+                        g_rgiPlayerSelectedSkin[playerid] = 0;
+                        Clothing_Select(playerid, 0);
                     }
                 }
             }
@@ -185,4 +193,94 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 #define OnPlayerKeyStateChange CLOTH_OnPlayerKeyStateChange
 #if defined CLOTH_OnPlayerKeyStateChange
     forward CLOTH_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
+#endif
+
+
+public OnPlayerClickTextDraw(playerid, Text:clickedid)
+{
+    if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES))
+    {
+        // Left button
+        if(clickedid == g_tdShops[7])
+        {
+            --g_rgiPlayerSelectedSkin[playerid];
+            if (g_rgiPlayerSelectedSkin[playerid] < 0)
+                g_rgiPlayerSelectedSkin[playerid] = 0;
+
+            Clothing_Select(playerid, g_rgiPlayerSelectedSkin[playerid]);
+            PlayerPlaySound(playerid, SOUND_BACK);
+        }
+        // Right button
+        else if(clickedid == g_tdShops[8])
+        {
+            ++g_rgiPlayerSelectedSkin[playerid];
+            if (!g_rgiClothingSkins[ g_rgiPlayerClothingStore[playerid] ][ Player_Sex(playerid) ][ g_rgiPlayerSelectedSkin[playerid] ][0])
+                g_rgiPlayerSelectedSkin[playerid] = 0;
+
+            Clothing_Select(playerid, g_rgiPlayerSelectedSkin[playerid]);
+            PlayerPlaySound(playerid, SOUND_NEXT);
+        }
+        // Buy button
+        else if(clickedid == g_tdShops[9])
+        {
+            if (Player_Money(playerid) < g_rgiClothingSkins[ g_rgiPlayerClothingStore[playerid] ][ Player_Sex(playerid) ][ g_rgiPlayerSelectedSkin[playerid] ][1])
+            {
+                PlayerPlaySound(playerid, SOUND_ERROR);
+                Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                return 0;
+            }
+
+            Player_GiveMoney(playerid, -g_rgiClothingSkins[ g_rgiPlayerClothingStore[playerid] ][ Player_Sex(playerid) ][ g_rgiPlayerSelectedSkin[playerid] ][1]);
+            Player_Skin(playerid) = g_rgiClothingSkins[ g_rgiPlayerClothingStore[playerid] ][ Player_Sex(playerid) ][ g_rgiPlayerSelectedSkin[playerid] ][0];
+            SetPlayerSkin(playerid, Player_Skin(playerid));
+            Player_StopShopping(playerid);
+            Notification_Show(playerid, "Ropa comprada.", 3000, 0x64A752FF);
+            PlayerPlaySound(playerid, 1054);
+            SetPlayerVirtualWorld(playerid, g_rgePlayerTempData[playerid][e_iPlayerLastWorld]);
+        }
+    }
+
+    #if defined CLOTH_OnPlayerClickTextDraw
+        return CLOTH_OnPlayerClickTextDraw(playerid, Text:clickedid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerClickTextDraw
+    #undef OnPlayerClickTextDraw
+#else
+    #define _ALS_OnPlayerClickTextDraw
+#endif
+#define OnPlayerClickTextDraw CLOTH_OnPlayerClickTextDraw
+#if defined CLOTH_OnPlayerClickTextDraw
+    forward CLOTH_OnPlayerClickTextDraw(playerid, Text:clickedid);
+#endif
+
+
+public OnPlayerCancelTDSelection(playerid)
+{
+    if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES))
+    {
+        SetPlayerVirtualWorld(playerid, g_rgePlayerTempData[playerid][e_iPlayerLastWorld]);
+        Player_StopShopping(playerid);
+        SetPlayerSkin(playerid, Player_Skin(playerid));
+        return 1;
+    }
+
+    #if defined CLOTH_OnPlayerCancelTDSelection
+        return CLOTH_OnPlayerCancelTDSelection(playerid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerCancelTDSelection
+    #undef OnPlayerCancelTDSelection
+#else
+    #define _ALS_OnPlayerCancelTDSelection
+#endif
+#define OnPlayerCancelTDSelection CLOTH_OnPlayerCancelTDSelection
+#if defined CLOTH_OnPlayerCancelTDSelection
+    forward CLOTH_OnPlayerCancelTDSelection(playerid);
 #endif

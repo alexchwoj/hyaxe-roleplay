@@ -20,6 +20,7 @@ enum
     PFLAG_USING_ATM,
     PFLAG_INJURED,
     PFLAG_SHOPPING,
+    PFLAG_SHOPPING_CLOTHES,
     PFLAG_CAN_USE_SHOP_BUTTONS,
     PFLAG_IS_PUKING,
     PFLAG_USING_INV,
@@ -100,7 +101,8 @@ enum ePlayerTemp
     e_iPlayerEatCount,
     e_iPlayerPukeTick,
     e_iPlayerDropItemAmount,
-    e_iPlayerItemSlot
+    e_iPlayerItemSlot,
+    e_iPlayerLastWorld
 };
 
 new 

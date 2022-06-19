@@ -96,8 +96,9 @@ Shop_AddItem(shop_id, const name[], model, price, Float:rx, Float:ry, Float:rz)
 
 Player_StopShopping(playerid)
 {
-    printf("Player_StopShopping");
+    KillTimer(g_rgiRotateSkinTimer[playerid]);
     Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING, false);
+    Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES, false);
     Bit_Set(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS, false);
 
     for(new i = (sizeof(g_tdShops) - 1); i != -1; --i)
