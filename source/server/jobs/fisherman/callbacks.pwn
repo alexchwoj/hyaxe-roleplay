@@ -119,12 +119,11 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 if (info[0] == 0x534653)
                 {
                     new amount = Inventory_GetItemAmount(playerid, ITEM_FISH);
-                    if (amount)
-                    {
-                        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}¿Quieres vender %d peces por {64A752}$%d{DADADA}?", amount, 2 * amount);
-                        Dialog_Show(playerid, "sell_fish", DIALOG_STYLE_MSGBOX, !"{CB3126}Pescadería", HYAXE_UNSAFE_HUGE_STRING, !"Vender", !"Cerrar");
-                    }
-                    else Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes peces para vender.");
+                    if (amount < 5)
+                        return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Necesitas al menos 5 peces.");
+
+                    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}¿Quieres vender %d peces por {64A752}$%d{DADADA}?", amount, 2 * amount);
+                    Dialog_Show(playerid, "sell_fish", DIALOG_STYLE_MSGBOX, !"{CB3126}Pescadería", HYAXE_UNSAFE_HUGE_STRING, !"Vender", !"Cerrar");
                 }
             }
         }
