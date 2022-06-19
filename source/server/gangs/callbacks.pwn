@@ -83,8 +83,6 @@ public OnGameModeInit()
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    log_function();
-
     if(((newkeys & (KEY_SPRINT | KEY_YES)) == KEY_SPRINT | KEY_YES) && !IsPlayerInAnyVehicle(playerid))
     {
         printf("gang = %i", Player_Gang(playerid));

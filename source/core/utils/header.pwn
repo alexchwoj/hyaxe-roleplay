@@ -5,7 +5,7 @@
 
 const cellbytes = (cellbits / charbits);
 
-const HYAXE_UNSAFE_HUGE_LENGTH = 1024;
+const HYAXE_UNSAFE_HUGE_LENGTH = 2048;
 new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 
 #if defined isnull

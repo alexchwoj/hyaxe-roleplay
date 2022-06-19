@@ -62,7 +62,7 @@ command kick(playerid, const params[], "Expulsa a un jugador")
     gettime(hour, minute, second);
     getdate(year, month, day);
 
-    Dialog_Show_s(playerid, "kick", DIALOG_STYLE_MSGBOX, @("{CB3126}Hyaxe {DADADA}- Expulsión"),
+    Dialog_Show_s(kicked, "kick", DIALOG_STYLE_MSGBOX, @("{CB3126}Hyaxe {DADADA}- Expulsión"),
         @f(
             "{DADADA}Fuiste expulsad%c del servidor.\n\n\
             {CB3126}Razón de la expulsión\n\
@@ -78,7 +78,7 @@ command kick(playerid, const params[], "Expulsa a un jugador")
         "Salir"
     );
 
-    KickTimed(playerid, 500);
+    KickTimed(kicked, 500);
 
     Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, 
         @f("› {DADADA}%s {415BA2}%s {DADADA}(ID {415BA2}%i{DADADA}) fue expulsad%c por %s %s {415BA2}%s{DADADA}.", 
