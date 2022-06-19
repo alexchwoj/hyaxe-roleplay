@@ -3,6 +3,9 @@
 #endif
 #define _gangs_callbacks_
 
+static 
+    s_rgbSelectingNewOwner[MAX_PLAYERS char];
+
 public OnGameModeInit()
 {
     Iter_Init(GangMember);
@@ -253,6 +256,9 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
         }
 
         strcat(HYAXE_UNSAFE_HUGE_STRING, "{CB3126}>>{DADADA} Abandonar banda");
+        if(Player_IsGangOwner(playerid))
+            strcat(HYAXE_UNSAFE_HUGE_STRING, "\n{CB3126}>>{DADADA} Ceder administración");
+
         Dialog_Show(playerid, "modify_gang", DIALOG_STYLE_LIST, caption, HYAXE_UNSAFE_HUGE_STRING, "Siguiente", "Cancelar");
         return 1;
     }
@@ -289,6 +295,18 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
                 if(!strcmp(s_rgszSelectedGangMember[playerid], Player_Name(playerid)))
                     return 1;
 
+                if(s_rgbSelectingNewOwner{playerid})
+                {
+                    s_rgbSelectingNewOwner{playerid} = false;
+                    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+                        SELECT `ID` FROM `ACCOUNT` WHERE `NAME` = '%e' LIMIT 1;\
+                    ",
+                        s_rgszSelectedGangMember[playerid]
+                    );
+                    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "GANGS_NewOwnerFetched", "i", playerid);
+                    return 1;
+                }
+
                 Gangs_ClosePanel(playerid);
 
                 Dialog_Show_s(playerid, "gang_member", DIALOG_STYLE_LIST, @f("{CB3126}>>{DADADA} %s", s_rgszSelectedGangMember[playerid]), @("{CB3126}>{DADADA} Cambiar rol\n{CB3126}>>{DADADA} Expulsar miembro"), "Seleccionar", "Atrás");
@@ -313,6 +331,30 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 #if defined GANGS_OnPlayerClickPlayerTD
     forward GANGS_OnPlayerClickPlayerTD(playerid, PlayerText:playertextid);
 #endif
+
+public GANGS_NewOwnerFetched(playerid)
+{
+    new rowc;
+    cache_get_row_count(rowc);
+    if(!rowc)
+    {
+        s_rgbSelectingNewOwner{playerid} = false;
+        Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Se produjo un error al seleccionar el usuario");
+        return 1;
+    }
+
+    new accid;
+    cache_get_value_name_int(0, "ID", accid);
+
+    g_rgeGangs[Player_Gang(playerid)][e_iGangOwnerId] = accid;
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `GANGS` SET `CREATOR_ID` = %i WHERE `GANG_ID` = %i;", accid, Gang_Data(Player_Gang(playerid))[e_iGangDbId]);
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}El dueño de la banda ahora es {CB3126}%s{DADADA}.", s_rgszSelectedGangMember[playerid]);
+    Dialog_Show(playerid, "", DIALOG_STYLE_MSGBOX, "{CB3126}>{DADADA} Permisos cedidos", HYAXE_UNSAFE_HUGE_STRING, "Entendido");
+
+    return 1;
+}
 
 dialog gang_member(playerid, response, listitem, const inputtext[])
 {
@@ -463,6 +505,11 @@ dialog modify_gang(playerid, response, listitem, inputtext[])
         Dialog_Show(playerid, "gang_abandon", DIALOG_STYLE_MSGBOX, "{CB3126}>{DADADA} Abandonar banda", HYAXE_UNSAFE_HUGE_STRING, "Abandonar", "Cancelar");
         return 1;
     }
+    else if(perm == (_:GANG_PERM_LAST << 1))
+    {
+        Dialog_Show(playerid, "gang_give_owner", DIALOG_STYLE_MSGBOX, "{CB3126}>{DADADA} Ceder administración de la banda", "{DADADA}¿Estás seguro de que deseas ceder tu cargo como dueño de la banda? Perderás todos los permisos que no esten asignados a tu rol y no podrás hacer ninguna acción sobre miembros superiores a ti.", "Siguiente", "Cancelar");
+        return 1;
+    }
 
     new caption[40];
     format(caption, sizeof(caption), "{CB3126}>>{DADADA} %s", g_rgszGangPermNames[listitem]);
@@ -509,6 +556,18 @@ dialog modify_gang(playerid, response, listitem, inputtext[])
         }
     }
 
+    return 1;
+}
+
+dialog gang_give_owner(playerid, response, listitem, const inputtext[])
+{
+    if(response)
+    {
+        s_rgbSelectingNewOwner{playerid} = true;
+        Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Selecciona al nuevo dueño en la lista de miembros");
+    }
+
+    Gangs_OpenPanel(playerid);
     return 1;
 }
 
@@ -958,6 +1017,7 @@ public OnPlayerCancelTDSelection(playerid)
 {
     if(Bit_Get(Player_Flags(playerid), PFLAG_GANG_PANEL_OPEN))
     {
+        s_rgbSelectingNewOwner{playerid} = false;
         Gangs_ClosePanel(playerid);
         return 1;
     }

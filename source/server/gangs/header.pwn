@@ -88,6 +88,8 @@ forward Gangs_PanelBackwards(playerid);
 forward Gang_SendMessage(gangid, const message[]);
 forward Gang_SendMessage_s(gangid, ConstString:message);
 forward Gang_GetLowestRank(gangid);
+
 forward GANGS_PanelDataFetched(playerid);
 forward GANGS_PanelMembersFetched(playerid);
 forward GANGS_RoleCreated(playerid);
+forward GANGS_NewOwnerFetched(playerid);
