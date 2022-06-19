@@ -179,6 +179,7 @@ static AccountRegistered(playerid)
     SetPlayerInterior(playerid, 0);
     SetCameraBehindPlayer(playerid);
 
+    SetPlayerScore(playerid, 1);
     StopAudioStreamForPlayer(playerid);
 
     Iter_Add(LoggedIn, playerid);
@@ -237,6 +238,7 @@ dialog login(playerid, response, listitem, inputtext[])
     Player_GiveAllWeapons(playerid);
     SetPlayerArmedWeapon(playerid, 0);
     
+    SetPlayerScore(playerid, Player_Level(playerid));
     Iter_Add(LoggedIn, playerid);
 
     if (Player_AdminLevel(playerid) > 0)

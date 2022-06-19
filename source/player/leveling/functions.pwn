@@ -74,6 +74,7 @@ Player_AddXP(playerid, xp)
         while(total_xp >= Level_GetRequiredXP(Player_Level(playerid)));
 
         Player_XP(playerid) = total_xp;
+        SetPlayerScore(playerid, Player_Level(playerid));
 
         if(animate)
             Levels_AnimateBar(playerid, current_xp, .start_level = current_level, .new_level = true);
@@ -133,6 +134,8 @@ Player_SetLevel(playerid, level)
         Levels_AnimateBar(playerid, old_xp, old_level, true);
     }
 
+    SetPlayerScore(playerid, Player_Level(playerid));
+    
     return 1;
 }
 
