@@ -11,7 +11,8 @@ enum eGangData
     e_iGangDbId,
     e_szGangName[64],
     e_iGangColor,
-    e_iGangIcon
+    e_iGangIcon,
+    e_iGangOwnerId
 };
 new g_rgeGangs[HYAXE_MAX_GANGS][eGangData],
     Map:g_mapGangIds;
@@ -79,12 +80,16 @@ new
 #define Player_Gang(%0) (g_rgiPlayerGang[(%0)])
 #define Player_GangRank(%0) (g_rgiPlayerGangRank{(%0)})
 #define Player_GangRankData(%0) (g_rgeGangRanks[g_rgiPlayerGang[(%0)]][g_rgiPlayerGangRank{(%0)}])
+#define Player_IsGangOwner(%0) (g_rgeGangs[Player_Gang(%0)][e_iGangOwnerId] == Player_AccountID(%0))
+#define Player_HasPermissionInGang(%0,%1) ((g_rgeGangRanks[Player_Gang(%0)][Player_GangRank(%0)][e_iRankPermisionFlags] & (%1)) || Player_IsGangOwner(%0))
 
 forward Gangs_PanelForward(playerid);
 forward Gangs_PanelBackwards(playerid);
 forward Gang_SendMessage(gangid, const message[]);
 forward Gang_SendMessage_s(gangid, ConstString:message);
 forward Gang_GetLowestRank(gangid);
+
 forward GANGS_PanelDataFetched(playerid);
 forward GANGS_PanelMembersFetched(playerid);
 forward GANGS_RoleCreated(playerid);
+forward GANGS_NewOwnerFetched(playerid);

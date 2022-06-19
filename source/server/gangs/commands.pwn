@@ -208,6 +208,7 @@ public GANG_Inserted(playerid)
     strcpy(g_rgeGangs[idx][e_szGangName], s_rgszGangCreationName[playerid]);
     g_rgeGangs[idx][e_iGangColor] = s_rgiGangCreationColor[playerid];
     g_rgeGangs[idx][e_iGangIcon] = s_rgiGangCreationIcon{playerid};
+    g_rgeGangs[idx][e_iGangOwnerId] = Player_AccountID(playerid);
     map_add(g_mapGangIds, gangid, idx);
 
     g_rgeGangRanks[idx][9][e_iRankId] = rankid;

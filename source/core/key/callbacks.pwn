@@ -97,7 +97,7 @@ public OnPlayerLeaveDynamicArea(playerid, areaid)
     {
         if (g_rgeKeyData[playerid][e_bKeyActivated])
         {
-            if (Performance_IsFine(playerid) && !g_rgeKeyData[playerid][e_bKeyGoingUp])
+            if ((Performance_IsFine(playerid) && !Bit_Get(Player_Config(playerid), CONFIG_PERFORMANCE_MODE)) && !g_rgeKeyData[playerid][e_bKeyGoingUp])
             {
                 g_rgeKeyData[playerid][e_iKeyFrameCount] = 0;
                 KillTimer(g_rgeKeyData[playerid][e_iKeyTimer]);
