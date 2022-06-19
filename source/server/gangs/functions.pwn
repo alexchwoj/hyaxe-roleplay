@@ -36,6 +36,26 @@ Gangs_OpenPanel(playerid)
     return 1;
 }
 
+Gangs_UpdatePanel(playerid)
+{
+    if(!Bit_Get(Player_Flags(playerid), PFLAG_GANG_PANEL_OPEN))
+        return 0;
+
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, 
+        "SELECT `CURRENT_PLAYERID`, `NAME`, `GANG_RANK`, COUNT(*) OVER() AS `MEMBER_COUNT` \
+            FROM `ACCOUNT` \
+            WHERE \
+                `ACCOUNT`.`GANG_ID` = %i \
+            ORDER BY `GANG_RANK` DESC \
+            LIMIT 7 OFFSET %i;",
+        Gang_Data(Player_Gang(playerid))[e_iGangDbId],
+        (7 * (g_rgiGangPanelPage{playerid} - 1))
+    );
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "GANGS_PanelMembersFetched", "i", playerid);
+
+    return 1;
+}
+
 Gangs_PanelForward(playerid)
 {
     g_rgiGangPanelPage{playerid}++;
@@ -178,11 +198,11 @@ GangPanel_OpenRoleSwap(playerid)
     {
         if(g_rgeGangRanks[Player_Gang(playerid)][i][e_iRankId])
         {
-            format(line, sizeof(line), "{DADADA}%2i {CB3126}>{%06x} %s\t \n", i + 1, (g_rgiPanelSelectedRole{playerid} == i ? 0xCB3126 : (Player_GangRank(playerid) > i ? 0xDADADA : 0x969696)), g_rgeGangRanks[Player_Gang(playerid)][i][e_szRankName]);
+            format(line, sizeof(line), "{DADADA}%2i {CB3126}>{%06x} %s\t \n", i + 1, (g_rgiPanelSelectedRole{playerid} == i ? 0xCB3126 : (Player_GangRank(playerid) > i || Player_IsGangOwner(playerid) ? 0xDADADA : 0x969696)), g_rgeGangRanks[Player_Gang(playerid)][i][e_szRankName]);
         }
         else
         {
-            format(line, sizeof(line), "{DADADA}%2i {CB3126}>{%06x} Vacío\t \n", i + 1, (Player_GangRank(playerid) > i ? 0xBFBDBD : 0x969696));
+            format(line, sizeof(line), "{DADADA}%2i {CB3126}>{%06x} Vacío\t \n", i + 1, (Player_GangRank(playerid) > i || Player_IsGangOwner(playerid) ? 0xBFBDBD : 0x969696));
         }
 
         strcat(HYAXE_UNSAFE_HUGE_STRING, line);
