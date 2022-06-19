@@ -30,7 +30,7 @@ Inventory_Update(playerid)
 		{
 			if (InventorySlot_IsValid(playerid, i))
 			{
-				if (InventorySlot_Type(playerid, i) > 31)
+				if (InventorySlot_Type(playerid, i) >= ITEM_INVALID)
 				{
 					printf("[inventory]: Invalid item > playerid: %d, slot: %d, type: %d, db_id: %d", playerid, i, InventorySlot_Type(playerid, i), InventorySlot_ID(playerid, i));
 					memset(g_rgePlayerInventory[playerid][i], 0);
