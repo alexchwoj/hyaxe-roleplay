@@ -924,7 +924,7 @@ dialog gang_invite_member(playerid, response, listitem, const inputtext[])
     }
 
     new recruit;
-    if(sscanf(inputtext, "r", recruit))
+    if(sscanf(inputtext, "r", recruit) || !IsPlayerConnected(recruit))
     {
         Dialog_Show(playerid, "gang_invite_member", DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Usuario inválido o desconectado", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
         return 1;
