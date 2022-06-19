@@ -55,6 +55,7 @@ Player_GoToTheNearestHospital(playerid)
     SetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fSpawnPosAngle]);
     SetPlayerInterior(playerid, 0);
     SetPlayerVirtualWorld(playerid, 0);
+    SetPlayerDrunkLevel(playerid, 0);
 
     new
         Float:cam_x = g_rgePlayerData[playerid][e_fSpawnPosX],

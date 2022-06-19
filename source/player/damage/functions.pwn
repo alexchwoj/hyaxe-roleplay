@@ -123,9 +123,9 @@ command revive(playerid, const params[], "Revivir a un jugador")
 
 	Player_SetHealth(destination, health);
 	Bit_Set(Player_Flags(destination), PFLAG_INJURED, false);
-
 	KillTimer(g_rgeCrawlData[destination][e_iCrawlKeyTimer]);
 	ClearAnimations(destination);
+	SetPlayerDrunkLevel(playerid, 0);
 
     if (playerid != destination)
     {
