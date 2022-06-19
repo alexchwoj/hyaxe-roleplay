@@ -36,20 +36,18 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
     if ((newkeys & KEY_WALK) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
-        if (GetPlayerNumberDynamicAreas(playerid) > 0)
+        for_list(it : GetPlayerAllDynamicAreas(playerid))
         {
-            new areas[1];
-            GetPlayerDynamicAreas(playerid, areas);
-
-            new info[7];
-            Streamer_GetArrayData(STREAMER_TYPE_AREA, areas[0], E_STREAMER_EXTRA_ID, info);
-            if (info[0] == 0x49544d)
+            if (Streamer_HasArrayData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x49544d)))
             {
-                if (Inventory_AddItem(playerid, info[1], info[2], info[6]))
+                new info[6];
+                Streamer_GetArrayData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x49544d), info);
+                
+                if (Inventory_AddItem(playerid, info[0], info[1], info[5]))
                 {
+                    DroppedItem_Delete(iter_get(it));
                     PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
                     ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
-                    DroppedItem_Delete(areas[0]);
                 }
                 else return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes el inventario lleno.");
             }
@@ -320,7 +318,6 @@ public OnGameModeInit()
 forward INV_OnItemInserted(playerid, slot, type, amount, extra);
 public INV_OnItemInserted(playerid, slot, type, amount, extra)
 {
-    printf("INV_OnItemInserted(playerid: %d, slot: %d, type: %d, amount: %d, extra: %d)", playerid, slot, type, amount, extra);
     g_rgePlayerInventory[playerid][slot][e_bValid] = true;
     g_rgePlayerInventory[playerid][slot][e_iID] = cache_insert_id();
     g_rgePlayerInventory[playerid][slot][e_iType] = type;

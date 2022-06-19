@@ -67,6 +67,7 @@ const __dada = __addressof(__beware__black_people__);
 #define MAX_PLAYERS 500
 const HYAXE_MAX_NPCS = 100;
 
+#include <crashdetect>
 #include <jit>
 #include <streamer>
 #include <YSF>

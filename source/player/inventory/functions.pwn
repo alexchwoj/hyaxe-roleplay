@@ -30,10 +30,15 @@ Inventory_Update(playerid)
 		{
 			if (InventorySlot_IsValid(playerid, i))
 			{
-				printf("i: %d", i);
-				printf("type: %d", InventorySlot_Type(playerid, i));
+				if (InventorySlot_Type(playerid, i) > 31)
+				{
+					printf("[inventory]: Invalid item > playerid: %d, slot: %d, type: %d, db_id: %d", playerid, i, InventorySlot_Type(playerid, i), InventorySlot_ID(playerid, i));
+					memset(g_rgePlayerInventory[playerid][i], 0);
+					continue;
+				}
 
 				PlayerTextDrawSetPreviewModel(playerid, p_tdItemView[playerid]{i}, Item_ModelID( InventorySlot_Type(playerid, i) ));
+
 				PlayerTextDrawSetPreviewRot(
 					playerid, p_tdItemView[playerid]{i},
 					g_rgeItemData[ InventorySlot_Type(playerid, i) ][e_fRotX],
@@ -256,7 +261,6 @@ Inventory_InsertItem(playerid, type, amount, extra)
 
 Inventory_AddItem(playerid, type, amount, extra)
 {
-	printf("Inventory_AddItem(playerid: %d, type: %d, amount: %d, extra: %d)", playerid, type, amount, extra);
 	new slot = Inventory_GetFreeSlot(playerid);
     if (slot < HYAXE_MAX_INVENTORY_SLOTS)
 	{
@@ -351,17 +355,16 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 
 	MoveDynamicObject(objectid, x, y, dest_z, 10.0, rx, ry, rz);
 
-	new area_info[7];
-	area_info[0] = 0x49544d; // ITM
-	area_info[1] = type; // Item type
-	area_info[2] = amount; // Amount
-	area_info[3] = objectid; // Object ID
-	area_info[4] = _:labelid; // Label ID
-	area_info[5] = (gettime() + 300); // Time
-	area_info[6] = extra; // Extra
+	new area_info[6];
+	area_info[0] = type; // Item type
+	area_info[1] = amount; // Amount
+	area_info[2] = objectid; // Object ID
+	area_info[3] = _:labelid; // Label ID
+	area_info[4] = (gettime() + 300); // Time
+	area_info[5] = extra; // Extra
 
 	new area_id = CreateDynamicSphere(x, y, dest_z + 0.9, 1.0, world, interior);
-	Streamer_SetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, area_info);
+	Streamer_SetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x49544d), area_info);
 
 	Iter_Add(DroppedItems, area_id);
 	return 1;
@@ -369,12 +372,12 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 
 DroppedItem_Delete(area_id)
 {
-	new info[7];
-	Streamer_GetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, info);
+	new info[6];
+	Streamer_GetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x49544d), info);
 
-	DestroyDynamicObject(info[3]);
-	DestroyDynamic3DTextLabel(Text3D:info[4]);
 	DestroyDynamicArea(area_id);
+	DestroyDynamicObject(info[2]);
+	DestroyDynamic3DTextLabel(Text3D:info[3]);
 
 	new next;
 	Iter_SafeRemove(DroppedItems, area_id, next);
