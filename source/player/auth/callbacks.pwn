@@ -262,5 +262,7 @@ dialog login(playerid, response, listitem, inputtext[])
 
     StopAudioStreamForPlayer(playerid);
 
+    Player_SetImmunityForCheat(playerid, CHEAT_FLY, 3000);
+
     return 1;
 }

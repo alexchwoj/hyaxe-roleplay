@@ -95,6 +95,9 @@ command pos(playerid, const params[], "Ir a unas coordenadas")
     SetPlayerInterior(playerid, interior);
     SetPlayerVirtualWorld(playerid, world);
     SetPlayerPos(playerid, x, y, z);
+    
+    Player_SetImmunityForCheat(playerid, CHEAT_FLY, 3000);
+    
     return 1;
 }
 flags:pos(CMD_FLAG<RANK_LEVEL_MODERATOR>)
