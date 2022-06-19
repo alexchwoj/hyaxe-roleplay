@@ -30,6 +30,9 @@ Inventory_Update(playerid)
 		{
 			if (InventorySlot_IsValid(playerid, i))
 			{
+				printf("i: %d", i);
+				printf("type: %d", InventorySlot_Type(playerid, i));
+
 				PlayerTextDrawSetPreviewModel(playerid, p_tdItemView[playerid]{i}, Item_ModelID( InventorySlot_Type(playerid, i) ));
 				PlayerTextDrawSetPreviewRot(
 					playerid, p_tdItemView[playerid]{i},
@@ -253,6 +256,7 @@ Inventory_InsertItem(playerid, type, amount, extra)
 
 Inventory_AddItem(playerid, type, amount, extra)
 {
+	printf("Inventory_AddItem(playerid: %d, type: %d, amount: %d, extra: %d)", playerid, type, amount, extra);
 	new slot = Inventory_GetFreeSlot(playerid);
     if (slot < HYAXE_MAX_INVENTORY_SLOTS)
 	{

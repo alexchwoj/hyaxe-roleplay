@@ -230,12 +230,23 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
                 return 0;
             }
 
+            Notification_Show(playerid, "Ropa comprada.", 3000, 0x64A752FF);
+            PlayerPlaySound(playerid, 1054);
+
+            mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+                UPDATE `ACCOUNT` SET \
+                    `SKIN` = %i, \
+                WHERE `ID` = %i;\
+            ", 
+                Player_Skin(playerid), Player_AccountID(playerid)
+            );
+            mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+
             Player_GiveMoney(playerid, -g_rgiClothingSkins[ g_rgiPlayerClothingStore[playerid] ][ Player_Sex(playerid) ][ g_rgiPlayerSelectedSkin[playerid] ][1]);
             Player_Skin(playerid) = g_rgiClothingSkins[ g_rgiPlayerClothingStore[playerid] ][ Player_Sex(playerid) ][ g_rgiPlayerSelectedSkin[playerid] ][0];
             SetPlayerSkin(playerid, Player_Skin(playerid));
+
             Player_StopShopping(playerid);
-            Notification_Show(playerid, "Ropa comprada.", 3000, 0x64A752FF);
-            PlayerPlaySound(playerid, 1054);
             SetPlayerVirtualWorld(playerid, g_rgePlayerTempData[playerid][e_iPlayerLastWorld]);
         }
     }

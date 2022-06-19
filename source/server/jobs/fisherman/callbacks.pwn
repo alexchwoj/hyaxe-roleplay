@@ -112,7 +112,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     if (amount < 5)
                         return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Necesitas al menos 5 peces.");
 
-                    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}¿Quieres vender %d peces por {64A752}$%d{DADADA}?", amount, 2 * amount);
+                    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}¿Quieres vender %d peces por {64A752}$%d{DADADA}?", amount, 4 * amount);
                     Dialog_Show(playerid, "sell_fish", DIALOG_STYLE_MSGBOX, !"{CB3126}Pescadería", HYAXE_UNSAFE_HUGE_STRING, !"Vender", !"Cerrar");
                 }
             }
@@ -142,12 +142,12 @@ dialog sell_fish(playerid, response, listitem, inputtext[])
     {
         new amount = Inventory_GetItemAmount(playerid, ITEM_FISH);
         
-        Player_GiveMoney(playerid, 2 * amount);
+        Player_GiveMoney(playerid, 4 * amount);
         PlayerPlaySound(playerid, SOUND_SUCCESS);
 
         Inventory_DeleteItemByType(playerid, ITEM_FISH);
 
-        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Vendiste tus %d peces por $%d", amount, 2 * amount);
+        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Vendiste tus %d peces por $%d", amount, 4 * amount);
         Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 4000, 0x64A752FF);
     }
     return 1;

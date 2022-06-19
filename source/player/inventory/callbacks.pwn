@@ -320,6 +320,7 @@ public OnGameModeInit()
 forward INV_OnItemInserted(playerid, slot, type, amount, extra);
 public INV_OnItemInserted(playerid, slot, type, amount, extra)
 {
+    printf("INV_OnItemInserted(playerid: %d, slot: %d, type: %d, amount: %d, extra: %d)", playerid, slot, type, amount, extra);
     g_rgePlayerInventory[playerid][slot][e_bValid] = true;
     g_rgePlayerInventory[playerid][slot][e_iID] = cache_insert_id();
     g_rgePlayerInventory[playerid][slot][e_iType] = type;
