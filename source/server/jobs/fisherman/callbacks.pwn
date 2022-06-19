@@ -3,19 +3,9 @@
 #endif
 #define _fisherman_callbacks_
 
-static Fisherman_JobEvent(playerid, eJobEvent:event, data)
-{
-    #pragma unused event
-    #pragma unused data
-
-    Notification_Show(playerid, "Compra una caña de pescar en la tienda de al lado para empezar a trabajar. Puedes pescar en cualquier lugar con agua y luego puedes vender el pescado en la pescadería de al lado.", 7000);
-    return 1;
-}
-
 public OnGameModeInit()
 {
-    Job_CreateSite(JOB_FISHERMAN, 2156.9067, -97.8114, 3.1911, 0, 0);
-    Job_SetCallback(JOB_FISHERMAN, __addressof(Fisherman_JobEvent));
+    CreateDynamic3DTextLabel("{CB3126}Trabajo de pescador{DADADA}\nCompra una caña de pescar en la tienda de al lado para empezar\na trabajar. Puedes pescar en cualquier lugar con agua y luego\npuedes vender el pescado en la pescadería de al lado.", 0xDADADAFF, 2156.9067, -97.8114, 3.1911, 13.0, .testlos = 1, .worldid = 0, .interiorid = 0);
 
     new area_info[1], area_id;
 
