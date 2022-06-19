@@ -145,7 +145,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         TogglePlayerControllable(playerid, false);
 
                         g_rgePlayerTempData[playerid][e_iPlayerLastWorld] = GetPlayerVirtualWorld(playerid);
-                        SetPlayerVirtualWorld(playerid, playerid);
+                        SetPlayerVirtualWorld(playerid, 1 + playerid);
 
                         g_rgiPlayerClothingStore[playerid] = info[1];
 
