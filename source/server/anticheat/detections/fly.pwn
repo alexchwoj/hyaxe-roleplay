@@ -9,47 +9,27 @@ IPacket:__ac_fly_PlayerSync(playerid, BitStream:bs)
     if (Player_HasImmunityForCheat(playerid, CHEAT_FLY))
         return 1;
 
-    new onFootData[PR_OnFootSync];
-
+    new data[PR_OnFootSync];
     BS_IgnoreBits(bs, 8);
-    BS_ReadOnFootSync(bs, onFootData);
+    BS_ReadOnFootSync(bs, data);
+    
+    if(data[PR_surfingVehicleId] != 0 || data[PR_position][2] < 1.0)
+        return 1;
 
-    new diff = GetTickDiff(GetTickCount(), g_rgePlayerTempData[playerid][e_iPlayerFootTick]);
-    if (diff >= 15000)
+    new
+        Float:x = data[PR_position][0],
+        Float:y = data[PR_position][1],
+        Float:z = data[PR_position][2];
+
+    new const bool:is_falling = ((1128 <= data[PR_animationId] <= 1134) || ((958 <= data[PR_animationId] <= 962) && data[PR_weaponId] == WEAPON_PARACHUTE));
+    
+    // Since the distance is minimal we don't need to check for jumping
+    new object = CA_RayCastLine(x, y, z, x, y, z - 3.0, x, x, x);
+    if(!is_falling && !object)
     {
-        switch(onFootData[PR_animationId])
-        {
-            case 157, 159, 161:
-            {
-                if (!IsPlayerInAnyVehicle(playerid))
-                {
-                    Anticheat_Trigger(playerid, CHEAT_FLY);
-                    return 0;
-                }
-            }
-            case 958, 959:
-            {
-                if (onFootData[PR_weaponId] != WEAPON_PARACHUTE)
-                {
-                    Anticheat_Trigger(playerid, CHEAT_FLY);
-                    return 0;
-                }
-            }
-            case 1538, 1539, 1543:
-            {
-                new Float:depth, Float:playerdepth;
-                if (!CA_IsPlayerInWater(playerid, depth, playerdepth))
-                {
-                    if (onFootData[PR_position][2] > 1.0)
-                    {
-                        Anticheat_Trigger(playerid, CHEAT_FLY);
-                        return 0;
-                    }
-                }
-            }
-        }
-
-        g_rgePlayerTempData[playerid][e_iPlayerFootTick] = GetTickCount();
+        Anticheat_Trigger(playerid, CHEAT_FLY);
+        return 0;
     }
+
     return 1;
 }

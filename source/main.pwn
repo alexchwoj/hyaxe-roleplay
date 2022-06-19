@@ -225,6 +225,7 @@ const HYAXE_MAX_NPCS = 100;
 
 // Anticheat
 ///////////////
+#include "server/anticheat/detections/speedhack.pwn"
 #include "server/anticheat/detections/fly.pwn"
 #include "server/anticheat/detections/repaircar.pwn"
 #include "server/anticheat/detections/money.pwn"
@@ -259,4 +260,24 @@ SSCANF:boolean(string[])
 	else if(!strcmp(string, "no", true)) return 0;
 
 	return 0;
+}
+
+command spt(playerid, const params[], "")
+{
+	SetTimer("reportspeed", 1000, true);
+	return 1;
+}
+
+forward reportspeed();
+public reportspeed()
+{
+	new Float:x, Float:y, Float:z;
+	GetPlayerVelocity(0, x, y, z);
+	SendClientMessagef(0, -1, "x: %f - y: %f - z: %f", x, y, z);
+	new animid, lib[16], animname[32];
+	animid = GetPlayerAnimationIndex(0);
+	GetAnimationName(animid, lib, 16, animname, 32);
+	SendClientMessagef(0, -1, "%s:%s (%i)", lib, animname, animid);
+
+	return 1;
 }
