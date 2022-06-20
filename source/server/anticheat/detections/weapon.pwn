@@ -20,7 +20,7 @@ IPacket:__ac_weapon_WeaponUpdate(playerid, BitStream:bs)
             if (g_rgePlayerWeapons[playerid][i][e_iWeaponId] != weaponsUpdate[PR_slotWeaponId][i])
             {
                 SetPlayerArmedWeapon(playerid, 0);
-                Anticheat_Trigger(playerid, CHEAT_weapon);
+                Anticheat_Trigger(playerid, CHEAT_WEAPON);
 				return 0;
             }
         }
