@@ -16,7 +16,7 @@ IPacket:__ac_sh_PlayerSync(playerid, BitStream:bs)
     new const bool:is_speeding_high = (floatabs(data[PR_velocity][0]) > 0.31 || floatabs(data[PR_velocity][1]) > 0.31);
     new const bool:is_moving = (1222 <= data[PR_animationId] <= 1287);
     
-    if(is_speeding_high && is_moving)
+    if(is_speeding_high && is_moving && data[PR_surfingVehicleId] == INVALID_VEHICLE_ID)
     {
         Anticheat_Trigger(playerid, CHEAT_SPEEDHACK);
         return 0;

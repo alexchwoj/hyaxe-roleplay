@@ -46,15 +46,16 @@ forward GVENT_TruckSpawnLoot();
 public GVENT_TruckSpawnLoot()
 {
     new loot[][] = {
-        {ITEM_CRACK, 5, 10},
+        {ITEM_CRACK, 2, 8},
         {ITEM_MEDICINE, 25, 50},
         {ITEM_TEC9, 1, 1},
         {ITEM_KNIFE, 1, 1},
         {ITEM_SAWEDOFF, 1, 1},
-        {ITEM_DEAGLE, 1, 1}
+        {ITEM_DEAGLE, 1, 1},
+        {ITEM_CRACK, 2, 8}
     };
 
-    for(new i; i < minrand(8, 16); ++i)
+    for(new i; i < minrand(12, 24); ++i)
     {
         new item = random( sizeof(loot) );
 

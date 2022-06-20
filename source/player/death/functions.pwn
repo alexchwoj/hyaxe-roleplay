@@ -7,6 +7,7 @@ Player_Revive(playerid)
 {
     Bit_Set(Player_Flags(playerid), PFLAG_INJURED, false);
 	
+    ResetPlayerWeapons(playerid);
     ClearAnimations(playerid);
 	SetPlayerDrunkLevel(playerid, 0);
     KillTimer(g_rgeCrawlData[playerid][e_iCrawlKeyTimer]);

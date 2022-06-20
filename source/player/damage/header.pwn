@@ -29,19 +29,19 @@ new
         9, // 19 - Vehicle M4 (custom)
         46, // 20 - Vehicle minigun (custom)
         82, // 21 - Vehicle rocket (custom)
-        8, // 22 - Colt 45
-        13, // 23 - Silenced
-        46, // 24 - Deagle
-        3, // 25 - Shotgun
-        3, // 26 - Sawed-off
-        4, // 27 - Spas
+        10, // 22 - Colt 45
+        8, // 23 - Silenced
+        15, // 24 - Deagle
+        30, // 25 - Shotgun
+        12, // 26 - Sawed-off
+        15, // 27 - Spas
         8, // 28 - UZI
-        8, // 29 - MP5
-        9, // 30 - AK47
-        12, // 31 - M4
-        5, // 32 - Tec9
-        24, // 33 - Cuntgun
-        41, // 34 - Sniper
+        13, // 29 - MP5
+        10, // 30 - AK47
+        15, // 31 - M4
+        15, // 32 - Tec9
+        30, // 33 - Cuntgun
+        45, // 34 - Sniper
         82, // 35 - Rocket launcher
         82, // 36 - Heatseeker
         1, // 37 - Flamethrower

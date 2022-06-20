@@ -34,26 +34,27 @@ Inventory_Update(playerid)
 				{
 					printf("[inventory]: Invalid item > playerid: %d, slot: %d, type: %d, db_id: %d", playerid, i, InventorySlot_Type(playerid, i), InventorySlot_ID(playerid, i));
 					memset(g_rgePlayerInventory[playerid][i], 0);
-					continue;
 				}
-
-				PlayerTextDrawSetPreviewModel(playerid, p_tdItemView[playerid]{i}, Item_ModelID( InventorySlot_Type(playerid, i) ));
-
-				PlayerTextDrawSetPreviewRot(
-					playerid, p_tdItemView[playerid]{i},
-					g_rgeItemData[ InventorySlot_Type(playerid, i) ][e_fRotX],
-					g_rgeItemData[ InventorySlot_Type(playerid, i) ][e_fRotY],
-					g_rgeItemData[ InventorySlot_Type(playerid, i) ][e_fRotZ],
-					g_rgeItemData[ InventorySlot_Type(playerid, i) ][e_fZoom]
-				);
-
-				if (!Item_SingleSlot( InventorySlot_Type(playerid, i) ))
+				else
 				{
-					new string[8];
-					valstr(string, InventorySlot_Amount(playerid, i));
-					PlayerTextDrawSetString(playerid, p_tdItemCount[playerid]{i}, string);
+					PlayerTextDrawSetPreviewModel(playerid, p_tdItemView[playerid]{i}, Item_ModelID( InventorySlot_Type(playerid, i) ));
+
+					PlayerTextDrawSetPreviewRot(
+						playerid, p_tdItemView[playerid]{i},
+						g_rgeItemData[ InventorySlot_Type(playerid, i) ][e_fRotX],
+						g_rgeItemData[ InventorySlot_Type(playerid, i) ][e_fRotY],
+						g_rgeItemData[ InventorySlot_Type(playerid, i) ][e_fRotZ],
+						g_rgeItemData[ InventorySlot_Type(playerid, i) ][e_fZoom]
+					);
+
+					if (!Item_SingleSlot( InventorySlot_Type(playerid, i) ))
+					{
+						new string[8];
+						valstr(string, InventorySlot_Amount(playerid, i));
+						PlayerTextDrawSetString(playerid, p_tdItemCount[playerid]{i}, string);
+					}
+					else PlayerTextDrawSetString(playerid, p_tdItemCount[playerid]{i}, "_");
 				}
-				else PlayerTextDrawSetString(playerid, p_tdItemCount[playerid]{i}, "_");
 			}
 			else
 			{

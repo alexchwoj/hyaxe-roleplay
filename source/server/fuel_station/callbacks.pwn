@@ -9,7 +9,7 @@ public OnGameModeInit()
     {
         Key_Alert(
             g_rgfFuelStations[i][0], g_rgfFuelStations[i][1], g_rgfFuelStations[i][2], 12.5,
-            KEYNAME_YES, 0, 0
+            KEYNAME_CTRL_BACK, 0, 0
         );
 
         CreateDynamic3DTextLabel(
@@ -18,7 +18,7 @@ public OnGameModeInit()
             .testlos = true, .worldid = 0, .interiorid = 0
         );
 
-        new area_id = CreateDynamicSphere(g_rgfFuelStations[i][0], g_rgfFuelStations[i][1], g_rgfFuelStations[i][2], 2.5, .worldid = 0, .interiorid = 0);
+        new area_id = CreateDynamicSphere(g_rgfFuelStations[i][0], g_rgfFuelStations[i][1], g_rgfFuelStations[i][2], 3.0, .worldid = 0, .interiorid = 0);
         Streamer_SetIntData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, 0x4655454c); // FUEL
     }
 
@@ -42,7 +42,7 @@ public OnGameModeInit()
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if((newkeys & KEY_YES) != 0)
+    if((newkeys & KEY_CROUCH) != 0)
     {
         if(IsPlayerInAnyDynamicArea(playerid))
         {

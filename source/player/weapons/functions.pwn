@@ -58,6 +58,8 @@ Weapon_GetSlot(weaponid)
 
 Player_GiveWeapon(playerid, weaponid, ammo)
 {
+    Player_SetImmunityForCheat(playerid, CHEAT_WEAPON, 1000 + GetPlayerPing(playerid));
+
     new slot = GetWeaponSlot(weaponid);
 
     Player_WeaponSlot(playerid, slot)[e_iWeaponId] = weaponid;
@@ -80,6 +82,8 @@ Player_GiveWeapon(playerid, weaponid, ammo)
 
 Player_RemoveWeapon(playerid, weaponid)
 {
+    Player_SetImmunityForCheat(playerid, CHEAT_WEAPON, 1000 + GetPlayerPing(playerid));
+
     new slot = GetWeaponSlot(weaponid);
     if(!Player_HasWeaponAtSlot(playerid, slot))
         return 0;
@@ -105,6 +109,8 @@ Player_RemoveWeapon(playerid, weaponid)
 
 Player_RemoveAllWeapons(playerid)
 {
+    Player_SetImmunityForCheat(playerid, CHEAT_WEAPON, 1000 + GetPlayerPing(playerid));
+    
     ResetPlayerWeapons(playerid);
     g_rgePlayerWeapons[playerid] = g_rgePlayerWeapons[MAX_PLAYERS];
 
@@ -140,6 +146,8 @@ bool:Player_HasWeapon(playerid, weaponid)
 
 Player_GiveAllWeapons(playerid)
 {
+    Player_SetImmunityForCheat(playerid, CHEAT_WEAPON, 1000 + GetPlayerPing(playerid));
+    
     for(new i = 1; i < MAX_WEAPON_SLOTS; ++i)
     {
         if(!Player_HasWeaponAtSlot(playerid, i))
