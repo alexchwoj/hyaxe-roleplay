@@ -417,3 +417,42 @@ command pos(playerid, const params[], "Ir a unas coordenadas")
     return 1;
 }
 flags:pos(CMD_FLAG<RANK_LEVEL_MODERATOR>)
+
+command specoff(playerid, const params[], "Deja de spectear")
+{
+    SetPlayerPos(playerid, s_rgfPreviousPositions[playerid][0], s_rgfPreviousPositions[playerid][1], s_rgfPreviousPositions[playerid][2]);
+    SetPlayerFacingAngle(playerid, s_rgfPreviousPositions[playerid][3]);
+    SetPlayerInterior(playerid, s_rgiPreviousInteriors[playerid]);
+    SetPlayerVirtualWorld(playerid, s_rgiPreviousWorlds[playerid]);
+
+	TogglePlayerSpectating(playerid, false);
+    return 1;
+}
+flags:specoff(CMD_FLAG<RANK_LEVEL_MODERATOR>)
+
+command spec(playerid, const params[], "Spectea a un jugador")
+{
+    new destination;
+    if(sscanf(params, "r", destination))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/spec {DADADA} <jugador>");
+        return 1;
+    }
+
+    GetPlayerPos(playerid, s_rgfPreviousPositions[playerid][0], s_rgfPreviousPositions[playerid][1], s_rgfPreviousPositions[playerid][2]);
+    GetPlayerFacingAngle(playerid, s_rgfPreviousPositions[playerid][3]);
+    s_rgiPreviousInteriors[playerid] = GetPlayerInterior(playerid);
+    s_rgiPreviousWorlds[playerid] = GetPlayerVirtualWorld(playerid);
+
+    TogglePlayerSpectating(playerid, true);
+
+	SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(destination));
+	SetPlayerInterior(playerid, GetPlayerInterior(destination));
+
+	if (IsPlayerInAnyVehicle(destination)) PlayerSpectateVehicle(playerid, GetPlayerVehicleID(destination));
+	else PlayerSpectatePlayer(playerid, destination);
+
+    SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Estas mirando a {ED2B2B}%s{DADADA}.", Player_RPName(destination));
+    return 1;
+}
+flags:spec(CMD_FLAG<RANK_LEVEL_MODERATOR>)
