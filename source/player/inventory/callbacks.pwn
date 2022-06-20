@@ -43,7 +43,20 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 new info[6];
                 Streamer_GetArrayData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x49544d), info);
                 
-                if (Inventory_AddItem(playerid, info[0], info[1], info[5]))
+                new weapon = Item_TypeToWeapon(info[0]);
+                if (weapon)
+                {
+                    new ammo = 9999;
+                    if (Weapon_IsExplosive(weapon))
+                        ammo = info[1];
+
+                    Player_GiveWeapon(playerid, weapon, ammo);
+
+                    DroppedItem_Delete(iter_get(it));
+                    PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
+                    ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
+                }
+                else if (Inventory_AddItem(playerid, info[0], info[1], info[5]))
                 {
                     DroppedItem_Delete(iter_get(it));
                     PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);

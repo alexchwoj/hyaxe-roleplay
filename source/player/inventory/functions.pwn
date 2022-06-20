@@ -384,6 +384,55 @@ DroppedItem_Delete(area_id)
 	return next;
 }
 
+Item_TypeToWeapon(type)
+{
+	switch(type)
+	{
+		case ITEM_BRASSKNUCKLE: return 1;
+		case ITEM_GOLFCLUB: return 2;
+		case ITEM_NITESTICK: return 3;
+		case ITEM_KNIFE: return 4;
+		case ITEM_BAT: return 5;
+		case ITEM_SHOVEL: return 6;
+		case ITEM_POOLSTICK: return 7;
+		case ITEM_KATANA: return 8;
+		case ITEM_CHAINSAW: return 9;
+		case ITEM_DILDO: return 10;
+		case ITEM_DILDO2: return 11;
+		case ITEM_VIBRATOR: return 12;
+		case ITEM_VIBRATOR2: return 13;
+		case ITEM_FLOWER: return 14;
+		case ITEM_CANE: return 15;
+		case ITEM_GRENADE: return 16;
+		case ITEM_TEARGAS: return 17;
+		case ITEM_MOLTOV: return 18;
+		case ITEM_COLT45: return 22;
+		case ITEM_SILENCED: return 23;
+		case ITEM_DEAGLE: return 24;
+		case ITEM_SHOTGUN: return 25;
+		case ITEM_SAWEDOFF: return 26;
+		case ITEM_SHOTGSPA: return 27;
+		case ITEM_UZI: return 28;
+		case ITEM_MP5: return 29;
+		case ITEM_AK47: return 30;
+		case ITEM_M4: return 31;
+		case ITEM_TEC9: return 32;
+		case ITEM_RIFLE: return 33;
+		case ITEM_SNIPER: return 34;
+		case ITEM_ROCKETLAUNCHER: return 35;
+		case ITEM_HEATSEEKER: return 36;
+		case ITEM_FLAMETHROWER: return 37;
+		case ITEM_MINIGUN: return 38;
+		case ITEM_SATCHEL: return 39;
+		case ITEM_BOMB: return 40;
+		case ITEM_SPRAYCAN: return 41;
+		case ITEM_FIREEXTINGUISHER: return 42;
+		case ITEM_CAMERA: return 43;
+		case ITEM_PARACHUTE: return 46;
+	}
+	return 0;
+}
+
 command randomitem(playerid, const params[], "")
 {
 	new Float:x, Float:y, Float:z, Float:angle;

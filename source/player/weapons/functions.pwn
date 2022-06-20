@@ -14,6 +14,23 @@ stock Weapon_UnpackIdAndAmmo(weapon_and_ammo, &weapon, &ammo)
     weapon = (weapon_and_ammo & 0xFF);
 }
 
+bool:Weapon_IsExplosive(weapon)
+{
+    switch(weapon)
+    {
+        case WEAPON_GRENADE: return true;
+        case WEAPON_TEARGAS: return true;
+        case WEAPON_MOLTOV: return true;
+        case WEAPON_ROCKETLAUNCHER: return true;
+        case WEAPON_HEATSEEKER: return true;
+        case WEAPON_SATCHEL: return true;
+        case WEAPON_BOMB: return true;
+        case WEAPON_MINIGUN: return true;
+        case WEAPON_FLAMETHROWER: return true;
+    }
+    return false;
+}
+
 /*
 Weapon_GetSlot(weaponid)
 {

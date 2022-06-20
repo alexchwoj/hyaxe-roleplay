@@ -40,6 +40,47 @@ enum _:eItems
     ITEM_SANGUCHEDEMILANESA,
     ITEM_FISHING_ROD,
     ITEM_FISH,
+    ITEM_BRASSKNUCKLE,
+    ITEM_GOLFCLUB,
+    ITEM_NITESTICK,
+    ITEM_KNIFE,
+    ITEM_BAT,
+    ITEM_SHOVEL,
+    ITEM_POOLSTICK,
+    ITEM_KATANA,
+    ITEM_CHAINSAW,
+    ITEM_DILDO,
+    ITEM_DILDO2,
+    ITEM_VIBRATOR,
+    ITEM_VIBRATOR2,
+    ITEM_FLOWER,
+    ITEM_CANE,
+    ITEM_GRENADE,
+    ITEM_TEARGAS,
+    ITEM_MOLTOV,
+    ITEM_COLT45,
+    ITEM_SILENCED,
+    ITEM_DEAGLE,
+    ITEM_SHOTGUN,
+    ITEM_SAWEDOFF,
+    ITEM_SHOTGSPA,
+    ITEM_UZI,
+    ITEM_MP5,
+    ITEM_AK47,
+    ITEM_M4,
+    ITEM_TEC9,
+    ITEM_RIFLE,
+    ITEM_SNIPER,
+    ITEM_ROCKETLAUNCHER,
+    ITEM_HEATSEEKER,
+    ITEM_FLAMETHROWER,
+    ITEM_MINIGUN,
+    ITEM_SATCHEL,
+    ITEM_BOMB,
+    ITEM_SPRAYCAN,
+    ITEM_FIREEXTINGUISHER,
+    ITEM_CAMERA,
+    ITEM_PARACHUTE,
 
 	ITEM_INVALID
 };
@@ -115,6 +156,47 @@ new
 		{"Sanguche de milanesa", 2703, true, -1}, // ITEM_SANGUCHEDEMILANESA
         {"Caña de pescar", 18632, true, -1}, // ITEM_FISHING_ROD
         {"Pescado", 19630, false, -1}, // ITEM_FISH
+        {"Manopla", 331, true, -1}, // ITEM_BRASSKNUCKLE
+        {"Palo de golf", 333, true, -1}, // ITEM_GOLFCLUB
+        {"Porra", 334, true, -1}, // ITEM_NITESTICK
+        {"Cuchillo", 335, true, -1}, // ITEM_KNIFE
+        {"Bate", 336, true, -1}, // ITEM_BAT
+        {"Pala", 337, true, -1}, // ITEM_SHOVEL
+        {"Palo de billas", 338, true, -1}, // ITEM_POOLSTICK
+        {"Katana", 339, true, -1}, // ITEM_KATANA
+        {"Motosierra", 341, true, -1}, // ITEM_CHAINSAW
+        {"Dildo poderoso", 321, true, -1}, // ITEM_DILDO
+        {"Dildo", 322, true, -1}, // ITEM_DILDO2
+        {"Vibrador", 323, true, -1}, // ITEM_VIBRATOR
+        {"Vibrador plateado", 324, true, -1}, // ITEM_VIBRATOR2
+        {"Flores", 325, true, -1}, // ITEM_FLOWER
+        {"Baston", 326, true, -1}, // ITEM_CANE
+        {"Granada", 342, true, -1}, // ITEM_GRENADE
+        {"Gas lacrimogeno", 343, true, -1}, // ITEM_TEARGAS
+        {"Cocktail Molotov", 344, true, -1}, // ITEM_MOLTOV
+        {"9mm", 346, true, -1}, // ITEM_COLT45
+        {"9mm silenciada", 347, true, -1}, // ITEM_SILENCED
+        {"Desert Eagle", 348, true, -1}, // ITEM_DEAGLE
+        {"Escopeta", 349, true, -1}, // ITEM_SHOTGUN
+        {"Escopeta recortada", 350, true, -1}, // ITEM_SAWEDOFF
+        {"Escopeta de combate", 351, true, -1}, // ITEM_SHOTGSPA
+        {"Uzi", 352, true, -1}, // ITEM_UZI
+        {"MP5", 353, true, -1}, // ITEM_MP5
+        {"Ak-47", 355, true, -1}, // ITEM_AK47
+        {"M4", 356, true, -1}, // ITEM_M4
+        {"Tec-9", 372, true, -1}, // ITEM_TEC9
+        {"Rifle", 357, true, -1}, // ITEM_RIFLE
+        {"Sniper", 358, true, -1}, // ITEM_SNIPER
+        {"Lanzacohetes RPG", 359, true, -1}, // ITEM_ROCKETLAUNCHER
+        {"Lanzacohetes HS", 360, true, -1}, // ITEM_HEATSEEKER
+        {"Lanzallamas", 361, true, -1}, // ITEM_FLAMETHROWER
+        {"Minigun", 362, true, -1}, // ITEM_MINIGUN
+        {"Satchel", 363, true, -1}, // ITEM_SATCHEL
+        {"Detonador", 364, true, -1}, // ITEM_BOMB
+        {"Bote de spray", 365, true, -1}, // ITEM_SPRAYCAN
+        {"Extintor", 366, true, -1}, // ITEM_FIREEXTINGUISHER
+        {"Camara", 367, true, -1}, // ITEM_CAMERA
+        {"Paracaidas", 371, true, -1}, // ITEM_PARACHUTE
 
 		{"Invalid item", 18631, false, -1} // ITEM_INVALID
 	},
