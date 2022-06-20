@@ -45,6 +45,10 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         SetPlayerFacingAngle(playerid, g_rgeEnterExits[id][e_fExitAngle]);
                         SetPlayerInterior(playerid, g_rgeEnterExits[id][e_iExitInterior]);
                         SetPlayerVirtualWorld(playerid, g_rgeEnterExits[id][e_iExitWorld]);
+
+                        new hour, minute;
+                        gettime(hour, minute);
+                        SetPlayerTime(playerid, hour, minute);
                     }
                     else
                     {

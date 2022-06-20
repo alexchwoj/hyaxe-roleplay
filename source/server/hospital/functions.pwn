@@ -85,19 +85,3 @@ Player_GoToTheNearestHospital(playerid)
     g_rgiHospitalHealthTimer[playerid] = SetTimerEx("HP_HealPlayer", 1000, true, "i", playerid);
     return 1;
 }
-
-command pos(playerid, const params[], "Ir a unas coordenadas")
-{
-    extract params -> new Float:x, Float:y, Float:z, world, interior; else {
-        return SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/pos {DADADA}<x> <y> <z> <world> <interior>");
-    }
-
-    SetPlayerInterior(playerid, interior);
-    SetPlayerVirtualWorld(playerid, world);
-    SetPlayerPos(playerid, x, y, z);
-    
-    Player_SetImmunityForCheat(playerid, CHEAT_FLY, 3000);
-    
-    return 1;
-}
-flags:pos(CMD_FLAG<RANK_LEVEL_MODERATOR>)

@@ -52,7 +52,7 @@ public HP_HealPlayer(playerid)
         return 1;
     }
 
-    Player_SetHealth(playerid, Player_Health(playerid) + 4);
+    Player_SetHealth(playerid, Player_Health(playerid) + 6);
     return 1;
 }
 

@@ -9,6 +9,10 @@ public OnPlayerConnect(playerid)
 
     SetPlayerColor(playerid, 0xF7F7F700);
 
+    new hour, minute;
+    gettime(hour, minute);
+    SetPlayerTime(playerid, hour, minute);
+
     if(FCNPC_IsValid(playerid))
         return 1;
         

@@ -18,6 +18,18 @@ static Medicine_OnUse(playerid, slot)
     return 1;
 }
 
+static Crack_OnUse(playerid, slot)
+{
+    ApplyAnimation(playerid, "FOOD", "EAT_Pizza", 4.1, false, true, true, false, 1000);
+    PlayerPlaySound(playerid, SOUND_EAT);
+
+    Notification_ShowBeatingText(playerid, 2000, 0xF7F7F7, 100, 255, "Has usado un gramo de crack (~g~+10~w~ de chaleco)");
+    Player_SetArmour(playerid, Player_Armour(playerid) + 10);
+
+    InventorySlot_Subtract(playerid, slot);
+    return 1;
+}
+
 static Food_OnUse(playerid, slot)
 {
     new type = InventorySlot_Type(playerid, slot);
@@ -65,6 +77,7 @@ public OnGameModeInit()
 
     // Crack
     Item_Rarity(ITEM_CRACK) = RARITY_RARE;
+    Item_Callback(ITEM_CRACK) = __addressof(Crack_OnUse);
     Item_SetPreviewRot(ITEM_CRACK, -38.000000, 0.000000, 159.000000, 1.000000);
 
     /* Vehicles */
