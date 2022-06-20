@@ -31,6 +31,13 @@ public OnPlayerDeath(playerid, killerid, reason)
         }
         else
         {
+            new Float:x, Float:y, Float:z;
+            GetPlayerPos(playerid, x, y, z);
+            Sound_PlayInRange(
+                1136,
+                15.0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid)
+            );
+
             Player_SetHealth(playerid, 100);
             Bit_Set(Player_Flags(playerid), PFLAG_INJURED, true);
 
