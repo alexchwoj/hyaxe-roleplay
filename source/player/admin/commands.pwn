@@ -456,3 +456,33 @@ command spec(playerid, const params[], "Spectea a un jugador")
     return 1;
 }
 flags:spec(CMD_FLAG<RANK_LEVEL_MODERATOR>)
+
+command freeze(playerid, const params[], "Congela a un jugador")
+{
+    new destination;
+    if(sscanf(params, "r", destination))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/freeze {DADADA} <jugador>");
+        return 1;
+    }
+
+    TogglePlayerControllable(destination, false);
+    SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Congelaste a {ED2B2B}%s{DADADA}.", Player_RPName(destination));
+    return 1;
+}
+flags:freeze(CMD_FLAG<RANK_LEVEL_MODERATOR>)
+
+command unfreeze(playerid, const params[], "Congela a un jugador")
+{
+    new destination;
+    if(sscanf(params, "r", destination))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/unfreeze {DADADA} <jugador>");
+        return 1;
+    }
+
+    TogglePlayerControllable(destination, true);
+    SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Descongelaste a {ED2B2B}%s{DADADA}.", Player_RPName(destination));
+    return 1;
+}
+flags:unfreeze(CMD_FLAG<RANK_LEVEL_MODERATOR>)
