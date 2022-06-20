@@ -103,7 +103,8 @@ enum ePlayerTemp
     e_iPlayerFootTick,
     e_iPlayerDropItemAmount,
     e_iPlayerItemSlot,
-    e_iPlayerLastWorld
+    e_iPlayerLastWorld,
+    e_iPlayerBuyVehicleIndex
 };
 
 new 

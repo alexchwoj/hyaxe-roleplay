@@ -19,6 +19,7 @@ Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, c
         g_rgeVehicles[vehicleid][e_iColorTwo] = color2;
         g_rgeVehicles[vehicleid][e_fFuel] = g_rgeVehicleModelData[vehicletype - 400][e_fMaxFuel];
         g_rgeVehicles[vehicleid][e_fHealth] = 1000.0;
+        g_rgeVehicles[vehicleid][e_iSellIndex] = -1;
 
         SetVehicleParamsEx(vehicleid, 0, 0, 0, 0, 0, 0, 0);
     }

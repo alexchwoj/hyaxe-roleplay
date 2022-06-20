@@ -59,7 +59,8 @@ enum eVehicleData
     eJobs:e_iVehicleWork,
 
     e_iVehicleTimers[eVehicleTimers],
-    bool:e_bSpawned
+    bool:e_bSpawned,
+    e_iSellIndex
 };
 
 new g_rgeVehicles[MAX_VEHICLES][eVehicleData];

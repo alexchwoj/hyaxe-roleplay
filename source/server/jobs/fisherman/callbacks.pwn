@@ -53,8 +53,9 @@ static Fisherman_KeyGameCallback(playerid, bool:success)
 
     if (success)
     {
+        Player_AddXP(playerid, 20);
         Inventory_AddFixedItem(playerid, ITEM_FISH, 1, 0);
-
+        
         Notification_Show(playerid, "¡Bien ahí! Has pescado un pez.", 3000, 0x64A752FF);
         ApplyAnimation(playerid, "OTB", "WTCHRACE_WIN", 4.1, false, false, false, false, 0, true);
     }
@@ -142,6 +143,7 @@ dialog sell_fish(playerid, response, listitem, inputtext[])
     {
         new amount = Inventory_GetItemAmount(playerid, ITEM_FISH);
         
+        Player_AddXP(playerid, 50);
         Player_GiveMoney(playerid, 10 * amount);
         PlayerPlaySound(playerid, SOUND_SUCCESS);
 
