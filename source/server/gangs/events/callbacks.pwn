@@ -46,8 +46,8 @@ forward GVENT_TruckSpawnLoot();
 public GVENT_TruckSpawnLoot()
 {
     new loot[][] = {
-        {ITEM_CRACK, 5, 25},
-        {ITEM_MEDICINE, 25, 50}
+        {ITEM_CRACK, 5, 15},
+        {ITEM_MEDICINE, 10, 15}
     };
 
     for(new i; i < 16; ++i)
@@ -74,7 +74,7 @@ public GVENT_UpdateTruck()
     new elapsed = g_iGangTruckTimeCount - gettime();
     new minutes = elapsed / 60, seconds = elapsed % 60;
 
-    if (minutes <= 0 && seconds <= 0)
+    if (minutes < 0)
     {
         KillTimer(g_iGangTruckTimer);
         TextDrawSetString(g_tdGangEventText, "CAMIONETA ~g~ABIERTA");

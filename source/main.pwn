@@ -231,6 +231,7 @@ const HYAXE_MAX_NPCS = 100;
 ///////////////
 #include "server/anticheat/detections/speedhack.pwn"
 #include "server/anticheat/detections/fly.pwn"
+#include "server/anticheat/detections/weapon.pwn"
 #include "server/anticheat/detections/repaircar.pwn"
 #include "server/anticheat/detections/money.pwn"
 

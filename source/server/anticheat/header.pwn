@@ -8,7 +8,8 @@ enum eCheats
     CHEAT_REPAIR_CAR,
     CHEAT_MONEY_HACK,
     CHEAT_FLY,
-    CHEAT_SPEEDHACK
+    CHEAT_SPEEDHACK.
+    CHEAT_WEAPON
 };
 
 enum ePunishment
@@ -34,7 +35,8 @@ new g_rgeDetectionData[eCheats][eDetectionData] =
     { "Reparar vehículo", true, PUNISHMENT_KICK, 0 },
     { "Dinero", true, PUNISHMENT_IGNORE, 0 },
     { "Volar", true, PUNISHMENT_KICK, 0 },
-    { "Speedhack", true, PUNISHMENT_KICK, 0 }
+    { "Speedhack", true, PUNISHMENT_KICK, 0 },
+    { "Weaponhack", true, PUNISHMENT_KICK, 0 }
 };
 
 new 
