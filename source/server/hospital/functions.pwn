@@ -56,6 +56,7 @@ Player_GoToTheNearestHospital(playerid)
     SetPlayerInterior(playerid, 0);
     SetPlayerVirtualWorld(playerid, 0);
     SetPlayerDrunkLevel(playerid, 0);
+    Player_RemoveAllWeapons(playerid);
 
     new
         Float:cam_x = g_rgePlayerData[playerid][e_fSpawnPosX],

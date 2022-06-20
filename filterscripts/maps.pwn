@@ -9,7 +9,7 @@ public OnFilterScriptInit()
     new tmpobjid;
 
     // Mechanic
-    CreateDynamicObject(19379, 2153.05371, -2171.66577, 12.50570,   0.00000, 90.00000, 316.00000);
+    /*CreateDynamicObject(19379, 2153.05371, -2171.66577, 12.50570,   0.00000, 90.00000, 316.00000);
     CreateDynamicObject(19379, 2145.63306, -2177.58960, 12.48570,   0.00000, 90.00000, 316.00000);
     CreateDynamicObject(19379, 2142.48975, -2182.61475, 12.48570,   0.00000, 90.00000, 316.00000);
     CreateDynamicObject(19379, 2152.58521, -2171.26733, 12.50570,   0.00000, 90.00000, 316.00000);
@@ -236,7 +236,7 @@ public OnFilterScriptInit()
     CreateDynamicObject(19817, 2153.37891, -2167.03931, 11.41050,   0.00000, 0.00000, -45.00000);
     CreateDynamicObject(19903, 2157.26855, -2165.71973, 12.55210,   0.00000, 0.00000, -135.00000);
     CreateDynamicObject(1238, 2149.96265, -2168.04150, 12.86060,   0.00000, 0.00000, 0.00000);
-    CreateDynamicObject(1238, 2153.95142, -2163.82861, 12.86060,   0.00000, 0.00000, 0.00000);
+    CreateDynamicObject(1238, 2153.95142, -2163.82861, 12.86060,   0.00000, 0.00000, 0.00000);*/
 
     // Block paintnspray
     tmpobjid = CreateDynamicObject(19325, 1968.74219, 2162.49219, 12.09380,   0.00000, 0.00000, 0.00000);
@@ -2614,13 +2614,13 @@ public OnPlayerConnect(playerid)
     RemoveBuildingForPlayer(playerid, 12860, 164.7109, -234.1875, 0.4766, 0.25);
 
     // Mechanic
-    RemoveBuildingForPlayer(playerid, 3687, 2135.7422, -2186.4453, 15.6719, 0.25);
+    /*RemoveBuildingForPlayer(playerid, 3687, 2135.7422, -2186.4453, 15.6719, 0.25);
     RemoveBuildingForPlayer(playerid, 3687, 2162.8516, -2159.7500, 15.6719, 0.25);
     RemoveBuildingForPlayer(playerid, 3687, 2150.1953, -2172.3594, 15.6719, 0.25);
     RemoveBuildingForPlayer(playerid, 1531, 2173.5938, -2165.1875, 15.3047, 0.25);
     RemoveBuildingForPlayer(playerid, 3622, 2135.7422, -2186.4453, 15.6719, 0.25);
     RemoveBuildingForPlayer(playerid, 3622, 2150.1953, -2172.3594, 15.6719, 0.25);
-    RemoveBuildingForPlayer(playerid, 3622, 2162.8516, -2159.7500, 15.6719, 0.25);
+    RemoveBuildingForPlayer(playerid, 3622, 2162.8516, -2159.7500, 15.6719, 0.25);*/
 
     return 1;
 }

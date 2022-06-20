@@ -12,6 +12,7 @@ Player_Revive(playerid)
     KillTimer(g_rgeCrawlData[playerid][e_iCrawlKeyTimer]);
 	
     ApplyAnimation(playerid, "PED", "CAR_CRAWLOUTRHS", 4.1, false, true, true, false, 0, false);
+    Player_GiveAllWeapons(playerid);
     return 1;
 }
 
