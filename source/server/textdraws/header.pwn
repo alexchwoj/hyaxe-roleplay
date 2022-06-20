@@ -14,7 +14,8 @@ new
     Text:g_tdInventoryUsername,
     Text:g_tdLevelingBar[6],
     Text:g_tdGangs[9],
-    Text:g_tdGangMemberSlotBg[7]
+    Text:g_tdGangMemberSlotBg[7],
+    Text:g_tdGangEventText
 ;
 
 new

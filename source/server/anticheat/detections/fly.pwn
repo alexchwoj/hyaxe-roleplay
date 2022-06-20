@@ -27,7 +27,7 @@ IPacket:__ac_fly_PlayerSync(playerid, BitStream:bs)
     new object = CA_RayCastLine(x, y, z, x, y, z - 3.0, x, x, x);
     if(!is_falling && !object)
     {
-        Anticheat_Trigger(playerid, CHEAT_FLY);
+        //Anticheat_Trigger(playerid, CHEAT_FLY);
         return 0;
     }
 

@@ -24,7 +24,7 @@ static Crack_OnUse(playerid, slot)
     PlayerPlaySound(playerid, SOUND_EAT);
 
     Notification_ShowBeatingText(playerid, 2000, 0xF7F7F7, 100, 255, "Has usado un gramo de crack (~g~+10~w~ de chaleco)");
-    Player_SetArmour(playerid, Player_Armour(playerid) + 10);
+    Player_SetArmor(playerid, Player_Armor(playerid) + 10);
 
     InventorySlot_Subtract(playerid, slot);
     return 1;

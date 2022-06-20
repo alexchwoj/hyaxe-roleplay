@@ -3,9 +3,10 @@
 #endif
 #define _events_header_
 
-enum eGangEventType {
+enum _:eGangEventType {
     EVENT_TRUCK_DEFENSE,
-    EVENT_GRAFFITI
+    EVENT_GRAFFITI,
+    EVENT_INVALID
 };
 
 new Float:g_rgfTruckDefensePositions[][] =
@@ -26,3 +27,15 @@ new Float:g_rgfTruckDefensePositions[][] =
     {2396.1238, -2011.9196, 13.2807, 268.1526}, 
     {2236.5156, -1937.5461, 13.2691, 88.3561}
 };
+
+new 
+    g_iGangEventType,
+    g_iGangEventTick,
+    g_iGangEventMapIcon,
+    
+    g_iGangTruckIndex,
+    g_iGangTruckVehicleID,
+    g_iGangTruckTimer,
+    g_iGangTruckTimeCount,
+    g_iGangTruckParticle
+;

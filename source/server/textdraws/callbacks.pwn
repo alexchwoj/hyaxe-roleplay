@@ -5,6 +5,21 @@
 
 public OnGameModeInit()
 {
+    // GANG EVENT
+    g_tdGangEventText = TextDrawCreate(321.000000, 28.000000, "_");
+    TextDrawFont(g_tdGangEventText, 3);
+    TextDrawLetterSize(g_tdGangEventText, 0.300000, 1.500000);
+    TextDrawTextSize(g_tdGangEventText, 168.500000, 237.000000);
+    TextDrawSetOutline(g_tdGangEventText, 1);
+    TextDrawSetShadow(g_tdGangEventText, 0);
+    TextDrawAlignment(g_tdGangEventText, 2);
+    TextDrawColor(g_tdGangEventText, -1);
+    TextDrawBackgroundColor(g_tdGangEventText, 255);
+    TextDrawBoxColor(g_tdGangEventText, 50);
+    TextDrawUseBox(g_tdGangEventText, 0);
+    TextDrawSetProportional(g_tdGangEventText, 1);
+    TextDrawSetSelectable(g_tdGangEventText, 0);
+
     // SNEEDOMETER
     g_tdSpeedometer[0] = TextDrawCreate(562.000000, 425.000000, "_");
     TextDrawFont(g_tdSpeedometer[0], 1);

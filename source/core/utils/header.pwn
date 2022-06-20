@@ -75,3 +75,4 @@ native TextDrawSetString_s(Text:text, ConstAmxString:string) = TextDrawSetString
 #include "core/utils/bitarray.pwn"
 #include "core/utils/cells.pwn"
 #include "core/utils/sounds.pwn"
+#include "core/utils/zones.pwn"
