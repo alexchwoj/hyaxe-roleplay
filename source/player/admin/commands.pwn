@@ -493,3 +493,19 @@ command clearchat(playerid, const params[], "Limpia el chat")
     return 1;
 }
 flags:clearchat(CMD_FLAG<RANK_LEVEL_MANAGER>)
+
+command asay(playerid, const params[], "Envia un anuncio como admin")
+{
+	if (isnull(params))
+        return SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/asay {DADADA} <texto>");
+
+	format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "[Anuncio]{DADADA} %s %s (%d): %s",
+        g_rgszRankLevelNames[ Player_AdminLevel(playerid) ][ Player_Sex(playerid) ],
+        Player_RPName(playerid),
+        playerid,
+        params
+    );
+	SendClientMessageToAll(0xDAA838, HYAXE_UNSAFE_HUGE_STRING);
+	return 1;
+}
+flags:asay(CMD_FLAG<RANK_LEVEL_MANAGER>)
