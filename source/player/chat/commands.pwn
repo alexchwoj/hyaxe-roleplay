@@ -62,6 +62,42 @@ command do(playerid, const params[], "Envia un mensaje de entorno")
 }
 alias:do("entorno")
 
+command gritar(playerid, const params[], "Grita")
+{
+    if(isnull(params))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/gritar {DADADA}<texto>");
+        return 1;
+    }
+
+    new string[150];
+    format(string, sizeof(string), "%s grita: %s", Player_RPName(playerid), params);
+
+    Chat_SendMessageToRange(playerid, 0xDADADAFF, 60.0, string);
+    SetPlayerChatBubble(playerid, params, 0xDADADAFF, 15.0, 15000);
+
+    return 1;
+}
+alias:gritar("g")
+
+command susurrar(playerid, const params[], "Susurra")
+{
+    if(isnull(params))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/susurrar {DADADA}<texto>");
+        return 1;
+    }
+
+    new string[150];
+    format(string, sizeof(string), "%s susurra: %s", Player_RPName(playerid), params);
+
+    Chat_SendMessageToRange(playerid, 0xDADADAFF, 10.0, string);
+    SetPlayerChatBubble(playerid, params, 0xDADADAFF, 10.0, 15000);
+
+    return 1;
+}
+alias:susurrar("s")
+
 command duda(playerid, const params[], "Envia un mensaje al canal de dudas")
 {
     if (isnull(params))
