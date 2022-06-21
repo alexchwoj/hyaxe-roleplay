@@ -10,7 +10,8 @@ enum eCheats
     CHEAT_FLY,
     CHEAT_SPEEDHACK,
     CHEAT_WEAPON,
-    CHEAT_CARJACK
+    CHEAT_CARJACK,
+    CHEAT_SLAPPER
 };
 
 enum ePunishment
@@ -38,7 +39,8 @@ new g_rgeDetectionData[eCheats][eDetectionData] =
     { "Volar", true, PUNISHMENT_KICK, 0 },
     { "Speedhack", true, PUNISHMENT_KICK, 0 },
     { "Weaponhack", true, PUNISHMENT_KICK, 0 },
-    { "CarJack", true, PUNISHMENT_KICK, 0 } // External detection on vehicle module
+    { "CarJack", true, PUNISHMENT_KICK, 0 }, // External detection on vehicle module
+    { "Slapper", true, PUNISHMENT_KICK, 0 }
 };
 
 new 
