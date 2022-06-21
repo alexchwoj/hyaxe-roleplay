@@ -116,6 +116,7 @@ dialog buy_vehicle(playerid, response, listitem, const inputtext[])
         {
             PlayerPlaySound(playerid, SOUND_ERROR);
             Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+            return 1;
         }
 
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
