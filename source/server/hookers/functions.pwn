@@ -5,8 +5,6 @@
 
 Hooker_Spawn(hookerid)
 {
-    log_function();
-
     g_rgbHookerAvailable{hookerid} = true;
     new npcid = g_rgiHookers[hookerid];
 
