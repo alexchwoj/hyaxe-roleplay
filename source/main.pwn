@@ -160,7 +160,6 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/enter_exits/functions.pwn"
 #include "server/stores/functions.pwn"
 #include "server/stores/clothing/functions.pwn"
-#include "server/stores/dealership/functions.pwn"
 #include "server/actors/functions.pwn"
 #include "server/atm/functions.pwn"
 #include "server/jobs/functions.pwn"

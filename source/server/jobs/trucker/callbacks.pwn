@@ -453,8 +453,6 @@ dialog select_trucker_route(playerid, response, listitem, const inputtext[])
 
 public OnPlayerLeaveDynamicArea(playerid, areaid)
 {
-    log_function();
-
     if(areaid == g_iTruckerCentralArea)
     {
         if(Player_Job(playerid) == JOB_TRUCKER)

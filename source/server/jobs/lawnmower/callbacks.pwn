@@ -159,7 +159,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
             
             Player_Job(playerid) = JOB_NONE;
 
-            new money = g_rgeLawnmowerAreas[park_id][e_iInitialGrassCount] * 5;
+            new money = g_rgeLawnmowerAreas[park_id][e_iInitialGrassCount] * 10;
             Player_GiveMoney(playerid, money);
 
             new string[80];

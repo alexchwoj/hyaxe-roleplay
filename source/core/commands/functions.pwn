@@ -78,7 +78,7 @@ Commands_ShowSuggestions(playerid, const command[])
 
     if(!distances_length)
     {
-        SendClientMessagef(playerid, 0xDADADAFF, "({ED2B2B}/%s{DADADA}) Comando desconocido, usa {ED2B2B}/ayuda{DADADA} para recibir ayuda.", command);
+        SendClientMessagef(playerid, 0xDADADAFF, "({ED2B2B}/%s{DADADA}) Comando desconocido.", command);
         return 1;
     }
 

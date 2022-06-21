@@ -5,8 +5,6 @@
 
 static Levels_AnimateBar(playerid, start_xp, start_level = -1, bool:new_level = false)
 {
-    log_function();
-
     new required_xp = Level_GetRequiredXP(Player_Level(playerid));
     new Float:initial_x = lerp(LEVEL_BAR_MIN_X, LEVEL_BAR_MAX_X, floatdiv(start_xp, required_xp));
     new Float:end_x = (new_level ? LEVEL_BAR_MAX_X : lerp(LEVEL_BAR_MIN_X, LEVEL_BAR_MAX_X, floatdiv(Player_XP(playerid), required_xp)));

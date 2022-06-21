@@ -87,8 +87,6 @@ Needs_ShowBars(playerid)
 
 Player_Puke(playerid)
 {
-    log_function();
-
     Player_StopShopping(playerid);
     g_rgePlayerTempData[playerid][e_iPlayerEatCount] = 0;
     g_rgePlayerTempData[playerid][e_iPlayerPukeTick] = GetTickCount();
