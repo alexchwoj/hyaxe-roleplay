@@ -93,8 +93,7 @@ GangEvent_Start(event_type)
 
 command gangevent(playerid, const params[], "Inicion un evento de bandas")
 {
-    new event_type;
-    if (sscanf(params, "d", event_type))
+    extract params -> new event_type; else
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/gangevent {DADADA}<tipo>");
         return 1;
