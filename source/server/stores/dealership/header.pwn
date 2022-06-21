@@ -1,7 +1,7 @@
-#if defined _concessionaire_header_
+#if defined _dealership_header_
     #endinput
 #endif
-#define _concessionaire_header_
+#define _dealership_header_
 
 enum eVehiclesForSale
 {
@@ -124,7 +124,7 @@ new g_rgeVehiclesForSale[][eVehiclesForSale] =
 	{545, -1656.527587, 1216.405029, 21.003622, 44.999988, -1, -1, 4}
 };
 
-new Float:g_rgfConcessionairePosition[][] =
+new Float:g_rgfDealershipPosition[][] =
 {
 	{-1920.1965, 302.7697, 40.5643, -90.0000}, // San Fierro 1
 	{563.774475, -1273.510986, 16.867170, 12.636687}, // Grotti

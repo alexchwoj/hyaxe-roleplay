@@ -1,7 +1,7 @@
-#if defined _concessionaire_callbacks_
+#if defined _dealership_callbacks_
     #endinput
 #endif
-#define _concessionaire_callbacks_
+#define _dealership_callbacks_
 
 public OnGameModeInit()
 {
@@ -128,10 +128,10 @@ dialog buy_vehicle(playerid, response, listitem, const inputtext[])
 
         new vehicleid = Vehicle_Create(
             modelid,
-            g_rgfConcessionairePosition[concessionaire][0],
-            g_rgfConcessionairePosition[concessionaire][1],
-            g_rgfConcessionairePosition[concessionaire][2],
-            g_rgfConcessionairePosition[concessionaire][3],
+            g_rgfDealershipPosition[concessionaire][0],
+            g_rgfDealershipPosition[concessionaire][1],
+            g_rgfDealershipPosition[concessionaire][2],
+            g_rgfDealershipPosition[concessionaire][3],
             random(255), random(255), 0
         );
         PutPlayerInVehicle(playerid, vehicleid, 0);
