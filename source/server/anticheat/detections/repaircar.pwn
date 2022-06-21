@@ -6,7 +6,7 @@
 const __ac_rc_VehicleSync = 200;
 IPacket:__ac_rc_VehicleSync(playerid, BitStream:bs)
 {
-    if(Player_HasImmunityForCheat(playerid, CHEAT_REPAIR_CAR))
+    if (Player_HasImmunityForCheat(playerid, CHEAT_REPAIR_CAR))
         return 1;
 
     new vehicleid, Float:vehicle_health;
@@ -17,7 +17,7 @@ IPacket:__ac_rc_VehicleSync(playerid, BitStream:bs)
         PR_FLOAT, vehicle_health
     );
 
-    if(Vehicle_GetHealth(vehicleid) < vehicle_health)
+    if (Vehicle_GetHealth(vehicleid) < vehicle_health)
     {
         Anticheat_Trigger(playerid, CHEAT_REPAIR_CAR);
         return 0;

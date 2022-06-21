@@ -165,7 +165,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
                 new line[128];
                 for(new i; i < sizeof(g_rgeTruckerRoutes); ++i)
                 {
-                    new pay = floatround(VectorSize(125.2116 - g_rgeTruckerRoutes[i][e_fTruckCpX], -285.1135 - g_rgeTruckerRoutes[i][e_fTruckCpY], 1.5781 - g_rgeTruckerRoutes[i][e_fTruckCpZ])) * 10;
+                    new pay = floatround(VectorSize(125.2116 - g_rgeTruckerRoutes[i][e_fTruckCpX], -285.1135 - g_rgeTruckerRoutes[i][e_fTruckCpY], 1.5781 - g_rgeTruckerRoutes[i][e_fTruckCpZ])) * 3;
                     format(line, sizeof(line), "{DADADA}%s\t{DADADA}%i caja%s\t{64A752}$%i\n", g_rgeTruckerRoutes[i][e_szRouteName], g_rgeTruckerRoutes[i][e_iBoxCount], (g_rgeTruckerRoutes[i][e_iBoxCount] > 1 ? "s" : ""), pay);
                     strcat(HYAXE_UNSAFE_HUGE_STRING, line);
                 }

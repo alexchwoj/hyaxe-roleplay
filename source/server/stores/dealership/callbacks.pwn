@@ -1,7 +1,7 @@
-#if defined _concessionaire_callbacks_
+#if defined _dealership_callbacks_
     #endinput
 #endif
-#define _concessionaire_callbacks_
+#define _dealership_callbacks_
 
 public OnGameModeInit()
 {
@@ -27,9 +27,9 @@ public OnGameModeInit()
 
         format(
             HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH,
-            "{CB3126}%s\n{DADADA}Precio: {64A752}$%d{DADADA}\n\nPresiona {CB3126}Y{DADADA} para comprar",
+            "{CB3126}%s\n{DADADA}Precio: {64A752}$%s{DADADA}\n\nPresiona {CB3126}Y{DADADA} para comprar",
             g_rgeVehicleModelData[g_rgeVehiclesForSale[i][e_iVehicleModelID] - 400][e_szModelName],
-            g_rgeVehicleModelData[g_rgeVehiclesForSale[i][e_iVehicleModelID] - 400][e_iPrice]
+            Format_Thousand(g_rgeVehicleModelData[g_rgeVehiclesForSale[i][e_iVehicleModelID] - 400][e_iPrice])
         );
         g_rgeVehiclesForSale[i][e_iVehicleLabel] = CreateDynamic3DTextLabel(HYAXE_UNSAFE_HUGE_STRING, 0xDADADAFF,
             g_rgeVehiclesForSale[i][e_fVehicleX],
@@ -76,10 +76,10 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 g_rgePlayerTempData[playerid][e_iPlayerBuyVehicleIndex] = g_rgeVehicles[vehicleid][e_iSellIndex];
 
                 format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-                    {DADADA}¿Quieres comprar un(a) {CB3126}%s{DADADA} a {64A752}$%d{DADADA}?\
+                    {DADADA}¿Quieres comprar un(a) {CB3126}%s{DADADA} a {64A752}$%s{DADADA}?\
                 ",
                     g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_szModelName],
-                    g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_iPrice]
+                    Format_Thousand(g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_iPrice])
                 );
                 Dialog_Show(playerid, "buy_vehicle", DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe{DADADA} - Comprar vehículo", HYAXE_UNSAFE_HUGE_STRING, "Comprar", "Cancelar");
             }
@@ -109,29 +109,30 @@ dialog buy_vehicle(playerid, response, listitem, const inputtext[])
     {
         new
             modelid = g_rgeVehiclesForSale[ g_rgePlayerTempData[playerid][e_iPlayerBuyVehicleIndex]  ][e_iVehicleModelID],
-            concessionaire = g_rgeVehiclesForSale[ g_rgePlayerTempData[playerid][e_iPlayerBuyVehicleIndex]  ][e_iConcessionaire]
+            dealership = g_rgeVehiclesForSale[ g_rgePlayerTempData[playerid][e_iPlayerBuyVehicleIndex]  ][e_iDealership]
         ;
 
         if (Player_Money(playerid) < g_rgeVehicleModelData[modelid - 400][e_iPrice])
         {
             PlayerPlaySound(playerid, SOUND_ERROR);
             Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+            return 0;
         }
 
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-            Compraste un(a) %s $%d\
+            Compraste un(a) %s $%s\
         ",
             g_rgeVehicleModelData[modelid - 400][e_szModelName],
-            g_rgeVehicleModelData[modelid - 400][e_iPrice]
+            Format_Thousand(g_rgeVehicleModelData[modelid - 400][e_iPrice])
         );
         Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 5000, 0x64A752FF);
 
         new vehicleid = Vehicle_Create(
             modelid,
-            g_rgfConcessionairePosition[concessionaire][0],
-            g_rgfConcessionairePosition[concessionaire][1],
-            g_rgfConcessionairePosition[concessionaire][2],
-            g_rgfConcessionairePosition[concessionaire][3],
+            g_rgfDealershipPosition[dealership][0],
+            g_rgfDealershipPosition[dealership][1],
+            g_rgfDealershipPosition[dealership][2],
+            g_rgfDealershipPosition[dealership][3],
             random(255), random(255), 0
         );
         PutPlayerInVehicle(playerid, vehicleid, 0);

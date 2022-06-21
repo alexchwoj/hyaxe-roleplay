@@ -116,3 +116,30 @@ public OnPlayerDisconnect(playerid, reason)
 #if defined CRAWL_OnPlayerDisconnect
     forward CRAWL_OnPlayerDisconnect(playerid, reason);
 #endif
+
+public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
+{
+    if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+    {
+        new Float:x, Float:y, Float:z;
+	    GetPlayerPos(playerid, x, y, z);
+	    SetPlayerPos(playerid, x, y, z);
+	    ApplyAnimation(playerid, "SWEET", "SWEET_INJUREDLOOP", 4.1, true, false, false, 1, 0, 1);
+    }
+
+    #if defined CRAWL_OnPlayerEnterVehicle
+        return CRAWL_OnPlayerEnterVehicle(playerid, vehicleid, ispassenger);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerEnterVehicle
+    #undef OnPlayerEnterVehicle
+#else
+    #define _ALS_OnPlayerEnterVehicle
+#endif
+#define OnPlayerEnterVehicle CRAWL_OnPlayerEnterVehicle
+#if defined CRAWL_OnPlayerEnterVehicle
+    forward CRAWL_OnPlayerEnterVehicle(playerid, vehicleid, ispassenger);
+#endif

@@ -290,3 +290,26 @@ public OnAccountInserted(playerid, callback)
 
     return 1;
 }
+
+public OnPlayerSpawn(playerid)
+{
+    new hour, minute;
+    gettime(hour, minute);
+    SetPlayerTime(playerid, hour, minute);
+
+    #if defined ACC_OnPlayerSpawn
+        return ACC_OnPlayerSpawn(playerid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerSpawn
+    #undef OnPlayerSpawn
+#else
+    #define _ALS_OnPlayerSpawn
+#endif
+#define OnPlayerSpawn ACC_OnPlayerSpawn
+#if defined ACC_OnPlayerSpawn
+    forward ACC_OnPlayerSpawn(playerid);
+#endif
