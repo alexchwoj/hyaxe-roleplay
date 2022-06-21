@@ -29,6 +29,12 @@ command banda(playerid, const params[], "Abre el panel de creación de una banda"
         return 1;
     }
 
+    if(Player_Gang(playerid) != -1)
+    {
+        Dialog_Show(playerid, "", DIALOG_STYLE_MSGBOX, "{DADADA}Error - {CB3126}Creación de banda", "{DADADA}No puedes crear una banda si ya estás en una.", "Entendido");
+        return 1;
+    }
+
     strcpy(s_rgszGangCreationName[playerid], "Mi banda");
     s_rgiGangCreationIcon{playerid} = 0;
     s_rgiGangCreationColor[playerid] = math_random_unsigned(0, 0xFFFFFFFF) | 0xFF;
