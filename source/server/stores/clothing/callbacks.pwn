@@ -234,9 +234,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
             PlayerPlaySound(playerid, 1054);
 
             mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-                UPDATE `ACCOUNT` SET \
-                    `SKIN` = %i, \
-                WHERE `ID` = %i;\
+                UPDATE `ACCOUNT` SET `SKIN` = %i WHERE `ID` = %i;\
             ", 
                 Player_Skin(playerid), Player_AccountID(playerid)
             );
