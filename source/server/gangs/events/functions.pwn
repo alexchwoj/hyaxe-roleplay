@@ -68,7 +68,7 @@ GangEvent_Start(event_type)
                 g_rgfTruckDefensePositions[g_iGangTruckIndex][1],
                 g_rgfTruckDefensePositions[g_iGangTruckIndex][2],
                 51, -1, 0, 0,
-                .style = MAPICON_GLOBAL, .streamdistance = 516.0
+                .style = MAPICON_GLOBAL, .streamdistance = 2064.0
             );
 
             // Announce
