@@ -92,11 +92,11 @@ Inventory_UpdateSlot(playerid, slot)
 
 Inventory_ResetSlot(playerid, slot)
 {
-	g_rgePlayerInventory[playerid][slot][e_bValid] = false;
-	g_rgePlayerInventory[playerid][slot][e_iID] = 0;
-	g_rgePlayerInventory[playerid][slot][e_iType] = 0;
-	g_rgePlayerInventory[playerid][slot][e_iAmount] = 0;
-	g_rgePlayerInventory[playerid][slot][e_iExtra] = 0;
+	g_rgePlayerInventory[playerid][slot][e_bValid] = 
+	bool:(g_rgePlayerInventory[playerid][slot][e_iID] = 
+	g_rgePlayerInventory[playerid][slot][e_iType] = 
+	g_rgePlayerInventory[playerid][slot][e_iAmount] = 
+	g_rgePlayerInventory[playerid][slot][e_iExtra] = 0);
 	return 1;
 }
 
