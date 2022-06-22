@@ -189,6 +189,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     new graffiti_id = Streamer_GetIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x4752414646));
                     if (graffiti_id == e_iGangGraffitiIndex)
                     {
+                        KillTimer(e_iGangGraffitiTimer[playerid]);
                         e_iGangGraffitiTimer[playerid] = SetTimerEx("GVENT_UpdateGraffiti", 1000, true, "i", playerid);
                     }
                 }
@@ -196,7 +197,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         }
     }
 
-    if ((oldkeys & KEY_FIRE) && !(newkeys & KEY_FIRE))
+    if ((oldkeys & KEY_FIRE) != 0)
     {
         KillTimer(e_iGangGraffitiTimer[playerid]);
     }
