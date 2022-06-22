@@ -140,11 +140,16 @@ Inventory_Hide(playerid)
 		TextDrawHideForPlayer(playerid, g_tdInventoryExp[i]);
 
 	for(new i; i < 6; ++i)
+	{
 		PlayerTextDrawHide(playerid, p_tdToyView[playerid]{i});
+		PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{i});
+	}
 
+	/*
 	for(new i; i < 6; ++i)
 		PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{i});
-
+	*/
+	
 	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
 		PlayerTextDrawHide(playerid, p_tdItemView[playerid]{i});
