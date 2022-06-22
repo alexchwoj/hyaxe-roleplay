@@ -344,16 +344,15 @@ public INV_OnItemInserted(playerid, slot, type, amount, extra)
 
 public OnDynamicObjectMoved(objectid)
 {
-    new info[3];
-    Streamer_GetArrayData(STREAMER_TYPE_OBJECT, objectid, E_STREAMER_EXTRA_ID, info);
-
-    if (info[0] == 0x49544d)
+    if(Streamer_HasIntData(STREAMER_TYPE_OBJECT, objectid, E_STREAMER_CUSTOM(0x4449544D)))
     {
         new Float:x, Float:y, Float:z;
         GetDynamicObjectPos(objectid, x, y, z);
         Sound_PlayInRange(
             g_rgeDropSounds[ random(sizeof(g_rgeDropSounds)) ],
-            50.0, x, y, z, info[1], info[2]
+            50.0, x, y, z, 
+            Streamer_GetIntData(STREAMER_TYPE_OBJECT, objectid, E_STREAMER_WORLD_ID),
+            Streamer_GetIntData(STREAMER_TYPE_OBJECT, objectid, E_STREAMER_INTERIOR_ID)
         );
     }
 
