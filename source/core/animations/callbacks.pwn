@@ -3,8 +3,20 @@
 #endif
 #define _animations_callbacks_
 
+static bool:s_rgbKillFadings[MAX_PLAYERS char];
+
 public FADINGS_FadeTextDraw(playerid, PlayerText:textdraw, rounds, interval, Task:t)
 {
+    if(s_rgbKillFadings{playerid})
+    {
+        if(task_valid(t))
+            task_delete(t);
+
+        Timer_Kill(g_rgiFadingTimers[playerid][textdraw]);
+        s_rgbKillFadings{playerid} = false;
+        return 1;
+    }
+    
     new color = PlayerTextDrawGetColor(playerid, textdraw);
     new alpha = (color & 0xFF);
 
@@ -33,9 +45,31 @@ public FADINGS_FadeTextDraw(playerid, PlayerText:textdraw, rounds, interval, Tas
         if(g_rgiFadingRounds[playerid]{textdraw} >= rounds)
         {
             Timer_Kill(g_rgiFadingTimers[playerid][textdraw]);
-            task_set_result(t, 1);
+            if(task_valid(t))
+                task_set_result(t, 1);
         }
     }
 
     return 1;
 }
+
+public OnPlayerDisconnect(playerid, reason)
+{
+    s_rgbKillFadings{playerid} = true;
+
+    #if defined ANIMS_OnPlayerDisconnect
+        return ANIMS_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect ANIMS_OnPlayerDisconnect
+#if defined ANIMS_OnPlayerDisconnect
+    forward ANIMS_OnPlayerDisconnect(playerid, reason);
+#endif
