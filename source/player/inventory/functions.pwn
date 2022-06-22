@@ -33,7 +33,7 @@ Inventory_Update(playerid)
 				if (InventorySlot_Type(playerid, i) >= ITEM_INVALID)
 				{
 					printf("[inventory]: Invalid item > playerid: %d, slot: %d, type: %d, db_id: %d", playerid, i, InventorySlot_Type(playerid, i), InventorySlot_ID(playerid, i));
-					memset(g_rgePlayerInventory[playerid][i], 0);
+					Inventory_ResetSlot(playerid, i);
 					printf("[MIERDAS8] slot: %d, type: %d", i, g_rgePlayerInventory[playerid][i][e_iType]);
 				}
 				else
@@ -87,6 +87,16 @@ Inventory_UpdateSlot(playerid, slot)
 			}
 		}
 	}
+	return 1;
+}
+
+Inventory_ResetSlot(playerid, slot)
+{
+	g_rgePlayerInventory[playerid][slot][e_bValid] = false;
+	g_rgePlayerInventory[playerid][slot][e_iID] = 0;
+	g_rgePlayerInventory[playerid][slot][e_iType] = 0;
+	g_rgePlayerInventory[playerid][slot][e_iAmount] = 0;
+	g_rgePlayerInventory[playerid][slot][e_iExtra] = 0;
 	return 1;
 }
 
@@ -202,7 +212,7 @@ InventorySlot_Delete(playerid, slot)
 	mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `PLAYER_INVENTORY` WHERE `ID` = %d;", InventorySlot_ID(playerid, slot));
 	mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 	printf("[MIERDAS6] slot: %d, type: %d", slot, g_rgePlayerInventory[playerid][slot][e_iType]);
-	memset(g_rgePlayerInventory[playerid][slot], 0);
+	Inventory_ResetSlot(playerid, slot);
 	printf("[MIERDAS7] slot: %d, type: %d", slot, g_rgePlayerInventory[playerid][slot][e_iType]);
 
 	Inventory_Update(playerid);
@@ -220,7 +230,7 @@ Inventory_DeleteItemByType(playerid, type)
 				mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `PLAYER_INVENTORY` WHERE `ID` = %d;", InventorySlot_ID(playerid, i));
 				mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 				printf("[MIERDAS5] slot: %d, type: %d", i, g_rgePlayerInventory[playerid][i][e_iType]);
-				memset(g_rgePlayerInventory[playerid][i], 0);
+				Inventory_ResetSlot(playerid, 0);
 				printf("[MIERDAS4] slot: %d, type: %d", i, g_rgePlayerInventory[playerid][i][e_iType]);
 			}
 		}
