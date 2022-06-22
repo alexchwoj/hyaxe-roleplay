@@ -61,7 +61,13 @@ on_init RegisterCommands()
 #endif
 
 public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
-{    
+{
+    if(!Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
+    {
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No has iniciado sesión.");
+        return 0;
+    }
+
     new cmd_level = (flags >>> 24);
 
     if(cmd_level > Player_AdminLevel(playerid))
@@ -102,7 +108,7 @@ public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags)
 
     if((flags >>> 24) > RANK_LEVEL_USER && !(flags & CMD_DONT_LOG_COMMAND))
     {
-        Admins_SendMessage_s(Player_AdminLevel(playerid), 0x415BA2FF, @f("{DADADA}%s %s {415BA2}%s{DADADA} usó el comando {415BA2}/%s{DADADA}.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_GetRankName(playerid), Player_RPName(playerid), cmd));
+        Admins_SendMessage_s(Player_AdminLevel(playerid), 0x415BA2FF, @f("{DADADA}%s %s {415BA2}%s{DADADA} usó el comando {415BA2}/%s{DADADA} %s.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_GetRankName(playerid), Player_RPName(playerid), cmd, params));
     }
 
     #if defined CMD_OnPlayerCommandPerformed

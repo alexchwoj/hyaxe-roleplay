@@ -22,10 +22,8 @@ public OnPlayerUpdate(playerid)
             Anticheat_Trigger(playerid, CHEAT_TELEPORT);
             return 0;
         }
-        else
-        {
-            GetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
-        }
+
+        GetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
     }
 
     #if defined AC_OnPlayerUpdate
