@@ -287,7 +287,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
             new Float:truck_health = Vehicle_GetHealth(g_rgiPlayerUsingTruck[playerid]);
 
             new route = g_rgiPlayerTruckerRoute{playerid};
-            new pay = floatround( VectorSize(125.2116 - g_rgeTruckerRoutes[i][e_fTruckCpX], -285.1135 - g_rgeTruckerRoutes[i][e_fTruckCpY], 1.5781 - g_rgeTruckerRoutes[i][e_fTruckCpZ]) );
+            new pay = floatround( VectorSize(125.2116 - g_rgeTruckerRoutes[route][e_fTruckCpX], -285.1135 - g_rgeTruckerRoutes[route][e_fTruckCpY], 1.5781 - g_rgeTruckerRoutes[route][e_fTruckCpZ]) );
             new pay_subtracted = 0;
 
             if(truck_health < 900.0)

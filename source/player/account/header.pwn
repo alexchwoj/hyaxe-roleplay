@@ -71,10 +71,10 @@ enum ePlayerData
     e_iPlayerArmor,
     e_iPlayerMoney,
     e_iPlayerBankBalance,
-    Float:e_fSpawnPosX,
-    Float:e_fSpawnPosY,
-    Float:e_fSpawnPosZ,
-    Float:e_fSpawnPosAngle,
+    Float:e_fPosX,
+    Float:e_fPosY,
+    Float:e_fPosZ,
+    Float:e_fPosAngle,
     e_iPlayerVirtualWorld,
     e_iPlayerInterior,
     e_iPlayerSex,
@@ -104,7 +104,9 @@ enum ePlayerTemp
     e_iPlayerDropItemAmount,
     e_iPlayerItemSlot,
     e_iPlayerLastWorld,
-    e_iPlayerBuyVehicleIndex
+    e_iPlayerBuyVehicleIndex,
+    e_iPlayerCarJackTick,
+    e_iPlayerCarJackAmount
 };
 
 new 

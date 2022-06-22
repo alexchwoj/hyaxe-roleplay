@@ -111,7 +111,10 @@ public OnGameModeExit()
 public OnIncomingPacket(playerid, packetid, BitStream:bs)
 {
     if(g_rgbPlayerKicked{playerid})
+    {
+        printf("[dbg] caught packet from kicked player (%i): packetid %i", playerid, packetid);
         return 0;
+    }
 
     #if defined AC_OnIncomingPacket
         return AC_OnIncomingPacket(playerid, packetid, bs);
@@ -133,8 +136,11 @@ public OnIncomingPacket(playerid, packetid, BitStream:bs)
 public OnIncomingRPC(playerid, rpcid, BitStream:bs)
 {
     if(g_rgbPlayerKicked{playerid})
+    {
+        printf("[dbg] caught rpc from kicked player (%i): rpcid %i", playerid, rpcid);
         return 0;
-
+    }
+    
     #if defined AC_OnIncomingRPC
         return AC_OnIncomingRPC(playerid, rpcid, bs);
     #else

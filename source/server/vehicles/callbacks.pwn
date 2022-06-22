@@ -431,12 +431,56 @@ public OnPlayerAuthenticate(playerid)
     forward VEH_OnPlayerAuthenticate(playerid);
 #endif
 
-#if defined _ALS_OnVehicleDamageStatusUpd
-    #undef OnVehicleDamageStatusUpdate
+// - Prevent car jacking
+public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
+{
+    if(!ispassenger)
+    {
+        new last_driver = GetVehicleLastDriver(vehicleid);
+        if(GetPlayerVehicleID(last_driver) == vehicleid && GetPlayerState(last_driver) == PLAYER_STATE_DRIVER)
+        {
+            if(GetTickDiff(GetTickCount(), g_rgePlayerTempData[playerid][e_iPlayerCarJackTick]) > 5000)
+            {
+                g_rgePlayerTempData[playerid][e_iPlayerCarJackAmount] = 0;
+            }
+
+            new Float:x, Float:y, Float:z;
+            GetPlayerPos(playerid, x, y, z);
+            SetPlayerPos(playerid, x, y, z);
+            TogglePlayerControllable(playerid, false);
+
+            g_rgePlayerTempData[playerid][e_iPlayerCarJackTick] = GetTickCount();
+            g_rgePlayerTempData[playerid][e_iPlayerCarJackAmount]++;
+
+            if(g_rgePlayerTempData[playerid][e_iPlayerCarJackAmount] >= 5)
+            {
+                Anticheat_Trigger(playerid, CHEAT_CARJACK);
+                return 0;
+            }
+
+            Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes robar vehículos");
+            task_yield(0);
+            wait_ms(2000);
+
+            TogglePlayerControllable(playerid, true);
+
+            return 0;
+        }
+    }
+
+    #if defined VEH_OnPlayerEnterVehicle
+        return VEH_OnPlayerEnterVehicle(playerid, vehicleid, ispassenger);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerEnterVehicle
+    #undef OnPlayerEnterVehicle
 #else
-    #define _ALS_OnVehicleDamageStatusUpd
+    #define _ALS_OnPlayerEnterVehicle
 #endif
-#define OnVehicleDamageStatusUpdate VEH_OnVehicleDamageStatusUpdate
-#if defined VEH_OnVehicleDamageStatusUpdate
-    forward VEH_OnVehicleDamageStatusUpdate(vehicleid, playerid);
+#define OnPlayerEnterVehicle VEH_OnPlayerEnterVehicle
+#if defined VEH_OnPlayerEnterVehicle
+    forward VEH_OnPlayerEnterVehicle(playerid, vehicleid, ispassenger);
 #endif

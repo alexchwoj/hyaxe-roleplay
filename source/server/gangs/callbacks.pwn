@@ -85,8 +85,6 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if(((newkeys & (KEY_SPRINT | KEY_YES)) == KEY_SPRINT | KEY_YES) && !IsPlayerInAnyVehicle(playerid))
     {
-        printf("gang = %i", Player_Gang(playerid));
-
         if(Player_Gang(playerid) != -1)
         {
             Gangs_OpenPanel(playerid);
@@ -115,7 +113,6 @@ public GANGS_PanelDataFetched(playerid)
 {
     new member_count;
     cache_get_value_name_int(0, "MEMBER_COUNT", member_count);
-    printf("member_count = %i", member_count);
 
     SetExclusiveBroadcast(true);
     TextDrawSetString(g_tdGangs[2], Gang_Data(Player_Gang(playerid))[e_szGangName]);
