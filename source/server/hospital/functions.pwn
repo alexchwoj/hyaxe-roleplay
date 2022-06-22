@@ -79,8 +79,12 @@ Player_GoToTheNearestHospital(playerid)
         1000
     );
 
-    Player_GiveMoney(playerid, -1500);
-    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Estás siendo atendido en el ~b~%s~w~, el costo es de $1500.", g_rgeHospitalData[ nearest_hospital ][e_szHospitalName]);
+    new cost = 1500;
+    if (Player_Money(playerid) < cost)
+        cost = 0;
+
+    Player_GiveMoney(playerid, -cost);
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Estás siendo atendido en el ~b~%s~w~, el costo es de $%d.", g_rgeHospitalData[ nearest_hospital ][e_szHospitalName], cost);
     Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 5000, 0x415BA2FF);
 
     g_rgiHospitalHealthTimer[playerid] = SetTimerEx("HP_HealPlayer", 1000, true, "i", playerid);
