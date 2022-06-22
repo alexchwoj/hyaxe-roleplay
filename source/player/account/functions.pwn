@@ -155,7 +155,7 @@ Account_LoadFromCache(playerid)
 
 Player_GiveMoney(playerid, money, bool:update = true)
 {
-    Player_Money(playerid) += money;
+    Player_Money(playerid) = clamp(Player_Money(playerid) + money, 0, cellmax);
 
 	ResetPlayerMoney(playerid);
 	GivePlayerMoney(playerid, Player_Money(playerid));
@@ -192,4 +192,20 @@ Player_SetPos(playerid, Float:x, Float:y, Float:z)
     g_rgePlayerData[playerid][e_fPosY] = y;
     g_rgePlayerData[playerid][e_fPosZ] = z;
     return SetPlayerPos(playerid, x, y, z);
+}
+
+Player_SetSkin(playerid, skinid, bool:update = true)
+{
+    if(skinid == 74 || !(0 <= skinid <= 311))
+        return 0;
+
+    Player_Skin(playerid) = skinid;
+
+    if(update)
+    {
+        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `SKIN` = %i WHERE `ID` = %i;", skinid, Player_AccountID(playerid));
+        mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+    }
+    
+    return SetPlayerSkin(playerid, skinid);
 }

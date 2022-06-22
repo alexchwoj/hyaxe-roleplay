@@ -509,3 +509,38 @@ command asay(playerid, const params[], "Envia un anuncio como admin")
 	return 1;
 }
 flags:asay(CMD_FLAG<RANK_LEVEL_MANAGER>)
+
+command set_skin(playerid, const params[], "Asigna la ropa de un jugador")
+{
+    new destination, skin;
+    if(sscanf(params, "ri", skin))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/set_skin{DADADA} <jugador> <skin>");
+        return 1;
+    }
+
+    if(!IsPlayerConnected(destination))
+    {
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} Jugador inválido.");
+        return 1;
+    }
+
+    if(!Player_SetSkin(destination, skin))
+    {
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} La ID de la skin debe estar entre el 0 y 311, excluyendo el 74.");
+        return 1;
+    }
+
+    if(playerid != destination)
+    {
+        SendClientMessage(destination, 0xED2B2BFF, "›{DADADA} Un administrador cambió tu skin.");
+        SendClientMessagef(playerid, 0xED2B2FF, "›{DADADA} La skin de %s ahora es la %i.", Player_RPName(destination), skin);
+    }
+    else
+    {
+        SendClientMessagef(playerid, 0xED2B2FF, "›{DADADA} Tu skin ahora es la %i.", skin);
+    }
+
+    return 1;
+}
+flags:set_skin(CMD_FLAG<RANK_LEVEL_MANAGER>)
