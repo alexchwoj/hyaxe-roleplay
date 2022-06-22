@@ -297,10 +297,10 @@ public INV_RefreshDroppedItems()
 {
     foreach(new i : DroppedItems)
     {
-        new info[7];
-        Streamer_GetArrayData(STREAMER_TYPE_AREA, i, E_STREAMER_EXTRA_ID, info);
+        new info[6];
+        Streamer_GetArrayData(STREAMER_TYPE_AREA, i, E_STREAMER_CUSTOM(0x49544D), info);
 
-        if (gettime() > info[5])
+        if (gettime() > info[4])
             i = DroppedItem_Delete(i);
     }
     return 1;

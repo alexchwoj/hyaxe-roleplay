@@ -149,7 +149,7 @@ Inventory_Hide(playerid)
 	for(new i; i < 6; ++i)
 		PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{i});
 	*/
-	
+
 	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
 		PlayerTextDrawHide(playerid, p_tdItemView[playerid]{i});
@@ -395,6 +395,9 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 
 DroppedItem_Delete(area_id)
 {
+	if(!Streamer_HasArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x49544D)))
+		return 0;
+
 	new info[6];
 	Streamer_GetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x49544d), info);
 
