@@ -5,7 +5,7 @@
 
 public OnPlayerUpdate(playerid)
 {
-    if(IsPlayerSpawned(playerid))
+    if(IsPlayerSpawned(playerid) && Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
     {
         new const Float:max_dist = (IsPlayerInAnyVehicle(playerid) ? 340.0 : 50.0);
         if(GetPlayerDistanceFromPoint(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ)) > max_dist)
@@ -20,6 +20,7 @@ public OnPlayerUpdate(playerid)
             }
 
             Anticheat_Trigger(playerid, CHEAT_TELEPORT);
+            return 0;
         }
         else
         {

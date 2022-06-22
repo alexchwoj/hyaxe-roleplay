@@ -200,7 +200,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
         TogglePlayerDynamicCP(playerid, checkpointid, false);
         return 1;
     }
-    else if(g_rgiPlayerUsingTruck[playerid] != INVALID_VEHICLE_ID)
+    else if(g_rgiPlayerUsingTruck[playerid])
     { 
         if(checkpointid == g_rgiPlayerTruckCheckpoint[playerid])
         {
@@ -487,8 +487,6 @@ public OnPlayerLeaveDynamicArea(playerid, areaid)
 
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
-    log_function();
-
     if(!ispassenger)
     {
         if(g_rgeVehicles[vehicleid][e_iVehicleWork] == JOB_TRUCKER && Player_Job(playerid) != JOB_TRUCKER)

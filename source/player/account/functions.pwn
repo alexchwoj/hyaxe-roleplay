@@ -185,18 +185,11 @@ Player_SetMoney(playerid, money, bool:update = true)
 	return 1;
 }
 
-Player_SetPos(playerid, Float:x, Float:y, Float:z, Float:angle = Float:0x7FFFFFFF)
+Player_SetPos(playerid, Float:x, Float:y, Float:z)
 {
     g_rgePlayerData[playerid][e_fPosX] = x;
     g_rgePlayerData[playerid][e_fPosY] = y;
     g_rgePlayerData[playerid][e_fPosZ] = z;
-
-    if(angle != Float:0x7FFFFFFF)
-    {
-        g_rgePlayerData[playerid][e_fPosAngle] = angle;
-        SetPlayerFacingAngle(playerid, angle);
-    }
-
-    SetPlayerPos(playerid, x, y, z);
-    return 1;
+    Player_SetImmunityForCheat(playerid, CHEAT_TELEPORT, 1000);
+    return SetPlayerPos(playerid, x, y, z);
 }

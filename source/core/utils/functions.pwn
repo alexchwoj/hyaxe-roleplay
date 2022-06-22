@@ -28,7 +28,7 @@ RawIpToString(rawip)
 KickTimed(playerid, time = 250)
 {
     PrintBacktrace();
-    
+
     g_rgbPlayerKicked{playerid} = true;
 	SetTimerEx(!"KickTimed_Due", time, false, !"i", playerid);
 }
@@ -224,8 +224,6 @@ stock Str_FixEncoding_s(String:result)
 
 SplitChatMessageInLines(const string[], result[][], max_lines = sizeof(result), max_line_length = sizeof(result[]))
 {
-	DEBUG_PRINT("SplitMessageInLines(string[%i], result[%i][%i])", strlen(string), max_lines, max_line_length);
-
 	new len = strlen(string);
 	if(len < max_line_length)
 	{
@@ -238,7 +236,7 @@ SplitChatMessageInLines(const string[], result[][], max_lines = sizeof(result), 
         rgx = Regex_New(".{1,144}(\\s|$)");
 	
 	new RegexMatch:match, pos, startpos, line_count;
-	while(Regex_Search(string, rgx, match, pos, startpos))
+	while(Regex_Search(string, rgx, match, pos, startpos) && line_count < max_lines)
 	{
 		new length;
 		Match_GetGroup(match, 0, result[line_count], length, max_line_length);

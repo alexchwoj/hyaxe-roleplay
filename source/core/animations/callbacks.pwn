@@ -5,8 +5,6 @@
 
 public FADINGS_FadeTextDraw(playerid, PlayerText:textdraw, rounds, interval, Task:t)
 {
-    log_function();
-
     new color = PlayerTextDrawGetColor(playerid, textdraw);
     new alpha = (color & 0xFF);
 

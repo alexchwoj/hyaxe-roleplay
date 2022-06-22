@@ -439,7 +439,7 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
         new last_driver = GetVehicleLastDriver(vehicleid);
         if(GetPlayerVehicleID(last_driver) == vehicleid && GetPlayerState(last_driver) == PLAYER_STATE_DRIVER)
         {
-            if(GetTickDiff(GetTickCount(), g_rgePlayerTempData[playerid][e_iPlayerCarJackTick]) > 5000)
+            if(GetTickDiff(GetTickCount(), g_rgePlayerTempData[playerid][e_iPlayerCarJackTick]) > 60000)
             {
                 g_rgePlayerTempData[playerid][e_iPlayerCarJackAmount] = 0;
             }
