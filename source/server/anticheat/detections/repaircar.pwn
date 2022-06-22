@@ -6,9 +6,6 @@
 const __ac_rc_VehicleSync = 200;
 IPacket:__ac_rc_VehicleSync(playerid, BitStream:bs)
 {
-    if (Player_HasImmunityForCheat(playerid, CHEAT_REPAIR_CAR))
-        return 1;
-
     new vehicleid, Float:vehicle_health;
     BS_ReadValue(bs,
         PR_IGNORE_BITS, 8,
@@ -16,6 +13,17 @@ IPacket:__ac_rc_VehicleSync(playerid, BitStream:bs)
         PR_IGNORE_BITS, 368,
         PR_FLOAT, vehicle_health
     );
+
+    if(vehicle_health < 375.0)
+    {
+        vehicle_health = 375.0;
+        Vehicle_SetHealth(vehicleid, 375.0);
+        BS_SetWriteOffset(bs, 8 + 16 + 368);
+        BS_WriteValue(bs, PR_FLOAT, 375.0);
+    }
+
+    if (Player_HasImmunityForCheat(playerid, CHEAT_REPAIR_CAR))
+        return 1;
 
     if (Vehicle_GetHealth(vehicleid) < vehicle_health)
     {

@@ -301,6 +301,7 @@ forward Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, c
 #define Vehicle_Type(%0) (g_rgeVehicles[(%0)][e_iVehicleType])
 #define Vehicle_Job(%0) (g_rgeVehicles[(%0)][e_iVehicleWork])
 #define Vehicle_Fuel(%0) (g_rgeVehicles[(%0)][e_fFuel])
+#define Vehicle_Locked(%0) (g_rgeVehicles[(%0)][e_bLocked])
 forward Vehicle_SetHealth(vehicleid, Float:health);
 forward Vehicle_Repair(vehicleid);
 #define Vehicle_GetHealth(%0) (g_rgeVehicles[(%0)][e_fHealth])
