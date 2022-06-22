@@ -457,10 +457,11 @@ Item_TypeToWeapon(type)
 
 command dropitem(playerid, const params[], "Crea un item en el suelo")
 {
-	 extract params -> new item_id, amount = 1, extra = 0; else {
+	extract params -> new item_id, amount = 1, extra = 0; else {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/dropitem {DADADA}<item> {969696}[cantidad = 100] [extra = 0]");
         return 1;
     }
+	
 	new Float:x, Float:y, Float:z, Float:angle;
 	GetPlayerPos(playerid, x, y, z);
 	GetPlayerFacingAngle(playerid, angle);

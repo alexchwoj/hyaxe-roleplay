@@ -153,25 +153,25 @@ public GVENT_UpdateGraffiti(playerid)
             if (Streamer_HasIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x4752414646)))
             {
                 new graffiti_id = Streamer_GetIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x4752414646));
-                if (graffiti_id == e_iGangGraffitiIndex)
+                if (graffiti_id == g_iGangGraffitiIndex)
                 {
-                    e_bGangGraffitiPainted[playerid] = true;
-                    e_iGraffitiGang = Player_Gang(playerid);
-                    e_fGangGraffitiProgress += 0.5;
-                    TextDrawSetString_s(g_tdGangEventText, @f("%s: ~y~%.2f%%", Gang_Data( Player_Gang(playerid) )[e_szGangName], e_fGangGraffitiProgress));
+                    g_rgbGangGraffitiPainted[playerid] = true;
+                    g_iGraffitiGang = Player_Gang(playerid);
+                    g_fGangGraffitiProgress += 0.5;
+                    TextDrawSetString_s(g_tdGangEventText, @f("%s: ~y~%.2f%%", Gang_Data( Player_Gang(playerid) )[e_szGangName], g_fGangGraffitiProgress));
                     SetDynamicObjectMaterialText(g_rgeGraffiti[ graffiti_id ][e_iGraffitiObject], 0, Gang_Data( Player_Gang(playerid) )[e_szGangName], OBJECT_MATERIAL_SIZE_512x64, "Comic Sans MS", 60, 0, RGBAToARGB( Gang_Data( Player_Gang(playerid) )[e_iGangColor] ), 0x00000000, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
                 
-                    if (e_fGangGraffitiProgress >= 100.0)
+                    if (g_fGangGraffitiProgress >= 100.0)
                     {
                         Graffiti_Finish();
-                        KillTimer(e_iGangGraffitiTimer[playerid]);
+                        KillTimer(g_rgiGangGraffitiTimer[playerid]);
                     }                
                 }
             }
         }
     }
     else
-        KillTimer(e_iGangGraffitiTimer[playerid]);
+        KillTimer(g_rgiGangGraffitiTimer[playerid]);
 
     return 1;
 }
@@ -187,10 +187,10 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 if (Streamer_HasIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x4752414646)))
                 {
                     new graffiti_id = Streamer_GetIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x4752414646));
-                    if (graffiti_id == e_iGangGraffitiIndex)
+                    if (graffiti_id == g_iGangGraffitiIndex)
                     {
-                        KillTimer(e_iGangGraffitiTimer[playerid]);
-                        e_iGangGraffitiTimer[playerid] = SetTimerEx("GVENT_UpdateGraffiti", 1000, true, "i", playerid);
+                        KillTimer(g_rgiGangGraffitiTimer[playerid]);
+                        g_rgiGangGraffitiTimer[playerid] = SetTimerEx("GVENT_UpdateGraffiti", 1000, true, "i", playerid);
                     }
                 }
             }
@@ -199,7 +199,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
     if ((oldkeys & KEY_FIRE) != 0)
     {
-        KillTimer(e_iGangGraffitiTimer[playerid]);
+        KillTimer(g_rgiGangGraffitiTimer[playerid]);
     }
 
     #if defined GVENT_OnPlayerKeyStateChange
@@ -221,7 +221,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    KillTimer(e_iGangGraffitiTimer[playerid]);
+    KillTimer(g_rgiGangGraffitiTimer[playerid]);
 
     #if defined GVENT_OnPlayerDisconnect
         return GVENT_OnPlayerDisconnect(playerid, reason);

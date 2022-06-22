@@ -25,7 +25,7 @@ Graffiti_Finish()
 {
     foreach(new i : Player)
     {
-        if (Player_Gang(i) == g_rgiGraffitiGang)
+        if (Player_Gang(i) == g_iGraffitiGang)
         {
             if (g_rgbGangGraffitiPainted[i])
                 Player_GiveMoney(i, 2000);
@@ -37,7 +37,7 @@ Graffiti_Finish()
     new city[45], zone[45];
     GetPointZone(g_rgeGraffiti[g_iGangGraffitiIndex][e_fGraffitiX], g_rgeGraffiti[g_iGangGraffitiIndex][e_fGraffitiY], city, zone);
             
-    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "La banda %s ha ganado el graffiti de %s, %s. Todos los integrantes han ganado $2.000 y los que han pintado han ganado $4.000.", Gang_Data(e_iGraffitiGang)[e_szGangName], zone, city);
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "La banda %s ha ganado el graffiti de %s, %s. Todos los integrantes han ganado $2.000 y los que han pintado han ganado $4.000.", Gang_Data(g_iGraffitiGang)[e_szGangName], zone, city);
     GangEvent_SendNotification(HYAXE_UNSAFE_HUGE_STRING, 15000, 0xDAA838FF, .finishied = true);
 
     GangEvent_Cancel();
@@ -57,14 +57,14 @@ GangEvent_Cancel()
         }
         case EVENT_GRAFFITI:
         {
-            DestroyDynamicMapIcon(e_iGangGraffitiMapIcon);
-            e_fGangGraffitiProgress = 0.0;
-            e_iGraffitiGang = -1;
+            DestroyDynamicMapIcon(g_iGangGraffitiMapIcon);
+            g_fGangGraffitiProgress = 0.0;
+            g_iGraffitiGang = -1;
 
             foreach(new i : Player)
             {
-                e_bGangGraffitiPainted[i] = false;
-                KillTimer(e_iGangGraffitiTimer[i]);
+                g_rgbGangGraffitiPainted[i] = false;
+                KillTimer(g_rgiGangGraffitiTimer[i]);
             }
         }
     }
@@ -119,19 +119,19 @@ GangEvent_Start(event_type)
         }
         case EVENT_GRAFFITI:
         {
-            e_iGangGraffitiIndex = random( sizeof(g_rgeGraffiti) );
+            g_iGangGraffitiIndex = random( sizeof(g_rgeGraffiti) );
 
-            e_iGangGraffitiMapIcon = CreateDynamicMapIcon(
-                g_rgeGraffiti[e_iGangGraffitiIndex][e_fGraffitiX],
-                g_rgeGraffiti[e_iGangGraffitiIndex][e_fGraffitiY],
-                g_rgeGraffiti[e_iGangGraffitiIndex][e_fGraffitiZ],
+            g_iGangGraffitiMapIcon = CreateDynamicMapIcon(
+                g_rgeGraffiti[g_iGangGraffitiIndex][e_fGraffitiX],
+                g_rgeGraffiti[g_iGangGraffitiIndex][e_fGraffitiY],
+                g_rgeGraffiti[g_iGangGraffitiIndex][e_fGraffitiZ],
                 63, -1, 0, 0,
                 .style = MAPICON_GLOBAL, .streamdistance = 2064.0
             );
 
             // Announce
             new city[45], zone[45];
-            GetPointZone(g_rgeGraffiti[e_iGangGraffitiIndex][e_fGraffitiX], g_rgeGraffiti[e_iGangGraffitiIndex][e_fGraffitiY], city, zone);
+            GetPointZone(g_rgeGraffiti[g_iGangGraffitiIndex][e_fGraffitiX], g_rgeGraffiti[g_iGangGraffitiIndex][e_fGraffitiY], city, zone);
             
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Una disputa de graffiti ha comenzado en %s, %s. Sé el primero en pintarlo.", zone, city);
             GangEvent_SendNotification(HYAXE_UNSAFE_HUGE_STRING, 10000, 0xDAA838FF, .started = true);
