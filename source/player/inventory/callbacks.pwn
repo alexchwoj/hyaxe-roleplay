@@ -99,6 +99,7 @@ public INV_LoadFromDatabase(playerid)
             g_rgePlayerInventory[playerid][slot][e_bValid] = true;
             cache_get_value_name_int(i, "ID", g_rgePlayerInventory[playerid][slot][e_iID]);
             cache_get_value_name_int(i, "ITEM_TYPE", g_rgePlayerInventory[playerid][slot][e_iType]);
+            printf("[MIERDAS1] slot: %d, type: %d", slot, g_rgePlayerInventory[playerid][slot][e_iType]);
             cache_get_value_name_int(i, "AMOUNT", g_rgePlayerInventory[playerid][slot][e_iAmount]);
             cache_get_value_name_int(i, "EXTRA", g_rgePlayerInventory[playerid][slot][e_iExtra]);
 
@@ -331,9 +332,11 @@ public OnGameModeInit()
 forward INV_OnItemInserted(playerid, slot, type, amount, extra);
 public INV_OnItemInserted(playerid, slot, type, amount, extra)
 {
+    printf("[MIERDAS11] slot: %d, type: %d", slot, type);
     g_rgePlayerInventory[playerid][slot][e_bValid] = true;
     g_rgePlayerInventory[playerid][slot][e_iID] = cache_insert_id();
     g_rgePlayerInventory[playerid][slot][e_iType] = type;
+    printf("[MIERDAS2] slot: %d, type: %d", slot, g_rgePlayerInventory[playerid][slot][e_iType]);
     g_rgePlayerInventory[playerid][slot][e_iAmount] = amount;
     g_rgePlayerInventory[playerid][slot][e_iExtra] = extra;
     return 1;
