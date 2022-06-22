@@ -61,7 +61,7 @@ public GVENT_CheckTime()
 
         if (minute >= 0 && minute <= 5)
         {
-            GangEvent_Start(EVENT_TRUCK_DEFENSE);
+            GangEvent_Start( random(EVENT_INVALID) );
         }
     }
     return 1;
