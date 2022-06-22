@@ -487,8 +487,6 @@ public OnPlayerLeaveDynamicArea(playerid, areaid)
 
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
-    log_function();
-
     if(!ispassenger)
     {
         if(g_rgeVehicles[vehicleid][e_iVehicleWork] == JOB_TRUCKER && Player_Job(playerid) != JOB_TRUCKER)

@@ -61,9 +61,7 @@ on_init RegisterCommands()
 #endif
 
 public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
-{
-    log_function();
-    
+{    
     new cmd_level = (flags >>> 24);
 
     if(cmd_level > Player_AdminLevel(playerid))
@@ -96,8 +94,6 @@ public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
 
 public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags)
 {
-    log_function();
-
     if(result == -1)
     {
         Commands_ShowSuggestions(playerid, cmd);

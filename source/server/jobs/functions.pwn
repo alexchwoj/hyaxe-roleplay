@@ -28,8 +28,6 @@ Job_SetCallback(eJobs:jobid, callback)
 
 Job_TriggerCallback(playerid, eJobs:jobid, eJobEvent:event, data = -1)
 {
-    log_function();
-
     if(g_rgePlayerJobCallbacks[jobid] != -1)
     {
         new cb_addr = g_rgePlayerJobCallbacks[jobid];
