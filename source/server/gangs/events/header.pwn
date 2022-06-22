@@ -107,7 +107,7 @@ new
 
     e_iGangGraffitiIndex,
     e_iGangGraffitiMapIcon,
-	e_iGangGraffitiTick[MAX_PLAYERS],
+	e_iGangGraffitiTimer[MAX_PLAYERS],
 
 	Float:e_fGangGraffitiProgress,
 	e_iGraffitiGang

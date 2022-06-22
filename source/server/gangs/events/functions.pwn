@@ -21,6 +21,18 @@ GangEvent_SendNotification(const text[], time, color = 0xCB3126FF, bool:started 
     return 1;
 }
 
+Graffiti_Finish()
+{
+    new city[45], zone[45];
+    GetPointZone(g_rgeGraffiti[e_iGangGraffitiIndex][e_fGraffitiX], g_rgeGraffiti[e_iGangGraffitiIndex][e_fGraffitiY], city, zone);
+            
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "La banda %s ha ganado el graffiti de %s, %s. Todos los integrantes han ganado $2.000 y los que han pintado han ganado $4.000.", zone, city);
+    GangEvent_SendNotification(HYAXE_UNSAFE_HUGE_STRING, 15000, 0xDAA838FF, .finishied = true);
+
+    GangEvent_Cancel();
+    return 1;
+}
+
 GangEvent_Cancel()
 {
     switch(g_iGangEventType)
