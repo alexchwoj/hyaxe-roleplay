@@ -33,6 +33,7 @@ native HY_PlayerPlaySound(playerid, soundid, Float:x = 0.0, Float:y = 0.0, Float
 #endif
 #define PlayerPlaySound HY_PlayerPlaySound
 
+forward Sound_PlayInRange(soundid, Float:range, Float:x, Float:y, Float:z, worldid = -1, interiorid = -1);
 Sound_PlayInRange(soundid, Float:range, Float:x, Float:y, Float:z, worldid = -1, interiorid = -1)
 {
     foreach(new i : Player)

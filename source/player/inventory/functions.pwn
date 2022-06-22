@@ -359,11 +359,7 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 	if (playerid != INVALID_PLAYER_ID)
 		Streamer_UpdateEx(playerid, x, y, z, world, interior, .freezeplayer = 0);
 
-	new object_info[3];
-	object_info[0] = 0x49544d; // ITM
-	object_info[1] = world; // Virtual world
-	object_info[2] = interior; // Interior
-	Streamer_SetArrayData(STREAMER_TYPE_OBJECT, objectid, E_STREAMER_EXTRA_ID, object_info);
+	Streamer_SetIntData(STREAMER_TYPE_OBJECT, objectid, E_STREAMER_CUSTOM(0x4449544D), 1); // DITM
 
 	new Float:dest_z = z, Float:rx, Float:ry, Float:rz;
 	if (!interior)
