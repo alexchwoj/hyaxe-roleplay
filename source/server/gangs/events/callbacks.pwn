@@ -23,6 +23,9 @@ public OnGameModeInit()
             0, 0
         );
 
+        new area = CreateDynamicSphere(g_rgeGraffiti[i][e_fGraffitiX], g_rgeGraffiti[i][e_fGraffitiY], g_rgeGraffiti[i][e_fGraffitiZ], 4.0, 0, 0);
+        Streamer_SetIntData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x4752414646), i); // GRAFF
+
         new city[45], zone[45];
         GetPointZone(g_rgeGraffiti[i][e_fGraffitiX], g_rgeGraffiti[i][e_fGraffitiY], city, zone);
         #pragma unused city
@@ -139,3 +142,59 @@ public GVENT_UpdateTruck()
     }
     return 1;
 }
+
+public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
+{
+    if ((newkeys & KEY_FIRE) != 0 && (oldkeys & KEY_FIRE) != 0)
+    {
+        printf("1");
+        if (g_iGangEventType == EVENT_GRAFFITI && Player_Gang(playerid) != -1 && GetPlayerWeapon(playerid) == WEAPON_SPRAYCAN)
+        {
+            printf("2");
+            if (IsPlayerInAnyDynamicArea(playerid))
+            {
+                printf("3");
+                for_list(it : GetPlayerAllDynamicAreas(playerid))
+                {
+                    printf("4");
+                    if (Streamer_HasIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x4752414646)))
+                    {
+                        printf("5");
+                        new graffiti_id = Streamer_GetIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x4752414646));
+                        if (graffiti_id == e_iGangGraffitiIndex)
+                        {
+                            printf("6");
+                            new diff = GetTickDiff(GetTickCount(), e_iGangGraffitiTick[playerid]);
+                            if (diff >= 1500)
+                            {
+                                printf("7");
+                                e_iGraffitiGang = Player_Gang(playerid);
+                                e_fGangGraffitiProgress += 0.5;
+                                TextDrawSetString_s(g_tdGangEventText, @f("%s: ~y~%.2f%", Gang_Data( Player_Gang(playerid) )[e_szGangName], e_fGangGraffitiProgress));
+                                SetDynamicObjectMaterialText(g_rgeGraffiti[ graffiti_id ][e_iGraffitiObject], 0, Gang_Data( Player_Gang(playerid) )[e_szGangName], OBJECT_MATERIAL_SIZE_512x64, "Comic Sans MS", 60, 0, RGBAToARGB( Gang_Data( Player_Gang(playerid) )[e_iGangColor] ), 0x00000000, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
+                                
+                                e_iGangGraffitiTick[playerid] = GetTickCount();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    #if defined GVENT_OnPlayerKeyStateChange
+        return GVENT_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerKeyStateChange
+    #undef OnPlayerKeyStateChange
+#else
+    #define _ALS_OnPlayerKeyStateChange
+#endif
+#define OnPlayerKeyStateChange GVENT_OnPlayerKeyStateChange
+#if defined GVENT_OnPlayerKeyStateChange
+    forward GVENT_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
+#endif

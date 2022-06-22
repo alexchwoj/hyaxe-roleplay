@@ -523,3 +523,13 @@ stock ReplaceStringByRegex(const str[], const regexp[], const fmt[], dest[], siz
         Regex_Delete(r);
     }
 }
+
+stock RGBAToARGB(col)
+{
+    return ((((col) << 24) & 0xFF000000) | (((col) >>> 8) & 0xFFFFFF));
+}
+
+stock ARGBToRGBA(col)
+{
+    return ((((col) << 8) & 0xFFFFFF00) | (((col) >>> 24) & 0xFF));
+}

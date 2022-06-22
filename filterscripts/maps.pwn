@@ -267,7 +267,7 @@ public OnFilterScriptInit()
     tmpobjid = CreateDynamicObject(19482, 2133.373291, -2171.505371, 19.794809, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
 
     // Block paintnspray
-    tmpobjid = CreateDynamicObject(19325, 1968.74219, 2162.49219, 12.09380,   0.00000, 0.00000, 0.00000);
+    /*tmpobjid = CreateDynamicObject(19325, 1968.74219, 2162.49219, 12.09380,   0.00000, 0.00000, 0.00000);
     SetDynamicObjectMaterial(tmpobjid, 0, 0, "none", "none", 0x00FFFFFF);
 	tmpobjid = CreateDynamicObject(19325, 2006.00000, 2303.72656, 11.31250,   0.00000, 0.00000, 90.00000);
     SetDynamicObjectMaterial(tmpobjid, 0, 0, "none", "none", 0x00FFFFFF);
@@ -314,7 +314,7 @@ public OnFilterScriptInit()
 	tmpobjid = CreateDynamicObject(19325, 1041.52917, -1025.91101, 33.13861,   0.00000, 0.00000, 90.00000);
     SetDynamicObjectMaterial(tmpobjid, 0, 0, "none", "none", 0x00FFFFFF);
 	tmpobjid = CreateDynamicObject(19325, 1024.22107, -1029.22949, 33.13861,   0.00000, 0.00000, 90.00000);
-    SetDynamicObjectMaterial(tmpobjid, 0, 0, "none", "none", 0x00FFFFFF);
+    SetDynamicObjectMaterial(tmpobjid, 0, 0, "none", "none", 0x00FFFFFF);*/
 
     // Mercado negro
     tmpobjid = CreateDynamicObject(19482, 2451.228027, -1985.323730, 16.173261, -13.299992, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 

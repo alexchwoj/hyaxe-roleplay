@@ -106,5 +106,9 @@ new
     g_iGangTruckParticle,
 
     e_iGangGraffitiIndex,
-    e_iGangGraffitiMapIcon
+    e_iGangGraffitiMapIcon,
+	e_iGangGraffitiTick[MAX_PLAYERS],
+
+	Float:e_fGangGraffitiProgress,
+	e_iGraffitiGang
 ;
