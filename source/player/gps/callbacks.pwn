@@ -24,7 +24,6 @@ public OnPlayerDisconnect(playerid, reason)
     forward GPS_OnPlayerDisconnect(playerid, reason);
 #endif
 
-
 command gps(playerid, const params[], "Abre el GPS")
 {
     Player_ShowGPS(playerid);
@@ -54,7 +53,7 @@ dialog gps_main(playerid, response, listitem, inputtext[])
                 for(new i; i < sizeof(g_rgeHospitalData); ++i)
                 {
                     new Float:distance = GetPlayerDistanceFromPoint(playerid, g_rgeHospitalData[i][e_fHospitalPosX], g_rgeHospitalData[i][e_fHospitalPosY], g_rgeHospitalData[i][e_fHospitalPosZ]);
-                    format(line, sizeof(line), "%s\t%.2f\n", g_rgeHospitalData[i][e_szHospitalName], distance);
+                    format(line, sizeof(line), "%s\t%.2f Km\n", g_rgeHospitalData[i][e_szHospitalName], distance * 0.01);
                     strcat(HYAXE_UNSAFE_HUGE_STRING, line);
                 }
 
@@ -70,7 +69,7 @@ dialog gps_main(playerid, response, listitem, inputtext[])
                     new city[45], zone[45];
                     GetPointZone(g_rgfDealershipPosition[i][0], g_rgfDealershipPosition[i][1], city, zone);
 
-                    format(line, sizeof(line), "%s, %s\t%.2f\n", zone, city, distance);
+                    format(line, sizeof(line), "%s, %s\t%.2f Km\n", zone, city, distance * 0.01);
                     strcat(HYAXE_UNSAFE_HUGE_STRING, line);
                 }
 
@@ -122,3 +121,28 @@ dialog gps_hospital(playerid, response, listitem, inputtext[])
     else Player_ShowGPS(playerid);
     return 1;
 }
+
+public OnPlayerEnterDynamicCP(playerid, checkpointid)
+{
+    if (checkpointid == g_rgiGPSCheckpoint[playerid])
+    {
+        DestroyDynamicCP(g_rgiGPSCheckpoint[playerid]);
+        Notification_Show(playerid, "Llegaste al destino.", 3000, 0x64A752FF);
+    }
+
+    #if defined GPS_OnPlayerEnterDynamicCP
+        return GPS_OnPlayerEnterDynamicCP(playerid, checkpointid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerEnterDynamicCP
+    #undef OnPlayerEnterDynamicCP
+#else
+    #define _ALS_OnPlayerEnterDynamicCP
+#endif
+#define OnPlayerEnterDynamicCP GPS_OnPlayerEnterDynamicCP
+#if defined GPS_OnPlayerEnterDynamicCP
+    forward GPS_OnPlayerEnterDynamicCP(playerid, checkpointid);
+#endif
