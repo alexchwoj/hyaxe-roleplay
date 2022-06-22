@@ -14,6 +14,15 @@ command cagar(playerid, const params[], "Echa un cago")
     if(GetPlayerSurfingVehicleID(playerid) != INVALID_VEHICLE_ID)
         return SendClientMessage(playerid, 0xDADADAFF, "No puedes cagar {CB3126}encima de un vehículo{DADADA}.");
 
+    new diff = GetTickDiff(GetTickCount(), g_rgePlayerTempData[playerid][e_iPlayerShitTick]);
+    if(diff <= 120000)
+    {
+        SendClientMessagef(playerid, 0xDADADAFF, "Cagaste hace poco. Espera {CB3126}%i minutos{DADADA} antes de volver a cagar.", ((120000 - diff) / 60000));
+        return 0;
+    }
+    
+    g_rgePlayerTempData[playerid][e_iPlayerShitTick] = GetTickCount();
+
     new Float:x, Float:y, Float:z;
     GetPlayerPos(playerid, x, y, z),
 
