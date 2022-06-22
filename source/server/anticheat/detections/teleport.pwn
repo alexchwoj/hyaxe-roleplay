@@ -5,23 +5,26 @@
 
 public OnPlayerUpdate(playerid)
 {
-    new const Float:max_dist = (IsPlayerInAnyVehicle(playerid) ? 340.0 : 50.0);
-    if(GetPlayerDistanceFromPoint(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ)) > max_dist)
+    if(IsPlayerSpawned(playerid))
     {
-        if(IsPlayerInAnyVehicle(playerid))
+        new const Float:max_dist = (IsPlayerInAnyVehicle(playerid) ? 340.0 : 50.0);
+        if(GetPlayerDistanceFromPoint(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ)) > max_dist)
         {
-            SetVehiclePos(GetPlayerVehicleID(playerid), Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
+            if(IsPlayerInAnyVehicle(playerid))
+            {
+                SetVehiclePos(GetPlayerVehicleID(playerid), Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
+            }
+            else
+            {
+                SetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
+            }
+
+            Anticheat_Trigger(playerid, CHEAT_TELEPORT);
         }
         else
         {
-            SetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
+            GetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
         }
-
-        Anticheat_Trigger(playerid, CHEAT_TELEPORT);
-    }
-    else
-    {
-        GetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
     }
 
     #if defined AC_OnPlayerUpdate
