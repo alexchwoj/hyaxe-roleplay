@@ -508,7 +508,7 @@ command asay(playerid, const params[], "Envia un anuncio como admin")
 	SendClientMessageToAll(0xDAA838FF, HYAXE_UNSAFE_HUGE_STRING);
 	return 1;
 }
-flags:asay(CMD_FLAG<RANK_LEVEL_MANAGER>)
+flags:asay(CMD_FLAG<RANK_LEVEL_MANAGER> | CMD_DONT_LOG_COMMAND)
 
 command set_skin(playerid, const params[], "Asigna la ropa de un jugador")
 {
