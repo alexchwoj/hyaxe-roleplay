@@ -207,8 +207,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
             TogglePlayerWidescreen(playerid, true);
             Chat_Resend(playerid);
 
-            ac_SetPlayerPos(playerid, g_rgfGunsmakerBenchSites[benchid][0], g_rgfGunsmakerBenchSites[benchid][1], g_rgfGunsmakerBenchSites[benchid][2]);
-            SetPlayerFacingAngle(playerid, g_rgfGunsmakerBenchSites[benchid][3]);
+            Player_SetPos(playerid, g_rgfGunsmakerBenchSites[benchid][0], g_rgfGunsmakerBenchSites[benchid][1], g_rgfGunsmakerBenchSites[benchid][2], g_rgfGunsmakerBenchSites[benchid][3]);
 
             Player_StartKeyGame(playerid, __addressof(GunsmakerKeyGameCallback), 9.9, 2.5);
 

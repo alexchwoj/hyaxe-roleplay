@@ -51,7 +51,7 @@ Player_GoToTheNearestHospital(playerid)
     SpawnPlayer(playerid);
     TogglePlayerSpectating(playerid, true);
     
-    ac_SetPlayerPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
+    SetPlayerPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
     SetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fPosAngle]);
     SetPlayerInterior(playerid, 0);
     SetPlayerVirtualWorld(playerid, 0);

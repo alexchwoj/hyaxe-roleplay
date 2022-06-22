@@ -16,7 +16,7 @@ public OnPlayerDeath(playerid, killerid, reason)
         TogglePlayerSpectating(playerid, false);
 
         RemovePlayerFromVehicle(playerid);
-        ac_SetPlayerPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
+        SetPlayerPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
         SetCameraBehindPlayer(playerid);
 
         ApplyAnimation(playerid, "SWEET", "null", 4.0, 0, 0, 0, 0, 0, 1);
@@ -123,7 +123,7 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
     {
         new Float:x, Float:y, Float:z;
 	    GetPlayerPos(playerid, x, y, z);
-	    ac_SetPlayerPos(playerid, x, y, z);
+	    SetPlayerPos(playerid, x, y, z);
 	    ApplyAnimation(playerid, "SWEET", "SWEET_INJUREDLOOP", 4.1, true, false, false, 1, 0, 1);
     }
 

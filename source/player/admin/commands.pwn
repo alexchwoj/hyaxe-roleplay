@@ -174,7 +174,7 @@ command tp(playerid, const params[], "Teletransportate a la posición de un jugad
 
     new Float:x, Float:y, Float:z;
     GetPlayerPos(destination, x, y, z);
-    ac_SetPlayerPos(playerid, x, y, z);
+    Player_SetPos(playerid, x, y, z);
     SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(destination));
     SetPlayerInterior(playerid, GetPlayerInterior(destination));
 
@@ -197,7 +197,7 @@ command back(playerid, const params[], "Devuelve a un jugador a su posición orig
     }
 
     s_rgbHasBeenTeleported{destination} = false;
-    ac_SetPlayerPos(destination, s_rgfPreviousPositions[destination][0], s_rgfPreviousPositions[destination][1], s_rgfPreviousPositions[destination][2]);
+    Player_SetPos(destination, s_rgfPreviousPositions[destination][0], s_rgfPreviousPositions[destination][1], s_rgfPreviousPositions[destination][2]);
     SetPlayerFacingAngle(destination, s_rgfPreviousPositions[destination][3]);
     SetPlayerInterior(destination, s_rgiPreviousInteriors[destination]);
     SetPlayerVirtualWorld(destination, s_rgiPreviousWorlds[destination]);
@@ -227,7 +227,7 @@ command bring(playerid, const params[], "Trae a un jugador a tu posición")
 
     new Float:x, Float:y, Float:z;
     GetPlayerPos(playerid, x, y, z);
-    ac_SetPlayerPos(destination, x, y, z);
+    Player_SetPos(destination, x, y, z);
     SetPlayerInterior(destination, GetPlayerInterior(playerid));
     SetPlayerVirtualWorld(destination, GetPlayerVirtualWorld(playerid));
 
@@ -410,7 +410,7 @@ command pos(playerid, const params[], "Ir a unas coordenadas")
 
     SetPlayerInterior(playerid, interior);
     SetPlayerVirtualWorld(playerid, world);
-    ac_SetPlayerPos(playerid, x, y, z);
+    Player_SetPos(playerid, x, y, z);
     
     Player_SetImmunityForCheat(playerid, CHEAT_FLY, 3000);
     
@@ -420,7 +420,7 @@ flags:pos(CMD_FLAG<RANK_LEVEL_MODERATOR>)
 
 command specoff(playerid, const params[], "Deja de spectear")
 {
-    ac_SetPlayerPos(playerid, s_rgfPreviousPositions[playerid][0], s_rgfPreviousPositions[playerid][1], s_rgfPreviousPositions[playerid][2]);
+    Player_SetPos(playerid, s_rgfPreviousPositions[playerid][0], s_rgfPreviousPositions[playerid][1], s_rgfPreviousPositions[playerid][2]);
     SetPlayerFacingAngle(playerid, s_rgfPreviousPositions[playerid][3]);
     SetPlayerInterior(playerid, s_rgiPreviousInteriors[playerid]);
     SetPlayerVirtualWorld(playerid, s_rgiPreviousWorlds[playerid]);
