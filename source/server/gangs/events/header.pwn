@@ -103,5 +103,8 @@ new
     g_iGangTruckVehicleID,
     g_iGangTruckTimer,
     g_iGangTruckTimeCount,
-    g_iGangTruckParticle
+    g_iGangTruckParticle,
+
+    e_iGangGraffitiIndex,
+    e_iGangGraffitiMapIcon
 ;

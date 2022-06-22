@@ -32,6 +32,10 @@ GangEvent_Cancel()
             Vehicle_Destroy(g_iGangTruckVehicleID);
             DestroyDynamicMapIcon(g_iGangEventMapIcon);
         }
+        case EVENT_GRAFFITI:
+        {
+            DestroyDynamicMapIcon(e_iGangGraffitiMapIcon);
+        }
     }
 
     TextDrawSetString(g_tdGangEventText, "_");
@@ -84,7 +88,22 @@ GangEvent_Start(event_type)
         }
         case EVENT_GRAFFITI:
         {
-            printf("ja! inepto...");
+            e_iGangGraffitiIndex = random( sizeof(g_rgeGraffiti) );
+
+            e_iGangGraffitiMapIcon = CreateDynamicMapIcon(
+                g_rgeGraffiti[e_iGangGraffitiIndex][e_fGraffitiX],
+                g_rgeGraffiti[e_iGangGraffitiIndex][e_fGraffitiY],
+                g_rgeGraffiti[e_iGangGraffitiIndex][e_fGraffitiZ],
+                63, -1, 0, 0,
+                .style = MAPICON_GLOBAL, .streamdistance = 2064.0
+            );
+
+            // Announce
+            new city[45], zone[45];
+            GetPointZone(g_rgeGraffiti[e_iGangGraffitiIndex][e_fGraffitiX], g_rgeGraffiti[e_iGangGraffitiIndex][e_fGraffitiY], city, zone);
+            
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Una disputa de graffiti ha comenzado en %s, %s. Sé el primero en pintarlo.", zone, city);
+            GangEvent_SendNotification(HYAXE_UNSAFE_HUGE_STRING, 10000, 0xDAA838FF, .started = true);
         }
     }
     g_iGangEventTick = GetTickCount();
