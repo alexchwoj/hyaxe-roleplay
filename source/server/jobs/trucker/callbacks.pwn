@@ -200,7 +200,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
         TogglePlayerDynamicCP(playerid, checkpointid, false);
         return 1;
     }
-    else if(g_rgiPlayerUsingTruck[playerid] != INVALID_VEHICLE_ID)
+    else if(g_rgiPlayerUsingTruck[playerid])
     { 
         if(checkpointid == g_rgiPlayerTruckCheckpoint[playerid])
         {
