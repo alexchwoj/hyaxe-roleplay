@@ -25,9 +25,9 @@ Graffiti_Finish()
 {
     foreach(new i : Player)
     {
-        if (Player_Gang(i) == e_iGraffitiGang)
+        if (Player_Gang(i) == g_rgiGraffitiGang)
         {
-            if (e_bGangGraffitiPainted[i])
+            if (g_rgbGangGraffitiPainted[i])
                 Player_GiveMoney(i, 2000);
             else
                 Player_GiveMoney(i, 4000);
@@ -35,7 +35,7 @@ Graffiti_Finish()
     }
 
     new city[45], zone[45];
-    GetPointZone(g_rgeGraffiti[e_iGangGraffitiIndex][e_fGraffitiX], g_rgeGraffiti[e_iGangGraffitiIndex][e_fGraffitiY], city, zone);
+    GetPointZone(g_rgeGraffiti[g_iGangGraffitiIndex][e_fGraffitiX], g_rgeGraffiti[g_iGangGraffitiIndex][e_fGraffitiY], city, zone);
             
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "La banda %s ha ganado el graffiti de %s, %s. Todos los integrantes han ganado $2.000 y los que han pintado han ganado $4.000.", Gang_Data(e_iGraffitiGang)[e_szGangName], zone, city);
     GangEvent_SendNotification(HYAXE_UNSAFE_HUGE_STRING, 15000, 0xDAA838FF, .finishied = true);

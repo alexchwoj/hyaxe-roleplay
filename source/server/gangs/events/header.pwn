@@ -105,11 +105,11 @@ new
     g_iGangTruckTimeCount,
     g_iGangTruckParticle,
 
-    e_iGangGraffitiIndex,
-    e_iGangGraffitiMapIcon,
-	e_iGangGraffitiTimer[MAX_PLAYERS],
-	bool:e_bGangGraffitiPainted[MAX_PLAYERS],
+    g_iGangGraffitiIndex,
+    g_iGangGraffitiMapIcon,
+	g_rgiGangGraffitiTimer[MAX_PLAYERS],
+	bool:g_rgbGangGraffitiPainted[MAX_PLAYERS],
 
-	Float:e_fGangGraffitiProgress,
-	e_iGraffitiGang
+	Float:g_fGangGraffitiProgress,
+	g_iGraffitiGang
 ;

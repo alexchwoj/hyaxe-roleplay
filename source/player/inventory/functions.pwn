@@ -455,35 +455,18 @@ Item_TypeToWeapon(type)
 	return 0;
 }
 
-command randomitem(playerid, const params[], "")
+command dropitem(playerid, const params[], "Crea un item en el suelo")
 {
+	 extract params -> new item_id, amount = 1, extra = 0; else {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/dropitem {DADADA}<item> {969696}[cantidad = 100] [extra = 0]");
+        return 1;
+    }
 	new Float:x, Float:y, Float:z, Float:angle;
 	GetPlayerPos(playerid, x, y, z);
 	GetPlayerFacingAngle(playerid, angle);
 
 	GetXYFromAngle(x, y, angle, 0.8);
-	DroppedItem_Create(random(ITEM_INVALID), 5, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
+	DroppedItem_Create(item_id, amount, extra, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
 	return 1;
 }
-
-command medicineitem(playerid, const params[], "")
-{
-	new Float:x, Float:y, Float:z, Float:angle;
-	GetPlayerPos(playerid, x, y, z);
-	GetPlayerFacingAngle(playerid, angle);
-
-	GetXYFromAngle(x, y, angle, 0.8);
-	DroppedItem_Create(ITEM_MEDICINE, 15, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
-	return 1;
-}
-
-command lata(playerid, const params[], "")
-{
-	new Float:x, Float:y, Float:z, Float:angle;
-	GetPlayerPos(playerid, x, y, z);
-	GetPlayerFacingAngle(playerid, angle);
-
-	GetXYFromAngle(x, y, angle, 0.8);
-	DroppedItem_Create(ITEM_SPRAYCAN, 15, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
-	return 1;
-}
+flags:dropitem(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)
