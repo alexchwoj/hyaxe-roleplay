@@ -20,6 +20,7 @@ public OnPlayerUpdate(playerid)
             }
 
             Anticheat_Trigger(playerid, CHEAT_TELEPORT);
+            return 0;
         }
         else
         {
