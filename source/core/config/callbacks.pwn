@@ -49,7 +49,7 @@ on_init 00SetupServerConfig()
 	SetNameTagDrawDistance(20.0);
 	ShowPlayerMarkers(PLAYER_MARKERS_MODE_GLOBAL);
 	FCNPC_SetTickRate(GetConsoleVarAsInt("sleep"));
-	AddPlayerClass(0, 0.0, 0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0);
+	//AddPlayerClass(0, 0.0, 0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0);
 
 	print("[config] Server config done");
 	printf("[config] maxplayers     = %i (MAX_PLAYERS = "#MAX_PLAYERS")", GetMaxPlayers());
@@ -64,15 +64,6 @@ on_init 00SetupServerConfig()
 
 	CA_Init();
 	
-	print("[config] Setting default NPC colors");
-	for(new i = MAX_PLAYERS - 1; i != -1; --i)
-	{
-		if(!FCNPC_IsValid(i))
-			continue;
-
-		SetPlayerColor(i, 0xF7F7F700);
-	}
-
 	SendRconCommand(!"password 0");
 
 	return 1;
