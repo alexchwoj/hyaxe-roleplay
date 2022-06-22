@@ -190,5 +190,6 @@ Player_SetPos(playerid, Float:x, Float:y, Float:z)
     g_rgePlayerData[playerid][e_fPosX] = x;
     g_rgePlayerData[playerid][e_fPosY] = y;
     g_rgePlayerData[playerid][e_fPosZ] = z;
+    Player_SetImmunityForCheat(playerid, CHEAT_TELEPORT, 1000);
     return SetPlayerPos(playerid, x, y, z);
 }
