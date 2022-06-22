@@ -155,6 +155,7 @@ public GVENT_UpdateGraffiti(playerid)
                 new graffiti_id = Streamer_GetIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x4752414646));
                 if (graffiti_id == e_iGangGraffitiIndex)
                 {
+                    e_bGangGraffitiPainted[playerid] = true;
                     e_iGraffitiGang = Player_Gang(playerid);
                     e_fGangGraffitiProgress += 0.5;
                     TextDrawSetString_s(g_tdGangEventText, @f("%s: ~y~%.2f%%", Gang_Data( Player_Gang(playerid) )[e_szGangName], e_fGangGraffitiProgress));

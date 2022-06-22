@@ -108,6 +108,7 @@ new
     e_iGangGraffitiIndex,
     e_iGangGraffitiMapIcon,
 	e_iGangGraffitiTimer[MAX_PLAYERS],
+	bool:e_bGangGraffitiPainted[MAX_PLAYERS],
 
 	Float:e_fGangGraffitiProgress,
 	e_iGraffitiGang
