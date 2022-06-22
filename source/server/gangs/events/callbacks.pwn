@@ -5,8 +5,30 @@
 
 public OnGameModeInit()
 {
+    // Initialize
     g_iGangEventType = EVENT_INVALID;
     SetTimer("GVENT_CheckTime", 60000, true);
+
+    // Create graffiti object
+    for(new i; i < sizeof(g_rgeGraffiti); ++i)
+	{
+        g_rgeGraffiti[i][e_iGraffitiObject] = CreateDynamicObject(
+            19482,
+            g_rgeGraffiti[i][e_fGraffitiX],
+            g_rgeGraffiti[i][e_fGraffitiY],
+            g_rgeGraffiti[i][e_fGraffitiZ],
+            g_rgeGraffiti[i][e_fGraffitiRX],
+            g_rgeGraffiti[i][e_fGraffitiRY],
+            g_rgeGraffiti[i][e_fGraffitiRZ],
+            0, 0
+        );
+
+        new city[45], zone[45];
+        GetPointZone(g_rgeGraffiti[i][e_fGraffitiX], g_rgeGraffiti[i][e_fGraffitiY], city, zone);
+        #pragma unused city
+
+        SetDynamicObjectMaterialText(g_rgeGraffiti[i][e_iGraffitiObject], 0, zone, OBJECT_MATERIAL_SIZE_512x64, "Comic Sans MS", 60, 0, math_random_unsigned(0, 0xFFFFFFFF) | 0xFF000000, 0x00000000, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
+    }
 
     #if defined GVENT_OnGameModeInit
         return GVENT_OnGameModeInit();
