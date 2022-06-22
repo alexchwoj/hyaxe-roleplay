@@ -49,7 +49,8 @@ on_init 00SetupServerConfig()
 	SetNameTagDrawDistance(20.0);
 	ShowPlayerMarkers(PLAYER_MARKERS_MODE_GLOBAL);
 	FCNPC_SetTickRate(GetConsoleVarAsInt("sleep"));
-	
+	AddPlayerClass(0, 0.0, 0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0);
+
 	print("[config] Server config done");
 	printf("[config] maxplayers     = %i (MAX_PLAYERS = "#MAX_PLAYERS")", GetMaxPlayers());
 	printf("[config] maxnpc         = %i", GetConsoleVarAsInt("maxnpc"));
