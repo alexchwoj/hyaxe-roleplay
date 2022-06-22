@@ -121,3 +121,10 @@ stock ac_SetPlayerChatBubble(playerid, const text[], color, Float:drawdistance, 
     #define _ALS_SetPlayerChatBubble
 #endif
 #define SetPlayerChatBubble ac_SetPlayerChatBubble
+
+ac_SetPlayerPos(playerid, Float:x, Float:y, Float:z)
+{
+    Player_SetImmunityForCheat(playerid, CHEAT_TELEPORT, 1000);
+    SetPlayerPos(playerid, x, y, z);
+    return 1;
+}

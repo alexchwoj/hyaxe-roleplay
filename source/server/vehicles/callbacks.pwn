@@ -446,7 +446,7 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 
             new Float:x, Float:y, Float:z;
             GetPlayerPos(playerid, x, y, z);
-            SetPlayerPos(playerid, x, y, z);
+            ac_SetPlayerPos(playerid, x, y, z);
             TogglePlayerControllable(playerid, false);
 
             g_rgePlayerTempData[playerid][e_iPlayerCarJackTick] = GetTickCount();

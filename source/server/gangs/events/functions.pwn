@@ -79,7 +79,7 @@ GangEvent_Start(event_type)
             GangEvent_SendNotification(HYAXE_UNSAFE_HUGE_STRING, 10000, 0xDAA838FF, .started = true);
 
             TextDrawSetString(g_tdGangEventText, "ABRIENDOSE EN ~r~10:00");
-            g_iGangTruckTimeCount = gettime() + 60;
+            g_iGangTruckTimeCount = gettime() + 600;
             g_iGangTruckTimer = SetTimer("GVENT_UpdateTruck", 1000, true);
         }
         case EVENT_GRAFFITI:
