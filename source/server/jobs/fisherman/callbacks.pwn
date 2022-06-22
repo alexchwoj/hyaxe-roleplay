@@ -7,25 +7,23 @@ public OnGameModeInit()
 {
     CreateDynamic3DTextLabel("{CB3126}Trabajo de pescador{DADADA}\nCompra una caña de pescar en la tienda de al lado para empezar\na trabajar. Puedes pescar en cualquier lugar con agua y luego\npuedes vender el pescado en la pescadería de al lado.", 0xDADADAFF, 2156.9067, -97.8114, 3.1911, 13.0, .testlos = 1, .worldid = 0, .interiorid = 0);
 
-    new area_info[1], area_id;
+    new area_id;
 
     // Rod store
     CreateDynamicActor(34, 2157.2991, -107.2062, 2.6883, 115.4688, .worldid = 0, .interiorid = 0);
     CreateDynamic3DTextLabel("{CB3126}Caña de pescar{DADADA}\nPresiona {CB3126}Y{DADADA} para comprar", 0xDADADAFF, 2154.5454, -108.4645, 2.6524, 10.0, .testlos = 1, .worldid = 0, .interiorid = 0);
     Key_Alert(2154.5454, -108.4645, 2.6524, 2.6, KEYNAME_YES, 0, 0);
 	
-    area_info[0] = 0x726f64; // ROD
 	area_id = CreateDynamicSphere(2154.5454, -108.4645, 2.6524, 2.5, 0, 0);
-	Streamer_SetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, area_info);
+	Streamer_SetIntData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x726f64), 1);
 
     // Fish store
     CreateDynamicActor(44, 2154.6438, -102.8098, 2.6685, 128.2921, .worldid = 0, .interiorid = 0);
     CreateDynamic3DTextLabel("{CB3126}Pescadería{DADADA}\nPresiona {CB3126}Y{DADADA} para vender", 0xDADADAFF, 2152.4070, -104.5057, 2.6569, 10.0, .testlos = 1, .worldid = 0, .interiorid = 0);
     Key_Alert(2152.4070, -104.5057, 2.6569, 2.6, KEYNAME_YES, 0, 0);
 	
-    area_info[0] = 0x534653; // SFS
 	area_id = CreateDynamicSphere(2152.4070, -104.5057, 2.6569, 2.5, 0, 0);
-	Streamer_SetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, area_info);
+	Streamer_SetIntData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x534653), 1);
 
     CreateDynamicActor(222, 2137.2734, -49.2241, 3.3297, 103.5150, .worldid = 0, .interiorid = 0);
     CreateDynamicActor(77, 2134.7053, -42.9645, 3.0114, 111.9517, .worldid = 0, .interiorid = 0);
@@ -100,20 +98,17 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
             for(new i; i < sizeof(areas); ++i)
             {
-                new info[1];
-                Streamer_GetArrayData(STREAMER_TYPE_AREA, areas[i], E_STREAMER_EXTRA_ID, info);
-                if (info[0] == 0x726f64)
+                if (Streamer_HasIntData(STREAMER_TYPE_AREA, areas[i], E_STREAMER_CUSTOM(0x726f64)))
                 {
                     Dialog_Show(playerid, "buy_fishing_rod", DIALOG_STYLE_MSGBOX, !"{CB3126}Caña de pescar", !"{DADADA}¿Quieres comprar una caña de pescar por {64A752}$75{DADADA}?", !"Comprar", !"Cerrar");
                 }
-
-                if (info[0] == 0x534653)
+                else if (Streamer_HasIntData(STREAMER_TYPE_AREA, areas[i], E_STREAMER_CUSTOM(0x534653)))
                 {
                     new amount = Inventory_GetItemAmount(playerid, ITEM_FISH);
                     if (amount < 5)
                         return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Necesitas al menos 5 peces.");
 
-                    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}¿Quieres vender %d peces por {64A752}$%d{DADADA}?", amount, 10 * amount);
+                    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}¿Quieres vender %d %s por {64A752}$%d{DADADA}?", amount, (amount > 1 ? "peces" : "pez"), 10 * amount);
                     Dialog_Show(playerid, "sell_fish", DIALOG_STYLE_MSGBOX, !"{CB3126}Pescadería", HYAXE_UNSAFE_HUGE_STRING, !"Vender", !"Cerrar");
                 }
             }
@@ -149,7 +144,11 @@ dialog sell_fish(playerid, response, listitem, inputtext[])
 
         Inventory_DeleteItemByType(playerid, ITEM_FISH);
 
-        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Vendiste tus %d peces por $%d", amount, 10 * amount);
+        if(amount > 1)
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Vendiste tus %d peces por $%d", amount, 10 * amount);
+        else
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Vendiste un pez por $%d", 10 * amount);
+
         Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 4000, 0x64A752FF);
     }
     return 1;
