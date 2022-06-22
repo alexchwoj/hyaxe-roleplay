@@ -39,7 +39,7 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 	#define DEBUG_PRINT(%1);
 #endif
 
-#define Performance_IsFine(%0) (GetPlayerPing(%0) <= 300 && NetStats_PacketLossPercent(%0) <= 4.5 && GetServerTickRate() >= 200)
+#define Performance_IsFine(%0) (GetPlayerPing(%0) <= 300 && NetStats_PacketLossPercent(%0) <= 4.5 && GetServerTickRate() >= 100)
 
 #if !defined GLOBAL_TAG_TYPES
 	#if defined CUSTOM_TAG_TYPES

@@ -16,7 +16,7 @@ public OnPlayerDeath(playerid, killerid, reason)
         TogglePlayerSpectating(playerid, false);
 
         RemovePlayerFromVehicle(playerid);
-        SetPlayerPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
+        Player_SetPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
         SetCameraBehindPlayer(playerid);
 
         ApplyAnimation(playerid, "SWEET", "null", 4.0, 0, 0, 0, 0, 0, 1);
