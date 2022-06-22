@@ -27,7 +27,9 @@ RawIpToString(rawip)
 
 KickTimed(playerid, time = 250)
 {
+#if !NDEBUG
     PrintBacktrace();
+#endif
 
     g_rgbPlayerKicked{playerid} = true;
 	SetTimerEx(!"KickTimed_Due", time, false, !"i", playerid);

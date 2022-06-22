@@ -36,7 +36,7 @@ static Pizza_OnBuy(playerid, shop_id, item_id)
         }
     }
 
-    if(g_rgePlayerTempData[playerid][e_iPlayerEatCount] >= 5)
+    if(g_rgePlayerTempData[playerid][e_iPlayerEatCount] >= (Player_Skin(playerid) == 4 ? 10 : 5))
     {
         Player_Puke(playerid);
         return 0;

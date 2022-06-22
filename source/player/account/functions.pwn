@@ -206,6 +206,6 @@ Player_SetSkin(playerid, skinid, bool:update = true)
         mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `SKIN` = %i WHERE `ID` = %i;", skinid, Player_AccountID(playerid));
         mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
     }
-    
+
     return SetPlayerSkin(playerid, skinid);
 }

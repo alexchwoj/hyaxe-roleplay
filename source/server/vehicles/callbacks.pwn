@@ -63,7 +63,7 @@ public OnVehicleDeath(vehicleid, killerid)
 {
     g_rgeVehicles[vehicleid][e_bSpawned] = false;
     g_rgeVehicles[vehicleid][e_fHealth] = 1000.0;
-    g_rgeVehicles[vehicleid][e_fFuel] = g_rgeVehicleModelData[GetVehicleModel(vehicleid)][e_fMaxFuel];
+    g_rgeVehicles[vehicleid][e_fFuel] = g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_fMaxFuel];
 
     #if defined VEH_OnVehicleDeath
         return VEH_OnVehicleDeath(vehicleid, killerid);
@@ -94,6 +94,7 @@ public OnVehicleSpawn(vehicleid)
 
     g_rgeVehicles[vehicleid][e_bSpawned] = true;
     SetVehicleHealth(vehicleid, g_rgeVehicles[vehicleid][e_fHealth]);
+    SetVehicleParamsEx(vehicleid, 0, 0, 0, Vehicle_Locked(vehicleid), 0, 0, 0);
 
     #if defined VEH_OnVehicleSpawn
         return VEH_OnVehicleSpawn(vehicleid);
@@ -447,6 +448,7 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
             new Float:x, Float:y, Float:z;
             GetPlayerPos(playerid, x, y, z);
             SetPlayerPos(playerid, x, y, z);
+            ClearAnimations(playerid, 1);
             TogglePlayerControllable(playerid, false);
 
             g_rgePlayerTempData[playerid][e_iPlayerCarJackTick] = GetTickCount();
