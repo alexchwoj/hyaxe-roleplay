@@ -13,21 +13,31 @@ IPacket:__ac_fly_PlayerSync(playerid, BitStream:bs)
     BS_IgnoreBits(bs, 8);
     BS_ReadOnFootSync(bs, data);
     
+    if(data[PR_specialAction] == SPECIAL_ACTION_USEJETPACK)
+    {
+        Anticheat_Trigger(playerid, CHEAT_FLY);
+        return 0;
+    }
+
     if(data[PR_surfingVehicleId] != 0 || data[PR_position][2] < 1.0)
         return 1;
-
-    new
-        Float:x = data[PR_position][0],
-        Float:y = data[PR_position][1],
-        Float:z = data[PR_position][2];
-
-    new const bool:is_falling = ((1128 <= data[PR_animationId] <= 1134) || ((958 <= data[PR_animationId] <= 962) && data[PR_weaponId] == WEAPON_PARACHUTE));
     
-    // Since the distance is minimal we don't need to check for jumping
-    new object = CA_RayCastLine(x, y, z, x, y, z - 3.0, x, x, x);
-    if(!is_falling && !object)
+    if((958 <= data[PR_animationId] <= 959) && data[PR_weaponId] != WEAPON_PARACHUTE)
     {
-        //Anticheat_Trigger(playerid, CHEAT_FLY);
+        Anticheat_Trigger(playerid, CHEAT_FLY);
+        return 0;
+    }
+
+    if(157 <= data[PR_animationId] <= 162)
+    {
+        Anticheat_Trigger(playerid, CHEAT_FLY);
+        return 0;
+    }
+
+    new Float:dummy;
+    if(((1538 <= data[PR_animationId] <= 1544) || data[PR_animationId] == 1250) && !CA_IsPlayerInWater(playerid, dummy, dummy))
+    {
+        Anticheat_Trigger(playerid, CHEAT_FLY);
         return 0;
     }
 

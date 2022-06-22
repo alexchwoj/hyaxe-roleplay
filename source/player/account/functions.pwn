@@ -15,10 +15,10 @@ Account_Register(playerid, callback = -1)
     Player_Money(playerid) = PLAYER_DEFAULT_MONEY;
     Player_SetHealth(playerid, 100);
     
-    g_rgePlayerData[playerid][e_fSpawnPosX] = PLAYER_SPAWN_X;    
-    g_rgePlayerData[playerid][e_fSpawnPosY] = PLAYER_SPAWN_Y;    
-    g_rgePlayerData[playerid][e_fSpawnPosZ] = PLAYER_SPAWN_Z;    
-    g_rgePlayerData[playerid][e_fSpawnPosAngle] = PLAYER_SPAWN_ANGLE;
+    g_rgePlayerData[playerid][e_fPosX] = PLAYER_SPAWN_X;    
+    g_rgePlayerData[playerid][e_fPosY] = PLAYER_SPAWN_Y;    
+    g_rgePlayerData[playerid][e_fPosZ] = PLAYER_SPAWN_Z;    
+    g_rgePlayerData[playerid][e_fPosAngle] = PLAYER_SPAWN_ANGLE;
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
         START TRANSACTION;\
@@ -57,8 +57,8 @@ Account_Save(playerid, bool:disconnect = false)
 
     if(IsPlayerSpawned(playerid))
     {
-        GetPlayerPos(playerid, g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ]);
-        GetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fSpawnPosAngle]);
+        GetPlayerPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
+        GetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fPosAngle]);
         Player_VirtualWorld(playerid) = GetPlayerVirtualWorld(playerid);
         Player_Interior(playerid) = GetPlayerInterior(playerid);
     }
@@ -83,7 +83,7 @@ Account_Save(playerid, bool:disconnect = false)
         WHERE `ID` = %i;\
     ", 
         g_rgePlayerData[playerid][e_iPlayerPausedTime],
-        g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ], g_rgePlayerData[playerid][e_fSpawnPosAngle],
+        g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle],
         Player_VirtualWorld(playerid), Player_Interior(playerid), Player_Health(playerid), Player_Armor(playerid), Player_Hunger(playerid), Player_Thirst(playerid),
         Player_Skin(playerid), Player_Level(playerid), Player_XP(playerid), (disconnect ? -1 : playerid), 
         (disconnect ? ", CURRENT_CONNECTION = 0" : ""), Player_AccountID(playerid)
@@ -108,10 +108,10 @@ Account_LoadFromCache(playerid)
     cache_get_value_name_int(0, !"MONEY", Player_Money(playerid));
     cache_get_value_name_int(0, !"HEALTH", Player_Health(playerid));
     cache_get_value_name_int(0, !"ARMOR", Player_Armor(playerid));
-    cache_get_value_name_float(0, !"POS_X", g_rgePlayerData[playerid][e_fSpawnPosX]);
-    cache_get_value_name_float(0, !"POS_Y", g_rgePlayerData[playerid][e_fSpawnPosY]);
-    cache_get_value_name_float(0, !"POS_Z", g_rgePlayerData[playerid][e_fSpawnPosZ]);
-    cache_get_value_name_float(0, !"ANGLE", g_rgePlayerData[playerid][e_fSpawnPosAngle]);
+    cache_get_value_name_float(0, !"POS_X", g_rgePlayerData[playerid][e_fPosX]);
+    cache_get_value_name_float(0, !"POS_Y", g_rgePlayerData[playerid][e_fPosY]);
+    cache_get_value_name_float(0, !"POS_Z", g_rgePlayerData[playerid][e_fPosZ]);
+    cache_get_value_name_float(0, !"ANGLE", g_rgePlayerData[playerid][e_fPosAngle]);
     cache_get_value_name_int(0, !"VIRTUAL_WORLD", Player_VirtualWorld(playerid));
     cache_get_value_name_int(0, !"INTERIOR", Player_Interior(playerid));
     cache_get_value_name(0, !"LAST_CONNECTION", Player_LastConnection(playerid));

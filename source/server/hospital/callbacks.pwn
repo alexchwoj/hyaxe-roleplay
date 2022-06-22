@@ -40,8 +40,8 @@ public HP_HealPlayer(playerid)
         TogglePlayerSpectating(playerid, true);
         TogglePlayerSpectating(playerid, false);
 
-        SetPlayerPos(playerid, g_rgePlayerData[playerid][e_fSpawnPosX], g_rgePlayerData[playerid][e_fSpawnPosY], g_rgePlayerData[playerid][e_fSpawnPosZ]);
-        SetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fSpawnPosAngle]);
+        SetPlayerPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
+        SetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fPosAngle]);
 
         SetCameraBehindPlayer(playerid);
 

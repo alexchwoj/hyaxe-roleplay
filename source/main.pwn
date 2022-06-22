@@ -237,6 +237,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/anticheat/detections/repaircar.pwn"
 #include "server/anticheat/detections/money.pwn"
 #include "server/anticheat/detections/slapper.pwn"
+#include "server/anticheat/detections/teleport.pwn"
 
 // Commands
 //////////////
