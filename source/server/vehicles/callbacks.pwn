@@ -190,6 +190,12 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
             new notif_str[40];
             
+            if(Vehicle_Repairing(vehicleid))
+            {
+                Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes encender el vehículo si está siendo reparado");
+                return 1;
+            }
+
             if(g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_TOGGLE_ENGINE])
             {
                 format(notif_str, sizeof(notif_str), "El vehículo ya se está %s", (Vehicle_GetEngineState(vehicleid) ? "apagando" : "encendiendo"));

@@ -97,8 +97,8 @@ static RepairKit_OnUse(playerid, slot)
     new Float:model_x, Float:model_y, Float:model_z;
     GetVehicleModelInfo(GetVehicleModel(vehicleid), VEHICLE_MODEL_INFO_SIZE, model_x, model_y, model_z);
 
-    veh_x += (model_y / 2.0 + 0.3) * floatsin(-veh_ang, degrees);
-    veh_y += (model_y / 2.0 + 0.3) * floatcos(-veh_ang, degrees);
+    veh_x += (model_y / 2.0 + 0.5) * floatsin(-veh_ang, degrees);
+    veh_y += (model_y / 2.0 + 0.5) * floatcos(-veh_ang, degrees);
 
     if(!IsPlayerInRangeOfPoint(playerid, 1.0, veh_x, veh_y, veh_z))
     {
@@ -108,12 +108,15 @@ static RepairKit_OnUse(playerid, slot)
 
     Player_SetPos(playerid, veh_x, veh_y, veh_z);
     SetPlayerFacingAngle(playerid, veh_ang);
-    ApplyAnimation(playerid, "CAR", "FIXN_CAR_LOOP", 4.1, 1, 1, 1, 1, 0);
+    TogglePlayerControllable(playerid, false);
+    ApplyAnimation(playerid, "CAR", "FIXN_CAR_LOOP", 4.1, 1, 0, 0, 1, 0);
+
+    Inventory_Hide(playerid);
     InventorySlot_Subtract(playerid, slot);
     Vehicle_Repairing(vehicleid) = true;
 
     Notification_ShowBeatingText(playerid, 15000, 0xF29624, 100, 255, "Reparando vehículo...");
-    g_rgiRepairSoundTimer[playerid] = SetTimerEx("GARAGE_VehicleRepairPlaySound", 2000, true, "i", playerid);
+    g_rgiRepairSoundTimer[playerid] = SetTimerEx("GARAGE_VehicleRepairPlaySound", 1000, true, "i", playerid);
     g_rgiRepairFinishTimer[playerid] = SetTimerEx("REPAIRKIT_ActionFinished", 15000, false, "ii", playerid, vehicleid);
 
     return 1;
@@ -126,8 +129,14 @@ public REPAIRKIT_ActionFinished(playerid, vehicleid)
     g_rgiRepairFinishTimer[playerid] = 0;
 
     Vehicle_SetHealth(vehicleid, 1000.0);
-    ApplyAnimation(playerid, "CAR", "FIXN_CAR_OUT", 4.1, 1, 1, 1, 1, 0);
+    Vehicle_Repairing(vehicleid) = false;
+    TogglePlayerControllable(playerid, true);
+    ApplyAnimation(playerid, "CAR", "FIXN_CAR_OUT", 4.1, 0, 0, 0, 0, 0);
     Notification_ShowBeatingText(playerid, 3000, 0x98D952, 100, 255, "Vehículo reparado");
+
+    wait_ms(3000);
+
+    ClearAnimations(playerid);
 
     return 1;
 }
