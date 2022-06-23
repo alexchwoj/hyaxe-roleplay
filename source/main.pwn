@@ -4,7 +4,7 @@
 #pragma warning disable 239
 #pragma warning disable 214
 
-#define NDEBUG 1
+#define NDEBUG 0
 
 #if NDEBUG
 	#pragma option -d0
@@ -132,6 +132,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/gangs/events/header.pwn"
 #include "server/church/header.pwn"
 #include "server/fuel_station/header.pwn"
+#include "server/garage/header.pwn"
 #include "player/account/header.pwn"
 #include "player/config/header.pwn"
 #include "player/damage/header.pwn"
@@ -217,6 +218,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/church/callbacks.pwn"
 #include "server/black_market/callbacks.pwn"
 #include "server/fuel_station/callbacks.pwn"
+#include "server/garage/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/damage/callbacks.pwn"
 #include "player/leveling/callbacks.pwn"
