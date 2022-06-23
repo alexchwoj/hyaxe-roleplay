@@ -23,9 +23,9 @@ Account_Register(playerid, callback = -1)
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
         START TRANSACTION;\
         INSERT INTO `ACCOUNT` \
-            (`NAME`, `EMAIL`, `EMAIL_VERIFICATION_CODE`, `PASSWORD`, `SKIN`, `SEX`, `MONEY`, `POS_X`, `POS_Y`, `POS_Z`, `ANGLE`, `CURRENT_CONNECTION`, `CURRENT_PLAYERID`, `CONFIG_BITS`) \
+            (`NAME`, `EMAIL`, `EMAIL_VERIFICATION_CODE`, `PASSWORD`, `SKIN`, `SEX`, `LEVEL`, `XP`, `MONEY`, `POS_X`, `POS_Y`, `POS_Z`, `ANGLE`, `CURRENT_CONNECTION`, `CURRENT_PLAYERID`, `CONFIG_BITS`) \
         VALUES \
-            ('%e', '%e', REPLACE(UUID(), '-', ''), SHA2('%e', 256), %i, %i, %i, %.2f, %.2f, %.2f, %.2f, UNIX_TIMESTAMP(), %i, '%s'); \
+            ('%e', '%e', REPLACE(UUID(), '-', ''), SHA2('%e', 256), %i, %i, 1, 0, %i, %.2f, %.2f, %.2f, %.2f, UNIX_TIMESTAMP(), %i, '%s'); \
         \
         SET @accid = LAST_INSERT_ID();\
         INSERT INTO `PLAYER_WEAPONS` (`ACCOUNT_ID`) VALUES (@accid); \

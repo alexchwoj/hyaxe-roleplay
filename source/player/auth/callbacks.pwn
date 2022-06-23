@@ -225,6 +225,12 @@ dialog login(playerid, response, listitem, inputtext[])
 
     Account_LoadFromCache(playerid);
 
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `CURRENT_PLAYERID` = %i, `CURRENT_CONNECTION` = UNIX_TIMESTAMP() WHERE `ID` = %i LIMIT 1;", playerid, Player_AccountID(playerid));
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+    Account_RegisterConnection(playerid);
+
+    CallLocalFunction(!"OnPlayerAuthenticate", !"i", playerid);
+
     SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle], 0, 0, 0, 0, 0, 0);
     Streamer_UpdateEx(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], Player_VirtualWorld(playerid), Player_Interior(playerid), .compensatedtime = 2000, .freezeplayer = 1);
     TogglePlayerSpectating(playerid, false);
@@ -240,6 +246,7 @@ dialog login(playerid, response, listitem, inputtext[])
     Player_GiveAllWeapons(playerid);
     SetPlayerArmedWeapon(playerid, 0);
     
+    printf("player %i level = %i", playerid, Player_Level(playerid));
     SetPlayerScore(playerid, Player_Level(playerid));
     Iter_Add(LoggedIn, playerid);
 
@@ -248,12 +255,6 @@ dialog login(playerid, response, listitem, inputtext[])
 
     Bit_Set(Player_Flags(playerid), PFLAG_AUTHENTICATING, false);
     Bit_Set(Player_Flags(playerid), PFLAG_IN_GAME, true);
-    
-    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `CURRENT_PLAYERID` = '%i', `CURRENT_CONNECTION` = UNIX_TIMESTAMP() WHERE `ID` = %d LIMIT 1;", playerid, Player_AccountID(playerid));
-    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
-    Account_RegisterConnection(playerid);
-
-    CallLocalFunction(!"OnPlayerAuthenticate", !"i", playerid);
 
     new text[116];
     format(text, sizeof(text), "Bienvenid%c a ~r~Hyaxe~w~, %s. Tu último inicio de sesión fue el ~r~%s~w~.", (Player_Sex(playerid) == SEX_MALE ? 'o' : 'a'), Player_Name(playerid), Player_LastConnection(playerid));
