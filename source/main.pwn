@@ -252,6 +252,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/stores/pizza/callbacks.pwn"
 #include "server/stores/clothing/callbacks.pwn"
 #include "server/stores/dealership/callbacks.pwn"
+#include "server/stores/convenience/callbacks.pwn"
 #include "server/actors/callbacks.pwn"
 #include "server/jobs/callbacks.pwn"
 #include "server/hospital/callbacks.pwn"

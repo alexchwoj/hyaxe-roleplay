@@ -36,7 +36,7 @@ enum _:eItems
     ITEM_CHAMPAGNE,
     ITEM_CRAFT_BEER,
     ITEM_CHICKEN,
-    ITEM_COFFE,
+    ITEM_COFFEE,
     ITEM_SANGUCHEDEMILANESA,
     ITEM_FISHING_ROD,
     ITEM_FISH,
@@ -152,7 +152,7 @@ new
 		{"Champagne", 19824, true, -1}, // ITEM_CHAMPAGNE
 		{"Cerveza artesanal", 1544, true, -1}, // ITEM_CRAFT_BEER
 		{"Pollo", 2768, true, -1}, // ITEM_CHICKEN
-		{"Cafe", 19835, true, -1}, // ITEM_COFFE
+		{"Cafe", 19835, true, -1}, // ITEM_COFFEE
 		{"Sanguche de milanesa", 2703, true, -1}, // ITEM_SANGUCHEDEMILANESA
         {"Caña de pescar", 18632, true, -1}, // ITEM_FISHING_ROD
         {"Pescado", 19630, false, -1}, // ITEM_FISH

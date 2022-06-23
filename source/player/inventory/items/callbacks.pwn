@@ -270,9 +270,9 @@ public OnGameModeInit()
     Item_SetPreviewRot(ITEM_CHICKEN, -29.000000, 0.000000, 51.000000, 1.000000);
 
     // Coffe
-    Item_Thirst(ITEM_COFFE) = -8.0;
-    Item_Callback(ITEM_COFFE) = __addressof(Food_OnUse);
-    Item_SetPreviewRot(ITEM_COFFE, -29.000000, 0.000000, 51.000000, 1.000000);
+    Item_Thirst(ITEM_COFFEE) = -8.0;
+    Item_Callback(ITEM_COFFEE) = __addressof(Food_OnUse);
+    Item_SetPreviewRot(ITEM_COFFEE, -29.000000, 0.000000, 51.000000, 1.000000);
 
     // Sanguche de milanesa
     Item_Hunger(ITEM_SANGUCHEDEMILANESA) = -100.0;
