@@ -74,6 +74,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             {
                 new areaid = iter_get(i);
                 new info[2];
+                printf("a7");
                 Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID, info);
 
                 if(info[0] != 0x57484F52)

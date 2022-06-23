@@ -24,7 +24,7 @@ public OnGameModeInit()
         );
 
         new area = CreateDynamicSphere(g_rgeGraffiti[i][e_fGraffitiX], g_rgeGraffiti[i][e_fGraffitiY], g_rgeGraffiti[i][e_fGraffitiZ], 4.0, 0, 0);
-        Streamer_SetIntData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x4752414646), i); // GRAFF
+        Streamer_SetIntData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x47524146), i); // GRAF
 
         new city[45], zone[45];
         GetPointZone(g_rgeGraffiti[i][e_fGraffitiX], g_rgeGraffiti[i][e_fGraffitiY], city, zone);
@@ -150,9 +150,9 @@ public GVENT_UpdateGraffiti(playerid)
     {
         for_list(it : GetPlayerAllDynamicAreas(playerid))
         {
-            if (Streamer_HasIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x4752414646)))
+            if (Streamer_HasIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x47524146)))
             {
-                new graffiti_id = Streamer_GetIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x4752414646));
+                new graffiti_id = Streamer_GetIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x47524146));
                 if (graffiti_id == g_iGangGraffitiIndex)
                 {
                     g_rgbGangGraffitiPainted[playerid] = true;
@@ -184,9 +184,9 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         {
             for_list(it : GetPlayerAllDynamicAreas(playerid))
             {
-                if (Streamer_HasIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x4752414646)))
+                if (Streamer_HasIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x47524146)))
                 {
-                    new graffiti_id = Streamer_GetIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x4752414646));
+                    new graffiti_id = Streamer_GetIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x47524146));
                     if (graffiti_id == g_iGangGraffitiIndex)
                     {
                         KillTimer(g_rgiGangGraffitiTimer[playerid]);

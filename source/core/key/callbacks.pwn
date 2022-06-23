@@ -130,6 +130,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
     if (Streamer_HasArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4B4559)))
     {
         new info[4];
+        printf("a1");
         Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4B4559), info);
         
         if (GetPlayerVirtualWorld(playerid) == info[0] && GetPlayerInterior(playerid) == info[1])

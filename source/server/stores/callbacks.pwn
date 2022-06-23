@@ -39,17 +39,13 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         {
             if(IsPlayerInAnyDynamicArea(playerid))
             {
-                new area[2];
-                GetPlayerDynamicAreas(playerid, area);
-
-                for(new i = sizeof(area) - 1; i != -1; --i)
+                for_list(i : GetPlayerAllDynamicAreas(playerid))
                 {
-                    new info[2];
-                    Streamer_GetArrayData(STREAMER_TYPE_AREA, area[i], E_STREAMER_EXTRA_ID, info);
-
-                    if(info[0] == 0x73686F70)
+                    new areaid = iter_get(i);
+                    if(Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x53484f50)))
                     {
-                        new shop_id = info[1];
+                        new shop_id = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x53484f50));
+                        
                         Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING, true);
                         Bit_Set(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS, false);
                         TogglePlayerControllable(playerid, false);

@@ -40,10 +40,7 @@ Shop_Create(const name[], Float:pos_x, Float:pos_y, Float:pos_z, world, interior
     g_rgeShops[idx][e_iShopLabel] = CreateDynamic3DTextLabel(name, 0xCB3126FF, pos_x, pos_y, pos_z, 10.0, .testlos = 1, .worldid = world, .interiorid = interior);
     g_rgeShops[idx][e_iShopArea] = CreateDynamicCircle(pos_x, pos_y, 0.5, .worldid = world, .interiorid = interior);
     Key_Alert(pos_x, pos_y, pos_z, 1.0, KEYNAME_YES, world, interior);
-
-    new info[2] = { 0x73686F70 };
-    info[1] = idx;
-    Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgeShops[idx][e_iShopArea], E_STREAMER_EXTRA_ID, info);
+    Streamer_SetIntData(STREAMER_TYPE_AREA, g_rgeShops[idx][e_iShopArea], E_STREAMER_CUSTOM(0x53484f50), idx);
 
     g_rgeShops[idx][e_fShopX] = pos_x; 
     g_rgeShops[idx][e_fShopY] = pos_y;

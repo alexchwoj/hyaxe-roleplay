@@ -41,6 +41,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             if (Streamer_HasArrayData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x49544d)))
             {
                 new info[6];
+                printf("a2");
                 Streamer_GetArrayData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x49544d), info);
                 
                 new weapon = Item_TypeToWeapon(info[0]);
@@ -298,6 +299,7 @@ public INV_RefreshDroppedItems()
     foreach(new i : DroppedItems)
     {
         new info[6];
+        printf("a3");
         Streamer_GetArrayData(STREAMER_TYPE_AREA, i, E_STREAMER_CUSTOM(0x49544D), info);
 
         if (gettime() > info[4])

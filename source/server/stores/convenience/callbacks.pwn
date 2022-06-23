@@ -6,7 +6,7 @@
 static Convenience_OnBuy(playerid, shop_id, item_id)
 {
     #pragma unused shop_id
-    
+
     switch(item_id)
     {
         case 0: // Repair kit
@@ -46,9 +46,9 @@ public OnGameModeInit()
         1.124887, -28.677103, 1004.111938,
         4.151215, -32.320850, 1002.510559,
         // Objects
-        -29.88, 1003.47, 2.0,
-        -29.88, 1003.47, 1.02,
-        -29.88, 1003.47, 2.0,
+        -29.88, 1003.47, 2.4,
+        -29.88, 1003.47, 2.4,
+        -29.88, 1003.47, 2.4,
         __addressof(Convenience_OnBuy)
     );
     Shop_AddItem(shopid, "Kit de reparación", 19921, 2000, 0.0, 0.0, 0.0);

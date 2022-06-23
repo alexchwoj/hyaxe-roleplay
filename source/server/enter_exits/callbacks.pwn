@@ -15,6 +15,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 if(Streamer_HasArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x4545)))
                 {
                     new info[2];
+                    printf("a6");
                     Streamer_GetArrayData(STREAMER_TYPE_AREA, iter_get(i), E_STREAMER_CUSTOM(0x4545), info);
 
                     new id = info[0];

@@ -12,6 +12,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             for_list(it : GetPlayerAllDynamicAreas(playerid))
             {
                 new info[3];
+                printf("a8");
                 Streamer_GetArrayData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_EXTRA_ID, info);
                 if(info[0] == 0x4A4F42)
                 {

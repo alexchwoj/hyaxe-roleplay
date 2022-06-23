@@ -122,6 +122,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             GetPlayerDynamicAreas(playerid, areas);
 
             new info[3];
+            printf("a5");
             Streamer_GetArrayData(STREAMER_TYPE_AREA, areas[0], E_STREAMER_EXTRA_ID, info);
             if (info[0] == 0x41544D)
             {

@@ -137,6 +137,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 for(new i = sizeof(area) - 1; i != -1; --i)
                 {
                     new info[2];
+                    printf("a10");
                     Streamer_GetArrayData(STREAMER_TYPE_AREA, area[i], E_STREAMER_EXTRA_ID, info);
 
                     if(info[0] == 0x434c53)

@@ -395,6 +395,7 @@ DroppedItem_Delete(area_id)
 		return 0;
 
 	new info[6];
+	printf("a4");
 	Streamer_GetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x49544d), info);
 
 	DestroyDynamicArea(area_id);
