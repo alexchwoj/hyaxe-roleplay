@@ -67,6 +67,9 @@ IPacket:__ac_weapon_BulletSync(playerid, BitStream:bs)
 
 public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 {
+    if (Player_HasImmunityForCheat(playerid, CHEAT_WEAPON))
+        return 1;
+        
     new slot = GetWeaponSlot(weaponid);
     if (weaponid > WEAPON_BRASSKNUCKLE && g_rgePlayerWeapons[playerid][slot][e_iWeaponId] != weaponid)
     {
