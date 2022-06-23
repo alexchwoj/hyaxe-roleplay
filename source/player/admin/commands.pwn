@@ -513,7 +513,7 @@ flags:asay(CMD_FLAG<RANK_LEVEL_MANAGER> | CMD_DONT_LOG_COMMAND)
 command set_skin(playerid, const params[], "Asigna la ropa de un jugador")
 {
     new destination, skin;
-    if(sscanf(params, "ri", skin))
+    if(sscanf(params, "ri", destination, skin))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/set_skin{DADADA} <jugador> <skin>");
         return 1;
