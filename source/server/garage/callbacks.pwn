@@ -60,6 +60,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     Vehicle_ToggleEngine(vehicleid, VEHICLE_STATE_OFF);
                     TogglePlayerControllable(playerid, false);
 
+                    Notification_ShowBeatingText(playerid, 5000, 0xF29624, 100, 255, "Reparando vehículo...");
                     g_rgiRepairSoundTimer[playerid] = SetTimerEx("GARAGE_VehicleRepairPlaySound", 1000, true, "i", playerid);
                     g_rgiRepairFinishTimer[playerid] = SetTimerEx("GARAGE_FinishRepairCar", 5000, false, "ii", playerid, vehicleid);
 
