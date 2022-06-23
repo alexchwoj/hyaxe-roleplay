@@ -3,6 +3,7 @@
 #endif
 #define _detections_teleport_
 
+/*
 public OnPlayerUpdate(playerid)
 {
     if(IsPlayerSpawned(playerid) && Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME) && !GetPlayerInterior(playerid))
@@ -42,3 +43,4 @@ public OnPlayerUpdate(playerid)
 #if defined AC_OnPlayerUpdate
     forward AC_OnPlayerUpdate(playerid);
 #endif
+*/

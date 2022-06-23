@@ -10,6 +10,7 @@ public OnGameModeInit()
         new areaid = CreateDynamicCircle(g_rgeRepairPositions[i][e_fRepairPosX], g_rgeRepairPositions[i][e_fRepairPosY], 1.5, .worldid = 0, .interiorid = 0);
         Streamer_SetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x52455052), i);
         CreateDynamic3DTextLabel("{CB3126}Reparación de vehículos\n{DADADA}Costo: {98D952}250${DADADA}", 0xFFFFFFFF, g_rgeRepairPositions[i][e_fRepairPosX], g_rgeRepairPositions[i][e_fRepairPosY], g_rgeRepairPositions[i][e_fRepairPosZ], 10.0, .testlos = 1);
+        Key_Alert(g_rgeRepairPositions[i][e_fRepairPosX], g_rgeRepairPositions[i][e_fRepairPosY], g_rgeRepairPositions[i][e_fRepairPosZ], 1.5, KEYNAME_YES, 0, 0, KEY_TYPE_VEHICLE);
     }
 
     #if defined GARAGE_OnGameModeInit
@@ -31,36 +32,40 @@ public OnGameModeInit()
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+    if((newkeys & KEY_YES) != 0)
     {
-        if(IsPlayerInAnyDynamicArea(playerid))
+        if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
         {
-            for_list(it : GetPlayerAllDynamicAreas(playerid))
+            if(IsPlayerInAnyDynamicArea(playerid))
             {
-                new areaid = iter_get(it);
-
-                if(!Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x52455052)))
-                    continue;
-
-                if(Player_Money(playerid) < 250)
+                for_list(it : GetPlayerAllDynamicAreas(playerid))
                 {
-                    Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No tienes dinero para reparar tu vehículo");
+                    new areaid = iter_get(it);
+
+                    if(!Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x52455052)))
+                        continue;
+
+                    if(Player_Money(playerid) < 250)
+                    {
+                        Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No tienes dinero para reparar tu vehículo");
+                        return 1;
+                    }
+
+                    Player_GiveMoney(playerid, -250);
+
+                    new repairid = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x52455052));
+                    Sound_PlayInRange(12201, 10.0, g_rgeRepairPositions[repairid][e_fRepairPosX], g_rgeRepairPositions[repairid][e_fRepairPosY], g_rgeRepairPositions[repairid][e_fRepairPosZ], 0, 0);
+                    
+                    new vehicleid = GetPlayerVehicleID(playerid);
+                    Vehicle_ToggleEngine(vehicleid, VEHICLE_STATE_OFF);
+                    TogglePlayerControllable(playerid, false);
+
+                    Notification_ShowBeatingText(playerid, 5000, 0xF29624, 100, 255, "Reparando vehículo...");
+                    g_rgiRepairSoundTimer[playerid] = SetTimerEx("GARAGE_VehicleRepairPlaySound", 1000, true, "i", playerid);
+                    g_rgiRepairFinishTimer[playerid] = SetTimerEx("GARAGE_FinishRepairCar", 5000, false, "ii", playerid, vehicleid);
+
                     return 1;
                 }
-
-                Player_GiveMoney(playerid, -250);
-
-                new repairid = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x52455052));
-                Sound_PlayInRange(12201, 10.0, g_rgeRepairPositions[repairid][e_fRepairPosX], g_rgeRepairPositions[repairid][e_fRepairPosY], g_rgeRepairPositions[repairid][e_fRepairPosZ], 0, 0);
-                
-                new vehicleid = GetPlayerVehicleID(playerid);
-                Vehicle_ToggleEngine(vehicleid, VEHICLE_STATE_OFF);
-                TogglePlayerControllable(playerid, false);
-
-                g_rgiRepairSoundTimer[playerid] = SetTimerEx("GARAGE_VehicleRepairPlaySound", 1000, true, "i", playerid);
-                g_rgiRepairFinishTimer[playerid] = SetTimerEx("GARAGE_FinishRepairCar", 5000, false, "i", playerid, vehicleid);
-
-                return 1;
             }
         }
     }

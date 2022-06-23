@@ -79,7 +79,7 @@ Player_AddXP(playerid, xp)
         else
         {
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Subiste al nivel ~r~%i~w~.", Player_Level(playerid));
-            Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 10);
+            Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 7000);
         }
     }
     else
