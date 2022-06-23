@@ -285,7 +285,7 @@ public VEHICLE_ToggleEngineTimer(playerid, vehicleid)
             PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{2});
         }
 
-        Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Motor averiado. Llama a un mecánico");
+        Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Motor averiado.");
         return 1;
     }
 

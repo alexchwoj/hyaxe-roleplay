@@ -60,7 +60,8 @@ enum eVehicleData
 
     e_iVehicleTimers[eVehicleTimers],
     bool:e_bSpawned,
-    e_iSellIndex
+    e_iSellIndex,
+    bool:e_bRepairing
 };
 
 new g_rgeVehicles[MAX_VEHICLES][eVehicleData];
@@ -290,7 +291,7 @@ new const g_rgeVehicleModelData[MAX_VEHICLE_MODELS + 1][eVehicleModelData] = {
 
 new
     g_rgiSpeedometerUpdateTimer[MAX_PLAYERS];
-
+    
 #define Vehicle_GetModelName(%0) (g_rgeVehicleModelData[(%0) - 400][e_szModelName])
 #define Vehicle_GetModelMaxSpeed(%0) (g_rgeVehicleModelData[(%0) - 400][e_iMaxSpeed])
 #define Vehicle_GetModelMaxFuel(%0) (g_rgeVehicleModelData[(%0) - 400][e_fMaxFuel])
@@ -309,6 +310,7 @@ forward Vehicle_Repair(vehicleid);
 #define Vehicle_GetVirtualWorld(%0) (g_rgeVehicles[(%0)][e_iVehWorld])
 #define Vehicle_SetInterior(%0,%1) (g_rgeVehicles[(%0)][e_iVehInterior] = (%1), LinkVehicleToInterior((%0), (%1)))
 #define Vehicle_GetInterior(%0) (g_rgeVehicles[(%0)][e_iVehInterior])
+#define Vehicle_Repairing(%0) (g_rgeVehicles[(%0)][e_bRepairing])
 forward Vehicle_Respawn(vehicleid);
 
 #define Speedometer_Shown(%0) (IsTextDrawVisibleForPlayer(playerid, g_tdSpeedometer[0]))

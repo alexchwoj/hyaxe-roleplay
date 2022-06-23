@@ -222,3 +222,6 @@ new
 #define InventorySlot_Type(%0,%1) (g_rgePlayerInventory[(%0)][(%1)][e_iType])
 #define InventorySlot_Extra(%0,%1) (g_rgePlayerInventory[(%0)][(%1)][e_iExtra])
 #define InventorySlot_IsValid(%0,%1) (g_rgePlayerInventory[(%0)][(%1)][e_bValid])
+
+forward Inventory_GetItemAmount(playerid, type);
+forward Inventory_AddFixedItem(playerid, type, amount, extra);

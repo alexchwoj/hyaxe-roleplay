@@ -58,12 +58,77 @@ static Food_OnUse(playerid, slot)
     Sound_PlayInRange(SOUND_EAT, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid));
 
     if (Item_DrunkLevel(type))
-        SetPlayerDrunkLevel(playerid, Item_DrunkLevel(type));
+        SetPlayerDrunkLevel(playerid, GetPlayerDrunkLevel(playerid) + Item_DrunkLevel(type));
 
     Player_AddHunger(playerid, Item_Hunger(type));
     Player_AddThirst(playerid, Item_Thirst(type));
 
     InventorySlot_Subtract(playerid, slot);
+    return 1;
+}
+
+static RepairKit_OnUse(playerid, slot)
+{
+    new vehicleid = GetPlayerCameraTargetVehicle(playerid);
+    if(vehicleid == INVALID_VEHICLE_ID)
+    {
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas estar viendo un vehículo");
+        return 1;
+    }
+
+    if(Vehicle_Repairing(vehicleid))
+    {
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Este vehículo ya está siendo reparado");
+        return 1;
+    }
+
+    if(Vehicle_GetEngineState(vehicleid) != VEHICLE_STATE_OFF || g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_TOGGLE_ENGINE])
+    {
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "El vehículo debe estar apagado");
+        return 1;
+    }
+
+    new 
+        Float:veh_x, Float:veh_y, Float:veh_z, Float:veh_ang;
+
+    GetVehiclePos(vehicleid, veh_x, veh_y, veh_z);
+    GetVehicleZAngle(vehicleid, veh_ang);
+
+    new Float:model_x, Float:model_y, Float:model_z;
+    GetVehicleModelInfo(GetVehicleModel(vehicleid), VEHICLE_MODEL_INFO_SIZE, model_x, model_y, model_z);
+
+    veh_x += (model_y / 2.0 + 0.3) * floatsin(-veh_ang, degrees);
+    veh_y += (model_y / 2.0 + 0.3) * floatcos(-veh_ang, degrees);
+
+    if(!IsPlayerInRangeOfPoint(playerid, 1.0, veh_x, veh_y, veh_z))
+    {
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas estar cerca del capó");
+        return 1;
+    }
+
+    Player_SetPos(playerid, veh_x, veh_y, veh_z);
+    SetPlayerFacingAngle(playerid, veh_ang);
+    ApplyAnimation(playerid, "CAR", "FIXN_CAR_LOOP", 4.1, 1, 1, 1, 1, 0);
+    InventorySlot_Subtract(playerid, slot);
+    Vehicle_Repairing(vehicleid) = true;
+
+    Notification_ShowBeatingText(playerid, 15000, 0xF29624, 100, 255, "Reparando vehículo...");
+    g_rgiRepairSoundTimer[playerid] = SetTimerEx("GARAGE_VehicleRepairPlaySound", 2000, true, "i", playerid);
+    g_rgiRepairFinishTimer[playerid] = SetTimerEx("REPAIRKIT_ActionFinished", 15000, false, "ii", playerid, vehicleid);
+
+    return 1;
+}
+
+forward REPAIRKIT_ActionFinished(playerid, vehicleid);
+public REPAIRKIT_ActionFinished(playerid, vehicleid)
+{
+    Timer_Kill(g_rgiRepairSoundTimer[playerid]);
+    g_rgiRepairFinishTimer[playerid] = 0;
+
+    Vehicle_SetHealth(vehicleid, 1000.0);
+    ApplyAnimation(playerid, "CAR", "FIXN_CAR_OUT", 4.1, 1, 1, 1, 1, 0);
+    Notification_ShowBeatingText(playerid, 3000, 0x98D952, 100, 255, "Vehículo reparado");
+
     return 1;
 }
 
@@ -89,6 +154,7 @@ public OnGameModeInit()
     Item_SetPreviewRot(ITEM_PETROL_CAN, -21.000000, 0.000000, 159.000000, 1.000000);
 
     // Repair kit
+    Item_Callback(ITEM_REPAIR_KIT) = __addressof(RepairKit_OnUse);
     Item_SetPreviewRot(ITEM_REPAIR_KIT, -196.000000, 0.000000, 6.000000, 1.000000);
 
     /* Other */
