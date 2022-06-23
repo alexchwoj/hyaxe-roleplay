@@ -157,11 +157,11 @@ public GVENT_UpdateGraffiti(playerid)
                 {
                     g_rgbGangGraffitiPainted[playerid] = true;
                     g_iGraffitiGang = Player_Gang(playerid);
-                    g_fGangGraffitiProgress += 0.5;
-                    TextDrawSetString_s(g_tdGangEventText, @f("%s: ~y~%.2f%%", Gang_Data( Player_Gang(playerid) )[e_szGangName], g_fGangGraffitiProgress));
+                    g_rgfGangGraffitiProgress[ Player_Gang(playerid) ] += 0.5;
+                    TextDrawSetString_s(g_tdGangEventText, @f("%s: ~y~%.2f%%", Gang_Data( Player_Gang(playerid) )[e_szGangName], g_rgfGangGraffitiProgress[ Player_Gang(playerid) ]));
                     SetDynamicObjectMaterialText(g_rgeGraffiti[ graffiti_id ][e_iGraffitiObject], 0, Gang_Data( Player_Gang(playerid) )[e_szGangName], OBJECT_MATERIAL_SIZE_512x64, "Comic Sans MS", 60, 0, RGBAToARGB( Gang_Data( Player_Gang(playerid) )[e_iGangColor] ), 0x00000000, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
                 
-                    if (g_fGangGraffitiProgress >= 100.0)
+                    if (g_rgfGangGraffitiProgress[ Player_Gang(playerid) ] >= 100.0)
                     {
                         Graffiti_Finish();
                         KillTimer(g_rgiGangGraffitiTimer[playerid]);

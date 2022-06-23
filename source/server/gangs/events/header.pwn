@@ -109,7 +109,6 @@ new
     g_iGangGraffitiMapIcon,
 	g_rgiGangGraffitiTimer[MAX_PLAYERS],
 	bool:g_rgbGangGraffitiPainted[MAX_PLAYERS],
-
-	Float:g_fGangGraffitiProgress,
+	Float:g_rgfGangGraffitiProgress[HYAXE_MAX_GANGS],
 	g_iGraffitiGang
 ;

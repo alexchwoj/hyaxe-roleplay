@@ -58,7 +58,6 @@ GangEvent_Cancel()
         case EVENT_GRAFFITI:
         {
             DestroyDynamicMapIcon(g_iGangGraffitiMapIcon);
-            g_fGangGraffitiProgress = 0.0;
             g_iGraffitiGang = -1;
 
             foreach(new i : Player)
@@ -136,6 +135,8 @@ GangEvent_Start(event_type)
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Una disputa de graffiti ha comenzado en %s, %s. Sé el primero en pintarlo.", zone, city);
             GangEvent_SendNotification(HYAXE_UNSAFE_HUGE_STRING, 10000, 0xDAA838FF, .started = true);
             TextDrawSetString(g_tdGangEventText, "GRAFFITI ~g~LIBRE");
+            
+            for(new i; i < HYAXE_MAX_GANGS; ++i) g_rgfGangGraffitiProgress[i] = 0.0;
         }
     }
     g_iGangEventTick = GetTickCount();
