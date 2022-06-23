@@ -61,7 +61,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     TogglePlayerControllable(playerid, false);
 
                     g_rgiRepairSoundTimer[playerid] = SetTimerEx("GARAGE_VehicleRepairPlaySound", 1000, true, "i", playerid);
-                    g_rgiRepairFinishTimer[playerid] = SetTimerEx("GARAGE_FinishRepairCar", 5000, false, "i", playerid, vehicleid);
+                    g_rgiRepairFinishTimer[playerid] = SetTimerEx("GARAGE_FinishRepairCar", 5000, false, "ii", playerid, vehicleid);
 
                     return 1;
                 }
