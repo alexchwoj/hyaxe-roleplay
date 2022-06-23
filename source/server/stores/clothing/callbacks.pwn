@@ -131,24 +131,20 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         {
             if(IsPlayerInAnyDynamicArea(playerid))
             {
-                new area[2];
-                GetPlayerDynamicAreas(playerid, area);
-
-                for(new i = sizeof(area) - 1; i != -1; --i)
+                for_list(i : GetPlayerAllDynamicAreas(playerid))
                 {
-                    new info[2];
-                    printf("a10");
-                    Streamer_GetArrayData(STREAMER_TYPE_AREA, area[i], E_STREAMER_EXTRA_ID, info);
-
-                    if(info[0] == 0x434c53)
+                    new areaid = iter_get(i);
+                    if(Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x434c53)))
                     {
+                        new store_type = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x434c53));
+
                         Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES, true);
                         TogglePlayerControllable(playerid, false);
 
                         g_rgePlayerTempData[playerid][e_iPlayerLastWorld] = GetPlayerVirtualWorld(playerid);
                         SetPlayerVirtualWorld(playerid, 1 + playerid);
 
-                        g_rgiPlayerClothingStore[playerid] = info[1];
+                        g_rgiPlayerClothingStore[playerid] = store_type;
 
                         new Float:x, Float:y, Float:z, Float:angle;
                         GetPlayerPos(playerid, x, y, z);

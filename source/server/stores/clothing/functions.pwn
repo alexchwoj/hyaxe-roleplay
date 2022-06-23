@@ -5,15 +5,11 @@
 
 Clothing_CreateArea(store_type, Float:x, Float:y, Float:z, interior)
 {
-    new info[2];
-    info[0] = 0x434c53; // CLS
-    info[1] = store_type; // Store type
-
     new area = CreateDynamicSphere(
         x, y, z, 1.8,
         .worldid = -1, .interiorid = interior
     );
-    Streamer_SetArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_EXTRA_ID, info);
+    Streamer_SetIntData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x434c53), store_type);
 
     Key_Alert(
         x, y, z, 1.2,
