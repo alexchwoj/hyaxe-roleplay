@@ -167,6 +167,7 @@ dialog register_email(playerid, response, listitem, inputtext[])
 static AccountRegistered(playerid)
 {
     SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle], 0, 0, 0, 0, 0, 0);
+    Streamer_UpdateEx(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], 0, 0, .freezeplayer = 1);
     TogglePlayerSpectating(playerid, false);
 
     ResetPlayerMoney(playerid);
@@ -225,6 +226,7 @@ dialog login(playerid, response, listitem, inputtext[])
     Account_LoadFromCache(playerid);
 
     SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle], 0, 0, 0, 0, 0, 0);
+    Streamer_UpdateEx(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], Player_VirtualWorld(playerid), Player_Interior(playerid), .freezeplayer = 1);
     TogglePlayerSpectating(playerid, false);
     
     g_rgePlayerData[playerid][e_iCurrentConnectionTime] = gettime();
