@@ -534,11 +534,11 @@ command set_skin(playerid, const params[], "Asigna la ropa de un jugador")
     if(playerid != destination)
     {
         SendClientMessage(destination, 0xED2B2BFF, "›{DADADA} Un administrador cambió tu skin.");
-        SendClientMessagef(playerid, 0xED2B2FF, "›{DADADA} La skin de %s ahora es la %i.", Player_RPName(destination), skin);
+        SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} La skin de %s ahora es la %i.", Player_RPName(destination), skin);
     }
     else
     {
-        SendClientMessagef(playerid, 0xED2B2FF, "›{DADADA} Tu skin ahora es la %i.", skin);
+        SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Tu skin ahora es la %i.", skin);
     }
 
     return 1;
