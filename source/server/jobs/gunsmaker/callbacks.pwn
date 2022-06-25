@@ -33,7 +33,8 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
     {
         case JOB_EV_JOIN:
         {
-            new id = Cell_GetLowestBlank(g_iGunsmakerUsedBenchs);
+            //new id = Cell_GetLowestBlank(g_iGunsmakerUsedBenchs);
+            new id = random( sizeof(g_rgiGunsmakerBenchCheckpoint) );
             if(id == sizeof(g_rgfGunsmakerBenchSites))
             {
                 if(Iter_Contains(GunsmakerBenchQueue, playerid))
@@ -169,13 +170,11 @@ static GunsmakerKeyGameCallback(playerid, bool:success)
 
     ClearAnimations(playerid);
     TogglePlayerControllable(playerid, true);
-    TogglePlayerWidescreen(playerid, false);
-    Chat_Resend(playerid);
 
     if(success)
     {
         new crafted_gun = random(sizeof(gun_names));
-        PlayerJob_Paycheck(playerid) += 150 * (crafted_gun + 1);
+        PlayerJob_Paycheck(playerid) += 50 * (crafted_gun + 1);
         Player_AddXP(playerid, crafted_gun + 11);
 
         new str[101];
@@ -204,8 +203,6 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
             s_rgbPlayerIsInJobCp{playerid} = true;
             TogglePlayerDynamicCP(playerid, checkpointid, false);
             TogglePlayerControllable(playerid, false);
-            TogglePlayerWidescreen(playerid, true);
-            Chat_Resend(playerid);
 
             Player_SetPos(playerid, g_rgfGunsmakerBenchSites[benchid][0], g_rgfGunsmakerBenchSites[benchid][1], g_rgfGunsmakerBenchSites[benchid][2]);
             SetPlayerFacingAngle(playerid, g_rgfGunsmakerBenchSites[benchid][3]);
