@@ -36,6 +36,7 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
 
                 g_rgbPlayerLoadingTruck{playerid} = 
                 g_rgbTruckLoaded{g_rgiPlayerUsingTruck[playerid]} =
+                g_rgbTruckLoadDispatched{g_rgiPlayerUsingTruck[playerid]} = 
                 g_rgbPlayerHasBoxInHands{playerid} = 
                 bool:(
                 g_rgiPlayerUsingTruck[playerid] =
@@ -270,6 +271,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
                 {
                     g_rgbPlayerUnloadingTruck{playerid} = false;
                     g_rgbTruckLoaded{g_rgiPlayerUsingTruck[playerid]} = false;
+                    g_rgbTruckLoadDispatched{g_rgiPlayerUsingTruck[playerid]} = true;
 
                     new engine, lights, alarm, doors, bonnet, dummy;
                     GetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, doors, bonnet, dummy, dummy);
@@ -442,6 +444,7 @@ dialog select_trucker_route(playerid, response, listitem, const inputtext[])
     g_rgiPlayerRemainingBoxes{playerid} = g_rgeTruckerRoutes[listitem][e_iBoxCount];
     g_rgbPlayerLoadingTruck{playerid} = true;
     g_rgbTruckLoaded{vehicleid} = false;
+    g_rgbTruckLoadDispatched{vehicleid} = false;
     
     new engine, lights, alarm, doors, bonnet, boot, objective;
     GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
@@ -459,7 +462,7 @@ public OnPlayerLeaveDynamicArea(playerid, areaid)
         if(Player_Job(playerid) == JOB_TRUCKER)
         {
             new vehicleid = GetPlayerVehicleID(playerid);
-            if(!vehicleid || !g_rgbTruckLoaded{vehicleid})
+            if(!vehicleid || (!g_rgbTruckLoaded{vehicleid} && !g_rgbTruckLoadDispatched{vehicleid}))
             {
                 Job_TriggerCallback(playerid, JOB_TRUCKER, JOB_EV_LEAVE);
                 Notification_Show(playerid, "Al salir de la central de camioneros, abandonaste el trabajo.", 8000);
