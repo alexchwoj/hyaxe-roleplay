@@ -113,16 +113,12 @@ public OnGameModeInit()
     for(new i; i < sizeof(g_rgeLawnmowerAreas); ++i)
     {
         g_rgeLawnmowerAreas[i][e_iAreaId] = CreateDynamicRectangle(g_rgeLawnmowerAreas[i][e_fAreaMinX], g_rgeLawnmowerAreas[i][e_fAreaMinY], g_rgeLawnmowerAreas[i][e_fAreaMaxX], g_rgeLawnmowerAreas[i][e_fAreaMaxY], .worldid = 0, .interiorid = 0);
-        Streamer_SetIntData(STREAMER_TYPE_AREA, g_rgeLawnmowerAreas[i][e_iAreaId], E_STREAMER_EXTRA_ID, 0x4C4D5F50); // LM_P(ARK)
-
+        Streamer_SetIntData(STREAMER_TYPE_AREA, g_rgeLawnmowerAreas[i][e_iAreaId], E_STREAMER_CUSTOM(0x4c4d4a53), 1); // LMJS (LawnMower Job Site)
         Job_CreateSite(JOB_LAWNMOWER, g_rgeLawnmowerAreas[i][e_fPedContractorX], g_rgeLawnmowerAreas[i][e_fPedContractorY], g_rgeLawnmowerAreas[i][e_fPedContractorZ], 0, 0, .cb_data = i);
  
         g_rgeLawnmowerAreas[i][e_iPedContractorId] = CreateDynamicActor(16, g_rgeLawnmowerAreas[i][e_fPedContractorX], g_rgeLawnmowerAreas[i][e_fPedContractorY], g_rgeLawnmowerAreas[i][e_fPedContractorZ], g_rgeLawnmowerAreas[i][e_fPedContractorAngle], .worldid = 0, .interiorid = 0);
         ApplyDynamicActorAnimation(g_rgeLawnmowerAreas[i][e_iPedContractorId], "SMOKING", "null", 4.1, 0, 0, 0, 0, 0);
         ApplyDynamicActorAnimation(g_rgeLawnmowerAreas[i][e_iPedContractorId], "SMOKING", "M_SMKLEAN_LOOP", 4.1, 1, 0, 0, 1, 0);
-
-        new park_area = CreateDynamicRectangle(g_rgeLawnmowerAreas[i][e_fAreaMinX], g_rgeLawnmowerAreas[i][e_fAreaMinY], g_rgeLawnmowerAreas[i][e_fAreaMaxX], g_rgeLawnmowerAreas[i][e_fAreaMaxY], .worldid = 0, .interiorid = 0);
-        Streamer_SetIntData(STREAMER_TYPE_AREA, park_area, E_STREAMER_CUSTOM(0x4c4d4a53), 1); // LMJS (LawnMower Job Site)
     }
 
     Job_SetCallback(JOB_LAWNMOWER, __addressof(LawnMowerEvent));
