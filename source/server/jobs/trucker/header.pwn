@@ -61,4 +61,5 @@ new
     bool:g_rgbPlayerHasBoxInHands[MAX_PLAYERS char],
     g_rgiPlayerUsingTruck[MAX_PLAYERS],
     g_rgiPlayerTruckerRoute[MAX_PLAYERS char],
-    bool:g_rgbTruckLoaded[MAX_VEHICLES char];
+    bool:g_rgbTruckLoaded[MAX_VEHICLES char],
+    bool:g_rgbTruckLoadDispatched[MAX_VEHICLES char];

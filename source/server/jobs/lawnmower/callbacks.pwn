@@ -43,6 +43,29 @@ static GenerateGrassInArea(areaid)
     return 1;
 }
 
+static LawnMower_ClearJob(playerid)
+{
+    StopAudioStreamForPlayer(playerid);
+
+    new parkid = g_rgiPlayerLawnmowerArea{playerid};
+    Vehicle_Destroy(g_rgeLawnmowerAreas[parkid][e_iMowerId]);
+
+    for(new i; i < MAX_GRASS_PER_AREA; ++i)
+    {
+        DestroyDynamicObject(g_rgeLawnmowerAreas[parkid][e_rgiGrassObjects][i]);
+        DestroyDynamicArea(g_rgeLawnmowerAreas[parkid][e_rgiGrassAreas][i]);
+
+        g_rgeLawnmowerAreas[parkid][e_rgiGrassObjects][i] = 
+        g_rgeLawnmowerAreas[parkid][e_rgiGrassAreas][i] = INVALID_STREAMER_ID;
+    }
+
+    g_rgeLawnmowerAreas[parkid][e_iMowerId] = INVALID_VEHICLE_ID;
+    g_rgeLawnmowerAreas[parkid][e_iInitialGrassCount] =
+    g_rgeLawnmowerAreas[parkid][e_iCurrentGrassCount] = 0;
+    g_rgeLawnmowerAreas[parkid][e_iMowingPlayer] = INVALID_PLAYER_ID;
+    g_rgiPlayerLawnmowerArea{playerid} = 0xFF;
+}
+
 static LawnMowerEvent(playerid, eJobEvent:event, areaid)
 {
     switch(event)
@@ -72,27 +95,13 @@ static LawnMowerEvent(playerid, eJobEvent:event, areaid)
         }
         case JOB_EV_LEAVE_VEHICLE:
         {
-            StopAudioStreamForPlayer(playerid);
-
-            new parkid = g_rgiPlayerLawnmowerArea{playerid};
-            Vehicle_Destroy(g_rgeLawnmowerAreas[parkid][e_iMowerId]);
-
-            for(new i; i < MAX_GRASS_PER_AREA; ++i)
-            {
-                DestroyDynamicObject(g_rgeLawnmowerAreas[parkid][e_rgiGrassObjects][i]);
-                DestroyDynamicArea(g_rgeLawnmowerAreas[parkid][e_rgiGrassAreas][i]);
-
-                g_rgeLawnmowerAreas[parkid][e_rgiGrassObjects][i] = 
-                g_rgeLawnmowerAreas[parkid][e_rgiGrassAreas][i] = INVALID_STREAMER_ID;
-            }
-
-            g_rgeLawnmowerAreas[parkid][e_iMowerId] = INVALID_VEHICLE_ID;
-            g_rgeLawnmowerAreas[parkid][e_iInitialGrassCount] =
-            g_rgeLawnmowerAreas[parkid][e_iCurrentGrassCount] = 0;
-            g_rgeLawnmowerAreas[parkid][e_iMowingPlayer] = INVALID_PLAYER_ID;
-            g_rgiPlayerLawnmowerArea{playerid} = 0xFF;
-
+            LawnMower_ClearJob(playerid);
             Notification_Show(playerid, "El capataz te vio fuera del cortacésped y te ~r~despidió~w~.", 5000);
+        }
+        case JOB_EV_LEAVE_PLACE:
+        {
+            LawnMower_ClearJob(playerid);
+            Notification_Show(playerid, "El capataz te vio fuera del parque y te ~r~despidió~w~.", 5000);
         }
     }
     #pragma unused playerid, event, areaid
@@ -111,6 +120,9 @@ public OnGameModeInit()
         g_rgeLawnmowerAreas[i][e_iPedContractorId] = CreateDynamicActor(16, g_rgeLawnmowerAreas[i][e_fPedContractorX], g_rgeLawnmowerAreas[i][e_fPedContractorY], g_rgeLawnmowerAreas[i][e_fPedContractorZ], g_rgeLawnmowerAreas[i][e_fPedContractorAngle], .worldid = 0, .interiorid = 0);
         ApplyDynamicActorAnimation(g_rgeLawnmowerAreas[i][e_iPedContractorId], "SMOKING", "null", 4.1, 0, 0, 0, 0, 0);
         ApplyDynamicActorAnimation(g_rgeLawnmowerAreas[i][e_iPedContractorId], "SMOKING", "M_SMKLEAN_LOOP", 4.1, 1, 0, 0, 1, 0);
+
+        new park_area = CreateDynamicRectangle(g_rgeLawnmowerAreas[i][e_fAreaMinX], g_rgeLawnmowerAreas[i][e_fAreaMinY], g_rgeLawnmowerAreas[i][e_fAreaMaxX], g_rgeLawnmowerAreas[i][e_fAreaMaxY], .worldid = 0, .interiorid = 0);
+        Streamer_SetIntData(STREAMER_TYPE_AREA, park_area, E_STREAMER_CUSTOM(0x4c4d4a53), 1); // LMJS (LawnMower Job Site)
     }
 
     Job_SetCallback(JOB_LAWNMOWER, __addressof(LawnMowerEvent));
@@ -208,6 +220,31 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
     forward JOB_LM_OnPlayerEnterDynamicArea(playerid, areaid);
 #endif
 
+public OnPlayerLeaveDynamicArea(playerid, areaid)
+{
+    if(Player_Job(playerid) == JOB_LAWNMOWER && Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4c4d4a53)))
+    {
+        Job_TriggerCallback(playerid, JOB_LAWNMOWER, JOB_EV_LEAVE_PLACE);
+        return 1;
+    }
+
+    #if defined JOB_LM_OnPlayerLeaveDynamicArea
+        return JOB_LM_OnPlayerLeaveDynamicArea(playerid, areaid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerLeaveDynamicArea
+    #undef OnPlayerLeaveDynamicArea
+#else
+    #define _ALS_OnPlayerLeaveDynamicArea
+#endif
+#define OnPlayerLeaveDynamicArea JOB_LM_OnPlayerLeaveDynamicArea
+#if defined JOB_LM_OnPlayerLeaveDynamicArea
+    forward JOB_LM_OnPlayerLeaveDynamicArea(playerid, areaid);
+#endif
+
 public OnPlayerStateChange(playerid, newstate, oldstate)
 {
     if(newstate == PLAYER_STATE_ONFOOT && oldstate == PLAYER_STATE_DRIVER)
@@ -240,23 +277,7 @@ public OnPlayerDisconnect(playerid, reason)
 {
     if(Player_Job(playerid) == JOB_LAWNMOWER)
     {
-        new parkid = g_rgiPlayerLawnmowerArea{playerid};
-        Vehicle_Destroy(g_rgeLawnmowerAreas[parkid][e_iMowerId]);
-
-        for(new i; i < MAX_GRASS_PER_AREA; ++i)
-        {
-            DestroyDynamicObject(g_rgeLawnmowerAreas[parkid][e_rgiGrassObjects][i]);
-            DestroyDynamicArea(g_rgeLawnmowerAreas[parkid][e_rgiGrassAreas][i]);
-
-            g_rgeLawnmowerAreas[parkid][e_rgiGrassObjects][i] = 
-            g_rgeLawnmowerAreas[parkid][e_rgiGrassAreas][i] = INVALID_STREAMER_ID;
-        }
-
-        g_rgeLawnmowerAreas[parkid][e_iMowerId] = INVALID_VEHICLE_ID;
-        g_rgeLawnmowerAreas[parkid][e_iInitialGrassCount] =
-        g_rgeLawnmowerAreas[parkid][e_iCurrentGrassCount] = 0;
-        g_rgeLawnmowerAreas[parkid][e_iMowingPlayer] = INVALID_PLAYER_ID;
-        g_rgiPlayerLawnmowerArea{playerid} = 0xFF;
+        LawnMower_ClearJob(playerid);
     }
 
     #if defined JOB_LM_OnPlayerDisconnect
