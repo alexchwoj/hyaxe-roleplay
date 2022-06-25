@@ -25,6 +25,20 @@ RawIpToString(rawip)
     return ip;
 }
 
+stock UTILS_Kick(playerid)
+{
+    g_rgbPlayerKicked{playerid} = false;
+    return Kick(playerid);
+}
+
+#if defined _ALS_Kick
+    #undef Kick
+#else
+    #define _ALS_Kick
+#endif
+#define Kick UTILS_Kick
+
+
 KickTimed(playerid, time = 250)
 {
 #if !NDEBUG
