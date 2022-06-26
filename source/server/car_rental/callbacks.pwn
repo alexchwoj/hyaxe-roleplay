@@ -80,7 +80,7 @@ dialog rent_car(playerid, response, listitem, inputtext[])
         }
 
         if (IsValidVehicle(g_rgiPlayerRentalCar[playerid]))
-            DestroyVehicle(g_rgiPlayerRentalCar[playerid]);
+            Vehicle_Destroy(g_rgiPlayerRentalCar[playerid]);
 
         new index = random( sizeof(g_rgfCarRentalPosition) );
         g_rgiPlayerRentalCar[playerid] = Vehicle_Create(
@@ -91,6 +91,9 @@ dialog rent_car(playerid, response, listitem, inputtext[])
             g_rgfCarRentalPosition[index][3],
             -1, -1, 0)
         ;
+        Vehicle_Type(g_rgiPlayerRentalCar[playerid]) = VEHICLE_TYPE_RENTAL;
+        Vehicle_OwnerId(g_rgiPlayerRentalCar[playerid]) = playerid;
+
         PutPlayerInVehicle(playerid, g_rgiPlayerRentalCar[playerid], 0);
 
         Player_GiveMoney(playerid, -50);
