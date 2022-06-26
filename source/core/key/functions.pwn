@@ -10,13 +10,12 @@ Key_ShowAll(playerid)
     return 1;
 }
 
-Key_Alert(Float:x, Float:y, Float:z, Float:range, key, world = -1, interior = -1, key_type = KEY_TYPE_FOOT, attachedplayer = INVALID_PLAYER_ID)
+Key_Alert(Float:x, Float:y, Float:z, Float:range, key, world = -1, interior = -1, key_type = KEY_TYPE_FOOT, attachedplayer = INVALID_PLAYER_ID, callback_on_press = -1)
 {
-    new info[4];
-    info[0] = world; // World
-    info[1] = interior; // Interior
-    info[2] = key; // Key name
-    info[3] = key_type; // Key type (KEY_TYPE_FOOT, KEY_TYPE_VEHICLE)
+    new info[3];
+    info[0] = key; // Key name
+    info[1] = key_type; // Key type (KEY_TYPE_FOOT, KEY_TYPE_VEHICLE)
+    info[2] = callback_on_press;
 
     new area = CreateDynamicSphere(
         x, y, z, range,
@@ -30,4 +29,9 @@ Key_Alert(Float:x, Float:y, Float:z, Float:range, key, world = -1, interior = -1
     }
 
     return area;
+}
+
+Key_KeyNameToKeyBit(keyname)
+{
+    return (1 << keyname);
 }

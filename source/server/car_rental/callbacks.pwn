@@ -3,6 +3,12 @@
 #endif
 #define _car_rental_callbacks_
 
+static Rental_OnKeyPress(playerid)
+{
+    Dialog_Show(playerid, "rent_car", DIALOG_STYLE_MSGBOX, !"{CB3126}Rentar un auto", !"{DADADA}¿Quieres rentar un Manana por {64A752}$50{DADADA}?", !"Rentar", !"Cerrar");
+    return 1;
+}
+
 public OnGameModeInit()
 {
     CreateDynamic3DTextLabel(
@@ -10,11 +16,8 @@ public OnGameModeInit()
         1677.0374, -1134.7346, 23.9140, 15.0,
         .testlos = true, .worldid = 0, .interiorid = 0
     );
-    Key_Alert(1677.0374, -1134.7346, 23.9140, 2.6, KEYNAME_YES, 0, 0);
+    Key_Alert(1677.0374, -1134.7346, 23.9140, 2.6, KEYNAME_YES, 0, 0, .callback_on_press = __addressof(Rental_OnKeyPress));
     CreateDynamicMapIcon(1677.0374, -1134.7346, 23.9140, 55, -1, .worldid = 0, .interiorid = 0);
-
-    new area_id = CreateDynamicSphere(1677.0374, -1134.7346, 23.9140, 2.5, 0, 0);
-	Streamer_SetIntData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x524e54), 1); // RNT
 
     #if defined RENTAL_OnGameModeInit
         return RENTAL_OnGameModeInit();
@@ -31,41 +34,6 @@ public OnGameModeInit()
 #define OnGameModeInit RENTAL_OnGameModeInit
 #if defined RENTAL_OnGameModeInit
     forward RENTAL_OnGameModeInit();
-#endif
-
-public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
-{
-    if ((newkeys & KEY_YES) != 0)
-    {
-        if (IsPlayerInAnyDynamicArea(playerid))
-        {
-            for_list(it : GetPlayerAllDynamicAreas(playerid))
-            {
-                new areaid = iter_get(it);
-                if (Streamer_HasArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x524e54)))
-                {
-                    Dialog_Show(playerid, "rent_car", DIALOG_STYLE_MSGBOX, !"{CB3126}Rentar un auto", !"{DADADA}¿Quieres rentar un Manana por {64A752}$50{DADADA}?", !"Rentar", !"Cerrar");
-                    return 1;
-                }
-            }
-        }
-    }
-
-    #if defined RENTAL_OnPlayerKeyStateChange
-        return RENTAL_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-    #else
-        return 1;
-    #endif
-}
-
-#if defined _ALS_OnPlayerKeyStateChange
-    #undef OnPlayerKeyStateChange
-#else
-    #define _ALS_OnPlayerKeyStateChange
-#endif
-#define OnPlayerKeyStateChange RENTAL_OnPlayerKeyStateChange
-#if defined RENTAL_OnPlayerKeyStateChange
-    forward RENTAL_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 #endif
 
 dialog rent_car(playerid, response, listitem, inputtext[])
@@ -107,7 +75,7 @@ dialog rent_car(playerid, response, listitem, inputtext[])
 public OnPlayerDisconnect(playerid, reason)
 {
     if (IsValidVehicle(g_rgiPlayerRentalCar[playerid]))
-        DestroyVehicle(g_rgiPlayerRentalCar[playerid]);
+        Vehicle_Destroy(g_rgiPlayerRentalCar[playerid]);
 
     #if defined RENTAL_OnPlayerDisconnect
         return RENTAL_OnPlayerDisconnect(playerid, reason);
