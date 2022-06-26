@@ -11,6 +11,7 @@ public OnGameModeInit()
         .testlos = true, .worldid = 0, .interiorid = 0
     );
     Key_Alert(1677.0374, -1134.7346, 23.9140, 2.6, KEYNAME_YES, 0, 0);
+    CreateDynamicMapIcon(1677.0374, -1134.7346, 23.9140, 55, -1, .worldid = 0, .interiorid = 0);
 
     new area_id = CreateDynamicSphere(1677.0374, -1134.7346, 23.9140, 2.5, 0, 0);
 	Streamer_SetIntData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x524e54), 1); // RNT
