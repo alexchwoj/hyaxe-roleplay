@@ -241,7 +241,7 @@ public ATM_OnFinishBankTransfer(playerid, bank_account, amount)
     {
         new current_playerid, current_connection;
         cache_get_value_name_int(0, !"CURRENT_PLAYERID", current_playerid);
-        cache_get_value_name_int(0, !"CURRENT_CONNECTION", current_playerid);
+        cache_get_value_name_int(0, !"CURRENT_CONNECTION", current_connection);
 
         Bank_RegisterTransaction(Player_AccountID(playerid), BANK_TRANSFER_SENT, amount, bank_account);
         Bank_RegisterTransaction(bank_account, BANK_TRANSFER_RECEIVED, amount, Player_AccountID(playerid));
