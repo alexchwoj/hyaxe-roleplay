@@ -91,7 +91,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if ((newkeys & KEY_YES) != 0)
     {
-        if (GetPlayerNumberDynamicAreas(playerid) > 0)
+        if (IsPlayerInAnyDynamicArea(playerid))
         {
             new areas[3];
             GetPlayerDynamicAreas(playerid, areas);
