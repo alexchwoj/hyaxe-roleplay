@@ -8,6 +8,12 @@ public OnFilterScriptInit()
 {
     new tmpobjid;
 
+    // Latas jeje
+    CreateDynamicObject(2752, 2380.7924, -1243.3140, 23.8157, 0.0000, 0.0000, 0.0000); //CJ_hairspray2
+	CreateDynamicObject(365, 2380.8354, -1243.4238, 23.9370, 0.0000, 0.0000, 0.0000); //spraycan
+	CreateDynamicObject(2749, 2380.9868, -1243.3880, 23.8213, 0.0000, 0.0000, 0.0000); //CJ_hairspray
+	CreateDynamicObject(2749, 2380.1499, -1242.8997, 23.9324, -79.3999, -29.4000, 0.0000); //CJ_hairspray
+    
     // Car rental
     tmpobjid = CreateDynamicObject(996, 1681.857299, -1095.141113, 23.770328, 0.000000, 0.000000, -90.100021, -1, -1, -1, 300.00, 300.00); 
     tmpobjid = CreateDynamicObject(996, 1681.857299, -1095.141113, 23.770328, 0.000000, 0.000000, -90.100021, -1, -1, -1, 300.00, 300.00); 
@@ -17,7 +23,6 @@ public OnFilterScriptInit()
     tmpobjid = CreateDynamicObject(996, 1681.796997, -1131.430419, 23.770328, 0.000000, 0.000000, -90.100021, -1, -1, -1, 300.00, 300.00); 
     tmpobjid = CreateDynamicObject(4641, 1678.933349, -1134.770019, 24.546260, 0.000000, 0.000000, 90.200088, -1, -1, -1, 300.00, 300.00); 
     tmpobjid = CreateDynamicObject(996, 1679.706298, -1094.418457, 23.570323, 0.000000, 0.000000, -179.200134, -1, -1, -1, 300.00, 300.00); 
-
 
     // Block paintnspray
     tmpobjid = CreateDynamicObject(19325, 1968.74219, 2162.49219, 12.09380,   0.00000, 0.00000, 0.00000);
