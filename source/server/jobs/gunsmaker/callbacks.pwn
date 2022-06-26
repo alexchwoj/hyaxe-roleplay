@@ -33,8 +33,7 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
     {
         case JOB_EV_JOIN:
         {
-            //new id = Cell_GetLowestBlank(g_iGunsmakerUsedBenchs);
-            new id = random( sizeof(g_rgiGunsmakerBenchCheckpoint) );
+            new id = Cell_GetLowestBlank(g_iGunsmakerUsedBenchs);
             if(id == sizeof(g_rgfGunsmakerBenchSites))
             {
                 if(Iter_Contains(GunsmakerBenchQueue, playerid))
@@ -50,6 +49,7 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
                 return 1;
             }
 
+            g_iGunsmakerUsedBenchs |= (1 << id);
             g_rgiGunsmakerUsedBench{playerid} = id;
             TogglePlayerDynamicCP(playerid, g_rgiGunsmakerBenchCheckpoint[id], true);
             Streamer_Update(playerid, STREAMER_TYPE_CP);

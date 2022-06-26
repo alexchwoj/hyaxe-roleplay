@@ -11,9 +11,7 @@ public OnGameModeInit()
         
         g_rgiHookerAreas[i] = CreateDynamicCircle(g_rgfHookerPos[i][0], g_rgfHookerPos[i][1], 5.0, .worldid = 0, .interiorid = 0);
         AttachDynamicAreaToPlayer(g_rgiHookerAreas[i], g_rgiHookers[i]);
-        new info[2] = { 0x57484F52 }; // WHOR
-        info[1] = i;
-        Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgiHookerAreas[i], E_STREAMER_EXTRA_ID, info);
+        Streamer_SetIntData(STREAMER_TYPE_AREA, g_rgiHookerAreas[i], E_STREAMER_CUSTOM(0x57484F52), i);
         Key_Alert(g_rgfHookerPos[i][0], g_rgfHookerPos[i][1], g_rgfHookerPos[i][2], 5.0, KEYNAME_CTRL_BACK, .attachedplayer = g_rgiHookers[i]);
         
         Hooker_Spawn(i);
@@ -69,47 +67,42 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     {
         if(IsPlayerInAnyDynamicArea(playerid))
         {
-            new List:areas = GetPlayerAllDynamicAreas(playerid);
-            for_list(i : areas)
+            for_list(i : GetPlayerAllDynamicAreas(playerid))
             {
                 new areaid = iter_get(i);
-                new info[2];
-                printf("a7");
-                Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID, info);
+                if(Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x57484F52)))
+                {
+                    new hookerid = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x57484F52));
+                    DEBUG_PRINT("Player %i interacted with hooker %i", playerid, hookerid);
 
-                if(info[0] != 0x57484F52)
-                    continue;
+                    if(!g_rgbHookerAvailable{hookerid})
+                        return 1;
 
-                new hookerid = info[1];
-                DEBUG_PRINT("Player %i interacted with hooker %i", playerid, hookerid);
+                    DEBUG_PRINT("Hooker is available");
 
-                if(!g_rgbHookerAvailable{hookerid})
+                    g_rgbHookerAvailable{hookerid} = false;
+                    g_rgiPlayerInteractingHooker[playerid] = hookerid;
+                    g_rgiHookerInteractingPlayer[hookerid] = playerid;
+
+                    if(!IsPlayerInAnyVehicle(playerid))
+                    {
+                        FCNPC_AimAtPlayer(g_rgiHookers[hookerid], playerid);
+                        FCNPC_SetAnimationByName(g_rgiHookers[hookerid], "KISSING:GF_STREETARGUE_02", 4.1, 1, 0, 0, 0, 0);
+                        Dialog_Show(playerid, "hooker_accept", DIALOG_STYLE_TABLIST_HEADERS, 
+                                "Prostituta", 
+                                    "{DADADA}Hablaste con la prostituta y te dio sus precios.\t \n\
+                                    Beso\t{64A752}50${DADADA}\n\
+                                    Mamada\t{64A752}200${DADADA}", 
+                                "Veni mamucha", "Todas putas"
+                        );
+                    }
+                    else if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+                    {
+
+                    }
+
                     return 1;
-
-                DEBUG_PRINT("Hooker is available");
-
-                g_rgbHookerAvailable{hookerid} = false;
-                g_rgiPlayerInteractingHooker[playerid] = hookerid;
-                g_rgiHookerInteractingPlayer[hookerid] = playerid;
-
-                if(!IsPlayerInAnyVehicle(playerid))
-                {
-                    FCNPC_AimAtPlayer(g_rgiHookers[hookerid], playerid);
-                    FCNPC_SetAnimationByName(g_rgiHookers[hookerid], "KISSING:GF_STREETARGUE_02", 4.1, 1, 0, 0, 0, 0);
-                    Dialog_Show(playerid, "hooker_accept", DIALOG_STYLE_TABLIST_HEADERS, 
-                            "Prostituta", 
-                                "{DADADA}Hablaste con la prostituta y te dio sus precios.\t \n\
-                                Beso\t{64A752}50${DADADA}\n\
-                                Mamada\t{64A752}200${DADADA}", 
-                            "Veni mamucha", "Todas putas"
-                    );
                 }
-                else if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
-                {
-
-                }
-
-                return 1;
             }
         }
     }

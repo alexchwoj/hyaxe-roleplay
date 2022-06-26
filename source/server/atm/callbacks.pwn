@@ -116,17 +116,12 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if ((newkeys & KEY_YES) != 0)
     {
-        if (GetPlayerNumberDynamicAreas(playerid) > 0)
+        if (IsPlayerInAnyDynamicArea(playerid))
         {
-            new areas[1];
-            GetPlayerDynamicAreas(playerid, areas);
-
-            new info[3];
-            printf("a5");
-            Streamer_GetArrayData(STREAMER_TYPE_AREA, areas[0], E_STREAMER_EXTRA_ID, info);
-            if (info[0] == 0x41544D)
+            for_list(i : GetPlayerAllDynamicAreas(playerid))
             {
-                if (GetPlayerVirtualWorld(playerid) == g_rgeATMBank[ info[1] ][e_iAtmWorld] && GetPlayerInterior(playerid) == g_rgeATMBank[ info[1] ][e_iAtmInterior])
+                new areaid = iter_get(i);
+                if(Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x41544D)))
                 {
                     ATM_ShowMenu(playerid);
                 }
@@ -174,15 +169,11 @@ public OnGameModeInit()
             .testlos = true, .worldid = g_rgeATMBank[i][e_iAtmWorld], .interiorid = g_rgeATMBank[i][e_iAtmInterior]
         );
 
-        new info[2];
-        info[0] = 0x41544D; // ATM
-        info[1] = i; // ATM ID
-
         g_rgeATMBank[i][e_iAtmArea] = CreateDynamicCircle(
             g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], 1.2,
             .worldid = g_rgeATMBank[i][e_iAtmWorld], .interiorid = g_rgeATMBank[i][e_iAtmInterior]
         );
-        Streamer_SetArrayData(STREAMER_TYPE_AREA, g_rgeATMBank[i][e_iAtmArea], E_STREAMER_EXTRA_ID, info);
+        Streamer_SetIntData(STREAMER_TYPE_AREA, g_rgeATMBank[i][e_iAtmArea], E_STREAMER_CUSTOM(0x41544D), i);
     
         Key_Alert(
             g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], g_rgeATMBank[i][e_fAtmPosZ], 1.2,

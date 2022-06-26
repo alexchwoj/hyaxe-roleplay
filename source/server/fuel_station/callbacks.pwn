@@ -19,7 +19,7 @@ public OnGameModeInit()
         );
 
         new area_id = CreateDynamicSphere(g_rgfFuelStations[i][0], g_rgfFuelStations[i][1], g_rgfFuelStations[i][2], 3.0, .worldid = 0, .interiorid = 0);
-        Streamer_SetIntData(STREAMER_TYPE_AREA, area_id, E_STREAMER_EXTRA_ID, 0x4655454c); // FUEL
+        Streamer_SetIntData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x4655454c), 1); // FUEL
     }
 
     #if defined FUEL_OnGameModeInit
@@ -48,8 +48,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         {
             for_list(it : GetPlayerAllDynamicAreas(playerid))
             {
-                new info = Streamer_GetIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_EXTRA_ID);
-                if(info == 0x4655454c)
+                if(Streamer_HasIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x4655454c)))
                 {
                     if (!IsPlayerInAnyVehicle(playerid))
                     {

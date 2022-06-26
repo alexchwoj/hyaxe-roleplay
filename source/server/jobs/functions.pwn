@@ -10,11 +10,10 @@ Job_CreateSite(eJobs:jobid, Float:x, Float:y, Float:z, vw, interior, const extra
 
     CreateDynamic3DTextLabel(labelstring, 0xDADADAFF, x, y, z, 10.0, .testlos = 1, .worldid = vw, .interiorid = interior);
     new area = CreateDynamicCircle(x, y, 3.0, .worldid = vw, .interiorid = interior);
-    new info[3];
-    info[0] = 0x4A4F42; // 'JOB'
-    info[1] = _:jobid;
-    info[2] = cb_data;
-    Streamer_SetArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_EXTRA_ID, info);
+    new info[2];
+    info[0] = _:jobid;
+    info[1] = cb_data;
+    Streamer_SetArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x4A4F42), info); // JOB
 
     Key_Alert(x, y, z, 1.5, KEYNAME_YES, vw, interior);
     return 1;
