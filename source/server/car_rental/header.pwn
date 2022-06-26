@@ -13,3 +13,5 @@ new Float:g_rgfCarRentalPosition[][] = {
     { 1675.7604, -1102.2664, 23.6333, 90.5620 }, 
     { 1675.4692, -1097.8652, 23.6333, 88.6437 }
 };
+
+new g_rgiPlayerRentalCar[MAX_PLAYERS];
