@@ -195,6 +195,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 if(info[2] == -1)
                     break;
 
+                printf("info = { %i, %i, %i }", info[0], info[1], info[2]);
+                
                 if((newkeys & Key_KeyNameToKeyBit(info[0])) != 0)
                 {
                     if(info[1] == KEY_TYPE_VEHICLE && !IsPlayerInAnyVehicle(playerid))
