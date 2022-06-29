@@ -132,6 +132,9 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
         new info[3];
         Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4B4559), info);
 
+        if(info[1] == KEY_TYPE_VEHICLE && !IsPlayerInAnyVehicle(playerid))
+            return 1;
+
         new string[64];
         format(string, sizeof(string), "PULSA ~y~\"~k~~%s~\"", (info[1] == KEY_TYPE_FOOT ? g_rgszKeyFootCode[ info[0] ] : g_rgszKeyVehicleCode[ info[0] ]));
 
@@ -194,9 +197,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
                 if(info[2] == -1)
                     break;
-
-                printf("info = { %i, %i, %i }", info[0], info[1], info[2]);
-                
+                    
                 if((newkeys & Key_KeyNameToKeyBit(info[0])) != 0)
                 {
                     if(info[1] == KEY_TYPE_VEHICLE && !IsPlayerInAnyVehicle(playerid))

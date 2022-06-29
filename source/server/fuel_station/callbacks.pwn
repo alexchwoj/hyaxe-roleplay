@@ -15,7 +15,7 @@ public OnGameModeInit()
     {
         Key_Alert(
             g_rgfFuelStations[i][0], g_rgfFuelStations[i][1], g_rgfFuelStations[i][2], 12.5,
-            KEYNAME_CTRL_BACK, 0, 0, KEY_TYPE_VEHICLE, .callback_on_press = __addressof(GasStation_OnKeyPress)
+            KEYNAME_CROUCH, 0, 0, KEY_TYPE_VEHICLE, .callback_on_press = __addressof(GasStation_OnKeyPress)
         );
 
         CreateDynamic3DTextLabel(
