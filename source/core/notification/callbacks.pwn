@@ -135,6 +135,7 @@ public NOTIFICATION_ProcessText(playerid, time, alpha_min, alpha_max, bool:shoul
             PlayerTextDrawHide(playerid, p_tdBeatingText{playerid});
 
             td_phase{playerid} = false;
+            g_rgiTextProcessTick[playerid] = 0;
             Timer_Kill(g_rgiTextProcessTimer[playerid]);
             return 1;
         }
