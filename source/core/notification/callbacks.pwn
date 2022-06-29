@@ -135,8 +135,7 @@ public NOTIFICATION_ProcessText(playerid, time, alpha_min, alpha_max, bool:shoul
             PlayerTextDrawHide(playerid, p_tdBeatingText{playerid});
 
             td_phase{playerid} = false;
-            g_rgiTextProcessTick[playerid] = 0;
-            KillTimer(g_rgiTextProcessTimer[playerid]);
+            Timer_Kill(g_rgiTextProcessTimer[playerid]);
             return 1;
         }
 
@@ -154,5 +153,12 @@ public NOTIFICATION_ProcessText(playerid, time, alpha_min, alpha_max, bool:shoul
         g_rgiTextProcessTimer[playerid] = SetTimerEx("NOTIFICATION_ProcessText", 10, true, "iiiii", playerid, time, alpha_min, alpha_max, true);
     }
 
+    return 1;
+}
+
+public NOTIFICATION_HideStaticPerfText(playerid)
+{
+    PlayerTextDrawHide(playerid, p_tdBeatingText{playerid});
+    g_rgiTextProcessTimer[playerid] = 0;
     return 1;
 }

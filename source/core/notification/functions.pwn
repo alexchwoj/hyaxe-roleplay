@@ -164,8 +164,15 @@ Notification_ShowBeatingText(playerid, time, color, alpha_min, alpha_max, const 
     PlayerTextDrawSetString(playerid, p_tdBeatingText{playerid}, string);
     PlayerTextDrawShow(playerid, p_tdBeatingText{playerid});
 
-    g_rgiTextProcessTick[playerid] = GetTickCount();
-    g_rgiTextProcessTimer[playerid] = SetTimerEx("NOTIFICATION_ProcessText", 10, true, "iiiii", playerid, time, alpha_min, alpha_max, false);
+    if(Performance_IsFine(playerid) && !Bit_Get(Player_Config(playerid), CONFIG_PERFORMANCE_MODE))
+    {
+        g_rgiTextProcessTick[playerid] = GetTickCount();
+        g_rgiTextProcessTimer[playerid] = SetTimerEx("NOTIFICATION_ProcessText", 10, true, "iiiii", playerid, time, alpha_min, alpha_max, false);
+    }
+    else
+    {
+        g_rgiTextProcessTimer[playerid] = SetTimerEx("NOTIFICATION_HideStaticPerfText", time, false, "i", playerid);
+    }
 
     return 1;
 }
