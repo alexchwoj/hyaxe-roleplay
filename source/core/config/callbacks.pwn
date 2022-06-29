@@ -70,6 +70,12 @@ on_init 00SetupServerConfig()
 	
 	SendRconCommand(!"password 0");
 
+	for(new i = MAX_PLAYERS - 1; i != -1; --i)
+	{
+		if(FCNPC_IsValid(i))
+			SetPlayerColor(i, 0xF7F7F700);
+	}
+	
 	return 1;
 }
 
