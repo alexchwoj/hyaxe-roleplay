@@ -13,6 +13,8 @@ Account_Register(playerid, callback = -1)
 {
     Config_ResetDefaults(playerid);
     Player_Money(playerid) = PLAYER_DEFAULT_MONEY;
+    Player_Level(playerid) = 1;
+    Player_XP(playerid) = 0;
     Player_SetHealth(playerid, 100);
     
     g_rgePlayerData[playerid][e_fPosX] = PLAYER_SPAWN_X;    
