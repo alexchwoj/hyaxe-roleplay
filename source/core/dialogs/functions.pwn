@@ -19,17 +19,20 @@ Dialog_Show_s(playerid, const dialogname[], style, ConstString:caption, ConstStr
     return ShowPlayerDialog_s(playerid, 422, style, caption, info, button1, button2);
 }
 
-Task<eDialogResponse>:Dialog_ShowAsync(playerid, style, const caption[], const info[], const button1[], const button2[] = "")
+Task:Dialog_ShowAsync(playerid, style, const caption[], const info[], const button1[], const button2[] = "")
 {
     if(g_rgtPlayerDialogs[playerid])
         task_delete(g_rgtPlayerDialogs[playerid]);
 
-    g_rgtPlayerDialogs[playerid] = task_new<eDialogResponse>();
+    g_rgtPlayerDialogs[playerid] = task_new();
     return ShowPlayerDialog(playerid, 423, style, caption, info, button1, button2);
 }
 
 Dialog_Hide(playerid)
 {
     g_rgszPlayerDialogName[playerid][0] = '\0';
+    if(task_valid(g_rgtPlayerDialogs[playerid]))
+        task_delete(g_rgtPlayerDialogs[playerid]);
+
     return ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, !" ", !" ", !" ", "");
 }

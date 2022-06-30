@@ -5,10 +5,10 @@
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    if(task_valid<eDialogResponse>(g_rgtPlayerDialogs[playerid]))
+    if(g_rgtPlayerDialogs[playerid])
     {
-        task_delete<eDialogResponse>(g_rgtPlayerDialogs[playerid]);
-        g_rgtPlayerDialogs[playerid] = Task<eDialogResponse>:0;
+        task_delete(g_rgtPlayerDialogs[playerid]);
+        g_rgtPlayerDialogs[playerid] = Task:0;
     }
     
     #if defined DIALOG_OnPlayerDisconnect
@@ -30,7 +30,7 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-    DEBUG_PRINT("OnDialogResponse(%i, %i, %i, %i, \"%s\")", playerid, dialogid, response, listitem, inputtext);
+    DEBUG_PRINT("OnDialogResponse(playerid = %i, dialogid = %i, response = %i, listitem = %i, inputtext[] = \"%s\")", playerid, dialogid, response, listitem, inputtext);
 
     for(new i, j = strlen(inputtext); i < j; ++i)
     {
@@ -48,7 +48,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
         return 1;
     }
-    else if(dialogid == 423 && task_valid<eDialogResponse>(g_rgtPlayerDialogs[playerid]))
+    else if(dialogid == 423 && task_valid(g_rgtPlayerDialogs[playerid]))
     {
         g_rgszPlayerDialogName[playerid][0] = '\0';
         
@@ -57,8 +57,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         info[e_iListItem] = listitem;
         strcat(info[e_szInputText], inputtext);
 
-        new Task<eDialogResponse>:t = g_rgtPlayerDialogs[playerid];
-        g_rgtPlayerDialogs[playerid] = Task<eDialogResponse>:0;
+        new Task:t = g_rgtPlayerDialogs[playerid];
+        g_rgtPlayerDialogs[playerid] = Task:0;
 
         task_set_result_arr(Task:t, _:info, .tag_id = tagof(info));
 
