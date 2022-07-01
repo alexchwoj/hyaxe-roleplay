@@ -149,9 +149,7 @@ Account_LoadFromCache(playerid)
     cache_unset_active();
     cache_delete(Player_Cache(playerid));
     Player_Cache(playerid) = MYSQL_INVALID_CACHE;
-
-    log_function();
-    
+        
     return 1;
 }
 

@@ -3,6 +3,7 @@
 #endif
 #define _weapons_functions_
 
+// least significant byte is the weaponid, rest of the integer is the ammo
 Weapon_PackIdAndAmmo(weaponid, ammo)
 {
     return (clamp(ammo, 0, 32767) << 8) | weaponid;
@@ -10,7 +11,7 @@ Weapon_PackIdAndAmmo(weaponid, ammo)
 
 stock Weapon_UnpackIdAndAmmo(weapon_and_ammo, &weapon, &ammo)
 {
-    ammo = (weapon_and_ammo >> 8);
+    ammo = (weapon_and_ammo >>> 8);
     weapon = (weapon_and_ammo & 0xFF);
 }
 
@@ -91,7 +92,7 @@ Player_RemoveWeapon(playerid, weaponid)
     Player_WeaponSlot(playerid, slot)[e_iWeaponId] = 
     Player_WeaponSlot(playerid, slot)[e_iWeaponAmmo] = 0;
 
-    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYER_WEAPONS` SET `SLOT_%i` = 0 WHERE `ACCOUNT_ID` = %i LIMIT 1;", slot, Player_AccountID(playerid));
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYER_WEAPONS` SET `SLOT_%i` = 0 WHERE `ACCOUNT_ID` = %i;", slot, Player_AccountID(playerid));
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 
     ResetPlayerWeapons(playerid);
@@ -128,7 +129,7 @@ Player_RemoveAllWeapons(playerid)
             `SLOT_10` = 0, \
             `SLOT_11` = 0, \
             `SLOT_12` = 0 \
-        WHERE `ACCOUNT_ID` = %i LIMIT 1;\
+        WHERE `ACCOUNT_ID` = %i;\
     ", Player_AccountID(playerid));
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 }
@@ -199,12 +200,12 @@ Player_LoadWeaponsFromCache(playerid)
 
 command giveweapon(playerid, const params[], "Le da un arma a un jugador")
 {
-    extract params -> new kustom:weaponid<weapon>, ammo = 100, player:destination = 0xFFFF; else {
-        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/giveweapon {DADADA}<arma> {969696}[munición = 100] [jugador = tú]");
+    extract params -> new kustom:weaponid<weapon>, ammo = 32767, player:destination = 0xFFFF; else {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/giveweapon {DADADA}<arma> {969696}[munición = máx.] [jugador = tú]");
         return 1;
     }
 
-    if(destination == INVALID_PLAYER_ID)
+    if(!IsPlayerConnected(destination))
         destination = playerid;
 
     Player_GiveWeapon(destination, weaponid, ammo);

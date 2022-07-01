@@ -298,6 +298,7 @@ public OnPlayerSpawn(playerid)
     SetPlayerTime(playerid, hour, minute);
 
     ApplyAnimation(playerid, "CAR", "null", 4.1, 0, 0, 0, 0, 0, 0);
+    ApplyAnimation(playerid, "PED", "null", 4.1, 0, 0, 0, 0, 0, 0);
 
     #if defined ACC_OnPlayerSpawn
         return ACC_OnPlayerSpawn(playerid);
