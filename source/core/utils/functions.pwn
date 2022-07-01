@@ -539,3 +539,12 @@ stock ARGBToRGBA(col)
 {
     return ((((col) << 8) & 0xFFFFFF00) | (((col) >>> 24) & 0xFF));
 }
+
+bool:IsValidEmailAddress(const str[])
+{
+    static Regex:email_rgx;
+    if(!email_rgx)
+        email_rgx = Regex_New("^[\\w\\d.!#$%&'*+/=?^`{|}~-]+@[\\w\\d-]+\\.[\\w\\d-]{2,11}$", REGEX_ICASE);
+
+    return bool:Regex_Check(str, email_rgx);
+}

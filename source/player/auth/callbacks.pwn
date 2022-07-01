@@ -151,6 +151,19 @@ dialog register_email(playerid, response, listitem, inputtext[])
         return 1;
     }
 
+    if(!IsValidEmailAddress(inputtext))
+    {
+        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+            {DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta no está registrada.\n\n\
+            \t{5C5C5C}1. Contraseña\n\
+            \t{E3E3E3}2. Correo\n\
+            \t{5C5C5C}3. Sexo del personaje{DADADA}\n\n\
+            Ingrese su dirección de correo electrónico válida.\
+        ", Player_RPName(playerid));
+        Dialog_Show(playerid, "register_email", DIALOG_STYLE_INPUT, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Atrás");
+        return 1;
+    }
+
     strcpy(Player_Email(playerid), inputtext);
     
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
