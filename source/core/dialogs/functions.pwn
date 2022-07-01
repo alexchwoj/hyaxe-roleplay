@@ -32,7 +32,10 @@ Dialog_Hide(playerid)
 {
     g_rgszPlayerDialogName[playerid][0] = '\0';
     if(task_valid(g_rgtPlayerDialogs[playerid]))
+    {
         task_delete(g_rgtPlayerDialogs[playerid]);
+        g_rgtPlayerDialogs[playerid] = Task:0;
+    }
 
     return ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, !" ", !" ", !" ", "");
 }

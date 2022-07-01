@@ -388,19 +388,9 @@ binary_search(const arr[], value, start = 0, end = -1, size = sizeof(arr))
 
 List:GetPlayerAllDynamicAreas(playerid)
 {
-    new List:l = list_new();
-
-    if(!IsPlayerInAnyDynamicArea(playerid))
-        return l;
-
     static areas[128];
     new count = GetPlayerDynamicAreas(playerid, areas);
-    list_reserve(l, count);
-
-    for(new i; i < count; ++i)
-        list_add(l, areas[i]);
-
-    return l;
+    return list_new_arr(areas, count);
 }
 
 static enum eLoggerVarData
