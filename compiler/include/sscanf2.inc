@@ -1,5 +1,5 @@
 /*
- *  sscanf 2.11.4
+ *  sscanf 2.13.1
  *
  *  Version: MPL 1.1
  *
@@ -103,6 +103,19 @@
 
 /// <p/>
 
+#define SSCANF_STATIC__
+#if defined __PawnBuild
+	#if __PawnBuild == 11
+		// `const static` support.
+		#undef SSCANF_STATIC__
+		#define SSCANF_STATIC__ static
+	#endif
+#else
+	#if !defined SSCANF_NO_NICE_FEATURES
+		#error sscanf utilises community compiler features.  Use `#define SSCANF_NO_NICE_FEATURES` to live without (if you can call that living) or better yet download it here: github.com/pawn-lang/compiler/releases
+	#endif
+#endif
+
 /**
  * <library>sscanf</library>
  * <remarks>
@@ -117,10 +130,6 @@
 #else
 	static stock SSCANF_NPC = 0;
 	#define SSCANF_NPC (0)
-#endif
-
-#if !defined __PawnBuild && !defined SSCANF_NO_NICE_FEATURES
-	#error sscanf likes the community compiler.  Use `#define SSCANF_NO_NICE_FEATURES` to ignore this.
 #endif
 
 /**
@@ -138,8 +147,8 @@ static stock SSCANF_VERSION_MAJOR =  2;
  * The sscanf minor version number.
  * </remarks>
  */
-static stock SSCANF_VERSION_MINOR = 11;
-#define SSCANF_VERSION_MINOR 11
+static stock SSCANF_VERSION_MINOR = 13;
+#define SSCANF_VERSION_MINOR 13
 
 /**
  * <library>sscanf</library>
@@ -147,8 +156,8 @@ static stock SSCANF_VERSION_MINOR = 11;
  * The sscanf build number.
  * </remarks>
  */
-static stock SSCANF_VERSION_BUILD =  4;
-#define SSCANF_VERSION_BUILD  4
+static stock SSCANF_VERSION_BUILD =  1;
+#define SSCANF_VERSION_BUILD  1
 
 /**
  * <library>sscanf</library>
@@ -181,10 +190,7 @@ static stock SSCANF_VERSION_STRING[] = #SSCANF_VERSION_MAJOR "." #SSCANF_VERSION
  *
  * </remarks>
  */
-static stock BCD(number)
-{
-	return number;
-}
+forward BCD(number);
 
 #define BCD(%0) (_:MORE_BCD:NO_MORE_BCD:%0.$0)
 #define MORE_BCD:NO_MORE_BCD:%0.%1$%2) MORE_BCD:NO_MORE_BCD:%1$(%2) << 8 | DO_BCD(%0))
@@ -222,11 +228,11 @@ stock const SSCANF_VERSION_BCD = SSCANF_VERSION;
 #define sscanf_%0\32; sscanf_
 #define SSCANF:%0(%1) forward sscanf_%0(%1);public sscanf_%0(%1)
 
-// The check for `SSCANF_Option` ensures that this is the first compiler pass
-// and thus the check for `sscanf` only finds earlier definitions not our
-// later fake definition made purely for documentation purposes.
-#if defined sscanf && !defined SSCANF_Option
-	#error sscanf (possibly the PAWN version) already defined.
+// The check for `SSCANF_GetClosestString` ensures that this is the first
+// compiler pass and thus the check for `sscanf` only finds earlier definitions
+// not our later fake definition made purely for documentation purposes.
+#if defined sscanf && !defined SSCANF_GetClosestString
+	#error sscanf already defined, or used before inclusion.
 #endif
 
 /**
@@ -316,6 +322,23 @@ native SSCANF_Levenshtein(const string1[], const string2[]);
 
 /**
  * <library>sscanf</library>
+ * <param name="string1">The first string to compare.</param>
+ * <param name="string2">The second string to compare.</param>
+ * <remarks>
+ * This works out the similarity between two strings.  The Levenshtein distance
+ * often produces results that seem weird to people, for example by that measure
+ * <c>NRG</c> is closer to <c>TUG</c> than <c>NRG-400</c>.  Instead this
+ * function compares all pairs of letters between the two strings to work out
+ * what percentage of each string is in the other string, then multiplies the
+ * results to get the final similarity.  This algorithm produces much more human
+ * sane results, and can handle things like <c>ls police<c> matching
+ * <c>Police Car (LSPD)</c>.  It ignores all punctuation and case as well.
+ * </remarks>
+ */
+native Float:SSCANF_TextSimilarity(const string1[], const string2[]);
+
+/**
+ * <library>sscanf</library>
  * <param name="name">The sscanf option to look up.  For example <c>SSCANF_COLOUR_FORMS</c>.</param>
  * <remarks>
  * The old API used <c>SSCANF_Option</c> to both get and set parse options,
@@ -354,7 +377,7 @@ native SSCANF_GetOption__(const name[]) = SSCANF_Option;
  * value.  Instead the new API has explicit <c>Get</c> and <c>Set</c> functions.
  * </remarks>
  */
-native SSCANF_SetOption(const name[], value) = SSCANF_Option;
+native SSCANF_SetOption(const name[], {_, Float}:value) = SSCANF_Option;
 
 /**
  * <library>sscanf</library>
@@ -370,7 +393,7 @@ native SSCANF_SetOption(const name[], value) = SSCANF_Option;
  * to <c>Get__</c> and <c>Set__</c> functions.
  * </remarks>
  */
-native SSCANF_SetOption__(const name[], value) = SSCANF_Option;
+native SSCANF_SetOption__(const name[], {_, Float}:value) = SSCANF_Option;
 
 /**
  * <library>sscanf</library>
@@ -391,10 +414,7 @@ native SSCANF_SetOption__(const name[], value) = SSCANF_Option;
  * value.
  * </remarks>
  */
-static stock SSCANF_Option(const name[], value = -1)
-{
-	return value;
-}
+forward SSCANF_Option(const name[], {_, Float}:value = -1);
 
 #define SSCANF_Option SSCANF_GetOption__
 #define SSCANF_GetOption__(%0,%1) SSCANF_SetOption__(%0,%1)
@@ -478,10 +498,8 @@ static stock SSCANF_Version(version[] = "", size = sizeof (version))
  * well for improved error messages.
  * </remarks>
  */
-stock sscanf(const data[], const format[], {Float, _}:...)
-{
-	return 0;
-}
+#pragma deprecated - include <sscanf2> first.
+forward sscanf(const data[], const format[], {Float, _}:...);
 
 #if defined __PawnBuild
 	#define sscanf( SSCANF__(__file,__line,
@@ -496,6 +514,7 @@ stock sscanf(const data[], const format[], {Float, _}:...)
 #endif
 
 /**
+ * - include <sscanf2> first.
  * <library>sscanf</library>
  * <param name="data">The input string containing the data to parse out.</param>
  * <param name="format">The format description of what the input data should contain.</param>
@@ -506,10 +525,8 @@ stock sscanf(const data[], const format[], {Float, _}:...)
  * number as well for improved error messages.
  * </remarks>
  */
-stock unformat(const data[], const format[], {Float, _}:...)
-{
-	return 0;
-}
+#pragma deprecated - include <sscanf2> first.
+forward unformat(const data[], const format[], {Float, _}:...);
 
 #if defined __PawnBuild
 	#define unformat( SSCANF__(__file,__line,
@@ -731,13 +748,48 @@ stock const SSCANF_ARGB[] = "SSCANF_ARGB";
 /**
  * <library>sscanf</library>
  * <remarks>
+ * The <c>MATCH_NAME_FIRST</c> option as a constant string so you can get compile-
+ * time spell checking on the name.  Specify whether <c>u</c> etc keep searching
+ * for better matching player names after finding one:
+ *
+ * <code>
+ *     SSCANF_Option(MATCH_NAME_FIRST, 0); // Enable scanning for the best name match not the first (default). <br />
+ *     SSCANF_Option(MATCH_NAME_FIRST, 1); // Enable scanning for the first name match not the best (old behaviour).
+ * </code>
+ * </remarks>
+ */
+stock const MATCH_NAME_FIRST[] = "MATCH_NAME_FIRST";
+
+/**
+ * <library>sscanf</library>
+ * <remarks>
+ * The <c>MATCH_NAME_SIMILARITY</c> option as a constant string so you can get
+ * compile-time spell checking on the name.  Specify whether <c>u</c> etc should
+ * use the ngrams-based similarity algorithm when searching for players matching
+ * a given name.  I.e. enable or disable fuzzy name matching.  It will return
+ * the best match found, but depending on the threshold that may still be very
+ * different to what was typed.
+ *
+ * <code>
+ *     SSCANF_Option(MATCH_NAME_SIMILARITY, 0.0); // Will find all names, regardless of input. <br />
+ *     SSCANF_Option(MATCH_NAME_SIMILARITY, 1.0); // Will find exact matches only. <br />
+ *     SSCANF_Option(MATCH_NAME_SIMILARITY, 0.5); // Will find names somewhat similar to the input. <br />
+ *     SSCANF_Option(MATCH_NAME_SIMILARITY, -1.0); // Disable fuzzy name matching.
+ * </code>
+ * </remarks>
+ */
+stock const MATCH_NAME_SIMILARITY[] = "MATCH_NAME_SIMILARITY";
+
+/**
+ * <library>sscanf</library>
+ * <remarks>
  * Has sscanf been initialised at least once already in this script?  Avoids the
  * need to define <c>FILTERSCRIPT</c> by including <c>OnFilterScriptInit</c>
  * and <c>OnGameModeInit</c> (plus <c>OnNPCModeInit</c>) and seeing which one
  * gets called first.
  * </remarks>
  */
-static stock bool:SSCANF_gInit = false;
+static stock SSCANF_gInit = 0;
 
 // Pre-hook data.
 #if !defined CHAIN_ORDER
@@ -768,7 +820,9 @@ CHAIN_HOOK(SSCANF)
 static stock _SSCANF_IncludeStates() <_ALS : _ALS_x0, _ALS : _ALS_x1, _ALS : _ALS_x2, _ALS : _ALS_x3> {}
 static stock _SSCANF_IncludeStates() <_ALS : _ALS_go> {}
 
-forward SSCANF_PlayerCheck();
+#if SSCANF_NPC && !defined SSCANF_NO_PLAYERS
+	forward SSCANF_PlayerCheck();
+#endif
 
 /**
  * <library>sscanf</library>
@@ -808,21 +862,25 @@ static stock SSCANF_RunInit()
 		#endif
 	#else
 		state _ALS : _ALS_go;
-		new
-			name[MAX_PLAYER_NAME + 1];
 
-		SSCANF_Init(GetMaxPlayers(), INVALID_PLAYER_ID, MAX_PLAYER_NAME);
-		SSCANF_gInit = true;
-
-		// Check if there are any players that aren't initialized.
-		for (new i = 0; i < MAX_PLAYERS; i ++)
+		if ((SSCANF_gInit = SSCANF_Init(GetMaxPlayers(), INVALID_PLAYER_ID, MAX_PLAYER_NAME)) == 1)
 		{
-			if (IsPlayerConnected(i) && !SSCANF_IsConnected(i))
+			// SA:MP plugin.
+			new
+				name[MAX_PLAYER_NAME + 1];
+
+			// Check if there are any players that aren't initialized.
+			for (new i = 0; i != MAX_PLAYERS; ++i)
 			{
-				GetPlayerName(i, name, sizeof (name));
-				SSCANF_Join(i, name, bool:IsPlayerNPC(i));
+				if (IsPlayerConnected(i) && !SSCANF_IsConnected(i))
+				{
+					GetPlayerName(i, name, sizeof (name));
+					SSCANF_Join(i, name, bool:IsPlayerNPC(i));
+				}
 			}
 		}
+		// If the return is `0` we can try again later.  If it is `-1` the
+		// native code is an open.mp component.
 	#endif
 }
 
@@ -849,14 +907,14 @@ static stock SSCANF_RunInit()
 	#define OnNPCModeInit(%0) CHAIN_PUBLIC:SSCANF_OnNPCModeInit(%0)
 	CHAIN_FORWARD:SSCANF_OnNPCModeInit() = 1;
 #else
-	native SSCANF_OnNPCModeInit();
-	#define SSCANF_OnNPCModeInit()
+	const SSCANF_STATIC__ SSCANF_OnNPCModeInit = 0;
+	#define SSCANF_OnNPCModeInit
 #endif
 
 /**
  * <library>sscanf</library>
  * <remarks>
- * NPC modes have no "OnPlayerConnect callback, so we need to simulate one.
+ * NPC modes have no <c>OnPlayerConnect</c> callback, so we need to simulate one.
  * </remarks>
  */
 #if SSCANF_NPC && !defined SSCANF_NO_PLAYERS
@@ -885,8 +943,8 @@ static stock SSCANF_RunInit()
 		}
 	}
 #else
-	native SSCANF_PlayerCheck();
-	#define SSCANF_PlayerCheck()
+	const SSCANF_STATIC__ SSCANF_PlayerCheck = 0;
+	#define SSCANF_PlayerCheck
 #endif
 
 // `SSCANF_BRACKETS` to avoid macro replacements.
@@ -901,8 +959,8 @@ forward OnScriptInit SSCANF_BRACKETS;
  * </remarks>
  */
 #if SSCANF_NPC
-	native SSCANF_OnScriptInit();
-	#define SSCANF_OnScriptInit()
+	const SSCANF_STATIC__ SSCANF_OnScriptInit = 0;
+	#define SSCANF_OnScriptInit
 #else
 	public OnScriptInit()
 	{
@@ -931,8 +989,8 @@ forward OnScriptInit SSCANF_BRACKETS;
  * </remarks>
  */
 #if SSCANF_NPC
-	native SSCANF_OnFilterScriptInit();
-	#define SSCANF_OnFilterScriptInit()
+	const SSCANF_STATIC__ SSCANF_OnFilterScriptInit = 0;
+	#define SSCANF_OnFilterScriptInit
 #else
 	public OnFilterScriptInit()
 	{
@@ -962,8 +1020,8 @@ forward OnScriptInit SSCANF_BRACKETS;
  * </remarks>
  */
 #if SSCANF_NPC
-	native SSCANF_OnGameModeInit();
-	#define SSCANF_OnGameModeInit()
+	const SSCANF_STATIC__ SSCANF_OnGameModeInit = 0;
+	#define SSCANF_OnGameModeInit
 #else
 	public OnGameModeInit()
 	{
@@ -993,8 +1051,8 @@ forward OnCachedInit();
  * </remarks>
  */
 #if SSCANF_NPC
-	native SSCANF_OnCachedInit();
-	#define SSCANF_OnCachedInit()
+	const SSCANF_STATIC__ SSCANF_OnCachedInit = 0;
+	#define SSCANF_OnCachedInit
 #else
 	public OnCachedInit()
 	{
@@ -1022,15 +1080,18 @@ forward OnCachedInit();
  * </remarks>
  */
 #if SSCANF_NPC
-	native SSCANF_OnPlayerConnect();
-	#define SSCANF_OnPlayerConnect()
+	const SSCANF_STATIC__ SSCANF_OnPlayerConnect = 0;
+	#define SSCANF_OnPlayerConnect
 #else
 	public OnPlayerConnect(playerid)
 	{
-		new
-			name[MAX_PLAYER_NAME + 1];
-		GetPlayerName(playerid, name, sizeof(name));
-		SSCANF_Join(playerid, name, bool:IsPlayerNPC(playerid));
+		if (SSCANF_gInit == 1)
+		{
+			new
+				name[MAX_PLAYER_NAME + 1];
+			GetPlayerName(playerid, name, sizeof(name));
+			SSCANF_Join(playerid, name, bool:IsPlayerNPC(playerid));
+		}
 		SSCANF_OnPlayerConnect(playerid);
 		return 1;
 	}
@@ -1051,13 +1112,16 @@ forward OnCachedInit();
  * </remarks>
  */
 #if SSCANF_NPC
-	native SSCANF_OnPlayerDisconnect();
-	#define SSCANF_OnPlayerDisconnect()
+	const SSCANF_STATIC__ SSCANF_OnPlayerDisconnect = 0;
+	#define SSCANF_OnPlayerDisconnect
 #else
 	public OnPlayerDisconnect(playerid, reason)
 	{
 		SSCANF_OnPlayerDisconnect(playerid, reason);
-		SSCANF_Leave(playerid);
+		if (SSCANF_gInit == 1)
+		{
+			SSCANF_Leave(playerid);
+		}
 		return 1;
 	}
 
@@ -1161,6 +1225,70 @@ forward OnCachedInit();
  * otherwise again <c>-1</c> is returned.
  * </remarks>
  */
+stock SSCANF_GetSimilarString(const input[], const candidates[][], Float:threshold = 0.111111, count = sizeof (candidates))
+{
+	new
+		closest = cellmin,
+		Float:distance;
+	while (count--)
+	{
+		distance = SSCANF_TextSimilarity(input, candidates[count]);
+		if (distance >= threshold)
+		{
+			closest = count,
+			threshold = distance;
+		}
+	}
+	return closest;
+}
+
+/**
+ * <library>sscanf</library>
+ * <param name="input">The first string to compare.</param>
+ * <param name="candidates">A list of other strings to compare against.</param>
+ * <param name="results">The values to return when the corresponding candidate (by index) is the closest match.</param>
+ * <param name="fail">The value to return when there is no good match.</param>
+ * <param name="threshold">How similar the strings must be to be considered a match.</param>
+ * <param name="count">The number of candidates (must match <c>check</c>).</param>
+ * <param name="check">The number of results (must match <c>count</c>).</param>
+ * <remarks>
+ * Similar to <c>SSCANF_GetClosestString</c> in that it searches the
+ * <c>candidates</c> array for the string most closely matching the <c>input</c>
+ * and bounded by <c>threshold</c>.  But instead of returning the index this
+ * function returns the value in the second <c>results</c> array at that index;
+ * and instead of returning <c>-1</c> on failure it returns the value of
+ * <c>fail</c>.  The two arrays must match in size and an <c>assert</c> in the
+ * function checks for this.
+ * </remarks>
+ */
+stock SSCANF_GetSimilarValue(const input[], const candidates[][], const results[], fail = cellmin, Float:threshold = 0.111111, count = sizeof (candidates), check = sizeof (results))
+{
+	assert(count == check);
+	new closest = SSCANF_GetSimilarString(input, candidates, threshold, count);
+	if (closest == cellmin)
+	{
+		return fail;
+	}
+	return results[closest];
+}
+
+/**
+ * <library>sscanf</library>
+ * <param name="input">The first string to compare.</param>
+ * <param name="candidates">A list of other strings to compare against.</param>
+ * <param name="threshold">How similar the strings must be to be considered a match.</param>
+ * <param name="count">The number of candidates.</param>
+ * <remarks>
+ * Takes an input string and an array of string possibilities (candidates) and
+ * returns the index of the string closest to the input string.  If no valid
+ * match is found, <c>-1</c> is returned.  Note that this will always return the
+ * closest, even if the closest is not that close; which is why an optional
+ * <c>threshold</c> parameter is available.  When this parameter is provided the
+ * closest match must be closer in Levenshtein distance than the threshold,
+ * otherwise again <c>-1</c> is returned.
+ * </remarks>
+ */
+#pragma deprecated Use `SSCANF_GetSimilarString` for more human results.
 stock SSCANF_GetClosestString(const input[], const candidates[][], threshold = cellmax, count = sizeof (candidates))
 {
 	new
@@ -1197,6 +1325,7 @@ stock SSCANF_GetClosestString(const input[], const candidates[][], threshold = c
  * function checks for this.
  * </remarks>
  */
+#pragma deprecated Use `SSCANF_GetSimilarValue` for more human results.
 stock SSCANF_GetClosestValue(const input[], const candidates[][], const results[], fail = cellmin, threshold = cellmax, count = sizeof (candidates), check = sizeof (results))
 {
 	assert(count == check);
@@ -1290,7 +1419,7 @@ stock SSCANF_GetClosestValue(const input[], const candidates[][], const results[
 		}
 		else
 		{
-			return SSCANF_GetClosestValue(string, candidates, results, -1);
+			return SSCANF_GetSimilarValue(string, candidates, results, -1);
 		}
 		return -1;
 	}
@@ -1330,7 +1459,7 @@ stock SSCANF_GetClosestValue(const input[], const candidates[][], const results[
 			"Bravura",
 			"Buffalo",
 			"Linerunner",
-			"Perenniel",
+			"Perennial",
 			"Sentinel",
 			"Dumper",
 			"Firetruck",
@@ -1372,7 +1501,7 @@ stock SSCANF_GetClosestValue(const input[], const candidates[][], const results[
 			"Packer",
 			"Monster",
 			"Admiral",
-			"Squallo",
+			"Squalo",
 			"Seasparrow",
 			"Pizzaboy",
 			"Tram",
@@ -1385,7 +1514,7 @@ stock SSCANF_GetClosestValue(const input[], const candidates[][], const results[
 			"Yankee",
 			"Caddy",
 			"Solair",
-			"Berkley's RC Van",
+			"Topfun Van (Berkley's RC)",
 			"Skimmer",
 			"PCJ-600",
 			"Faggio",
@@ -1428,10 +1557,10 @@ stock SSCANF_GetClosestValue(const input[], const candidates[][], const results[
 			"Benson",
 			"Mesa",
 			"RC Goblin",
-			"Hotring Racer",
-			"Hotring Racer",
+			"Hotring Racer \"A\"",
+			"Hotring Racer \"B\"",
 			"Bloodring Banger",
-			"Rancher",
+			"Rancher Lure",
 			"Super GT",
 			"Elegant",
 			"Journey",
@@ -1552,7 +1681,7 @@ stock SSCANF_GetClosestValue(const input[], const candidates[][], const results[
 		}
 		else
 		{
-			return SSCANF_GetClosestValue(string, candidates, results, -1);
+			return SSCANF_GetSimilarValue(string, candidates, results, -1);
 		}
 		return -1;
 	}

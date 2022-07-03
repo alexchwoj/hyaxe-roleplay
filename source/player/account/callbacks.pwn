@@ -198,6 +198,11 @@ public OnPlayerDisconnect(playerid, reason)
     Account_Save(playerid, true);
 
     g_rgePlayerData[playerid] = g_rgePlayerData[MAX_PLAYERS];
+    for(new i = e_iMaxTimer - 1; i != -1; --i)
+    {
+        KillTimer(g_rgePlayerTempData[playerid][e_rgiTimers][i]);
+    }
+
     Player_ResetTemp(playerid);
     Bit_SetAll(Player_Flags(playerid), false);
 

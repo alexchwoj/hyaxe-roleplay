@@ -26,11 +26,8 @@ command cagar(playerid, const params[], "Echa un cago")
     
     g_rgePlayerTempData[playerid][e_iPlayerShitTick] = GetTickCount();
 
-    new Float:x, Float:y, Float:z;
-    GetPlayerPos(playerid, x, y, z),
-
     ApplyAnimation(playerid, "PED", "SEAT_IDLE", 4.1, false, false, false, true, 0, false);
-    SetTimerEx("SHIT_StepOne", 2000, false, "i", playerid);
+    Player_Timer(playerid, e_iPlayerShitTimer) = SetTimerEx("SHIT_StepOne", 2000, false, "i", playerid);
 
     Chat_SendAction(playerid, "echa un cago");
     return 1;
@@ -39,6 +36,8 @@ command cagar(playerid, const params[], "Echa un cago")
 forward SHIT_StepOne(playerid);
 public SHIT_StepOne(playerid)
 {
+    Player_Timer(playerid, e_iPlayerShitTimer) = 0;
+    
     new Float:x, Float:y, Float:z;
     GetPlayerPos(playerid, x, y, z);
 

@@ -26,19 +26,6 @@
 #define CR_SERVER_LOST_EXTENDED 		2055
 
 
-#if !defined E_LOGLEVEL
-enum E_LOGLEVEL
-{
-	NONE = 0,
-	DEBUG = 1,
-	INFO = 2,
-	WARNING = 4,
-	ERROR = 8,
-	
-	ALL = ERROR | WARNING | INFO | DEBUG
-};
-#endif
-
 enum E_ORM_ERROR
 {
 	ERROR_INVALID,
@@ -69,21 +56,21 @@ enum E_MYSQL_OPTION
 enum E_MYSQL_FIELD_TYPE
 {
 	MYSQL_TYPE_INVALID = -1,
-	MYSQL_TYPE_DECIMAL = 0, 
+	MYSQL_TYPE_DECIMAL = 0,
 	MYSQL_TYPE_TINY,
-	MYSQL_TYPE_SHORT,  
+	MYSQL_TYPE_SHORT,
 	MYSQL_TYPE_LONG,
-	MYSQL_TYPE_FLOAT,  
+	MYSQL_TYPE_FLOAT,
 	MYSQL_TYPE_DOUBLE,
-	MYSQL_TYPE_NULL,   
+	MYSQL_TYPE_NULL,
 	MYSQL_TYPE_TIMESTAMP,
 	MYSQL_TYPE_LONGLONG,
 	MYSQL_TYPE_INT24,
-	MYSQL_TYPE_DATE,   
+	MYSQL_TYPE_DATE,
 	MYSQL_TYPE_TIME,
-	MYSQL_TYPE_DATETIME, 
+	MYSQL_TYPE_DATETIME,
 	MYSQL_TYPE_YEAR,
-	MYSQL_TYPE_NEWDATE, 
+	MYSQL_TYPE_NEWDATE,
 	MYSQL_TYPE_VARCHAR,
 	MYSQL_TYPE_BIT,
 	MYSQL_TYPE_TIMESTAMP2,
@@ -123,13 +110,13 @@ native E_ORM_ERROR:orm_errno(ORM:id);
 
 native orm_apply_cache(ORM:id, row_idx, result_idx = 0);
 
-native orm_select(ORM:id, const callback[] = "", const format[] = "", {Float, _}:...);
-native orm_update(ORM:id, const callback[] = "", const format[] = "", {Float, _}:...);
-native orm_insert(ORM:id, const callback[] = "", const format[] = "", {Float, _}:...);
-native orm_delete(ORM:id, const callback[] = "", const format[] = "", {Float, _}:...);
+native orm_select(ORM:id, const callback[] = "", const format[] = "", {ORM, Float, _}:...);
+native orm_update(ORM:id, const callback[] = "", const format[] = "", {ORM, Float, _}:...);
+native orm_insert(ORM:id, const callback[] = "", const format[] = "", {ORM, Float, _}:...);
+native orm_delete(ORM:id, const callback[] = "", const format[] = "", {ORM, Float, _}:...);
 
-native orm_load(ORM:id, const callback[] = "", const format[] = "", {Float, _}:...) = orm_select;
-native orm_save(ORM:id, const callback[] = "", const format[] = "", {Float, _}:...);
+native orm_load(ORM:id, const callback[] = "", const format[] = "", {ORM, Float, _}:...) = orm_select;
+native orm_save(ORM:id, const callback[] = "", const format[] = "", {ORM, Float, _}:...);
 
 native orm_addvar_int(ORM:id, &var, const columnname[]);
 native orm_addvar_float(ORM:id, &Float:var, const columnname[]);
@@ -141,7 +128,6 @@ native orm_setkey(ORM:id, const columnname[]);
 
 
 // MySQL functions
-native mysql_log(E_LOGLEVEL:loglevel = ERROR | WARNING);
 native MySQL:mysql_connect(const host[], const user[], const password[], const database[], MySQLOpt:option_id = MySQLOpt:0);
 native MySQL:mysql_connect_file(const file_name[] = "mysql.ini");
 native mysql_close(MySQL:handle = MYSQL_DEFAULT_HANDLE);
@@ -152,16 +138,16 @@ native mysql_global_options(E_MYSQL_GLOBAL_OPTION:type, value);
 native MySQLOpt:mysql_init_options();
 native mysql_set_option(MySQLOpt:option_id, E_MYSQL_OPTION:type, ...);
 
-native mysql_pquery(MySQL:handle, const query[], const callback[] = "", const format[] = "", {Float,_}:...);
-native mysql_tquery(MySQL:handle, const query[], const callback[] = "", const format[] = "", {Float,_}:...);
+native mysql_pquery(MySQL:handle, const query[], const callback[] = "", const format[] = "", {MySQL, Float,_}:...);
+native mysql_tquery(MySQL:handle, const query[], const callback[] = "", const format[] = "", {MySQL, Float,_}:...);
 native Cache:mysql_query(MySQL:handle, const query[], bool:use_cache = true);
-native mysql_tquery_file(MySQL:handle, const file_path[], const callback[] = "", const format[] = "", {Float,_}:...);
+native mysql_tquery_file(MySQL:handle, const file_path[], const callback[] = "", const format[] = "", {MySQL, Float,_}:...);
 native Cache:mysql_query_file(MySQL:handle, const file_path[], bool:use_cache = false);
 
 native mysql_errno(MySQL:handle = MYSQL_DEFAULT_HANDLE);
 native mysql_error(destination[], max_len = sizeof(destination), MySQL:handle = MYSQL_DEFAULT_HANDLE);
 native mysql_escape_string(const source[], destination[], max_len = sizeof(destination), MySQL:handle = MYSQL_DEFAULT_HANDLE);
-native mysql_format(MySQL:handle, output[], max_len, const format[], {Float,_}:...);
+native mysql_format(MySQL:handle, output[], max_len, const format[], {MySQL, Float,_}:...);
 native mysql_set_charset(const charset[], MySQL:handle = MYSQL_DEFAULT_HANDLE);
 native mysql_get_charset(destination[], max_len = sizeof(destination), MySQL:handle = MYSQL_DEFAULT_HANDLE);
 native mysql_stat(destination[], max_len = sizeof(destination), MySQL:handle = MYSQL_DEFAULT_HANDLE);
@@ -223,25 +209,13 @@ stock cache_num_results()
 native cache_get_value_index(row_idx, column_idx, destination[], max_len = sizeof(destination));
 native cache_get_value_index_int(row_idx, column_idx, &destination);
 native cache_get_value_index_float(row_idx, column_idx, &Float:destination);
-/*
-native cache_get_value_index_bool(row_idx, column_idx, &bool:destination);
-*/
-stock cache_get_value_index_bool(row_idx, column_idx, &bool:destination)
-{
-    return cache_get_value_index_int(row_idx, column_idx, _:destination);
-}
+native cache_get_value_index_bool(row_idx, column_idx, &bool:destination) = cache_get_value_index_int;
 native cache_is_value_index_null(row_idx, column_idx, &bool:destination);
 
 native cache_get_value_name(row_idx, const column_name[], destination[], max_len = sizeof(destination));
 native cache_get_value_name_int(row_idx, const column_name[], &destination);
 native cache_get_value_name_float(row_idx, const column_name[], &Float:destination);
-/*
-native cache_get_value_name_bool(row_idx, const column_name[], &bool:destination);
-*/
-stock cache_get_value_name_bool(row_idx, const column_name[], &bool:destination)
-{
-    return cache_get_value_name_int(row_idx, column_name, _:destination);
-}
+native cache_get_value_name_bool(row_idx, const column_name[], &bool:destination) = cache_get_value_name_int;
 native cache_is_value_name_null(row_idx, const column_name[], &bool:destination);
 
 native Cache:cache_save();
@@ -261,3 +235,24 @@ native cache_get_query_string(destination[], max_len = sizeof(destination));
 
 // Forward declarations
 forward OnQueryError(errorid, const error[], const callback[], const query[], MySQL:handle);
+
+
+// Deprecated functions
+
+#if !defined E_LOGLEVEL
+enum E_LOGLEVEL
+{
+	NONE = 0,
+	DEBUG = 1,
+	INFO = 2,
+	WARNING = 4,
+	ERROR = 8,
+	ALL = ERROR | WARNING | INFO | DEBUG
+};
+#endif
+
+#pragma deprecated Configuring log levels is now done through the "log-config.yml" file
+stock mysql_log(E_LOGLEVEL:loglevel = ERROR | WARNING)
+{
+	#pragma unused loglevel
+}
