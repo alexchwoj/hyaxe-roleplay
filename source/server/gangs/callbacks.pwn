@@ -586,6 +586,8 @@ dialog gang_abandon(playerid, response, listitem, const inputtext[])
         }
 
         Iter_Clear(GangMember[gangid]);
+        map_remove(g_mapGangIds, g_rgeGangs[gangid][e_iGangDbId]);
+        
         g_rgeGangs[gangid][e_iGangDbId] =
         g_rgeGangs[gangid][e_szGangName] = '\0';
 
@@ -644,21 +646,20 @@ dialog gang_change_name(playerid, response, listitem, inputtext[])
         return 1;
     }
 
-    new new_name[64];
-    if(sscanf(inputtext, "s[64]", new_name))
+    if(isnull(inputtext) || strlen(inputtext) > 64)
     {
         Dialog_Show(playerid, "gang_change_name", DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Cambiar nombre", "{DADADA}Introduce el nuevo nombre de la banda. Debe tener una longitud entre {CB3126}1{DADADA} y {CB3126}64{DADADA} caracteres.", "Cambiar", "Cancelar");
         return 1;
     }
+    
+    strcpy(Gang_Data(Player_Gang(playerid))[e_szGangName], inputtext);
 
-    strcpy(Gang_Data(Player_Gang(playerid))[e_szGangName], new_name);
-
-    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "[BANDA] {DADADA}%s cambió el nombre de la banda a %s.", Player_RPName(playerid), new_name);
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "[BANDA] {DADADA}%s cambió el nombre de la banda a %s.", Player_RPName(playerid), inputtext);
     Gang_SendMessage(Player_Gang(playerid), HYAXE_UNSAFE_HUGE_STRING);
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
         UPDATE `GANGS` SET `GANG_NAME` = '%e' WHERE `GANG_ID` = %i;\
-    ", new_name, Gang_Data(Player_Gang(playerid))[e_iGangDbId]);
+    ", inputtext, Gang_Data(Player_Gang(playerid))[e_iGangDbId]);
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
     
     Gangs_OpenPanel(playerid);

@@ -228,7 +228,7 @@ public ATM_OnFinishBankTransfer(playerid, bank_account, amount)
             mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
         }
 
-        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Sa acaban de transferir ~g~$%s~w~ a la cuenta %d.", Format_Thousand(amount), bank_account);
+        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Se acaban de transferir ~g~$%s~w~ a la cuenta %d.", Format_Thousand(amount), bank_account);
         Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 3000, 0x64A752FF);
         PlayerPlaySound(playerid, SOUND_SUCCESS);
     }
