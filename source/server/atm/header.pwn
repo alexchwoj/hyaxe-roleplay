@@ -21,7 +21,6 @@ enum eAtmInfo {
     Text3D:e_iAtmLabel,
     Float:e_fAtmHealth,
 
-    e_iAtmArea,
     e_iAtmObject
 };
 

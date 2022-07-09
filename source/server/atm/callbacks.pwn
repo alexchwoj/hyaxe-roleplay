@@ -112,39 +112,11 @@ public OnPlayerAuthenticate(playerid)
 #endif
 
 
-public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
+static ATM_OnPress(playerid)
 {
-    if ((newkeys & KEY_YES) != 0)
-    {
-        if (IsPlayerInAnyDynamicArea(playerid))
-        {
-            for_list(i : GetPlayerAllDynamicAreas(playerid))
-            {
-                new areaid = iter_get(i);
-                if(Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x41544D)))
-                {
-                    ATM_ShowMenu(playerid);
-                }
-            }
-        }
-    }
-
-    #if defined ATM_OnPlayerKeyStateChange
-        return ATM_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-    #else
-        return 1;
-    #endif
+    ATM_ShowMenu(playerid);
+    return 1;
 }
-
-#if defined _ALS_OnPlayerKeyStateChange
-    #undef OnPlayerKeyStateChange
-#else
-    #define _ALS_OnPlayerKeyStateChange
-#endif
-#define OnPlayerKeyStateChange ATM_OnPlayerKeyStateChange
-#if defined ATM_OnPlayerKeyStateChange
-    forward ATM_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-#endif
 
 public OnGameModeInit()
 {
@@ -168,16 +140,11 @@ public OnGameModeInit()
             g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], g_rgeATMBank[i][e_fAtmPosZ] + 2.0, 5.0,
             .testlos = true, .worldid = g_rgeATMBank[i][e_iAtmWorld], .interiorid = g_rgeATMBank[i][e_iAtmInterior]
         );
-
-        g_rgeATMBank[i][e_iAtmArea] = CreateDynamicCircle(
-            g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], 1.2,
-            .worldid = g_rgeATMBank[i][e_iAtmWorld], .interiorid = g_rgeATMBank[i][e_iAtmInterior]
-        );
-        Streamer_SetIntData(STREAMER_TYPE_AREA, g_rgeATMBank[i][e_iAtmArea], E_STREAMER_CUSTOM(0x41544D), i);
     
         Key_Alert(
             g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], g_rgeATMBank[i][e_fAtmPosZ], 1.2,
-            KEYNAME_YES, g_rgeATMBank[i][e_iAtmWorld], g_rgeATMBank[i][e_iAtmInterior]
+            KEYNAME_YES, g_rgeATMBank[i][e_iAtmWorld], g_rgeATMBank[i][e_iAtmInterior],
+            .callback_on_press = __addressof(ATM_OnPress), .cb_data = i
         );
     }
 

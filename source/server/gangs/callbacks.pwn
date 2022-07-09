@@ -83,7 +83,7 @@ public OnGameModeInit()
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if(((newkeys & (KEY_SPRINT | KEY_YES)) == KEY_SPRINT | KEY_YES) && !IsPlayerInAnyVehicle(playerid))
+    if((newkeys & (KEY_SPRINT | KEY_YES)) == KEY_SPRINT | KEY_YES)
     {
         if(Player_Gang(playerid) != -1)
         {

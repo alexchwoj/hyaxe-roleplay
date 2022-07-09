@@ -182,8 +182,7 @@ Notification_HideBeatingText(playerid)
     if(!g_rgiTextProcessTick[playerid])
         return 0;
 
-    KillTimer(g_rgiTextProcessTimer[playerid]);
-    g_rgiTextProcessTick[playerid] = 0;
+    Timer_Kill(g_rgiTextProcessTimer[playerid]);
     PlayerTextDrawHide(playerid, p_tdBeatingText{playerid});
 
     return 1;
