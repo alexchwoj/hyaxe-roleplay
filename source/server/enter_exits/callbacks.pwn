@@ -15,12 +15,12 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 if(Streamer_HasArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x4545)))
                 {
                     new info[2];
-                    Streamer_GetArrayData(STREAMER_TYPE_AREA, iter_get(i), E_STREAMER_CUSTOM(0x4545), info);
+                    Streamer_GetArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x4545), info);
 
                     new id = info[0];
                     if(g_rgeEnterExits[id][e_iEnterExitCallback] != 0)
                     {
-                        new ret, data = g_rgeEnterExits[id][e_iEnterExitData], addr = g_rgeEnterExits[id][e_iEnterExitCallback], enter = info[1];
+                        new data = g_rgeEnterExits[id][e_iEnterExitData], addr = g_rgeEnterExits[id][e_iEnterExitCallback], enter = info[1];
                         __emit {
                             push.s data
                             push.s enter
@@ -32,11 +32,12 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                             push.pri
                             load.s.pri addr
                             sctrl 6
-                            stor.s.pri ret
+                            jnz L1
+                            const.pri 1
+                            retn
                         }
 
-                        if(!ret)
-                            return 1;
+                        L1:
                     }
 
                     if(info[1])

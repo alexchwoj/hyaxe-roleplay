@@ -306,7 +306,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/gangs/commands.pwn"
 
 // Prevents runtime error 20 (invalid index)
-main() { return 0; }
+main() { Chat_Clear(0, 20); return 0; }
 
 public OnJITCompile()
 {

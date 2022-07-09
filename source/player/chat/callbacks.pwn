@@ -77,7 +77,7 @@ public OnPlayerText(playerid, text[])
 {
     if (Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
     {
-        if (GetTickDiff(GetTickCount(), g_rgePlayerTempData[playerid][e_iPlayerChatTick]) < 350)
+        if (GetTickCount() - g_rgePlayerTempData[playerid][e_iPlayerChatTick] < 350)
         {
             SendClientMessage(playerid, 0xCB3126FF, "›{DADADA} ¡Vas a quemar el teclado!");
             return 0;

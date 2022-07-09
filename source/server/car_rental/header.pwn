@@ -3,7 +3,7 @@
 #endif
 #define _car_rental_header_
 
-new Float:g_rgfCarRentalPosition[][] = {
+new Float:g_rgfCarRentalPosition[][4] = {
     { 1675.4479, -1129.3870, 23.6333, 89.7122 }, 
     { 1676.4674, -1124.8604, 23.6333, 90.0914 }, 
     { 1675.4646, -1120.2682, 23.6333, 90.1928 }, 

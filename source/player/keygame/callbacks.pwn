@@ -60,7 +60,7 @@ public KEYGAME_ProcessKey(playerid)
     }
     else
     {
-        if(!g_rgeKeyGameData[playerid][e_bKgKeyRed] && GetTickDiff(GetTickCount(), g_rgeKeyGameData[playerid][e_iKgLastKeyAppearance]) >= 5000)
+        if(!g_rgeKeyGameData[playerid][e_bKgKeyRed] && GetTickCount() - g_rgeKeyGameData[playerid][e_iKgLastKeyAppearance] >= 5000)
         {
             g_rgeKeyGameData[playerid][e_bKgKeyRed] = true;
             g_rgeKeyGameData[playerid][e_iKgKeyRedTick] = GetTickCount();
@@ -69,7 +69,7 @@ public KEYGAME_ProcessKey(playerid)
             format(keystr, sizeof(keystr), "~r~%s", g_rgszKeyNames[g_rgeKeyGameData[playerid][e_iKgCurrentKey]]);
             PlayerTextDrawSetString(playerid, p_tdKeyGame{playerid}, keystr);
         }
-        else if(g_rgeKeyGameData[playerid][e_bKgKeyRed] && GetTickDiff(GetTickCount(), g_rgeKeyGameData[playerid][e_iKgKeyRedTick]) >= 5000)
+        else if(g_rgeKeyGameData[playerid][e_bKgKeyRed] && GetTickCount() - g_rgeKeyGameData[playerid][e_iKgKeyRedTick] >= 5000)
         {
             new cb = g_rgeKeyGameData[playerid][e_pKgCallback];
             Player_StopKeyGame(playerid);
