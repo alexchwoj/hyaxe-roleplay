@@ -29,6 +29,7 @@ enum eGangRankPermissions(<<=1)
 
     GANG_PERM_LAST
 };
+
 new const g_rgszGangPermNames[][32] = {
     "Cambiar color",
     "Cambiar nombre",

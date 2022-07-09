@@ -405,7 +405,8 @@ command veh(playerid, const params[], "Crea un vehículo")
     new vehicleid = Vehicle_Create(modelid, x, y, z, ang, color1, color2, 0);
     Vehicle_SetInterior(vehicleid, GetPlayerInterior(playerid));
     Vehicle_SetVirtualWorld(vehicleid, GetPlayerVirtualWorld(playerid));
-
+    Vehicle_Type(vehicleid) = VEHICLE_TYPE_ADMIN;
+    
     PutPlayerInVehicle(playerid, vehicleid, 0);
 
     SendClientMessagef(playerid, 0xED2B2BFF, "› {DADADA}Se creó un {ED2B2B}%s {DADADA}(modelo {ED2B2B}%d{DADADA}) {DADADA}en tu posición.", Vehicle_GetModelName(modelid), modelid);

@@ -129,7 +129,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
 {
     if (Streamer_HasArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4B4559)))
     {
-        new info[3];
+        new info[4];
         Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4B4559), info);
 
         if(info[1] == KEY_TYPE_VEHICLE && !IsPlayerInAnyVehicle(playerid))
@@ -192,7 +192,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         {
             if(Streamer_HasArrayData(STREAMER_TYPE_AREA, area_arr[0][i], E_STREAMER_CUSTOM(0x4B4559)))
             {
-                new info[3];
+                new info[4];
                 Streamer_GetArrayData(STREAMER_TYPE_AREA, area_arr[0][i], E_STREAMER_CUSTOM(0x4B4559), info);
 
                 if(info[2] == -1)
@@ -203,15 +203,19 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     if(info[1] == KEY_TYPE_VEHICLE && !IsPlayerInAnyVehicle(playerid))
                         break;
 
-                    new callback = info[2];
-                    __emit {                // callback(playerid)
+                    new 
+                        cb_address = info[2],
+                        cb_data = info[3];
+
+                    __emit {                // callback(playerid, cb_data)
+                        push.s cb_data
                         push.s playerid     // playerid
-                        push.c 4
+                        push.c 8
                         lctrl 6
                         add.c 0x24
                         lctrl 8
                         push.pri
-                        load.s.pri callback
+                        load.s.pri cb_address
                         sctrl 6
                     }
                 }
