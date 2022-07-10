@@ -307,7 +307,21 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/gangs/commands.pwn"
 
 // Prevents runtime error 20 (invalid index)
-main() { return 0; }
+main()
+{
+	new args[2];
+	SetTimerEx("test_awaited_callback", 5000, false, "ii", 4, 2);
+	await_arr(args) wait_for_callback("test_awaited_callback", expr_eq(expr_arg(0), expr_const(2)));
+	printf("args[0] = %i\nargs[1] = %i", args[0], args[1]);
+	return 0; 
+}
+
+forward test_awaited_callback(a, b);
+public test_awaited_callback(a, b)
+{
+	printf("test_awaited_callback(a = %i, b = %i)", a, b);
+	return 1;
+}
 
 public OnJITCompile()
 {

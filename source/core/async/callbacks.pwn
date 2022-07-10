@@ -46,3 +46,42 @@ public hy@AsyncQueryDone(Handle<Task>:task_handle)
 
     return 1;
 }
+
+forward HandleTaskedCallback(CallbackHandler:cb_handle, Handle<Task>:th, Handle<Expression>:eh);
+public HandleTaskedCallback(CallbackHandler:cb_handle, Handle<Task>:th, Handle<Expression>:eh)
+{
+    DEBUG_PRINT("HandleTaskedCallback called");
+    DEBUG_PRINT("Handle<Task> is linked: %i", handle_linked<Task>(th));
+    DEBUG_PRINT("Handle<Expression> is linked: %i", handle_linked<Expression>(eh));
+
+    if(!handle_linked<Task>(th))
+    {
+        handle_release<Expression>(eh);
+        handle_release<Task>(th);
+        pawn_unregister_callback(cb_handle);
+        return 0;
+    }
+
+    new Expression:expr = handle_get<Expression>(eh);
+
+    new stack[32];
+    for(new i = 3, j = GetCurrentFrameParameterCount(); i < j; ++i)
+    {
+        stack[i - 3] = GetCurrentFrameParameter(i);
+        expr = expr_bind(expr, expr_const(stack[i - 3]));
+    }
+
+    new result = expr_get(expr);
+    DEBUG_PRINT("result = %i", result);
+    expr_delete(expr);
+
+    if(result)
+    {
+        task_set_result_arr(handle_get<Task>(th), stack);
+        handle_release<Expression>(eh);
+        handle_release<Task>(th);
+        pawn_unregister_callback(cb_handle);
+    }
+
+    return 0;
+}
