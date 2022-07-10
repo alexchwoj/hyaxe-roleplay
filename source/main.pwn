@@ -327,3 +327,10 @@ SSCANF:boolean(string[])
 
 	return 0;
 }
+
+command settime(playerid, const params[], "")
+{
+	extract params -> new hour, minute;
+	SetPlayerTime(playerid, hour, minute);
+	return 1;
+}
