@@ -213,6 +213,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/actors/functions.pwn"
 #include "server/atm/functions.pwn"
 #include "server/jobs/functions.pwn"
+#include "server/jobs/gunsmaker/functions.pwn"
 #include "server/hospital/functions.pwn"
 #include "server/hookers/functions.pwn"
 #include "server/church/functions.pwn"

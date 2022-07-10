@@ -81,14 +81,16 @@ Account_Save(playerid, bool:disconnect = false)
             `SKIN` = %i, \
             `LEVEL` = %i, \
             `XP` = %i, \
+            `MONEY` = %i, \
             `CURRENT_PLAYERID` = %i%s \
         WHERE `ID` = %i;\
     ", 
         g_rgePlayerData[playerid][e_iPlayerPausedTime],
         g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle],
         Player_VirtualWorld(playerid), Player_Interior(playerid), Player_Health(playerid), Player_Armor(playerid), Player_Hunger(playerid), Player_Thirst(playerid),
-        Player_Skin(playerid), Player_Level(playerid), Player_XP(playerid), (disconnect ? -1 : playerid), 
-        (disconnect ? ", CURRENT_CONNECTION = 0" : ""), Player_AccountID(playerid)
+        Player_Skin(playerid), Player_Level(playerid), Player_XP(playerid), Player_Money(playerid),
+        (disconnect ? -1 : playerid), (disconnect ? ", CURRENT_CONNECTION = 0" : ""), 
+        Player_AccountID(playerid)
     );
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 
