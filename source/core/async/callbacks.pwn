@@ -85,3 +85,23 @@ public HandleTaskedCallback(CallbackHandler:cb_handle, Handle<Task>:th, Handle<E
 
     return 0;
 }
+
+public hy@Async_OnQueryError(CallbackHandler:cb_handler, Handle<Task>:th, errorid, const error[], const callback[], const query[], MySQL:handle)
+{
+    new Handle<Task>:cb_task_handle;
+    if(amx_try_decode_value(callback, Handle:cb_task_handle))
+    {
+        if(th == cb_task_handle)
+        {
+            if(handle_linked<Task>(th))
+            {
+                task_set_error(handle_get<Task>(th), amx_err_exit);
+            }
+
+            pawn_unregister_callback(cb_handler);
+            handle_release<Task>(th);
+        }
+    }
+
+    return 0;
+}
