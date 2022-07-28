@@ -72,10 +72,9 @@
 #define PP_SYNTAX_ON_EXIT
 #define PP_SYNTAX_FOR_LIST
 #define PP_SYNTAX_GENERIC
-#define PP_SYNTAX_FOR_LIST
 #define PP_SYNTAX_AWAIT
 #define PP_SYNTAX_@
-#define PP_ADDITIONAL_TAGS Cache,ArgTag
+#define PP_ADDITIONAL_TAGS ArgTag
 
 #define FCNPC_DISABLE_VERSION_CHECK
 
@@ -214,6 +213,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/actors/functions.pwn"
 #include "server/atm/functions.pwn"
 #include "server/jobs/functions.pwn"
+#include "server/jobs/gunsmaker/functions.pwn"
 #include "server/hospital/functions.pwn"
 #include "server/hookers/functions.pwn"
 #include "server/church/functions.pwn"
@@ -284,6 +284,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/police/callbacks.pwn"
 #include "player/weapons/callbacks.pwn"
 #include "player/gps/callbacks.pwn"
+//#include "server/debug/callbacks.pwn"
 
 // Anticheat
 ///////////////
@@ -297,6 +298,7 @@ const HYAXE_MAX_NPCS = 100;
 
 // Commands
 //////////////
+#include "server/anticheat/commands.pwn"
 #include "player/chat/commands.pwn"
 #include "player/needs/commands.pwn"
 #include "player/admin/commands.pwn"
@@ -325,4 +327,11 @@ SSCANF:boolean(string[])
 	else if(!strcmp(string, "no", true)) return 0;
 
 	return 0;
+}
+
+command settime(playerid, const params[], "")
+{
+	extract params -> new hour, minute;
+	SetPlayerTime(playerid, hour, minute);
+	return 1;
 }

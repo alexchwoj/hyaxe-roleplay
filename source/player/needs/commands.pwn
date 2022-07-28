@@ -6,16 +6,19 @@
 command cagar(playerid, const params[], "Echa un cago")
 {
     if(GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
-        return SendClientMessage(playerid, 0xDADADAFF, "No estas {CB3126}de pie{DADADA}.");
+        return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No estás de pie");
 
     if(GetPlayerSurfingObjectID(playerid) != INVALID_OBJECT_ID)
-        return SendClientMessage(playerid, 0xDADADAFF, "No puedes cagar {CB3126}encima de un objeto{DADADA}.");
+        return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes cagar encima de un objeto");
 
     if(GetPlayerSurfingVehicleID(playerid) != INVALID_VEHICLE_ID)
-        return SendClientMessage(playerid, 0xDADADAFF, "No puedes cagar {CB3126}encima de un vehículo{DADADA}.");
+        return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes cagar encima de un vehículo");
 
-    new diff = GetTickDiff(GetTickCount(), g_rgePlayerTempData[playerid][e_iPlayerShitTick]);
-    if(diff <= 120000)
+    if(!CA_IsPlayerOnSurface(playerid, 0.5))
+        return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes cagar en el aire");
+
+    new diff = GetTickCount() - g_rgePlayerTempData[playerid][e_iPlayerShitTick];
+    if(120000 > diff)
     {
         SendClientMessagef(playerid, 0xDADADAFF, "Cagaste hace poco. Espera {CB3126}%i minutos{DADADA} antes de volver a cagar.", ((120000 - diff) / 60000));
         return 0;
@@ -23,11 +26,8 @@ command cagar(playerid, const params[], "Echa un cago")
     
     g_rgePlayerTempData[playerid][e_iPlayerShitTick] = GetTickCount();
 
-    new Float:x, Float:y, Float:z;
-    GetPlayerPos(playerid, x, y, z),
-
     ApplyAnimation(playerid, "PED", "SEAT_IDLE", 4.1, false, false, false, true, 0, false);
-    SetTimerEx("SHIT_StepOne", 2000, false, "i", playerid);
+    Player_Timer(playerid, e_iPlayerShitTimer) = SetTimerEx("SHIT_StepOne", 2000, false, "i", playerid);
 
     Chat_SendAction(playerid, "echa un cago");
     return 1;
@@ -36,6 +36,8 @@ command cagar(playerid, const params[], "Echa un cago")
 forward SHIT_StepOne(playerid);
 public SHIT_StepOne(playerid)
 {
+    Player_Timer(playerid, e_iPlayerShitTimer) = 0;
+    
     new Float:x, Float:y, Float:z;
     GetPlayerPos(playerid, x, y, z);
 

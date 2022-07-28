@@ -16,6 +16,7 @@ new
     Text:g_tdGangs[9],
     Text:g_tdGangMemberSlotBg[7],
     Text:g_tdGangEventText
+    //Text:g_tdDebugScreen[4]
 ;
 
 new

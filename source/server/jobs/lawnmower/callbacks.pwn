@@ -9,19 +9,19 @@ static GenerateGrassInArea(areaid)
     g_rgeLawnmowerAreas[areaid][e_iInitialGrassCount] =
     g_rgeLawnmowerAreas[areaid][e_iCurrentGrassCount] = grass_count;
 
+    // LOL
+    new const
+        Float:min_x = (g_rgeLawnmowerAreas[areaid][e_fAreaMinX] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxX] ? g_rgeLawnmowerAreas[areaid][e_fAreaMinX] : g_rgeLawnmowerAreas[areaid][e_fAreaMaxX]),
+        Float:max_x = (g_rgeLawnmowerAreas[areaid][e_fAreaMinX] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxX] ? g_rgeLawnmowerAreas[areaid][e_fAreaMaxX] : g_rgeLawnmowerAreas[areaid][e_fAreaMinX]),
+        Float:min_y = (g_rgeLawnmowerAreas[areaid][e_fAreaMinY] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxY] ? g_rgeLawnmowerAreas[areaid][e_fAreaMinY] : g_rgeLawnmowerAreas[areaid][e_fAreaMaxY]),
+        Float:max_y = (g_rgeLawnmowerAreas[areaid][e_fAreaMinY] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxY] ? g_rgeLawnmowerAreas[areaid][e_fAreaMaxY] : g_rgeLawnmowerAreas[areaid][e_fAreaMinY]),
+        Float:min_z = (g_rgeLawnmowerAreas[areaid][e_fAreaMinZ] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ] ? g_rgeLawnmowerAreas[areaid][e_fAreaMinZ] : g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ]),
+        Float:max_z = (g_rgeLawnmowerAreas[areaid][e_fAreaMinZ] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ] ? g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ] : g_rgeLawnmowerAreas[areaid][e_fAreaMinZ]);
+
     for(new i = grass_count; i != -1; --i)
     {
         new bool:is_above_water = false;
         new Float:x, Float:y, Float:z;
-
-        // LOL
-        new const
-            Float:min_x = (g_rgeLawnmowerAreas[areaid][e_fAreaMinX] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxX] ? g_rgeLawnmowerAreas[areaid][e_fAreaMinX] : g_rgeLawnmowerAreas[areaid][e_fAreaMaxX]),
-            Float:max_x = (g_rgeLawnmowerAreas[areaid][e_fAreaMinX] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxX] ? g_rgeLawnmowerAreas[areaid][e_fAreaMaxX] : g_rgeLawnmowerAreas[areaid][e_fAreaMinX]),
-            Float:min_y = (g_rgeLawnmowerAreas[areaid][e_fAreaMinY] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxY] ? g_rgeLawnmowerAreas[areaid][e_fAreaMinY] : g_rgeLawnmowerAreas[areaid][e_fAreaMaxY]),
-            Float:max_y = (g_rgeLawnmowerAreas[areaid][e_fAreaMinY] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxY] ? g_rgeLawnmowerAreas[areaid][e_fAreaMaxY] : g_rgeLawnmowerAreas[areaid][e_fAreaMinY]),
-            Float:min_z = (g_rgeLawnmowerAreas[areaid][e_fAreaMinZ] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ] ? g_rgeLawnmowerAreas[areaid][e_fAreaMinZ] : g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ]),
-            Float:max_z = (g_rgeLawnmowerAreas[areaid][e_fAreaMinZ] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ] ? g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ] : g_rgeLawnmowerAreas[areaid][e_fAreaMinZ]);
 
         do
         {

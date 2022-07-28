@@ -51,6 +51,10 @@ on_init 00SetupServerConfig()
 	FCNPC_SetTickRate(GetConsoleVarAsInt("sleep"));
 	//AddPlayerClass(0, 0.0, 0.0, 0.0, 0.0, 0, 0, 0, 0, 0, 0);
 
+#if !NDEBUG
+	Streamer_ToggleErrorCallback(true);
+#endif
+
 	print("[config] Server config done");
 	printf("[config] maxplayers     = %i (MAX_PLAYERS = "#MAX_PLAYERS")", GetMaxPlayers());
 	printf("[config] maxnpc         = %i", GetConsoleVarAsInt("maxnpc"));
@@ -66,5 +70,20 @@ on_init 00SetupServerConfig()
 	
 	SendRconCommand(!"password 0");
 
+	for(new i = MAX_PLAYERS - 1; i != -1; --i)
+	{
+		if(FCNPC_IsValid(i))
+			SetPlayerColor(i, 0xF7F7F700);
+	}
+	
 	return 1;
 }
+
+#if !NDEBUG
+	public Streamer_OnPluginError(const error[])
+	{
+		printf("[streamer!] caught error: %s", error);
+		PrintBacktrace();
+		return 1;
+	}
+#endif

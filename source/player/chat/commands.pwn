@@ -127,9 +127,9 @@ command id(playerid, const params[], "Ver los datos de un jugador")
     if (!IsPlayerConnected(destination))
         return SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} No hay un usuario que concuerde con el ID: {ED2B2B}%s{DADADA}.", destination);
 
-    new
+    new const
         Float:max_packetloss_percentage = NetStats_PacketLossPercent(destination) / 10.0,
-        Float:max_ping_percentage = GetPlayerPing(destination) / 500
+        Float:max_ping_percentage = float(GetPlayerPing(destination) / 500)    
     ;
 
     SendClientMessagef(

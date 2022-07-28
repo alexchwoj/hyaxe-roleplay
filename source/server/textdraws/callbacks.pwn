@@ -964,6 +964,64 @@ public OnGameModeInit()
     TextDrawSetProportional(g_tdGangMemberSlotBg[6], 1);
     TextDrawSetSelectable(g_tdGangMemberSlotBg[6], 0);
 
+    /*
+    g_tdDebugScreen[0] = TextDrawCreate(561.000000, 110.000000, "_");
+    TextDrawFont(g_tdDebugScreen[0], 1);
+    TextDrawLetterSize(g_tdDebugScreen[0], 0.245833, 17.249998);
+    TextDrawTextSize(g_tdDebugScreen[0], 400.000000, 117.500000);
+    TextDrawSetOutline(g_tdDebugScreen[0], 1);
+    TextDrawSetShadow(g_tdDebugScreen[0], 0);
+    TextDrawAlignment(g_tdDebugScreen[0], 2);
+    TextDrawColor(g_tdDebugScreen[0], -885971201);
+    TextDrawBackgroundColor(g_tdDebugScreen[0], 255);
+    TextDrawBoxColor(g_tdDebugScreen[0], -125);
+    TextDrawUseBox(g_tdDebugScreen[0], 1);
+    TextDrawSetProportional(g_tdDebugScreen[0], 1);
+    TextDrawSetSelectable(g_tdDebugScreen[0], 0);
+
+    g_tdDebugScreen[1] = TextDrawCreate(561.000000, 112.000000, "_");
+    TextDrawFont(g_tdDebugScreen[1], 1);
+    TextDrawLetterSize(g_tdDebugScreen[1], 0.245833, 16.850004);
+    TextDrawTextSize(g_tdDebugScreen[1], 400.000000, 114.500000);
+    TextDrawSetOutline(g_tdDebugScreen[1], 1);
+    TextDrawSetShadow(g_tdDebugScreen[1], 0);
+    TextDrawAlignment(g_tdDebugScreen[1], 2);
+    TextDrawColor(g_tdDebugScreen[1], -885971201);
+    TextDrawBackgroundColor(g_tdDebugScreen[1], 255);
+    TextDrawBoxColor(g_tdDebugScreen[1], 640034559);
+    TextDrawUseBox(g_tdDebugScreen[1], 1);
+    TextDrawSetProportional(g_tdDebugScreen[1], 1);
+    TextDrawSetSelectable(g_tdDebugScreen[1], 0);
+
+    g_tdDebugScreen[2] = TextDrawCreate(561.000000, 111.000000, "DEBUG");
+    TextDrawFont(g_tdDebugScreen[2], 2);
+    TextDrawLetterSize(g_tdDebugScreen[2], 0.329166, 1.750000);
+    TextDrawTextSize(g_tdDebugScreen[2], 400.000000, 114.000000);
+    TextDrawSetOutline(g_tdDebugScreen[2], 1);
+    TextDrawSetShadow(g_tdDebugScreen[2], 0);
+    TextDrawAlignment(g_tdDebugScreen[2], 2);
+    TextDrawColor(g_tdDebugScreen[2], -1);
+    TextDrawBackgroundColor(g_tdDebugScreen[2], 255);
+    TextDrawBoxColor(g_tdDebugScreen[2], 50);
+    TextDrawUseBox(g_tdDebugScreen[2], 0);
+    TextDrawSetProportional(g_tdDebugScreen[2], 1);
+    TextDrawSetSelectable(g_tdDebugScreen[2], 0);
+
+    g_tdDebugScreen[3] = TextDrawCreate(509.000000, 138.000000, "_");
+    TextDrawFont(g_tdDebugScreen[3], 1);
+    TextDrawLetterSize(g_tdDebugScreen[3], 0.237500, 1.499999);
+    TextDrawTextSize(g_tdDebugScreen[3], 400.000000, 17.000000);
+    TextDrawSetOutline(g_tdDebugScreen[3], 0);
+    TextDrawSetShadow(g_tdDebugScreen[3], 1);
+    TextDrawAlignment(g_tdDebugScreen[3], 1);
+    TextDrawColor(g_tdDebugScreen[3], -1);
+    TextDrawBackgroundColor(g_tdDebugScreen[3], 255);
+    TextDrawBoxColor(g_tdDebugScreen[3], 50);
+    TextDrawUseBox(g_tdDebugScreen[3], 0);
+    TextDrawSetProportional(g_tdDebugScreen[3], 1);
+    TextDrawSetSelectable(g_tdDebugScreen[3], 0);
+    */
+    
     #if defined TD_OnGameModeInit
         return TD_OnGameModeInit();
     #else

@@ -73,7 +73,7 @@ public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
     if(cmd_level > Player_AdminLevel(playerid))
         return 0;
 
-    if(!(flags & CMD_NO_COOLDOWN) && (g_rgiPlayerCommandCooldown[playerid] && GetTickDiff(GetTickCount(), g_rgiPlayerCommandCooldown[playerid]) < 500))
+    if(!(flags & CMD_NO_COOLDOWN) && (g_rgiPlayerCommandCooldown[playerid] && 500 > GetTickCount() - g_rgiPlayerCommandCooldown[playerid]))
     {
         SendClientMessage(playerid, 0xDADADAFF, "Solo puedes enviar {ED2B2B}dos comando por segundo{DADADA}. Algunos comandos no disponen de tiempo de espera.");
         return 0;
@@ -108,7 +108,7 @@ public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags)
 
     if((flags >>> 24) > RANK_LEVEL_USER && !(flags & CMD_DONT_LOG_COMMAND))
     {
-        Admins_SendMessage_s(Player_AdminLevel(playerid), 0x415BA2FF, @f("{DADADA}%s %s {415BA2}%s{DADADA} usó el comando {415BA2}/%s{DADADA} %s.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_GetRankName(playerid), Player_RPName(playerid), cmd, params));
+        Admins_SendMessage_s(Player_AdminLevel(playerid), 0x415BA2FF, @f("{DADADA}%s %s {415BA2}%s{DADADA} usó el comando {415BA2}/%s{BFBFBF} %s.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_GetRankName(playerid), Player_RPName(playerid), cmd, params));
     }
 
     #if defined CMD_OnPlayerCommandPerformed

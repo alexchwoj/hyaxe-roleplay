@@ -125,7 +125,7 @@ GangEvent_Start(event_type)
                 g_rgeGraffiti[g_iGangGraffitiIndex][e_fGraffitiY],
                 g_rgeGraffiti[g_iGangGraffitiIndex][e_fGraffitiZ],
                 63, -1, 0, 0,
-                .style = MAPICON_GLOBAL, .streamdistance = 2064.0
+                .style = MAPICON_GLOBAL, .streamdistance = 6000.0
             );
 
             // Announce
@@ -139,6 +139,7 @@ GangEvent_Start(event_type)
             for(new i; i < HYAXE_MAX_GANGS; ++i) g_rgfGangGraffitiProgress[i] = 0.0;
         }
     }
+    
     g_iGangEventTick = GetTickCount();
     return 1;
 }

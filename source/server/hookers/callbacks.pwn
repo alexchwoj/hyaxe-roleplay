@@ -63,7 +63,8 @@ public OnGameModeExit()
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if((newkeys & KEY_CTRL_BACK) != 0)
+    new const player_state = GetPlayerState(playerid);
+    if((player_state == PLAYER_STATE_ONFOOT && (newkeys & KEY_CTRL_BACK) != 0) || (player_state == PLAYER_STATE_DRIVER && (newkeys & KEY_CROUCH) != 0))
     {
         if(IsPlayerInAnyDynamicArea(playerid))
         {
@@ -84,7 +85,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     g_rgiPlayerInteractingHooker[playerid] = hookerid;
                     g_rgiHookerInteractingPlayer[hookerid] = playerid;
 
-                    if(!IsPlayerInAnyVehicle(playerid))
+                    if(player_state == PLAYER_STATE_ONFOOT)
                     {
                         FCNPC_AimAtPlayer(g_rgiHookers[hookerid], playerid);
                         FCNPC_SetAnimationByName(g_rgiHookers[hookerid], "KISSING:GF_STREETARGUE_02", 4.1, 1, 0, 0, 0, 0);
@@ -96,9 +97,10 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                                 "Veni mamucha", "Todas putas"
                         );
                     }
-                    else if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+                    else if(player_state == PLAYER_STATE_DRIVER)
                     {
-
+                        PlayerPlaySound(playerid, 39073);
+                        FCNPC_EnterVehicle(g_rgiHookers[hookerid], GetPlayerVehicleID(playerid), 1);
                     }
 
                     return 1;

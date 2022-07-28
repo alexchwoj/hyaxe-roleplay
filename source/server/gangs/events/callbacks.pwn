@@ -53,8 +53,7 @@ public OnGameModeInit()
 forward GVENT_CheckTime();
 public GVENT_CheckTime()
 {
-    new diff = GetTickDiff(GetTickCount(), g_iGangEventTick);
-    if (diff >= 600000)
+    if (GetTickCount() - g_iGangEventTick >= 600000)
     {
         new hour, minute;
         gettime(hour, minute);
@@ -70,7 +69,7 @@ public GVENT_CheckTime()
 forward GVENT_TruckSpawnLoot();
 public GVENT_TruckSpawnLoot()
 {
-    new loot[][] = {
+    static const loot[][] = {
         {ITEM_CRACK, 2, 8},
         {ITEM_MEDICINE, 25, 50},
         {ITEM_TEC9, 1, 1},
@@ -80,7 +79,7 @@ public GVENT_TruckSpawnLoot()
         {ITEM_CRACK, 2, 8}
     };
 
-    for(new i; i < minrand(12, 24); ++i)
+    for(new i, j = math_random(12, 24); i < j; ++i)
     {
         new item = random( sizeof(loot) );
 
@@ -102,7 +101,9 @@ forward GVENT_UpdateTruck();
 public GVENT_UpdateTruck()
 {
     new elapsed = g_iGangTruckTimeCount - gettime();
-    new minutes = elapsed / 60, seconds = elapsed % 60;
+    new 
+        minutes = elapsed / 60, 
+        seconds = elapsed % 60;
 
     if (minutes < 0)
     {
@@ -138,7 +139,9 @@ public GVENT_UpdateTruck()
         );
         SetVehicleZAngle(g_iGangTruckVehicleID, g_rgfTruckDefensePositions[g_iGangTruckIndex][3]);
 
-        TextDrawSetString_s(g_tdGangEventText, @f("ABRIENDOSE EN ~r~%02i:%02i", minutes, seconds));
+        new str[30];
+        format(str, sizeof(str), "ABRIENDOSE EN ~r~%i:%02i", minutes, seconds);
+        TextDrawSetString(g_tdGangEventText, str);
     }
     return 1;
 }
@@ -150,9 +153,10 @@ public GVENT_UpdateGraffiti(playerid)
     {
         for_list(it : GetPlayerAllDynamicAreas(playerid))
         {
-            if (Streamer_HasIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x47524146)))
+            new areaid = iter_get(it);
+            if (Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x47524146)))
             {
-                new graffiti_id = Streamer_GetIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x47524146));
+                new graffiti_id = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x47524146));
                 if (graffiti_id == g_iGangGraffitiIndex)
                 {
                     g_rgbGangGraffitiPainted[playerid] = true;
@@ -184,9 +188,10 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         {
             for_list(it : GetPlayerAllDynamicAreas(playerid))
             {
-                if (Streamer_HasIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x47524146)))
+                new areaid = iter_get(it);
+                if (Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x47524146)))
                 {
-                    new graffiti_id = Streamer_GetIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x47524146));
+                    new graffiti_id = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x47524146));
                     if (graffiti_id == g_iGangGraffitiIndex)
                     {
                         KillTimer(g_rgiGangGraffitiTimer[playerid]);

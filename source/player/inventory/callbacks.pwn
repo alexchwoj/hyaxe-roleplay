@@ -33,15 +33,15 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         if (GetPlayerState(playerid) == PLAYER_STATE_ONFOOT && !Bit_Get(Player_Flags(playerid), PFLAG_IN_KEYGAME))
             Inventory_Show(playerid);
     }
-
-    if ((newkeys & KEY_WALK) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
+    else if ((newkeys & KEY_WALK) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
         for_list(it : GetPlayerAllDynamicAreas(playerid))
         {
-            if (Streamer_HasArrayData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x49544d)))
+            new areaid = iter_get(it);
+            if (Streamer_HasArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x49544d)))
             {
                 new info[6];
-                Streamer_GetArrayData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x49544d), info);
+                Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x49544d), info);
                 
                 new weapon = Item_TypeToWeapon(info[0]);
                 if (weapon)

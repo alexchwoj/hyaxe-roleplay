@@ -3,6 +3,9 @@
 #endif
 #define _notification_callbacks_
 
+static
+    bool:s_rgbBeatingTextShouldHide[MAX_PLAYERS char];
+
 public OnPlayerDisconnect(playerid, reason)
 {
     for(new i = 0; i < MAX_NOTIFICATIONS; i++)
@@ -14,7 +17,9 @@ public OnPlayerDisconnect(playerid, reason)
     }
 
     if(g_rgiTextProcessTimer[playerid])
-        KillTimer(g_rgiTextProcessTimer[playerid]);
+        Timer_Kill(g_rgiTextProcessTimer[playerid]);
+        
+    s_rgbBeatingTextShouldHide{playerid} = false;
 
     #if defined NOTI_OnPlayerDisconnect
         return NOTI_OnPlayerDisconnect(playerid, reason);
@@ -71,7 +76,7 @@ forward NotificationWaitToLeft(playerid, index, Float:pos_y, Float:max, count);
 public NotificationWaitToLeft(playerid, index, Float:pos_y, Float:max, count)
 {
     KillTimer(NOTIFICATION_DATA[playerid][index][notificationFrameTimer]);
-    NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationMoveToLeft", 10, true, "ddffd", playerid, index, pos_y, 300.0, 5);
+    NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationMoveToLeft", 15, true, "ddffd", playerid, index, pos_y, 300.0, count);
 	return 1;
 }
 
@@ -93,13 +98,13 @@ public NotificationMoveToRight(playerid, index, time, Float:pos_y, Float:max, co
 	{
 		NOTIFICATION_DATA[playerid][index][notificationFrameCount] = 0;
 		KillTimer(NOTIFICATION_DATA[playerid][index][notificationFrameTimer]);
-        NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationWaitToLeft", time, false, "ddffd", playerid, index, pos_y, 300.0, 5);
+        NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationWaitToLeft", time, false, "ddffd", playerid, index, pos_y, 300.0, count);
 	}
 
 	return 1;
 }
 
-public NOTIFICATION_ProcessText(playerid, time, alpha_min, alpha_max, bool:should_hide)
+public NOTIFICATION_ProcessText(playerid, time, alpha_min, alpha_max)
 {
     // false = out
     // true = in
@@ -108,7 +113,7 @@ public NOTIFICATION_ProcessText(playerid, time, alpha_min, alpha_max, bool:shoul
     new color = PlayerTextDrawGetColor(playerid, p_tdBeatingText{playerid});
     new current_alpha = (color & 0xFF);
 
-    if (!should_hide)
+    if (!s_rgbBeatingTextShouldHide{playerid})
     {
         if (!td_phase{playerid} && current_alpha <= alpha_min)
         {
@@ -119,14 +124,7 @@ public NOTIFICATION_ProcessText(playerid, time, alpha_min, alpha_max, bool:shoul
             td_phase{playerid} = false;
         }
 
-        if (!td_phase{playerid})
-        {
-            current_alpha -= NOTIFICATION_TEXT_BEAT_DIFF;
-        }
-        else
-        {
-            current_alpha += NOTIFICATION_TEXT_BEAT_DIFF;
-        }
+        current_alpha += (td_phase{playerid} ? NOTIFICATION_TEXT_BEAT_DIFF : -NOTIFICATION_TEXT_BEAT_DIFF);
     }
     else
     {
@@ -134,9 +132,10 @@ public NOTIFICATION_ProcessText(playerid, time, alpha_min, alpha_max, bool:shoul
         {
             PlayerTextDrawHide(playerid, p_tdBeatingText{playerid});
 
-            td_phase{playerid} = false;
-            g_rgiTextProcessTick[playerid] = 0;
-            KillTimer(g_rgiTextProcessTimer[playerid]);
+            td_phase{playerid} = 
+            s_rgbBeatingTextShouldHide{playerid} = 
+            bool:(g_rgiTextProcessTick[playerid] = 0);
+            Timer_Kill(g_rgiTextProcessTimer[playerid]);
             return 1;
         }
 
@@ -148,11 +147,17 @@ public NOTIFICATION_ProcessText(playerid, time, alpha_min, alpha_max, bool:shoul
     PlayerTextDrawBackgroundColor(playerid, p_tdBeatingText{playerid}, current_alpha);
     PlayerTextDrawShow(playerid, p_tdBeatingText{playerid});
 
-    if (!should_hide && time < GetTickCount() - g_rgiTextProcessTick[playerid])
+    if (!s_rgbBeatingTextShouldHide{playerid} && time < GetTickCount() - g_rgiTextProcessTick[playerid])
     {
-        KillTimer(g_rgiTextProcessTimer[playerid]);
-        g_rgiTextProcessTimer[playerid] = SetTimerEx("NOTIFICATION_ProcessText", 10, true, "iiiii", playerid, time, alpha_min, alpha_max, true);
+        s_rgbBeatingTextShouldHide{playerid} = true;
     }
 
+    return 1;
+}
+
+public NOTIFICATION_HideStaticPerfText(playerid)
+{
+    PlayerTextDrawHide(playerid, p_tdBeatingText{playerid});
+    g_rgiTextProcessTimer[playerid] = 0;
     return 1;
 }

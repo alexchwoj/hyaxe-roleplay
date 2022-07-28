@@ -46,3 +46,62 @@ public hy@AsyncQueryDone(Handle<Task>:task_handle)
 
     return 1;
 }
+
+forward HandleTaskedCallback(CallbackHandler:cb_handle, Handle<Task>:th, Handle<Expression>:eh);
+public HandleTaskedCallback(CallbackHandler:cb_handle, Handle<Task>:th, Handle<Expression>:eh)
+{
+    DEBUG_PRINT("HandleTaskedCallback called");
+    DEBUG_PRINT("Handle<Task> is linked: %i", handle_linked<Task>(th));
+    DEBUG_PRINT("Handle<Expression> is linked: %i", handle_linked<Expression>(eh));
+
+    if(!handle_linked<Task>(th))
+    {
+        handle_release<Expression>(eh);
+        handle_release<Task>(th);
+        pawn_unregister_callback(cb_handle);
+        return 0;
+    }
+
+    new Expression:expr = handle_get<Expression>(eh);
+
+    new stack[32];
+    for(new i = 3, j = GetCurrentFrameParameterCount(); i < j; ++i)
+    {
+        stack[i - 3] = GetCurrentFrameParameter(i);
+        expr = expr_bind(expr, expr_const(stack[i - 3]));
+    }
+
+    new result = expr_get(expr);
+    DEBUG_PRINT("result = %i", result);
+    expr_delete(expr);
+
+    if(result)
+    {
+        task_set_result_arr(handle_get<Task>(th), stack);
+        handle_release<Expression>(eh);
+        handle_release<Task>(th);
+        pawn_unregister_callback(cb_handle);
+    }
+
+    return 0;
+}
+
+public hy@Async_OnQueryError(CallbackHandler:cb_handler, Handle<Task>:th, errorid, const error[], const callback[], const query[], MySQL:handle)
+{
+    new Handle<Task>:cb_task_handle;
+    if(amx_try_decode_value(callback, Handle:cb_task_handle))
+    {
+        if(th == cb_task_handle)
+        {
+            if(handle_linked<Task>(th))
+            {
+                task_set_error(handle_get<Task>(th), amx_err_exit);
+            }
+
+            pawn_unregister_callback(cb_handler);
+            handle_release<Task>(th);
+        }
+    }
+
+    return 0;
+}

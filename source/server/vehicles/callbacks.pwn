@@ -219,7 +219,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         new vehicleid = (IsPlayerInAnyVehicle(playerid) ? GetPlayerVehicleID(playerid) : GetPlayerCameraTargetVehicle(playerid));
         if(vehicleid != INVALID_VEHICLE_ID)
         {
-            if(g_rgeVehicles[vehicleid][e_iVehicleOwnerId] == playerid || Vehicle_Type(vehicleid) == VEHICLE_TYPE_ADMIN)
+            if(Vehicle_OwnerId(vehicleid) == playerid || Vehicle_Type(vehicleid) == VEHICLE_TYPE_ADMIN)
             {
                 Vehicle_ToggleLock(vehicleid);
                 SetPlayerChatBubble(playerid, (g_rgeVehicles[vehicleid][e_bLocked] ? "* Bloqueó su vehículo" : "* Desbloqueó su vehículo"), 0xB39B6BFF, 15.0, 5000);
@@ -446,7 +446,7 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
         new last_driver = GetVehicleLastDriver(vehicleid);
         if(GetPlayerVehicleID(last_driver) == vehicleid && GetPlayerState(last_driver) == PLAYER_STATE_DRIVER)
         {
-            if(GetTickDiff(GetTickCount(), g_rgePlayerTempData[playerid][e_iPlayerCarJackTick]) > 60000)
+            if(GetTickCount() - g_rgePlayerTempData[playerid][e_iPlayerCarJackTick] > 60000)
             {
                 g_rgePlayerTempData[playerid][e_iPlayerCarJackAmount] = 0;
             }

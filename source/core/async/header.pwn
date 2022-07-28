@@ -13,3 +13,9 @@ stock operator~(const Cache:caches[], len)
             cache_delete(caches[i]);
     }
 }
+
+forward Task<Cache>:MySQL_QueryAsync(MySQL:handle, const query[]);
+forward Task<Cache>:MySQL_QueryAsync_s(MySQL:handle, ConstString:query);
+forward Task:wait_for_callback(const public_name[], Expression:expr);
+
+forward hy@Async_OnQueryError(CallbackHandler:cb_handler, Handle<Task>:th, errorid, const error[], const callback[], const query[], MySQL:handle);

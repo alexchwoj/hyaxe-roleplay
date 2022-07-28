@@ -3,13 +3,19 @@
 #endif
 #define _fuel_station_callbacks_
 
+static GasStation_OnKeyPress(playerid)
+{
+    Dialog_Show(playerid, "fuel_station", DIALOG_STYLE_LIST, !"{CB3126}Gasolinera", !"Llenar tanque\nCargar por litro", !"Seleccionar", !"Cerrar");
+    return 1;
+}
+
 public OnGameModeInit()
 {
     for(new i; i < sizeof(g_rgfFuelStations); ++i)
     {
         Key_Alert(
             g_rgfFuelStations[i][0], g_rgfFuelStations[i][1], g_rgfFuelStations[i][2], 12.5,
-            KEYNAME_CTRL_BACK, 0, 0
+            KEYNAME_CROUCH, 0, 0, KEY_TYPE_VEHICLE, .callback_on_press = __addressof(GasStation_OnKeyPress)
         );
 
         CreateDynamic3DTextLabel(
@@ -17,9 +23,6 @@ public OnGameModeInit()
             g_rgfFuelStations[i][0], g_rgfFuelStations[i][1], g_rgfFuelStations[i][2] + 0.5, 15.0,
             .testlos = true, .worldid = 0, .interiorid = 0
         );
-
-        new area_id = CreateDynamicSphere(g_rgfFuelStations[i][0], g_rgfFuelStations[i][1], g_rgfFuelStations[i][2], 3.0, .worldid = 0, .interiorid = 0);
-        Streamer_SetIntData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x4655454c), 1); // FUEL
     }
 
     #if defined FUEL_OnGameModeInit
@@ -38,46 +41,6 @@ public OnGameModeInit()
 #if defined FUEL_OnGameModeInit
     forward FUEL_OnGameModeInit();
 #endif
-
-
-public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
-{
-    if((newkeys & KEY_CROUCH) != 0)
-    {
-        if(IsPlayerInAnyDynamicArea(playerid))
-        {
-            for_list(it : GetPlayerAllDynamicAreas(playerid))
-            {
-                if(Streamer_HasIntData(STREAMER_TYPE_AREA, iter_get(it), E_STREAMER_CUSTOM(0x4655454c)))
-                {
-                    if (!IsPlayerInAnyVehicle(playerid))
-                    {
-                        PlayerPlaySound(playerid, SOUND_ERROR);
-                        return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No estás en un vehículo.");
-                    }
-                    Dialog_Show(playerid, "fuel_station", DIALOG_STYLE_LIST, !"{CB3126}Gasolinera", !"Llenar tanque\nCargar por litro", !"Seleccionar", !"Cerrar");
-                }
-            }
-        }
-    }
-
-    #if defined FUEL_OnPlayerKeyStateChange
-        return FUEL_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-    #else
-        return 1;
-    #endif
-}
-
-#if defined _ALS_OnPlayerKeyStateChange
-    #undef OnPlayerKeyStateChange
-#else
-    #define _ALS_OnPlayerKeyStateChange
-#endif
-#define OnPlayerKeyStateChange FUEL_OnPlayerKeyStateChange
-#if defined FUEL_OnPlayerKeyStateChange
-    forward FUEL_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-#endif
-
 
 dialog fuel_station(playerid, response, listitem, inputtext[])
 {

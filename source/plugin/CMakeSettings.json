@@ -25,7 +25,7 @@
     {
       "name": "WSL-Clang-Release",
       "generator": "Ninja",
-      "configurationType": "Debug",
+      "configurationType": "Release",
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
       "cmakeExecutable": "cmake",

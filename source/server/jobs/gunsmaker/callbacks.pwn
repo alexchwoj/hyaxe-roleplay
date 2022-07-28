@@ -75,6 +75,8 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
                 TogglePlayerDynamicCP(playerid, g_rgiGunsmakerBenchCheckpoint[g_rgiGunsmakerUsedBench{playerid}], false);
                 g_iGunsmakerUsedBenchs &= ~(1 << g_rgiGunsmakerUsedBench{playerid});
                 g_rgiGunsmakerUsedBench{playerid} = 0xFF;
+
+                Gunsmaker_ProcessQueue();
             }
             
             if(Iter_Contains(GunsmakerBenchQueue, playerid))
@@ -108,9 +110,13 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
                 TogglePlayerDynamicCP(playerid, g_rgiGunsmakerBenchCheckpoint[g_rgiGunsmakerUsedBench{playerid}], false);
                 g_iGunsmakerUsedBenchs &= ~(1 << g_rgiGunsmakerUsedBench{playerid});
                 g_rgiGunsmakerUsedBench{playerid} = 0xFF;
+                Gunsmaker_ProcessQueue();
             }
-
-            Iter_Remove(GunsmakerBenchQueue, playerid);
+            else if(Iter_Contains(GunsmakerBenchQueue, playerid))
+            {
+                Iter_Remove(GunsmakerBenchQueue, playerid);
+                Notification_Show(playerid, "Abandonaste la cola para trabajar como fabricante de armas.", 5000);
+            }
         }
     }
     return 1;
@@ -253,4 +259,43 @@ public OnPlayerLeaveDynamicCP(playerid, checkpointid)
 #define OnPlayerLeaveDynamicCP GSMAKER_OnPlayerLeaveDynamicCP
 #if defined GSMAKER_OnPlayerLeaveDynamicCP
     forward GSMAKER_OnPlayerLeaveDynamicCP(playerid, checkpointid);
+#endif
+
+public OnPlayerDisconnect(playerid, reason)
+{
+    if(Player_Job(playerid) == JOB_GUNSMAKER)
+    {
+        if(Iter_Contains(GunsmakerBenchQueue, playerid))
+        {
+            Iter_Remove(GunsmakerBenchQueue, playerid);
+        }
+        else if(g_rgiGunsmakerUsedBench{playerid} != 0xFF)
+        {
+            g_iGunsmakerUsedBenchs &= ~(1 << g_rgiGunsmakerUsedBench{playerid});
+            g_rgiGunsmakerUsedBench{playerid} = 0xFF;
+
+            Gunsmaker_ProcessQueue();
+        }
+
+        if(PlayerJob_Paycheck(playerid) > 0)
+        {
+            Player_Money(playerid) += PlayerJob_Paycheck(playerid);
+        }
+    }
+
+    #if defined J_GSMAKER_OnPlayerDisconnect
+        return J_GSMAKER_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect J_GSMAKER_OnPlayerDisconnect
+#if defined J_GSMAKER_OnPlayerDisconnect
+    forward J_GSMAKER_OnPlayerDisconnect(playerid, reason);
 #endif

@@ -25,6 +25,47 @@ static ShopItem_FindFreeIndex(shop_id)
     return -1;
 }
 
+static Shop_OnPress(playerid, shop_id)
+{
+    Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING, true);
+    Bit_Set(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS, false);
+    TogglePlayerControllable(playerid, false);
+
+    SetExclusiveBroadcast(true);
+    BroadcastToPlayer(playerid, true);
+
+    TextDrawSetString(g_tdShops[5], Str_FixEncoding(g_rgeShops[shop_id][e_szShopName]));
+    TextDrawSetString_s(g_tdShops[10], @f("$%d", g_rgeShopItems[shop_id][0][e_iItemPrice]));
+    TextDrawSetString(g_tdShops[11], Str_FixEncoding(g_rgeShopItems[shop_id][0][e_szItemName]));
+
+    BroadcastToPlayer(playerid, false);
+    SetExclusiveBroadcast(false);
+
+    for(new j = (sizeof(g_tdShops) - 1); j != -1; --j)
+    {
+        TextDrawShowForPlayer(playerid, g_tdShops[j]);
+    }
+    
+    /*new Float:cam_x, Float:cam_y, Float:cam_z, Float:cvec_x, Float:cvec_y, Float:cvec_z;
+    GetPlayerCameraPos(playerid, cam_x, cam_y, cam_z);
+    GetPlayerCameraFrontVector(playerid, cvec_x, cvec_y, cvec_z);
+    InterpolateCameraPos(playerid, cam_x, cam_y, cam_z, g_rgeShops[shop_id][e_fShopCamX], g_rgeShops[shop_id][e_fShopCamY], g_rgeShops[shop_id][e_fShopCamZ], 1000);
+    InterpolateCameraLookAt(playerid, cvec_x, cvec_y, cvec_z, g_rgeShops[shop_id][e_fShopCamLookX], g_rgeShops[shop_id][e_fShopCamLookY], g_rgeShops[shop_id][e_fShopCamLookZ], 1000);*/
+    InterpolateCameraPos(playerid, g_rgeShops[shop_id][e_fShopCamX], g_rgeShops[shop_id][e_fShopCamY], g_rgeShops[shop_id][e_fShopCamZ], g_rgeShops[shop_id][e_fShopCamX], g_rgeShops[shop_id][e_fShopCamY], g_rgeShops[shop_id][e_fShopCamZ], 1000);
+    InterpolateCameraLookAt(playerid, g_rgeShops[shop_id][e_fShopCamLookX], g_rgeShops[shop_id][e_fShopCamLookY], g_rgeShops[shop_id][e_fShopCamLookZ] - 1.5, g_rgeShops[shop_id][e_fShopCamLookX], g_rgeShops[shop_id][e_fShopCamLookY], g_rgeShops[shop_id][e_fShopCamLookZ], 1000);
+
+    SelectTextDraw(playerid, 0xD2B567FF);
+
+    PlayerPlaySound(playerid, 1145);
+    g_rgiPlayerCurrentShop{playerid} = shop_id;
+    g_rgiPlayerCurrentShopItem{playerid} = 0;
+    g_rgbPlayerWaitingObjectMove{playerid} = true;
+    g_rgiPlayerShopObject[playerid] = CreatePlayerObject(playerid, g_rgeShopItems[shop_id][0][e_iItemModel], g_rgeShops[shop_id][e_fShopObjectStartX], g_rgeShops[shop_id][e_fShopObjectStartY], g_rgeShops[shop_id][e_fShopObjectStartZ], g_rgeShopItems[shop_id][0][e_fRotX], g_rgeShopItems[shop_id][0][e_fRotY], g_rgeShopItems[shop_id][0][e_fRotZ]);
+    MovePlayerObject(playerid, g_rgiPlayerShopObject[playerid], g_rgeShops[shop_id][e_fShopObjectIdleX], g_rgeShops[shop_id][e_fShopObjectIdleY], g_rgeShops[shop_id][e_fShopObjectIdleZ], 1.2);
+
+    return 1;
+}
+
 Shop_Create(const name[], Float:pos_x, Float:pos_y, Float:pos_z, world, interior, Float:cam_x, Float:cam_y, Float:cam_z, Float:cam_look_x, Float:cam_look_y, Float:cam_look_z, Float:object_start_x, Float:object_start_y, Float:object_start_z, Float:object_idle_x, Float:object_idle_y, Float:object_idle_z, Float:object_end_x, Float:object_end_y, Float:object_end_z, buy_callback)
 {
     new idx = Shop_FindFreeIndex();
@@ -39,8 +80,7 @@ Shop_Create(const name[], Float:pos_x, Float:pos_y, Float:pos_z, world, interior
     strcpy(g_rgeShops[idx][e_szShopName], name);
     g_rgeShops[idx][e_iShopLabel] = CreateDynamic3DTextLabel(name, 0xCB3126FF, pos_x, pos_y, pos_z, 10.0, .testlos = 1, .worldid = world, .interiorid = interior);
     g_rgeShops[idx][e_iShopArea] = CreateDynamicCircle(pos_x, pos_y, 0.5, .worldid = world, .interiorid = interior);
-    Key_Alert(pos_x, pos_y, pos_z, 1.0, KEYNAME_YES, world, interior);
-    Streamer_SetIntData(STREAMER_TYPE_AREA, g_rgeShops[idx][e_iShopArea], E_STREAMER_CUSTOM(0x53484f50), idx);
+    Key_Alert(pos_x, pos_y, pos_z, 1.0, KEYNAME_YES, world, interior, .callback_on_press = __addressof(Shop_OnPress), .cb_data = idx);
 
     g_rgeShops[idx][e_fShopX] = pos_x; 
     g_rgeShops[idx][e_fShopY] = pos_y;

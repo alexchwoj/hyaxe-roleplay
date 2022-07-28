@@ -80,8 +80,6 @@ static CreateNotificationTD(playerid, index, const text[], color)
 
 Notification_Show(playerid, const text[], time, color = 0xCB3126FF)
 {
-    printf("Server tickrate: %d", GetServerTickRate());
-    
     new index = GetFreeNotificationSlot(playerid);
     if (index > MAX_NOTIFICATIONS)
         return 0;
@@ -122,7 +120,7 @@ Notification_Show(playerid, const text[], time, color = 0xCB3126FF)
 
     if (!Bit_Get(Player_Config(playerid), CONFIG_PERFORMANCE_MODE) && Performance_IsFine(playerid))
     {
-        NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationMoveToRight", 10, true, "dddffd", playerid, index, time, pos_y, 300.0, 5);
+        NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationMoveToRight", 15, true, "dddffd", playerid, index, time, pos_y, 300.0, 5);
     }
     else
     {
@@ -166,8 +164,15 @@ Notification_ShowBeatingText(playerid, time, color, alpha_min, alpha_max, const 
     PlayerTextDrawSetString(playerid, p_tdBeatingText{playerid}, string);
     PlayerTextDrawShow(playerid, p_tdBeatingText{playerid});
 
-    g_rgiTextProcessTick[playerid] = GetTickCount();
-    g_rgiTextProcessTimer[playerid] = SetTimerEx("NOTIFICATION_ProcessText", 10, true, "iiiii", playerid, time, alpha_min, alpha_max, false);
+    if(Performance_IsFine(playerid) && !Bit_Get(Player_Config(playerid), CONFIG_PERFORMANCE_MODE))
+    {
+        g_rgiTextProcessTick[playerid] = GetTickCount();
+        g_rgiTextProcessTimer[playerid] = SetTimerEx("NOTIFICATION_ProcessText", 10, true, "iiii", playerid, time, alpha_min, alpha_max);
+    }
+    else
+    {
+        g_rgiTextProcessTimer[playerid] = SetTimerEx("NOTIFICATION_HideStaticPerfText", time, false, "i", playerid);
+    }
 
     return 1;
 }
@@ -177,8 +182,7 @@ Notification_HideBeatingText(playerid)
     if(!g_rgiTextProcessTick[playerid])
         return 0;
 
-    KillTimer(g_rgiTextProcessTimer[playerid]);
-    g_rgiTextProcessTick[playerid] = 0;
+    Timer_Kill(g_rgiTextProcessTimer[playerid]);
     PlayerTextDrawHide(playerid, p_tdBeatingText{playerid});
 
     return 1;

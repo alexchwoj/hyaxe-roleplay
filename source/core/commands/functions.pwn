@@ -47,9 +47,9 @@ Commands_ShowSuggestions(playerid, const command[])
 {
     new CmdArray:arr = PC_GetCommandArray();
     new cmd_size = PC_GetArraySize(arr);
-    new distances[HYAXE_MAX_COMMANDS][3];
+    static distances[HYAXE_MAX_COMMANDS][3];
 
-    new cmd_name[16], distances_length;
+    new cmd_name[32], distances_length;
     for(new i; i < cmd_size && distances_length < 20; ++i)
     {
         PC_GetCommandName(arr, i, cmd_name);
@@ -76,6 +76,8 @@ Commands_ShowSuggestions(playerid, const command[])
         distances_length++;
     }
 
+    PC_FreeArray(arr);
+    
     if(!distances_length)
     {
         SendClientMessagef(playerid, 0xDADADAFF, "({ED2B2B}/%s{DADADA}) Comando desconocido.", command);
@@ -110,7 +112,6 @@ Commands_ShowSuggestions(playerid, const command[])
         strcat(HYAXE_UNSAFE_HUGE_STRING, line);
     }
 
-    PC_FreeArray(arr);
     new header[64];
     format(header, sizeof(header), "{DADADA}Comando {ED2B2B}/%s{DADADA} desconocido", command);
     Dialog_Show(playerid, "unknown_command", DIALOG_STYLE_TABLIST_HEADERS, header, HYAXE_UNSAFE_HUGE_STRING, !"Ejecutar", !"Cerrar");
