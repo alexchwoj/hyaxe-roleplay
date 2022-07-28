@@ -7,14 +7,7 @@ public OnGameModeInit()
 {
     print("[veh] Initializing iterators...");
     Iter_Init(PlayerVehicles);
-
-    Vehicle_Create(410, 1759.8231, -1170.7485, 23.3850, 72.8596, -1, -1, 0);
-    Vehicle_Create(410, 1748.9504, -1168.2219, 23.3778, 77.0558, -1, -1, 0);
-    Vehicle_Create(410, 1756.1627, -1159.1874, 23.3844, 77.0031, -1, -1, 0);
-    Vehicle_Create(410, 1746.8607, -1157.2327, 23.3768, 81.5200, -1, -1, 0);
-    Vehicle_Create(410, 1709.5199, -1186.3311, 23.3972, 0.1373, -1, -1, 0);
-    Vehicle_Create(410, 1709.4225, -1175.6863, 23.3932, 358.1502, -1, -1, 0);
-
+    
     #if defined VEH_OnGameModeInit
         return VEH_OnGameModeInit();
     #else
