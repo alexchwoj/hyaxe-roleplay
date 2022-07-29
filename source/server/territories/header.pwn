@@ -21,6 +21,7 @@ enum eTerritoryInfo
 
 	e_iArea,
 	e_iGangZone,
-    e_iColor
+    e_iColor,
+	e_iGangID
 };
 new g_rgeTerritories[HYAXE_MAX_TERRITORIES][eTerritoryInfo];
