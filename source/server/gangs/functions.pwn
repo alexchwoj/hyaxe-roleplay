@@ -235,7 +235,7 @@ Gang_PlayerStartConquest(playerid, territory_index)
     g_rgeTerritories[territory_index][e_iLabel] = CreateDynamic3DTextLabel("Progreso de conquista: {CA3737}0%{FFFFFF}\n{CA3737}{7D3535}||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||", 0xFFFFFFFF, x, y, z + 1.0, 40.0);
     g_rgeTerritories[territory_index][e_iMapIcon] = CreateDynamicMapIcon(x, y, z, 19, -1, 0, 0, .style = MAPICON_GLOBAL, .streamdistance = 2064.0);
     
-    g_rgeTerritories[territory_index][e_iConquestTimer] = SetTimerEx("TERR_UpdateProgress", 500, true, "i", territory_index);
+    g_rgeTerritories[territory_index][e_iConquestTimer] = SetTimerEx("TERR_UpdateProgress", 6000, true, "i", territory_index);
     g_rgeTerritories[territory_index][e_iGangAttaking] = Player_Gang(playerid);
 
     new str_text[164];
