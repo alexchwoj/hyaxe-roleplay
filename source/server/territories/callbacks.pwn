@@ -118,14 +118,34 @@ public OnPlayerConnect(playerid)
 forward TERR_UpdateProgress(territory_index);
 public TERR_UpdateProgress(territory_index)
 {
+    // Check if there are members within the territory
+    new members;
+    foreach(new i : Player)
+    {
+        if (IsPlayerInDynamicArea(i, g_rgeTerritories[territory_index][e_iArea]))
+            ++members;
+    }
+
+    if (!members)
+    {
+        new str_text[164];
+        format(str_text, sizeof(str_text), "La banda ~y~%s~w~ no pudo conquistar el territorio en ~y~%s~w~ porque no hay quien lo defienda.", Gang_Data(g_rgeTerritories[territory_index][e_iGangAttaking])[e_szGangName], g_rgeTerritories[territory_index][e_szName]);
+        GangEvent_SendNotification(str_text, 5000, 0xDAA838FF);
+
+        Territory_CancelConquest(territory_index);
+        return 0;
+    }
+
+    // Increase progress
     g_rgeTerritories[territory_index][e_fConquestProgress] += 5.0;
     if (g_rgeTerritories[territory_index][e_fConquestProgress] >= 100.0)
     {
-        g_rgeTerritories[territory_index][e_fConquestProgress] = 100.0;
         Territory_SetGang(territory_index, g_rgeTerritories[territory_index][e_iGangAttaking]);
         Territory_CancelConquest(territory_index);
+        return 0;
     }
 
+    // Update text
     new str_text[144];
     format(str_text, sizeof(str_text), "Progreso de conquista: {CA3737}%.1f%%{FFFFFF}\n{CA3737}", g_rgeTerritories[territory_index][e_fConquestProgress]);
 
