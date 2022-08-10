@@ -33,7 +33,6 @@ static Flag_OnUse(playerid, slot)
 
     Gang_PlayerStartConquest(playerid, territory_index);
 
-    Streamer_Update(playerid);
     Inventory_Hide(playerid);
     ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
 

@@ -28,6 +28,7 @@ enum eTerritoryInfo
 	e_iGangID,
 
 	e_iFlagObject,
-	Text3D:e_iLabel
+	Text3D:e_iLabel,
+	e_iMapIcon
 };
 new g_rgeTerritories[HYAXE_MAX_TERRITORIES][eTerritoryInfo];

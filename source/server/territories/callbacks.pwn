@@ -140,6 +140,16 @@ public TERR_UpdateProgress(territory_index)
     g_rgeTerritories[territory_index][e_fConquestProgress] += 5.0;
     if (g_rgeTerritories[territory_index][e_fConquestProgress] >= 100.0)
     {
+        new str_text[164], payment = 100 + random(500);
+        format(str_text, sizeof(str_text), "La banda ~y~%s~w~ ha conquistado el territorio en ~y~%s~w~, y cada miembro ha ganado $%s.", Gang_Data(g_rgeTerritories[territory_index][e_iGangAttaking])[e_szGangName], g_rgeTerritories[territory_index][e_szName], Format_Thousand(payment));
+        GangEvent_SendNotification(str_text, 5000, 0xDAA838FF);
+
+        foreach(new i : Player)
+        {
+            if (Player_Gang(i) == g_rgeTerritories[territory_index][e_iGangAttaking])
+                Player_GiveMoney(i, payment);
+        }
+
         Territory_SetGang(territory_index, g_rgeTerritories[territory_index][e_iGangAttaking]);
         Territory_CancelConquest(territory_index);
         return 0;

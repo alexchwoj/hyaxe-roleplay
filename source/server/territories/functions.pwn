@@ -10,7 +10,8 @@ Territory_CancelConquest(territory_index)
     
     DestroyDynamicObject(g_rgeTerritories[territory_index][e_iFlagObject]);
     DestroyDynamic3DTextLabel(g_rgeTerritories[territory_index][e_iLabel]);
-    
+    DestroyDynamicMapIcon(g_rgeTerritories[territory_index][e_iMapIcon]);
+
     KillTimer(g_rgeTerritories[territory_index][e_iConquestTimer]);
 
     GangZoneStopFlashForAll(g_rgeTerritories[territory_index][e_iGangZone]);
