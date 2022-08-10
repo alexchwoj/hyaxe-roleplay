@@ -3,6 +3,44 @@
 #endif
 #define _medicine_callbacks_
 
+static Flag_OnUse(playerid, slot)
+{
+    if (Player_Gang(playerid) == -1)
+        return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Tienes que estar en una banda.");
+
+    new territory_index = -1;
+    for_list(it : GetPlayerAllDynamicAreas(playerid))
+    {
+        new areaid = iter_get(it);
+        if (Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x544552)))
+            territory_index = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x544552));
+    }
+
+    if (territory_index == -1)
+        return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No te encuentras en una zona conquistable.");
+
+    if (!g_rgeTerritories[territory_index][e_bIsConquerable])
+        return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No te encuentras en una zona conquistable.");
+
+    if (g_rgeTerritories[territory_index][e_iGangAttaking] != -1)
+        return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Este territorio ya está siendo conquistado.");
+
+    if (g_rgeGangs[Player_Gang(playerid)][e_bGangAttacking])
+        return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Solo puedes conquistar un territorio al mismo tiempo.");
+
+    if (g_rgeTerritories[territory_index][e_iGangID] == Gang_Data(Player_Gang(playerid))[e_iGangDbId])
+        return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Este territorio ya pertenece a la banda.");
+
+    Gang_PlayerStartConquest(playerid, territory_index);
+
+    Streamer_Update(playerid);
+    Inventory_Hide(playerid);
+    ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
+
+    InventorySlot_Subtract(playerid, slot);
+    return 1;
+}
+
 static Medicine_OnUse(playerid, slot)
 {
     if (Player_Health(playerid) >= 100)
@@ -301,6 +339,10 @@ public OnGameModeInit()
     Item_Thirst(ITEM_FISH) = 40.0;
     Item_Callback(ITEM_FISH) = __addressof(Food_OnUse);
     Item_SetPreviewRot(ITEM_FISH, -19.000000, 49.000000, -171.000000, 0.770000);
+
+    // Flag
+    Item_Callback(ITEM_FLAG) = __addressof(Flag_OnUse);
+    Item_SetPreviewRot(ITEM_FLAG, -19.000000, 49.000000, -171.000000, 0.770000);
 
     #if defined ITEM_OnGameModeInit
         return ITEM_OnGameModeInit();

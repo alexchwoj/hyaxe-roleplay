@@ -18,10 +18,16 @@ enum eTerritoryInfo
 	Float:e_fMaxZ,
 
     bool:e_bIsConquerable,
+	Float:e_fConquestProgress,
+	e_iConquestTimer,
+	e_iGangAttaking,
 
 	e_iArea,
 	e_iGangZone,
     e_iColor,
-	e_iGangID
+	e_iGangID,
+
+	e_iFlagObject,
+	Text3D:e_iLabel
 };
 new g_rgeTerritories[HYAXE_MAX_TERRITORIES][eTerritoryInfo];

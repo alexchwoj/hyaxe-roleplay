@@ -81,6 +81,7 @@ enum _:eItems
     ITEM_FIREEXTINGUISHER,
     ITEM_CAMERA,
     ITEM_PARACHUTE,
+    ITEM_FLAG,
 
 	ITEM_INVALID
 };
@@ -197,6 +198,7 @@ new
         {"Extintor", 366, true, -1}, // ITEM_FIREEXTINGUISHER
         {"Camara", 367, true, -1}, // ITEM_CAMERA
         {"Paracaidas", 371, true, -1}, // ITEM_PARACHUTE
+        {"Bandera", 19306, true, -1}, // ITEM_FLAG
 
 		{"Invalid item", 18631, false, -1} // ITEM_INVALID
 	},

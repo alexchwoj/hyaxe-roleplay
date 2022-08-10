@@ -29,6 +29,7 @@ public OnGameModeInit()
 
         if (g_rgeTerritories[i][e_bIsConquerable])
         {   
+            g_rgeTerritories[i][e_iGangAttaking] = -1;
             g_rgeTerritories[i][e_iColor] = 0xF7F7F755;
             g_rgeTerritories[i][e_iGangZone] = GangZoneCreate(g_rgeTerritories[i][e_fMinX], g_rgeTerritories[i][e_fMinY], g_rgeTerritories[i][e_fMaxX], g_rgeTerritories[i][e_fMaxY]);
             g_rgeTerritories[i][e_iArea] = CreateDynamicCube(
@@ -113,3 +114,30 @@ public OnPlayerConnect(playerid)
 #if defined TERR_OnPlayerConnect
     forward TERR_OnPlayerConnect(playerid);
 #endif
+
+forward TERR_UpdateProgress(territory_index);
+public TERR_UpdateProgress(territory_index)
+{
+    g_rgeTerritories[territory_index][e_fConquestProgress] += 5.0;
+    if (g_rgeTerritories[territory_index][e_fConquestProgress] >= 100.0)
+    {
+        g_rgeTerritories[territory_index][e_fConquestProgress] = 100.0;
+        Territory_SetGang(territory_index, g_rgeTerritories[territory_index][e_iGangAttaking]);
+        Territory_CancelConquest(territory_index);
+    }
+
+    new str_text[144];
+    format(str_text, sizeof(str_text), "Progreso de conquista: {CA3737}%.1f%%{FFFFFF}\n{CA3737}", g_rgeTerritories[territory_index][e_fConquestProgress]);
+
+    new painted_lines = floatround(3 * (g_rgeTerritories[territory_index][e_fConquestProgress] / 5.0));
+    for(new i; i <= painted_lines; ++i)
+        strcat(str_text, "|");
+
+    new unpainted_lines = 60 - painted_lines;
+    strcat(str_text, "{7D3535}");
+    for(new i; i <= unpainted_lines; ++i)
+        strcat(str_text, "|");
+
+    UpdateDynamic3DTextLabelText(g_rgeTerritories[territory_index][e_iLabel], 0xFFFFFFFF, str_text);
+    return 1;
+}

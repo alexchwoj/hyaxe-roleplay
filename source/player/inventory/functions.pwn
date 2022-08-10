@@ -455,6 +455,17 @@ Item_TypeToWeapon(type)
 	return 0;
 }
 
+command banderita(playerid, const params[], "")
+{
+	new Float:x, Float:y, Float:z, Float:angle;
+	GetPlayerPos(playerid, x, y, z);
+	GetPlayerFacingAngle(playerid, angle);
+
+	GetXYFromAngle(x, y, angle, 0.8);
+	DroppedItem_Create(ITEM_FLAG, 1, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
+	return 1;
+}
+
 command dropitem(playerid, const params[], "Crea un item en el suelo")
 {
 	extract params -> new item_id, amount = 1, extra = 0; else {

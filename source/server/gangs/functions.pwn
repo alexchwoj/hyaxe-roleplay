@@ -221,3 +221,19 @@ Gang_GetLowestRank(gangid)
     }
     return -1;
 }
+
+Gang_PlayerStartConquest(playerid, territory_index)
+{
+    Territory_CancelConquest(territory_index);
+
+    new Float:x, Float:y, Float:z;
+    GetPlayerPos(playerid, x, y, z);
+
+    GangZoneFlashForAll(g_rgeTerritories[territory_index][e_iGangZone], 0xE1363655);
+
+    g_rgeTerritories[territory_index][e_iFlagObject] = CreateDynamicObject(19306, x, y, z - 1.0, 0.0, 0.0, 0.0, 0, 0);
+    g_rgeTerritories[territory_index][e_iLabel] = CreateDynamic3DTextLabel("Progreso de conquista: {CA3737}0%{FFFFFF}\n{CA3737}{7D3535}||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||", 0xFFFFFFFF, x, y, z + 1.0, 40.0);
+    g_rgeTerritories[territory_index][e_iConquestTimer] = SetTimerEx("TERR_UpdateProgress", 500, true, "i", territory_index);
+    g_rgeTerritories[territory_index][e_iGangAttaking] = Player_Gang(playerid);
+    return 1;
+}

@@ -12,7 +12,9 @@ enum eGangData
     e_szGangName[64],
     e_iGangColor,
     e_iGangIcon,
-    e_iGangOwnerId
+    e_iGangOwnerId,
+
+    bool:e_bGangAttacking
 };
 new g_rgeGangs[HYAXE_MAX_GANGS][eGangData],
     Map:g_mapGangIds;
