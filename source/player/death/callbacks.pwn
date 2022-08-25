@@ -23,6 +23,20 @@ public OnPlayerDeath(playerid, killerid, reason)
 
         if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
         {
+            KillTimer(g_rgiPlayerCorpseTimer[playerid]);
+            DestroyDynamicActor(g_rgiPlayerCorpseActor[playerid]);
+
+            g_rgiPlayerCorpseActor[playerid] = CreateDynamicActor(
+                Player_Skin(playerid),
+                g_rgePlayerData[playerid][e_fPosX],
+                g_rgePlayerData[playerid][e_fPosY],
+                g_rgePlayerData[playerid][e_fPosZ],
+                g_rgePlayerData[playerid][e_fPosAngle],
+                .worldid = GetPlayerVirtualWorld(playerid), .interiorid = GetPlayerInterior(playerid)
+            );
+            ApplyDynamicActorAnimation(g_rgiPlayerCorpseActor[playerid], "WUZI", "CS_Dead_Guy", 4.1, 0, 0, 0, 1, 0);
+            g_rgiPlayerCorpseTimer[playerid] = SetTimerEx("DEATH_DeleteCorpse", 30000, false, "i", playerid);
+            
             Player_SetHealth(playerid, 4);
             Bit_Set(Player_Flags(playerid), PFLAG_INJURED, false);
 
@@ -64,6 +78,25 @@ public OnPlayerDeath(playerid, killerid, reason)
     forward CRAWL_OnPlayerDeath(playerid, killerid, reason);
 #endif
 
+forward DEATH_DeleteCorpse(playerid);
+public DEATH_DeleteCorpse(playerid)
+{
+    new Float:x, Float:y, Float:z, Float:angle;
+    GetDynamicActorPos(g_rgiPlayerCorpseActor[playerid], x, y, z)
+
+    new amount = 1 + random(3);
+    if (Player_Skin(playerid) == 5 || Player_Skin(playerid) == 149 || Player_Skin(playerid) == 5)
+        amount += amount;
+
+    for(new i; i < amount); ++i)
+    {
+        DroppedItem_Create(ITEM_MEAT, 1, 0, x, y, z, GetDynamicActorVirtualWorld(g_rgiPlayerCorpseActor[playerid]), 0, playerid);
+    }
+
+    DestroyDynamicActor(g_rgiPlayerCorpseActor[playerid]);
+    return 1;
+}
+
 forward CRAWL_ProcessKey(playerid);
 public CRAWL_ProcessKey(playerid)
 {
@@ -97,6 +130,8 @@ public CRAWL_StopAnimation(playerid)
 
 public OnPlayerDisconnect(playerid, reason)
 {
+    KillTimer(g_rgiPlayerCorpseTimer[playerid]);
+    DestroyDynamicActor(g_rgiPlayerCorpseActor[playerid]);
     KillTimer(g_rgeCrawlData[playerid][e_iCrawlKeyTimer]);
     g_rgeCrawlData[playerid] = g_rgeCrawlData[MAX_PLAYERS];
 
