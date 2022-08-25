@@ -548,3 +548,18 @@ bool:IsValidEmailAddress(const str[])
 
     return bool:Regex_Check(str, email_rgx);
 }
+
+bool:Skin_IsFat(skin)
+{
+    switch(skin)
+    {
+        case 5: return true;
+        case 149: return true;
+        case 182: return true;
+        case 241: return true;
+        case 242: return true;
+        case 264: return true;
+        case 269: return true;
+    }
+    return false;
+}
