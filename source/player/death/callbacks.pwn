@@ -37,7 +37,7 @@ public OnPlayerDeath(playerid, killerid, reason)
                 .worldid = GetPlayerVirtualWorld(playerid), .interiorid = GetPlayerInterior(playerid)
             );
             ApplyDynamicActorAnimation(g_rgiPlayerCorpseActor[playerid], "WUZI", "CS_Dead_Guy", 4.1, 0, 0, 0, 1, 0);
-            g_rgiPlayerCorpseTimer[playerid] = SetTimerEx("DEATH_DeleteCorpse", 30000, false, "i", playerid);
+            g_rgiPlayerCorpseTimer[playerid] = SetTimerEx("DEATH_DeleteCorpse", 60000, false, "i", playerid);
             
             Player_SetHealth(playerid, 4);
             Bit_Set(Player_Flags(playerid), PFLAG_INJURED, false);
