@@ -348,7 +348,7 @@ DroppedItem_CreateFrontPlayer(playerid, type, amount, extra)
 	DroppedItem_Create(type, amount, extra, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
 }
 
-DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, interior = 0, playerid = INVALID_PLAYER_ID)
+DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, interior = 0, playerid = INVALID_PLAYER_ID, timeout = 300)
 {
 	new objectid = CreateDynamicObject(
 		Item_ModelID(type), x, y, z + 0.9,
@@ -379,7 +379,7 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 	area_info[1] = amount; // Amount
 	area_info[2] = objectid; // Object ID
 	area_info[3] = _:labelid; // Label ID
-	area_info[4] = (gettime() + 300); // Time
+	area_info[4] = (gettime() + timeout); // Time
 	area_info[5] = extra; // Extra
 
 	new area_id = CreateDynamicSphere(x, y, dest_z + 0.9, 1.0, world, interior);
