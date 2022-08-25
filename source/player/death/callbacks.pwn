@@ -24,7 +24,7 @@ public OnPlayerDeath(playerid, killerid, reason)
         if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
         {
             ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, 0, 0, 0, 1, 0);
-            
+
             KillTimer(g_rgiPlayerCorpseTimer[playerid]);
             DestroyDynamicActor(g_rgiPlayerCorpseActor[playerid]);
 
@@ -92,7 +92,7 @@ public DEATH_DeleteCorpse(playerid)
 
     for(new i; i < amount; ++i)
     {
-        DroppedItem_Create(ITEM_MEAT, 1, 0, x + math_random_float(-1.0, 1.0), y + math_random_float(-1.0, 1.0), z, GetDynamicActorVirtualWorld(g_rgiPlayerCorpseActor[playerid]), 0, playerid);
+        DroppedItem_Create(ITEM_MEAT, 1, 0, x + math_random_float(-1.0, 1.0), y + math_random_float(-1.0, 1.0), z, GetDynamicActorVirtualWorld(g_rgiPlayerCorpseActor[playerid]), 0, playerid, .timeout = 30 + random(120));
     }
 
     DestroyDynamicActor(g_rgiPlayerCorpseActor[playerid]);
