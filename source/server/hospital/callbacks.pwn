@@ -63,7 +63,7 @@ public OnGameModeInit()
         new int = g_rgeHospitalData[i][e_iHospitalInteriorType];
 
         Actor_CreateRobbable(
-            minrand(274, 277), 500, 800,
+            minrand(274, 276), 500, 800,
             g_rgeHospitalInteriorData[int][e_fHospitalActorPosX], g_rgeHospitalInteriorData[int][e_fHospitalActorPosY], g_rgeHospitalInteriorData[int][e_fHospitalActorPosZ], g_rgeHospitalInteriorData[int][e_fHospitalActorPosAngle],
             .worldid = i, .interiorid = g_rgeHospitalInteriorData[int][e_iHospitalIntInterior]
         );
