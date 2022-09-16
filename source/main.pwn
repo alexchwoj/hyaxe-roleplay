@@ -52,7 +52,7 @@
 #pragma warning disable 239
 #pragma warning disable 214
 
-#define NDEBUG 0
+#define NDEBUG 1
 
 #if NDEBUG
 	#pragma option -d0
@@ -157,6 +157,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "core/config/header.pwn"
 #include "core/animations/header.pwn"
 #include "core/notification/header.pwn"
+#include "core/menu/header.pwn"
 #include "core/dialogs/header.pwn"
 #include "core/commands/header.pwn"
 #include "core/key/header.pwn"
@@ -183,6 +184,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/garage/header.pwn"
 #include "server/car_rental/header.pwn"
 #include "server/weather/header.pwn"
+#include "server/tuning/header.pwn"
 #include "player/account/header.pwn"
 #include "player/config/header.pwn"
 #include "player/damage/header.pwn"
@@ -204,6 +206,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "core/async/functions.pwn"
 #include "core/animations/functions.pwn"
 #include "core/notification/functions.pwn"
+#include "core/menu/functions.pwn"
 #include "core/dialogs/functions.pwn"
 #include "core/commands/functions.pwn"
 #include "core/key/functions.pwn"
@@ -224,6 +227,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/territories/functions.pwn"
 #include "server/fuel_station/functions.pwn"
 #include "server/weather/functions.pwn"
+#include "server/tuning/functions.pwn"
 #include "player/account/functions.pwn"
 #include "player/config/functions.pwn"
 #include "player/damage/functions.pwn"
@@ -246,6 +250,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "core/config/callbacks.pwn"
 #include "core/animations/callbacks.pwn"
 #include "core/notification/callbacks.pwn"
+#include "core/menu/callbacks.pwn"
 #include "core/dialogs/callbacks.pwn"
 #include "core/commands/callbacks.pwn"
 #include "core/key/callbacks.pwn"
@@ -276,6 +281,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/garage/callbacks.pwn"
 #include "server/car_rental/callbacks.pwn"
 #include "server/weather/callbacks.pwn"
+#include "server/tuning/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/damage/callbacks.pwn"
 #include "player/leveling/callbacks.pwn"
@@ -333,11 +339,4 @@ SSCANF:boolean(string[])
 	else if(!strcmp(string, "no", true)) return 0;
 
 	return 0;
-}
-
-command settime(playerid, const params[], "")
-{
-	extract params -> new hour, minute;
-	SetPlayerTime(playerid, hour, minute);
-	return 1;
 }

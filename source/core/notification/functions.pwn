@@ -187,3 +187,15 @@ Notification_HideBeatingText(playerid)
 
     return 1;
 }
+
+Notification_DestroyAll(playerid)
+{
+    for(new i = 0; i < MAX_NOTIFICATIONS; i++)
+    {
+        if(NOTIFICATION_DATA[playerid][i][notificationActive])
+        {
+            DestroyPlayerNotification(playerid, i);
+        }
+    }
+    return 1;
+}

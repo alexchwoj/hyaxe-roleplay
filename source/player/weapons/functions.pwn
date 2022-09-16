@@ -62,13 +62,13 @@ Player_GiveWeapon(playerid, weaponid, ammo)
     Player_SetImmunityForCheat(playerid, CHEAT_WEAPON, 1000 + GetPlayerPing(playerid));
 
     new slot = GetWeaponSlot(weaponid);
-
+    printf("playerid = %d, weaponid = %d, ammo = %d, slot = %d", playerid, weaponid, ammo, slot);
     Player_WeaponSlot(playerid, slot)[e_iWeaponId] = weaponid;
     Player_WeaponSlot(playerid, slot)[e_iWeaponAmmo] = ammo;
-
     GivePlayerWeapon(playerid, weaponid, ammo);
 
     new weapon_and_ammo = Weapon_PackIdAndAmmo(weaponid, ammo);
+    printf("Player_GiveWeapon 7");
     DEBUG_PRINT("[dbg:weapons] Saving weapon %i with %i ammo to player %i: %b", weaponid, ammo, playerid, weapon_and_ammo);
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH,
@@ -77,7 +77,6 @@ Player_GiveWeapon(playerid, weaponid, ammo)
         WHERE `ACCOUNT_ID` = %i LIMIT 1;\
     ", slot, weapon_and_ammo, Player_AccountID(playerid));
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
-
     return 1;
 }
 
@@ -201,21 +200,21 @@ Player_LoadWeaponsFromCache(playerid)
 command giveweapon(playerid, const params[], "Le da un arma a un jugador")
 {
     new weaponid, ammo, destination;
-    if(sscanf(params, "p<,>k<weapon>I(32767)R(-1)", weaponid, ammo, destination))
+    if (sscanf(params, "p<,>k<weapon>I(32767)R(-1)", weaponid, ammo, destination))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/giveweapon {DADADA}<arma>, {969696}[munición = máx.], [jugador = tú]");
         return 1;
     }
 
-    if(destination == INVALID_PLAYER_ID)
+    if (destination == INVALID_PLAYER_ID || destination == -1)
         destination = playerid;
 
     Player_GiveWeapon(destination, weaponid, ammo);
-    
+
     new weapon_name[20];
     GetWeaponName(weaponid, weapon_name);
 
-    if(playerid != destination)
+    if (playerid != destination)
     {
         SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Le diste un(a) {ED2B2B}%s{DADADA} con {ED2B2B}%i balas{DADADA} a {ED2B2B}%s{DADADA}.", weapon_name, ammo, Player_RPName(destination));
     }
