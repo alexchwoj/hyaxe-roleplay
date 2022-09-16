@@ -239,7 +239,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             // Vehicle name
             new header[64];
             format(
-                header, sizeof(header), "{CB3126}%s{F7F7F7} (%s)",
+                header, sizeof(header), "{CB3126}%s{E6E6E6} (%s)",
                 g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_szModelName],
                 (player_seat ? "Pasajero" : "Conductor")
             );
