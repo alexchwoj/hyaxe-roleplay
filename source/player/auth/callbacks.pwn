@@ -43,7 +43,7 @@ public OnPlayerDataLoaded(playerid)
     }
 
     new song_link[65];
-    format(song_link, sizeof(song_link), "https://github.com/RealAtom/hyaxe/raw/main/song/ost_intro%d.mp3", random(12));
+    format(song_link, sizeof(song_link), "https://raw.githubusercontent.com/Hyaxe/static/main/ost_intro%d.mp3", random(12));
     PlayAudioStreamForPlayer(playerid, song_link);
 
     if(!Bit_Get(Player_Flags(playerid), PFLAG_REGISTERED))

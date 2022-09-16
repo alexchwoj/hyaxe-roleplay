@@ -180,41 +180,14 @@ public VEHICLE_Update(vehicleid)
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if((newkeys & KEY_NO) != 0 && !(newkeys & KEY_HANDBRAKE))
+    if ((newkeys & KEY_NO) != 0 && !(newkeys & KEY_HANDBRAKE))
     {
-        if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+        if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
         {
-            new vehicleid = GetPlayerVehicleID(playerid);
-            if(!vehicleid)
-                return 1;
-
-            new notif_str[40];
-            
-            if(Vehicle_Repairing(vehicleid))
-            {
-                Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes encender el vehículo si está siendo reparado");
-                return 1;
-            }
-
-            if(g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_TOGGLE_ENGINE])
-            {
-                format(notif_str, sizeof(notif_str), "El vehículo ya se está %s", (Vehicle_GetEngineState(vehicleid) ? "apagando" : "encendiendo"));
-                Notification_ShowBeatingText(playerid, 1000, 0xED2B2B, 100, 255, notif_str);
-                return 1;
-            }
-
-            if(Speedometer_Shown(playerid))
-            {
-                PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{2}, 0xE69F2EFF);
-                PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{2});
-            }
-
-            format(notif_str, sizeof(notif_str), "%s motor", (Vehicle_GetEngineState(vehicleid) == VEHICLE_STATE_ON ? "Apagando" : "Encendiendo"));
-            Notification_ShowBeatingText(playerid, 1000, 0xF29624, 100, 255,  notif_str);
-            g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_TOGGLE_ENGINE] = SetTimerEx("VEHICLE_ToggleEngineTimer", 1000, false, "ii", playerid, vehicleid);
+            Vehicle_PlayerStartEngine(playerid);
         }
     }
-    else if((newkeys & KEY_YES) != 0)
+    else if ((newkeys & KEY_YES) != 0)
     {
         new vehicleid = (IsPlayerInAnyVehicle(playerid) ? GetPlayerVehicleID(playerid) : GetPlayerCameraTargetVehicle(playerid));
         if(vehicleid != INVALID_VEHICLE_ID)
@@ -243,22 +216,60 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             }
         }
     }
-    else if((newkeys & (KEY_HANDBRAKE | KEY_NO)) == KEY_HANDBRAKE | KEY_NO)
+    else if ((newkeys & (KEY_HANDBRAKE | KEY_NO)) == KEY_HANDBRAKE | KEY_NO)
     {
-        if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+        if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
         {
-            new vehicleid = GetPlayerVehicleID(playerid);
-            if(vehicleid)
+            Vehicle_PlayerEnableLights(playerid);
+            return 1;
+        }
+    }
+    else if((newkeys & KEY_LOOK_BEHIND) != 0)
+    {
+        new vehicleid = GetPlayerVehicleID(playerid);
+        if (IsValidVehicle(vehicleid))
+        {
+            // Vehicle windows
+            new windows[4], player_seat;
+
+            player_seat = GetPlayerVehicleSeat(playerid);
+            if (player_seat < 0 || player_seat > 3)
+                player_seat = 3;
+
+            // Vehicle name
+            new header[64];
+            format(
+                header, sizeof(header), "{CB3126}%s{F7F7F7} (%s)",
+                g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_szModelName],
+                (player_seat ? "Pasajero" : "Conductor")
+            );
+
+            GetVehicleParamsCarWindows(vehicleid, windows[0], windows[1], windows[2], windows[3]);
+
+            // Vehicle panel
+            if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
             {
-                new lights = Vehicle_ToggleLights(vehicleid);
-                if(Speedometer_Shown(playerid))
-                {
-                    PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{3}, (lights ? 0x64A752FF : 0x2F2F2FFF));
-                    PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{3});
-                }
+                format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+                    Ventana\t%s\n\
+                    Motor\t%s\n\
+                    Luces\t%s\
+                ",
+                    (windows[player_seat] ? "{CB3126}Cerrada" : "{64A752}Abierta"),
+                    (Vehicle_GetEngineState(vehicleid) ? "{64A752}Encendido" : "{CB3126}Apagado"),
+                    (Vehicle_GetLightsStatus(vehicleid) ? "{64A752}Encendidas" : "{CB3126}Apagadas")
+                );
+            }
+            else if (GetPlayerState(playerid) == PLAYER_STATE_PASSENGER)
+            {
+                format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+                    Ventana\t%s\n\
+                ",
+                    (windows[player_seat] ? "{CB3126}Cerrada" : "{64A752}Abierta")
+                );
             }
 
-            return 1;
+            Dialog_Show(playerid, "vehicle_panel", DIALOG_STYLE_TABLIST, header, HYAXE_UNSAFE_HUGE_STRING, !"Seleccionar", !"Cerrar");
+            PlayerPlaySound(playerid, SOUND_BUTTON);
         }
     }
 
@@ -278,6 +289,46 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 #if defined VEH_OnPlayerKeyStateChange
     forward VEH_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 #endif
+
+dialog vehicle_panel(playerid, response, listitem, const inputtext[])
+{
+    if (response)
+    {
+        new vehicleid = GetPlayerVehicleID(playerid);
+        if (!IsValidVehicle(vehicleid))
+            return 1;
+
+        switch(listitem)
+        {
+            case 0:
+            {
+                new windows[4], player_seat;
+
+                player_seat = GetPlayerVehicleSeat(playerid);
+                if (player_seat < 0 || player_seat > 3)
+                    player_seat = 3;
+
+                GetVehicleParamsCarWindows(vehicleid, windows[0], windows[1], windows[2], windows[3]);
+
+                windows[ player_seat ] = (windows[ player_seat ] ? 0 : 1);
+                SetVehicleParamsCarWindows(vehicleid, windows[0], windows[1], windows[2], windows[3]);
+                PlayerPlaySound(playerid, SOUND_CAR_DOORS);
+            }
+            case 1:
+            {
+                Vehicle_PlayerStartEngine(playerid);
+                PlayerPlaySound(playerid, SOUND_CAR_DOORS);
+            }
+            case 2:
+            {
+                Vehicle_PlayerEnableLights(playerid);
+                PlayerPlaySound(playerid, SOUND_CAR_DOORS);
+            }
+        }
+    }
+
+    return 1;
+}
 
 public VEHICLE_ToggleEngineTimer(playerid, vehicleid)
 {

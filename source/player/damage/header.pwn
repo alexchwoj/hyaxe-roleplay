@@ -23,25 +23,25 @@ new
         1, // 13 - Vibrator 2
         1, // 14 - Flowers
         1, // 15 - Cane
-        82, // 16 - Grenade
+        83, // 16 - Grenade
         0, // 17 - Teargas
         1, // 18 - Molotov
         9, // 19 - Vehicle M4 (custom)
         46, // 20 - Vehicle minigun (custom)
         82, // 21 - Vehicle rocket (custom)
-        10, // 22 - Colt 45
-        8, // 23 - Silenced
-        15, // 24 - Deagle
+        4, // 22 - Colt 45
+        6, // 23 - Silenced
+        14, // 24 - Deagle
         30, // 25 - Shotgun
         12, // 26 - Sawed-off
         15, // 27 - Spas
-        8, // 28 - UZI
-        13, // 29 - MP5
+        6, // 28 - UZI
+        8, // 29 - MP5
         10, // 30 - AK47
-        15, // 31 - M4
-        15, // 32 - Tec9
-        30, // 33 - Cuntgun
-        45, // 34 - Sniper
+        13, // 31 - M4
+        8, // 32 - Tec9
+        24, // 33 - Cuntgun
+        41, // 34 - Sniper
         82, // 35 - Rocket launcher
         82, // 36 - Heatseeker
         1, // 37 - Flamethrower

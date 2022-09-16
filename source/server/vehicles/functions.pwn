@@ -86,6 +86,55 @@ Vehicle_ToggleEngine(vehicleid, engstate = VEHICLE_STATE_DEFAULT)
     return 1;
 }
 
+Vehicle_PlayerStartEngine(playerid)
+{
+    new vehicleid = GetPlayerVehicleID(playerid);
+    if (!vehicleid)
+        return 1;
+
+    new notif_str[40];
+            
+    if (Vehicle_Repairing(vehicleid))
+    {
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes encender el vehículo si está siendo reparado");
+        return 1;
+    }
+
+    if (g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_TOGGLE_ENGINE])
+    {
+        format(notif_str, sizeof(notif_str), "El vehículo ya se está %s", (Vehicle_GetEngineState(vehicleid) ? "apagando" : "encendiendo"));
+        Notification_ShowBeatingText(playerid, 1000, 0xED2B2B, 100, 255, notif_str);
+        return 1;
+    }
+
+    if (Speedometer_Shown(playerid))
+    {
+        PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{2}, 0xE69F2EFF);
+        PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{2});
+    }
+
+    format(notif_str, sizeof(notif_str), "%s motor", (Vehicle_GetEngineState(vehicleid) == VEHICLE_STATE_ON ? "Apagando" : "Encendiendo"));
+    Notification_ShowBeatingText(playerid, 1000, 0xF29624, 100, 255,  notif_str);
+    g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_TOGGLE_ENGINE] = SetTimerEx("VEHICLE_ToggleEngineTimer", 1000, false, "ii", playerid, vehicleid);
+    
+    return 1;
+}
+
+Vehicle_PlayerEnableLights(playerid)
+{
+    new vehicleid = GetPlayerVehicleID(playerid);
+    if (vehicleid)
+    {
+        new lights = Vehicle_ToggleLights(vehicleid);
+        if (Speedometer_Shown(playerid))
+        {
+            PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{3}, (lights ? 0x64A752FF : 0x2F2F2FFF));
+            PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{3});
+        }
+    }
+    return 1;
+}
+
 Vehicle_ToggleLock(vehicleid)
 {
     g_rgeVehicles[vehicleid][e_bLocked] = !g_rgeVehicles[vehicleid][e_bLocked];

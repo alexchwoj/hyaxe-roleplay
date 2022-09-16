@@ -30,7 +30,7 @@ public OnGameModeInit()
         if (g_rgeTerritories[i][e_bIsConquerable])
         {   
             g_rgeTerritories[i][e_iGangAttaking] = -1;
-            g_rgeTerritories[i][e_iColor] = 0xF7F7F755;
+            g_rgeTerritories[i][e_iColor] = 0xD1D1D133;
             g_rgeTerritories[i][e_iGangZone] = GangZoneCreate(g_rgeTerritories[i][e_fMinX], g_rgeTerritories[i][e_fMinY], g_rgeTerritories[i][e_fMaxX], g_rgeTerritories[i][e_fMaxY]);
             g_rgeTerritories[i][e_iArea] = CreateDynamicCube(
                 g_rgeTerritories[i][e_fMinX],
