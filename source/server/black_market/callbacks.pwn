@@ -59,9 +59,71 @@ static RifleShop_OnBuy(playerid, shop_id, item_id)
     return 1;
 }
 
+static MiscShop_OnEnter(playerid)
+{
+    Dialog_Show(playerid, "misc_shop", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Varios", "{F7F7F7}Productor\t{F7F7F7}Precio\nBandera para conquistar\t{64A752}$100\nBote de spray\t{64A752}$150\n", !"Comprar", !"Cerrar");
+    PlayerPlaySound(playerid, SOUND_BUTTON);
+    return 1;
+}
+
+dialog misc_shop(playerid, response, listitem, const inputtext[])
+{
+    if (response)
+    {
+        switch(listitem)
+        {
+            case 0:
+            {
+                if (100 > Player_Money(playerid))
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 1;
+                }
+
+                if (Inventory_AddItem(playerid, ITEM_FLAG, 1, 0))
+                {
+                    Player_GiveMoney(playerid, -100);
+                    PlayerPlaySound(playerid, SOUND_SUCCESS);
+                    Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste una bandera para conquistar.");
+                }
+                else
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes el inventario lleno.");
+                    return 1;
+                }
+            }
+            case 1:
+            {
+                if (150 > Player_Money(playerid))
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 1;
+                }
+
+                Player_GiveWeapon(playerid, 41, 99999);
+
+                Player_GiveMoney(playerid, -150);
+                PlayerPlaySound(playerid, SOUND_SUCCESS);
+
+                Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un bote de pintura.");
+            }
+
+        }
+    }
+    return 1;
+}
+
 public OnGameModeInit()
 {
     CreateDynamicMapIcon(2453.5684, -1971.7292, 13.5469, 18, -1, .worldid = 0, .interiorid = 0);
+
+    // Misc shop
+    CreateDynamicActor(202, 2440.5835, -1975.5815, 13.5469, 266.2618, .worldid = 0, .interiorid = 0);
+    CreateDynamic3DTextLabel("Varios", 0xCB3126FF, 2440.5835, -1975.5815, 13.5469, 10.0, .testlos = 1, .worldid = 0, .interiorid = 0);
+    Key_Alert(2440.5835, -1975.5815, 13.5469, 1.5, KEYNAME_YES, 0, 0, .callback_on_press = __addressof(MiscShop_OnEnter));
 
     // Pistol shop
     CreateDynamicActor(73, 2447.4807, -1980.9473, 13.5469, 0.2792, .worldid = 0, .interiorid = 0);
