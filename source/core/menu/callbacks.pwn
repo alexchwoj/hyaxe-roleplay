@@ -102,7 +102,8 @@ public OnPlayerUpdate(playerid)
 				playerMenu[playerid][E_PLAYER_MENU_LISTITEM] = 0;
 				playerMenu[playerid][E_PLAYER_MENU_PAGE] = 0;
 			}
-			else if ((playerMenu[playerid][E_PLAYER_MENU_LISTITEM] + 1) == ((playerMenu[playerid][E_PLAYER_MENU_PAGE] + 1) * MENU_MAX_LISTITEMS_PERPAGE))
+			//else if ((playerMenu[playerid][E_PLAYER_MENU_LISTITEM] + 1) >= ((playerMenu[playerid][E_PLAYER_MENU_PAGE] + 1) * MENU_MAX_LISTITEMS_PERPAGE))
+			else if ((playerMenu[playerid][E_PLAYER_MENU_LISTITEM] + 1) >= MENU_MAX_LISTITEMS_PERPAGE)
 			{
 				playerMenu[playerid][E_PLAYER_MENU_LISTITEM] = 0;
 				playerMenu[playerid][E_PLAYER_MENU_PAGE]++;

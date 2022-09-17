@@ -9,8 +9,21 @@ TuningMenu_Main(playerid)
     AddPlayerMenuItem(playerid, "Reparar", "Precio: ~g~$500");
     AddPlayerMenuItem(playerid, "Colores");
 	AddPlayerMenuItem(playerid, "Paintjob");
-	AddPlayerMenuItem(playerid, "Ruedas");
-    AddPlayerMenuItem(playerid, "Salir");
+    AddPlayerMenuItem(playerid, "Ruedas");
+	AddPlayerMenuItem(playerid, "Alerones");
+    AddPlayerMenuItem(playerid, "Techo");
+    AddPlayerMenuItem(playerid, "Tomas de aire");
+    AddPlayerMenuItem(playerid, "Tubos de escape");
+    AddPlayerMenuItem(playerid, "Capó");
+    AddPlayerMenuItem(playerid, "Faros");
+    AddPlayerMenuItem(playerid, "Faldones");
+    AddPlayerMenuItem(playerid, "Parachoques delanteros");
+    AddPlayerMenuItem(playerid, "Parachoques traseros");
+    AddPlayerMenuItem(playerid, "Protector delantero");
+    AddPlayerMenuItem(playerid, "Protector trasero");
+    AddPlayerMenuItem(playerid, "Suspensión hidráulica");
+    AddPlayerMenuItem(playerid, "Nitro");
+    AddPlayerMenuItem(playerid, "Varios");
     Menu_UpdateListitems(playerid);
     return 1;
 }
@@ -47,6 +60,7 @@ Tuning_Open(playerid)
     PutPlayerInVehicle(playerid, vehicle_id, 0);
     TogglePlayerControllable(playerid, false);
     SetCameraBehindPlayer(playerid);
+    Speedometer_Hide(playerid);
 
     // Camera
     InterpolateCameraPos(playerid, 603.253234, -1.074449, 1002.081970, 606.906799, 2.143145, 1002.159118, 1000);
@@ -60,6 +74,7 @@ Tuning_Open(playerid)
 Tuning_Back(playerid)
 {
     HidePlayerMenu(playerid);
+    Speedometer_Show(playerid);
 
     Player_SetPos(playerid, s_rgfPreviusTuningPos[playerid][0], s_rgfPreviusTuningPos[playerid][1], s_rgfPreviusTuningPos[playerid][2]);
     SetPlayerFacingAngle(playerid, s_rgfPreviusTuningPos[playerid][3]);

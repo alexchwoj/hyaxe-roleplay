@@ -13,7 +13,7 @@ Internal_UpdateListitemInfo(playerid)
 
 	    new string[MENU_MAX_LISTITEM_SIZE];
 	    strunpack(string, playerMenuListitemsInfo[playerid][listitemid]);
-	    PlayerTextDrawSetString(playerid, menuPlayerTextDraws[playerid][menuPlayerTextDrawsID[playerid][E_MENU_TEXTDRAW_INFO_TEXT]], string);
+	    PlayerTextDrawSetString(playerid, menuPlayerTextDraws[playerid][menuPlayerTextDrawsID[playerid][E_MENU_TEXTDRAW_INFO_TEXT]], Str_FixEncoding(string));
         PlayerTextDrawShow(playerid, menuPlayerTextDraws[playerid][menuPlayerTextDrawsID[playerid][E_MENU_TEXTDRAW_INFO_TEXT]]);
 	}
 	else
@@ -53,7 +53,7 @@ Menu_UpdateListitems(playerid)
 		}
 
 	    strunpack(string, playerMenuListitems[playerid][listitem]);
-	    PlayerTextDrawSetString(playerid, menuPlayerTextDraws[playerid][menuPlayerTextDrawsID[playerid][E_MENU_TEXTDRAW_LISTITEMS][i]], string);
+	    PlayerTextDrawSetString(playerid, menuPlayerTextDraws[playerid][menuPlayerTextDrawsID[playerid][E_MENU_TEXTDRAW_LISTITEMS][i]], Str_FixEncoding(string));
         PlayerTextDrawShow(playerid, menuPlayerTextDraws[playerid][menuPlayerTextDrawsID[playerid][E_MENU_TEXTDRAW_LISTITEMS][i]]);
 	}
 

@@ -20,7 +20,7 @@
 
 #if !defined MENU_MAX_LISTITEMS
 	#define MENU_MAX_LISTITEMS \
-		256
+		128
 #endif
 
 #if !defined MENU_MAX_LISTITEM_SIZE

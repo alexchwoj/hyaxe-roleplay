@@ -143,6 +143,10 @@ Menu:TUNING_COLOR_TYPE(playerid, response, listitem)
     if (response == MENU_RESPONSE_CLOSE)
     {
         TuningMenu_Main(playerid);
+
+        new vehicleid = GetPlayerVehicleID(playerid);
+        if (IsValidVehicle(vehicleid))
+            ChangeVehicleColor(vehicleid, g_rgeVehicles[vehicleid][e_iColorOne], g_rgeVehicles[vehicleid][e_iColorTwo]);
     }
     else if (response == MENU_RESPONSE_SELECT)
     {
@@ -150,9 +154,11 @@ Menu:TUNING_COLOR_TYPE(playerid, response, listitem)
 
         ShowPlayerMenu(playerid, TUNING_COLOR, (g_rgiSelectedColorType[playerid] ? "Color 2" : "Color 1"), .clearChat = true);
 
-        for(new i; i < sizeof(g_rgiVehicleColoursTableRGBA); ++i)
+        for(new i; i < 128; ++i)
         {
-            AddPlayerMenuItem(playerid, "==========", "Precio: ~g~$50", .color = g_rgiVehicleColoursTableRGBA[i]);
+            new line_str[32];
+            format(line_str, sizeof(line_str), "%d (%x)", i, g_rgiVehicleColoursTableRGBA[i]);
+            AddPlayerMenuItem(playerid, line_str, "Precio: ~g~$100", .color = g_rgiVehicleColoursTableRGBA[i]);
         }
         Menu_UpdateListitems(playerid);
     }
@@ -161,28 +167,57 @@ Menu:TUNING_COLOR_TYPE(playerid, response, listitem)
 
 Menu:TUNING_COLOR(playerid, response, listitem)
 {
+    new vehicleid = GetPlayerVehicleID(playerid);
+    if (!IsValidVehicle(vehicleid))
+        return 1;
+
     if (response == MENU_RESPONSE_CLOSE)
     {
         TuningMenu_SelectColorSlot(playerid);
     }
     else if (response == MENU_RESPONSE_SELECT)
     {
-        
-    }
-    else if (response == MENU_RESPONSE_DOWN || response == MENU_RESPONSE_UP)
-    {
-        new vehicleid = GetPlayerVehicleID(playerid);
-        if (!IsValidVehicle(vehicleid))
+        if (100 > Player_Money(playerid))
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+            TuningMenu_SelectColorSlot(playerid);
             return 1;
+        }
 
+        Player_GiveMoney(playerid, -100);
+        TuningMenu_Main(playerid);
+
+        new color1, color2;
+        GetVehicleColor(vehicleid, color1, color2);
         if (g_rgiSelectedColorType[playerid])
         {
-            ChangeVehicleColor(vehicleid, g_rgeVehicles[vehicleid][e_iColorOne], g_rgiVehicleColoursTableRGBA[listitem]);
+            g_rgeVehicles[vehicleid][e_iColorTwo] = color2;
+            ChangeVehicleColor(vehicleid, g_rgeVehicles[vehicleid][e_iColorOne], color2);
         }
         else
         {
-            ChangeVehicleColor(vehicleid, g_rgiVehicleColoursTableRGBA[listitem],  g_rgeVehicles[vehicleid][e_iColorTwo]);
+            g_rgeVehicles[vehicleid][e_iColorOne] = color1;
+            ChangeVehicleColor(vehicleid, color1, g_rgeVehicles[vehicleid][e_iColorTwo]);
         }
+    }
+    else if (response == MENU_RESPONSE_DOWN)
+    {
+        //printf("[DOWN] COLOR %d (%x)", listitem, g_rgiVehicleColoursTableRGBA[listitem]);
+
+        if (g_rgiSelectedColorType[playerid])
+            ChangeVehicleColor(vehicleid, g_rgeVehicles[vehicleid][e_iColorOne], listitem + 1);
+        else
+            ChangeVehicleColor(vehicleid, listitem + 1, g_rgeVehicles[vehicleid][e_iColorTwo]);
+    }
+    else if (response == MENU_RESPONSE_UP)
+    {
+        //printf("[UP] COLOR %d (%x)", listitem, g_rgiVehicleColoursTableRGBA[listitem]);
+
+        if (g_rgiSelectedColorType[playerid])
+            ChangeVehicleColor(vehicleid, g_rgeVehicles[vehicleid][e_iColorOne], listitem);
+        else
+            ChangeVehicleColor(vehicleid, listitem, g_rgeVehicles[vehicleid][e_iColorTwo]);
     }
     return 1;
 }
