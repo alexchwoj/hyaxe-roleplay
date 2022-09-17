@@ -69,7 +69,14 @@ on_init 00SetupServerConfig()
 	CA_Init();
 	
 	SendRconCommand(!"password 0");
-
+	
+	printf("  _   ___   __ _    __  _______ ");
+	printf(" | | | \\ \\ / // \\   \\ \\/ / ____|");
+	printf(" | |_| |\\ V // _ \\   \\  /|  _|  ");
+	printf(" |  _  | | |/ ___ \\  /  \\| |___ ");
+	printf(" |_| |_| |_/_/   \\_\\/_/\\_\\_____|");
+	printf("\n Hyaxe Server "SERVER_VERSION"\n");
+                                
 	for(new i = MAX_PLAYERS - 1; i != -1; --i)
 	{
 		if(FCNPC_IsValid(i))

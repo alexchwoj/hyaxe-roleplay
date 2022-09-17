@@ -52,6 +52,8 @@
 #pragma warning disable 239
 #pragma warning disable 214
 
+#define SERVER_VERSION "v1.0.0-alpha"
+
 #define NDEBUG 1
 
 #if NDEBUG
