@@ -7,7 +7,8 @@ Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE
 {
 	PlayerPlaySound(playerid, SOUND_BUTTON);
 
-	if (clearChat)
+	g_rgePlayerMenu[playerid][e_bClearChat] = clearChat;
+	if (g_rgePlayerMenu[playerid][e_bClearChat])
 		Chat_Clear(playerid);
 
 	Notification_DestroyAll(playerid);

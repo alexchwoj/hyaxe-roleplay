@@ -72,6 +72,9 @@ public MENU_ProcessKey(playerid)
 {
 	if (g_rgePlayerMenu[playerid][e_iEnabled])
 	{
+		if (g_rgePlayerMenu[playerid][e_bClearChat])
+			SendClientMessage(playerid, 0, " ");
+
 		new keys, updown, leftright;
 		GetPlayerKeys(playerid, keys, updown, leftright);
 

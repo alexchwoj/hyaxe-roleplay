@@ -43,7 +43,8 @@ enum ePlayerMenuInfo {
 	e_iTotalListitems,
 	e_iLastTick,
 	e_iTextdrawCount,
-	e_iKeyProcessTimer
+	e_iKeyProcessTimer,
+	bool:e_bClearChat
 }
 
 new g_rgePlayerMenu[MAX_PLAYERS + 1][ePlayerMenuInfo];
