@@ -25,7 +25,7 @@
 
 #if !defined MENU_MAX_LISTITEM_SIZE
 	#define MENU_MAX_LISTITEM_SIZE \
-		128
+		256
 #endif
 
 #if !defined MENU_MAX_LISTITEMS_PERPAGE

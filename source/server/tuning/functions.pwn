@@ -3,6 +3,17 @@
 #endif
 #define _tuning_functions_
 
+TuningMenu_Main(playerid)
+{
+    ShowPlayerMenu(playerid, TUNING_MAIN, "Tuning", .clearChat = true);
+    AddPlayerMenuItem(playerid, "Reparar", "Precio: ~g~$500");
+    AddPlayerMenuItem(playerid, "Colores");
+	AddPlayerMenuItem(playerid, "Paintjob");
+	AddPlayerMenuItem(playerid, "Ruedas");
+    AddPlayerMenuItem(playerid, "Salir");
+    return 1;
+}
+
 Tuning_Open(playerid)
 {
     new vehicle_id = GetPlayerVehicleID(playerid);
@@ -32,10 +43,7 @@ Tuning_Open(playerid)
     InterpolateCameraLookAt(playerid, 608.203308, -0.976854, 1001.383850, 611.030334, -0.317962, 1000.766418, 1000);
 
     // Menu
-    ShowPlayerMenu(playerid, TUNING_MAIN, "Tuning", .clearChat = true);
-    AddPlayerMenuItem(playerid, "Colores");
-	AddPlayerMenuItem(playerid, "Paintjob");
-	AddPlayerMenuItem(playerid, "Ruedas");
+    TuningMenu_Main(playerid);
     return 1;
 }
 
