@@ -3,6 +3,13 @@
 #endif
 #define _tuning_callbacks_
 
+static Tuning_OnPress(playerid, repairid)
+{
+    #pragma unused repairid
+    Tuning_Open(playerid);
+    return 1;
+}
+
 public OnGameModeInit()
 {
     new area_id = CreateDynamicCube(
