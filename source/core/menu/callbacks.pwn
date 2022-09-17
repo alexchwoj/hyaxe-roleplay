@@ -3,165 +3,129 @@
 #endif
 #define _menu_callbacks_
 
-public OnPlayerConnect(playerid)
+public OnPlayerDisconnect(playerid, reason)
 {
-    menuPlayerTextDrawsCount[playerid] = 0;
-	playerMenu[playerid][E_PLAYER_MENU_ID][0] = EOS;
+	KillTimer(g_rgePlayerMenu[playerid][e_iKeyProcessTimer]);
+	g_rgePlayerMenu[playerid] = g_rgePlayerMenu[MAX_PLAYERS];
+	g_rgiMenuTextDrawsID[playerid] = g_rgiMenuTextDrawsID[MAX_PLAYERS];
 
-    #if defined Menu_OnPlayerConnect
-       	return Menu_OnPlayerConnect(playerid);
+	for (new i; i < g_rgePlayerMenu[playerid][e_iTextdrawCount]; ++i)
+		PlayerTextDrawDestroy(playerid, g_rgiMenuTextDraws[playerid][i]);
+
+	g_rgiMenuTextDraws[playerid] = g_rgiMenuTextDraws[MAX_PLAYERS];
+
+	#if defined MENU_OnPlayerDisconnect
+		return MENU_OnPlayerDisconnect(playerid, reason);
 	#else
-	   	return 1;
+		return 1;
 	#endif
 }
-#if defined _ALS_OnPlayerConnect
-    #undef OnPlayerConnect
+
+#if defined _ALS_OnPlayerDisconnect
+	#undef OnPlayerDisconnect
 #else
-    #define _ALS_OnPlayerConnect
+	#define _ALS_OnPlayerDisconnect
 #endif
-#define OnPlayerConnect Menu_OnPlayerConnect
-#if defined Menu_OnPlayerConnect
-    forward Menu_OnPlayerConnect(playerid);
+#define OnPlayerDisconnect MENU_OnPlayerDisconnect
+#if defined MENU_OnPlayerDisconnect
+	forward MENU_OnPlayerDisconnect(playerid, reason);
 #endif
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	if(playerMenu[playerid][E_PLAYER_MENU_ID][0] != EOS)
+	if (g_rgePlayerMenu[playerid][e_iEnabled])
 	{
-		if (newkeys == KEY_SECONDARY_ATTACK && (GetTickCount() - playerMenu[playerid][E_PLAYER_MENU_TICKCOUNT]) >= 200)
+		if (newkeys == KEY_SECONDARY_ATTACK && (GetTickCount() - g_rgePlayerMenu[playerid][e_iLastTick]) >= 160) // Enter
 		{
-    		playerMenu[playerid][E_PLAYER_MENU_TICKCOUNT] = GetTickCount();
-			PlayerPlaySound(playerid, MENU_SOUND_CLOSE, 0.0, 0.0, 0.0);
-
-			new menuid[32] = "menu_";
-			strcat(menuid, playerMenu[playerid][E_PLAYER_MENU_ID]);
-
-			for (new i; i < menuPlayerTextDrawsCount[playerid]; i++)
-			{
-			    PlayerTextDrawDestroy(playerid, menuPlayerTextDraws[playerid][i]);
-			}
-		    menuPlayerTextDrawsCount[playerid] = 0;
-		    playerMenu[playerid][E_PLAYER_MENU_ID][0] = EOS;
-
-			CallLocalFunction(menuid, "iii", playerid, MENU_RESPONSE_CLOSE, (playerMenu[playerid][E_PLAYER_MENU_LISTITEM] + (playerMenu[playerid][E_PLAYER_MENU_PAGE] * MENU_MAX_LISTITEMS_PERPAGE)));
+			g_rgePlayerMenu[playerid][e_iLastTick] = GetTickCount();
+			PlayerPlaySound(playerid, SOUND_BUTTON);
+			Menu_SendResponse(playerid, MENU_RESPONSE_CLOSE);
 		}
-		else if (newkeys == KEY_SPRINT && (GetTickCount() - playerMenu[playerid][E_PLAYER_MENU_TICKCOUNT]) >= 200)
+		else if (newkeys == KEY_SPRINT && (GetTickCount() - g_rgePlayerMenu[playerid][e_iLastTick]) >= 160) // Space
 		{
-    		playerMenu[playerid][E_PLAYER_MENU_TICKCOUNT] = GetTickCount();
-			PlayerPlaySound(playerid, MENU_SOUND_SELECT, 0.0, 0.0, 0.0);
-
-			new menuid[32] = "menu_";
-			strcat(menuid, playerMenu[playerid][E_PLAYER_MENU_ID]);
-
-			for (new i; i < menuPlayerTextDrawsCount[playerid]; i++)
-			{
-			    PlayerTextDrawDestroy(playerid, menuPlayerTextDraws[playerid][i]);
-			}
-		    menuPlayerTextDrawsCount[playerid] = 0;
-		    playerMenu[playerid][E_PLAYER_MENU_ID][0] = EOS;
-
-			CallLocalFunction(menuid, "iii", playerid, MENU_RESPONSE_SELECT, (playerMenu[playerid][E_PLAYER_MENU_LISTITEM] + (playerMenu[playerid][E_PLAYER_MENU_PAGE] * MENU_MAX_LISTITEMS_PERPAGE)));
-		}
+			g_rgePlayerMenu[playerid][e_iLastTick] = GetTickCount();
+			PlayerPlaySound(playerid, SOUND_BUTTON);
+			Menu_SendResponse(playerid, MENU_RESPONSE_SELECT);
+    	}
 	}
-	
-	#if defined Menu_OnPlayerKeyStateChange
-       	return Menu_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
+
+	#if defined MENU_OnPlayerKeyStateChange
+		return MENU_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 	#else
-	   	return 1;
+		return 1;
 	#endif
 }
+
 #if defined _ALS_OnPlayerKeyStateChange
-    #undef OnPlayerKeyStateChange
+	#undef OnPlayerKeyStateChange
 #else
-    #define _ALS_OnPlayerKeyStateChange
+	#define _ALS_OnPlayerKeyStateChange
 #endif
-#define OnPlayerKeyStateChange Menu_OnPlayerKeyStateChange
-#if defined Menu_OnPlayerKeyStateChange
-    forward Menu_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
+#define OnPlayerKeyStateChange MENU_OnPlayerKeyStateChange
+#if defined MENU_OnPlayerKeyStateChange
+	forward MENU_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 #endif
-		
-public OnPlayerUpdate(playerid)
+
+
+forward MENU_ProcessKey(playerid);
+public MENU_ProcessKey(playerid)
 {
-	if(playerMenu[playerid][E_PLAYER_MENU_ID][0] != EOS)
+	if (g_rgePlayerMenu[playerid][e_iEnabled])
 	{
-	    new keys, updown, leftright;
+		new keys, updown, leftright;
 		GetPlayerKeys(playerid, keys, updown, leftright);
 
 		#pragma unused leftright
 		#pragma unused keys
 
-		if (updown == KEY_DOWN && (GetTickCount() - playerMenu[playerid][E_PLAYER_MENU_TICKCOUNT]) >= 200)
+		if (updown == KEY_DOWN && (GetTickCount() - g_rgePlayerMenu[playerid][e_iLastTick]) >= 160)
 		{
-		    new listitem = (playerMenu[playerid][E_PLAYER_MENU_LISTITEM] + (playerMenu[playerid][E_PLAYER_MENU_PAGE] * MENU_MAX_LISTITEMS_PERPAGE));
+			new listitem = (g_rgePlayerMenu[playerid][e_iListitem] + (g_rgePlayerMenu[playerid][e_iPage] * MENU_MAX_LISTITEMS_PERPAGE));
 
-    		playerMenu[playerid][E_PLAYER_MENU_TICKCOUNT] = GetTickCount();
+			g_rgePlayerMenu[playerid][e_iLastTick] = GetTickCount();
 			PlayerPlaySound(playerid, SOUND_NEXT);
 
-			if ((listitem + 1) == playerMenu[playerid][E_PLAYER_MENU_TOTAL_LISTITEMS])
+			if ((listitem + 1) == g_rgePlayerMenu[playerid][e_iTotalListitems])
 			{
-				playerMenu[playerid][E_PLAYER_MENU_LISTITEM] = 0;
-				playerMenu[playerid][E_PLAYER_MENU_PAGE] = 0;
+				g_rgePlayerMenu[playerid][e_iListitem] = 0;
+				g_rgePlayerMenu[playerid][e_iPage] = 0;
 			}
-			//else if ((playerMenu[playerid][E_PLAYER_MENU_LISTITEM] + 1) >= ((playerMenu[playerid][E_PLAYER_MENU_PAGE] + 1) * MENU_MAX_LISTITEMS_PERPAGE))
-			else if ((playerMenu[playerid][E_PLAYER_MENU_LISTITEM] + 1) >= MENU_MAX_LISTITEMS_PERPAGE)
+			else if ((g_rgePlayerMenu[playerid][e_iListitem] + 1) >= MENU_MAX_LISTITEMS_PERPAGE)
 			{
-				playerMenu[playerid][E_PLAYER_MENU_LISTITEM] = 0;
-				playerMenu[playerid][E_PLAYER_MENU_PAGE]++;
+				g_rgePlayerMenu[playerid][e_iListitem] = 0;
+				++g_rgePlayerMenu[playerid][e_iPage];
 			}
 			else
-			{
-				playerMenu[playerid][E_PLAYER_MENU_LISTITEM]++;
-			}
+				++g_rgePlayerMenu[playerid][e_iListitem];
 
 			Menu_UpdateListitems(playerid);
-
-			new menuid[32] = "menu_";
-			strcat(menuid, playerMenu[playerid][E_PLAYER_MENU_ID]);
-			CallLocalFunction(menuid, "iii", playerid, MENU_RESPONSE_DOWN, listitem);
+			Menu_SendResponse(playerid, MENU_RESPONSE_DOWN);
 		}
-		else if (updown == KEY_UP && (GetTickCount() - playerMenu[playerid][E_PLAYER_MENU_TICKCOUNT]) >= 200)
+		else if (updown == KEY_UP && (GetTickCount() - g_rgePlayerMenu[playerid][e_iLastTick]) >= 160)
 		{
-    		playerMenu[playerid][E_PLAYER_MENU_TICKCOUNT] = GetTickCount();
+			g_rgePlayerMenu[playerid][e_iLastTick] = GetTickCount();
 			PlayerPlaySound(playerid, SOUND_BACK);
 
-    		if ((playerMenu[playerid][E_PLAYER_MENU_LISTITEM] - 1) == -1)
+			if ((g_rgePlayerMenu[playerid][e_iListitem] - 1) == -1)
 			{
-			    if (playerMenu[playerid][E_PLAYER_MENU_PAGE] == 0)
+			    if (g_rgePlayerMenu[playerid][e_iPage] == 0)
 			    {
-					playerMenu[playerid][E_PLAYER_MENU_LISTITEM] = ((MENU_MAX_LISTITEMS_PERPAGE - ((MENU_COUNT_PAGES(playerMenu[playerid][E_PLAYER_MENU_TOTAL_LISTITEMS], MENU_MAX_LISTITEMS_PERPAGE) * MENU_MAX_LISTITEMS_PERPAGE) - playerMenu[playerid][E_PLAYER_MENU_TOTAL_LISTITEMS])) - 1);
-					playerMenu[playerid][E_PLAYER_MENU_PAGE] = (MENU_COUNT_PAGES(playerMenu[playerid][E_PLAYER_MENU_TOTAL_LISTITEMS], MENU_MAX_LISTITEMS_PERPAGE) - 1);
+					g_rgePlayerMenu[playerid][e_iListitem] = ((MENU_MAX_LISTITEMS_PERPAGE - ((MENU_COUNT_PAGES(g_rgePlayerMenu[playerid][e_iTotalListitems], MENU_MAX_LISTITEMS_PERPAGE) * MENU_MAX_LISTITEMS_PERPAGE) - g_rgePlayerMenu[playerid][e_iTotalListitems])) - 1);
+					g_rgePlayerMenu[playerid][e_iPage] = (MENU_COUNT_PAGES(g_rgePlayerMenu[playerid][e_iTotalListitems], MENU_MAX_LISTITEMS_PERPAGE) - 1);
 				}
 				else
 				{
-					playerMenu[playerid][E_PLAYER_MENU_LISTITEM] = (MENU_MAX_LISTITEMS_PERPAGE - 1);
-					playerMenu[playerid][E_PLAYER_MENU_PAGE]--;
+					g_rgePlayerMenu[playerid][e_iListitem] = (MENU_MAX_LISTITEMS_PERPAGE - 1);
+					--g_rgePlayerMenu[playerid][e_iPage];
 				}
 			}
 			else
-			{
-				playerMenu[playerid][E_PLAYER_MENU_LISTITEM]--;
-			}
+				--g_rgePlayerMenu[playerid][e_iListitem];
 
 			Menu_UpdateListitems(playerid);
-
-			new menuid[32] = "menu_";
-			strcat(menuid, playerMenu[playerid][E_PLAYER_MENU_ID]);
-			CallLocalFunction(menuid, "iii", playerid, MENU_RESPONSE_DOWN, (playerMenu[playerid][E_PLAYER_MENU_LISTITEM] + (playerMenu[playerid][E_PLAYER_MENU_PAGE] * MENU_MAX_LISTITEMS_PERPAGE)));
+			Menu_SendResponse(playerid, MENU_RESPONSE_UP);
 		}
 	}
 
-	#if defined Menu_OnPlayerUpdate
-       	return Menu_OnPlayerUpdate(playerid);
-	#else
-	   	return 1;
-	#endif
+    return 1;
 }
-#if defined _ALS_OnPlayerUpdate
-    #undef OnPlayerUpdate
-#else
-    #define _ALS_OnPlayerUpdate
-#endif
-#define OnPlayerUpdate Menu_OnPlayerUpdate
-#if defined Menu_OnPlayerUpdate
-    forward Menu_OnPlayerUpdate(playerid);
-#endif

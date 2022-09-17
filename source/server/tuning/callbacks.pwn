@@ -119,7 +119,7 @@ public GARAGE_FinishRepairCar(playerid, vehicleid)
     return 1;
 }
 
-Menu:TUNING_MAIN(playerid, response, listitem)
+Menu:tuning_main(playerid, response, listitem)
 {
     if (response == MENU_RESPONSE_CLOSE)
     {
@@ -138,7 +138,7 @@ Menu:TUNING_MAIN(playerid, response, listitem)
     return 1;
 }
 
-Menu:TUNING_COLOR_TYPE(playerid, response, listitem)
+Menu:tuning_color_type(playerid, response, listitem)
 {
     if (response == MENU_RESPONSE_CLOSE)
     {
@@ -152,20 +152,20 @@ Menu:TUNING_COLOR_TYPE(playerid, response, listitem)
     {
         g_rgiSelectedColorType[playerid] = listitem;
 
-        ShowPlayerMenu(playerid, TUNING_COLOR, (g_rgiSelectedColorType[playerid] ? "Color 2" : "Color 1"), .clearChat = true);
+        Menu_Show(playerid, "tuning_color", (g_rgiSelectedColorType[playerid] ? "Color 2" : "Color 1"), .clearChat = true);
 
         for(new i; i < 128; ++i)
         {
             new line_str[32];
             format(line_str, sizeof(line_str), "%d (%x)", i, g_rgiVehicleColoursTableRGBA[i]);
-            AddPlayerMenuItem(playerid, line_str, "Precio: ~g~$100", .color = g_rgiVehicleColoursTableRGBA[i]);
+            Menu_AddItem(playerid, line_str, .color = g_rgiVehicleColoursTableRGBA[i]);
         }
         Menu_UpdateListitems(playerid);
     }
     return 1;
 }
 
-Menu:TUNING_COLOR(playerid, response, listitem)
+Menu:tuning_color(playerid, response, listitem)
 {
     new vehicleid = GetPlayerVehicleID(playerid);
     if (!IsValidVehicle(vehicleid))
@@ -206,9 +206,9 @@ Menu:TUNING_COLOR(playerid, response, listitem)
         //printf("[DOWN] COLOR %d (%x)", listitem, g_rgiVehicleColoursTableRGBA[listitem]);
 
         if (g_rgiSelectedColorType[playerid])
-            ChangeVehicleColor(vehicleid, g_rgeVehicles[vehicleid][e_iColorOne], listitem + 1);
+            ChangeVehicleColor(vehicleid, g_rgeVehicles[vehicleid][e_iColorOne], listitem);
         else
-            ChangeVehicleColor(vehicleid, listitem + 1, g_rgeVehicles[vehicleid][e_iColorTwo]);
+            ChangeVehicleColor(vehicleid, listitem, g_rgeVehicles[vehicleid][e_iColorTwo]);
     }
     else if (response == MENU_RESPONSE_UP)
     {

@@ -5,34 +5,34 @@
 
 TuningMenu_Main(playerid)
 {
-    ShowPlayerMenu(playerid, TUNING_MAIN, "Tuning", .clearChat = true);
-    AddPlayerMenuItem(playerid, "Reparar", "Precio: ~g~$500");
-    AddPlayerMenuItem(playerid, "Colores");
-	AddPlayerMenuItem(playerid, "Paintjob");
-    AddPlayerMenuItem(playerid, "Ruedas");
-	AddPlayerMenuItem(playerid, "Alerones");
-    AddPlayerMenuItem(playerid, "Techo");
-    AddPlayerMenuItem(playerid, "Tomas de aire");
-    AddPlayerMenuItem(playerid, "Tubos de escape");
-    AddPlayerMenuItem(playerid, "Capó");
-    AddPlayerMenuItem(playerid, "Faros");
-    AddPlayerMenuItem(playerid, "Faldones");
-    AddPlayerMenuItem(playerid, "Parachoques delanteros");
-    AddPlayerMenuItem(playerid, "Parachoques traseros");
-    AddPlayerMenuItem(playerid, "Protector delantero");
-    AddPlayerMenuItem(playerid, "Protector trasero");
-    AddPlayerMenuItem(playerid, "Suspensión hidráulica");
-    AddPlayerMenuItem(playerid, "Nitro");
-    AddPlayerMenuItem(playerid, "Varios");
+    Menu_Show(playerid, "tuning_main", "Tuning", .clearChat = true);
+    Menu_AddItem(playerid, "Reparar", "Precio: ~g~$500");
+    Menu_AddItem(playerid, "Colores");
+	Menu_AddItem(playerid, "Paintjob");
+    Menu_AddItem(playerid, "Ruedas");
+	Menu_AddItem(playerid, "Alerones");
+    Menu_AddItem(playerid, "Techo");
+    Menu_AddItem(playerid, "Tomas de aire");
+    Menu_AddItem(playerid, "Tubos de escape");
+    Menu_AddItem(playerid, "Capó");
+    Menu_AddItem(playerid, "Faros");
+    Menu_AddItem(playerid, "Faldones");
+    Menu_AddItem(playerid, "Parachoques delanteros");
+    Menu_AddItem(playerid, "Parachoques traseros");
+    Menu_AddItem(playerid, "Protector delantero");
+    Menu_AddItem(playerid, "Protector trasero");
+    Menu_AddItem(playerid, "Suspensión hidráulica");
+    Menu_AddItem(playerid, "Nitro");
+    Menu_AddItem(playerid, "Varios");
     Menu_UpdateListitems(playerid);
     return 1;
 }
 
 TuningMenu_SelectColorSlot(playerid)
 {
-    ShowPlayerMenu(playerid, TUNING_COLOR_TYPE, "Colores", .clearChat = true);
-    AddPlayerMenuItem(playerid, "Color primario");
-    AddPlayerMenuItem(playerid, "Color secundario");
+    Menu_Show(playerid, "tuning_color_type", "Colores", .clearChat = true);
+    Menu_AddItem(playerid, "Color primario", "Precio: ~g~$100");
+    Menu_AddItem(playerid, "Color secundario", "Precio: ~g~$75");
     Menu_UpdateListitems(playerid);
     return 1;
 }
@@ -73,7 +73,7 @@ Tuning_Open(playerid)
 
 Tuning_Back(playerid)
 {
-    HidePlayerMenu(playerid);
+    Menu_Hide(playerid);
     Speedometer_Show(playerid);
 
     Player_SetPos(playerid, s_rgfPreviusTuningPos[playerid][0], s_rgfPreviusTuningPos[playerid][1], s_rgfPreviusTuningPos[playerid][2]);

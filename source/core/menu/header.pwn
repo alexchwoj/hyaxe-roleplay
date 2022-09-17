@@ -3,81 +3,61 @@
 #endif
 #define _menu_header_
 
-#if !defined MENU_SOUND_UPDOWN
-	#define MENU_SOUND_UPDOWN \
-		1054
-#endif
-
-#if !defined MENU_SOUND_CLOSE
-	#define MENU_SOUND_CLOSE \
-		1084
-#endif
-
-#if !defined MENU_SOUND_SELECT
-	#define MENU_SOUND_SELECT \
-		1083
-#endif
-
-#if !defined MENU_MAX_LISTITEMS
-	#define MENU_MAX_LISTITEMS \
-		128
-#endif
-
-#if !defined MENU_MAX_LISTITEM_SIZE
-	#define MENU_MAX_LISTITEM_SIZE \
-		256
-#endif
-
-#if !defined MENU_MAX_LISTITEMS_PERPAGE
-	#define MENU_MAX_LISTITEMS_PERPAGE \
-		8
-#endif
-
-#define MENU_COUNT_PAGES(%0,%1) \
-	(((%0) - 1) / (%1) + 1)
-
 #define MENU:%0(%1) \
 	forward menu_%0(%1); public menu_%0(%1)
 
 #define Menu:%0(%1) \
 	MENU:%0(%1)
 
-enum
-{
+#define MENU_COUNT_PAGES(%0,%1) \
+	(((%0) - 1) / (%1) + 1)
+
+// Limits
+const MENU_MAX_LISTITEMS = 256;
+const MENU_MAX_LISTITEMS_PERPAGE = 8;
+
+// Response
+enum {
 	MENU_RESPONSE_UP,
 	MENU_RESPONSE_DOWN,
 	MENU_RESPONSE_SELECT,
 	MENU_RESPONSE_CLOSE
 };
 
-enum E_PLAYER_MENU
-{
-	E_PLAYER_MENU_ID[32],
-    E_PLAYER_MENU_PAGE,
-    E_PLAYER_MENU_LISTITEM,
-    E_PLAYER_MENU_TOTAL_LISTITEMS,
-	E_PLAYER_MENU_TICKCOUNT
-};
-new playerMenu[MAX_PLAYERS][E_PLAYER_MENU];
+// List items
+enum eListitemInfo {
+    e_szText[64],
+	e_szInfo[64],
+	e_iColor,
+	e_iExtra
+}
 
-enum E_MENU_TEXTDRAW
-{
-	E_MENU_TEXTDRAW_LISTITEM_COUNT,
-	E_MENU_TEXTDRAW_LISTITEMS[MENU_MAX_LISTITEMS_PERPAGE],
-	E_MENU_TEXTDRAW_INFO_BOX,
-	E_MENU_TEXTDRAW_INFO_ICON,
-	E_MENU_TEXTDRAW_INFO_TEXT,
-};
-new menuPlayerTextDrawsID[MAX_PLAYERS][E_MENU_TEXTDRAW];
-new PlayerText:menuPlayerTextDraws[MAX_PLAYERS][50];
-new menuPlayerTextDrawsCount[MAX_PLAYERS];
+new g_rgeMenuListitem[MAX_PLAYERS + 1][MENU_MAX_LISTITEMS + 1][eListitemInfo];
 
-new playerMenuListitems[MAX_PLAYERS][MENU_MAX_LISTITEMS][MENU_MAX_LISTITEM_SIZE char];
-new playerMenuListitemsInfo[MAX_PLAYERS][MENU_MAX_LISTITEMS][MENU_MAX_LISTITEM_SIZE char];
+// Player menu
+enum ePlayerMenuInfo {
+	bool:e_iEnabled,
+    e_szID[32],
+	e_iPage,
+	e_iListitem,
+	e_iTotalListitems,
+	e_iLastTick,
+	e_iTextdrawCount,
+	e_iKeyProcessTimer
+}
 
-enum E_PLAYER_MENU_OPTIONS
+new g_rgePlayerMenu[MAX_PLAYERS + 1][ePlayerMenuInfo];
+
+// Menu textdraw
+enum eMenuTextdraw
 {
-    E_PLAYER_OPTION_COLOR,
-	E_PLAYER_OPTION_EXTRA
+	e_tdListitemCount,
+	e_tdListitems[MENU_MAX_LISTITEMS_PERPAGE],
+	e_tdInfoBox,
+	e_tdInfoIcon,
+	e_tdInfoText
 };
-new playerMenuListitemsOptions[MAX_PLAYERS][MENU_MAX_LISTITEMS][E_PLAYER_MENU_OPTIONS];
+new
+	g_rgiMenuTextDrawsID[MAX_PLAYERS + 1][eMenuTextdraw],
+	PlayerText:g_rgiMenuTextDraws[MAX_PLAYERS + 1][50]
+;
