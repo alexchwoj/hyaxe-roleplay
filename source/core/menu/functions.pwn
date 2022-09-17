@@ -24,11 +24,11 @@ Internal_UpdateListitemInfo(playerid)
 	}
 }
 
-Internal_UpdateListitems(playerid)
+Menu_UpdateListitems(playerid)
 {
 	new string[MENU_MAX_LISTITEM_SIZE];
 	new listitem = ((playerMenu[playerid][E_PLAYER_MENU_LISTITEM] + (playerMenu[playerid][E_PLAYER_MENU_PAGE] * MENU_MAX_LISTITEMS_PERPAGE)) + 1);
-    format(string, sizeof string, "%i/%i", listitem, playerMenu[playerid][E_PLAYER_MENU_TOTAL_LISTITEMS]);
+    format(string, sizeof string, "%d/%d", listitem, playerMenu[playerid][E_PLAYER_MENU_TOTAL_LISTITEMS]);
 	PlayerTextDrawSetString(playerid, menuPlayerTextDraws[playerid][menuPlayerTextDrawsID[playerid][E_MENU_TEXTDRAW_LISTITEM_COUNT]], string);
 
 	for (new i; i < MENU_MAX_LISTITEMS_PERPAGE; i++)
@@ -47,7 +47,8 @@ Internal_UpdateListitems(playerid)
 		}
 		else
 		{
-        	PlayerTextDrawColor(playerid, menuPlayerTextDraws[playerid][menuPlayerTextDrawsID[playerid][E_MENU_TEXTDRAW_LISTITEMS][i]], -1);
+			PlayerTextDrawColor(playerid, menuPlayerTextDraws[playerid][menuPlayerTextDrawsID[playerid][E_MENU_TEXTDRAW_LISTITEMS][i]], playerMenuListitemsOptions[playerid][listitem][E_PLAYER_OPTION_COLOR] );
+        	//PlayerTextDrawColor(playerid, menuPlayerTextDraws[playerid][menuPlayerTextDrawsID[playerid][E_MENU_TEXTDRAW_LISTITEMS][i]], -1);
         	PlayerTextDrawBoxColor(playerid, menuPlayerTextDraws[playerid][menuPlayerTextDrawsID[playerid][E_MENU_TEXTDRAW_LISTITEMS][i]], 175);
 		}
 
@@ -250,9 +251,9 @@ stock Internal_ShowPlayerMenu(playerid, menuid[], caption[], type[] = "SELECCION
 }
 
 /*
-native AddPlayerMenuItem(playerid, text[], info[] = "");
+native AddPlayerMenuItem(playerid, text[], info[] = "", color = 0xF7F7F7FF, extra = 0);
 */
-stock AddPlayerMenuItem(playerid, text[], info[] = "")
+stock AddPlayerMenuItem(playerid, text[], info[] = "", color = 0xF7F7F7FF, extra = 0)
 {
 	if (playerid < 0 || playerid >= MAX_PLAYERS)
 	{
@@ -269,11 +270,15 @@ stock AddPlayerMenuItem(playerid, text[], info[] = "")
 	    return 0;
 	}
 
-	strpack(playerMenuListitems[playerid][playerMenu[playerid][E_PLAYER_MENU_TOTAL_LISTITEMS]], text, MENU_MAX_LISTITEM_SIZE);
-	strpack(playerMenuListitemsInfo[playerid][playerMenu[playerid][E_PLAYER_MENU_TOTAL_LISTITEMS]], info, MENU_MAX_LISTITEM_SIZE);
+	strpack(playerMenuListitems[playerid][ playerMenu[playerid][E_PLAYER_MENU_TOTAL_LISTITEMS] ], text, MENU_MAX_LISTITEM_SIZE);
+	strpack(playerMenuListitemsInfo[playerid][ playerMenu[playerid][E_PLAYER_MENU_TOTAL_LISTITEMS] ], info, MENU_MAX_LISTITEM_SIZE);
+
+	playerMenuListitemsOptions[playerid][ playerMenu[playerid][E_PLAYER_MENU_TOTAL_LISTITEMS] ][E_PLAYER_OPTION_COLOR] = color;
+	playerMenuListitemsOptions[playerid][ playerMenu[playerid][E_PLAYER_MENU_TOTAL_LISTITEMS] ][E_PLAYER_OPTION_EXTRA] = extra;
+
     playerMenu[playerid][E_PLAYER_MENU_TOTAL_LISTITEMS]++;
 
-    Internal_UpdateListitems(playerid);
+    //Menu_UpdateListitems(playerid);
     return 1;
 }
 

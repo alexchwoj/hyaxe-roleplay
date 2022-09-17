@@ -46,7 +46,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
 {
     if (Streamer_HasArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4d4558)) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
     {
-        Notification_Show(playerid, "Has entrado al taller mecánico, las colisiones de tu vehículo se han desactivado.", 3000, 0xDAA838FF);
+        //Notification_Show(playerid, "Has entrado al taller mecánico, las colisiones de tu vehículo se han desactivado.", 3000, 0xDAA838FF);
         DisableRemoteVehicleCollisions(playerid, true);
     }
 
@@ -71,7 +71,7 @@ public OnPlayerLeaveDynamicArea(playerid, areaid)
 {
     if (Streamer_HasArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4d4558)) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
     {
-        Notification_Show(playerid, "Has salido del taller mecánico, las colisiones de tu vehículo se han activado de nuevo.", 3000, 0xDAA838FF);
+        //Notification_Show(playerid, "Has salido del taller mecánico, las colisiones de tu vehículo se han activado de nuevo.", 3000, 0xDAA838FF);
         DisableRemoteVehicleCollisions(playerid, false);
     }
 
@@ -116,5 +116,73 @@ public GARAGE_FinishRepairCar(playerid, vehicleid)
     Timer_Kill(g_rgiRepairSoundTimer[playerid]);
     g_rgiRepairFinishTimer[playerid] = 0;
 
+    return 1;
+}
+
+Menu:TUNING_MAIN(playerid, response, listitem)
+{
+    if (response == MENU_RESPONSE_CLOSE)
+    {
+        Tuning_Back(playerid);
+    }
+    else if (response == MENU_RESPONSE_SELECT)
+    {
+        switch(listitem)
+        {
+            case 1:
+            {
+                TuningMenu_SelectColorSlot(playerid);
+            }
+        }
+    }
+    return 1;
+}
+
+Menu:TUNING_COLOR_TYPE(playerid, response, listitem)
+{
+    if (response == MENU_RESPONSE_CLOSE)
+    {
+        TuningMenu_Main(playerid);
+    }
+    else if (response == MENU_RESPONSE_SELECT)
+    {
+        g_rgiSelectedColorType[playerid] = listitem;
+
+        ShowPlayerMenu(playerid, TUNING_COLOR, (g_rgiSelectedColorType[playerid] ? "Color 2" : "Color 1"), .clearChat = true);
+
+        for(new i; i < sizeof(g_rgiVehicleColoursTableRGBA); ++i)
+        {
+            AddPlayerMenuItem(playerid, "==========", "Precio: ~g~$50", .color = g_rgiVehicleColoursTableRGBA[i]);
+        }
+        Menu_UpdateListitems(playerid);
+    }
+    return 1;
+}
+
+Menu:TUNING_COLOR(playerid, response, listitem)
+{
+    if (response == MENU_RESPONSE_CLOSE)
+    {
+        TuningMenu_SelectColorSlot(playerid);
+    }
+    else if (response == MENU_RESPONSE_SELECT)
+    {
+        
+    }
+    else if (response == MENU_RESPONSE_DOWN || response == MENU_RESPONSE_UP)
+    {
+        new vehicleid = GetPlayerVehicleID(playerid);
+        if (!IsValidVehicle(vehicleid))
+            return 1;
+
+        if (g_rgiSelectedColorType[playerid])
+        {
+            ChangeVehicleColor(vehicleid, g_rgeVehicles[vehicleid][e_iColorOne], g_rgiVehicleColoursTableRGBA[listitem]);
+        }
+        else
+        {
+            ChangeVehicleColor(vehicleid, g_rgiVehicleColoursTableRGBA[listitem],  g_rgeVehicles[vehicleid][e_iColorTwo]);
+        }
+    }
     return 1;
 }

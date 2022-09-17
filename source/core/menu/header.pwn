@@ -20,7 +20,7 @@
 
 #if !defined MENU_MAX_LISTITEMS
 	#define MENU_MAX_LISTITEMS \
-		24
+		256
 #endif
 
 #if !defined MENU_MAX_LISTITEM_SIZE
@@ -74,3 +74,10 @@ new menuPlayerTextDrawsCount[MAX_PLAYERS];
 
 new playerMenuListitems[MAX_PLAYERS][MENU_MAX_LISTITEMS][MENU_MAX_LISTITEM_SIZE char];
 new playerMenuListitemsInfo[MAX_PLAYERS][MENU_MAX_LISTITEMS][MENU_MAX_LISTITEM_SIZE char];
+
+enum E_PLAYER_MENU_OPTIONS
+{
+    E_PLAYER_OPTION_COLOR,
+	E_PLAYER_OPTION_EXTRA
+};
+new playerMenuListitemsOptions[MAX_PLAYERS][MENU_MAX_LISTITEMS][E_PLAYER_MENU_OPTIONS];

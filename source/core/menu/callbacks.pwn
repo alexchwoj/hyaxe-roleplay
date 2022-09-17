@@ -112,7 +112,7 @@ public OnPlayerUpdate(playerid)
 				playerMenu[playerid][E_PLAYER_MENU_LISTITEM]++;
 			}
 
-			Internal_UpdateListitems(playerid);
+			Menu_UpdateListitems(playerid);
 
 			new menuid[32] = "menu_";
 			strcat(menuid, playerMenu[playerid][E_PLAYER_MENU_ID]);
@@ -141,7 +141,7 @@ public OnPlayerUpdate(playerid)
 				playerMenu[playerid][E_PLAYER_MENU_LISTITEM]--;
 			}
 
-			Internal_UpdateListitems(playerid);
+			Menu_UpdateListitems(playerid);
 
 			new menuid[32] = "menu_";
 			strcat(menuid, playerMenu[playerid][E_PLAYER_MENU_ID]);

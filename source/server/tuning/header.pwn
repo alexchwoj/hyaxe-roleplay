@@ -26,7 +26,8 @@ new const
 
 new
     g_rgiRepairSoundTimer[MAX_PLAYERS],
-    g_rgiRepairFinishTimer[MAX_PLAYERS];
+    g_rgiRepairFinishTimer[MAX_PLAYERS],
+    g_rgiSelectedColorType[MAX_PLAYERS];
 
 forward GARAGE_VehicleRepairPlaySound(playerid);
 forward GARAGE_FinishRepairCar(playerid, vehicleid);

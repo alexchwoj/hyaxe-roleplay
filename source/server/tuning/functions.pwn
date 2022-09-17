@@ -11,6 +11,16 @@ TuningMenu_Main(playerid)
 	AddPlayerMenuItem(playerid, "Paintjob");
 	AddPlayerMenuItem(playerid, "Ruedas");
     AddPlayerMenuItem(playerid, "Salir");
+    Menu_UpdateListitems(playerid);
+    return 1;
+}
+
+TuningMenu_SelectColorSlot(playerid)
+{
+    ShowPlayerMenu(playerid, TUNING_COLOR_TYPE, "Colores", .clearChat = true);
+    AddPlayerMenuItem(playerid, "Color primario");
+    AddPlayerMenuItem(playerid, "Color secundario");
+    Menu_UpdateListitems(playerid);
     return 1;
 }
 
@@ -64,6 +74,8 @@ Tuning_Back(playerid)
         SetVehicleVirtualWorld(vehicle_id, s_rgiPreviusTuningWorld[playerid]);
         LinkVehicleToInterior(vehicle_id, s_rgiPreviusTuningInterior[playerid]);
         PutPlayerInVehicle(playerid, vehicle_id, 0);
+
+        ChangeVehicleColor(vehicle_id, g_rgeVehicles[vehicle_id][e_iColorOne], g_rgeVehicles[vehicle_id][e_iColorTwo]);
     }
 
     TogglePlayerControllable(playerid, true);
