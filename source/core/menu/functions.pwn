@@ -3,7 +3,7 @@
 #endif
 #define _menu_functions_
 
-Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE UNA OPCIÓN", captionTextColor = 0x1B1B1BFF, captionBoxColor = 0xAC3E36FF, clearChat = false)
+Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE UNA OPCIÓN", captionTextColor = 0x1B1B1BFF, captionBoxColor = 0xAC3E36FF, bool:clearChat = false)
 {
 	PlayerPlaySound(playerid, SOUND_BUTTON);
 
@@ -19,7 +19,7 @@ Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE
     g_rgePlayerMenu[playerid][e_iTextdrawCount] = 0;
 
 	// Title
-	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 13.000000, 143.000000, "_box");
+	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 13.000000, 15.000000, "_box");
 	PlayerTextDrawBackgroundColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 255);
 	PlayerTextDrawFont(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 	PlayerTextDrawLetterSize(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0.000000, 4.000000);
@@ -33,7 +33,7 @@ Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE
 	PlayerTextDrawShow(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ]);
 	PlayerTextDrawSetSelectable(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount]++ ], 0);
 
-	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 16.000000, 151.000000, Str_FixEncoding(caption));
+	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 16.000000, 23.000000, Str_FixEncoding(caption));
 	PlayerTextDrawBackgroundColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 	PlayerTextDrawFont(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 	PlayerTextDrawLetterSize(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0.399998, 2.299998);
@@ -44,7 +44,7 @@ Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE
 	PlayerTextDrawSetSelectable(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 	PlayerTextDrawShow(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount]++ ]);
 
-	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 13.000000, 182.000000, "_box");
+	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 13.000000, 55.000000, "_box");
 	PlayerTextDrawBackgroundColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 	PlayerTextDrawFont(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 	PlayerTextDrawLetterSize(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0.000000, 1.200000);
@@ -53,13 +53,13 @@ Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE
 	PlayerTextDrawSetProportional(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 	PlayerTextDrawSetShadow(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 	PlayerTextDrawUseBox(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
-	PlayerTextDrawBoxColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0x1B1B1BFF);
+	PlayerTextDrawBoxColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0x000000AA);
 	PlayerTextDrawTextSize(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 150.000000, 0.000000);
 	PlayerTextDrawSetSelectable(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 	PlayerTextDrawShow(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount]++ ]);
 
 	// Subtitle
-	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 14.000000, 183.000000, Str_FixEncoding(type));
+	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 14.000000, 55.000000, Str_FixEncoding(type));
 	PlayerTextDrawBackgroundColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 	PlayerTextDrawFont(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 	PlayerTextDrawLetterSize(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0.189998, 1.000000);
@@ -70,7 +70,7 @@ Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE
 	PlayerTextDrawSetSelectable(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 	PlayerTextDrawShow(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount]++ ]);
 
-	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 149.000000, 183.000000, "-/-");
+	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 149.000000, 55.000000, "-/-");
 	PlayerTextDrawAlignment(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 3);
 	PlayerTextDrawBackgroundColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 	PlayerTextDrawFont(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
@@ -83,7 +83,7 @@ Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE
 	PlayerTextDrawShow(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ]);
 	g_rgiMenuTextDrawsID[playerid][e_tdListitemCount] = g_rgePlayerMenu[playerid][e_iTextdrawCount]++;
 
-	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 13.000000, 196.000000, "_box");
+	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 13.000000, 70.000000, "_box");
 	PlayerTextDrawBackgroundColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 	PlayerTextDrawFont(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 	PlayerTextDrawLetterSize(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0.159999, (1.999999 + (1.6 * (MENU_MAX_LISTITEMS_PERPAGE - 1))));
@@ -92,14 +92,14 @@ Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE
 	PlayerTextDrawSetProportional(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 	PlayerTextDrawSetShadow(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 	PlayerTextDrawUseBox(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
-	PlayerTextDrawBoxColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 421075400);
+	PlayerTextDrawBoxColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0x00000088);
 	PlayerTextDrawTextSize(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 150.000000, 0.000000);
 	PlayerTextDrawSetSelectable(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 	PlayerTextDrawShow(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount]++ ]);
 
 	for (new i; i < MENU_MAX_LISTITEMS_PERPAGE; i++)
 	{
-		g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 13.000000, (196.000000 + (15 * i)), "_");
+		g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 13.000000, (70.000000 + (15 * i)), "_");
 		PlayerTextDrawBackgroundColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 		PlayerTextDrawFont(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 		PlayerTextDrawLetterSize(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0.230000, 1.399999);
@@ -108,13 +108,13 @@ Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE
 		PlayerTextDrawSetProportional(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 		PlayerTextDrawSetShadow(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 		PlayerTextDrawUseBox(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
-		PlayerTextDrawBoxColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 175);
+		PlayerTextDrawBoxColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0x00000000);
 		PlayerTextDrawTextSize(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 150.000000, 0.000000);
 		PlayerTextDrawSetSelectable(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 		g_rgiMenuTextDrawsID[playerid][e_tdListitems][i] = g_rgePlayerMenu[playerid][e_iTextdrawCount]++;
 	}
 
-	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 13.000000, 319.000000, "_box");
+	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 13.000000, 195.000000, "_box");
 	PlayerTextDrawBackgroundColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 	PlayerTextDrawFont(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 	PlayerTextDrawLetterSize(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0.159999, 1.999999);
@@ -123,12 +123,12 @@ Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE
 	PlayerTextDrawSetProportional(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 	PlayerTextDrawSetShadow(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 	PlayerTextDrawUseBox(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
-	PlayerTextDrawBoxColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 421075400);
+	PlayerTextDrawBoxColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0x00000088);
 	PlayerTextDrawTextSize(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 150.000000, 0.000000);
 	PlayerTextDrawSetSelectable(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 	g_rgiMenuTextDrawsID[playerid][e_tdInfoBox] = g_rgePlayerMenu[playerid][e_iTextdrawCount]++;
 
-	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 13.000000, 319.000000, "_model");
+	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 13.000000, 900.000000, "_model");
 	PlayerTextDrawBackgroundColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 	PlayerTextDrawFont(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 5);
 	PlayerTextDrawLetterSize(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0.159999, 0.899999);
@@ -144,7 +144,7 @@ Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE
 	PlayerTextDrawSetSelectable(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 	g_rgiMenuTextDrawsID[playerid][e_tdInfoIcon] = g_rgePlayerMenu[playerid][e_iTextdrawCount]++;
 
-	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 23.000000, 319.000000, "_");
+	g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ] = CreatePlayerTextDraw(playerid, 13.000000, 200.000000, "_");
 	PlayerTextDrawBackgroundColor(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0);
 	PlayerTextDrawFont(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 1);
 	PlayerTextDrawLetterSize(playerid, g_rgiMenuTextDraws[playerid][ g_rgePlayerMenu[playerid][e_iTextdrawCount] ], 0.159999, 0.899999);
@@ -227,7 +227,7 @@ Menu_UpdateListitems(playerid)
 		else
 		{
 			PlayerTextDrawColor(playerid, g_rgiMenuTextDraws[playerid][g_rgiMenuTextDrawsID[playerid][e_tdListitems][i]], g_rgeMenuListitem[playerid][listitem][e_iColor] );
-        	PlayerTextDrawBoxColor(playerid, g_rgiMenuTextDraws[playerid][g_rgiMenuTextDrawsID[playerid][e_tdListitems][i]], 175);
+        	PlayerTextDrawBoxColor(playerid, g_rgiMenuTextDraws[playerid][g_rgiMenuTextDrawsID[playerid][e_tdListitems][i]], 0x00000000);
 		}
 
 	    strunpack(string, g_rgeMenuListitem[playerid][listitem][e_szText]);

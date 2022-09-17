@@ -60,7 +60,9 @@ Tuning_Open(playerid)
     PutPlayerInVehicle(playerid, vehicle_id, 0);
     TogglePlayerControllable(playerid, false);
     SetCameraBehindPlayer(playerid);
+
     Speedometer_Hide(playerid);
+    Needs_HideBars(playerid);
 
     // Camera
     InterpolateCameraPos(playerid, 603.253234, -1.074449, 1002.081970, 606.906799, 2.143145, 1002.159118, 1000);
@@ -74,7 +76,12 @@ Tuning_Open(playerid)
 Tuning_Back(playerid)
 {
     Menu_Hide(playerid);
-    Speedometer_Show(playerid);
+
+    if (Bit_Get(Player_Config(playerid), CONFIG_DISPLAY_SPEEDOMETER))
+        Speedometer_Show(playerid);
+
+    if (Bit_Get(Player_Config(playerid), CONFIG_DISPLAY_NEED_BARS))
+        Needs_ShowBars(playerid);
 
     Player_SetPos(playerid, s_rgfPreviusTuningPos[playerid][0], s_rgfPreviusTuningPos[playerid][1], s_rgfPreviusTuningPos[playerid][2]);
     SetPlayerFacingAngle(playerid, s_rgfPreviusTuningPos[playerid][3]);

@@ -5,24 +5,28 @@
 
 static Needs_UpdateBar(playerid, bool:hunger = true, bool:thirst = true, bool:show_always = false)
 {
-    if(show_always || IsPlayerTextDrawVisible(playerid, p_tdNeedBars[playerid]{0}))
+    if (show_always || IsPlayerTextDrawVisible(playerid, p_tdNeedBars[playerid]{0}))
     {
-        if(thirst)
+        if (thirst)
         {
             const Float:THIRST_BAR_MIN = 517.320;
             const Float:THIRST_BAR_MAX = 557.785;
             new Float:x = lerp(THIRST_BAR_MIN, THIRST_BAR_MAX, Player_Thirst(playerid) / 100.0);
             PlayerTextDrawTextSize(playerid, p_tdNeedBars[playerid]{0}, x, 75.0);
-            PlayerTextDrawShow(playerid, p_tdNeedBars[playerid]{0});
+
+            if (Bit_Get(Player_Config(playerid), CONFIG_DISPLAY_NEED_BARS))
+                PlayerTextDrawShow(playerid, p_tdNeedBars[playerid]{0});
         }
 
-        if(hunger)
+        if (hunger)
         {
             const Float:HUNGER_BAR_MIN = 563.350;
             const Float:HUNGER_BAR_MAX = 604.050;
             new Float:x = lerp(HUNGER_BAR_MIN, HUNGER_BAR_MAX, Player_Hunger(playerid) / 100.0);
             PlayerTextDrawTextSize(playerid, p_tdNeedBars[playerid]{1}, x, 75.0);
-            PlayerTextDrawShow(playerid, p_tdNeedBars[playerid]{1});
+
+            if (Bit_Get(Player_Config(playerid), CONFIG_DISPLAY_NEED_BARS))
+                PlayerTextDrawShow(playerid, p_tdNeedBars[playerid]{1});
         }
     }
 
@@ -82,6 +86,20 @@ Needs_ShowBars(playerid)
     }
 
     Needs_UpdateBar(playerid, .show_always = true);
+    return 1;
+}
+
+Needs_HideBars(playerid)
+{
+    for(new i = sizeof(g_tdNeedBars) - 1; i != -1; --i)
+    {
+        TextDrawHideForPlayer(playerid, g_tdNeedBars[i]);
+    }
+
+    for(new i = sizeof(p_tdNeedBars) - 1; i != -1; --i)
+    {
+        PlayerTextDrawHide(playerid, p_tdNeedBars[playerid]{i});
+    }
     return 1;
 }
 
