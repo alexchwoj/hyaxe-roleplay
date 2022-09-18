@@ -563,3 +563,17 @@ bool:Skin_IsFat(skin)
     }
     return false;
 }
+
+Vehicle_GetPaintjobs(modelid)
+{
+	switch(modelid)
+	{
+		case 483: return 1;
+		case 534..536: return 3;
+		case 558..562: return 3;
+		case 565, 567: return 3;
+		case 575: return 2;
+		case 576: return 3;
+	}
+	return false;
+}

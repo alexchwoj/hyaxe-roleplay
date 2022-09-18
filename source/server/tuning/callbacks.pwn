@@ -198,6 +198,23 @@ Menu:tuning_main(playerid, response, listitem)
 
             case 2:
             {
+                new paintjobs = Vehicle_GetPaintjobs(GetVehicleModel( GetPlayerVehicleID(playerid) ));
+                if (!paintjobs)
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Este vehículo no admite trabajos de pintura.");
+                    TuningMenu_Main(playerid);
+                    return 1;
+                }
+
+                Menu_Show(playerid, "tuning_paintjob", "Paintjob");
+                Menu_AddItem(playerid, "Eliminar paintjob", "Precio: ~g~$500");
+                for(new i; i != paintjobs; ++i)
+                {
+                    new line_str[25];
+                    format(line_str, sizeof line_str, "Poaintjob %d", i + 1);
+                    Menu_AddItem(playerid, line_str, "Precio: 500$");
+                }
             }
 
             default:
@@ -230,6 +247,42 @@ Menu:tuning_main(playerid, response, listitem)
     return 1;
 }
 
+Menu:tuning_paintjob(playerid, response, listitem)
+{
+    new vehicleid = GetPlayerVehicleID(playerid);
+    if (!IsValidVehicle(vehicleid))
+        return 1;
+
+    if (response == MENU_RESPONSE_CLOSE)
+    {
+        TuningMenu_Main(playerid);
+        ChangeVehiclePaintjob(vehicleid, g_rgeVehicles[vehicleid][e_iPaintjob]);
+    }
+    else if (response == MENU_RESPONSE_SELECT)
+    {
+        TuningMenu_Main(playerid);
+
+        if (500 > Player_Money(playerid))
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+            TuningMenu_SelectColorSlot(playerid);
+            return 1;
+        }
+
+        Player_GiveMoney(playerid, -500);
+        PlayerPlaySound(playerid, 1133);
+    }
+    else if (response == MENU_RESPONSE_DOWN || response == MENU_RESPONSE_UP)
+    {
+        if (!listitem)
+            ChangeVehiclePaintjob(vehicleid, 3);
+        else
+            ChangeVehiclePaintjob(vehicleid, listitem - 1);
+    }
+    return 1;
+}
+
 Menu:tuning_sel_component(playerid, response, listitem)
 {
     new vehicleid = GetPlayerVehicleID(playerid);
@@ -241,7 +294,14 @@ Menu:tuning_sel_component(playerid, response, listitem)
         TuningMenu_Main(playerid);
 
         if (g_rgiActualTuningComponent[playerid] != -1)
+        {
             RemoveVehicleComponent(vehicleid, g_rgiActualTuningComponent[playerid]);
+
+            for(new i; i < 14; ++i)
+            {
+                AddVehicleComponent(vehicleid, g_rgeVehicles[vehicleid][e_iComponents][i]);
+            }
+        }
     }
     else if (response == MENU_RESPONSE_SELECT)
     {
@@ -258,12 +318,7 @@ Menu:tuning_sel_component(playerid, response, listitem)
         Player_GiveMoney(playerid, -g_rgeTuningMenu[playerid][listitem][e_iPrice]);
         PlayerPlaySound(playerid, 1133);
     }
-    else if (response == MENU_RESPONSE_DOWN)
-    {
-        g_rgiActualTuningComponent[playerid] = g_rgeTuningMenu[playerid][listitem][e_iID];
-        AddVehicleComponent(vehicleid, g_rgeTuningMenu[playerid][listitem][e_iID]);
-    }
-    else if (response == MENU_RESPONSE_UP)
+    else if (response == MENU_RESPONSE_DOWN || response == MENU_RESPONSE_UP)
     {
         g_rgiActualTuningComponent[playerid] = g_rgeTuningMenu[playerid][listitem][e_iID];
         AddVehicleComponent(vehicleid, g_rgeTuningMenu[playerid][listitem][e_iID]);
