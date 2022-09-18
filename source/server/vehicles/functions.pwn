@@ -20,6 +20,7 @@ Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, c
         g_rgeVehicles[vehicleid][e_fFuel] = g_rgeVehicleModelData[vehicletype - 400][e_fMaxFuel];
         g_rgeVehicles[vehicleid][e_fHealth] = 1000.0;
         g_rgeVehicles[vehicleid][e_iSellIndex] = -1;
+        g_rgeVehicles[vehicleid][e_iPaintjob] = 3;
 
         SetVehicleParamsEx(vehicleid, 0, 0, 0, 0, 0, 0, 0);
     }
@@ -442,7 +443,7 @@ Player_SaveVehicles(playerid)
 command veh(playerid, const params[], "Crea un vehículo")
 {
     new modelid, color1, color2;
-    if(sscanf(params, "k<vehicle>D(-1)D(-1)", modelid, color1, color2) || modelid == -1)
+    if(sscanf(params, "k<vehicle>D(1)D(1)", modelid, color1, color2) || modelid == -1)
     {
         return SendClientMessage(playerid, 0xDADADAFF, "USO: /{ED2B2B}veh {DADADA}<modelo> {969696}[color 1] [color 2]");
     }
