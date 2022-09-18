@@ -108,7 +108,7 @@ public GARAGE_VehicleRepairPlaySound(playerid)
     return 1;
 }
 
-public GARAGE_FinishRepairCar(playerid, vehicleid)
+public GARAGE_FinishRepairCar(playerid, vehicleid, bool:show_tuning)
 {
     Vehicle_Repair(vehicleid);
     Vehicle_Repairing(vehicleid) = false;
@@ -116,6 +116,42 @@ public GARAGE_FinishRepairCar(playerid, vehicleid)
     Timer_Kill(g_rgiRepairSoundTimer[playerid]);
     g_rgiRepairFinishTimer[playerid] = 0;
 
+    if (show_tuning)
+        TuningMenu_Main(playerid);
+    return 1;
+}
+
+forward TUNING_MainComponents(playerid);
+public TUNING_MainComponents(playerid)
+{
+    new row_count;
+    cache_get_row_count(row_count);
+
+    for(new i = 0; i < row_count; ++i)
+    {
+        cache_get_value_name(i, "PART", g_rgeTuningMenu[playerid][i][e_szName], 24);
+        Menu_AddItem(playerid, g_rgeTuningMenu[playerid][i][e_szName]);
+    }
+
+    Menu_UpdateListitems(playerid);
+    return 1;
+}
+
+forward TUNING_SubComponents(playerid);
+public TUNING_SubComponents(playerid)
+{
+    new row_count;
+    cache_get_row_count(row_count);
+
+    for(new i = 0; i < row_count; ++i)
+    {
+        cache_get_value_name_int(i, "ID", g_rgeTuningMenu[playerid][i][e_iID]);
+        cache_get_value_name(i, "NAME", g_rgeTuningMenu[playerid][i][e_szName], 24);
+
+        Menu_AddItem(playerid, g_rgeTuningMenu[playerid][i][e_szName]);
+    }
+
+    Menu_UpdateListitems(playerid);
     return 1;
 }
 
@@ -129,11 +165,79 @@ Menu:tuning_main(playerid, response, listitem)
     {
         switch(listitem)
         {
+            case 0:
+            {
+                if (Player_Money(playerid) < 250)
+                {
+                    Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No tienes dinero para reparar tu vehículo");
+                    TuningMenu_Main(playerid);
+                    return 1;
+                }
+
+                Player_GiveMoney(playerid, -250);
+
+                PlayerPlaySound(playerid, 12201);
+
+                new vehicleid = GetPlayerVehicleID(playerid);
+                Vehicle_ToggleEngine(vehicleid, VEHICLE_STATE_OFF);
+                Vehicle_Repairing(vehicleid) = true;
+
+                Notification_ShowBeatingText(playerid, 5000, 0xF29624, 100, 255, "Reparando vehículo...");
+                g_rgiRepairSoundTimer[playerid] = SetTimerEx("GARAGE_VehicleRepairPlaySound", 1000, true, "i", playerid);
+                g_rgiRepairFinishTimer[playerid] = SetTimerEx("GARAGE_FinishRepairCar", 5000, false, "iib", playerid, vehicleid, true);
+            }
+
             case 1:
             {
                 TuningMenu_SelectColorSlot(playerid);
             }
+
+            case 2:
+            {
+            }
+
+            default:
+            {
+                Menu_Show(playerid, "tuning_sel_component", g_rgeTuningMenu[playerid][listitem - 3][e_szName]);
+
+                InterpolateCameraPos(playerid, 606.906799, 2.143145, 1002.159118,  609.474670, 1.573151, 1000.936645, 1000);
+                InterpolateCameraLookAt(playerid, 611.030334, -0.317962, 1000.766418,  612.700805, -2.129092, 999.995788, 1000);
+
+                mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "SELECT `COMPONENTS_INFO`.`ID`, `COMPONENTS_INFO`.`NAME` FROM `COMPONENTS_INFO`, `VEHICLE_COMPONENTS` WHERE `COMPONENTS_INFO`.`PART` = '%s' AND `VEHICLE_COMPONENTS`.`MODELID` = '%d' AND `VEHICLE_COMPONENTS`.`COMPONENT_ID` = `COMPONENTS_INFO`.`ID`;", g_rgeTuningMenu[playerid][listitem - 3][e_szName], GetVehicleModel( GetPlayerVehicleID(playerid) ));
+                mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "TUNING_SubComponents", !"i", playerid);
+            }
         }
+    }
+    return 1;
+}
+
+Menu:tuning_sel_component(playerid, response, listitem)
+{
+    new vehicleid = GetPlayerVehicleID(playerid);
+    if (!IsValidVehicle(vehicleid))
+        return 1;
+
+    if (response == MENU_RESPONSE_CLOSE)
+    {
+        TuningMenu_Main(playerid);
+
+        if (g_rgiActualTuningComponent[playerid] != -1)
+            RemoveVehicleComponent(vehicleid, g_rgiActualTuningComponent[playerid]);
+    }
+    else if (response == MENU_RESPONSE_SELECT)
+    {
+        TuningMenu_Main(playerid);
+        PlayerPlaySound(playerid, 1133);
+    }
+    else if (response == MENU_RESPONSE_DOWN)
+    {
+        g_rgiActualTuningComponent[playerid] = g_rgeTuningMenu[playerid][listitem][e_iID];
+        AddVehicleComponent(vehicleid, g_rgeTuningMenu[playerid][listitem][e_iID]);
+    }
+    else if (response == MENU_RESPONSE_UP)
+    {
+        g_rgiActualTuningComponent[playerid] = g_rgeTuningMenu[playerid][listitem][e_iID];
+        AddVehicleComponent(vehicleid, g_rgeTuningMenu[playerid][listitem][e_iID]);
     }
     return 1;
 }
@@ -177,7 +281,8 @@ Menu:tuning_color(playerid, response, listitem)
     }
     else if (response == MENU_RESPONSE_SELECT)
     {
-        if (100 > Player_Money(playerid))
+        new cost = (g_rgiSelectedColorType[playerid] ? 75 : 100);
+        if (cost > Player_Money(playerid))
         {
             PlayerPlaySound(playerid, SOUND_ERROR);
             Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
@@ -185,7 +290,7 @@ Menu:tuning_color(playerid, response, listitem)
             return 1;
         }
 
-        Player_GiveMoney(playerid, -100);
+        Player_GiveMoney(playerid, -cost);
         TuningMenu_Main(playerid);
 
         new color1, color2;
@@ -200,6 +305,8 @@ Menu:tuning_color(playerid, response, listitem)
             g_rgeVehicles[vehicleid][e_iColorOne] = color1;
             ChangeVehicleColor(vehicleid, color1, g_rgeVehicles[vehicleid][e_iColorTwo]);
         }
+
+        PlayerPlaySound(playerid, 1134);
     }
     else if (response == MENU_RESPONSE_DOWN)
     {

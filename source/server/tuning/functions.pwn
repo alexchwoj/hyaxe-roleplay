@@ -6,25 +6,12 @@
 TuningMenu_Main(playerid)
 {
     Menu_Show(playerid, "tuning_main", "Tuning", .clearChat = true);
-    Menu_AddItem(playerid, "Reparar", "Precio: ~g~$500");
+    Menu_AddItem(playerid, "Reparar", "Precio: ~g~$250");
     Menu_AddItem(playerid, "Colores");
 	Menu_AddItem(playerid, "Paintjob");
-    Menu_AddItem(playerid, "Ruedas");
-	Menu_AddItem(playerid, "Alerones");
-    Menu_AddItem(playerid, "Techo");
-    Menu_AddItem(playerid, "Tomas de aire");
-    Menu_AddItem(playerid, "Tubos de escape");
-    Menu_AddItem(playerid, "Capó");
-    Menu_AddItem(playerid, "Faros");
-    Menu_AddItem(playerid, "Faldones");
-    Menu_AddItem(playerid, "Parachoques delanteros");
-    Menu_AddItem(playerid, "Parachoques traseros");
-    Menu_AddItem(playerid, "Protector delantero");
-    Menu_AddItem(playerid, "Protector trasero");
-    Menu_AddItem(playerid, "Suspensión hidráulica");
-    Menu_AddItem(playerid, "Nitro");
-    Menu_AddItem(playerid, "Varios");
-    Menu_UpdateListitems(playerid);
+
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "SELECT `COMPONENTS_INFO`.`PART` FROM `COMPONENTS_INFO`, `VEHICLE_COMPONENTS` WHERE `VEHICLE_COMPONENTS`.`MODELID` = '%d' AND `VEHICLE_COMPONENTS`.`COMPONENT_ID` = `COMPONENTS_INFO`.`ID` GROUP BY `COMPONENTS_INFO`.`PART`;", GetVehicleModel( GetPlayerVehicleID(playerid) ));
+    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "TUNING_MainComponents", !"i", playerid);
     return 1;
 }
 
@@ -60,6 +47,7 @@ Tuning_Open(playerid)
     PutPlayerInVehicle(playerid, vehicle_id, 0);
     TogglePlayerControllable(playerid, false);
     SetCameraBehindPlayer(playerid);
+    g_rgiActualTuningComponent[playerid] = -1;
 
     Speedometer_Hide(playerid);
     Needs_HideBars(playerid);

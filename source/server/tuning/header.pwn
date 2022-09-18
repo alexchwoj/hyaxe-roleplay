@@ -3,10 +3,21 @@
 #endif
 #define _tuning_header_
 
+#define TOTAL_TUNING_PARTS 14
+#define MAX_TUNING_PARTS_COMPONENTS 20
+
+enum eTuningMenu
+{
+    e_iID,
+	e_szName[24]
+};
+new g_rgeTuningMenu[MAX_PLAYERS + 1][MAX_TUNING_PARTS_COMPONENTS][eTuningMenu];
+
 new 
     Float:s_rgfPreviusTuningPos[MAX_PLAYERS][4],
     s_rgiPreviusTuningInterior[MAX_PLAYERS],
-    s_rgiPreviusTuningWorld[MAX_PLAYERS]
+    s_rgiPreviusTuningWorld[MAX_PLAYERS],
+    g_rgiActualTuningComponent[MAX_PLAYERS]
 ;
 
 enum eRepairPosition
@@ -30,4 +41,4 @@ new
     g_rgiSelectedColorType[MAX_PLAYERS];
 
 forward GARAGE_VehicleRepairPlaySound(playerid);
-forward GARAGE_FinishRepairCar(playerid, vehicleid);
+forward GARAGE_FinishRepairCar(playerid, vehicleid, bool:show_tuning);
