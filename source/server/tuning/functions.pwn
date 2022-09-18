@@ -5,12 +5,32 @@
 
 TuningMenu_Main(playerid)
 {
+    InterpolateCameraPos(
+        playerid,
+        g_rgeTuningCameras[ g_rgiTuningCamera[playerid] ][e_fPosX],
+        g_rgeTuningCameras[ g_rgiTuningCamera[playerid] ][e_fPosY],
+        g_rgeTuningCameras[ g_rgiTuningCamera[playerid] ][e_fPosZ],
+        606.906799, 2.143145, 1002.159118,
+        1000
+    );
+                
+    InterpolateCameraLookAt(
+        playerid,
+        g_rgeTuningCameras[ g_rgiTuningCamera[playerid] ][e_fLookX],
+        g_rgeTuningCameras[ g_rgiTuningCamera[playerid] ][e_fLookY],
+        g_rgeTuningCameras[ g_rgiTuningCamera[playerid] ][e_fLookZ],
+        611.030334, -0.317962, 1000.766418,
+        1000
+    );
+
+    g_rgiTuningCamera[playerid] = 0;
+
     Menu_Show(playerid, "tuning_main", "Tuning", .clearChat = true);
     Menu_AddItem(playerid, "Reparar", "Precio: ~g~$250");
     Menu_AddItem(playerid, "Colores");
 	Menu_AddItem(playerid, "Paintjob");
 
-    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "SELECT `COMPONENTS_INFO`.`PART` FROM `COMPONENTS_INFO`, `VEHICLE_COMPONENTS` WHERE `VEHICLE_COMPONENTS`.`MODELID` = '%d' AND `VEHICLE_COMPONENTS`.`COMPONENT_ID` = `COMPONENTS_INFO`.`ID` GROUP BY `COMPONENTS_INFO`.`PART`;", GetVehicleModel( GetPlayerVehicleID(playerid) ));
+    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "SELECT `COMPONENTS_INFO`.`PART`, `COMPONENTS_INFO`.`CAMERA_TYPE` FROM `COMPONENTS_INFO`, `VEHICLE_COMPONENTS` WHERE `VEHICLE_COMPONENTS`.`MODELID` = '%d' AND `VEHICLE_COMPONENTS`.`COMPONENT_ID` = `COMPONENTS_INFO`.`ID` GROUP BY `COMPONENTS_INFO`.`PART`;", GetVehicleModel( GetPlayerVehicleID(playerid) ));
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "TUNING_MainComponents", !"i", playerid);
     return 1;
 }

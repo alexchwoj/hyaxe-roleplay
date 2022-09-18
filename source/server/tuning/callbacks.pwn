@@ -129,6 +129,7 @@ public TUNING_MainComponents(playerid)
 
     for(new i = 0; i < row_count; ++i)
     {
+        cache_get_value_name_int(i, "CAMERA_TYPE", g_rgeTuningMenu[playerid][i][e_iCameraType]);
         cache_get_value_name(i, "PART", g_rgeTuningMenu[playerid][i][e_szName], 24);
         Menu_AddItem(playerid, g_rgeTuningMenu[playerid][i][e_szName]);
     }
@@ -146,9 +147,12 @@ public TUNING_SubComponents(playerid)
     for(new i = 0; i < row_count; ++i)
     {
         cache_get_value_name_int(i, "ID", g_rgeTuningMenu[playerid][i][e_iID]);
+        cache_get_value_name_int(i, "PRICE", g_rgeTuningMenu[playerid][i][e_iPrice]);
         cache_get_value_name(i, "NAME", g_rgeTuningMenu[playerid][i][e_szName], 24);
 
-        Menu_AddItem(playerid, g_rgeTuningMenu[playerid][i][e_szName]);
+        new line_str[32];
+        format(line_str, sizeof(line_str), "Precio: ~g~$%d", g_rgeTuningMenu[playerid][i][e_iPrice]);
+        Menu_AddItem(playerid, g_rgeTuningMenu[playerid][i][e_szName], line_str);
     }
 
     Menu_UpdateListitems(playerid);
@@ -198,10 +202,25 @@ Menu:tuning_main(playerid, response, listitem)
 
             default:
             {
+                g_rgiTuningCamera[playerid] = g_rgeTuningMenu[playerid][listitem - 3][e_iCameraType];
+
                 Menu_Show(playerid, "tuning_sel_component", g_rgeTuningMenu[playerid][listitem - 3][e_szName]);
 
-                InterpolateCameraPos(playerid, 606.906799, 2.143145, 1002.159118,  609.474670, 1.573151, 1000.936645, 1000);
-                InterpolateCameraLookAt(playerid, 611.030334, -0.317962, 1000.766418,  612.700805, -2.129092, 999.995788, 1000);
+                InterpolateCameraPos(
+                    playerid, 606.906799, 2.143145, 1002.159118,
+                    g_rgeTuningCameras[ g_rgiTuningCamera[playerid] ][e_fPosX],
+                    g_rgeTuningCameras[ g_rgiTuningCamera[playerid] ][e_fPosY],
+                    g_rgeTuningCameras[ g_rgiTuningCamera[playerid] ][e_fPosZ],
+                    1000
+                );
+
+                InterpolateCameraLookAt(
+                    playerid, 611.030334, -0.317962, 1000.766418,
+                    g_rgeTuningCameras[ g_rgiTuningCamera[playerid] ][e_fLookX],
+                    g_rgeTuningCameras[ g_rgiTuningCamera[playerid] ][e_fLookY],
+                    g_rgeTuningCameras[ g_rgiTuningCamera[playerid] ][e_fLookZ],
+                    1000
+                );
 
                 mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "SELECT `COMPONENTS_INFO`.`ID`, `COMPONENTS_INFO`.`NAME` FROM `COMPONENTS_INFO`, `VEHICLE_COMPONENTS` WHERE `COMPONENTS_INFO`.`PART` = '%s' AND `VEHICLE_COMPONENTS`.`MODELID` = '%d' AND `VEHICLE_COMPONENTS`.`COMPONENT_ID` = `COMPONENTS_INFO`.`ID`;", g_rgeTuningMenu[playerid][listitem - 3][e_szName], GetVehicleModel( GetPlayerVehicleID(playerid) ));
                 mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "TUNING_SubComponents", !"i", playerid);
@@ -227,6 +246,16 @@ Menu:tuning_sel_component(playerid, response, listitem)
     else if (response == MENU_RESPONSE_SELECT)
     {
         TuningMenu_Main(playerid);
+
+        if (g_rgeTuningMenu[playerid][listitem][e_iPrice] > Player_Money(playerid))
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+            TuningMenu_SelectColorSlot(playerid);
+            return 1;
+        }
+
+        Player_GiveMoney(playerid, -g_rgeTuningMenu[playerid][listitem][e_iPrice]);
         PlayerPlaySound(playerid, 1133);
     }
     else if (response == MENU_RESPONSE_DOWN)
