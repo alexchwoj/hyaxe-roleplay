@@ -2443,9 +2443,9 @@ public OnFilterScriptInit()
 	tmpobjid = CA_CreateDynamicObject_SC(19454, -65.907592, -1154.404296, 6.005774, 0.000000, 0.000000, 63.800003, -1, -1, -1, 800.00, 800.00); 
 	SetDynamicObjectMaterial(tmpobjid, 0, 17547, "eastbeach4a_lae2", "bluestucco1", 0x00000000);
 	tmpobjid = CA_CreateDynamicObject_SC(19482, -96.134216, -1160.215942, 4.647780, 0.000000, 0.000000, 153.799987, -1, -1, -1, 800.00, 800.00); 
-	SetDynamicObjectMaterialText(tmpobjid, 0, "{000000}Taller Mecanico", 40, "Ariel", 20, 1, 0x00000000, 0x00000000, 0);
+	SetDynamicObjectMaterialText(tmpobjid, 0, "{000000}Mechanical", 40, "Ariel", 20, 1, 0x00000000, 0x00000000, 0);
 	tmpobjid = CA_CreateDynamicObject_SC(19482, -105.083580, -1178.405883, 4.647780, 0.000000, 0.000000, 153.799987, -1, -1, -1, 800.00, 800.00); 
-	SetDynamicObjectMaterialText(tmpobjid, 0, "{000000}Taller Mecanico", 40, "Ariel", 20, 1, 0x00000000, 0x00000000, 0);
+	SetDynamicObjectMaterialText(tmpobjid, 0, "{000000}Workshop", 40, "Ariel", 20, 1, 0x00000000, 0x00000000, 0);
 	tmpobjid = CA_CreateDynamicObject_SC(19454, -61.205993, -1156.717285, 6.005770, 0.000000, 0.000000, 63.800003, -1, -1, -1, 800.00, 800.00); 
 	SetDynamicObjectMaterial(tmpobjid, 0, 17547, "eastbeach4a_lae2", "bluestucco1", 0x00000000);
 	tmpobjid = CA_CreateDynamicObject_SC(19454, -59.015102, -1163.657836, 6.025775, 0.000000, 0.000000, 153.800003, -1, -1, -1, 800.00, 800.00); 

@@ -212,8 +212,8 @@ Menu:tuning_main(playerid, response, listitem)
                 for(new i; i != paintjobs; ++i)
                 {
                     new line_str[25];
-                    format(line_str, sizeof line_str, "Poaintjob %d", i + 1);
-                    Menu_AddItem(playerid, line_str, "Precio: 500$");
+                    format(line_str, sizeof line_str, "Paintjov %d", i + 1);
+                    Menu_AddItem(playerid, line_str, "Precio: ~g~$500");
                 }
                 Menu_UpdateListitems(playerid);
             }
@@ -240,7 +240,7 @@ Menu:tuning_main(playerid, response, listitem)
                     1000
                 );
 
-                mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "SELECT `COMPONENTS_INFO`.`ID`, `COMPONENTS_INFO`.`NAME` FROM `COMPONENTS_INFO`, `VEHICLE_COMPONENTS` WHERE `COMPONENTS_INFO`.`PART` = '%s' AND `VEHICLE_COMPONENTS`.`MODELID` = '%d' AND `VEHICLE_COMPONENTS`.`COMPONENT_ID` = `COMPONENTS_INFO`.`ID`;", g_rgeTuningMenu[playerid][listitem - 3][e_szName], GetVehicleModel( GetPlayerVehicleID(playerid) ));
+                mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "SELECT `COMPONENTS_INFO`.`ID`, `COMPONENTS_INFO`.`NAME`, `COMPONENTS_INFO`.`PRICE` FROM `COMPONENTS_INFO`, `VEHICLE_COMPONENTS` WHERE `COMPONENTS_INFO`.`PART` = '%s' AND `VEHICLE_COMPONENTS`.`MODELID` = '%d' AND `VEHICLE_COMPONENTS`.`COMPONENT_ID` = `COMPONENTS_INFO`.`ID`;", g_rgeTuningMenu[playerid][listitem - 3][e_szName], GetVehicleModel( GetPlayerVehicleID(playerid) ));
                 mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "TUNING_SubComponents", !"i", playerid);
             }
         }
