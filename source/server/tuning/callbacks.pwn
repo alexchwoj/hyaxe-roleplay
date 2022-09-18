@@ -215,6 +215,7 @@ Menu:tuning_main(playerid, response, listitem)
                     format(line_str, sizeof line_str, "Poaintjob %d", i + 1);
                     Menu_AddItem(playerid, line_str, "Precio: 500$");
                 }
+                Menu_UpdateListitems(playerid);
             }
 
             default:
