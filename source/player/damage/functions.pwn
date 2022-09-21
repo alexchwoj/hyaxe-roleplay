@@ -65,6 +65,58 @@ Weapon_SetDamage(weapon_id, damage)
 	return 1;
 }
 
+Damage_Validate(playerid, damagedid, weaponid, bodypart)
+{
+	// Calculate distance
+	new Float:x1, Float:y1, Float:z1, Float:x2, Float:y2, Float:z2;
+	GetPlayerPos(playerid, x1, y1, z1);
+	GetPlayerPos(damagedid, x2, y2, z2);
+
+	// Check distance
+    new Float:distance = VectorSize(x1 - x2, y1 - y2, z1 - z2);
+    if (distance < g_rgfWeaponsRange[weaponid])
+    {
+		// Gun butt blows
+        if (distance <= 1.5)
+        {
+            CallLocalFunction(!"OnPlayerDamage", !"iidii", damagedid, playerid, 1, weaponid, bodypart);
+            Damage_Send(damagedid, playerid, 1, weaponid);
+            return 1;
+        }
+
+		// Verify that an object does not cross in between
+        new Float:ray_x, Float:ray_y, Float:ray_z;
+        new ray = CA_RayCastLine(
+            x1, y1, z1,
+            x2, y2, z2,
+            ray_x, ray_y, ray_z
+        );
+
+        new bool:valid_collision = true;
+        if (ray)
+        {
+            // Ignore specific objects
+            switch(ray)
+            {
+                case WATER_OBJECT, 1411, 19837, 19838, 19839, 2247, 701, 702, 859, 677, 860, 631, 647, 8153, 1412:
+                    valid_collision = true;
+                
+                default:
+                    valid_collision = false;
+            }
+        }
+
+        // Send damage
+        if (valid_collision)
+        {
+            CallLocalFunction(!"OnPlayerDamage", !"iidii", damagedid, playerid, g_rgiWeaponsDamage[weaponid], weaponid, bodypart);
+            Damage_Send(damagedid, playerid, g_rgiWeaponsDamage[weaponid], weaponid);
+        }
+		return 1;
+    }
+	return 0;
+}
+
 command setarmor(playerid, const params[], "Darle chaleco a un jugador")
 {
     extract params -> new armor = 100, player:destination = 0xFFFF; else {

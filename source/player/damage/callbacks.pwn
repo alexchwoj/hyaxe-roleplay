@@ -28,22 +28,8 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 {
-    new
-		Float:x1, Float:y1, Float:z1,
-		Float:x2, Float:y2, Float:z2
-	;
-
-	GetPlayerPos(playerid, x1, y1, z1);
-	GetPlayerPos(damagedid, x2, y2, z2);
-
-    if (VectorSize(x1 - x2, y1 - y2, z1 - z2) > g_rgfWeaponsRange[weaponid])
-        return 0;
-
-    if (weaponid <= WEAPON_SNIPER)
-        amount = g_rgiWeaponsDamage[weaponid];
-
-    CallLocalFunction(!"OnPlayerDamage", !"iidii", damagedid, playerid, floatround(amount), weaponid, bodypart);
-    Damage_Send(damagedid, playerid, amount, weaponid);
+    // Damage by another player
+    Damage_Validate(playerid, damagedid, weaponid, bodypart);
 
     #if defined DAMAGE_OnPlayerGiveDamage
         return DAMAGE_OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart);
@@ -70,15 +56,6 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
     {
         Damage_Send(playerid, INVALID_PLAYER_ID, g_rgiWeaponsDamage[weaponid], weaponid);
 	}
-    // Damage by player
-    else
-    {
-        if (weaponid > 50 || weaponid == WEAPON_FLAMETHROWER)
-	        return 0;
-
-        CallLocalFunction(!"OnPlayerDamage", !"iidii", playerid, issuerid, floatround(amount), weaponid, bodypart);
-        Damage_Send(playerid, issuerid, amount, weaponid);
-    }
 
     #if defined DAMAGE_OnPlayerTakeDamage
         return DAMAGE_OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart);
@@ -97,20 +74,22 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
     forward DAMAGE_OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart);
 #endif
 
-const damage_PLAYER_SYNC = 207;
-IPacket:damage_PLAYER_SYNC(playerid, BitStream:bs)
+const damage_PlayerSync = 207;
+IPacket:damage_PlayerSync(playerid, BitStream:bs)
 {
 	BS_SetWriteOffset(bs, 280);
     BS_WriteValue(bs,
         PR_UINT8, Player_Health(playerid),
         PR_UINT8, Player_Armor(playerid)
     );
-
 	return 1;
 }
 
 public OnPlayerDamage(playerid, issuerid, amount, weaponid, bodypart)
 {
     printf("playerid: %d, issuerid: %d, amount: %d, weaponid: %d, bodypart: %d", playerid, issuerid, amount, weaponid, bodypart);
+    //new str_text[144];
+    //format(str_text, sizeof(str_text), "playerid: %d, issuerid: %d, amount: %d, weaponid: %d, bodypart: %d", playerid, issuerid, amount, weaponid, bodypart);
+    //SendClientMessageToAll(-1, str_text);
     return 1;
 }

@@ -44,7 +44,7 @@ new g_rgeDetectionData[eCheats][eDetectionData] =
     { "CarJack", true, PUNISHMENT_KICK, 0 }, // External detection on vehicle module
     { "Slapper", true, PUNISHMENT_KICK, 0 },
     { "Teletransportación", true, PUNISHMENT_WARN_ADMINS, 0 },
-    { "Invisible", true, PUNISHMENT_WARN_ADMINS, 0 }
+    { "Invisibilidad", true, PUNISHMENT_WARN_ADMINS, 0 }
 };
 
 new 
