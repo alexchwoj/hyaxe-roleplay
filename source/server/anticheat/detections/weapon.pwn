@@ -19,7 +19,7 @@ IPacket:__ac_weapon_WeaponUpdate(playerid, BitStream:bs)
 		{
             if (g_rgePlayerWeapons[playerid][i][e_iWeaponId] != data[PR_slotWeaponId][i])
             {
-                Anticheat_Trigger(playerid, CHEAT_WEAPON);
+                Anticheat_Trigger(playerid, CHEAT_WEAPON, 0);
 				return 0;
             }
         }
@@ -40,7 +40,7 @@ IPacket:__ac_weapon_PlayerSync(playerid, BitStream:bs)
     new slot = GetWeaponSlot(data[PR_weaponId]);
     if (data[PR_weaponId] > WEAPON_BRASSKNUCKLE && g_rgePlayerWeapons[playerid][slot][e_iWeaponId] != data[PR_weaponId])
     {
-        Anticheat_Trigger(playerid, CHEAT_WEAPON);
+        Anticheat_Trigger(playerid, CHEAT_WEAPON, 1);
         return 0;
     }
     return 1;
@@ -59,7 +59,7 @@ IPacket:__ac_weapon_BulletSync(playerid, BitStream:bs)
     new slot = GetWeaponSlot(data[PR_weaponId]);
     if (data[PR_weaponId] > WEAPON_BRASSKNUCKLE && g_rgePlayerWeapons[playerid][slot][e_iWeaponId] != data[PR_weaponId])
     {
-        Anticheat_Trigger(playerid, CHEAT_WEAPON);
+        Anticheat_Trigger(playerid, CHEAT_WEAPON, 2);
         return 0;
     }
     return 1;
@@ -73,7 +73,7 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
     new slot = GetWeaponSlot(weaponid);
     if (weaponid > WEAPON_BRASSKNUCKLE && g_rgePlayerWeapons[playerid][slot][e_iWeaponId] != weaponid)
     {
-        Anticheat_Trigger(playerid, CHEAT_WEAPON);
+        Anticheat_Trigger(playerid, CHEAT_WEAPON, 3);
         return 0;
     }
 

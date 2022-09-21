@@ -964,8 +964,8 @@ public OnGameModeInit()
     TextDrawSetProportional(g_tdGangMemberSlotBg[6], 1);
     TextDrawSetSelectable(g_tdGangMemberSlotBg[6], 0);
 
-    /*
-    g_tdDebugScreen[0] = TextDrawCreate(561.000000, 110.000000, "_");
+    
+    /*g_tdDebugScreen[0] = TextDrawCreate(561.000000, 110.000000, "_");
     TextDrawFont(g_tdDebugScreen[0], 1);
     TextDrawLetterSize(g_tdDebugScreen[0], 0.245833, 17.249998);
     TextDrawTextSize(g_tdDebugScreen[0], 400.000000, 117.500000);
@@ -1019,8 +1019,8 @@ public OnGameModeInit()
     TextDrawBoxColor(g_tdDebugScreen[3], 50);
     TextDrawUseBox(g_tdDebugScreen[3], 0);
     TextDrawSetProportional(g_tdDebugScreen[3], 1);
-    TextDrawSetSelectable(g_tdDebugScreen[3], 0);
-    */
+    TextDrawSetSelectable(g_tdDebugScreen[3], 0);*/
+    
     
     #if defined TD_OnGameModeInit
         return TD_OnGameModeInit();

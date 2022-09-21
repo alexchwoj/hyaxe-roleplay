@@ -12,7 +12,8 @@ enum eCheats
     CHEAT_WEAPON,
     CHEAT_CARJACK,
     CHEAT_SLAPPER,
-    CHEAT_TELEPORT
+    CHEAT_TELEPORT,
+    CHEAT_INVISIBLE
 };
 
 enum ePunishment
@@ -42,7 +43,8 @@ new g_rgeDetectionData[eCheats][eDetectionData] =
     { "Weaponhack", true, PUNISHMENT_KICK, 0 },
     { "CarJack", true, PUNISHMENT_KICK, 0 }, // External detection on vehicle module
     { "Slapper", true, PUNISHMENT_KICK, 0 },
-    { "Teletransportación", true, PUNISHMENT_WARN_ADMINS, 0 }
+    { "Teletransportación", true, PUNISHMENT_WARN_ADMINS, 0 },
+    { "Invisible", true, PUNISHMENT_WARN_ADMINS, 0 }
 };
 
 new 

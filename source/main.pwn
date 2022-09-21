@@ -296,7 +296,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/police/callbacks.pwn"
 #include "player/weapons/callbacks.pwn"
 #include "player/gps/callbacks.pwn"
-#include "server/debug/callbacks.pwn"
+//#include "server/debug/callbacks.pwn"
 
 // Anticheat
 ///////////////
@@ -307,6 +307,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/anticheat/detections/money.pwn"
 #include "server/anticheat/detections/slapper.pwn"
 #include "server/anticheat/detections/teleport.pwn"
+#include "server/anticheat/detections/invisible.pwn"
 
 // Commands
 //////////////
