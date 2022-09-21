@@ -577,3 +577,19 @@ Vehicle_GetPaintjobs(modelid)
 	}
 	return false;
 }
+
+Data_CheckValidity(Float:data)
+{
+	if (floatcmp(data, data) != 0 || floatcmp(data, Float:0x7F800000) == 0 || floatcmp(data, Float:0xFF800000) == 0)
+        return 1;
+	
+    return 0;
+}
+
+Data_CheckOutputLimit(Float:data, Float:max, Float:min = 0.0, bool:check = false)
+{
+	if (floatcmp(floatabs(data), max) > 0 || check && floatcmp(data, min) < 0)
+        return 1;
+	
+    return 0;
+}

@@ -308,6 +308,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/anticheat/detections/slapper.pwn"
 #include "server/anticheat/detections/teleport.pwn"
 #include "server/anticheat/detections/invisible.pwn"
+#include "server/anticheat/detections/invalid_sync.pwn"
 
 // Commands
 //////////////

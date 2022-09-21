@@ -108,6 +108,7 @@ IPacket:damage_BulletSync(playerid, BitStream:bs)
 
         if (data[PR_offsets][0] == 0.0 && data[PR_offsets][1] == 0.0 && data[PR_offsets][2] == 0.0 || betweenDistance < 0.15 || floatabs(data[PR_origin][2] - getPlayerZ) < 0.01 || floatabs(getLastPlayerZ - data[PR_hitPos][2]) < 0.01)
         {
+            printf("invalid bullet sync");
             return 0;
         }
     }

@@ -81,7 +81,7 @@ Damage_Validate(playerid, damagedid, weaponid, bodypart)
         {
             CallLocalFunction(!"OnPlayerDamage", !"iidii", damagedid, playerid, 1, weaponid, bodypart);
             Damage_Send(damagedid, playerid, 1, weaponid);
-            g_rgiLastDamageTick[to][weaponid] = GetTickCount() + 1200;
+            g_rgiLastDamageTick[playerid][weaponid] = GetTickCount() + 1200;
             return 1;
         }
 

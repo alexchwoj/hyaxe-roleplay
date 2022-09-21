@@ -3,15 +3,14 @@
 #endif
 #define _detections_teleport_
 
-/*
 public OnPlayerUpdate(playerid)
 {
-    if(IsPlayerSpawned(playerid) && Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME) && !GetPlayerInterior(playerid))
+    if (!Player_HasImmunityForCheat(playerid, CHEAT_TELEPORT) && IsPlayerSpawned(playerid) && Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME) && !GetPlayerInterior(playerid))
     {
         new const Float:max_dist = (IsPlayerInAnyVehicle(playerid) ? 340.0 : 50.0);
-        if(GetPlayerDistanceFromPoint(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ)) > max_dist)
+        if (GetPlayerDistanceFromPoint(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ)) > max_dist)
         {
-            if(IsPlayerInAnyVehicle(playerid))
+            if (IsPlayerInAnyVehicle(playerid))
             {
                 SetVehiclePos(GetPlayerVehicleID(playerid), Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
             }
@@ -43,4 +42,3 @@ public OnPlayerUpdate(playerid)
 #if defined AC_OnPlayerUpdate
     forward AC_OnPlayerUpdate(playerid);
 #endif
-*/

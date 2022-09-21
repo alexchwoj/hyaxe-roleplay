@@ -6,7 +6,7 @@
 const __ac_invi_PlayerSync = 207;
 IPacket:__ac_invi_PlayerSync(playerid, BitStream:bs)
 {
-    if (Player_HasImmunityForCheat(playerid, CHEAT_FLY))
+    if (Player_HasImmunityForCheat(playerid, CHEAT_INVISIBLE))
         return 1;
 
     new data[PR_OnFootSync];

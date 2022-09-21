@@ -21,7 +21,7 @@ Anticheat_Trigger(playerid, eCheats:cheat, extra = 0)
         case PUNISHMENT_WARN_ADMINS:
         {
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, 
-                "[AC] {DADADA}%s {415BA2}%s{DADADA} ({415BA2}%i{DADADA}) fue detectad%c por {415BA2}%s (#d){DADADA}.",
+                "[AC] {DADADA}%s {415BA2}%s{DADADA} ({415BA2}%i{DADADA}) fue detectad%c por {415BA2}%s (#%d){DADADA}.",
                 (Player_Sex(playerid) == SEX_MALE ? "El jugador" : "La jugadora"),
                 Player_RPName(playerid), playerid, (Player_Sex(playerid) == SEX_MALE ? 'o' : 'a'),
                 g_rgeDetectionData[cheat][e_szDetectionName], extra
