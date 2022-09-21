@@ -153,6 +153,12 @@ public TUNING_SubComponents(playerid)
         new line_str[32];
         format(line_str, sizeof(line_str), "Precio: ~g~$%d", g_rgeTuningMenu[playerid][i][e_iPrice]);
         Menu_AddItem(playerid, g_rgeTuningMenu[playerid][i][e_szName], line_str);
+
+        if (!i)
+        {
+            g_rgiActualTuningComponent[playerid] = g_rgeTuningMenu[playerid][i][e_iID];
+            AddVehicleComponent(GetPlayerVehicleID(playerid), g_rgeTuningMenu[playerid][i][e_iID]);
+        }
     }
 
     Menu_UpdateListitems(playerid);
