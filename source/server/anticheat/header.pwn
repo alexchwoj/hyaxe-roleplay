@@ -14,7 +14,8 @@ enum eCheats
     CHEAT_SLAPPER,
     CHEAT_TELEPORT,
     CHEAT_INVISIBLE,
-    CHEAT_INVALID_SYNC
+    CHEAT_INVALID_SYNC,
+    CHEAT_AIRBREAK
 };
 
 enum ePunishment
@@ -46,7 +47,8 @@ new g_rgeDetectionData[eCheats][eDetectionData] =
     { "Slapper", true, PUNISHMENT_KICK, 0 },
     { "Teletransportación", true, PUNISHMENT_WARN_ADMINS, 0 },
     { "Invisibilidad", true, PUNISHMENT_WARN_ADMINS, 0 },
-    { "Sincronización inválida", true, PUNISHMENT_KICK, 0 }
+    { "Sincronización inválida", true, PUNISHMENT_KICK, 0 },
+    { "AirBreak", true, PUNISHMENT_KICK, 5 }
 };
 
 new 

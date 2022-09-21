@@ -5,25 +5,41 @@
 
 public OnPlayerUpdate(playerid)
 {
-    if (!Player_HasImmunityForCheat(playerid, CHEAT_TELEPORT) && IsPlayerSpawned(playerid) && Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME) && !GetPlayerInterior(playerid))
+    if (IsPlayerSpawned(playerid) && Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME) && !GetPlayerInterior(playerid))
     {
-        new const Float:max_dist = (IsPlayerInAnyVehicle(playerid) ? 340.0 : 50.0);
-        if (GetPlayerDistanceFromPoint(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ)) > max_dist)
-        {
-            if (IsPlayerInAnyVehicle(playerid))
-            {
-                SetVehiclePos(GetPlayerVehicleID(playerid), Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
-            }
-            else
-            {
-                SetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
-            }
+        new
+            const Float:max_dist = (IsPlayerInAnyVehicle(playerid) ? 340.0 : 50.0),
+            const Float:dist = GetPlayerDistanceFromPoint(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ))
+        ;
 
-            Anticheat_Trigger(playerid, CHEAT_TELEPORT);
-            return 0;
+        if (!Player_HasImmunityForCheat(playerid, CHEAT_AIRBREAK))
+        {
+            if (dist > 2.0)
+            {
+                Anticheat_Trigger(playerid, CHEAT_AIRBREAK);
+                return 0;
+            }
         }
 
-        GetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
+        if (!Player_HasImmunityForCheat(playerid, CHEAT_TELEPORT))
+        {
+            if (dist > max_dist)
+            {
+                if (IsPlayerInAnyVehicle(playerid))
+                {
+                    SetVehiclePos(GetPlayerVehicleID(playerid), Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
+                }
+                else
+                {
+                    SetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
+                }
+
+                Anticheat_Trigger(playerid, CHEAT_TELEPORT);
+                return 0;
+            }
+
+            GetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
+        }
     }
 
     #if defined AC_OnPlayerUpdate
