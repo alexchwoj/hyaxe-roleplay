@@ -85,6 +85,35 @@ IPacket:damage_PlayerSync(playerid, BitStream:bs)
 	return 1;
 }
 
+const damage_BulletSync = 206;
+IPacket:damage_BulletSync(playerid, BitStream:bs)
+{
+	new data[PR_BulletSync];
+    BS_IgnoreBits(bs, 8);
+    BS_ReadBulletSync(bs, data);
+    
+    if (data[PR_hitType] == BULLET_HIT_TYPE_PLAYER)
+    {
+        new
+            Float: getPlayerX,
+            Float: getPlayerY,
+            Float: getPlayerZ,
+            Float: getLastPlayerZ
+        ;
+
+        GetPlayerPos(playerid, getPlayerX, getPlayerY, getPlayerZ);
+        GetPlayerPos(data[PR_hitId], getLastPlayerZ, getLastPlayerZ, getLastPlayerZ);
+        
+        new Float:betweenDistance = floatabs(data[PR_origin][0] - getPlayerX) + floatabs(data[PR_origin][1] - getPlayerY);
+
+        if (data[PR_offsets][0] == 0.0 && data[PR_offsets][1] == 0.0 && data[PR_offsets][2] == 0.0 || betweenDistance < 0.15 || floatabs(data[PR_origin][2] - getPlayerZ) < 0.01 || floatabs(getLastPlayerZ - data[PR_hitPos][2]) < 0.01)
+        {
+            return 0;
+        }
+    }
+	return 1;
+}
+
 public OnPlayerDamage(playerid, issuerid, amount, weaponid, bodypart)
 {
     printf("playerid: %d, issuerid: %d, amount: %d, weaponid: %d, bodypart: %d", playerid, issuerid, amount, weaponid, bodypart);
