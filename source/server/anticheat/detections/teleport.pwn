@@ -12,15 +12,6 @@ public OnPlayerUpdate(playerid)
             Float:dist = GetPlayerDistanceFromPoint(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ))
         ;
 
-        if (!Player_HasImmunityForCheat(playerid, CHEAT_AIRBREAK))
-        {
-            if (dist > 2.0)
-            {
-                Anticheat_Trigger(playerid, CHEAT_AIRBREAK);
-                return 0;
-            }
-        }
-
         if (!Player_HasImmunityForCheat(playerid, CHEAT_TELEPORT))
         {
             if (dist > max_dist)
@@ -39,6 +30,15 @@ public OnPlayerUpdate(playerid)
             }
 
             GetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
+        }
+
+        if (!Player_HasImmunityForCheat(playerid, CHEAT_AIRBREAK))
+        {
+            if (dist > 2.0)
+            {
+                Anticheat_Trigger(playerid, CHEAT_AIRBREAK);
+                return 0;
+            }
         }
     }
 
