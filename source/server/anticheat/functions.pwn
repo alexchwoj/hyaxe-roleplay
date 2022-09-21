@@ -3,7 +3,7 @@
 #endif
 #define _anticheat_functions_
 
-Anticheat_Trigger(playerid, eCheats:cheat)
+Anticheat_Trigger(playerid, eCheats:cheat, extra = 0)
 {
     if(g_rgeDetectionData[cheat][e_ePunishmentType] == PUNISHMENT_KICK_ON_MAX_TRIGGERS || g_rgeDetectionData[cheat][e_ePunishmentType] == PUNISHMENT_BAN_ON_MAX_TRIGGERS)
     {
@@ -21,10 +21,10 @@ Anticheat_Trigger(playerid, eCheats:cheat)
         case PUNISHMENT_WARN_ADMINS:
         {
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, 
-                "[AC] {DADADA}%s {415BA2}%s{DADADA} ({415BA2}%i{DADADA}) fue detectad%c por {415BA2}%s{DADADA}.",
+                "[AC] {DADADA}%s {415BA2}%s{DADADA} ({415BA2}%i{DADADA}) fue detectad%c por {415BA2}%s (#d){DADADA}.",
                 (Player_Sex(playerid) == SEX_MALE ? "El jugador" : "La jugadora"),
                 Player_RPName(playerid), playerid, (Player_Sex(playerid) == SEX_MALE ? 'o' : 'a'),
-                g_rgeDetectionData[cheat][e_szDetectionName]
+                g_rgeDetectionData[cheat][e_szDetectionName], extra
             );
 
             Admins_SendMessage(RANK_LEVEL_MODERATOR, 0x415BA2FF, HYAXE_UNSAFE_HUGE_STRING);
@@ -38,13 +38,13 @@ Anticheat_Trigger(playerid, eCheats:cheat)
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, 
                 "{DADADA}Fuiste expulsad%c del servidor.\n\n\
                     {CB3126}Razón de la expulsión\n\
-                        \t{DADADA}%s\n\n\
+                        \t{DADADA}%s (#%d)\n\n\
                     {CB3126}Administrador encargado\n\
                         \t{DADADA}Anticheat\n\n\
                     {CB3126}Fecha\n\
                         \t{DADADA}%i/%i/%i %i:%i:%i\
                 ",
-                    (Player_Sex(playerid) == SEX_MALE ? 'o' : 'a'), g_rgeDetectionData[cheat][e_szDetectionName],
+                    (Player_Sex(playerid) == SEX_MALE ? 'o' : 'a'), g_rgeDetectionData[cheat][e_szDetectionName], extra,
                     day, month, year, hour, minute, second
             );
 
@@ -53,9 +53,9 @@ Anticheat_Trigger(playerid, eCheats:cheat)
             KickTimed(playerid, 500);
 
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH,
-                "› {DADADA}%s {415BA2}%s {DADADA}(ID {415BA2}%i{DADADA}) fue expulsad%c por el {415BA2}anticheat{DADADA}: %s", 
+                "› {DADADA}%s {415BA2}%s {DADADA}(ID {415BA2}%i{DADADA}) fue expulsad%c por el {415BA2}anticheat{DADADA}: %s (#%d)", 
                 (Player_Sex(playerid) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(playerid), playerid,
-                (Player_Sex(playerid) == SEX_MALE ? 'o' : 'a'), g_rgeDetectionData[cheat][e_szDetectionName]
+                (Player_Sex(playerid) == SEX_MALE ? 'o' : 'a'), g_rgeDetectionData[cheat][e_szDetectionName], extra
             );
             Admins_SendMessage(RANK_LEVEL_MODERATOR, 0x415BA2FF, HYAXE_UNSAFE_HUGE_STRING);
         }
@@ -64,9 +64,9 @@ Anticheat_Trigger(playerid, eCheats:cheat)
             Player_Ban(playerid, ADMIN_ID_ANTICHEAT, g_rgeDetectionData[cheat][e_szDetectionName]);
 
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH,
-                "{DADADA}%s {415BA2}%s{DADADA} ({415BA2}%i{DADADA}-{415BA2}%i{DADADA}) fue vetad%c por el {415BA2}anticheat{DADADA}: %s",
+                "{DADADA}%s {415BA2}%s{DADADA} ({415BA2}%i{DADADA}-{415BA2}%i{DADADA}) fue vetad%c por el {415BA2}anticheat{DADADA}: %s (#%d)",
                 (Player_Sex(playerid) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(playerid), playerid, Player_AccountID(playerid),
-                (Player_Sex(playerid) == SEX_MALE ? 'o' : 'a'), g_rgeDetectionData[cheat][e_szDetectionName]
+                (Player_Sex(playerid) == SEX_MALE ? 'o' : 'a'), g_rgeDetectionData[cheat][e_szDetectionName], extra
             );
             Admins_SendMessage(RANK_LEVEL_MODERATOR, 0x415BA2FF, HYAXE_UNSAFE_HUGE_STRING);
         }

@@ -50,7 +50,7 @@ new
     g_rgiAnticheatImmunity[MAX_PLAYERS][eCheats],
     g_rgiAnticheatTriggers[MAX_PLAYERS][eCheats char];
 
-forward Anticheat_Trigger(playerid, eCheats:cheat);
+forward Anticheat_Trigger(playerid, eCheats:cheat, extra = 0);
 forward bool:Player_HasImmunityForCheat(playerid, eCheats:cheat);
 #define Anticheat_PlayerImmunity(%0,%1) (g_rgiAnticheatImmunity[(%0)][(%1)])
 #define Player_SetImmunityForCheat(%0,%1,%2) (Anticheat_PlayerImmunity(%0,%1) = GetTickCount() + (%2))
