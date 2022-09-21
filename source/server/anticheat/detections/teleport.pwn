@@ -28,8 +28,6 @@ public OnPlayerUpdate(playerid)
                 Anticheat_Trigger(playerid, CHEAT_TELEPORT);
                 return 0;
             }
-
-            GetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
         }
 
         if (!Player_HasImmunityForCheat(playerid, CHEAT_AIRBREAK))
@@ -40,6 +38,8 @@ public OnPlayerUpdate(playerid)
                 return 0;
             }
         }
+
+        GetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
     }
 
     #if defined AC_OnPlayerUpdate

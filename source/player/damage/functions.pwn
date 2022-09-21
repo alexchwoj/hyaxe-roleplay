@@ -67,6 +67,12 @@ Weapon_SetDamage(weapon_id, damage)
 
 Damage_Validate(playerid, damagedid, weaponid, bodypart)
 {
+    if (GetTickCount() > g_rgiLastBulletTick[playerid])
+    {
+        printf("damage without bullet sync");
+        return 0;
+    }
+
 	// Calculate distance
 	new Float:x1, Float:y1, Float:z1, Float:x2, Float:y2, Float:z2;
 	GetPlayerPos(playerid, x1, y1, z1);

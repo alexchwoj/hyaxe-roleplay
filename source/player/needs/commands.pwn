@@ -14,7 +14,7 @@ command cagar(playerid, const params[], "Echa un cago")
     if(GetPlayerSurfingVehicleID(playerid) != INVALID_VEHICLE_ID)
         return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes cagar encima de un vehículo");
 
-    if(!CA_IsPlayerOnSurface(playerid, 0.5))
+    if(!CA_IsPlayerOnSurface(playerid, 2.0))
         return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes cagar en el aire");
 
     new diff = GetTickCount() - g_rgePlayerTempData[playerid][e_iPlayerShitTick];

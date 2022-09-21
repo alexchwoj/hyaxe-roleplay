@@ -7,6 +7,7 @@
 public OnPlayerDisconnect(playerid, reason)
 {
     g_rgiLastDamageTick[playerid] = g_rgiLastDamageTick[MAX_PLAYERS];
+    g_rgiLastBulletTick[playerid] = g_rgiLastBulletTick[MAX_PLAYERS];
 
     #if defined DAMAGE_OnPlayerDisconnect
         return DAMAGE_OnPlayerDisconnect(playerid, reason);
@@ -112,6 +113,8 @@ IPacket:damage_BulletSync(playerid, BitStream:bs)
             return 0;
         }
     }
+    
+    g_rgiLastBulletTick[playerid] = GetTickCount() + 2000;
 	return 1;
 }
 
