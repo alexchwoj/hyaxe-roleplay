@@ -9,7 +9,7 @@ public OnPlayerUpdate(playerid)
     {
         new
             const Float:max_dist = (IsPlayerInAnyVehicle(playerid) ? 340.0 : 50.0),
-            const Float:dist = GetPlayerDistanceFromPoint(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ))
+            Float:dist = GetPlayerDistanceFromPoint(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ))
         ;
 
         if (!Player_HasImmunityForCheat(playerid, CHEAT_AIRBREAK))
