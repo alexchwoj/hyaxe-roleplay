@@ -15,7 +15,7 @@ IPacket:__ac_weapon_WeaponUpdate(playerid, BitStream:bs)
 
     for (new i; i < sizeof(g_rgePlayerWeapons[]); ++i)
 	{
-		if (data[PR_slotWeaponId][i] > WEAPON_BRASSKNUCKLE)
+		if (data[PR_slotWeaponId][i] > WEAPON_BRASSKNUCKLE && data[PR_slotWeaponId][i] != WEAPON_PARACHUTE)
 		{
             if (g_rgePlayerWeapons[playerid][i][e_iWeaponId] != data[PR_slotWeaponId][i])
             {
