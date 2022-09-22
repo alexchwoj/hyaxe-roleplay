@@ -199,7 +199,7 @@ Player_SetPos(playerid, Float:x, Float:y, Float:z)
     return SetPlayerPos(playerid, x, y, z);
 }
 
-Player_PutInVehicle(playerid, vehicle_id, seat_id = 0);
+Player_PutInVehicle(playerid, vehicle_id, seat_id = 0)
 {
     new Float:x, Float:y, Float:z;
     GetVehiclePos(vehicle_id, x, y, z);

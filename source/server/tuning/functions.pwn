@@ -64,7 +64,6 @@ Tuning_Open(playerid)
     SetVehicleVirtualWorld(vehicle_id, playerid);
     LinkVehicleToInterior(vehicle_id, 1);
 
-    Player_SetPos(playerid, 612.3940, -1.1072, 1000.6490);
     Player_PutInVehicle(playerid, vehicle_id);
     TogglePlayerControllable(playerid, false);
     SetCameraBehindPlayer(playerid);
