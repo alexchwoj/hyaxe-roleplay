@@ -135,7 +135,7 @@ dialog buy_vehicle(playerid, response, listitem, const inputtext[])
             g_rgfDealershipPosition[dealership][3],
             random(255), random(255), 0
         );
-        PutPlayerInVehicle(playerid, vehicleid, 0);
+        Player_PutInVehicle(playerid, vehicleid);
         Player_RegisterVehicle(playerid, vehicleid);
 
         Player_AddXP(playerid, 500);

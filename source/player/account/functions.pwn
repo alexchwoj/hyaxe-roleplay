@@ -199,6 +199,18 @@ Player_SetPos(playerid, Float:x, Float:y, Float:z)
     return SetPlayerPos(playerid, x, y, z);
 }
 
+Player_PutInVehicle(playerid, vehicle_id, seat_id = 0);
+{
+    new Float:x, Float:y, Float:z;
+    GetVehiclePos(vehicle_id, x, y, z);
+
+    Player_SetPos(playerid, x, y, z);
+    SetPlayerVirtualWorld(playerid, GetVehicleVirtualWorld(vehicle_id));
+    SetPlayerInterior(playerid, GetVehicleInterior(vehicle_id));
+
+    return PutPlayerInVehicle(playerid, vehicle_id, seat_id);
+}
+
 Player_SetSkin(playerid, skinid, bool:update = true)
 {
     if(skinid == 74 || !(0 <= skinid <= 311))

@@ -81,7 +81,7 @@ static LawnMowerEvent(playerid, eJobEvent:event, areaid)
             new mowerid = Vehicle_Create(572, g_rgeLawnmowerAreas[areaid][e_fVehicleSpawnX], g_rgeLawnmowerAreas[areaid][e_fVehicleSpawnY], g_rgeLawnmowerAreas[areaid][e_fVehicleSpawnZ], g_rgeLawnmowerAreas[areaid][e_fVehicleSpawnRot], -1, -1, -1);
             Vehicle_Type(mowerid) = VEHICLE_TYPE_WORK;
             Vehicle_ToggleEngine(mowerid, VEHICLE_STATE_ON);
-            PutPlayerInVehicle(playerid, mowerid, 0);
+            Player_PutInVehicle(playerid, mowerid);
             g_rgeLawnmowerAreas[areaid][e_iMowerId] = mowerid;
 
             g_rgiPlayerLawnmowerArea{playerid} = areaid;

@@ -65,7 +65,7 @@ Tuning_Open(playerid)
     LinkVehicleToInterior(vehicle_id, 1);
 
     Player_SetPos(playerid, 612.3940, -1.1072, 1000.6490);
-    PutPlayerInVehicle(playerid, vehicle_id, 0);
+    Player_PutInVehicle(playerid, vehicle_id);
     TogglePlayerControllable(playerid, false);
     SetCameraBehindPlayer(playerid);
     g_rgiActualTuningComponent[playerid] = -1;
@@ -104,7 +104,7 @@ Tuning_Back(playerid)
         SetVehicleZAngle(vehicle_id, s_rgfPreviusTuningPos[playerid][3]);
         SetVehicleVirtualWorld(vehicle_id, s_rgiPreviusTuningWorld[playerid]);
         LinkVehicleToInterior(vehicle_id, s_rgiPreviusTuningInterior[playerid]);
-        PutPlayerInVehicle(playerid, vehicle_id, 0);
+        Player_PutInVehicle(playerid, vehicle_id);
 
         ChangeVehicleColor(vehicle_id, g_rgeVehicles[vehicle_id][e_iColorOne], g_rgeVehicles[vehicle_id][e_iColorTwo]);
     }

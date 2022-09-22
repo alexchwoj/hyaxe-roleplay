@@ -62,7 +62,7 @@ dialog rent_car(playerid, response, listitem, inputtext[])
         Vehicle_Type(g_rgiPlayerRentalCar[playerid]) = VEHICLE_TYPE_RENTAL;
         Vehicle_OwnerId(g_rgiPlayerRentalCar[playerid]) = playerid;
 
-        PutPlayerInVehicle(playerid, g_rgiPlayerRentalCar[playerid], 0);
+        Player_PutInVehicle(playerid, g_rgiPlayerRentalCar[playerid]);
 
         Player_GiveMoney(playerid, -50);
         PlayerPlaySound(playerid, SOUND_SUCCESS);
