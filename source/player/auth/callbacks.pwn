@@ -7,6 +7,8 @@ public OnPlayerDataLoaded(playerid)
 {
     log_function();
 
+    SetPlayerVirtualWorld(playerid, 1337);
+
     // Intro camera
     switch (random(6))
     {

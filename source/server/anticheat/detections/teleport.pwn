@@ -32,7 +32,7 @@ public OnPlayerUpdate(playerid)
 
         if (!Player_HasImmunityForCheat(playerid, CHEAT_AIRBREAK))
         {
-            if (dist > 2.0 && !IsPlayerInAnyVehicle(playerid))
+            if (dist >= 5.0 && !IsPlayerInAnyVehicle(playerid))
             {
                 Anticheat_Trigger(playerid, CHEAT_AIRBREAK);
                 return 0;
