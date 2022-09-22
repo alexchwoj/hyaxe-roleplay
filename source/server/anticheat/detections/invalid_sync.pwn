@@ -34,11 +34,14 @@ IPacket:__ac_inv_sync_PlayerSync(playerid, BitStream:bs)
 
     // Invert walk and wheel walk
     // source: https://gitlab.com/RcKoid/mod-s0beit-overlight/-/blob/master/src/cheat_samp.cpp#L940
-    if ( (data[PR_quaternion][1] != 0.0 || data[PR_quaternion][2] != 0.0) && !IsPlayerInAnyVehicle(playerid) && data[PR_animationId] < 1007 && data[PR_animationId] > 1060)
+    if (data[PR_animationId] < 1007 || data[PR_animationId] > 1060)
     {
-        printf("data[PR_quaternion][1] = %f, data[PR_quaternion][2] = %f, data[PR_animationId] = %d", data[PR_quaternion][1], data[PR_quaternion][2], data[PR_animationId]);
-        //Anticheat_Trigger(playerid, CHEAT_INVALID_SYNC, 4);
-        return 0;
+        if (data[PR_quaternion][1] != 0.0 || data[PR_quaternion][2] != 0.0)
+        {
+            //printf("data[PR_quaternion][1] = %f, data[PR_quaternion][2] = %f, data[PR_animationId] = %d", data[PR_quaternion][1], data[PR_quaternion][2], data[PR_animationId]);
+            Anticheat_Trigger(playerid, CHEAT_INVALID_SYNC, 4);
+            return 0;
+        }
     }
     return 1;
 }
