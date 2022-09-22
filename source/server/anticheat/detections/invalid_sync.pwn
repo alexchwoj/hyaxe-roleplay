@@ -14,7 +14,7 @@ IPacket:__ac_inv_sync_PlayerSync(playerid, BitStream:bs)
     BS_ReadOnFootSync(bs, data);
 
     // Crashers
-    /*if (Data_CheckValidity(data[PR_position][0]) || Data_CheckValidity(data[PR_position][1]) || Data_CheckValidity(data[PR_position][2]))
+    if (Data_CheckValidity(data[PR_position][0]) || Data_CheckValidity(data[PR_position][1]) || Data_CheckValidity(data[PR_position][2]))
 	{
 		Anticheat_Trigger(playerid, CHEAT_INVALID_SYNC, 0);
         return 0;
@@ -30,7 +30,7 @@ IPacket:__ac_inv_sync_PlayerSync(playerid, BitStream:bs)
 	{
         Anticheat_Trigger(playerid, CHEAT_INVALID_SYNC, 2);
         return 0;
-	}*/
+	}
 
     // Invert walk and wheel walk
     if (data[PR_quaternion][1] != 0.0 || data[PR_quaternion][2] != 0.0)
