@@ -191,8 +191,8 @@ Menu_AddItem(playerid, const text[], const info[] = "", color = 0xF7F7F7FF, extr
 	if (g_rgePlayerMenu[playerid][e_iTotalListitems] >= MENU_MAX_LISTITEMS)
 		return 0;
 
-	strpack(g_rgeMenuListitem[playerid][ g_rgePlayerMenu[playerid][e_iTotalListitems] ][e_szText], text, 64);
-	strpack(g_rgeMenuListitem[playerid][ g_rgePlayerMenu[playerid][e_iTotalListitems] ][e_szInfo], info, 64);
+	strpack(g_rgeMenuListitem[playerid][ g_rgePlayerMenu[playerid][e_iTotalListitems] ][e_szText], text, 32);
+	strpack(g_rgeMenuListitem[playerid][ g_rgePlayerMenu[playerid][e_iTotalListitems] ][e_szInfo], info, 32);
 
 	g_rgeMenuListitem[playerid][ g_rgePlayerMenu[playerid][e_iTotalListitems] ][e_iColor] = color;
 	g_rgeMenuListitem[playerid][ g_rgePlayerMenu[playerid][e_iTotalListitems] ][e_iExtra] = extra;

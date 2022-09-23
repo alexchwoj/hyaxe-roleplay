@@ -13,7 +13,7 @@
 	(((%0) - 1) / (%1) + 1)
 
 // Limits
-const MENU_MAX_LISTITEMS = 256;
+const MENU_MAX_LISTITEMS = 128;
 const MENU_MAX_LISTITEMS_PERPAGE = 8;
 
 // Response
@@ -26,8 +26,8 @@ enum {
 
 // List items
 enum eListitemInfo {
-    e_szText[64],
-	e_szInfo[64],
+    e_szText[32],
+	e_szInfo[32],
 	e_iColor,
 	e_iExtra
 }
