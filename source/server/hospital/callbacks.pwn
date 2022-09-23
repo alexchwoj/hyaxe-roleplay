@@ -139,10 +139,10 @@ public OnGameModeInit()
             .worldid = i, .interiorid = g_rgeHospitalInteriorData[int][e_iHospitalIntInterior]
         );
 
-        CreateDynamic3DTextLabel("Hospital", 0xCB3126FF,
+        CreateDynamic3DTextLabel("Hospital\n{F7F7F7}Acércate para ver más opciones.", 0xCB3126FF,
             g_rgeHospitalInteriorData[int][e_fHospitalActorPosX],
             g_rgeHospitalInteriorData[int][e_fHospitalActorPosY],
-            g_rgeHospitalInteriorData[int][e_fHospitalActorPosZ],
+            g_rgeHospitalInteriorData[int][e_fHospitalActorPosZ] + 1.1,
             10.0, .testlos = 1, .worldid = i, .interiorid = g_rgeHospitalInteriorData[int][e_iHospitalIntInterior]
         );
 
@@ -150,7 +150,7 @@ public OnGameModeInit()
             g_rgeHospitalInteriorData[int][e_fHospitalActorPosX],
             g_rgeHospitalInteriorData[int][e_fHospitalActorPosY],
             g_rgeHospitalInteriorData[int][e_fHospitalActorPosZ],
-            2.3, KEYNAME_YES, i, g_rgeHospitalInteriorData[int][e_iHospitalIntInterior], .callback_on_press = __addressof(HospitalShop_OnEnter)
+            2.5, KEYNAME_YES, i, g_rgeHospitalInteriorData[int][e_iHospitalIntInterior], .callback_on_press = __addressof(HospitalShop_OnEnter)
         );
 
         EnterExit_Create(
