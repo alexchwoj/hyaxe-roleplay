@@ -46,7 +46,7 @@ static GenerateGrassInArea(areaid)
 static LawnMower_ClearJob(playerid)
 {
     new parkid = g_rgiPlayerLawnmowerArea{playerid};
-    if(!(0 <= parkid < sizeof(g_rgeLawnmowerAreas[parkid])))
+    if(!(0 <= parkid < sizeof(g_rgeLawnmowerAreas)))
         return 0;
 
     StopAudioStreamForPlayer(playerid);
@@ -67,6 +67,8 @@ static LawnMower_ClearJob(playerid)
     g_rgeLawnmowerAreas[parkid][e_iCurrentGrassCount] = 0;
     g_rgeLawnmowerAreas[parkid][e_iMowingPlayer] = INVALID_PLAYER_ID;
     g_rgiPlayerLawnmowerArea{playerid} = 0xFF;
+
+    return 1;
 }
 
 static LawnMowerEvent(playerid, eJobEvent:event, areaid)
