@@ -4,3 +4,6 @@
 [submodule "source/plugin/lib/cmake"]
 	path = source/plugin/lib/cmake
 	url = https://github.com/katursis/samp-cmake-modules/
+[submodule "compiler/include/YSI"]
+	path = compiler/include/YSI
+	url = https://github.com/pawn-lang/YSI-Includes

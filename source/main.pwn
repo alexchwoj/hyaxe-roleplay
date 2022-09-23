@@ -64,12 +64,6 @@
 	#include <crashdetect>
 #endif
 
-#define FOREACH_I_Player 1
-#define FOREACH_I_Bot 0
-#define FOREACH_I_Character 0
-#define FOREACH_I_Vehicle 0
-#define FOREACH_I_Actor 0
-
 #define PP_SYNTAX_ON_INIT
 #define PP_SYNTAX_ON_EXIT
 #define PP_SYNTAX_FOR_LIST
@@ -77,7 +71,6 @@
 #define PP_SYNTAX_AWAIT
 #define PP_SYNTAX_@
 #define PP_ADDITIONAL_TAGS ArgTag
-
 #define FCNPC_DISABLE_VERSION_CHECK
 
 public const __HYAXE__ = 1;
@@ -128,12 +121,24 @@ const HYAXE_MAX_NPCS = 100;
 #include <a_mysql>
 #include <colandreas>
 #include <FCNPC>
-#include <foreach>
+//#include <foreach>
 #include <md-sort>
 
 /*
 		YSI is pozzed
 							*/
+#define YSI_NO_KEYWORD_List
+#define YSI_NO_HEAP_MALLOC
+#define YSI_NO_ANDROID_CHECK
+#define YSI_NO_VERSION_CHECK
+#define FOREACH_NO_BOTS
+#define FOREACH_NO_LOCALS
+#define FOREACH_NO_VEHICLES
+#define FOREACH_NO_ACTORS
+
+#include <YSI_Core/y_cell>
+#include <YSI_Data/y_iterate>
+#include <YSI_Data/y_bit>
 
 // Plugin
 ////////////

@@ -9,5 +9,5 @@ native GetTextDrawLineWidth(const string[], font, outline = 0, bool:proportional
 native GetTextDrawLineCount(const string[]);
 native GetTextDrawLineCount_s(ConstAmxString:string) = GetTextDrawLineCount;
 native bool:SplitTextDrawString(string[], Float:max_width, Float:letter_size, font, outline = 0, bool:proportional = true, size = sizeof(string));
-native memset(arr[], val, size = sizeof(arr));
+//native memset(arr[], val, size = sizeof(arr));
 native levenshtein(const string1[], const string2[]);

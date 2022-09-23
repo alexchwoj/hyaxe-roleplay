@@ -9,7 +9,7 @@ const MAX_VEHICLE_MODELS = MAX_VEHICLE_MODEL - MIN_VEHICLE_MODEL;
 const Float:VEHICLE_FUEL_DIVISOR = 20000.0;
 
 new
-    IteratorArray:PlayerVehicles[MAX_PLAYERS]<MAX_VEHICLES>;
+    Iterator:PlayerVehicles[MAX_PLAYERS]<MAX_VEHICLES>;
     
 enum 
 {
@@ -329,7 +329,7 @@ new
 #define Vehicle_GetModelMaxFuel(%0) (g_rgeVehicleModelData[(%0) - 400][e_fMaxFuel])
 #define Vehicle_GetModelPrice(%0) (g_rgeVehicleModelData[(%0) - 400][e_iPrice])
 
-forward Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, addsiren = 0, bool:static_veh = false);
+forward Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, bool:addsiren = false, bool:static_veh = false);
 #define Vehicle_OwnerId(%0) (g_rgeVehicles[(%0)][e_iVehicleOwnerId])
 #define Vehicle_Type(%0) (g_rgeVehicles[(%0)][e_iVehicleType])
 #define Vehicle_Job(%0) (g_rgeVehicles[(%0)][e_iVehicleWork])

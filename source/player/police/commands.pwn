@@ -11,7 +11,7 @@ command policias(playerid, const params[], "Muestra el panel de policías")
         return 1;
     }
 
-    memset(g_rgszSelectedOfficer[playerid], 0);
+    MemSet(g_rgszSelectedOfficer[playerid], 0);
 
     new Task<Cache>:t = MySQL_QueryAsync(g_hDatabase, 
         "\

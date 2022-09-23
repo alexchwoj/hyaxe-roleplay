@@ -16,7 +16,7 @@
 				"--%",
 				"\"${workspaceFolder}\\source\\main.pwn\"",
 				"\"-icompiler\\include\"",
-				"\"-icompiler\\include\\amx\"",
+				"\"-icompiler\\include\\YSI\"",
 				"\"-isource\"",
 				"\"-ogamemodes\\hyaxe.amx\""
 			],
