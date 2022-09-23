@@ -194,6 +194,9 @@ public OnPlayerDisconnect(playerid, reason)
     if(Player_Cache(playerid) != MYSQL_INVALID_CACHE)
         cache_delete(Player_Cache(playerid));
     
+    if(Bit_Get(Player_Flags(playerid), PFLAG_IN_TUNING))
+        Tuning_Back(playerid);
+
     g_rgbPlayerKicked{playerid} = false;
     Account_Save(playerid, true);
 

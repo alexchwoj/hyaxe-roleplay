@@ -50,6 +50,8 @@ Tuning_Open(playerid)
     if (!IsValidVehicle(vehicle_id))
         return 0;
 
+    Bit_Set(Player_Flags(playerid), PFLAG_IN_TUNING, true);
+
     // Put the player in the garage
     GetVehiclePos(vehicle_id, s_rgfPreviusTuningPos[playerid][0], s_rgfPreviusTuningPos[playerid][1], s_rgfPreviusTuningPos[playerid][2]);
     GetVehicleZAngle(vehicle_id, s_rgfPreviusTuningPos[playerid][3]);
@@ -83,6 +85,8 @@ Tuning_Open(playerid)
 
 Tuning_Back(playerid)
 {
+    Bit_Set(Player_Flags(playerid), PFLAG_IN_TUNING, false);
+
     Menu_Hide(playerid);
 
     if (Bit_Get(Player_Config(playerid), CONFIG_DISPLAY_SPEEDOMETER))
