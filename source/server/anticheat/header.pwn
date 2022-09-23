@@ -45,10 +45,10 @@ new g_rgeDetectionData[eCheats][eDetectionData] =
     { "Weaponhack", true, PUNISHMENT_KICK, 0 },
     { "CarJack", true, PUNISHMENT_KICK, 0 }, // External detection on vehicle module
     { "Slapper", true, PUNISHMENT_KICK, 0 },
-    { "Teletransportación", true, PUNISHMENT_WARN_ADMINS, 0 },
+    { "Teletransportación", true, PUNISHMENT_KICK_ON_MAX_TRIGGERS, 20 },
     { "Invisibilidad", true, PUNISHMENT_WARN_ADMINS, 0 },
     { "Sincronización inválida", true, PUNISHMENT_KICK, 0 },
-    { "AirBreak", true, PUNISHMENT_KICK, 5 }
+    { "AirBreak", true, PUNISHMENT_KICK_ON_MAX_TRIGGERS, 5 }
 };
 
 new 
