@@ -34,7 +34,8 @@ IPacket:__ac_inv_sync_PlayerSync(playerid, BitStream:bs)
 
     // Invert walk and wheel walk
     // source: https://gitlab.com/RcKoid/mod-s0beit-overlight/-/blob/master/src/cheat_samp.cpp#L940
-    if (data[PR_animationId] < 1007 || data[PR_animationId] > 1060)
+    //printf("data[PR_animationId] = %d", data[PR_animationId]);
+    if (data[PR_animationId] == 1231)
     {
         if (data[PR_quaternion][1] != 0.0 || data[PR_quaternion][2] != 0.0)
         {

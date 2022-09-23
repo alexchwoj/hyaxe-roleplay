@@ -27,7 +27,7 @@ IPacket:__ac_weapon_WeaponUpdate(playerid, BitStream:bs)
     return 1;
 }
 
-const __ac_weapon_PlayerSync = 207;
+/*const __ac_weapon_PlayerSync = 207;
 IPacket:__ac_weapon_PlayerSync(playerid, BitStream:bs)
 {
     if (Player_HasImmunityForCheat(playerid, CHEAT_WEAPON))
@@ -44,7 +44,7 @@ IPacket:__ac_weapon_PlayerSync(playerid, BitStream:bs)
         return 0;
     }
     return 1;
-}
+}*/
 
 const __ac_weapon_BulletSync = 206;
 IPacket:__ac_weapon_BulletSync(playerid, BitStream:bs)

@@ -61,6 +61,11 @@ Player_GiveWeapon(playerid, weaponid, ammo)
 {
     Player_SetImmunityForCheat(playerid, CHEAT_WEAPON, 1000 + GetPlayerPing(playerid));
 
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL, 40);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL_SILENCED, 500);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_SAWNOFF_SHOTGUN, 200);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_MICRO_UZI, 50);
+
     new slot = GetWeaponSlot(weaponid);
     printf("playerid = %d, weaponid = %d, ammo = %d, slot = %d", playerid, weaponid, ammo, slot);
     Player_WeaponSlot(playerid, slot)[e_iWeaponId] = weaponid;

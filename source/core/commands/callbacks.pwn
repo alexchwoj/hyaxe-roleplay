@@ -62,7 +62,7 @@ on_init RegisterCommands()
 
 public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
 {
-    if(!Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
+    if (!Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
     {
         SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No has iniciado sesión.");
         return 0;
@@ -70,7 +70,7 @@ public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
 
     new cmd_level = (flags >>> 24);
 
-    if(cmd_level > Player_AdminLevel(playerid))
+    if (cmd_level > Player_AdminLevel(playerid))
         return 0;
 
     if(!(flags & CMD_NO_COOLDOWN) && (g_rgiPlayerCommandCooldown[playerid] && 500 > GetTickCount() - g_rgiPlayerCommandCooldown[playerid]))

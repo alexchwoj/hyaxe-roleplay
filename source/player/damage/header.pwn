@@ -32,10 +32,10 @@ new
         82, // 21 - Vehicle rocket (custom)
         4, // 22 - Colt 45
         6, // 23 - Silenced
-        14, // 24 - Deagle
+        20, // 24 - Deagle
         30, // 25 - Shotgun
         12, // 26 - Sawed-off
-        15, // 27 - Spas
+        10, // 27 - Spas
         6, // 28 - UZI
         8, // 29 - MP5
         10, // 30 - AK47
