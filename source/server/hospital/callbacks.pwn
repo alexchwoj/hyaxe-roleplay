@@ -106,7 +106,7 @@ Menu:hospital_menu(playerid, response, listitem)
                     return 1;
                 }
 
-                if (Inventory_GetItemAmount(playerid, ITEM_MEDIC_KIT) >= 3)
+                if (Inventory_GetItemCount(playerid, ITEM_MEDIC_KIT) >= 3)
                     return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No puedes llevar más de 3 botiquines.");
 
                 if (Inventory_AddItem(playerid, ITEM_MEDIC_KIT, 1, 0))
