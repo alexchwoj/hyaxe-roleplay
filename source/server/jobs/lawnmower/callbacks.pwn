@@ -45,9 +45,12 @@ static GenerateGrassInArea(areaid)
 
 static LawnMower_ClearJob(playerid)
 {
+    new parkid = g_rgiPlayerLawnmowerArea{playerid};
+    if(!(0 <= parkid < sizeof(g_rgeLawnmowerAreas[parkid])))
+        return 0;
+
     StopAudioStreamForPlayer(playerid);
 
-    new parkid = g_rgiPlayerLawnmowerArea{playerid};
     Vehicle_Destroy(g_rgeLawnmowerAreas[parkid][e_iMowerId]);
 
     for(new i; i < MAX_GRASS_PER_AREA; ++i)
