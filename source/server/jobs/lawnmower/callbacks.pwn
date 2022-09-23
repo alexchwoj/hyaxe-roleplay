@@ -226,6 +226,7 @@ public OnPlayerLeaveDynamicArea(playerid, areaid)
     if(Player_Job(playerid) == JOB_LAWNMOWER && Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4c4d4a53)))
     {
         Job_TriggerCallback(playerid, JOB_LAWNMOWER, JOB_EV_LEAVE_PLACE);
+        Player_Job(playerid) = JOB_NONE;
         return 1;
     }
 
