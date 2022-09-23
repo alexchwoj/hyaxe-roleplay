@@ -130,8 +130,6 @@ const HYAXE_MAX_NPCS = 100;
 #include <FCNPC>
 #include <foreach>
 #include <md-sort>
-#include <amx/frame_info>
-#include <amx/amx_memory>
 
 /*
 		YSI is pozzed
@@ -325,7 +323,7 @@ main() { return 0; }
 
 public OnJITCompile()
 {
-	log_function();
+	print("[func] OnJITCompile()");
 	return 1;
 }
 

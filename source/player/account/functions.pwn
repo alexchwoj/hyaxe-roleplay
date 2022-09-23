@@ -99,7 +99,7 @@ Account_Save(playerid, bool:disconnect = false)
 
 Account_LoadFromCache(playerid)
 {
-    log_function();
+    DEBUG_PRINT("[func] Account_LoadFromCache(playerid = %i)", playerid);
     
     if(Player_Cache(playerid) == MYSQL_INVALID_CACHE)
         return 0;
