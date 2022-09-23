@@ -32,7 +32,7 @@ new
         82, // 21 - Vehicle rocket (custom)
         4, // 22 - Colt 45
         6, // 23 - Silenced
-        20, // 24 - Deagle
+        22, // 24 - Deagle
         30, // 25 - Shotgun
         12, // 26 - Sawed-off
         10, // 27 - Spas

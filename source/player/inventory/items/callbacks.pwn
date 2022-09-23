@@ -8,6 +8,9 @@ static Flag_OnUse(playerid, slot)
     if (Player_Gang(playerid) == -1)
         return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Tienes que estar en una banda.");
 
+    if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+        return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes conquistar estando herido.");
+
     new territory_index = -1;
     for_list(it : GetPlayerAllDynamicAreas(playerid))
     {
