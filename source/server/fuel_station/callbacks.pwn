@@ -81,6 +81,13 @@ dialog fuel_station_manual(playerid, response, listitem, inputtext[])
             return 1;
         }
 
+        if (liters <= 0)
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Introduce un monto mayor a 0.");
+            return 1;
+        }
+
         new vehicle_id = GetPlayerVehicleID(playerid);
         if (vehicle_id == INVALID_VEHICLE_ID)
             return 0;

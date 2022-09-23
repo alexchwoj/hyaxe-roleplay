@@ -59,12 +59,7 @@ Weapon_GetSlot(weaponid)
 
 Player_GiveWeapon(playerid, weaponid, ammo)
 {
-    Player_SetImmunityForCheat(playerid, CHEAT_WEAPON, 1000 + GetPlayerPing(playerid));
-
-    SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL, 40);
-    SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL_SILENCED, 500);
-    SetPlayerSkillLevel(playerid, WEAPONSKILL_SAWNOFF_SHOTGUN, 200);
-    SetPlayerSkillLevel(playerid, WEAPONSKILL_MICRO_UZI, 50);
+    Player_SetImmunityForCheat(playerid, CHEAT_WEAPON, 1500 + GetPlayerPing(playerid));
 
     new slot = GetWeaponSlot(weaponid);
     printf("playerid = %d, weaponid = %d, ammo = %d, slot = %d", playerid, weaponid, ammo, slot);
@@ -73,7 +68,7 @@ Player_GiveWeapon(playerid, weaponid, ammo)
     GivePlayerWeapon(playerid, weaponid, ammo);
 
     new weapon_and_ammo = Weapon_PackIdAndAmmo(weaponid, ammo);
-    printf("Player_GiveWeapon 7");
+
     DEBUG_PRINT("[dbg:weapons] Saving weapon %i with %i ammo to player %i: %b", weaponid, ammo, playerid, weapon_and_ammo);
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH,
