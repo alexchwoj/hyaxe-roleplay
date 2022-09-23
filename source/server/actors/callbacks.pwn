@@ -50,21 +50,22 @@ public ROBBERY_Progress(playerid, actorid, phase)
         }
         case 2:
         {
+            /*
             if((random(100) + 1) % 2)
             {
                 // Shopkeeper picked up a shotgun
             }
             else
-            {
-                ApplyDynamicActorAnimation(actorid, "SHOP", "SHP_ROB_GIVECASH", 4.1, false, false, false, true, 0);
+            {*/
+            ApplyDynamicActorAnimation(actorid, "SHOP", "SHP_ROB_GIVECASH", 4.1, false, false, false, true, 0);
 
-                new money = random(g_rgeRobbableActors[id][e_iMaxMoneyReward] - g_rgeRobbableActors[id][e_iMinMoneyReward]) + g_rgeRobbableActors[id][e_iMinMoneyReward];
-                Player_GiveMoney(playerid, money);
+            new money = random(g_rgeRobbableActors[id][e_iMaxMoneyReward] - g_rgeRobbableActors[id][e_iMinMoneyReward]) + g_rgeRobbableActors[id][e_iMinMoneyReward];
+            Player_GiveMoney(playerid, money);
 
-                new message[85];
-                format(message, sizeof(message), "Robaste la tienda y recibiste ~g~$%i~w~. Huye antes de que venga la policía.", money);
-                Notification_Show(playerid, message, 7000);
-            }
+            new message[85];
+            format(message, sizeof(message), "Robaste la tienda y recibiste ~g~$%i~w~. Huye antes de que venga la policía.", money);
+            Notification_Show(playerid, message, 7000);
+            //}
 
             g_rgeRobbableActors[id][e_iLastStealTick] = GetTickCount();
             g_rgeRobbableActors[id][e_iRobbingPlayer] = INVALID_PLAYER_ID;
