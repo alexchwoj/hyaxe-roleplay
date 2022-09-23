@@ -14,7 +14,7 @@ public OnPlayerUpdate(playerid)
 
         if (!Player_HasImmunityForCheat(playerid, CHEAT_TELEPORT))
         {
-            if (Player_Data(playerid, e_fPosZ) < -90)
+            if (Player_Data(playerid, e_fPosZ) < -90.0)
             {
                 Player_SetImmunityForCheat(playerid, CHEAT_TELEPORT, 1000);
                 return 1;
@@ -39,7 +39,7 @@ public OnPlayerUpdate(playerid)
 
         if (!Player_HasImmunityForCheat(playerid, CHEAT_AIRBREAK))
         {
-            if (Player_Data(playerid, e_fPosZ) < -90 && GetPlayerSurfingVehicleID(playerid) == INVALID_VEHICLE_ID)
+            if (Player_Data(playerid, e_fPosZ) < -90.0 && GetPlayerSurfingVehicleID(playerid) == INVALID_VEHICLE_ID)
             {
                 Player_SetImmunityForCheat(playerid, CHEAT_AIRBREAK, 1000);
                 return 1;

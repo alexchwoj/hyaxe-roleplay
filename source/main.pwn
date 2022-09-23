@@ -54,7 +54,7 @@
 
 #define SERVER_VERSION "v1.0.0-alpha"
 
-#define NDEBUG 1
+#define NDEBUG 0
 
 #if NDEBUG
 	#pragma option -d0

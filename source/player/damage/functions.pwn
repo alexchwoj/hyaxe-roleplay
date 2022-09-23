@@ -69,7 +69,7 @@ Damage_Validate(playerid, damagedid, weaponid, bodypart)
 {
     if (GetTickCount() > g_rgiLastBulletTick[playerid])
     {
-        printf("damage without bullet sync");
+        //printf("damage without bullet sync");
         return 0;
     }
 
