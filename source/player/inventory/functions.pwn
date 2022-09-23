@@ -327,6 +327,20 @@ Inventory_GetItemAmount(playerid, type)
 	return 0;
 }
 
+Inventory_GetItemCount(playerid, type)
+{
+	new count;
+	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+	{
+		if (InventorySlot_IsValid(playerid, i))
+		{
+			if (InventorySlot_Type(playerid, i) == type)
+				++count;
+		}
+	}
+	return count;
+}
+
 Inventory_AddFixedItem(playerid, type, amount, extra)
 {
 	if (!Inventory_AddItem(playerid, type, amount, extra))
