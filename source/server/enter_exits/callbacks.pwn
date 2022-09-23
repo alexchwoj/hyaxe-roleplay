@@ -45,7 +45,6 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
                     if(info[1])
                     {
-                        Streamer_UpdateEx(playerid, g_rgeEnterExits[id][e_fExitX], g_rgeEnterExits[id][e_fExitY], g_rgeEnterExits[id][e_fExitZ], .worldid = g_rgeEnterExits[id][e_iExitWorld], .interiorid = g_rgeEnterExits[id][e_iExitInterior], .compensatedtime = 1, .freezeplayer = true);
                         SetPlayerFacingAngle(playerid, g_rgeEnterExits[id][e_fExitAngle]);
                         SetPlayerInterior(playerid, g_rgeEnterExits[id][e_iExitInterior]);
                         SetPlayerVirtualWorld(playerid, g_rgeEnterExits[id][e_iExitWorld]);
@@ -54,13 +53,14 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         g_rgePlayerData[playerid][e_fPosY] = g_rgeEnterExits[id][e_fExitY];
                         g_rgePlayerData[playerid][e_fPosZ] = g_rgeEnterExits[id][e_fExitZ];
 
+                        Streamer_UpdateEx(playerid, g_rgeEnterExits[id][e_fExitX], g_rgeEnterExits[id][e_fExitY], g_rgeEnterExits[id][e_fExitZ], .worldid = g_rgeEnterExits[id][e_iExitWorld], .interiorid = g_rgeEnterExits[id][e_iExitInterior], .compensatedtime = 1, .freezeplayer = true);
+
                         new hour, minute;
                         gettime(hour, minute);
                         SetPlayerTime(playerid, hour, minute);
                     }
                     else
                     {
-                        Streamer_UpdateEx(playerid, g_rgeEnterExits[id][e_fEnterX], g_rgeEnterExits[id][e_fEnterY], g_rgeEnterExits[id][e_fEnterZ], .worldid = g_rgeEnterExits[id][e_iEnterWorld], .interiorid = g_rgeEnterExits[id][e_iEnterInterior], .compensatedtime = 1, .freezeplayer = 1);
                         SetPlayerFacingAngle(playerid, g_rgeEnterExits[id][e_fEnterAngle]);
                         SetPlayerInterior(playerid, g_rgeEnterExits[id][e_iEnterInterior]);
                         SetPlayerVirtualWorld(playerid, g_rgeEnterExits[id][e_iEnterWorld]);
@@ -68,6 +68,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         g_rgePlayerData[playerid][e_fPosX] = g_rgeEnterExits[id][e_fEnterX];
                         g_rgePlayerData[playerid][e_fPosY] = g_rgeEnterExits[id][e_fEnterY];
                         g_rgePlayerData[playerid][e_fPosZ] = g_rgeEnterExits[id][e_fEnterZ];
+
+                        Streamer_UpdateEx(playerid, g_rgeEnterExits[id][e_fEnterX], g_rgeEnterExits[id][e_fEnterY], g_rgeEnterExits[id][e_fEnterZ], .worldid = g_rgeEnterExits[id][e_iEnterWorld], .interiorid = g_rgeEnterExits[id][e_iEnterInterior], .compensatedtime = 1, .freezeplayer = 1);
                     }
                 }
             }
