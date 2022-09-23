@@ -56,6 +56,76 @@ public HP_HealPlayer(playerid)
     return 1;
 }
 
+static HospitalShop_OnEnter(playerid)
+{
+    Menu_Show(playerid, "hospital_menu", "Hospital");
+    Menu_AddItem(playerid, "Comprar 5 analgésicos", "Precio: ~g~$150");
+    Menu_AddItem(playerid, "Compra un botiquín", "Precio: ~g~$500");
+    return 1;
+}
+
+Menu:hospital_menu(playerid, response, listitem)
+{
+    if (response == MENU_RESPONSE_SELECT)
+    {
+        switch(listitem)
+        {
+            case 0:
+            {
+                if (150 > Player_Money(playerid))
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 1;
+                }
+
+                if (Inventory_GetItemAmount(playerid, ITEM_MEDICINE) >= 100)
+                    return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No puedes llevar más de 100 analgésicos.");
+
+                if (Inventory_AddItem(playerid, ITEM_MEDICINE, 5, 0))
+                {
+                    Player_GiveMoney(playerid, -150);
+                    PlayerPlaySound(playerid, SOUND_SUCCESS);
+                    Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste 5 analgésicos.");
+                }
+                else
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes el inventario lleno.");
+                    return 1;
+                }
+            }
+
+            case 1:
+            {
+                if (500 > Player_Money(playerid))
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 1;
+                }
+
+                if (Inventory_GetItemAmount(playerid, ITEM_MEDIC_KIT) >= 3)
+                    return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No puedes llevar más de 3 botiquines.");
+
+                if (Inventory_AddItem(playerid, ITEM_MEDIC_KIT, 1, 0))
+                {
+                    Player_GiveMoney(playerid, -500);
+                    PlayerPlaySound(playerid, SOUND_SUCCESS);
+                    Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un botiquín.");
+                }
+                else
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes el inventario lleno.");
+                    return 1;
+                }
+            }
+        }
+    }
+    return 1;
+}
+
 public OnGameModeInit()
 {
     for(new i; i < sizeof(g_rgeHospitalData); ++i)
@@ -66,6 +136,20 @@ public OnGameModeInit()
             minrand(274, 276), 500, 800,
             g_rgeHospitalInteriorData[int][e_fHospitalActorPosX], g_rgeHospitalInteriorData[int][e_fHospitalActorPosY], g_rgeHospitalInteriorData[int][e_fHospitalActorPosZ], g_rgeHospitalInteriorData[int][e_fHospitalActorPosAngle],
             .worldid = i, .interiorid = g_rgeHospitalInteriorData[int][e_iHospitalIntInterior]
+        );
+
+        CreateDynamic3DTextLabel("Hospital", 0xCB3126FF,
+            g_rgeHospitalInteriorData[int][e_fHospitalActorPosX],
+            g_rgeHospitalInteriorData[int][e_fHospitalActorPosY],
+            g_rgeHospitalInteriorData[int][e_fHospitalActorPosZ],
+            10.0, .testlos = 1, .worldid = i, .interiorid = g_rgeHospitalInteriorData[int][e_iHospitalIntInterior]
+        );
+
+        Key_Alert(
+            g_rgeHospitalInteriorData[int][e_fHospitalActorPosX],
+            g_rgeHospitalInteriorData[int][e_fHospitalActorPosY],
+            g_rgeHospitalInteriorData[int][e_fHospitalActorPosZ],
+            2.3, KEYNAME_YES, i, g_rgeHospitalInteriorData[int][e_iHospitalIntInterior], .callback_on_press = __addressof(HospitalShop_OnEnter)
         );
 
         EnterExit_Create(
