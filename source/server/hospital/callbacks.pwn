@@ -61,6 +61,7 @@ static HospitalShop_OnEnter(playerid)
     Menu_Show(playerid, "hospital_menu", "Hospital");
     Menu_AddItem(playerid, "Comprar 5 analgésicos", "Precio: ~g~$150");
     Menu_AddItem(playerid, "Compra un botiquín", "Precio: ~g~$500");
+    Menu_UpdateListitems(playerid);
     return 1;
 }
 

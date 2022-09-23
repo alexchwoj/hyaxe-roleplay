@@ -3,8 +3,9 @@
 #endif
 #define _menu_functions_
 
-Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE UNA OPCIÓN", captionTextColor = 0x1B1B1BFF, captionBoxColor = 0xAC3E36FF, bool:clearChat = false)
+Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE UNA OPCIÓN", captionTextColor = 0x1B1B1BFF, captionBoxColor = 0xAC3E36FF, bool:clearChat = true)
 {
+	TogglePlayerControllable(playerid, false);
 	PlayerPlaySound(playerid, SOUND_BUTTON);
 
 	g_rgePlayerMenu[playerid][e_bClearChat] = clearChat;
@@ -173,6 +174,7 @@ Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE
 
 Menu_Hide(playerid)
 {
+	TogglePlayerControllable(playerid, true);
 	g_rgePlayerMenu[playerid][e_iEnabled] = false;
 	KillTimer(g_rgePlayerMenu[playerid][e_iKeyProcessTimer]);
 
