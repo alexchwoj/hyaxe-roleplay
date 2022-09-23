@@ -40,12 +40,19 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         L1:
                     }
 
+                    Player_SetImmunityForCheat(playerid, CHEAT_TELEPORT, 1000);
+                    Player_SetImmunityForCheat(playerid, CHEAT_AIRBREAK, 1000);
+
                     if(info[1])
                     {
                         Streamer_UpdateEx(playerid, g_rgeEnterExits[id][e_fExitX], g_rgeEnterExits[id][e_fExitY], g_rgeEnterExits[id][e_fExitZ], .worldid = g_rgeEnterExits[id][e_iExitWorld], .interiorid = g_rgeEnterExits[id][e_iExitInterior], .compensatedtime = 1, .freezeplayer = true);
                         SetPlayerFacingAngle(playerid, g_rgeEnterExits[id][e_fExitAngle]);
                         SetPlayerInterior(playerid, g_rgeEnterExits[id][e_iExitInterior]);
                         SetPlayerVirtualWorld(playerid, g_rgeEnterExits[id][e_iExitWorld]);
+
+                        g_rgePlayerData[playerid][e_fPosX] = g_rgeEnterExits[id][e_fExitX];
+                        g_rgePlayerData[playerid][e_fPosY] = g_rgeEnterExits[id][e_fExitY];
+                        g_rgePlayerData[playerid][e_fPosZ] = g_rgeEnterExits[id][e_fExitZ];
 
                         new hour, minute;
                         gettime(hour, minute);
@@ -57,6 +64,10 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         SetPlayerFacingAngle(playerid, g_rgeEnterExits[id][e_fEnterAngle]);
                         SetPlayerInterior(playerid, g_rgeEnterExits[id][e_iEnterInterior]);
                         SetPlayerVirtualWorld(playerid, g_rgeEnterExits[id][e_iEnterWorld]);
+
+                        g_rgePlayerData[playerid][e_fPosX] = g_rgeEnterExits[id][e_fEnterX];
+                        g_rgePlayerData[playerid][e_fPosY] = g_rgeEnterExits[id][e_fEnterY];
+                        g_rgePlayerData[playerid][e_fPosZ] = g_rgeEnterExits[id][e_fEnterZ];
                     }
                 }
             }

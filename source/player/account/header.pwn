@@ -3,7 +3,7 @@
 #endif
 #define _account_header_
 
-const PLAYER_DEFAULT_MONEY = 1000;
+const PLAYER_DEFAULT_MONEY = 500000; // ANTES DE ABRIR HAY QUE CAMBIAR ESTO
 const Float:PLAYER_SPAWN_X = 1728.8326;
 const Float:PLAYER_SPAWN_Y = -1174.8977;
 const Float:PLAYER_SPAWN_Z = 23.8315;
