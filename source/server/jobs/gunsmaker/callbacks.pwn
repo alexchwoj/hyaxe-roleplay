@@ -53,7 +53,7 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
             g_rgiGunsmakerUsedBench{playerid} = id;
             TogglePlayerDynamicCP(playerid, g_rgiGunsmakerBenchCheckpoint[id], true);
             Streamer_Update(playerid, STREAMER_TYPE_CP);
-            Notification_ShowBeatingText(playerid, 7000, 0xED2B2B, 100, 255, "Diríjete a tu mesa asignada para empezar a trabajar");
+            Notification_ShowBeatingText(playerid, 7000, 0xDAA838, 100, 255, "Diríjete a tu mesa asignada para empezar a trabajar");
         }
         case JOB_EV_LEAVE:
         {

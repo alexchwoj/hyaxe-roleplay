@@ -11,7 +11,7 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
     {
         case JOB_EV_JOIN:
         {
-            Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Súbete en uno de los camiones de la central para empezar a trabajar");
+            Notification_ShowBeatingText(playerid, 5000, 0xDAA838, 100, 255, "Súbete en uno de los camiones de la central para empezar a trabajar");
         }
         case JOB_EV_LEAVE:
         {
@@ -156,7 +156,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
                     {
                         TogglePlayerDynamicCP(playerid, g_rgeTruckerRoutes[g_rgiPlayerTruckerRoute{playerid}][e_iTruckCp], true);
                         Streamer_Update(playerid, STREAMER_TYPE_CP);
-                        Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Dirígete al punto de descarga");
+                        Notification_ShowBeatingText(playerid, 5000, 0xDAA838, 100, 255, "Dirígete al punto de descarga");
                     }
                 }
             }
@@ -218,8 +218,8 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
 
                 g_rgiPlayerRemainingBoxes{playerid}--;
                 TogglePlayerDynamicCP(playerid, g_iPickBoxCheckpoint, true);
-                format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Te queda%s %i caja%s por cargar.", g_rgiPlayerRemainingBoxes{playerid} > 1 ? "n" : "", g_rgiPlayerRemainingBoxes{playerid}, g_rgiPlayerRemainingBoxes{playerid} > 1 ? "s" : "");
-                Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
+                format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "~w~Te queda%s ~y~%i caja%s~w~ por cargar.", g_rgiPlayerRemainingBoxes{playerid} > 1 ? "n" : "", g_rgiPlayerRemainingBoxes{playerid}, g_rgiPlayerRemainingBoxes{playerid} > 1 ? "s" : "");
+                Notification_ShowBeatingText(playerid, 5000, 0xFFFFFF, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
             }
             else
             {
@@ -234,7 +234,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
 
                 DestroyDynamicCP(g_rgiPlayerTruckCheckpoint[playerid]);
                 g_rgiPlayerTruckCheckpoint[playerid] = INVALID_STREAMER_ID;
-                Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Sube al camión y empieza el recorrido");
+                Notification_ShowBeatingText(playerid, 5000, 0xDAA838, 100, 255, "Sube al camión y empieza el recorrido");
             }
         }
         else if(checkpointid == g_rgeTruckerRoutes[g_rgiPlayerTruckerRoute{playerid}][e_iTruckCp])
@@ -264,8 +264,8 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
                     SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 1, 0);
 
                     g_rgiPlayerRemainingBoxes{playerid}--;
-                    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Te queda%s %i caja%s por descargar", g_rgiPlayerRemainingBoxes{playerid} > 1 ? "n" : "", g_rgiPlayerRemainingBoxes{playerid}, g_rgiPlayerRemainingBoxes{playerid} > 1 ? "s" : "");
-                    Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
+                    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "~w~Te queda%s ~y~%i caja%s~w~ por descargar", g_rgiPlayerRemainingBoxes{playerid} > 1 ? "n" : "", g_rgiPlayerRemainingBoxes{playerid}, g_rgiPlayerRemainingBoxes{playerid} > 1 ? "s" : "");
+                    Notification_ShowBeatingText(playerid, 3000, 0xFFFFFF, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
                 }
                 else
                 {
@@ -280,7 +280,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
 
                     TogglePlayerDynamicCP(playerid, checkpointid, false);
                     TogglePlayerDynamicCP(playerid, g_iTruckerCentralCp, true);
-                    Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Sube al camión y vuelve a la central");
+                    Notification_ShowBeatingText(playerid, 5000, 0xFFFFFF, 100, 255, "~w~Sube al camión y vuelve a la ~y~central");
                 }
             }
         }
@@ -345,7 +345,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     ApplyAnimation(playerid, "CARRY", "PUTDWN", 4.1, false, false, false, false, 0, false);
                     SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
                     SetPlayerAttachedObject(playerid, 0, 2912, 6, 0.08, 0.145, -0.016, 151.4, 0.0, -13.0, 0.552, 0.359, 0.636);
-                    Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Deja la caja en el camión");
+                    Notification_ShowBeatingText(playerid, 3000, 0xFFFFFF, 100, 255, "~w~Deja la caja en el ~y~camión");
 
                     if(!g_rgiPlayerTruckCheckpoint[playerid])
                     {
@@ -388,7 +388,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     ApplyAnimation(playerid, "CARRY", "PUTDWN", 4.1, false, false, false, false, 0, false);
                     SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
                     SetPlayerAttachedObject(playerid, 0, 2912, 6, 0.08, 0.145, -0.016, 151.4, 0.0, -13.0, 0.552, 0.359, 0.636);
-                    Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Deja la caja en el almacén");
+                    Notification_ShowBeatingText(playerid, 3000, 0xFFFFFF, 100, 255, "~w~Deja la caja en el ~y~almacén");
 
                     TogglePlayerDynamicCP(playerid, g_rgeTruckerRoutes[g_rgiPlayerTruckerRoute{playerid}][e_iBoxUnloadCp], true);
                     Streamer_Update(playerid, STREAMER_TYPE_CP);
