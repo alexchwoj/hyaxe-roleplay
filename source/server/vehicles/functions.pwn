@@ -5,11 +5,7 @@
 
 Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, bool:addsiren = false, bool:static_veh = false)
 {
-    new vehicleid;
-    if(static_veh)
-        vehicleid = AddStaticVehicleEx(vehicletype, x, y, z, rotation, color1, color2, respawn_delay, addsiren);
-    else
-        vehicleid = CreateVehicle(vehicletype, x, y, z, rotation, color1, color2, respawn_delay, addsiren);
+    new vehicleid = (static_veh ? AddStaticVehicleEx(vehicletype, x, y, z, rotation, color1, color2, respawn_delay, addsiren) : CreateVehicle(vehicletype, x, y, z, rotation, color1, color2, respawn_delay, addsiren));
 
     if(vehicleid != INVALID_VEHICLE_ID)
     {
