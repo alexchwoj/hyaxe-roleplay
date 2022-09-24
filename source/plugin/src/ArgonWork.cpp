@@ -27,17 +27,19 @@ void ArgonWork::SetCallback(Script* script, const std::string& name, const char*
 			}
 		}
 	} while (*(++format));
+
+	std::reverse(_params.begin(), _params.end());
 }
 
 void ArgonWork::Work()
 {
 	if (_type == WorkType::Hash)
 	{
-		_hash = Botan::argon2_generate_pwhash(_password.c_str(), _password.length() - 1, Botan::system_rng(), _parallelism, _memory, _passes, 2);
+		_hash = Botan::argon2_generate_pwhash(_password.data(), _password.size(), Botan::system_rng(), _parallelism, _memory, _passes, 2);
 	}
 	else
 	{
-		_check_result = Botan::argon2_check_pwhash(_password.c_str(), _password.length() - 1, _hash);
+		_check_result = Botan::argon2_check_pwhash(_password.data(), _password.size(), _hash);
 	}
 
 	_password.clear();

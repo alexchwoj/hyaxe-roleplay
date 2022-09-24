@@ -228,60 +228,61 @@ dialog login(playerid, response, listitem, inputtext[])
     if(!response)
         return Kick(playerid);
 
-    new hash[65];
-    SHA256_PassHash(inputtext, "", hash);
-
-    if(strcmp(Player_Password(playerid), hash, .ignorecase = true))
+    inline const CheckDone()
     {
-        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}Contraseña {CB3126}incorrecta{DADADA}.\nIntroduce la contraseña correcta para entrar al servidor:", Player_RPName(playerid));
-        Dialog_Show(playerid, "login", DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Ingresa a tu cuenta", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
-        return 1;
+        if(!argon_is_equal())
+        {
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}Contraseña {CB3126}incorrecta{DADADA}.\nIntroduce la contraseña correcta para entrar al servidor:", Player_RPName(playerid));
+            Dialog_Show(playerid, "login", DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Ingresa a tu cuenta", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
+            return 1;
+        }
+
+        Account_LoadFromCache(playerid);
+
+        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `CURRENT_PLAYERID` = %i, `CURRENT_CONNECTION` = UNIX_TIMESTAMP() WHERE `ID` = %i LIMIT 1;", playerid, Player_AccountID(playerid));
+        mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+        Account_RegisterConnection(playerid);
+
+        CallLocalFunction(!"OnPlayerAuthenticate", !"i", playerid);
+
+        SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle], 0, 0, 0, 0, 0, 0);
+        Streamer_UpdateEx(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], Player_VirtualWorld(playerid), Player_Interior(playerid), .compensatedtime = 2000, .freezeplayer = 1);
+        TogglePlayerSpectating(playerid, false);
+        
+        g_rgePlayerData[playerid][e_iCurrentConnectionTime] = gettime();
+        SetPlayerVirtualWorld(playerid, Player_VirtualWorld(playerid));
+        SetPlayerInterior(playerid, Player_Interior(playerid));
+        
+        Player_SetHealth(playerid, Player_Health(playerid));
+        Player_SetArmor(playerid, Player_Armor(playerid));
+        
+        GivePlayerMoney(playerid, Player_Money(playerid));
+        Player_GiveAllWeapons(playerid);
+        SetPlayerArmedWeapon(playerid, 0);
+        
+        printf("player %i level = %i", playerid, Player_Level(playerid));
+        SetPlayerScore(playerid, Player_Level(playerid));
+        Iter_Add(LoggedIn, playerid);
+
+        if (Player_AdminLevel(playerid) > 0)
+            Iter_Add(Admin, playerid);
+
+        Bit_Set(Player_Flags(playerid), PFLAG_AUTHENTICATING, false);
+        Bit_Set(Player_Flags(playerid), PFLAG_IN_GAME, true);
+        printf("PFLAG_IN_GAME = true");
+
+        new text[116];
+        format(text, sizeof(text), "Bienvenid%c a ~r~Hyaxe~w~, %s. Tu último inicio de sesión fue el ~r~%s~w~.", (Player_Sex(playerid) == SEX_MALE ? 'o' : 'a'), Player_Name(playerid), Player_LastConnection(playerid));
+        Notification_Show(playerid, text, 6000);
+
+        Needs_ShowBars(playerid);
+        Needs_StartUpdating(playerid);
+
+        StopAudioStreamForPlayer(playerid);
+
+        Player_SetImmunityForCheat(playerid, CHEAT_FLY, 3000);
     }
-
-    Account_LoadFromCache(playerid);
-
-    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `CURRENT_PLAYERID` = %i, `CURRENT_CONNECTION` = UNIX_TIMESTAMP() WHERE `ID` = %i LIMIT 1;", playerid, Player_AccountID(playerid));
-    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
-    Account_RegisterConnection(playerid);
-
-    CallLocalFunction(!"OnPlayerAuthenticate", !"i", playerid);
-
-    SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle], 0, 0, 0, 0, 0, 0);
-    Streamer_UpdateEx(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], Player_VirtualWorld(playerid), Player_Interior(playerid), .compensatedtime = 2000, .freezeplayer = 1);
-    TogglePlayerSpectating(playerid, false);
-    
-    g_rgePlayerData[playerid][e_iCurrentConnectionTime] = gettime();
-    SetPlayerVirtualWorld(playerid, Player_VirtualWorld(playerid));
-    SetPlayerInterior(playerid, Player_Interior(playerid));
-    
-    Player_SetHealth(playerid, Player_Health(playerid));
-    Player_SetArmor(playerid, Player_Armor(playerid));
-    
-    GivePlayerMoney(playerid, Player_Money(playerid));
-    Player_GiveAllWeapons(playerid);
-    SetPlayerArmedWeapon(playerid, 0);
-    
-    printf("player %i level = %i", playerid, Player_Level(playerid));
-    SetPlayerScore(playerid, Player_Level(playerid));
-    Iter_Add(LoggedIn, playerid);
-
-    if (Player_AdminLevel(playerid) > 0)
-        Iter_Add(Admin, playerid);
-
-    Bit_Set(Player_Flags(playerid), PFLAG_AUTHENTICATING, false);
-    Bit_Set(Player_Flags(playerid), PFLAG_IN_GAME, true);
-    printf("PFLAG_IN_GAME = true");
-
-    new text[116];
-    format(text, sizeof(text), "Bienvenid%c a ~r~Hyaxe~w~, %s. Tu último inicio de sesión fue el ~r~%s~w~.", (Player_Sex(playerid) == SEX_MALE ? 'o' : 'a'), Player_Name(playerid), Player_LastConnection(playerid));
-    Notification_Show(playerid, text, 6000);
-
-    Needs_ShowBars(playerid);
-    Needs_StartUpdating(playerid);
-
-    StopAudioStreamForPlayer(playerid);
-
-    Player_SetImmunityForCheat(playerid, CHEAT_FLY, 3000);
+    argon_check_inline(inputtext, Player_Password(playerid), using inline CheckDone);
 
     return 1;
 }

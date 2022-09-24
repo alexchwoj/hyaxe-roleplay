@@ -66,7 +66,7 @@ enum ePlayerData
     e_szPlayerEmail[128],
     e_iPlayerIp,
     e_szPlayerLastConnection[20],
-    e_szPassword[65],
+    e_szPassword[129],
     
     e_iPlayerHealth,
     e_iPlayerArmor,

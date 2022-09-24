@@ -16,7 +16,7 @@ private:
 	std::vector<std::variant<cell, std::string>> _params;
 	std::string _password;
 	std::string _hash;
-	bool _check_result;
+	bool _check_result{ false };
 	int _memory;
 	int _parallelism;
 	int _passes;
