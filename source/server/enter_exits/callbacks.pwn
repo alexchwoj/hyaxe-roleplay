@@ -71,6 +71,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
                         Streamer_UpdateEx(playerid, g_rgeEnterExits[id][e_fEnterX], g_rgeEnterExits[id][e_fEnterY], g_rgeEnterExits[id][e_fEnterZ], .worldid = g_rgeEnterExits[id][e_iEnterWorld], .interiorid = g_rgeEnterExits[id][e_iEnterInterior], .compensatedtime = 1, .freezeplayer = 1);
                     }
+
+                    Player_SetImmunityForCheat(playerid, CHEAT_AIRBREAK, 2000);
                 }
             }
         }
