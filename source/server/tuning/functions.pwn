@@ -116,15 +116,3 @@ Tuning_Back(playerid)
     SetCameraBehindPlayer(playerid);
     return 1;
 }
-
-command tuning(playerid, const params[], "")
-{
-    Tuning_Open(playerid);
-    return 1;
-}
-
-command tuningback(playerid, const params[], "")
-{
-    Tuning_Back(playerid);
-    return 1;
-}
