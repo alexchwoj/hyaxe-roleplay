@@ -2,7 +2,7 @@
 
 void ArgonWork::SetCallback(Script* script, const std::string& name, const char* format, const cell* params, std::size_t params_offset)
 {
-	_callback = script->MakePublic(name, false);
+	_callback = script->MakePublic(name, true);
 	if (!_callback->Exists())
 		return;
 
