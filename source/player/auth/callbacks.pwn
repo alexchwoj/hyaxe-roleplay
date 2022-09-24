@@ -281,6 +281,7 @@ dialog login(playerid, response, listitem, inputtext[])
         StopAudioStreamForPlayer(playerid);
 
         Player_SetImmunityForCheat(playerid, CHEAT_FLY, 3000);
+        Player_SetImmunityForCheat(playerid, CHEAT_AIRBREAK, 3000);
     }
     argon_check_inline(inputtext, Player_Password(playerid), using inline CheckDone);
 

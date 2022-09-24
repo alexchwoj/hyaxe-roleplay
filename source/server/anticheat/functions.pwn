@@ -9,7 +9,7 @@ Anticheat_Trigger(playerid, eCheats:cheat, extra = 0)
     {
         if(g_rgeDetectionData[cheat][e_iMaxTriggers] > ++g_rgiAnticheatTriggers[playerid]{cheat})
         {
-            return 1;
+            return 0;
         }
     }
 

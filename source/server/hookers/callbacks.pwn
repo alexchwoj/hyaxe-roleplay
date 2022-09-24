@@ -81,12 +81,12 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
                     DEBUG_PRINT("Hooker is available");
 
-                    g_rgbHookerAvailable{hookerid} = false;
-                    g_rgiPlayerInteractingHooker[playerid] = hookerid;
-                    g_rgiHookerInteractingPlayer[hookerid] = playerid;
-
                     if(player_state == PLAYER_STATE_ONFOOT)
                     {
+                        g_rgbHookerAvailable{hookerid} = false;
+                        g_rgiPlayerInteractingHooker[playerid] = hookerid;
+                        g_rgiHookerInteractingPlayer[hookerid] = playerid;
+
                         FCNPC_AimAtPlayer(g_rgiHookers[hookerid], playerid);
                         FCNPC_SetAnimationByName(g_rgiHookers[hookerid], "KISSING:GF_STREETARGUE_02", 4.1, 1, 0, 0, 0, 0);
                         Dialog_Show(playerid, "hooker_accept", DIALOG_STYLE_TABLIST_HEADERS, 
@@ -99,8 +99,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     }
                     else if(player_state == PLAYER_STATE_DRIVER)
                     {
-                        PlayerPlaySound(playerid, 39073);
-                        FCNPC_EnterVehicle(g_rgiHookers[hookerid], GetPlayerVehicleID(playerid), 1);
+                        //PlayerPlaySound(playerid, 39073);
+                        //FCNPC_EnterVehicle(g_rgiHookers[hookerid], GetPlayerVehicleID(playerid), 1);
                     }
 
                     return 1;
