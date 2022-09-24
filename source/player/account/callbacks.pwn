@@ -251,6 +251,7 @@ public OnPlayerDataFetched(playerid)
         Bit_Set(Player_Flags(playerid), PFLAG_REGISTERED, true);
         cache_get_value_name_int(0, !"ID", Player_AccountID(playerid));
         cache_get_value_name(0, !"PASSWORD", Player_Password(playerid));
+        printf("password: %s", Player_Password(playerid));
         cache_get_value_name(0, !"LAST_CONNECTION", Player_LastConnection(playerid));
         Player_Cache(playerid) = cache_save();
     }

@@ -18,3 +18,21 @@ native argon_check(const password[], const hash[], const callback[], const fmt[]
 native argon_set_thread_count(max_threads);
 native argon_get_hash(dest[], len = sizeof dest);
 native bool:argon_is_equal();
+
+argon_hash_inline(const password[], memory, parallelism, passes, Func:callback<>)
+{
+    new const ret = argon_hash(password, memory, parallelism, passes, "Indirect_FromCallback", "ii", _:callback, true);
+    if(ret)
+        Indirect_Claim(callback);
+
+    return ret;
+}
+
+argon_check_inline(const password[], const hash[], Func:callback<>)
+{
+    new const ret = argon_check(password, hash, "Indirect_FromCallback", "ii", _:callback, true);
+    if(ret)
+        Indirect_Claim(callback);
+
+    return ret;
+}

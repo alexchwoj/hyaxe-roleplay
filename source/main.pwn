@@ -54,7 +54,7 @@
 
 #define SERVER_VERSION "v1.0.0-alpha"
 
-#define NDEBUG 1
+#define NDEBUG 0
 
 #if NDEBUG
 	#pragma option -d0
@@ -137,6 +137,7 @@ const HYAXE_MAX_NPCS = 100;
 #define FOREACH_NO_ACTORS
 
 #include <YSI_Core/y_cell>
+#include <YSI_Coding/y_inline>
 #include <YSI_Data/y_bit>
 #include <YSI_Data/y_iterate>
 
