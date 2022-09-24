@@ -54,7 +54,7 @@
 
 #define SERVER_VERSION "v1.0.0-alpha"
 
-#define NDEBUG 0
+#define NDEBUG 1
 
 #if NDEBUG
 	#pragma option -d0
@@ -313,6 +313,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/anticheat/detections/teleport.pwn"
 #include "server/anticheat/detections/invisible.pwn"
 #include "server/anticheat/detections/invalid_sync.pwn"
+#include "server/anticheat/detections/carjack.pwn"
 
 // Commands
 //////////////
