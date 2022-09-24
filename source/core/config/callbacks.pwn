@@ -8,6 +8,7 @@ on_init 00SetupServerConfig()
     print("[config] Setting up...");
     
 	pp_public_min_index(0);
+	argon_set_thread_count(-1);
 
     SetMaxPlayers(MAX_PLAYERS);
     SetMaxNPCs(HYAXE_MAX_NPCS);

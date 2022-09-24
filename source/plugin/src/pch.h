@@ -9,6 +9,8 @@
 #include <cstdint>
 #include <random>
 #include <algorithm>
+#include <queue>
+#include <variant>
 #include <ctime>
 
 #endif

@@ -22,7 +22,9 @@ enum ePoliceRanks
     POLICE_RANK_COMMISSIONER,
     POLICE_RANK_INSP_COMMISSIONER,
     POLICE_RANK_CHIEF_COMMISSIONER,
-    POLICE_RANK_GEN_COMMISSIONER
+    POLICE_RANK_GEN_COMMISSIONER,
+
+    POLICE_RANK_SPEC_OPS
 };
 
 new const g_rgszPoliceRankNames[_:ePoliceRanks][] = {
@@ -43,7 +45,8 @@ new const g_rgszPoliceRankNames[_:ePoliceRanks][] = {
     "Comisario",
     "Comisario inspector",
     "Comisario mayor",
-    "Comisario general"
+    "Comisario general",
+    "Operaciones especiales"
 };
 
 new 

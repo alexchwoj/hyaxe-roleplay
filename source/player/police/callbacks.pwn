@@ -3,6 +3,32 @@
 #endif
 #define _police_callbacks_
 
+static PoliceLocker_OnKeyPress(playerid)
+{
+    return 0;
+}
+
+public OnGameModeInit()
+{
+    Key_Alert(0.0, 0.0, 0.0, 1.0, KEYNAME_NO, .callback_on_press = __addressof(PoliceLocker_OnKeyPress));    
+
+    #if defined POLICE_OnGameModeInit
+        return POLICE_OnGameModeInit();
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnGameModeInit
+    #undef OnGameModeInit
+#else
+    #define _ALS_OnGameModeInit
+#endif
+#define OnGameModeInit POLICE_OnGameModeInit
+#if defined POLICE_OnGameModeInit
+    forward POLICE_OnGameModeInit();
+#endif
+
 public OnPlayerAuthenticate(playerid)
 {
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "SELECT `RANK` FROM `POLICE_OFFICERS` WHERE `ACCOUNT_ID` = %i LIMIT 1;", Player_AccountID(playerid));

@@ -11,3 +11,10 @@ native GetTextDrawLineCount_s(ConstAmxString:string) = GetTextDrawLineCount;
 native bool:SplitTextDrawString(string[], Float:max_width, Float:letter_size, font, outline = 0, bool:proportional = true, size = sizeof(string));
 //native memset(arr[], val, size = sizeof(arr));
 native levenshtein(const string1[], const string2[]);
+
+// Argon2 natives
+native argon_hash(const password[], memory, parallelism, passes, const callback[], const fmt[] = "", GLOBAL_TAG_TYPES:...);
+native argon_check(const password[], const hash[], const callback[], const fmt[] = "", GLOBAL_TAG_TYPES:...);
+native argon_set_thread_count(max_threads);
+native argon_get_hash(dest[], len = sizeof dest);
+native bool:argon_is_equal();
