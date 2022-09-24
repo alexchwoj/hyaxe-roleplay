@@ -5,7 +5,7 @@
 
 Anticheat_Trigger(playerid, eCheats:cheat, extra = 0)
 {
-    if(g_rgeDetectionData[cheat][e_ePunishmentType] == PUNISHMENT_KICK_ON_MAX_TRIGGERS || g_rgeDetectionData[cheat][e_ePunishmentType] == PUNISHMENT_BAN_ON_MAX_TRIGGERS)
+    if(g_rgeDetectionData[cheat][e_ePunishmentType] > PUNISHMENT_BAN)
     {
         if(g_rgeDetectionData[cheat][e_iMaxTriggers] > ++g_rgiAnticheatTriggers[playerid]{cheat})
         {
@@ -75,10 +75,12 @@ Anticheat_Trigger(playerid, eCheats:cheat, extra = 0)
     return 1;
 }
 
+/*
 bool:Player_HasImmunityForCheat(playerid, eCheats:cheat)
 {
     return g_rgiAnticheatImmunity[playerid][cheat] && GetTickDiff(g_rgiAnticheatImmunity[playerid][cheat], GetTickCount()) > 0;
 }
+*/
 
 stock ac_SetPlayerChatBubble(playerid, const text[], color, Float:drawdistance, expiretime)
 {

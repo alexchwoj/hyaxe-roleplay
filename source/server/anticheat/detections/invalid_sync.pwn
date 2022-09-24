@@ -9,24 +9,38 @@ IPacket:__ac_inv_sync_PlayerSync(playerid, BitStream:bs)
     if (Player_HasImmunityForCheat(playerid, CHEAT_INVALID_SYNC))
         return 1;
 
-    new data[PR_OnFootSync];
-    BS_IgnoreBits(bs, 8);
-    BS_ReadOnFootSync(bs, data);
+    new
+        Float:pos_x, Float:pos_y, Float:pos_z,
+        Float:quaternion_x, Float:quaternion_y, Float:quaternion_z, Float:quaternion_w,
+        animation_id;
+    
+    BS_ReadValue(bs,
+        PR_IGNORE_BITS, 8 + 16 + 16,
+        PR_FLOAT, pos_x, 
+        PR_FLOAT, pos_y,
+        PR_FLOAT, pos_z,
+        PR_FLOAT, quaternion_x,
+        PR_FLOAT, quaternion_y,
+        PR_FLOAT, quaternion_z,
+        PR_FLOAT, quaternion_w,
+        PR_IGNORE_BITS, 8 + 8 + 2 + 6 + 8 + (32 * 6) + 16,
+        PR_INT16, animation_id
+    );
 
     // Crashers
-    if (Data_CheckValidity(data[PR_position][0]) || Data_CheckValidity(data[PR_position][1]) || Data_CheckValidity(data[PR_position][2]))
+    if (Data_CheckValidity(pos_x) || Data_CheckValidity(pos_y) || Data_CheckValidity(pos_z))
 	{
 		Anticheat_Trigger(playerid, CHEAT_INVALID_SYNC, 0);
         return 0;
 	}
 
-	if (Data_CheckOutputLimit(data[PR_position][0], 20000.0) || Data_CheckOutputLimit(data[PR_position][1], 20000.0) || Data_CheckOutputLimit(data[PR_position][2], 20000.0))
+	if (Data_CheckOutputLimit(pos_x, 20000.0) || Data_CheckOutputLimit(pos_y, 20000.0) || Data_CheckOutputLimit(pos_z, 20000.0))
 	{
         Anticheat_Trigger(playerid, CHEAT_INVALID_SYNC, 1);
         return 0;
 	}
 
-	if (Data_CheckValidity(data[PR_quaternion][0]) || Data_CheckValidity(data[PR_quaternion][1]) || Data_CheckValidity(data[PR_quaternion][2]) || Data_CheckValidity(data[PR_quaternion][3]))
+	if (Data_CheckValidity(quaternion_x) || Data_CheckValidity(quaternion_y) || Data_CheckValidity(quaternion_z) || Data_CheckValidity(quaternion_w))
 	{
         Anticheat_Trigger(playerid, CHEAT_INVALID_SYNC, 2);
         return 0;
@@ -35,14 +49,15 @@ IPacket:__ac_inv_sync_PlayerSync(playerid, BitStream:bs)
     // Invert walk and wheel walk
     // source: https://gitlab.com/RcKoid/mod-s0beit-overlight/-/blob/master/src/cheat_samp.cpp#L940
     //printf("data[PR_animationId] = %d", data[PR_animationId]);
-    if (data[PR_animationId] == 1231)
+    if (animation_id == 1231)
     {
-        if (data[PR_quaternion][1] != 0.0 || data[PR_quaternion][2] != 0.0)
+        if (quaternion_y != 0.0 || quaternion_z != 0.0)
         {
-            //printf("data[PR_quaternion][1] = %f, data[PR_quaternion][2] = %f, data[PR_animationId] = %d", data[PR_quaternion][1], data[PR_quaternion][2], data[PR_animationId]);
+            //printf("quaternion_y = %f, quaternion_z = %f, data[PR_animationId] = %d", quaternion_y, quaternion_z, data[PR_animationId]);
             Anticheat_Trigger(playerid, CHEAT_INVALID_SYNC, 4);
             return 0;
         }
     }
+
     return 1;
 }
