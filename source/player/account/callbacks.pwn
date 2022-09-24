@@ -5,7 +5,7 @@
 
 public OnPlayerConnect(playerid)
 {
-    log_function();
+    DEBUG_PRINT("[func] OnPlayerConnect(playerid = %i)", playerid);
 
     SetPlayerColor(playerid, 0xF7F7F700);
 
@@ -241,7 +241,7 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerDataFetched(playerid)
 {
-    log_function();
+    DEBUG_PRINT("[func] OnPlayerDataFetched(playerid = %i)", playerid);
 
     new rowc;
     cache_get_row_count(rowc);

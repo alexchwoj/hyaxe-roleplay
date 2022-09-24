@@ -5,7 +5,7 @@
 
 public OnPlayerDataLoaded(playerid)
 {
-    log_function();
+    DEBUG_PRINT("[func] OnPlayerDataLoaded(playerid = %i)", playerid);
 
     SetPlayerVirtualWorld(playerid, 1337);
 

@@ -72,7 +72,5 @@ native SendClientMessage_s(playerid, color, ConstAmxString:message) = SendClient
 native ShowPlayerDialog_s(playerid, dialogid, style, ConstAmxString:caption, ConstAmxString:info, const button1[], const button2[]) = ShowPlayerDialog;
 native TextDrawSetString_s(Text:text, ConstAmxString:string) = TextDrawSetString;
 
-#include "core/utils/bitarray.pwn"
-#include "core/utils/cells.pwn"
 #include "core/utils/sounds.pwn"
 #include "core/utils/zones.pwn"

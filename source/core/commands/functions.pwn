@@ -136,7 +136,7 @@ dialog unknown_command(playerid, response, listitem, inputtext[])
         }
     }
 
-    memset(g_rgiPlayerCommandsDialog[playerid], -1);
+    MemSet(g_rgiPlayerCommandsDialog[playerid], -1);
 
     return 1;
 }

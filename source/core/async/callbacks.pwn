@@ -65,9 +65,20 @@ public HandleTaskedCallback(CallbackHandler:cb_handle, Handle<Task>:th, Handle<E
     new Expression:expr = handle_get<Expression>(eh);
 
     new stack[32];
-    for(new i = 3, j = GetCurrentFrameParameterCount(); i < j; ++i)
+
+    new param_count = __emit(load.s.pri 0, add.c 8, load.i) / cellbytes;
+    for(new i = 3, j = param_count; i < j; ++i)
     {
-        stack[i - 3] = GetCurrentFrameParameter(i);
+        stack[i - 3] = __emit(
+            load.s.pri i,
+            shl.c.pri 2,
+            load.s.alt 0,
+            add,
+            add.c 12,
+            push.pri,
+            lref.s.pri 0xfffffffc,
+            stack 4
+        );
         expr = expr_bind(expr, expr_const(stack[i - 3]));
     }
 

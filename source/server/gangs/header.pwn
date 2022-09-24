@@ -75,7 +75,7 @@ new const g_rgszGangIcons[][2][32] = {
 new
     g_rgiPlayerGang[MAX_PLAYERS] = { -1, ... },
     g_rgiPlayerGangRank[MAX_PLAYERS char],
-    IteratorArray:GangMember[HYAXE_MAX_GANGS]<MAX_PLAYERS>,
+    Iterator:GangMember[HYAXE_MAX_GANGS]<MAX_PLAYERS>,
     g_rgiGangPanelPage[MAX_PLAYERS char],
     g_rgiPanelSelectedRole[MAX_PLAYERS char] = { 0xFFFFFFFF, ... };
 

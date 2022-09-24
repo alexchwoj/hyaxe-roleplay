@@ -1,9 +1,9 @@
-[submodule "compiler/include/amx"]
-	path = compiler/include/amx
-	url = https://github.com/Zeex/amx_assembly
 [submodule "source/plugin/lib/samp-ptl"]
 	path = source/plugin/lib/samp-ptl
 	url = https://github.com/katursis/samp-ptl
 [submodule "source/plugin/lib/cmake"]
 	path = source/plugin/lib/cmake
 	url = https://github.com/katursis/samp-cmake-modules/
+[submodule "compiler/include/YSI"]
+	path = compiler/include/YSI
+	url = https://github.com/pawn-lang/YSI-Includes

@@ -44,7 +44,7 @@ Account_Register(playerid, callback = -1)
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
     mysql_tquery(g_hDatabase, "SELECT @accid AS `ACCOUNT_ID`;", "OnAccountInserted", !"ii", playerid, callback);
 
-    memset(g_rgePlayerData[playerid][e_szPassword], '\0');
+    MemSet(g_rgePlayerData[playerid][e_szPassword], '\0');
 
     return 1;
 }
@@ -99,7 +99,7 @@ Account_Save(playerid, bool:disconnect = false)
 
 Account_LoadFromCache(playerid)
 {
-    log_function();
+    DEBUG_PRINT("[func] Account_LoadFromCache(playerid = %i)", playerid);
     
     if(Player_Cache(playerid) == MYSQL_INVALID_CACHE)
         return 0;
