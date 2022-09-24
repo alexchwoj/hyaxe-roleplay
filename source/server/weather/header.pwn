@@ -33,6 +33,12 @@ enum eWeatherType
 new const eWeatherType:g_iWeatherTypesList[] =
 {
     WEATHER_SUNNY_LA,
+    WEATHER_SUNNY_LA,
+    WEATHER_SUNNY_LA,
+    WEATHER_SUNNY_LA,
+    WEATHER_SUNNY_LA,
+    WEATHER_SUNNY_LA,
+    WEATHER_SUNNY_LA,
     WEATHER_RAINY_SF,
     WEATHER_SUNNY_LA,
     WEATHER_SUNNY_LA,
