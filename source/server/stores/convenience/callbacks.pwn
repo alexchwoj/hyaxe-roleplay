@@ -11,7 +11,7 @@ static Convenience_OnBuy(playerid, shop_id, item_id)
     {
         case 0: // Repair kit
         {
-            if(Inventory_GetItemAmount(playerid, ITEM_REPAIR_KIT) > 2)
+            if(Inventory_GetItemCount(playerid, ITEM_REPAIR_KIT) > 2)
             {
                 Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Solo puedes tener 2 kits de reparación");
                 return 0;
