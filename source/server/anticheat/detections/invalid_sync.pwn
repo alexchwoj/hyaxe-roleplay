@@ -15,7 +15,7 @@ IPacket:__ac_inv_sync_PlayerSync(playerid, BitStream:bs)
         animation_id;
     
     BS_ReadValue(bs,
-        PR_IGNORE_BITS, 8 + 16 + 16,
+        PR_IGNORE_BITS, 8 + 16 + 16 + 16,
         PR_FLOAT, pos_x, 
         PR_FLOAT, pos_y,
         PR_FLOAT, pos_z,

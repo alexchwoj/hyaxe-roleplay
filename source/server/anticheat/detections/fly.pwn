@@ -17,8 +17,7 @@ IPacket:__ac_fly_PlayerSync(playerid, BitStream:bs)
         weapon_id;
     
     BS_ReadValue(bs, 
-        PR_IGNORE_BITS, 8,
-        PR_IGNORE_BITS, 16 + 16 + 16 + (32 * 2),
+        PR_IGNORE_BITS, 8 + 16 + 16 + 16 + (32 * 2),
         PR_FLOAT, position_z,
         PR_IGNORE_BITS, (32 * 4) + 8 + 8 + 2,
         PR_BITS, weapon_id, 6,
