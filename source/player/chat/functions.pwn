@@ -99,15 +99,10 @@ ChatBuffer_Push(playerid, color, const message[])
     if(FCNPC_IsValid(playerid))
         return 0;
 
-    if(list_size(g_rglChatBuffer[playerid]) == CHAT_BUFFER_SIZE)
-    {
-        list_remove(g_rglChatBuffer[playerid], 0);
-    }
-
     new msg[eMessageData];
     msg[e_iColor] = color;
     strcat(msg[e_szMessage], message);
-    list_add_arr(g_rglChatBuffer[playerid], msg);
+    //Circular_Push_(sizeof(g_rgeChatBuffer[]) * cellbytes, sizeof(g_rgeChatBuffer[][]), g_rgeChatBuffer[playerid], msg);
 
     return 1;
 }
@@ -119,13 +114,16 @@ Chat_Resend(playerid)
 
     g_rgbRegisterChatMessages{playerid} = false;
 
-    new msg[eMessageData];
-    for_list(i : g_rglChatBuffer[playerid])
+    /*
+    for(new i; i < CHAT_BUFFER_SIZE; ++i)
     {
-        iter_get_arr_safe(i, msg);
-        SendClientMessage(playerid, msg[e_iColor], msg[e_szMessage]);
-    }
+        if(!g_rgeChatBuffer[playerid][i][e_szMessage][0])
+            break;
 
+        SendClientMessage(playerid, g_rgeChatBuffer[playerid][i][e_iColor], g_rgeChatBuffer[playerid][i][e_szMessage]);
+    }
+    */
+    
     g_rgbRegisterChatMessages{playerid} = true;
 
     return 1;

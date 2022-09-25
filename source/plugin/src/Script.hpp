@@ -19,6 +19,10 @@ public:
 	cell n_argon_get_hash(cell* params);
 	cell n_argon_is_equal();
 
+	cell n_gang_link_dbid(int dbid, int arrayid);
+	cell n_gang_id_from_dbid(int dbid);
+	cell n_gang_remove_id(int dbid);
+
 	void ProcessWorkQueue();
 	void ProcessResultQueue();
 private:
@@ -26,4 +30,5 @@ private:
 	sf::contfree_safe_ptr<std::queue<std::unique_ptr<ArgonWork>>> _result_queue;
 	std::atomic<std::uint8_t> _max_worker_threads{ 3 };
 	std::atomic<std::uint8_t> _active_threads{ 0 };
+	std::unordered_map<int, int> _gang_ids;
 };

@@ -37,7 +37,7 @@ command banda(playerid, const params[], "Abre el panel de creación de una banda"
 
     strcpy(s_rgszGangCreationName[playerid], "Mi banda");
     s_rgiGangCreationIcon{playerid} = 0;
-    s_rgiGangCreationColor[playerid] = math_random_unsigned(0, 0xFFFFFFFF) | 0xFF;
+    s_rgiGangCreationColor[playerid] = Random(0, 0xFFFFFFFF) | 0xFF;
 
     GangCreation_ShowDialog(playerid);
 
@@ -215,7 +215,7 @@ public GANG_Inserted(playerid)
     g_rgeGangs[idx][e_iGangColor] = s_rgiGangCreationColor[playerid];
     g_rgeGangs[idx][e_iGangIcon] = s_rgiGangCreationIcon{playerid};
     g_rgeGangs[idx][e_iGangOwnerId] = Player_AccountID(playerid);
-    map_add(g_mapGangIds, gangid, idx);
+    gang_link_dbid(gangid, idx);
 
     g_rgeGangRanks[idx][9][e_iRankId] = rankid;
     strcpy(g_rgeGangRanks[idx][9][e_szRankName], "Lider");

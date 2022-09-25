@@ -8,25 +8,25 @@ static PoliceLocker_OnKeyPress(playerid)
     return 0;
 }
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     Key_Alert(0.0, 0.0, 0.0, 1.0, KEYNAME_NO, .callback_on_press = __addressof(PoliceLocker_OnKeyPress));    
 
-    #if defined POLICE_OnGameModeInit
-        return POLICE_OnGameModeInit();
+    #if defined POLICE_OnScriptInit
+        return POLICE_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit POLICE_OnGameModeInit
-#if defined POLICE_OnGameModeInit
-    forward POLICE_OnGameModeInit();
+#define OnScriptInit POLICE_OnScriptInit
+#if defined POLICE_OnScriptInit
+    forward POLICE_OnScriptInit();
 #endif
 
 public OnPlayerAuthenticate(playerid)

@@ -92,7 +92,7 @@ public DEATH_DeleteCorpse(playerid)
 
     for(new i; i < amount; ++i)
     {
-        DroppedItem_Create(ITEM_MEAT, 1, 0, x + math_random_float(-1.0, 1.0), y + math_random_float(-1.0, 1.0), z, GetDynamicActorVirtualWorld(g_rgiPlayerCorpseActor[playerid]), 0, playerid, .timeout = 15 + random(60));
+        DroppedItem_Create(ITEM_MEAT, 1, 0, x + RandomFloat(-1.0, 1.0), y + RandomFloat(-1.0, 1.0), z, GetDynamicActorVirtualWorld(g_rgiPlayerCorpseActor[playerid]), 0, playerid, .timeout = 15 + random(60));
     }
 
     DestroyDynamicActor(g_rgiPlayerCorpseActor[playerid]);

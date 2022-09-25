@@ -13,7 +13,50 @@ command policias(playerid, const params[], "Muestra el panel de policías")
 
     MemSet(g_rgszSelectedOfficer[playerid], 0);
 
-    new Task<Cache>:t = MySQL_QueryAsync(g_hDatabase, 
+    inline const QueryDone()
+    {
+        new rowc;
+        cache_get_row_count(rowc);
+
+        if(!rowc)
+        {
+            SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} No hay ningún policía.");
+            return 1;
+        }
+
+        strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Oficial\t{DADADA}Rango\t{DADADA}Reclutado por\t{DADADA}Última conexión{DADADA}\n");
+
+        new line[256];
+        for(new i; i < rowc; ++i)
+        {
+            new officer_id, officer_name[25], rank, recruiter_id, recruiter_name[25], officer_current_playerid, last_connection[24];
+            cache_get_value_name_int(i, "ACCOUNT_ID", officer_id);
+            cache_get_value_name(i, "OFFICER_NAME", officer_name);
+            cache_get_value_name_int(i, "RANK", rank);
+            cache_get_value_name_int(i, "RECRUITED_BY", recruiter_id);
+
+            new bool:isnt_recruited;
+            cache_is_value_name_null(i, "RECRUITER_NAME", isnt_recruited);
+            if(isnt_recruited)
+            {
+                strcat(recruiter_name, "Desconocido");
+                recruiter_id = 0;
+            }
+            else
+            {
+                cache_get_value_name(i, "RECRUITER_NAME", recruiter_name);
+            }
+
+            cache_get_value_name_int(i, "CURRENT_PLAYERID", officer_current_playerid);
+            cache_get_value_name(i, "LAST_CONNECTION", last_connection);
+            
+            format(line, sizeof(line), "{DADADA}%s ({3A86FF}%i{DADADA})\t{DADADA}%s\t{DADADA}%s ({3A86FF}%i{DADADA})\t{%x}%s\n", officer_name, officer_id, Police_GetRankName(rank), recruiter_name, recruiter_id, (officer_current_playerid == -1 ? 0xDADADA : 0x64A752), (officer_current_playerid == -1 ? last_connection : "En línea"));
+            strcat(HYAXE_UNSAFE_HUGE_STRING, line);
+        }
+
+        Dialog_Show(playerid, "police_manage", DIALOG_STYLE_TABLIST_HEADERS, "{3A86FF}Hyaxe {DADADA}- Policía", HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Salir");
+    }
+    MySQL_TQueryInline(g_hDatabase, using inline QueryDone, 
         "\
             SELECT `POLICE_OFFICERS`.*, `RECRUITEE`.`NAME` AS `OFFICER_NAME`, `RECRUITEE`.`CURRENT_PLAYERID`, `RECRUITER`.`NAME` AS `RECRUITER_NAME`, MAX(`CONNECTION_LOG`.`DATE`) AS `LAST_CONNECTION` \
             FROM `POLICE_OFFICERS` \
@@ -28,49 +71,6 @@ command policias(playerid, const params[], "Muestra el panel de policías")
         "
     );
 
-    new Cache:c = await<Cache> t;
-
-    new rowc;
-    cache_get_row_count(rowc);
-
-    if(!rowc)
-    {
-        SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} No hay ningún policía.");
-        return 1;
-    }
-
-    strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Oficial\t{DADADA}Rango\t{DADADA}Reclutado por\t{DADADA}Última conexión{DADADA}\n");
-
-    new line[256];
-    for(new i; i < rowc; ++i)
-    {
-        new officer_id, officer_name[25], rank, recruiter_id, recruiter_name[25], officer_current_playerid, last_connection[24];
-        cache_get_value_name_int(i, "ACCOUNT_ID", officer_id);
-        cache_get_value_name(i, "OFFICER_NAME", officer_name);
-        cache_get_value_name_int(i, "RANK", rank);
-        cache_get_value_name_int(i, "RECRUITED_BY", recruiter_id);
-
-        new bool:isnt_recruited;
-        cache_is_value_name_null(i, "RECRUITER_NAME", isnt_recruited);
-        if(isnt_recruited)
-        {
-            strcat(recruiter_name, "Desconocido");
-            recruiter_id = 0;
-        }
-        else
-        {
-            cache_get_value_name(i, "RECRUITER_NAME", recruiter_name);
-        }
-
-        cache_get_value_name_int(i, "CURRENT_PLAYERID", officer_current_playerid);
-        cache_get_value_name(i, "LAST_CONNECTION", last_connection);
-        
-        format(line, sizeof(line), "{DADADA}%s ({3A86FF}%i{DADADA})\t{DADADA}%s\t{DADADA}%s ({3A86FF}%i{DADADA})\t{%x}%s\n", officer_name, officer_id, Police_GetRankName(rank), recruiter_name, recruiter_id, (officer_current_playerid == -1 ? 0xDADADA : 0x64A752), (officer_current_playerid == -1 ? last_connection : "En línea"));
-        strcat(HYAXE_UNSAFE_HUGE_STRING, line);
-    }
-
-    Dialog_Show(playerid, "police_manage", DIALOG_STYLE_TABLIST_HEADERS, "{3A86FF}Hyaxe {DADADA}- Policía", HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Salir");
-
     return 1;
 }
 
@@ -84,7 +84,7 @@ dialog police_manage(playerid, response, listitem, inputtext[])
 
     g_rgszSelectedOfficer[playerid][24] = '\0';
 
-    Dialog_Show_s(playerid, "police_manage_officer", DIALOG_STYLE_LIST, @f("Opciones para {3A86FF}%s", g_rgszSelectedOfficer[playerid]), @("{DADADA}Ascender o descender\n{A83225}Expulsar"), "Seleccionar", "Atrás");
+    Dialog_Show(playerid, "police_manage_officer", DIALOG_STYLE_LIST, va_return("Opciones para {3A86FF}%s", g_rgszSelectedOfficer[playerid]), "{DADADA}Ascender o descender\n{A83225}Expulsar", "Seleccionar", "Atrás");
 
     return 1;
 }
@@ -128,7 +128,7 @@ dialog police_change_rank(playerid, response, listitem, inputtext[])
     {
         new new_rank = _:POLICE_RANK_GEN_COMMISSIONER - listitem;
 
-        mysql_tquery_s(g_hDatabase, @f("UPDATE `POLICE_OFFICERS` SET `RANK` = %i WHERE `ACCOUNT_ID` = %i;", new_rank, g_rgszSelectedOfficer[playerid][25]));
+        mysql_tquery(g_hDatabase, va_return("UPDATE `POLICE_OFFICERS` SET `RANK` = %i WHERE `ACCOUNT_ID` = %i;", new_rank, g_rgszSelectedOfficer[playerid][25]));
         
         new bool:reported = false;
         
@@ -144,7 +144,7 @@ dialog police_change_rank(playerid, response, listitem, inputtext[])
                     new message[40];
                     format(message, sizeof(message), "Has sido %s a %s.", (is_lower ? "descendido" : "ascendido"), Police_GetRankName(new_rank));
                     Notification_Show(playerid, message, 10000, 0x3A86FFFF);
-                    Police_SendMessage_s(POLICE_RANK_NONE, 0x3A86FFFF, @f("[Policía] ›{DADADA} %s ahora es {3A86FF}%s{DADADA}.", Player_RPName(i), Police_GetRankName(new_rank)));
+                    Police_SendMessage(POLICE_RANK_NONE, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s ahora es {3A86FF}%s{DADADA}.", Player_RPName(i), Police_GetRankName(new_rank)));
                 }
 
                 reported = true;
@@ -155,7 +155,7 @@ dialog police_change_rank(playerid, response, listitem, inputtext[])
 
         if(!reported)
         {
-            Police_SendMessage_s(POLICE_RANK_NONE, 0x3A86FFFF, @f("[Policía] ›{DADADA} %s ahora es {415BA2}%s{DADADA}.", g_rgszSelectedOfficer[playerid], g_rgszPoliceRankNames[new_rank]));
+            Police_SendMessage(POLICE_RANK_NONE, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s ahora es {415BA2}%s{DADADA}.", g_rgszSelectedOfficer[playerid], g_rgszPoliceRankNames[new_rank]));
         }
     }
 

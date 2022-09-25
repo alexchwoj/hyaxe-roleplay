@@ -9,7 +9,7 @@ static GasStation_OnKeyPress(playerid)
     return 1;
 }
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     for(new i; i < sizeof(g_rgfFuelStations); ++i)
     {
@@ -25,21 +25,21 @@ public OnGameModeInit()
         );
     }
 
-    #if defined FUEL_OnGameModeInit
-        return FUEL_OnGameModeInit();
+    #if defined FUEL_OnScriptInit
+        return FUEL_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit FUEL_OnGameModeInit
-#if defined FUEL_OnGameModeInit
-    forward FUEL_OnGameModeInit();
+#define OnScriptInit FUEL_OnScriptInit
+#if defined FUEL_OnScriptInit
+    forward FUEL_OnScriptInit();
 #endif
 
 dialog fuel_station(playerid, response, listitem, inputtext[])

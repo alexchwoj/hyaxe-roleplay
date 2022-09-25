@@ -182,18 +182,14 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     new areas = GetPlayerNumberDynamicAreas(playerid);
     if(areas > 0)
     {
-        new area_arr[1][] = { { } };
-        new Var:v = amx_alloc(areas);
-        amx_to_ref(v, area_arr);
-
-        GetPlayerDynamicAreas(playerid, area_arr[0], areas);
+        GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
 
         for(new i; i < areas; ++i)
         {
-            if(Streamer_HasArrayData(STREAMER_TYPE_AREA, area_arr[0][i], E_STREAMER_CUSTOM(0x4B4559)))
+            if(Streamer_HasArrayData(STREAMER_TYPE_AREA, YSI_UNSAFE_HUGE_STRING[i], E_STREAMER_CUSTOM(0x4B4559)))
             {
                 new info[4];
-                Streamer_GetArrayData(STREAMER_TYPE_AREA, area_arr[0][i], E_STREAMER_CUSTOM(0x4B4559), info);
+                Streamer_GetArrayData(STREAMER_TYPE_AREA, YSI_UNSAFE_HUGE_STRING[i], E_STREAMER_CUSTOM(0x4B4559), info);
 
                 if(info[2] == -1)
                     break;
@@ -223,9 +219,6 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 break;
             }
         }
-
-        amx_free(v);
-        amx_delete(v);
     }
 
     #if defined KEY_OnPlayerKeyStateChange

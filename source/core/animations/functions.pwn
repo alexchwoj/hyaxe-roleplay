@@ -3,19 +3,24 @@
 #endif
 #define _animations_functions_
 
-Task:TD_Fade(playerid, PlayerText:textdraw, rounds = 5, interval = 5)
+TD_Fade(playerid, PlayerText:textdraw, rounds = 5, interval = 5, Func:callback<> = F@_@:-1)
 {
-    new Task:t = task_new();
+    DEBUG_PRINT("[func] TD_Fade(playerid = %i, PlayerText:textdraw = %i, rounds = %i, interval = %i, Func:callback<> = %i)", playerid, _:textdraw, rounds, interval, _:callback);
 
     if((interval % 2) != 0 && (interval % 5) != 0)
     {
-        task_set_error_ticks(t, amx_err_params, 1);
-        return t;
+        return 0;
     }
 
-    g_rgiFadingTimers[playerid][textdraw] = SetTimerEx("FADINGS_FadeTextDraw", 15, true, "iiiii", playerid, _:textdraw, rounds, interval, _:t);
+    g_rgiFadingTimers[playerid][textdraw] = SetTimerEx("FADINGS_FadeTextDraw", 15, true, "iiii", playerid, _:textdraw, rounds, interval);
     g_rgiFadingRounds[playerid]{textdraw} = 0;
     g_rgbFadingInOut[playerid]{textdraw} = FADING_IN;
 
-    return t;
+    if(_:callback != -1)
+    {
+        Indirect_Claim(callback);
+        g_rgpFadingCallbacks[playerid][textdraw] = callback;
+    }
+
+    return 1;
 }

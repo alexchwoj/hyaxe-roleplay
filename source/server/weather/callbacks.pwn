@@ -63,23 +63,23 @@ public OnPlayerPauseStateChange(playerid, pausestate)
     forward Clock_OnPlayerPauseStateChange(playerid, pausestate);
 #endif
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     SetTimer("Timer_WeatherUpdate", HYAXE_WEATHER_INTERVAL, true);
 
-    #if defined Clock_OnGameModeInit
-        return Clock_OnGameModeInit();
+    #if defined Clock_OnScriptInit
+        return Clock_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit Clock_OnGameModeInit
-#if defined Clock_OnGameModeInit
-    forward Clock_OnGameModeInit();
+#define OnScriptInit Clock_OnScriptInit
+#if defined Clock_OnScriptInit
+    forward Clock_OnScriptInit();
 #endif

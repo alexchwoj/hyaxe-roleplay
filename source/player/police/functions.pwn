@@ -19,23 +19,9 @@ Police_SendMessage(ePoliceRanks:rank, color, const message[])
 {
     foreach(new i : Police)
     {
-        if(Police_Rank(i) >= rank)
-        {
-            SendClientMessage(i, color, message);
-        }
-    }
-
-    return 1;
-}
-
-Police_SendMessage_s(ePoliceRanks:rank, color, ConstString:message)
-{
-    new ConstAmxString:addr = str_addr_const(message);
-    foreach(new i : Police)
-    {
         if(Police_Rank(i) >= _:rank)
         {
-            SendClientMessage_s(i, color, addr);
+            SendClientMessage(i, color, message);
         }
     }
 

@@ -19,24 +19,6 @@ Admins_SendMessage(level, color, const message[])
     return 1;
 }
 
-Admins_SendMessage_s(level, color, ConstString:message)
-{
-    new ConstAmxString:addr = str_addr_const(message);
-
-    foreach(new i : Admin)
-    {
-        if(!Bit_Get(Player_Config(i), CONFIG_DISABLE_ADMIN_MESSAGES))
-        {
-            if(Player_AdminLevel(i) >= level)
-            {
-                SendClientMessage_s(i, color, addr);
-            }
-        }
-    }
-
-    return 1;
-}
-
 Player_Ban(playerid, adminid, const reason[] = "No especificada", time_seconds = -1)
 {
     new admin_db[24] = "NULL";
@@ -61,7 +43,7 @@ Player_Ban(playerid, adminid, const reason[] = "No especificada", time_seconds =
     gettime(hour, minute, second);
     getdate(year, month, day);
 
-    new String:dialog_str = @f(
+    format(YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH,
         "{DADADA}Tu cuenta fue vetada %s del servidor.\n\n\
         {CB3126}Administrador\n\
         \t{DADADA}\
@@ -71,25 +53,25 @@ Player_Ban(playerid, adminid, const reason[] = "No especificada", time_seconds =
 
     if(adminid == ADMIN_ID_ANTICHEAT)
     {
-        dialog_str += @("Anticheat\n\n");
+        strcat(YSI_UNSAFE_HUGE_STRING, "Anticheat\n\n", YSI_UNSAFE_HUGE_LENGTH);
     }
     else
     {
-        dialog_str += @f("%s (Cuenta ID {CB3126}%i{DADADA})\n\n", Player_RPName(adminid), Player_AccountID(adminid));
+        strcat(YSI_UNSAFE_HUGE_STRING, va_return("%s (Cuenta ID {CB3126}%i{DADADA})\n\n", Player_RPName(adminid), Player_AccountID(adminid)), YSI_UNSAFE_HUGE_LENGTH);
     }
 
-    dialog_str += @f("\
+    strcat(YSI_UNSAFE_HUGE_STRING, va_return("\
         {CB3126}Razón de expulsión\n\t{DADADA} %s\n\n\
         {CB3126}Fecha de expulsión\n\t{DADADA}%i/%i/%i %i:%i:%i\n\n\
         {CB3126}Expira en\n\t{DADADA}\
     ", 
         reason,
         day, month, year, hour, minute, second
-    );
+    ), YSI_UNSAFE_HUGE_LENGTH);
 
     if(time_seconds < 0)
     {
-        dialog_str += @("Nunca");
+        strcat(YSI_UNSAFE_HUGE_STRING, "Nunca", YSI_UNSAFE_HUGE_LENGTH);
     }
     else
     {
@@ -102,30 +84,29 @@ Player_Ban(playerid, adminid, const reason[] = "No especificada", time_seconds =
 
         if(days)
         {
-            dialog_str += @f("%i día%s", days, (days > 1 ? "s" : ""));
+            strcat(YSI_UNSAFE_HUGE_STRING, va_return("%i día%s", days, (days > 1 ? "s" : "")));
             has_previous = true;
         }
 
         if(hours)
         {
-            dialog_str += @f("%s%i hora%s", (has_previous ? ", " : ""), hours, (hours > 1 ? "s" : ""));
+            strcat(YSI_UNSAFE_HUGE_STRING, va_return("%s%i hora%s", (has_previous ? ", " : ""), hours, (hours > 1 ? "s" : "")));
             has_previous = true;
         }
 
         if(minutes)
         {
-            dialog_str += @f("%s%i minuto%s", (has_previous ? ", " : ""), minutes, (minutes > 1 ? "s" : ""));
+            strcat(YSI_UNSAFE_HUGE_STRING, va_return("%s%i minuto%s", (has_previous ? ", " : ""), minutes, (minutes > 1 ? "s" : "")));
             has_previous = true;
         }
 
         if(seconds)
         {
-            dialog_str += @f("%s%i segundo%s", (has_previous ? " y " : ""), seconds, (seconds > 1 ? "s" : ""));
+            strcat(YSI_UNSAFE_HUGE_STRING, va_return("%s%i segundo%s", (has_previous ? " y " : ""), seconds, (seconds > 1 ? "s" : "")));
         }
     }
 
-    Dialog_Show_s(playerid, "kick", DIALOG_STYLE_MSGBOX, @("{CB3126}Hyaxe {DADADA}- Expulsión"), dialog_str, "Salir");
-
+    Dialog_Show(playerid, "kick", DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe {DADADA}- Expulsión", YSI_UNSAFE_HUGE_STRING, "Salir");
     KickTimed(playerid, 500);
 
     return 1;

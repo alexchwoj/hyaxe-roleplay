@@ -3,7 +3,7 @@
 #endif
 #define _territories_callbacks_
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     new Cache:territories_cache = mysql_query(g_hDatabase, "SELECT * FROM `ZONES`;", .use_cache = true);
     #pragma nodestruct territories_cache
@@ -70,21 +70,21 @@ public OnGameModeInit()
 
     printf("[territory] Loaded %i territories.", rowc);
 
-    #if defined TERR_OnGameModeInit
-        return TERR_OnGameModeInit();
+    #if defined TERR_OnScriptInit
+        return TERR_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit TERR_OnGameModeInit
-#if defined TERR_OnGameModeInit
-    forward TERR_OnGameModeInit();
+#define OnScriptInit TERR_OnScriptInit
+#if defined TERR_OnScriptInit
+    forward TERR_OnScriptInit();
 #endif
 
 

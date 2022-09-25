@@ -3,7 +3,7 @@
 #endif
 #define _debug_callbacks_
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     amx_forked() threaded(sync_explicit)
     {
@@ -111,21 +111,21 @@ public OnGameModeInit()
         }
     }
 
-    #if defined DEBUG_OnGameModeInit
-        return DEBUG_OnGameModeInit();
+    #if defined DEBUG_OnScriptInit
+        return DEBUG_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit DEBUG_OnGameModeInit
-#if defined DEBUG_OnGameModeInit
-    forward DEBUG_OnGameModeInit();
+#define OnScriptInit DEBUG_OnScriptInit
+#if defined DEBUG_OnScriptInit
+    forward DEBUG_OnScriptInit();
 #endif
 
 command debug(playerid, const params[], "Activa la pantalla de debug")

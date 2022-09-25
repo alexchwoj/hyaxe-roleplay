@@ -64,13 +64,6 @@
 	#include <crashdetect>
 #endif
 
-#define PP_SYNTAX_ON_INIT
-#define PP_SYNTAX_ON_EXIT
-#define PP_SYNTAX_FOR_LIST
-#define PP_SYNTAX_GENERIC
-#define PP_SYNTAX_AWAIT
-#define PP_SYNTAX_@
-#define PP_ADDITIONAL_TAGS ArgTag
 #define FCNPC_DISABLE_VERSION_CHECK
 
 public const __HYAXE__ = 1;
@@ -117,7 +110,6 @@ const HYAXE_MAX_NPCS = 100;
 #include <Pawn.CMD>
 #include <Pawn.Regex>
 #include <Pawn.RakNet>
-#include <PawnPlus>
 #include <a_mysql>
 #include <colandreas>
 #include <FCNPC>
@@ -127,6 +119,7 @@ const HYAXE_MAX_NPCS = 100;
 /*
 		YSI is pozzed
 							*/
+#define CGEN_MEMORY 20000
 #define YSI_NO_KEYWORD_List
 #define YSI_NO_HEAP_MALLOC
 #define YSI_NO_ANDROID_CHECK
@@ -137,9 +130,16 @@ const HYAXE_MAX_NPCS = 100;
 #define FOREACH_NO_ACTORS
 
 #include <YSI_Core/y_cell>
+#include <YSI_Coding/y_hooks>
 #include <YSI_Coding/y_inline>
+#include <YSI_Coding/y_va>
 #include <YSI_Data/y_bit>
+#include <YSI_Data/y_circular>
 #include <YSI_Data/y_iterate>
+#include <YSI_Extra/y_inline_mysql>
+#include <YSI_Extra/y_inline_timers>
+#include <YSI_Storage/y_amx>
+#include <amx/amx_header>
 
 // Plugin
 ////////////
@@ -185,7 +185,6 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/territories/header.pwn"
 #include "server/gangs/header.pwn"
 #include "server/gangs/events/header.pwn"
-#include "server/church/header.pwn"
 #include "server/fuel_station/header.pwn"
 #include "server/car_rental/header.pwn"
 #include "server/weather/header.pwn"
@@ -208,7 +207,6 @@ const HYAXE_MAX_NPCS = 100;
 // Functions
 ///////////////
 #include "core/utils/functions.pwn"
-#include "core/async/functions.pwn"
 #include "core/animations/functions.pwn"
 #include "core/notification/functions.pwn"
 #include "core/menu/functions.pwn"
@@ -226,7 +224,6 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/jobs/gunsmaker/functions.pwn"
 #include "server/hospital/functions.pwn"
 #include "server/hookers/functions.pwn"
-#include "server/church/functions.pwn"
 #include "server/gangs/functions.pwn"
 #include "server/gangs/events/functions.pwn"
 #include "server/territories/functions.pwn"
@@ -250,7 +247,6 @@ const HYAXE_MAX_NPCS = 100;
 
 // Callbacks
 ///////////////
-#include "core/async/callbacks.pwn"
 #include "core/database/callbacks.pwn"
 #include "core/config/callbacks.pwn"
 #include "core/animations/callbacks.pwn"
@@ -280,7 +276,6 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/gangs/callbacks.pwn"
 #include "server/gangs/events/callbacks.pwn"
 #include "server/territories/callbacks.pwn"
-#include "server/church/callbacks.pwn"
 #include "server/black_market/callbacks.pwn"
 #include "server/fuel_station/callbacks.pwn"
 #include "server/car_rental/callbacks.pwn"
@@ -323,7 +318,6 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/needs/commands.pwn"
 #include "player/admin/commands.pwn"
 #include "player/police/commands.pwn"
-#include "server/church/commands.pwn"
 #include "server/gangs/commands.pwn"
 
 // Prevents runtime error 20 (invalid index)

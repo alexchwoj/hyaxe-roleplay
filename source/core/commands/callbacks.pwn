@@ -3,62 +3,46 @@
 #endif
 #define _commands_callbacks_
 
-on_init RegisterCommands()
+#include <YSI_Coding/y_hooks>
+
+#if !defined CHAIN_ORDER
+	#define CHAIN_ORDER() 0
+#endif
+
+CHAIN_HOOK(Commands)
+#undef CHAIN_ORDER
+#define CHAIN_ORDER CHAIN_NEXT(Commands)
+CHAIN_FORWARD:Commands_OnScriptInit() = 1;
+
+public OnScriptInit()
 {
-    /*
-    __emit
+    new hdr[AMX_HDR];
+    GetAmxHeader(hdr);
+
+    new 
+        idx = 0,
+        ptr;
+
+    while((idx = AMX_GetPublicPointerPrefix(idx, ptr, _A<hy@cmd_>)))
     {
-        const.pri 0
-        sctrl 0xFE
-    }
-    */
-
-    new name[32];
-
-    for(new i = amx_num_publics() - 1; i != -1; --i)
-    {
-        amx_public_name(i, name);
-
-        if(!strcmp("hy@cmd_", name, true, 7))
+        __emit 
         {
-            new addr = amx_public_addr(i);
-            __emit
-            {
-                push.c 0
-                lctrl 6
-                add.c 36
-                lctrl 8
-                push.pri
-                load.s.pri addr
-                sctrl 6
-            }
+            push.c 0
+            lctrl 6
+            add.c 36
+            lctrl 8
+            push.pri
+            load.s.pri ptr
+            sctrl 6
         }
     }
 
-    /*
-    __emit
-    {
-        const.pri 2
-        sctrl 0xFF
-    }
-    */
-
-    #if defined CMD_OnGameModeInit
-        return CMD_OnGameModeInit();
-    #else
-        return 1;
-    #endif
+    Commands_OnScriptInit();
+    return 1;
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
-#else
-    #define _ALS_OnGameModeInit
-#endif
-#define OnGameModeInit CMD_OnGameModeInit
-#if defined CMD_OnGameModeInit
-    forward CMD_OnGameModeInit();
-#endif
+#undef OnScriptInit
+#define OnScriptInit(%0) CHAIN_PUBLIC:Commands_OnScriptInit(%0)
 
 public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
 {
@@ -108,7 +92,7 @@ public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags)
 
     if((flags >>> 24) > RANK_LEVEL_USER && !(flags & CMD_DONT_LOG_COMMAND))
     {
-        Admins_SendMessage_s(Player_AdminLevel(playerid), 0x415BA2FF, @f("{DADADA}%s %s {415BA2}%s{DADADA} usó el comando {415BA2}/%s{BFBFBF} %s.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_GetRankName(playerid), Player_RPName(playerid), cmd, params));
+        Admins_SendMessage(Player_AdminLevel(playerid), 0x415BA2FF, va_return("{DADADA}%s %s {415BA2}%s{DADADA} usó el comando {415BA2}/%s{BFBFBF} %s.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_GetRankName(playerid), Player_RPName(playerid), cmd, params));
     }
 
     #if defined CMD_OnPlayerCommandPerformed

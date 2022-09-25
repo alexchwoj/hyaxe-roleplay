@@ -3,7 +3,7 @@
 #endif
 #define _CALLBACKS_DATABASE_
 
-on_init ConnectDatabase()
+hook OnScriptInit()
 {
     print("[db] Connecting to database... ");
 

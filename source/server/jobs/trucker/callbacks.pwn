@@ -68,7 +68,7 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
     return 1;
 }
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     for(new i = sizeof(g_rgfTrucksPos) - 1; i != -1; --i)
     {
@@ -93,21 +93,21 @@ public OnGameModeInit()
 
     CreateDynamicMapIcon(125.2116, -285.1135, 1.5781, 51, -1, .worldid = 0, .interiorid = 0);
 
-    #if defined J_TRK_OnGameModeInit
-        return J_TRK_OnGameModeInit();
+    #if defined J_TRK_OnScriptInit
+        return J_TRK_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit J_TRK_OnGameModeInit
-#if defined J_TRK_OnGameModeInit
-    forward J_TRK_OnGameModeInit();
+#define OnScriptInit J_TRK_OnScriptInit
+#if defined J_TRK_OnScriptInit
+    forward J_TRK_OnScriptInit();
 #endif
 
 public OnPlayerDisconnect(playerid, reason)
@@ -496,9 +496,13 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
         {
             TogglePlayerControllable(playerid, false);
             Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Necesitas el trabajo de camionero para subir a este vehículo");
-            wait_ms(2000);
-            TogglePlayerControllable(playerid, true);
 
+            inline const Due()
+            {
+                TogglePlayerControllable(playerid, true);
+            }
+            Timer_CreateCallback(using inline Due, 2000, 1);
+            
             return 1;
         }
     }

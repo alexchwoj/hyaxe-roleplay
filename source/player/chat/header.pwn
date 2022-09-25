@@ -12,8 +12,7 @@ enum eMessageData
 const CHAT_BUFFER_SIZE = 200;
 
 new
-    List:g_rglChatBuffer[MAX_PLAYERS],
-    bool:g_rgbRegisterChatMessages[MAX_PLAYERS char] = { bool:0x01010101, ... },
-    NativeHook:g_hChatBufHook;
+    g_rgeChatBuffer[MAX_PLAYERS][CHAT_BUFFER_SIZE][eMessageData],
+    bool:g_rgbRegisterChatMessages[MAX_PLAYERS char] = { bool:0x01010101, ... };
 
 forward Chat_SendMessageToRange(playerid, color, Float:range, const string[]);

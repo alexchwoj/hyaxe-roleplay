@@ -127,18 +127,6 @@ Gang_SendMessage(gangid, const message[])
     return 1;
 }
 
-Gang_SendMessage_s(gangid, ConstString:message)
-{
-    new ConstAmxString:msg_address = str_addr_const(message);
-    
-    foreach(new i : GangMember[gangid])
-    {
-        SendClientMessage_s(i, g_rgeGangs[gangid][e_iGangColor], msg_address);
-    }
-
-    return 1;
-}
-
 GangPanel_OpenRoles(playerid)
 {
     strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Los roles están ordenados por su importancia jerárquica\t \n");

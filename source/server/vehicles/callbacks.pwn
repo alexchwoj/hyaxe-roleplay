@@ -3,26 +3,26 @@
 #endif
 #define _vehicles_callbacks_
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     print("[veh] Initializing iterators...");
     Iter_Init(PlayerVehicles);
     
-    #if defined VEH_OnGameModeInit
-        return VEH_OnGameModeInit();
+    #if defined VEH_OnScriptInit
+        return VEH_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit VEH_OnGameModeInit
-#if defined VEH_OnGameModeInit
-    forward VEH_OnGameModeInit();
+#define OnScriptInit VEH_OnScriptInit
+#if defined VEH_OnScriptInit
+    forward VEH_OnScriptInit();
 #endif
 
 public OnPlayerDisconnect(playerid, reason)
@@ -520,10 +520,12 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
             }
 
             Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes robar vehículos");
-            task_yield(0);
-            wait_ms(2000);
 
-            TogglePlayerControllable(playerid, true);
+            inline const Due()
+            {
+                TogglePlayerControllable(playerid, true);
+            }
+            Timer_CreateCallback(using inline Due, 2000, 1);
 
             return 0;
         }

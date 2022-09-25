@@ -12,7 +12,8 @@ enum
 new
     g_rgiFadingRounds[MAX_PLAYERS][PlayerText:MAX_PLAYER_TEXT_DRAWS char],
     g_rgiFadingTimers[MAX_PLAYERS][PlayerText:MAX_PLAYER_TEXT_DRAWS],
-    g_rgbFadingInOut[MAX_PLAYERS][PlayerText:MAX_PLAYER_TEXT_DRAWS char];
+    g_rgbFadingInOut[MAX_PLAYERS][PlayerText:MAX_PLAYER_TEXT_DRAWS char],
+    Func:g_rgpFadingCallbacks[MAX_PLAYERS][PlayerText:MAX_PLAYER_TEXT_DRAWS]<> = { F@_@:-1, ... };
 
-forward Task:TD_Fade(playerid, PlayerText:textdraw, rounds = 5, interval = 5);
-forward FADINGS_FadeTextDraw(playerid, PlayerText:textdraw, rounds, interval, Task:t);
+forward TD_Fade(playerid, PlayerText:textdraw, rounds = 5, interval = 5, Func:callback<> = F@_@:-1);
+forward FADINGS_FadeTextDraw(playerid, PlayerText:textdraw, rounds, interval);

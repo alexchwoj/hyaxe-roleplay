@@ -41,26 +41,28 @@ public LEVELS_InterpolateTo(playerid, Float:init_x, Float:end_x, Float:start_xp,
 
         if(new_level)
         {
-            await TD_Fade(playerid, p_tdLevelingBar[playerid]{1}, 3, 10);
-
-            PlayerTextDrawSetString_s(playerid, p_tdLevelingBar[playerid]{0}, @f("%i", Player_Level(playerid)));
-            PlayerTextDrawSetString_s(playerid, p_tdLevelingBar[playerid]{1}, @f("%i", Player_Level(playerid) + 1));
-
-            g_rgiLevelingBarSteps{playerid} = 0;
-
-            new Float:new_end_x = lerp(LEVEL_BAR_MIN_X, LEVEL_BAR_MAX_X, floatdiv(Player_XP(playerid), Level_GetRequiredXP(Player_Level(playerid))));
-            if(new_end_x == LEVEL_BAR_MIN_X)
+            inline const Faded()
             {
-                TextDrawTextSize(g_tdLevelingBar[3], LEVEL_BAR_MIN_X, 75.500000);
-                TextDrawShowForPlayer(playerid, g_tdLevelingBar[3]);
-                TextDrawSetStringForPlayer(g_tdLevelingBar[5], playerid, "0/%i", Level_GetRequiredXP(Player_Level(playerid)));
+                PlayerTextDrawSetString(playerid, p_tdLevelingBar[playerid]{0}, va_return("%i", Player_Level(playerid)));
+                PlayerTextDrawSetString(playerid, p_tdLevelingBar[playerid]{1}, va_return("%i", Player_Level(playerid) + 1));
 
-                g_rgiLevelingTimer[playerid] = SetTimerEx("LEVELS_HideAllBars", 10000, false, "i", playerid);
+                g_rgiLevelingBarSteps{playerid} = 0;
+
+                new Float:new_end_x = lerp(LEVEL_BAR_MIN_X, LEVEL_BAR_MAX_X, floatdiv(Player_XP(playerid), Level_GetRequiredXP(Player_Level(playerid))));
+                if(new_end_x == LEVEL_BAR_MIN_X)
+                {
+                    TextDrawTextSize(g_tdLevelingBar[3], LEVEL_BAR_MIN_X, 75.500000);
+                    TextDrawShowForPlayer(playerid, g_tdLevelingBar[3]);
+                    TextDrawSetStringForPlayer(g_tdLevelingBar[5], playerid, "0/%i", Level_GetRequiredXP(Player_Level(playerid)));
+
+                    g_rgiLevelingTimer[playerid] = SetTimerEx("LEVELS_HideAllBars", 10000, false, "i", playerid);
+                }
+                else
+                {
+                    g_rgiLevelingTimer[playerid] = SetTimerEx("LEVELS_InterpolateTo", 15, true, "ifffii", playerid, LEVEL_BAR_MIN_X, new_end_x, start_xp, start_level, false);
+                }
             }
-            else
-            {
-                g_rgiLevelingTimer[playerid] = SetTimerEx("LEVELS_InterpolateTo", 15, true, "ifffii", playerid, LEVEL_BAR_MIN_X, new_end_x, start_xp, start_level, false);
-            }
+            TD_Fade(playerid, p_tdLevelingBar[playerid]{1}, 3, 10, using inline Faded);
 
             return 1;
         }

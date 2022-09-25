@@ -13,6 +13,9 @@ bool Plugin::OnLoad()
 	RegisterNative<&Script::n_argon_set_thread_count>("argon_set_thread_count");
 	RegisterNative<&Script::n_argon_get_hash, false>("argon_get_hash");
 	RegisterNative<&Script::n_argon_is_equal>("argon_is_equal");
+	RegisterNative<&Script::n_gang_link_dbid>("gang_link_dbid");
+	RegisterNative<&Script::n_gang_id_from_dbid>("gang_id_from_dbid");
+	RegisterNative<&Script::n_gang_remove_id>("gang_remove_id");
 
 	Log("Loaded");
 	return true;

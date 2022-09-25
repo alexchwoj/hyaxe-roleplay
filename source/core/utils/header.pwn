@@ -49,10 +49,6 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 	#endif
 #endif
 
-#if !defined minrand
-	native minrand(min, max) = math_random;
-#endif
-
 #define _HexToRGBA(%1,%2,%3,%4) (((%4) & 0xFF) | (((%3) & 0xFF) << 8) | (((%2) & 0xFF) << 16) | ((%1) << 24))
 #define _RGBAToHex(%0,%1,%2,%3,%4) (((%1) = ((%0) >>> 24)),((%2) = (((%0) >>> 16) & 0xFF)),((%3) = (((%0) >>> 8) & 0xFF)),((%4) = ((%0) & 0xFF)))
 

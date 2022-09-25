@@ -127,14 +127,14 @@ Menu:hospital_menu(playerid, response, listitem)
     return 1;
 }
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     for(new i; i < sizeof(g_rgeHospitalData); ++i)
     {
         new int = g_rgeHospitalData[i][e_iHospitalInteriorType];
 
         Actor_CreateRobbable(
-            minrand(274, 276), 500, 800,
+            Random(274, 276), 500, 800,
             g_rgeHospitalInteriorData[int][e_fHospitalActorPosX], g_rgeHospitalInteriorData[int][e_fHospitalActorPosY], g_rgeHospitalInteriorData[int][e_fHospitalActorPosZ], g_rgeHospitalInteriorData[int][e_fHospitalActorPosAngle],
             .worldid = i, .interiorid = g_rgeHospitalInteriorData[int][e_iHospitalIntInterior]
         );
@@ -165,19 +165,19 @@ public OnGameModeInit()
         CreateDynamicMapIcon(g_rgeHospitalData[i][e_fHospitalPosX], g_rgeHospitalData[i][e_fHospitalPosY], g_rgeHospitalData[i][e_fHospitalPosZ], 22, -1, .worldid = 0, .interiorid = 0);
     }
 
-    #if defined HP_OnGameModeInit
-        return HP_OnGameModeInit();
+    #if defined HP_OnScriptInit
+        return HP_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit HP_OnGameModeInit
-#if defined HP_OnGameModeInit
-    forward HP_OnGameModeInit();
+#define OnScriptInit HP_OnScriptInit
+#if defined HP_OnScriptInit
+    forward HP_OnScriptInit();
 #endif

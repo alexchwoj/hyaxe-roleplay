@@ -21,7 +21,7 @@ static FishMarket_OnKeyPress(playerid)
     return 1;
 }
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     CreateDynamic3DTextLabel("{CB3126}Trabajo de pescador{DADADA}\nCompra una caña de pescar en la tienda de al lado para empezar\na trabajar. Puedes pescar en cualquier lugar con agua y luego\npuedes vender el pescado en la pescadería de al lado.", 0xDADADAFF, 2156.9067, -97.8114, 3.1911, 13.0, .testlos = 1, .worldid = 0, .interiorid = 0);
 
@@ -38,21 +38,21 @@ public OnGameModeInit()
     CreateDynamicActor(222, 2137.2734, -49.2241, 3.3297, 103.5150, .worldid = 0, .interiorid = 0);
     CreateDynamicActor(77, 2134.7053, -42.9645, 3.0114, 111.9517, .worldid = 0, .interiorid = 0);
     
-    #if defined FISH_OnGameModeInit
-        return FISH_OnGameModeInit(); 
+    #if defined FISH_OnScriptInit
+        return FISH_OnScriptInit(); 
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit FISH_OnGameModeInit
-#if defined FISH_OnGameModeInit
-    forward FISH_OnGameModeInit();
+#define OnScriptInit FISH_OnScriptInit
+#if defined FISH_OnScriptInit
+    forward FISH_OnScriptInit();
 #endif
 
 static Fisherman_KeyGameCallback(playerid, bool:success)

@@ -5,15 +5,17 @@
 
 static bool:s_rgbKillFadings[MAX_PLAYERS char];
 
-public FADINGS_FadeTextDraw(playerid, PlayerText:textdraw, rounds, interval, Task:t)
+public FADINGS_FadeTextDraw(playerid, PlayerText:textdraw, rounds, interval)
 {
     if(s_rgbKillFadings{playerid})
     {
-        if(task_valid(t))
-            task_delete(t);
+        if(_:g_rgpFadingCallbacks[playerid]{textdraw} != -1)
+        {
+            Indirect_Release(g_rgpFadingCallbacks[playerid]{textdraw});
+            g_rgpFadingCallbacks[playerid]{textdraw} = F@_@:-1;
+        }
 
         Timer_Kill(g_rgiFadingTimers[playerid][textdraw]);
-        s_rgbKillFadings{playerid} = false;
         return 1;
     }
     
@@ -45,8 +47,15 @@ public FADINGS_FadeTextDraw(playerid, PlayerText:textdraw, rounds, interval, Tas
         if(g_rgiFadingRounds[playerid]{textdraw} >= rounds)
         {
             Timer_Kill(g_rgiFadingTimers[playerid][textdraw]);
-            if(task_valid(t))
-                task_set_result(t, 1);
+            if(_:g_rgpFadingCallbacks[playerid][textdraw] != -1)
+            {
+                new Func:cb<> = g_rgpFadingCallbacks[playerid][textdraw];
+                g_rgpFadingCallbacks[playerid][textdraw] = F@_@:-1;
+                @.cb();
+                Indirect_Release(cb);
+            }
+
+            return 1;
         }
     }
 
@@ -72,4 +81,25 @@ public OnPlayerDisconnect(playerid, reason)
 #define OnPlayerDisconnect ANIMS_OnPlayerDisconnect
 #if defined ANIMS_OnPlayerDisconnect
     forward ANIMS_OnPlayerDisconnect(playerid, reason);
+#endif
+
+public OnPlayerConnect(playerid)
+{
+    s_rgbKillFadings{playerid} = false;
+
+    #if defined ANIMS_OnPlayerConnect
+        return ANIMS_OnPlayerConnect(playerid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerConnect
+    #undef OnPlayerConnect
+#else
+    #define _ALS_OnPlayerConnect
+#endif
+#define OnPlayerConnect ANIMS_OnPlayerConnect
+#if defined ANIMS_OnPlayerConnect
+    forward ANIMS_OnPlayerConnect(playerid);
 #endif
