@@ -9,10 +9,10 @@ public FADINGS_FadeTextDraw(playerid, PlayerText:textdraw, rounds, interval)
 {
     if(s_rgbKillFadings{playerid})
     {
-        if(_:g_rgpFadingCallbacks[playerid]{textdraw} != -1)
+        if(_:g_rgpFadingCallbacks[playerid][textdraw] != -1)
         {
-            Indirect_Release(g_rgpFadingCallbacks[playerid]{textdraw});
-            g_rgpFadingCallbacks[playerid]{textdraw} = F@_@:-1;
+            Indirect_Release(g_rgpFadingCallbacks[playerid][textdraw]);
+            g_rgpFadingCallbacks[playerid][textdraw] = F@_@:-1;
         }
 
         Timer_Kill(g_rgiFadingTimers[playerid][textdraw]);
