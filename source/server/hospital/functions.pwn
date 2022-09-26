@@ -48,15 +48,15 @@ Player_GoToTheNearestHospital(playerid)
         0, 0, 0, 0, 0, 0
     );
             
-    SpawnPlayer(playerid);
+    //SpawnPlayer(playerid);
     TogglePlayerSpectating(playerid, true);
     
-    Player_SetPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
-    SetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fPosAngle]);
+    //Player_SetPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
+    //SetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fPosAngle]);
     SetPlayerInterior(playerid, 0);
     SetPlayerVirtualWorld(playerid, 0);
     SetPlayerDrunkLevel(playerid, 0);
-    Player_RemoveAllWeapons(playerid);
+    //Player_RemoveAllWeapons(playerid);
 
     new
         Float:cam_x = g_rgePlayerData[playerid][e_fPosX],
@@ -79,11 +79,8 @@ Player_GoToTheNearestHospital(playerid)
         1000
     );
 
-    new cost = 1500;
-    if (Player_Money(playerid) < cost)
-        cost = 0;
-
-    Player_GiveMoney(playerid, -cost);
+    new cost = -(Player_Money(playerid) > 1500 ? 1500 : Player_Money(playerid));
+    Player_GiveMoney(playerid, cost);
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Estás siendo atendido en el ~b~%s~w~, el costo es de $%d.", g_rgeHospitalData[ nearest_hospital ][e_szHospitalName], cost);
     Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 5000, 0x415BA2FF);
 

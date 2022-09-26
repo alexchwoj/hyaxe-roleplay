@@ -297,6 +297,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
                 pay -= (pay_subtracted = (100000 / floatround(truck_health)));
             }
             
+            pay = Job_ApplyPaycheckBenefits(playerid, pay);
             Job_TriggerCallback(playerid, JOB_TRUCKER, JOB_EV_LEAVE);
             Player_GiveMoney(playerid, pay);
 

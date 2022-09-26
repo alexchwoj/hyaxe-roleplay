@@ -86,6 +86,7 @@ enum ePlayerData
     e_iPlayerLevel,
     
     e_iAdminLevel,
+    e_iVipLevel,
     e_iPlayedTime,
     
     // MISC DATA
@@ -151,6 +152,7 @@ new
 #define Player_PlayedTime(%0) ((gettime() - g_rgePlayerData[(%0)][e_iCurrentConnectionTime]) + g_rgePlayerData[(%0)][e_iPlayedTime] - g_rgePlayerData[(%0)][e_iPlayerPausedTime])
 #define Player_Data(%0,%1) (g_rgePlayerData[(%0)][(%1)])
 #define Player_Timer(%0,%1) (g_rgePlayerTempData[(%0)][e_rgiTimers][(%1)])
+#define Player_VIP(%0) (g_rgePlayerData[(%0)][e_iVipLevel])
 
 forward ACCOUNT_CheckForBans(playerid);
 forward OnPlayerDataFetched(playerid);

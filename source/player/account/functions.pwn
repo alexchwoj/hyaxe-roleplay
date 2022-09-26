@@ -151,6 +151,24 @@ Account_LoadFromCache(playerid)
         }
     }
 
+    // VIP load
+    new bool:vip_expired_null;
+    cache_is_value_name_null(0, "VIP_EXPIRED", vip_expired_null);
+    if(!vip_expired_null)
+    {
+        new vip_expired;
+        cache_get_value_name_int(0, "VIP_EXPIRED", vip_expired);
+        if(vip_expired)
+        {
+            Notification_Show(playerid, "Tu VIP expiró. Dirígete a ~r~samp.hyaxe.com/store~w~ para renovarlo.", 10000);
+            Player_VIP(playerid) = -1;
+        }
+        else
+        {
+            cache_get_value_name_int(0, "VIP_LEVEL", Player_VIP(playerid));
+        }
+    }
+
     Player_LoadWeaponsFromCache(playerid);
     Config_LoadFromCache(playerid);
 

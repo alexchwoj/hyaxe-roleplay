@@ -67,10 +67,11 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         {
             if (g_rgeVehicles[vehicleid][e_iSellIndex] != -1)
             {
-                if (Iter_Count(PlayerVehicles[playerid]) >= 3)
+                static const vehicles_per_privilege_level[] = { 2, 3, 4, 8 };
+                if (Iter_Count(PlayerVehicles[playerid]) >= vehicles_per_privilege_level[Player_VIP(playerid)])
                 {
                     PlayerPlaySound(playerid, SOUND_ERROR);
-                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Solo puedes tener hasta 3 vehículos.");
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, va_return("Solo puedes tener hasta %d vehículos.", vehicles_per_privilege_level[Player_VIP(playerid)]));
                 }
 
                 g_rgePlayerTempData[playerid][e_iPlayerBuyVehicleIndex] = g_rgeVehicles[vehicleid][e_iSellIndex];

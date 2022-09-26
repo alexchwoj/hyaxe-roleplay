@@ -29,21 +29,27 @@ public OnPlayerDisconnect(playerid, reason)
 forward HP_HealPlayer(playerid);
 public HP_HealPlayer(playerid)
 {
-    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Curando las heridas... ~r~%d%", Player_Health(playerid));
+    new const max_health = (Player_VIP(playerid) >= 3 ? 100 : 50);
+    new progress = floatround(floatdiv(float(Player_Health(playerid)), float(max_health)) * 100.0);
+
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Curando las heridas... ~r~%d%", progress);
     Notification_ShowBeatingText(playerid, 1000, 0xF7F7F7, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
 
-    if (Player_Health(playerid) >= 100)
+    if (Player_Health(playerid) >= max_health)
     {
         Notification_ShowBeatingText(playerid, 1000, 0xF7F7F7, 100, 255, "Curando las heridas... ~r~100%");
         
-        SpawnPlayer(playerid);
-        TogglePlayerSpectating(playerid, true);
+        //SpawnPlayer(playerid);
+        //TogglePlayerSpectating(playerid, true);
         TogglePlayerSpectating(playerid, false);
 
         Player_SetPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
         SetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fPosAngle]);
 
         SetCameraBehindPlayer(playerid);
+
+        if(Player_VIP(playerid) >= 3)
+            Player_SetArmor(playerid, 50);
 
         Notification_Show(playerid, "Los médicos te han dado de alta.", 3000, 0x64A752FF);
         KillTimer(g_rgiHospitalHealthTimer[playerid]);
@@ -52,7 +58,7 @@ public HP_HealPlayer(playerid)
         return 1;
     }
 
-    Player_SetHealth(playerid, Player_Health(playerid) + 6);
+    Player_SetHealth(playerid, Player_Health(playerid) + (Player_VIP(playerid) >= 2 ? 10 : 5));
     return 1;
 }
 

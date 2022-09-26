@@ -102,17 +102,18 @@ dialog sell_fish(playerid, response, listitem, inputtext[])
     if (response)
     {
         new amount = Inventory_GetItemAmount(playerid, ITEM_FISH);
-        
+        new pay = Job_ApplyPaycheckBenefits(playerid, 10 * amount);
+
         Player_AddXP(playerid, 50);
-        Player_GiveMoney(playerid, 10 * amount);
+        Player_GiveMoney(playerid, pay);
         PlayerPlaySound(playerid, SOUND_SUCCESS);
 
         Inventory_DeleteItemByType(playerid, ITEM_FISH);
 
         if(amount > 1)
-            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Vendiste tus %d peces por $%d", amount, 10 * amount);
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Vendiste tus %d peces por $%d", amount, pay);
         else
-            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Vendiste un pez por $%d", 10 * amount);
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Vendiste un pez por $%d", pay);
 
         Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 4000, 0x64A752FF);
     }
