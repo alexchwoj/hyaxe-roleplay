@@ -117,7 +117,9 @@ enum ePlayerTemp
     e_iPlayerBuyVehicleIndex,
     e_iPlayerCarJackTick,
     e_iPlayerCarJackAmount,
-    e_rgiTimers[ePlayerTimers]
+    e_rgiTimers[ePlayerTimers],
+    e_iMedicineUseTime,
+    e_iCrackUseTime
 };
 
 new 
