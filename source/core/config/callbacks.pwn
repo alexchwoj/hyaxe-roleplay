@@ -3,11 +3,21 @@
 #endif
 #define _config_callbacks_
 
-on_init 00SetupServerConfig()
+#include <YSI_Coding/y_hooks>
+
+#if !defined CHAIN_ORDER
+	#define CHAIN_ORDER() 0
+#endif
+
+CHAIN_HOOK(Config)
+#undef CHAIN_ORDER
+#define CHAIN_ORDER CHAIN_NEXT(Config)
+CHAIN_FORWARD:Config_OnScriptInit() = 1;
+
+public OnScriptInit()
 {
     print("[config] Setting up...");
     
-	pp_public_min_index(0);
 	argon_set_thread_count(-1);
 
     SetMaxPlayers(MAX_PLAYERS);
@@ -21,7 +31,10 @@ on_init 00SetupServerConfig()
 	SendRconCommand(!"hostname Hyaxe Roleplay [Rol en español]");
 	SendRconCommand(!"language Español / Spanish");
 	SendRconCommand(!"gamemodetext Roleplay / RPG");
-	SendRconCommand_s(@f("password %S", Str_Random(6)));
+
+	new pw[6];
+	Str_Random(pw);
+	SendRconCommand(va_return("password %s", pw));
 
  
 	SetServerRule(!"lagcomp", "skinshot");
@@ -62,9 +75,24 @@ on_init 00SetupServerConfig()
 	printf("[config] sleep          = %i", GetConsoleVarAsInt("sleep"));
 	printf("[config] FCNPC tickrate = %i", FCNPC_GetTickRate());
 	
-	// Wait for full initialization
-	wait_ticks(1);
+	Config_OnScriptInit();
+	return 1;
+}
 
+#undef OnScriptInit
+#define OnScriptInit(%0) CHAIN_PUBLIC:Config_OnScriptInit(%0)
+
+#if !NDEBUG
+	public Streamer_OnPluginError(const error[])
+	{
+		printf("[streamer!] caught error: %s", error);
+		PrintBacktrace();
+		return 1;
+	}
+#endif
+
+public OnGameModeInit()
+{
 	print("[config] Initializing ColAndreas...");
 
 	CA_Init();
@@ -83,15 +111,6 @@ on_init 00SetupServerConfig()
 		if(FCNPC_IsValid(i))
 			SetPlayerColor(i, 0xF7F7F700);
 	}
-	
+
 	return 1;
 }
-
-#if !NDEBUG
-	public Streamer_OnPluginError(const error[])
-	{
-		printf("[streamer!] caught error: %s", error);
-		PrintBacktrace();
-		return 1;
-	}
-#endif

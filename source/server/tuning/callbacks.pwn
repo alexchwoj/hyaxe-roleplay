@@ -10,7 +10,7 @@ static Tuning_OnPress(playerid, repairid)
     return 1;
 }
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     new area_id = CreateDynamicCube(
         -122.50, -1207.50, 0.0,
@@ -25,21 +25,21 @@ public OnGameModeInit()
         Key_Alert(g_rgeRepairPositions[i][e_fRepairPosX], g_rgeRepairPositions[i][e_fRepairPosY], g_rgeRepairPositions[i][e_fRepairPosZ], 1.5, KEYNAME_YES, 0, 0, KEY_TYPE_VEHICLE, .callback_on_press = __addressof(Tuning_OnPress), .cb_data = i);
     }
 
-    #if defined TUN_OnGameModeInit
-        return TUN_OnGameModeInit();
+    #if defined TUN_OnScriptInit
+        return TUN_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit TUN_OnGameModeInit
-#if defined TUN_OnGameModeInit
-    forward TUN_OnGameModeInit();
+#define OnScriptInit TUN_OnScriptInit
+#if defined TUN_OnScriptInit
+    forward TUN_OnScriptInit();
 #endif
 
 public OnPlayerEnterDynamicArea(playerid, areaid)

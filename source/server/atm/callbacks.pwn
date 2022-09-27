@@ -118,7 +118,7 @@ static ATM_OnPress(playerid)
     return 1;
 }
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     for(new i; i < sizeof(g_rgeATMBank); ++i)
     {
@@ -148,21 +148,21 @@ public OnGameModeInit()
         );
     }
 
-    #if defined ATM_OnGameModeInit
-        return ATM_OnGameModeInit();
+    #if defined ATM_OnScriptInit
+        return ATM_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit ATM_OnGameModeInit
-#if defined ATM_OnGameModeInit
-    forward ATM_OnGameModeInit();
+#define OnScriptInit ATM_OnScriptInit
+#if defined ATM_OnScriptInit
+    forward ATM_OnScriptInit();
 #endif
 
 forward ATM_OnFoundBankAccount(playerid, bank_account);

@@ -3,12 +3,15 @@
 #endif
 #define _hookers_callbacks_
 
-public OnGameModeInit()
-{    
+#include <YSI_Coding/y_hooks>
+
+hook OnGameModeInit()
+{
     for(new i = HYAXE_MAX_HOOKERS - 1; i != -1; --i)
     {
-        g_rgiHookers[i] = FCNPC_Create_s(Str_Random(24));
-        
+        new name[16];
+        format(name, sizeof(name), "__Hooker_%i__", i);
+        g_rgiHookers[i] = FCNPC_Create(name);
         g_rgiHookerAreas[i] = CreateDynamicCircle(g_rgfHookerPos[i][0], g_rgfHookerPos[i][1], 5.0, .worldid = 0, .interiorid = 0);
         AttachDynamicAreaToPlayer(g_rgiHookerAreas[i], g_rgiHookers[i]);
         Streamer_SetIntData(STREAMER_TYPE_AREA, g_rgiHookerAreas[i], E_STREAMER_CUSTOM(0x57484F52), i);
@@ -17,22 +20,8 @@ public OnGameModeInit()
         Hooker_Spawn(i);
     }
 
-    #if defined HOOKERS_OnGameModeInit
-        return HOOKERS_OnGameModeInit();
-    #else
-        return 1;
-    #endif
+    return 1;
 }
-
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
-#else
-    #define _ALS_OnGameModeInit
-#endif
-#define OnGameModeInit HOOKERS_OnGameModeInit
-#if defined HOOKERS_OnGameModeInit
-    forward HOOKERS_OnGameModeInit();
-#endif
 
 public OnGameModeExit()
 {
@@ -68,9 +57,10 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     {
         if(IsPlayerInAnyDynamicArea(playerid))
         {
-            for_list(i : GetPlayerAllDynamicAreas(playerid))
+            GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
+            for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
             {
-                new areaid = iter_get(i);
+                new areaid = YSI_UNSAFE_HUGE_STRING[i];
                 if(Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x57484F52)))
                 {
                     new hookerid = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x57484F52));
@@ -303,7 +293,7 @@ public HOOKER_StartBlowing(hookerid, playerid)
 {
     FCNPC_ApplyAnimation(g_rgiHookers[hookerid], "BLOWJOBZ", "BJ_STAND_LOOP_W", 4.1, 1, 0, 0, 1, 0);
     ApplyAnimation(playerid, "BLOWJOBZ", "BJ_STAND_LOOP_P", 4.1, 1, 0, 0, 1, 0);
-    g_rgiHookerUpdateTimer[hookerid] = SetTimerEx("HOOKER_FinishBlowing", math_random(15000, 30000), false, "ii", hookerid, playerid);
+    g_rgiHookerUpdateTimer[hookerid] = SetTimerEx("HOOKER_FinishBlowing", Random(15000, 30000), false, "ii", hookerid, playerid);
     return 1;
 }
 

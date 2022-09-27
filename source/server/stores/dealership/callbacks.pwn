@@ -3,7 +3,7 @@
 #endif
 #define _dealership_callbacks_
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     CreateDynamicMapIcon(-1920.1965, 302.7697, 40.5643, 55, -1, .worldid = 0, .interiorid = 0);
     CreateDynamicMapIcon(563.774475, -1273.510986, 16.867170, 55, -1, .worldid = 0, .interiorid = 0);
@@ -41,21 +41,21 @@ public OnGameModeInit()
         g_rgeVehicles[ g_rgeVehiclesForSale[i][e_iVehicleID] ][e_iSellIndex] = i;
     }
 
-    #if defined CONC_OnGameModeInit
-        return CONC_OnGameModeInit();
+    #if defined CONC_OnScriptInit
+        return CONC_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit CONC_OnGameModeInit
-#if defined CONC_OnGameModeInit
-    forward CONC_OnGameModeInit();
+#define OnScriptInit CONC_OnScriptInit
+#if defined CONC_OnScriptInit
+    forward CONC_OnScriptInit();
 #endif
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
@@ -67,10 +67,11 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         {
             if (g_rgeVehicles[vehicleid][e_iSellIndex] != -1)
             {
-                if (Iter_Count(PlayerVehicles[playerid]) >= 3)
+                static const vehicles_per_privilege_level[] = { 2, 3, 4, 8 };
+                if (Iter_Count(PlayerVehicles[playerid]) >= vehicles_per_privilege_level[Player_VIP(playerid)])
                 {
                     PlayerPlaySound(playerid, SOUND_ERROR);
-                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Solo puedes tener hasta 3 vehículos.");
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, va_return("Solo puedes tener hasta %d vehículos.", vehicles_per_privilege_level[Player_VIP(playerid)]));
                 }
 
                 g_rgePlayerTempData[playerid][e_iPlayerBuyVehicleIndex] = g_rgeVehicles[vehicleid][e_iSellIndex];

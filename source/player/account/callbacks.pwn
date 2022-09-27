@@ -9,7 +9,7 @@ public OnPlayerConnect(playerid)
 
     SetPlayerColor(playerid, 0xF7F7F700);
 
-    if(FCNPC_IsValid(playerid))
+    if(FCNPC_IsValid(playerid) || IsPlayerNPC(playerid))
         return 1;
         
     TogglePlayerSpectating(playerid, true);
@@ -171,7 +171,7 @@ public ACCOUNT_CheckForBans(playerid)
     );
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-        SELECT `ACCOUNT`.*, `PLAYER_WEAPONS`.*, `CONNECTION_LOG`.`DATE` AS `LAST_CONNECTION` \
+        SELECT `ACCOUNT`.*, `PLAYER_WEAPONS`.*, `CONNECTION_LOG`.`DATE` AS `LAST_CONNECTION`, (NOW() >= `ACCOUNT`.`VIP_EXPIRACY`) AS `VIP_EXPIRED` \
         FROM `ACCOUNT`, `PLAYER_WEAPONS`, `CONNECTION_LOG` \
         WHERE \
             `ACCOUNT`.`NAME` = '%e' AND \

@@ -28,8 +28,8 @@ Levels_ShowBarToPlayer(playerid)
         TextDrawShowForPlayer(playerid, g_tdLevelingBar[i]);
     }
 
-    PlayerTextDrawSetString_s(playerid, p_tdLevelingBar[playerid]{0}, @f("%i", Player_Level(playerid)));
-    PlayerTextDrawSetString_s(playerid, p_tdLevelingBar[playerid]{1}, @f("%i", Player_Level(playerid) + 1));
+    PlayerTextDrawSetString(playerid, p_tdLevelingBar[playerid]{0}, va_return("%i", Player_Level(playerid)));
+    PlayerTextDrawSetString(playerid, p_tdLevelingBar[playerid]{1}, va_return("%i", Player_Level(playerid) + 1));
 
     if(!IsPlayerTextDrawVisible(playerid, p_tdLevelingBar[playerid]{0}))
     {

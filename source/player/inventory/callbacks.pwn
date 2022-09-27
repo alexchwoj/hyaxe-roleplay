@@ -35,34 +35,38 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     }
     else if ((newkeys & KEY_WALK) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
-        for_list(it : GetPlayerAllDynamicAreas(playerid))
+        if(IsPlayerInAnyDynamicArea(playerid))
         {
-            new areaid = iter_get(it);
-            if (Streamer_HasArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x49544d)))
+            GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
+            for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
             {
-                new info[6];
-                Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x49544d), info);
-                
-                new weapon = Item_TypeToWeapon(info[0]);
-                if (weapon)
+                new areaid = YSI_UNSAFE_HUGE_STRING[i];
+                if (Streamer_HasArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x49544d)))
                 {
-                    new ammo = 9999;
-                    if (Weapon_IsExplosive(weapon))
-                        ammo = info[1];
+                    new info[6];
+                    Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x49544d), info);
+                    
+                    new weapon = Item_TypeToWeapon(info[0]);
+                    if (weapon)
+                    {
+                        new ammo = 9999;
+                        if (Weapon_IsExplosive(weapon))
+                            ammo = info[1];
 
-                    Player_GiveWeapon(playerid, weapon, ammo);
+                        Player_GiveWeapon(playerid, weapon, ammo);
 
-                    DroppedItem_Delete(iter_get(it));
-                    PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
-                    ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
+                        DroppedItem_Delete(areaid);
+                        PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
+                        ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
+                    }
+                    else if (Inventory_AddItem(playerid, info[0], info[1], info[5]))
+                    {
+                        DroppedItem_Delete(areaid);
+                        PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
+                        ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
+                    }
+                    else return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes el inventario lleno.");
                 }
-                else if (Inventory_AddItem(playerid, info[0], info[1], info[5]))
-                {
-                    DroppedItem_Delete(iter_get(it));
-                    PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
-                    ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
-                }
-                else return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes el inventario lleno.");
             }
         }
     }
@@ -307,25 +311,25 @@ public INV_RefreshDroppedItems()
 }
 
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     SetTimer("INV_RefreshDroppedItems", 180000, true);
 
-    #if defined INV_OnGameModeInit
-        return INV_OnGameModeInit();
+    #if defined INV_OnScriptInit
+        return INV_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit INV_OnGameModeInit
-#if defined INV_OnGameModeInit
-    forward INV_OnGameModeInit();
+#define OnScriptInit INV_OnScriptInit
+#if defined INV_OnScriptInit
+    forward INV_OnScriptInit();
 #endif
 
 

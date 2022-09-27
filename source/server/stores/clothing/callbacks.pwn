@@ -3,7 +3,7 @@
 #endif
 #define _clothing_callbacks_
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     /* Binco */
     EnterExit_Create(19902, "{ED2B2B}Binco", "{DADADA}Salida", 2244.484863, -1665.22351, 15.476562, 0.0, 0, 0, 207.744949, -111.073318, 1005.132812, 0.0, 1, 15);
@@ -72,21 +72,21 @@ public OnGameModeInit()
     Clothing_CreateArea(CLOTHING_VICTIM, 206.374328, -7.241514, 1001.210937, 5);
     Clothing_CreateArea(CLOTHING_ZIP, 161.443634, -83.589271, 1001.804687, 18);
 
-    #if defined CLOTH_OnGameModeInit
-        return CLOTH_OnGameModeInit();
+    #if defined CLOTH_OnScriptInit
+        return CLOTH_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit CLOTH_OnGameModeInit
-#if defined CLOTH_OnGameModeInit
-    forward CLOTH_OnGameModeInit();
+#define OnScriptInit CLOTH_OnScriptInit
+#if defined CLOTH_OnScriptInit
+    forward CLOTH_OnScriptInit();
 #endif
 
 public OnPlayerDisconnect(playerid, reason)

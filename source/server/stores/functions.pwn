@@ -35,7 +35,7 @@ static Shop_OnPress(playerid, shop_id)
     BroadcastToPlayer(playerid, true);
 
     TextDrawSetString(g_tdShops[5], Str_FixEncoding(g_rgeShops[shop_id][e_szShopName]));
-    TextDrawSetString_s(g_tdShops[10], @f("$%d", g_rgeShopItems[shop_id][0][e_iItemPrice]));
+    TextDrawSetString(g_tdShops[10], va_return("$%d", g_rgeShopItems[shop_id][0][e_iItemPrice]));
     TextDrawSetString(g_tdShops[11], Str_FixEncoding(g_rgeShopItems[shop_id][0][e_szItemName]));
 
     BroadcastToPlayer(playerid, false);

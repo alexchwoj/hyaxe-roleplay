@@ -3,7 +3,7 @@
 #endif
 #define _textdraws_callbacks_
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     // GANG EVENT
     g_tdGangEventText = TextDrawCreate(321.000000, 28.000000, "_");
@@ -1022,21 +1022,21 @@ public OnGameModeInit()
     TextDrawSetSelectable(g_tdDebugScreen[3], 0);*/
     
     
-    #if defined TD_OnGameModeInit
-        return TD_OnGameModeInit();
+    #if defined TD_OnScriptInit
+        return TD_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit TD_OnGameModeInit
-#if defined TD_OnGameModeInit
-    forward TD_OnGameModeInit();
+#define OnScriptInit TD_OnScriptInit
+#if defined TD_OnScriptInit
+    forward TD_OnScriptInit();
 #endif
 
 public OnPlayerConnect(playerid)

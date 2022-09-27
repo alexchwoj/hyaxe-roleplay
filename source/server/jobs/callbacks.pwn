@@ -9,9 +9,10 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     {
         if(IsPlayerInAnyDynamicArea(playerid))
         {
-            for_list(it : GetPlayerAllDynamicAreas(playerid))
+            GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
+            for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
             {
-                new areaid = iter_get(it);
+                new areaid = YSI_UNSAFE_HUGE_STRING[i];
                 if(Streamer_HasArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4A4F42)))
                 {
                     new info[2];

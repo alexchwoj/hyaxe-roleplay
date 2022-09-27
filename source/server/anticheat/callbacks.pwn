@@ -20,7 +20,7 @@ static Anticheat_PopulateDatabase()
     db_free_result(db_query(g_hAnticheatDatabase, "COMMIT;"));
 }
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     g_hAnticheatDatabase = db_open("anticheat.db");
     if(g_hAnticheatDatabase == DB:0)
@@ -69,21 +69,21 @@ public OnGameModeInit()
 
     db_free_result(res);
 
-    #if defined AC_OnGameModeInit
-        return AC_OnGameModeInit();
+    #if defined AC_OnScriptInit
+        return AC_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit AC_OnGameModeInit
-#if defined AC_OnGameModeInit
-    forward AC_OnGameModeInit();
+#define OnScriptInit AC_OnScriptInit
+#if defined AC_OnScriptInit
+    forward AC_OnScriptInit();
 #endif
 
 public OnGameModeExit()

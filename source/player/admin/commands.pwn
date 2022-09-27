@@ -26,8 +26,8 @@ command ban(playerid, const params[], "Veta a un jugador")
 
     Player_Ban(banned, playerid, reason, time);
 
-    Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, 
-        @f("{DADADA}%s {415BA2}%s{DADADA} ({415BA2}%i{DADADA}-{415BA2}%i{DADADA}) fue vetado por %s %s {415BA2}%s{DADADA}.", 
+    Admins_SendMessage(RANK_LEVEL_HELPER, 0x415BA2FF, 
+        va_return("{DADADA}%s {415BA2}%s{DADADA} ({415BA2}%i{DADADA}-{415BA2}%i{DADADA}) fue vetado por %s %s {415BA2}%s{DADADA}.", 
             (Player_Sex(banned) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(banned), banned, Player_AccountID(banned), (Player_Sex(playerid) == SEX_MALE ? "el" : "la"), Player_GetRankName(playerid), Player_RPName(playerid)
         )
     );
@@ -62,8 +62,8 @@ command kick(playerid, const params[], "Expulsa a un jugador")
     gettime(hour, minute, second);
     getdate(year, month, day);
 
-    Dialog_Show_s(kicked, "kick", DIALOG_STYLE_MSGBOX, @("{CB3126}Hyaxe {DADADA}- Expulsión"),
-        @f(
+    Dialog_Show(kicked, "kick", DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe {DADADA}- Expulsión",
+        va_return(
             "{DADADA}Fuiste expulsad%c del servidor.\n\n\
             {CB3126}Razón de la expulsión\n\
                 \t{DADADA}%s\n\n\
@@ -80,8 +80,8 @@ command kick(playerid, const params[], "Expulsa a un jugador")
 
     KickTimed(kicked, 500);
 
-    Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, 
-        @f("› {DADADA}%s {415BA2}%s {DADADA}(ID {415BA2}%i{DADADA}) fue expulsad%c por %s %s {415BA2}%s{DADADA}.", 
+    Admins_SendMessage(RANK_LEVEL_HELPER, 0x415BA2FF, 
+        va_return("› {DADADA}%s {415BA2}%s {DADADA}(ID {415BA2}%i{DADADA}) fue expulsad%c por %s %s {415BA2}%s{DADADA}.", 
             (Player_Sex(kicked) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(kicked), kicked, (Player_Sex(kicked) == SEX_MALE ? 'o' : 'a'), (Player_Sex(playerid) == SEX_MALE ? "el" : "la"), Player_GetRankName(playerid), Player_RPName(playerid)
         )
     );
@@ -102,17 +102,32 @@ command ban_account(playerid, const params[], "Veta a una cuenta offline")
             return 1;
         }
 
-        new Cache:c = await<Cache> MySQL_QueryAsync_s(g_hDatabase, @f("SELECT `NAME` FROM `ACCOUNT` WHERE `ID` = %i LIMIT 1;", account_id));
-        
-        new rowc;
-        cache_get_row_count(rowc);
-        if(!rowc)
+        inline const QueryDone()
         {
-            SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} No hay una cuenta asociada a la ID {ED2B2B}%i{DADADA}.", account_id);
-            return 1;
-        }
+            new rowc;
+            cache_get_row_count(rowc);
+            if(!rowc)
+            {
+                SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} No hay una cuenta asociada a la ID {ED2B2B}%i{DADADA}.", account_id);
+                return 1;
+            }
 
-        cache_get_value_name(0, !"NAME", account_name);
+            new sex;
+            cache_get_value_name(0, !"NAME", account_name);
+            cache_get_value_name_int(0, !"SEX", sex);
+
+            Account_Ban(account_name, playerid, reason, time_seconds);
+
+            Admins_SendMessage(RANK_LEVEL_HELPER, 0x415BA2FF, 
+                va_return("{DADADA}%s {415BA2}%s{DADADA} ({415BA2}%i{DADADA}) fue vetad%c por %s %s {415BA2}%s{DADADA}.", 
+                    (sex == SEX_MALE ? "El jugador" : "La jugadora"), account_name, account_id, (sex == SEX_MALE ? 'o' : 'a'), 
+                    (Player_Sex(playerid) == SEX_MALE ? "el" : "la"), Player_GetRankName(playerid), Player_RPName(playerid)
+                )
+            );
+        }
+        MySQL_TQueryInline(g_hDatabase, using inline QueryDone, "SELECT `NAME`, `SEX` FROM `ACCOUNT` WHERE `ID` = %i LIMIT 1;", account_id);
+
+        return 1;
     }
     else if(sscanf(params, "s[24]I(-1)S(No especificada)[50]", account_name, time_seconds, reason))
     {
@@ -120,10 +135,8 @@ command ban_account(playerid, const params[], "Veta a una cuenta offline")
         return 1;
     }
 
-    if(!account_id)
+    inline const QueryDone()
     {
-        new Cache:c = await<Cache> MySQL_QueryAsync_s(g_hDatabase, @f("SELECT `ID` FROM `ACCOUNT` WHERE `NAME` = '%e' LIMIT 1;", account_name));
-
         new rowc;
         cache_get_row_count(rowc);
         if(!rowc)
@@ -132,16 +145,20 @@ command ban_account(playerid, const params[], "Veta a una cuenta offline")
             return 1;
         }
 
+        new sex;
         cache_get_value_name_int(0, !"ID", account_id);
+        cache_get_value_name_int(0, !"SEX", sex);
+
+        Account_Ban(account_name, playerid, reason, time_seconds);
+
+        Admins_SendMessage(RANK_LEVEL_HELPER, 0x415BA2FF, 
+            va_return("{DADADA}%s {415BA2}%s{DADADA} ({415BA2}%i{DADADA}) fue vetad%c por %s %s {415BA2}%s{DADADA}.", 
+                (sex == SEX_MALE ? "El jugador" : "La jugadora"), account_name, account_id, (sex == SEX_MALE ? 'o' : 'a'), (Player_Sex(playerid) == SEX_MALE ? "el" : "la"), Player_GetRankName(playerid), Player_RPName(playerid)
+            )
+        );
     }
 
-    Account_Ban(account_name, playerid, reason, time_seconds);
-
-    Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, 
-        @f("{DADADA}La cuenta {415BA2}%s{DADADA} ({415BA2}%i{DADADA}) fue vetada por %s %s {415BA2}%s{DADADA}.", 
-            account_name, account_id, (Player_Sex(playerid) == SEX_MALE ? "el" : "la"), Player_GetRankName(playerid), Player_RPName(playerid)
-        )
-    );
+    MySQL_TQueryInline(g_hDatabase, using inline QueryDone, "SELECT `ID`, `SEX` FROM `ACCOUNT` WHERE `NAME` = '%e' LIMIT 1;", account_name);
 
     return 1;
 }
@@ -268,7 +285,41 @@ command manage_admins(playerid, const params[], "Abre el panel de administradore
 {
     s_rgszSelectedAdmin[playerid][0] = '\0';
 
-    new Task<Cache>:t = MySQL_QueryAsync(g_hDatabase, 
+    inline const QueryDone()
+    {
+        new rowc;
+        cache_get_row_count(rowc);
+
+        if(!rowc)
+        {
+            SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No se pudo encontrar a ningun administrador en la base de datos.");
+            return 1;
+        }
+
+        strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Nombre\t{DADADA}Rango administrativo\t{DADADA}Última conexión\n");
+
+        new line[128];
+        for(new i; i < rowc; ++i)
+        {
+            new admin_name[25], admin_accountid, admin_playerid, admin_level, admin_sex, last_connection[24];
+            cache_get_value_name(i, "NAME", admin_name);
+            cache_get_value_name_int(i, "ID", admin_accountid);
+            cache_get_value_name_int(i, "CURRENT_PLAYERID", admin_playerid);
+            cache_get_value_name_int(i, "ADMIN_LEVEL", admin_level);
+            cache_get_value_name_int(i, "SEX", admin_sex);
+            cache_get_value_name(i, "DATE", last_connection);
+
+            format(line, sizeof(line), 
+                "{DADADA}%s ({415BA2}%i{DADADA})\t{DADADA}%s\t{%x}%s\n", 
+                admin_name, admin_accountid, g_rgszRankLevelNames[admin_level][admin_sex], (admin_playerid == -1 ? 0xDADADA : 0x64A752), (admin_playerid == -1 ? last_connection : "En línea")
+            );
+
+            strcat(HYAXE_UNSAFE_HUGE_STRING, line);
+        }
+
+        Dialog_Show(playerid, "manage_admins", DIALOG_STYLE_TABLIST_HEADERS, "{415BA2}Hyaxe {DADADA}- Administradores", HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Salir");
+    }
+    MySQL_TQueryInline(g_hDatabase, using inline QueryDone, 
         "\
             SELECT `ACCOUNT`.`NAME`, `ACCOUNT`.`ID`, `ACCOUNT`.`CURRENT_PLAYERID`, `ACCOUNT`.`SEX`, `ACCOUNT`.`ADMIN_LEVEL`, MAX(`CONNECTION_LOG`.`DATE`) AS `DATE` \
                 FROM `ACCOUNT` \
@@ -277,41 +328,8 @@ command manage_admins(playerid, const params[], "Abre el panel de administradore
                 WHERE `ADMIN_LEVEL` > 0 \
                 GROUP BY `ACCOUNT`.`ID` \
                 ORDER BY `ACCOUNT`.`ADMIN_LEVEL` DESC;\
-        ");
-
-    new Cache:c = await<Cache> t;
-
-    new rowc;
-    cache_get_row_count(rowc);
-
-    if(!rowc)
-    {
-        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No se pudo encontrar a ningun administrador en la base de datos.");
-        return 1;
-    }
-
-    strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Nombre\t{DADADA}Rango administrativo\t{DADADA}Última conexión\n");
-
-    new line[128];
-    for(new i; i < rowc; ++i)
-    {
-        new admin_name[25], admin_accountid, admin_playerid, admin_level, admin_sex, last_connection[24];
-        cache_get_value_name(i, "NAME", admin_name);
-        cache_get_value_name_int(i, "ID", admin_accountid);
-        cache_get_value_name_int(i, "CURRENT_PLAYERID", admin_playerid);
-        cache_get_value_name_int(i, "ADMIN_LEVEL", admin_level);
-        cache_get_value_name_int(i, "SEX", admin_sex);
-        cache_get_value_name(i, "DATE", last_connection);
-
-        format(line, sizeof(line), 
-            "{DADADA}%s ({415BA2}%i{DADADA})\t{DADADA}%s\t{%x}%s\n", 
-            admin_name, admin_accountid, g_rgszRankLevelNames[admin_level][admin_sex], (admin_playerid == -1 ? 0xDADADA : 0x64A752), (admin_playerid == -1 ? last_connection : "En línea")
-        );
-
-        strcat(HYAXE_UNSAFE_HUGE_STRING, line);
-    }
-
-    Dialog_Show(playerid, "manage_admins", DIALOG_STYLE_TABLIST_HEADERS, "{415BA2}Hyaxe {DADADA}- Administradores", HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Salir");
+        "
+    );
 
     return 1;
 }
@@ -330,7 +348,7 @@ dialog manage_admins(playerid, response, listitem, const inputtext[])
     }
 
     strcat(s_rgszSelectedAdmin[playerid], inputtext, space + 1);
-    Dialog_Show_s(playerid, "manage_admin_options", DIALOG_STYLE_LIST, @f("Opciones para {415BA2}%s{DADADA}...", s_rgszSelectedAdmin[playerid]), @("{DADADA}Cambiar rango administrativo"), "Continuar", "Atrás");
+    Dialog_Show(playerid, "manage_admin_options", DIALOG_STYLE_LIST, va_return("Opciones para {415BA2}%s{DADADA}...", s_rgszSelectedAdmin[playerid]), "{DADADA}Cambiar rango administrativo", "Continuar", "Atrás");
 
     return 1;
 }
@@ -370,7 +388,8 @@ dialog manage_admin_new_rank(playerid, response, listitem, const inputtext[])
         if(!(RANK_LEVEL_USER <= listitem <= RANK_LEVEL_SUPERADMIN))
             return 1;
 
-        mysql_tquery_s(g_hDatabase, @f("UPDATE `ACCOUNT` SET `ADMIN_LEVEL` = %i WHERE `NAME` = '%e' LIMIT 1;", listitem, s_rgszSelectedAdmin[playerid]));
+        mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `ADMIN_LEVEL` = %i WHERE `NAME` = '%e' LIMIT 1;", listitem, s_rgszSelectedAdmin[playerid]);
+        mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
         
         new bool:reported = false;
         
@@ -384,7 +403,7 @@ dialog manage_admin_new_rank(playerid, response, listitem, const inputtext[])
                     Player_AdminLevel(i) = listitem;
 
                     SendClientMessagef(playerid, 0x415BA2FF, "›{DADADA} Tu nivel administrativo fue %s a {415BA2}%s{DADADA}.", (is_lower ? "descendido" : "ascendido"), Player_GetRankName(i));
-                    Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, @f("›{DADADA} %s ahora es %s {415BA2}%s{DADADA}.", Player_RPName(i), (Player_Sex(i) == SEX_MALE ? "un" : "una"), Player_GetRankName(i)));
+                    Admins_SendMessage(RANK_LEVEL_HELPER, 0x415BA2FF, va_return("›{DADADA} %s ahora es %s {415BA2}%s{DADADA}.", Player_RPName(i), (Player_Sex(i) == SEX_MALE ? "un" : "una"), Player_GetRankName(i)));
                 }
 
                 reported = true;
@@ -395,7 +414,7 @@ dialog manage_admin_new_rank(playerid, response, listitem, const inputtext[])
 
         if(!reported)
         {
-            Admins_SendMessage_s(RANK_LEVEL_HELPER, 0x415BA2FF, @f("›{DADADA} %s ahora es un {415BA2}%s{DADADA}.", s_rgszSelectedAdmin[playerid], g_rgszRankLevelNames[listitem][SEX_MALE]));
+            Admins_SendMessage(RANK_LEVEL_HELPER, 0x415BA2FF, va_return("›{DADADA} %s ahora es un {415BA2}%s{DADADA}.", s_rgszSelectedAdmin[playerid], g_rgszRankLevelNames[listitem][SEX_MALE]));
         }
     }
 

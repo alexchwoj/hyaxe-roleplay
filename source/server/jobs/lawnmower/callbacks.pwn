@@ -5,7 +5,7 @@
 
 static GenerateGrassInArea(areaid)
 {
-    new grass_count = math_random(MIN_GRASS_PER_AREA, MAX_GRASS_PER_AREA);
+    new grass_count = Random(MIN_GRASS_PER_AREA, MAX_GRASS_PER_AREA);
     g_rgeLawnmowerAreas[areaid][e_iInitialGrassCount] =
     g_rgeLawnmowerAreas[areaid][e_iCurrentGrassCount] = grass_count;
 
@@ -25,9 +25,9 @@ static GenerateGrassInArea(areaid)
 
         do
         {
-            x = math_random_float(min_x, max_x);
-            y = math_random_float(min_y, max_y);
-            z = math_random_float(min_z, max_z);
+            x = RandomFloat(min_x, max_x);
+            y = RandomFloat(min_y, max_y);
+            z = RandomFloat(min_z, max_z);
             is_above_water = CA_RayCastLine(x, y, 100.0, x, y, -100.0, x, y, z) == WATER_OBJECT;
 
             // FIXME
@@ -113,7 +113,7 @@ static LawnMowerEvent(playerid, eJobEvent:event, areaid)
     return 1;
 }
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     for(new i; i < sizeof(g_rgeLawnmowerAreas); ++i)
     {
@@ -128,21 +128,21 @@ public OnGameModeInit()
 
     Job_SetCallback(JOB_LAWNMOWER, __addressof(LawnMowerEvent));
 
-    #if defined JOB_LM_OnGameModeInit
-        return JOB_LM_OnGameModeInit();
+    #if defined JOB_LM_OnScriptInit
+        return JOB_LM_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit JOB_LM_OnGameModeInit
-#if defined JOB_LM_OnGameModeInit
-    forward JOB_LM_OnGameModeInit();
+#define OnScriptInit JOB_LM_OnScriptInit
+#if defined JOB_LM_OnScriptInit
+    forward JOB_LM_OnScriptInit();
 #endif
 
 public OnPlayerEnterDynamicArea(playerid, areaid)
@@ -172,7 +172,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
             
             Player_Job(playerid) = JOB_NONE;
 
-            new money = g_rgeLawnmowerAreas[park_id][e_iInitialGrassCount] * 10;
+            new money = Job_ApplyPaycheckBenefits(playerid, g_rgeLawnmowerAreas[park_id][e_iInitialGrassCount] * 10);
             Player_GiveMoney(playerid, money);
 
             new string[80];

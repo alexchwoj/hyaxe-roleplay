@@ -139,14 +139,33 @@ Account_LoadFromCache(playerid)
         new gang;
         cache_get_value_name_int(0, !"GANG_ID", gang);
 
-        if(map_has_key(g_mapGangIds, gang))
+        new gang_arrid = gang_id_from_dbid(gang);
+        if(gang_arrid != -1)
         {
-            Player_Gang(playerid) = map_get(g_mapGangIds, gang);
-            Iter_Add(GangMember[Player_Gang(playerid)], playerid);
+            Player_Gang(playerid) = gang_arrid;
+            Iter_Add(GangMember[gang_arrid], playerid);
             
             new rank;
             cache_get_value_name_int(0, !"GANG_RANK", rank);
             Player_GangRank(playerid) = rank - 1;
+        }
+    }
+
+    // VIP load
+    new bool:vip_expired_null;
+    cache_is_value_name_null(0, "VIP_EXPIRED", vip_expired_null);
+    if(!vip_expired_null)
+    {
+        new vip_expired;
+        cache_get_value_name_int(0, "VIP_EXPIRED", vip_expired);
+        if(vip_expired)
+        {
+            Notification_Show(playerid, "Tu VIP expiró. Dirígete a ~r~samp.hyaxe.com/store~w~ para renovarlo.", 10000);
+            Player_VIP(playerid) = -1;
+        }
+        else
+        {
+            cache_get_value_name_int(0, "VIP_LEVEL", Player_VIP(playerid));
         }
     }
 

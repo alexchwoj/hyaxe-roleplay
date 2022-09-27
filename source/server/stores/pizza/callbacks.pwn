@@ -59,7 +59,7 @@ static PreloadPizzaPlaceAnims(playerid, bool:enter)
     return 1;
 }
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     // Actors
     Actor_CreateRobbable(155, 500, 750, 373.7393, -117.2236, 1002.4995, 175.4680, .worldid = 1, .interiorid = 5);
@@ -111,19 +111,19 @@ public OnGameModeInit()
     Shop_AddItem(ugis, "Porción de pizza con ensalada", 2219, 50, -25.29, 23.39, 74.69); // Pizza and salad
     Shop_AddItem(ugis, "Pizza grande", 19580, 100, -25.29, 23.39, 74.69); // Large pizza
 
-    #if defined PIZZA_OnGameModeInit
-        return PIZZA_OnGameModeInit();
+    #if defined PIZZA_OnScriptInit
+        return PIZZA_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit PIZZA_OnGameModeInit
-#if defined PIZZA_OnGameModeInit
-    forward PIZZA_OnGameModeInit();
+#define OnScriptInit PIZZA_OnScriptInit
+#if defined PIZZA_OnScriptInit
+    forward PIZZA_OnScriptInit();
 #endif

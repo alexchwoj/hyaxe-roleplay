@@ -3,7 +3,7 @@
 #endif
 #define _events_callbacks_
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     // Initialize
     g_iGangEventType = EVENT_INVALID;
@@ -30,24 +30,24 @@ public OnGameModeInit()
         GetPointZone(g_rgeGraffiti[i][e_fGraffitiX], g_rgeGraffiti[i][e_fGraffitiY], city, zone);
         #pragma unused city
 
-        SetDynamicObjectMaterialText(g_rgeGraffiti[i][e_iGraffitiObject], 0, zone, OBJECT_MATERIAL_SIZE_512x64, "Comic Sans MS", 60, 0, math_random_unsigned(0, 0xFFFFFFFF) | 0xFF000000, 0x00000000, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
+        SetDynamicObjectMaterialText(g_rgeGraffiti[i][e_iGraffitiObject], 0, zone, OBJECT_MATERIAL_SIZE_512x64, "Comic Sans MS", 60, 0, Random(cellmin, cellmax) | 0xFF000000, 0x00000000, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
     }
 
-    #if defined GVENT_OnGameModeInit
-        return GVENT_OnGameModeInit();
+    #if defined GVENT_OnScriptInit
+        return GVENT_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit GVENT_OnGameModeInit
-#if defined GVENT_OnGameModeInit
-    forward GVENT_OnGameModeInit();
+#define OnScriptInit GVENT_OnScriptInit
+#if defined GVENT_OnScriptInit
+    forward GVENT_OnScriptInit();
 #endif
 
 forward GVENT_CheckTime();
@@ -79,14 +79,14 @@ public GVENT_TruckSpawnLoot()
         {ITEM_CRACK, 2, 8}
     };
 
-    for(new i, j = math_random(12, 24); i < j; ++i)
+    for(new i, j = Random(12, 24); i < j; ++i)
     {
         new item = random( sizeof(loot) );
 
         DroppedItem_Create(
-            loot[item][0], minrand(loot[item][1], loot[item][2]), 0, 
-            g_rgfTruckDefensePositions[g_iGangTruckIndex][0] + math_random_float(-5.0, 5.0),
-            g_rgfTruckDefensePositions[g_iGangTruckIndex][1] + math_random_float(-5.0, 5.0),
+            loot[item][0], Random(loot[item][1], loot[item][2]), 0, 
+            g_rgfTruckDefensePositions[g_iGangTruckIndex][0] + RandomFloat(-5.0, 5.0),
+            g_rgfTruckDefensePositions[g_iGangTruckIndex][1] + RandomFloat(-5.0, 5.0),
             g_rgfTruckDefensePositions[g_iGangTruckIndex][2] + 2.0,
             0, 0
         );
@@ -151,9 +151,10 @@ public GVENT_UpdateGraffiti(playerid)
 {
     if (g_iGangEventType == EVENT_GRAFFITI && Player_Gang(playerid) != -1 && GetPlayerWeapon(playerid) == WEAPON_SPRAYCAN && IsPlayerInAnyDynamicArea(playerid))
     {
-        for_list(it : GetPlayerAllDynamicAreas(playerid))
+        GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
+        for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
         {
-            new areaid = iter_get(it);
+            new areaid = YSI_UNSAFE_HUGE_STRING[i];
             if (Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x47524146)))
             {
                 new graffiti_id = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x47524146));
@@ -162,7 +163,7 @@ public GVENT_UpdateGraffiti(playerid)
                     g_rgbGangGraffitiPainted[playerid] = true;
                     g_iGraffitiGang = Player_Gang(playerid);
                     g_rgfGangGraffitiProgress[ Player_Gang(playerid) ] += 0.5;
-                    TextDrawSetString_s(g_tdGangEventText, @f("%s: ~y~%.2f%%", Gang_Data( Player_Gang(playerid) )[e_szGangName], g_rgfGangGraffitiProgress[ Player_Gang(playerid) ]));
+                    TextDrawSetString(g_tdGangEventText, va_return("%s: ~y~%.2f%%", Gang_Data( Player_Gang(playerid) )[e_szGangName], g_rgfGangGraffitiProgress[ Player_Gang(playerid) ]));
                     SetDynamicObjectMaterialText(g_rgeGraffiti[ graffiti_id ][e_iGraffitiObject], 0, Gang_Data( Player_Gang(playerid) )[e_szGangName], OBJECT_MATERIAL_SIZE_512x64, "Comic Sans MS", 60, 0, RGBAToARGB( Gang_Data( Player_Gang(playerid) )[e_iGangColor] ), 0x00000000, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
                 
                     if (g_rgfGangGraffitiProgress[ Player_Gang(playerid) ] >= 100.0)
@@ -186,9 +187,10 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     {
         if (g_iGangEventType == EVENT_GRAFFITI && Player_Gang(playerid) != -1 && GetPlayerWeapon(playerid) == WEAPON_SPRAYCAN && IsPlayerInAnyDynamicArea(playerid))
         {
-            for_list(it : GetPlayerAllDynamicAreas(playerid))
+            GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
+            for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
             {
-                new areaid = iter_get(it);
+                new areaid = YSI_UNSAFE_HUGE_STRING[i];
                 if (Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x47524146)))
                 {
                     new graffiti_id = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x47524146));

@@ -23,7 +23,8 @@ Config_ResetDefaults(playerid)
 
 Config_Save(playerid)
 {
-    mysql_tquery_s(g_hDatabase, @f("UPDATE `ACCOUNT` SET `CONFIG_BITS` = '%s' WHERE `ID` = %i;", Config_ToString(playerid), Player_AccountID(playerid)));
+    mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `CONFIG_BITS` = '%s' WHERE `ID` = %i;", Config_ToString(playerid), Player_AccountID(playerid));
+    mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
     return 1;
 }
 

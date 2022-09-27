@@ -16,3 +16,7 @@ crashinfo.txt
 **/out
 *.cadb
 *.so
+
+bans.json
+log.txt
+/components

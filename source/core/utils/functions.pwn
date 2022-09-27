@@ -41,10 +41,6 @@ stock UTILS_Kick(playerid)
 
 KickTimed(playerid, time = 250)
 {
-#if !NDEBUG
-    PrintBacktrace();
-#endif
-
     g_rgbPlayerKicked{playerid} = true;
 	SetTimerEx(!"KickTimed_Due", time, false, !"i", playerid);
 }
@@ -183,61 +179,6 @@ Str_FixEncoding_Ref(result[])
     }
 }
 
-stock Str_FixEncoding_s(String:result)
-{
-	for (new i = (str_len(result) - 1); i != -1; --i)
-    {
-        switch (str_getc(result, i))
-        {
-            case 'á': str_setc(result, i, 152);
-            case 'â': str_setc(result, i, 153);
-            case 'ä': str_setc(result, i, 154);
-            case 'À': str_setc(result, i, 128);
-            case 'Á': str_setc(result, i, 129);
-            case 'Â': str_setc(result, i, 130);
-            case 'Ä': str_setc(result, i, 131);
-            case 'è': str_setc(result, i, 157);
-            case 'é': str_setc(result, i, 158);
-            case 'ê': str_setc(result, i, 159);
-            case 'ë': str_setc(result, i, 160);
-            case 'È': str_setc(result, i, 134);
-            case 'É': str_setc(result, i, 135);
-            case 'Ê': str_setc(result, i, 136);
-            case 'Ë': str_setc(result, i, 137);
-            case 'ì': str_setc(result, i, 161);
-            case 'í': str_setc(result, i, 162);
-            case 'î': str_setc(result, i, 163);
-            case 'ï': str_setc(result, i, 164);
-            case 'Ì': str_setc(result, i, 138);
-            case 'Í': str_setc(result, i, 139);
-            case 'Î': str_setc(result, i, 140);
-            case 'Ï': str_setc(result, i, 141);
-            case 'ò': str_setc(result, i, 165);
-            case 'ó': str_setc(result, i, 166);
-            case 'ô': str_setc(result, i, 167);
-            case 'ö': str_setc(result, i, 168);
-            case 'Ò': str_setc(result, i, 142);
-            case 'Ó': str_setc(result, i, 143);
-            case 'Ô': str_setc(result, i, 144);
-            case 'Ö': str_setc(result, i, 145);
-            case 'ù': str_setc(result, i, 169);
-            case 'ú': str_setc(result, i, 170);
-            case 'û': str_setc(result, i, 171);
-            case 'ü': str_setc(result, i, 172);
-            case 'Ù': str_setc(result, i, 146);
-            case 'Ú': str_setc(result, i, 147);
-            case 'Û': str_setc(result, i, 148);
-            case 'Ü': str_setc(result, i, 149);
-            case 'ñ': str_setc(result, i, 174);
-            case 'Ñ': str_setc(result, i, 173);
-            case '¡': str_setc(result, i, 64);
-            case '¿': str_setc(result, i, 175);
-            case '`': str_setc(result, i, 177);
-            case '&': str_setc(result, i, 38);
-        }
-    }
-}
-
 SplitChatMessageInLines(const string[], result[][], max_lines = sizeof(result), max_line_length = sizeof(result[]))
 {
 	new len = strlen(string);
@@ -305,16 +246,12 @@ GetXYFromAngle(&Float:x, &Float:y, Float:a, Float:distance)
 	y += (distance * floatcos(-a, degrees));
 }
 
-String:Str_Random(len)
+Str_Random(dest[], len = sizeof dest)
 {
-    new String:s = str_new_buf(len + 1);
-    
-    for(new i = len; i != -1; --i)
+    while(--len != -1)
     {
-        str_setc(s, i, random(2) ? (random(26) + (random(2) ? 'a' : 'A')) : (random(10) + '0'));
+        dest[len] = random(2) ? (random(26) + (random(2) ? 'a' : 'A')) : (random(10) + '0');
     }
-
-    return s;
 }
 
 binary_search(const arr[], value, start = 0, end = -1, size = sizeof(arr))
@@ -335,13 +272,6 @@ binary_search(const arr[], value, start = 0, end = -1, size = sizeof(arr))
     }
 
     return -1;
-}
-
-List:GetPlayerAllDynamicAreas(playerid)
-{
-    static areas[128];
-    new count = GetPlayerDynamicAreas(playerid, areas);
-    return list_new_arr(areas, count);
 }
 
 Timer_Kill(&timerid)

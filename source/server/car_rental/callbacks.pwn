@@ -9,7 +9,7 @@ static Rental_OnKeyPress(playerid)
     return 1;
 }
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     CreateDynamic3DTextLabel(
         "Rentar un auto\n{F7F7F7}Presiona {CB3126}Y{F7F7F7} para rentar", 0xCB3126FF,
@@ -19,21 +19,21 @@ public OnGameModeInit()
     Key_Alert(1677.0374, -1134.7346, 23.9140, 2.6, KEYNAME_YES, 0, 0, .callback_on_press = __addressof(Rental_OnKeyPress));
     CreateDynamicMapIcon(1677.0374, -1134.7346, 23.9140, 55, -1, .worldid = 0, .interiorid = 0);
 
-    #if defined RENTAL_OnGameModeInit
-        return RENTAL_OnGameModeInit();
+    #if defined RENTAL_OnScriptInit
+        return RENTAL_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit RENTAL_OnGameModeInit
-#if defined RENTAL_OnGameModeInit
-    forward RENTAL_OnGameModeInit();
+#define OnScriptInit RENTAL_OnScriptInit
+#if defined RENTAL_OnScriptInit
+    forward RENTAL_OnScriptInit();
 #endif
 
 dialog rent_car(playerid, response, listitem, inputtext[])

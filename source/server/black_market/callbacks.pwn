@@ -116,7 +116,7 @@ dialog misc_shop(playerid, response, listitem, const inputtext[])
     return 1;
 }
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     CreateDynamicMapIcon(2453.5684, -1971.7292, 13.5469, 18, -1, .worldid = 0, .interiorid = 0);
 
@@ -182,19 +182,19 @@ public OnGameModeInit()
     Shop_AddItem(rifle_shop, "M4", 356, 16000, 84.000061, -39.400012, 150.699996);
     Shop_AddItem(rifle_shop, "Country Rifle", 357, 5000, 84.000061, -39.400012, 150.699996);
 
-    #if defined BMARKET_OnGameModeInit
-        return BMARKET_OnGameModeInit();
+    #if defined BMARKET_OnScriptInit
+        return BMARKET_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit BMARKET_OnGameModeInit
-#if defined BMARKET_OnGameModeInit
-    forward BMARKET_OnGameModeInit();
+#define OnScriptInit BMARKET_OnScriptInit
+#if defined BMARKET_OnScriptInit
+    forward BMARKET_OnScriptInit();
 #endif

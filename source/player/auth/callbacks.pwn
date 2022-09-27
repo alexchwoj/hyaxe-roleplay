@@ -239,7 +239,14 @@ dialog login(playerid, response, listitem, inputtext[])
 
         Account_LoadFromCache(playerid);
 
-        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `CURRENT_PLAYERID` = %i, `CURRENT_CONNECTION` = UNIX_TIMESTAMP() WHERE `ID` = %i LIMIT 1;", playerid, Player_AccountID(playerid));
+        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `CURRENT_PLAYERID` = %i, `CURRENT_CONNECTION` = UNIX_TIMESTAMP()", playerid);
+        if(Player_VIP(playerid) == -1)
+        {
+            Player_VIP(playerid) = 0;
+            strcat(HYAXE_UNSAFE_HUGE_STRING, ", `VIP_LEVEL` = 0, `VIP_EXPIRACY` = NULL", HYAXE_UNSAFE_HUGE_LENGTH);
+        }
+
+        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s WHERE `ID` = %i;", HYAXE_UNSAFE_HUGE_STRING, Player_AccountID(playerid));
         mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
         Account_RegisterConnection(playerid);
 
@@ -260,7 +267,6 @@ dialog login(playerid, response, listitem, inputtext[])
         Player_GiveAllWeapons(playerid);
         SetPlayerArmedWeapon(playerid, 0);
         
-        printf("player %i level = %i", playerid, Player_Level(playerid));
         SetPlayerScore(playerid, Player_Level(playerid));
         Iter_Add(LoggedIn, playerid);
 

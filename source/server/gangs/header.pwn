@@ -16,8 +16,7 @@ enum eGangData
 
     bool:e_bGangAttacking
 };
-new g_rgeGangs[HYAXE_MAX_GANGS][eGangData],
-    Map:g_mapGangIds;
+new g_rgeGangs[HYAXE_MAX_GANGS][eGangData];
 
 enum eGangRankPermissions(<<=1)
 {
@@ -96,3 +95,7 @@ forward GANGS_PanelDataFetched(playerid);
 forward GANGS_PanelMembersFetched(playerid);
 forward GANGS_RoleCreated(playerid);
 forward GANGS_NewOwnerFetched(playerid);
+
+native gang_link_dbid(dbid, arrayid);
+native gang_id_from_dbid(dbid);
+native gang_remove_id(dbid);

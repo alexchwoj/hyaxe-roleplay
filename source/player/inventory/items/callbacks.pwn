@@ -12,11 +12,16 @@ static Flag_OnUse(playerid, slot)
         return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes conquistar estando herido.");
 
     new territory_index = -1;
-    for_list(it : GetPlayerAllDynamicAreas(playerid))
+
+    if(IsPlayerInAnyDynamicArea(playerid))
     {
-        new areaid = iter_get(it);
-        if (Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x544552)))
-            territory_index = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x544552));
+        GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
+        for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
+        {
+            new areaid = YSI_UNSAFE_HUGE_STRING[i];
+            if (Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x544552)))
+                territory_index = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x544552));
+        }
     }
 
     if (territory_index == -1)
@@ -48,11 +53,18 @@ static Medicine_OnUse(playerid, slot)
     if (Player_Health(playerid) >= 100)
         return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Tienes la vida llena.");
 
+    if(g_rgePlayerTempData[playerid][e_iMedicineUseTime] && gettime() - g_rgePlayerTempData[playerid][e_iMedicineUseTime] < (Player_VIP(playerid) >= 3 ? 3 : 10))
+    {
+        Notification_ShowBeatingText(playerid, 2000, 0xF7F7F7, 100, 255, va_return("Debes esperar %d segundos para consumir otro medicamento", gettime() - g_rgePlayerTempData[playerid][e_iMedicineUseTime]));
+        return 1;
+    }
+
     ApplyAnimation(playerid, "FOOD", "EAT_Pizza", 4.1, false, true, true, false, 1000);
     PlayerPlaySound(playerid, SOUND_EAT);
 
     Notification_ShowBeatingText(playerid, 2000, 0xF7F7F7, 100, 255, "Has usado un medicamento (~g~+5~w~ de salud)");
     Player_SetHealth(playerid, Player_Health(playerid) + 5);
+    g_rgePlayerTempData[playerid][e_iMedicineUseTime] = gettime();
 
     InventorySlot_Subtract(playerid, slot);
     return 1;
@@ -63,11 +75,17 @@ static Crack_OnUse(playerid, slot)
     if (Player_Armor(playerid) >= 100)
         return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Tienes el chaleco lleno.");
 
+    if(g_rgePlayerTempData[playerid][e_iCrackUseTime] && gettime() - g_rgePlayerTempData[playerid][e_iCrackUseTime] < (Player_VIP(playerid) >= 3 ? 3 : 10))
+    {
+        Notification_ShowBeatingText(playerid, 2000, 0xF7F7F7, 100, 255, va_return("Debes esperar %d segundos para consumir crack", gettime() - g_rgePlayerTempData[playerid][e_iCrackUseTime]));
+        return 1;
+    }
     ApplyAnimation(playerid, "FOOD", "EAT_Pizza", 4.1, false, true, true, false, 1000);
     PlayerPlaySound(playerid, SOUND_EAT);
 
     Notification_ShowBeatingText(playerid, 2000, 0xF7F7F7, 100, 255, "Has usado un gramo de crack (~g~+10~w~ de chaleco)");
     Player_SetArmor(playerid, Player_Armor(playerid) + 10);
+    g_rgePlayerTempData[playerid][e_iCrackUseTime] = gettime();
 
     InventorySlot_Subtract(playerid, slot);
     return 1;
@@ -174,14 +192,16 @@ public REPAIRKIT_ActionFinished(playerid, vehicleid)
     ApplyAnimation(playerid, "CAR", "FIXN_CAR_OUT", 4.1, 0, 0, 0, 0, 0);
     Notification_ShowBeatingText(playerid, 3000, 0x98D952, 100, 255, "Vehículo reparado");
 
-    wait_ms(3000);
-
-    ClearAnimations(playerid);
+    inline const AnimationDone()
+    {
+        ClearAnimations(playerid);
+    }
+    Timer_CreateCallback(using inline AnimationDone, 3000, 1);
 
     return 1;
 }
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     /* Medical */
 
@@ -346,19 +366,19 @@ public OnGameModeInit()
     Item_Callback(ITEM_FLAG) = __addressof(Flag_OnUse);
     Item_SetPreviewRot(ITEM_FLAG, -19.000000, 49.000000, -171.000000, 0.770000);
 
-    #if defined ITEM_OnGameModeInit
-        return ITEM_OnGameModeInit();
+    #if defined ITEM_OnScriptInit
+        return ITEM_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit ITEM_OnGameModeInit
-#if defined ITEM_OnGameModeInit
-    forward ITEM_OnGameModeInit();
+#define OnScriptInit ITEM_OnScriptInit
+#if defined ITEM_OnScriptInit
+    forward ITEM_OnScriptInit();
 #endif

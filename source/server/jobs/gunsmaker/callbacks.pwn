@@ -60,10 +60,11 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
             if(PlayerJob_Paycheck(playerid) > 0)
             {
                 Player_Job(playerid) = JOB_GUNSMAKER;
-                Player_GiveMoney(playerid, PlayerJob_Paycheck(playerid), true);
+                new pay = Job_ApplyPaycheckBenefits(playerid, PlayerJob_Paycheck(playerid));
+                Player_GiveMoney(playerid, pay, true);
                 
                 new str[120];
-                format(str, sizeof(str), "Te pagaron ~g~$%i~w~ por tus trabajos. Vuelve a tu mesa o presiona ~k~~CONVERSATION_YES~ para dejar de trabajar.", PlayerJob_Paycheck(playerid));
+                format(str, sizeof(str), "Te pagaron ~g~$%i~w~ por tus trabajos. Vuelve a tu mesa o presiona ~k~~CONVERSATION_YES~ para dejar de trabajar.", pay);
                 Notification_Show(playerid, str, 6000, 0xCB3126);
                 PlayerJob_Paycheck(playerid) = 0;
 
@@ -93,10 +94,11 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
         {
             if(PlayerJob_Paycheck(playerid) > 0)
             {
-                Player_GiveMoney(playerid, PlayerJob_Paycheck(playerid), true);
+                new pay = Job_ApplyPaycheckBenefits(playerid, PlayerJob_Paycheck(playerid));
+                Player_GiveMoney(playerid, pay, true);
                 
                 new str[120];
-                format(str, sizeof(str), "Fuiste despedido por salir de la fábrica. Te indemnizaron ~g~$%i~w~ al despedirte.", PlayerJob_Paycheck(playerid));
+                format(str, sizeof(str), "Fuiste despedido por salir de la fábrica. Se te pagó tu sueldo pendiente de ~g~$%i~w~ al despedirte.", pay);
                 Notification_Show(playerid, str, 6000, 0xCB3126);
                 PlayerJob_Paycheck(playerid) = 0;
             }
@@ -122,7 +124,7 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
     return 1;
 }
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     // Actors
     CreateDynamicActor(168, 2548.1860, -1293.0232, 1045.1250, 182.7474, .worldid = 0, .interiorid = 2);
@@ -145,21 +147,21 @@ public OnGameModeInit()
         g_rgiGunsmakerBenchCheckpoint[i] = CreateDynamicCP(g_rgfGunsmakerBenchSites[i][0], g_rgfGunsmakerBenchSites[i][1], g_rgfGunsmakerBenchSites[i][2], 1.0, .worldid = 0, .interiorid = 2);
     }
 
-    #if defined GSMAKER_OnGameModeInit
-        return GSMAKER_OnGameModeInit();
+    #if defined GSMAKER_OnScriptInit
+        return GSMAKER_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit GSMAKER_OnGameModeInit
-#if defined GSMAKER_OnGameModeInit
-    forward GSMAKER_OnGameModeInit();
+#define OnScriptInit GSMAKER_OnScriptInit
+#if defined GSMAKER_OnScriptInit
+    forward GSMAKER_OnScriptInit();
 #endif
 
 static GunsmakerKeyGameCallback(playerid, bool:success)

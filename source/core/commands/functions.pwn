@@ -17,9 +17,12 @@ Commands_GetFreeIndex()
 
     new name[32], est_new;
 
-    for(new i = amx_num_publics() - 1; i != -1; --i)
+    new hdr[AMX_HDR];
+    GetAmxHeader(hdr);
+
+    for(new i = GetNumPublics(hdr) - 1; i != -1; --i)
     {
-        amx_public_name(i, name);
+        GetPublicNameFromIndex(i, name);
 
         if(!strcmp("hy@cmd_", name, true, 7))
             est_new++;

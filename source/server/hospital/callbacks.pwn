@@ -29,21 +29,27 @@ public OnPlayerDisconnect(playerid, reason)
 forward HP_HealPlayer(playerid);
 public HP_HealPlayer(playerid)
 {
-    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Curando las heridas... ~r~%d%", Player_Health(playerid));
+    new const max_health = (Player_VIP(playerid) >= 3 ? 100 : 50);
+    new progress = floatround(floatdiv(float(Player_Health(playerid)), float(max_health)) * 100.0);
+
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Curando las heridas... ~r~%d%", progress);
     Notification_ShowBeatingText(playerid, 1000, 0xF7F7F7, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
 
-    if (Player_Health(playerid) >= 100)
+    if (Player_Health(playerid) >= max_health)
     {
         Notification_ShowBeatingText(playerid, 1000, 0xF7F7F7, 100, 255, "Curando las heridas... ~r~100%");
         
-        SpawnPlayer(playerid);
-        TogglePlayerSpectating(playerid, true);
+        //SpawnPlayer(playerid);
+        //TogglePlayerSpectating(playerid, true);
         TogglePlayerSpectating(playerid, false);
 
         Player_SetPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
         SetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fPosAngle]);
 
         SetCameraBehindPlayer(playerid);
+
+        if(Player_VIP(playerid) >= 3)
+            Player_SetArmor(playerid, 50);
 
         Notification_Show(playerid, "Los médicos te han dado de alta.", 3000, 0x64A752FF);
         KillTimer(g_rgiHospitalHealthTimer[playerid]);
@@ -52,7 +58,7 @@ public HP_HealPlayer(playerid)
         return 1;
     }
 
-    Player_SetHealth(playerid, Player_Health(playerid) + 6);
+    Player_SetHealth(playerid, Player_Health(playerid) + (Player_VIP(playerid) >= 2 ? 10 : 5));
     return 1;
 }
 
@@ -127,14 +133,14 @@ Menu:hospital_menu(playerid, response, listitem)
     return 1;
 }
 
-public OnGameModeInit()
+public OnScriptInit()
 {
     for(new i; i < sizeof(g_rgeHospitalData); ++i)
     {
         new int = g_rgeHospitalData[i][e_iHospitalInteriorType];
 
         Actor_CreateRobbable(
-            minrand(274, 276), 500, 800,
+            Random(274, 276), 500, 800,
             g_rgeHospitalInteriorData[int][e_fHospitalActorPosX], g_rgeHospitalInteriorData[int][e_fHospitalActorPosY], g_rgeHospitalInteriorData[int][e_fHospitalActorPosZ], g_rgeHospitalInteriorData[int][e_fHospitalActorPosAngle],
             .worldid = i, .interiorid = g_rgeHospitalInteriorData[int][e_iHospitalIntInterior]
         );
@@ -165,19 +171,19 @@ public OnGameModeInit()
         CreateDynamicMapIcon(g_rgeHospitalData[i][e_fHospitalPosX], g_rgeHospitalData[i][e_fHospitalPosY], g_rgeHospitalData[i][e_fHospitalPosZ], 22, -1, .worldid = 0, .interiorid = 0);
     }
 
-    #if defined HP_OnGameModeInit
-        return HP_OnGameModeInit();
+    #if defined HP_OnScriptInit
+        return HP_OnScriptInit();
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnGameModeInit
-    #undef OnGameModeInit
+#if defined _ALS_OnScriptInit
+    #undef OnScriptInit
 #else
-    #define _ALS_OnGameModeInit
+    #define _ALS_OnScriptInit
 #endif
-#define OnGameModeInit HP_OnGameModeInit
-#if defined HP_OnGameModeInit
-    forward HP_OnGameModeInit();
+#define OnScriptInit HP_OnScriptInit
+#if defined HP_OnScriptInit
+    forward HP_OnScriptInit();
 #endif
