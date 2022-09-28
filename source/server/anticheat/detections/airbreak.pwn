@@ -25,7 +25,7 @@ IPacket:__ac_ab_PlayerSync(playerid, BitStream:bs)
         PR_INT16, animation_id
     );
 
-    if(pos_z - Player_Data(playerid, e_fPosZ) > 1.0 && speed_z == 0.0 && s_rgfLastSpeedZ[playerid] == 0.0 && (!animation_id || (1253 <= animation_id <= 1273) || (1222 <= animation_id <= 1236)))
+    if(pos_z - Player_Data(playerid, e_fPosZ) > 1.0 && speed_z == 0.0 && s_rgfLastSpeedZ[playerid] == 0.0 && (!animation_id || (1253 <= animation_id <= 1273) || (1222 <= animation_id <= 1236) || (1062 <= animation_id <= 1065)))
     {
         if(Anticheat_Trigger(playerid, CHEAT_AIRBREAK, 1))
             return 0;
