@@ -56,11 +56,11 @@ command config(playerid, const params[], "Abre el panel de configuración")
         strcat(HYAXE_UNSAFE_HUGE_STRING, line);
     }
 
-    Dialog_Show(playerid, "player_config", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Hyaxe {DADADA}- Configuración", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Salir");
+    Dialog_ShowCallback(playerid, using public _hydg@player_config<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Hyaxe {DADADA}- Configuración", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Salir");
     return 1;
 }
 
-dialog player_config(playerid, response, listitem, inputtext[])
+dialog player_config(playerid, dialogid, response, listitem, inputtext[])
 {
     if(!response)
         return 1;
@@ -78,7 +78,7 @@ dialog player_config(playerid, response, listitem, inputtext[])
         strcat(HYAXE_UNSAFE_HUGE_STRING, line);
     }
 
-    Dialog_Show(playerid, "player_config", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Hyaxe {DADADA}- Configuración", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Salir");
+    Dialog_ShowCallback(playerid, using public _hydg@player_config<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Hyaxe {DADADA}- Configuración", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Salir");
 
     Config_Save(playerid);
 

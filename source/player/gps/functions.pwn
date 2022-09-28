@@ -5,7 +5,7 @@
 
 Player_ShowGPS(playerid)
 {
-    Dialog_Show(playerid, "gps_main", DIALOG_STYLE_LIST, "{CB3126}Hyaxe{DADADA} - GPS", "\
+    Dialog_ShowCallback(playerid, using public _hydg@gps_main<iiiis>, DIALOG_STYLE_LIST, "{CB3126}Hyaxe{DADADA} - GPS", "\
         Trabajos\n\
         Hospitales\n\
         Concesionarios\n\

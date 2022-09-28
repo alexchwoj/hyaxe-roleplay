@@ -170,7 +170,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
                     format(line, sizeof(line), "{DADADA}%s\t{DADADA}%i caja%s\t{64A752}$%i\n", g_rgeTruckerRoutes[i][e_szRouteName], g_rgeTruckerRoutes[i][e_iBoxCount], (g_rgeTruckerRoutes[i][e_iBoxCount] > 1 ? "s" : ""), pay);
                     strcat(HYAXE_UNSAFE_HUGE_STRING, line);
                 }
-                Dialog_Show(playerid, "select_trucker_route", DIALOG_STYLE_TABLIST_HEADERS, "Rutas de {CB3126}camionero", HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Cancelar");
+                Dialog_ShowCallback(playerid, using public _hydg@select_trucker_route<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, "Rutas de {CB3126}camionero", HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Cancelar");
             }
 
             return 1;
@@ -419,7 +419,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     forward J_TRK_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 #endif
 
-dialog select_trucker_route(playerid, response, listitem, const inputtext[])
+dialog select_trucker_route(playerid, dialogid, response, listitem, const inputtext[])
 {
     new vehicleid = GetPlayerVehicleID(playerid);
 

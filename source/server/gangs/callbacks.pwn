@@ -235,7 +235,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
         
         if(!Player_IsGangOwner(playerid) && !(Player_GangRankData(playerid)[e_iRankPermisionFlags] & _:(~(GANG_PERM_KICK_MEMBERS | GANG_PERM_EDIT_MEMBERS))))
         {
-            Dialog_Show(playerid, "", DIALOG_STYLE_MSGBOX, caption, "{DADADA}No tienes permisos para modificar esta banda.", "Entendido");
+            Dialog_Show(playerid, DIALOG_STYLE_MSGBOX, caption, "{DADADA}No tienes permisos para modificar esta banda.", "Entendido");
             return 1;
         }
 
@@ -253,7 +253,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
         if(Player_IsGangOwner(playerid))
             strcat(HYAXE_UNSAFE_HUGE_STRING, "\n{CB3126}>>{DADADA} Ceder administración");
 
-        Dialog_Show(playerid, "modify_gang", DIALOG_STYLE_LIST, caption, HYAXE_UNSAFE_HUGE_STRING, "Siguiente", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@modify_gang<iiiis>, DIALOG_STYLE_LIST, caption, HYAXE_UNSAFE_HUGE_STRING, "Siguiente", "Cancelar");
         return 1;
     }
 
@@ -303,7 +303,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 
                 Gangs_ClosePanel(playerid);
 
-                Dialog_Show(playerid, "gang_member", DIALOG_STYLE_LIST, va_return("{CB3126}>>{DADADA} %s", s_rgszSelectedGangMember[playerid]), "{CB3126}>{DADADA} Cambiar rol\n{CB3126}>>{DADADA} Expulsar miembro", "Seleccionar", "Atrás");
+                Dialog_ShowCallback(playerid, using public _hydg@gang_member<iiiis>, DIALOG_STYLE_LIST, va_return("{CB3126}>>{DADADA} %s", s_rgszSelectedGangMember[playerid]), "{CB3126}>{DADADA} Cambiar rol\n{CB3126}>>{DADADA} Expulsar miembro", "Seleccionar", "Atrás");
                 return 1;
             }
         }
@@ -345,12 +345,12 @@ public GANGS_NewOwnerFetched(playerid)
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}El dueño de la banda ahora es {CB3126}%s{DADADA}.", s_rgszSelectedGangMember[playerid]);
-    Dialog_Show(playerid, "", DIALOG_STYLE_MSGBOX, "{CB3126}>{DADADA} Permisos cedidos", HYAXE_UNSAFE_HUGE_STRING, "Entendido");
+    Dialog_Show(playerid, DIALOG_STYLE_MSGBOX, "{CB3126}>{DADADA} Permisos cedidos", HYAXE_UNSAFE_HUGE_STRING, "Entendido");
 
     return 1;
 }
 
-dialog gang_member(playerid, response, listitem, const inputtext[])
+dialog gang_member(playerid, dialogid, response, listitem, const inputtext[])
 {
     if(!response)
     {
@@ -380,22 +380,22 @@ dialog gang_member(playerid, response, listitem, const inputtext[])
             }
 
             format(line, sizeof(line), "{CB3126}>>{DADADA} Cambiar rol de %s", s_rgszSelectedGangMember[playerid]);
-            Dialog_Show(playerid, "gang_member_change_role", DIALOG_STYLE_TABLIST_HEADERS, line, HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Cancelar");
+            Dialog_ShowCallback(playerid, using public _hydg@gang_member_change_role<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, line, HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Cancelar");
         }
         case 1: // Kick member
         {
-            Dialog_Show(playerid, "gang_kick_member", DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Expulsar miembro", va_return("{DADADA}¿Estás seguro de que quieres expulsar a {CB3126}%s{DADADA}?", s_rgszSelectedGangMember[playerid]), "Expulsar", "Cancelar");
+            Dialog_ShowCallback(playerid, using public _hydg@gang_kick_member<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Expulsar miembro", va_return("{DADADA}¿Estás seguro de que quieres expulsar a {CB3126}%s{DADADA}?", s_rgszSelectedGangMember[playerid]), "Expulsar", "Cancelar");
         }
     }
 
     return 1;
 }
 
-dialog gang_member_change_role(playerid, response, listitem, const inputtext[])
+dialog gang_member_change_role(playerid, dialogid, response, listitem, const inputtext[])
 {
     if(!response)
     {
-        Dialog_Show(playerid, "gang_member", DIALOG_STYLE_LIST, va_return("{CB3126}>>{DADADA} %s", s_rgszSelectedGangMember[playerid]), "{CB3126}>{DADADA} Cambiar rol\n{CB3126}>>{DADADA} Expulsar miembro", "Seleccionar", "Atrás");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_member<iiiis>, DIALOG_STYLE_LIST, va_return("{CB3126}>>{DADADA} %s", s_rgszSelectedGangMember[playerid]), "{CB3126}>{DADADA} Cambiar rol\n{CB3126}>>{DADADA} Expulsar miembro", "Seleccionar", "Atrás");
         return 1;
     }
 
@@ -421,7 +421,7 @@ dialog gang_member_change_role(playerid, response, listitem, const inputtext[])
         }
 
         format(line, sizeof(line), "{CB3126}>>{DADADA} Cambiar rol de %s", s_rgszSelectedGangMember[playerid]);
-        Dialog_Show(playerid, "gang_member_change_role", DIALOG_STYLE_TABLIST_HEADERS, line, HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_member_change_role<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, line, HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Cancelar");
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes asignarle un rango vacío o superior al tuyo");
         return 1;
     }
@@ -446,11 +446,11 @@ dialog gang_member_change_role(playerid, response, listitem, const inputtext[])
     return 1;
 }
 
-dialog gang_kick_member(playerid, response, listitem, const inputtext[])
+dialog gang_kick_member(playerid, dialogid, response, listitem, const inputtext[])
 {
     if(!response)
     {
-        Dialog_Show(playerid, "gang_member", DIALOG_STYLE_LIST, va_return("{CB3126}>>{DADADA} %s", s_rgszSelectedGangMember[playerid]), "{CB3126}>{DADADA} Cambiar rol\n{CB3126}>>{DADADA} Expulsar miembro", "Seleccionar", "Atrás");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_member<iiiis>, DIALOG_STYLE_LIST, va_return("{CB3126}>>{DADADA} %s", s_rgszSelectedGangMember[playerid]), "{CB3126}>{DADADA} Cambiar rol\n{CB3126}>>{DADADA} Expulsar miembro", "Seleccionar", "Atrás");
         return 1;
     }
 
@@ -479,7 +479,7 @@ dialog gang_kick_member(playerid, response, listitem, const inputtext[])
     return 1;
 }
 
-dialog modify_gang(playerid, response, listitem, inputtext[])
+dialog modify_gang(playerid, dialogid, response, listitem, inputtext[])
 {
     if(!response)
     {
@@ -496,12 +496,12 @@ dialog modify_gang(playerid, response, listitem, inputtext[])
         if(Player_IsGangOwner(playerid))
             strcat(HYAXE_UNSAFE_HUGE_STRING, " Si abandonas la banda, se borrará.");
 
-        Dialog_Show(playerid, "gang_abandon", DIALOG_STYLE_MSGBOX, "{CB3126}>{DADADA} Abandonar banda", HYAXE_UNSAFE_HUGE_STRING, "Abandonar", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_abandon<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}>{DADADA} Abandonar banda", HYAXE_UNSAFE_HUGE_STRING, "Abandonar", "Cancelar");
         return 1;
     }
     else if(perm == (_:GANG_PERM_LAST << 1))
     {
-        Dialog_Show(playerid, "gang_give_owner", DIALOG_STYLE_MSGBOX, "{CB3126}>{DADADA} Ceder administración de la banda", "{DADADA}¿Estás seguro de que deseas ceder tu cargo como dueño de la banda? Perderás todos los permisos que no esten asignados a tu rol y no podrás hacer ninguna acción sobre miembros superiores a ti.", "Siguiente", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_give_owner<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}>{DADADA} Ceder administración de la banda", "{DADADA}¿Estás seguro de que deseas ceder tu cargo como dueño de la banda? Perderás todos los permisos que no esten asignados a tu rol y no podrás hacer ninguna acción sobre miembros superiores a ti.", "Siguiente", "Cancelar");
         return 1;
     }
 
@@ -510,7 +510,7 @@ dialog modify_gang(playerid, response, listitem, inputtext[])
     
     if(!Player_IsGangOwner(playerid) && !(Player_GangRankData(playerid)[e_iRankPermisionFlags] & perm))
     {
-        Dialog_Show(playerid, "", DIALOG_STYLE_MSGBOX, caption, "{DADADA}No tienes permisos para usar esta opción.", "Entendido");
+        Dialog_Show(playerid, DIALOG_STYLE_MSGBOX, caption, "{DADADA}No tienes permisos para usar esta opción.", "Entendido");
         return 1;
     }
 
@@ -518,11 +518,11 @@ dialog modify_gang(playerid, response, listitem, inputtext[])
     {
         case GANG_PERM_CHANGE_COLOR:
         {
-            Dialog_Show(playerid, "gang_change_color", DIALOG_STYLE_INPUT, caption, "{DADADA}Introduce el nuevo color de la banda en el formato #{FF0000}RR{00FF00}GG{0000FF}BB{DADADA}. Cada color debe ser un número hexadecimal válido.", "Cambiar", "Cancelar");
+            Dialog_ShowCallback(playerid, using public _hydg@gang_change_color<iiiis>, DIALOG_STYLE_INPUT, caption, "{DADADA}Introduce el nuevo color de la banda en el formato #{FF0000}RR{00FF00}GG{0000FF}BB{DADADA}. Cada color debe ser un número hexadecimal válido.", "Cambiar", "Cancelar");
         }
         case GANG_PERM_CHANGE_NAME:
         {
-            Dialog_Show(playerid, "gang_change_name", DIALOG_STYLE_INPUT, caption, "{DADADA}Introduce el nuevo nombre de la banda. Debe tener una longitud entre {CB3126}1{DADADA} y {CB3126}64{DADADA} caracteres.", "Cambiar", "Cancelar");
+            Dialog_ShowCallback(playerid, using public _hydg@gang_change_name<iiiis>, DIALOG_STYLE_INPUT, caption, "{DADADA}Introduce el nuevo nombre de la banda. Debe tener una longitud entre {CB3126}1{DADADA} y {CB3126}64{DADADA} caracteres.", "Cambiar", "Cancelar");
         }
         case GANG_PERM_CHANGE_ICON:
         {
@@ -534,7 +534,7 @@ dialog modify_gang(playerid, response, listitem, inputtext[])
                 strcat(HYAXE_UNSAFE_HUGE_STRING, "\n");
             }
 
-            Dialog_Show(playerid, "gang_change_icon", DIALOG_STYLE_LIST, caption, HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Cancelar");
+            Dialog_ShowCallback(playerid, using public _hydg@gang_change_icon<iiiis>, DIALOG_STYLE_LIST, caption, HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Cancelar");
         }
         case GANG_PERM_CHANGE_ROLES:
         {
@@ -542,18 +542,18 @@ dialog modify_gang(playerid, response, listitem, inputtext[])
         }
         case GANG_PERM_KICK_MEMBERS, GANG_PERM_EDIT_MEMBERS:
         {
-            Dialog_Show(playerid, "null", DIALOG_STYLE_MSGBOX, caption, "{DADADA}Para editar o expulsar a algun miembro de la banda, presiona su nombre en el panel de banda.", "Entendido");
+            Dialog_ShowCallback(playerid, using public _hydg@null<iiiis>, DIALOG_STYLE_MSGBOX, caption, "{DADADA}Para editar o expulsar a algun miembro de la banda, presiona su nombre en el panel de banda.", "Entendido");
         }
         case GANG_PERM_INVITE_MEMBERS:
         {
-            Dialog_Show(playerid, "gang_invite_member", DIALOG_STYLE_INPUT, caption, "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
+            Dialog_ShowCallback(playerid, using public _hydg@gang_invite_member<iiiis>, DIALOG_STYLE_INPUT, caption, "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
         }
     }
 
     return 1;
 }
 
-dialog gang_give_owner(playerid, response, listitem, const inputtext[])
+dialog gang_give_owner(playerid, dialogid, response, listitem, const inputtext[])
 {
     if(response)
     {
@@ -565,7 +565,7 @@ dialog gang_give_owner(playerid, response, listitem, const inputtext[])
     return 1;
 }
 
-dialog gang_abandon(playerid, response, listitem, const inputtext[])
+dialog gang_abandon(playerid, dialogid, response, listitem, const inputtext[])
 {
     if(!response)
         return 1;
@@ -609,7 +609,7 @@ dialog gang_abandon(playerid, response, listitem, const inputtext[])
     return 1;
 }
 
-dialog gang_change_color(playerid, response, listitem, inputtext[])
+dialog gang_change_color(playerid, dialogid, response, listitem, inputtext[])
 {
     if(!response)
     {
@@ -620,7 +620,7 @@ dialog gang_change_color(playerid, response, listitem, inputtext[])
     new new_color;
     if(sscanf(inputtext, "?<SSCANF_COLOUR_FORMS=2>m", new_color))
     {
-        Dialog_Show(playerid, "gang_change_color", DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Cambiar color", "{DADADA}Introduce el nuevo color de la banda en el formato #{FF0000}RR{00FF00}GG{0000FF}BB{DADADA}. Cada color debe ser un número hexadecimal válido.", "Cambiar", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_change_color<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Cambiar color", "{DADADA}Introduce el nuevo color de la banda en el formato #{FF0000}RR{00FF00}GG{0000FF}BB{DADADA}. Cada color debe ser un número hexadecimal válido.", "Cambiar", "Cancelar");
         return 1;
     }
 
@@ -637,7 +637,7 @@ dialog gang_change_color(playerid, response, listitem, inputtext[])
     return 1;
 }
 
-dialog gang_change_name(playerid, response, listitem, inputtext[])
+dialog gang_change_name(playerid, dialogid, response, listitem, inputtext[])
 {
     if(!response)
     {
@@ -647,7 +647,7 @@ dialog gang_change_name(playerid, response, listitem, inputtext[])
 
     if(isnull(inputtext) || strlen(inputtext) > 64)
     {
-        Dialog_Show(playerid, "gang_change_name", DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Cambiar nombre", "{DADADA}Introduce el nuevo nombre de la banda. Debe tener una longitud entre {CB3126}1{DADADA} y {CB3126}64{DADADA} caracteres.", "Cambiar", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_change_name<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Cambiar nombre", "{DADADA}Introduce el nuevo nombre de la banda. Debe tener una longitud entre {CB3126}1{DADADA} y {CB3126}64{DADADA} caracteres.", "Cambiar", "Cancelar");
         return 1;
     }
     
@@ -665,7 +665,7 @@ dialog gang_change_name(playerid, response, listitem, inputtext[])
     return 1;
 }
 
-dialog gang_change_icon(playerid, response, listitem, inputtext[])
+dialog gang_change_icon(playerid, dialogid, response, listitem, inputtext[])
 {
     if(!response)
     {
@@ -685,7 +685,7 @@ dialog gang_change_icon(playerid, response, listitem, inputtext[])
     return 1;
 }
 
-dialog gang_change_role(playerid, response, listitem, inputtext[])
+dialog gang_change_role(playerid, dialogid, response, listitem, inputtext[])
 {
     if(!response)
     {
@@ -708,11 +708,11 @@ dialog gang_change_role(playerid, response, listitem, inputtext[])
     {
         g_rgiPanelSelectedRole{playerid} = rankid;
         g_rgeGangRanks[Player_Gang(playerid)][rankid][e_iRankId] = -1;
-        Dialog_Show(playerid, "gang_create_role", DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Crear nuevo rol", "{DADADA}Introduce el nombre del rol a crear. No debe contener más de {CB3126}32{DADADA} caracteres.", "Siguiente", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_create_role<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Crear nuevo rol", "{DADADA}Introduce el nombre del rol a crear. No debe contener más de {CB3126}32{DADADA} caracteres.", "Siguiente", "Cancelar");
     }
     else if(g_rgeGangRanks[Player_Gang(playerid)][rankid][e_iRankId] == -1)
     {
-        Dialog_Show(playerid, "gang_role_being_created", DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Crear nuevo rol", "{DADADA}Otro jugador ya está creando este rol, podrás modificarlo cuando termine de crearlo.", "Entendido");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_role_being_created<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Crear nuevo rol", "{DADADA}Otro jugador ya está creando este rol, podrás modificarlo cuando termine de crearlo.", "Entendido");
     }
     else
     {
@@ -723,13 +723,13 @@ dialog gang_change_role(playerid, response, listitem, inputtext[])
     return 1;
 }
 
-dialog gang_role_being_created(playerid, response, listitem, inputtext[])
+dialog gang_role_being_created(playerid, dialogid, response, listitem, inputtext[])
 {
     GangPanel_OpenRoles(playerid);
     return 1;
 }
 
-dialog gang_create_role(playerid, response, listitem, inputtext[])
+dialog gang_create_role(playerid, dialogid, response, listitem, inputtext[])
 {
     if(!response)
     {
@@ -741,7 +741,7 @@ dialog gang_create_role(playerid, response, listitem, inputtext[])
 
     if(isnull(inputtext) || strlen(inputtext) > 32)
     {
-        Dialog_Show(playerid, "gang_create_role", DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Crear nuevo rol", "{DADADA}Introduce el nombre del rol a crear. No debe contener más de {CB3126}32{DADADA} caracteres.", "Siguiente", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_create_role<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Crear nuevo rol", "{DADADA}Introduce el nombre del rol a crear. No debe contener más de {CB3126}32{DADADA} caracteres.", "Siguiente", "Cancelar");
         return 1;
     }
 
@@ -764,17 +764,17 @@ public GANGS_RoleCreated(playerid)
 {
     g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankId] = cache_insert_id();
     g_rgiPanelSelectedRole{playerid} = 0xFF;
-    Dialog_Show(playerid, "gang_role_created", DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Rol creado", "{DADADA}El rol fue creado exitosamente. Dirígete al panel de roles para editar sus permisos.", "Entendido");
+    Dialog_ShowCallback(playerid, using public _hydg@gang_role_created<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Rol creado", "{DADADA}El rol fue creado exitosamente. Dirígete al panel de roles para editar sus permisos.", "Entendido");
     return 1;
 }
 
-dialog gang_role_created(playerid, response, listitem, inputtext[])
+dialog gang_role_created(playerid, dialogid, response, listitem, inputtext[])
 {
     GangPanel_OpenRoles(playerid);
     return 1;
 }
 
-dialog gang_role_modify_option(playerid, response, listitem, inputtext[])
+dialog gang_role_modify_option(playerid, dialogid, response, listitem, inputtext[])
 {
     if(!response)
     {
@@ -787,7 +787,7 @@ dialog gang_role_modify_option(playerid, response, listitem, inputtext[])
     {
         case 0:
         {
-            Dialog_Show(playerid, "gang_role_change_name", DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Cambiar nombre del rol", "{DADADA}Introduce el nuevo nombre del rol a crear. No debe contener más de {CB3126}32{DADADA} caracteres.", "Cambiar", "Cancelar");
+            Dialog_ShowCallback(playerid, using public _hydg@gang_role_change_name<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Cambiar nombre del rol", "{DADADA}Introduce el nuevo nombre del rol a crear. No debe contener más de {CB3126}32{DADADA} caracteres.", "Cambiar", "Cancelar");
         }
         case 1:
         {
@@ -802,7 +802,7 @@ dialog gang_role_modify_option(playerid, response, listitem, inputtext[])
     return 1;
 }
 
-dialog gang_role_change_name(playerid, response, listitem, inputtext[])
+dialog gang_role_change_name(playerid, dialogid, response, listitem, inputtext[])
 {
     if(!response)
     {
@@ -812,7 +812,7 @@ dialog gang_role_change_name(playerid, response, listitem, inputtext[])
 
     if(isnull(inputtext) || strlen(inputtext) > 32)
     {
-        Dialog_Show(playerid, "gang_role_change_name", DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Cambiar nombre del rol", "{DADADA}Introduce el nuevo nombre del rol a crear. No debe contener más de {CB3126}32{DADADA} caracteres.", "Cambiar", "Atrás");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_role_change_name<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Cambiar nombre del rol", "{DADADA}Introduce el nuevo nombre del rol a crear. No debe contener más de {CB3126}32{DADADA} caracteres.", "Cambiar", "Atrás");
         return 1;
     }
 
@@ -830,7 +830,7 @@ dialog gang_role_change_name(playerid, response, listitem, inputtext[])
     return 1;
 }
 
-dialog gang_role_change_perms(playerid, response, listitem, inputtext[])
+dialog gang_role_change_perms(playerid, dialogid, response, listitem, inputtext[])
 {
     if(!response)
     {
@@ -847,7 +847,7 @@ dialog gang_role_change_perms(playerid, response, listitem, inputtext[])
 
     if((1 << listitem) == _:GANG_PERM_CHANGE_ROLES && (Player_GangRank(playerid) == g_rgiPanelSelectedRole{playerid} && !Player_IsGangOwner(playerid)))
     {
-        Dialog_Show(playerid, "gang_cant_change_perm", DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Permisos", "{DADADA}No puedes deshabilitar este permiso para tu rango actual.", "Entendido");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_cant_change_perm<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Permisos", "{DADADA}No puedes deshabilitar este permiso para tu rango actual.", "Entendido");
         return 1;
     }
 
@@ -856,13 +856,13 @@ dialog gang_role_change_perms(playerid, response, listitem, inputtext[])
     return 1;
 }
 
-dialog gang_cant_change_perm(playerid, response, listitem, inputtext[])
+dialog gang_cant_change_perm(playerid, dialogid, response, listitem, inputtext[])
 {
     GangPanel_OpenRolePermissions(playerid);
     return 1;
 }
 
-dialog gang_exchange_slot(playerid, response, listitem, inputtext[])
+dialog gang_exchange_slot(playerid, dialogid, response, listitem, inputtext[])
 {
     if(!response)
     {
@@ -900,17 +900,17 @@ dialog gang_exchange_slot(playerid, response, listitem, inputtext[])
     g_rgeGangRanks[Player_Gang(playerid)][rankid] = g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}];
     g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}] = copy;
 
-    Dialog_Show(playerid, "gang_role_swap_success", DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Roles intercambiados", "{DADADA}Los roles fueron intercambiados con éxito.", "Entendido");
+    Dialog_ShowCallback(playerid, using public _hydg@gang_role_swap_success<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Roles intercambiados", "{DADADA}Los roles fueron intercambiados con éxito.", "Entendido");
     return 1;
 }
 
-dialog gang_role_swap_success(playerid, response, listitem, inputtext[])
+dialog gang_role_swap_success(playerid, dialogid, response, listitem, inputtext[])
 {
     GangPanel_OpenRoles(playerid);
     return 1;
 }
 
-dialog gang_invite_member(playerid, response, listitem, const inputtext[])
+dialog gang_invite_member(playerid, dialogid, response, listitem, const inputtext[])
 {
     if(!response)
     {
@@ -921,7 +921,7 @@ dialog gang_invite_member(playerid, response, listitem, const inputtext[])
     new recruit;
     if(sscanf(inputtext, "r", recruit) || !IsPlayerConnected(recruit))
     {
-        Dialog_Show(playerid, "gang_invite_member", DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Usuario inválido o desconectado", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_invite_member<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Usuario inválido o desconectado", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
         return 1;
     }
 
@@ -929,7 +929,7 @@ dialog gang_invite_member(playerid, response, listitem, const inputtext[])
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "No te puedes invitar a ti mism%c", (Player_Sex(recruit) == SEX_MALE ? 'o' : 'a'));
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
-        Dialog_Show(playerid, "gang_invite_member", DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Invitar jugadores", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_invite_member<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Invitar jugadores", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
         return 1;
     }
 
@@ -937,7 +937,7 @@ dialog gang_invite_member(playerid, response, listitem, const inputtext[])
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s ya está en tu banda", (Player_Sex(recruit) == SEX_MALE ? "El jugador" : "La jugadora"));
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
-        Dialog_Show(playerid, "gang_invite_member", DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Invitar jugadores", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_invite_member<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Invitar jugadores", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
         return 1;
     }
 
@@ -945,26 +945,26 @@ dialog gang_invite_member(playerid, response, listitem, const inputtext[])
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s ya está en otra banda", (Player_Sex(recruit) == SEX_MALE ? "El jugador" : "La jugadora"));
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
-        Dialog_Show(playerid, "gang_invite_member", DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Invitar jugadores", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@gang_invite_member<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}>{DADADA} Invitar jugadores", "{DADADA}Para invitar a un miembro a la banda, introduce su {CB3126}nombre{DADADA} o {CB3126}ID de jugador{DADADA}.", "Reclutar", "Cancelar");
         return 1;
     }
 
     new rank = Gang_GetLowestRank(Player_Gang(playerid));
 
     SetPVarInt(recruit, "gang:invite_id", Player_Gang(playerid));
-    Dialog_Show(recruit, "gang_invite_notice", DIALOG_STYLE_MSGBOX, "{CB3126}>{DADADA} Invitación a banda", 
+    Dialog_ShowCallback(recruit, using public _hydg@gang_invite_notice<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}>{DADADA} Invitación a banda", 
         va_return("{DADADA}Fuiste invitad%c para unirte a la banda {%06x}%s{DADADA} con el rango de %s.", 
             (Player_Sex(recruit) == SEX_MALE ? 'o' : 'a'), 
             g_rgeGangs[Player_Gang(playerid)][e_iGangColor] >>> 8, 
             g_rgeGangs[Player_Gang(playerid)][e_szGangName], 
             g_rgeGangRanks[Player_Gang(playerid)][rank][e_szRankName]
         ), "Aceptar", "Rechazar");
-    Dialog_Show(playerid, "", DIALOG_STYLE_MSGBOX, va_return("{CB3126}>{DADADA} %s", (Player_Sex(recruit) == SEX_MALE ? "Jugador invitado" : "Jugadora invitada")), va_return("{DADADA}%s {CB3126}%s{DADADA} fue invitado a la banda con el rango menor de %s. Espera a que responda.", (Player_Sex(recruit) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(recruit), g_rgeGangRanks[Player_Gang(playerid)][rank][e_szRankName]), "Entendido");
+    Dialog_Show(playerid, DIALOG_STYLE_MSGBOX, va_return("{CB3126}>{DADADA} %s", (Player_Sex(recruit) == SEX_MALE ? "Jugador invitado" : "Jugadora invitada")), va_return("{DADADA}%s {CB3126}%s{DADADA} fue invitado a la banda con el rango menor de %s. Espera a que responda.", (Player_Sex(recruit) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(recruit), g_rgeGangRanks[Player_Gang(playerid)][rank][e_szRankName]), "Entendido");
 
     return 1;
 }
 
-dialog gang_invite_notice(playerid, response, listitem, const inputtext[])
+dialog gang_invite_notice(playerid, dialogid, response, listitem, const inputtext[])
 {
     if(response)
     {

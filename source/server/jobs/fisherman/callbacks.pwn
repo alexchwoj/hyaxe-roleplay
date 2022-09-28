@@ -5,7 +5,7 @@
 
 static RodStore_OnKeyPress(playerid)
 {
-    Dialog_Show(playerid, "buy_fishing_rod", DIALOG_STYLE_MSGBOX, !"{CB3126}Caña de pescar", !"{DADADA}¿Quieres comprar una caña de pescar por {64A752}$75{DADADA}?", !"Comprar", !"Cerrar");
+    Dialog_ShowCallback(playerid, using public _hydg@buy_fishing_rod<iiiis>, DIALOG_STYLE_MSGBOX, !"{CB3126}Caña de pescar", !"{DADADA}¿Quieres comprar una caña de pescar por {64A752}$75{DADADA}?", !"Comprar", !"Cerrar");
     return 1;
 }
 
@@ -16,7 +16,7 @@ static FishMarket_OnKeyPress(playerid)
         return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Necesitas al menos 5 peces.");
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}¿Quieres vender %d %s por {64A752}$%d{DADADA}?", amount, (amount > 1 ? "peces" : "pez"), 10 * amount);
-    Dialog_Show(playerid, "sell_fish", DIALOG_STYLE_MSGBOX, !"{CB3126}Pescadería", HYAXE_UNSAFE_HUGE_STRING, !"Vender", !"Cerrar");
+    Dialog_ShowCallback(playerid, using public _hydg@sell_fish<iiiis>, DIALOG_STYLE_MSGBOX, !"{CB3126}Pescadería", HYAXE_UNSAFE_HUGE_STRING, !"Vender", !"Cerrar");
 
     return 1;
 }
@@ -97,7 +97,7 @@ FishingRod_OnUse(playerid, slot)
     return 1;
 }
 
-dialog sell_fish(playerid, response, listitem, inputtext[])
+dialog sell_fish(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {
@@ -120,7 +120,7 @@ dialog sell_fish(playerid, response, listitem, inputtext[])
     return 1;
 }
 
-dialog buy_fishing_rod(playerid, response, listitem, inputtext[])
+dialog buy_fishing_rod(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {

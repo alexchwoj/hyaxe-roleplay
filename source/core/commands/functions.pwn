@@ -117,12 +117,12 @@ Commands_ShowSuggestions(playerid, const command[])
 
     new header[64];
     format(header, sizeof(header), "{DADADA}Comando {ED2B2B}/%s{DADADA} desconocido", command);
-    Dialog_Show(playerid, "unknown_command", DIALOG_STYLE_TABLIST_HEADERS, header, HYAXE_UNSAFE_HUGE_STRING, !"Ejecutar", !"Cerrar");
+    Dialog_ShowCallback(playerid, using public _hydg@unknown_command<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, header, HYAXE_UNSAFE_HUGE_STRING, !"Ejecutar", !"Cerrar");
 
     return 1;
 }
 
-dialog unknown_command(playerid, response, listitem, inputtext[])
+dialog unknown_command(playerid, dialogid, response, listitem, inputtext[])
 {
     DEBUG_PRINT("dialog unknown_command(playerid = %i, response = %i, listitem = %i, inputtext = \"%s\")", playerid, response, listitem, inputtext);
 

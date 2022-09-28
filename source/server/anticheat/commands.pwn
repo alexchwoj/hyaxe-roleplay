@@ -14,12 +14,12 @@ command ac(playerid, const params[], "Abre el panel del anticheat")
         strcat(HYAXE_UNSAFE_HUGE_STRING, line);
     }
 
-    Dialog_Show(playerid, "ac_settings", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Hyaxe{DADADA} - Anticheat", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Salir");
+    Dialog_ShowCallback(playerid, using public _hydg@ac_settings<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Hyaxe{DADADA} - Anticheat", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Salir");
     return 1;
 }
 flags:ac(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)
 
-dialog ac_settings(playerid, response, listitem, const inputtext[])
+dialog ac_settings(playerid, dialogid, response, listitem, const inputtext[])
 {
     if(!response)
         return 1;
@@ -40,7 +40,7 @@ dialog ac_settings(playerid, response, listitem, const inputtext[])
         strcat(HYAXE_UNSAFE_HUGE_STRING, line);
     }
 
-    Dialog_Show(playerid, "ac_settings", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Hyaxe{DADADA} - Anticheat", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Salir");
+    Dialog_ShowCallback(playerid, using public _hydg@ac_settings<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Hyaxe{DADADA} - Anticheat", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Salir");
 
     return 1;
 }

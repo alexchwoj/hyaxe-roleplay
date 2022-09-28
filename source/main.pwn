@@ -119,7 +119,6 @@ const HYAXE_MAX_NPCS = 100;
 /*
 		YSI is pozzed
 							*/
-#define CGEN_MEMORY 20000
 #define YSI_NO_KEYWORD_List
 #define YSI_NO_HEAP_MALLOC
 #define YSI_NO_ANDROID_CHECK
@@ -134,11 +133,11 @@ const HYAXE_MAX_NPCS = 100;
 #include <YSI_Coding/y_inline>
 #include <YSI_Coding/y_va>
 #include <YSI_Data/y_bit>
-#include <YSI_Data/y_circular>
 #include <YSI_Data/y_iterate>
 #include <YSI_Extra/y_inline_mysql>
 #include <YSI_Extra/y_inline_timers>
 #include <YSI_Storage/y_amx>
+#include <YSI_Visual/y_dialog>
 #include <amx/amx_header>
 
 // Plugin

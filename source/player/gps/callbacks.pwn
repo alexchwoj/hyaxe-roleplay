@@ -31,7 +31,7 @@ command gps(playerid, const params[], "Abre el GPS")
     return 1;
 }
 
-dialog gps_main(playerid, response, listitem, inputtext[])
+dialog gps_main(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {
@@ -39,7 +39,7 @@ dialog gps_main(playerid, response, listitem, inputtext[])
         {
             case 0:
             {
-                Dialog_Show(playerid, "gps_jobs", DIALOG_STYLE_LIST, "{CB3126}Hyaxe{DADADA} - Trabajos", "\
+                Dialog_ShowCallback(playerid, using public _hydg@gps_jobs<iiiis>, DIALOG_STYLE_LIST, "{CB3126}Hyaxe{DADADA} - Trabajos", "\
                     Camionero\n\
                     Pescador\n\
                     Cortacésped\n\
@@ -57,7 +57,7 @@ dialog gps_main(playerid, response, listitem, inputtext[])
                     strcat(HYAXE_UNSAFE_HUGE_STRING, line);
                 }
 
-                Dialog_Show(playerid, "gps_hospital", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Hyaxe{DADADA} - Hospitales", HYAXE_UNSAFE_HUGE_STRING, "Ver", "Volver");
+                Dialog_ShowCallback(playerid, using public _hydg@gps_hospital<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Hyaxe{DADADA} - Hospitales", HYAXE_UNSAFE_HUGE_STRING, "Ver", "Volver");
             }
             case 2:
             {
@@ -73,14 +73,14 @@ dialog gps_main(playerid, response, listitem, inputtext[])
                     strcat(HYAXE_UNSAFE_HUGE_STRING, line);
                 }
 
-                Dialog_Show(playerid, "gps_dealership", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Hyaxe{DADADA} - Concesionarios", HYAXE_UNSAFE_HUGE_STRING, "Ver", "Volver");
+                Dialog_ShowCallback(playerid, using public _hydg@gps_dealership<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Hyaxe{DADADA} - Concesionarios", HYAXE_UNSAFE_HUGE_STRING, "Ver", "Volver");
             }
         }
     }
     return 1;
 }
 
-dialog gps_jobs(playerid, response, listitem, inputtext[])
+dialog gps_jobs(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {
@@ -96,7 +96,7 @@ dialog gps_jobs(playerid, response, listitem, inputtext[])
     return 1;
 }
 
-dialog gps_dealership(playerid, response, listitem, inputtext[])
+dialog gps_dealership(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {
@@ -109,7 +109,7 @@ dialog gps_dealership(playerid, response, listitem, inputtext[])
     return 1;
 }
 
-dialog gps_hospital(playerid, response, listitem, inputtext[])
+dialog gps_hospital(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {

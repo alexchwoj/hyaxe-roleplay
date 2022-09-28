@@ -5,7 +5,7 @@
 
 static Rental_OnKeyPress(playerid)
 {
-    Dialog_Show(playerid, "rent_car", DIALOG_STYLE_MSGBOX, !"{CB3126}Rentar un auto", !"{DADADA}¿Quieres rentar un Manana por {64A752}$50{DADADA}?", !"Rentar", !"Cerrar");
+    Dialog_ShowCallback(playerid, using public _hydg@rent_car<iiiis>, DIALOG_STYLE_MSGBOX, !"{CB3126}Rentar un auto", !"{DADADA}¿Quieres rentar un Manana por {64A752}$50{DADADA}?", !"Rentar", !"Cerrar");
     return 1;
 }
 
@@ -36,7 +36,7 @@ public OnScriptInit()
     forward RENTAL_OnScriptInit();
 #endif
 
-dialog rent_car(playerid, response, listitem, inputtext[])
+dialog rent_car(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {

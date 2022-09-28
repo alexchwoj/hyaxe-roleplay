@@ -146,7 +146,7 @@ GangPanel_OpenRoles(playerid)
         strcat(HYAXE_UNSAFE_HUGE_STRING, line);
     }
 
-    Dialog_Show(playerid, "gang_change_role", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}>>{DADADA} Cambiar roles", HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Cancelar");
+    Dialog_ShowCallback(playerid, using public _hydg@gang_change_role<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}>>{DADADA} Cambiar roles", HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Cancelar");
     return 1;
 }
 
@@ -154,7 +154,7 @@ GangPanel_OpenRoleOptions(playerid)
 {
     new caption[64];
     format(caption, sizeof(caption), "{CB3126}>>{DADADA} Modificando rol {CB3126}%s", g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_szRankName]);
-    Dialog_Show(playerid, "gang_role_modify_option", DIALOG_STYLE_LIST, caption, "\
+    Dialog_ShowCallback(playerid, using public _hydg@gang_role_modify_option<iiiis>, DIALOG_STYLE_LIST, caption, "\
         {CB3126}>{DADADA} Cambiar nombre\n\
         {CB3126}>{DADADA} Modificar permisos\n\
         {CB3126}>{DADADA} Cambiar de posición\n\
@@ -173,7 +173,7 @@ GangPanel_OpenRolePermissions(playerid)
         strcat(HYAXE_UNSAFE_HUGE_STRING, line);
     }
 
-    Dialog_Show(playerid, "gang_role_change_perms", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}>>{DADADA} Permisos", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Atrás");
+    Dialog_ShowCallback(playerid, using public _hydg@gang_role_change_perms<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}>>{DADADA} Permisos", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Atrás");
     return 1;
 }
 
@@ -196,7 +196,7 @@ GangPanel_OpenRoleSwap(playerid)
         strcat(HYAXE_UNSAFE_HUGE_STRING, line);
     }
 
-    Dialog_Show(playerid, "gang_exchange_slot", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}>>{DADADA} Intercambiar posiciones", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Atrás");
+    Dialog_ShowCallback(playerid, using public _hydg@gang_exchange_slot<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}>>{DADADA} Intercambiar posiciones", HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Atrás");
     return 1;
 }
 

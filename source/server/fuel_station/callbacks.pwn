@@ -5,7 +5,7 @@
 
 static GasStation_OnKeyPress(playerid)
 {
-    Dialog_Show(playerid, "fuel_station", DIALOG_STYLE_LIST, !"{CB3126}Gasolinera", !"Llenar tanque\nCargar por litro", !"Seleccionar", !"Cerrar");
+    Dialog_ShowCallback(playerid, using public _hydg@fuel_station<iiiis>, DIALOG_STYLE_LIST, !"{CB3126}Gasolinera", !"Llenar tanque\nCargar por litro", !"Seleccionar", !"Cerrar");
     return 1;
 }
 
@@ -42,7 +42,7 @@ public OnScriptInit()
     forward FUEL_OnScriptInit();
 #endif
 
-dialog fuel_station(playerid, response, listitem, inputtext[])
+dialog fuel_station(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {
@@ -62,15 +62,15 @@ dialog fuel_station(playerid, response, listitem, inputtext[])
                 }
 
                 format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}¿Quieres cargar %.2f litros de combustible por {64A752}$%d{DADADA}?", fuel_to_load, floatround(fuel_to_load) * (Player_VIP(playerid) >= 3 ? 2 : 3));
-                Dialog_Show(playerid, "fuel_station_full", DIALOG_STYLE_MSGBOX, !"{CB3126}Gasolinera", HYAXE_UNSAFE_HUGE_STRING, !"Si", !"No");
+                Dialog_ShowCallback(playerid, using public _hydg@fuel_station_full<iiiis>, DIALOG_STYLE_MSGBOX, !"{CB3126}Gasolinera", HYAXE_UNSAFE_HUGE_STRING, !"Si", !"No");
             }
-            case 1: Dialog_Show(playerid, "fuel_station_manual", DIALOG_STYLE_INPUT, !"{CB3126}Gasolinera", !"{DADADA}¿Cuántos litros de gasolina quieres cargar?", !"Seguir", !"Cerrar");
+            case 1: Dialog_ShowCallback(playerid, using public _hydg@fuel_station_manual<iiiis>, DIALOG_STYLE_INPUT, !"{CB3126}Gasolinera", !"{DADADA}¿Cuántos litros de gasolina quieres cargar?", !"Seguir", !"Cerrar");
         }
     }
     return 1;
 }
 
-dialog fuel_station_manual(playerid, response, listitem, inputtext[])
+dialog fuel_station_manual(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {
@@ -119,7 +119,7 @@ dialog fuel_station_manual(playerid, response, listitem, inputtext[])
     return 1;
 }
 
-dialog fuel_station_full(playerid, response, listitem, inputtext[])
+dialog fuel_station_full(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {

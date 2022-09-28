@@ -58,12 +58,12 @@ public OnPlayerDataLoaded(playerid)
             Ingrese una contraseña de entre 6 y 18 caracteres de longitud.\
         ", Player_RPName(playerid));
 
-        Dialog_Show(playerid, "register", DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@register<iiiis>, DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
     }
     else
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta ya está registrada.\n\nContraseña:", Player_RPName(playerid));
-        Dialog_Show(playerid, "login", DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Ingresa a tu cuenta", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@login<iiiis>, DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Ingresa a tu cuenta", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
     }
 
     Chat_Clear(playerid);
@@ -85,7 +85,7 @@ public OnPlayerDataLoaded(playerid)
     forward AUTH_OnPlayerDataLoaded(playerid);
 #endif
 
-dialog register(playerid, response, listitem, inputtext[])
+dialog register(playerid, dialogid, response, listitem, inputtext[])
 {
     DEBUG_PRINT("Dialog: Register (%i, %i, %i, \"%s\")", playerid, response, listitem, inputtext);
     PlayerPlaySound(playerid, SOUND_BUTTON);
@@ -106,7 +106,7 @@ dialog register(playerid, response, listitem, inputtext[])
             \t{5C5C5C}3. Sexo del personaje{DADADA}\n\n\
             Ingrese una contraseña de entre 6 y 18 caracteres de longitud.\
         ", Player_RPName(playerid));
-        Dialog_Show(playerid, "register", DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@register<iiiis>, DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
         return 1;
     }
 
@@ -118,12 +118,12 @@ dialog register(playerid, response, listitem, inputtext[])
         \t{5C5C5C}3. Sexo del personaje{DADADA}\n\n\
         Ingrese su dirección de correo electrónico.\nEsto le va a servir para poder recuperar su contraseña\nen caso que se la olvide.\
     ", Player_RPName(playerid));
-    Dialog_Show(playerid, "register_email", DIALOG_STYLE_INPUT, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Atrás");
+    Dialog_ShowCallback(playerid, using public _hydg@register_email<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Atrás");
 
     return 1;
 }
 
-dialog register_email(playerid, response, listitem, inputtext[])
+dialog register_email(playerid, dialogid, response, listitem, inputtext[])
 {
     PlayerPlaySound(playerid, SOUND_BUTTON);
 
@@ -136,7 +136,7 @@ dialog register_email(playerid, response, listitem, inputtext[])
             \t{5C5C5C}3. Sexo del personaje{DADADA}\n\n\
             Ingrese una contraseña de entre 6 y 18 caracteres de longitud.\
         ", Player_RPName(playerid));
-        Dialog_Show(playerid, "register", DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@register<iiiis>, DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
         return 1;
     }
 
@@ -149,7 +149,7 @@ dialog register_email(playerid, response, listitem, inputtext[])
             \t{5C5C5C}3. Sexo del personaje{DADADA}\n\n\
             Ingrese su dirección de correo electrónico.\nEsto le va a servir para poder recuperar su contraseña\nen caso que se la olvide.\
         ", Player_RPName(playerid));
-        Dialog_Show(playerid, "register_email", DIALOG_STYLE_INPUT, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Atrás");
+        Dialog_ShowCallback(playerid, using public _hydg@register_email<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Atrás");
         return 1;
     }
 
@@ -162,7 +162,7 @@ dialog register_email(playerid, response, listitem, inputtext[])
             \t{5C5C5C}3. Sexo del personaje{DADADA}\n\n\
             Ingrese su dirección de correo electrónico válida.\
         ", Player_RPName(playerid));
-        Dialog_Show(playerid, "register_email", DIALOG_STYLE_INPUT, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Atrás");
+        Dialog_ShowCallback(playerid, using public _hydg@register_email<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Atrás");
         return 1;
     }
 
@@ -175,7 +175,7 @@ dialog register_email(playerid, response, listitem, inputtext[])
         \t{E3E3E3}3. Sexo del personaje{DADADA}\n\n\
         Este va a ser el sexo inicial de su personaje.\
     ", Player_RPName(playerid));
-    Dialog_Show(playerid, "register_sex", DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Hombre", "Mujer");
+    Dialog_ShowCallback(playerid, using public _hydg@register_sex<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Hombre", "Mujer");
     return 1;
 }
 
@@ -208,7 +208,7 @@ static AccountRegistered(playerid)
     return 1;
 }
 
-dialog register_sex(playerid, response, listitem, inputtext[])
+dialog register_sex(playerid, dialogid, response, listitem, inputtext[])
 {
     PlayerPlaySound(playerid, SOUND_BUTTON);
 
@@ -221,7 +221,7 @@ dialog register_sex(playerid, response, listitem, inputtext[])
 
 // - Login
 
-dialog login(playerid, response, listitem, inputtext[])
+dialog login(playerid, dialogid, response, listitem, inputtext[])
 {
     PlayerPlaySound(playerid, SOUND_BUTTON);
     
@@ -233,7 +233,7 @@ dialog login(playerid, response, listitem, inputtext[])
         if(!argon_is_equal())
         {
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}Contraseña {CB3126}incorrecta{DADADA}.\nIntroduce la contraseña correcta para entrar al servidor:", Player_RPName(playerid));
-            Dialog_Show(playerid, "login", DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Ingresa a tu cuenta", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
+            Dialog_ShowCallback(playerid, using public _hydg@login<iiiis>, DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Ingresa a tu cuenta", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
             return 1;
         }
 
