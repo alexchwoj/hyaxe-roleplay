@@ -3,6 +3,12 @@
 #endif
 #define _medicine_callbacks_
 
+static Phone_OnUse(playerid, slot)
+{
+    Phone_Show(playerid);
+    return 1;
+}
+
 static Flag_OnUse(playerid, slot)
 {
     if (Player_Gang(playerid) == -1)
@@ -230,6 +236,7 @@ public OnScriptInit()
 
     // Phone
     Item_SetPreviewRot(ITEM_PHONE, -91.000000, 0.000000, 254.000000, 1.000000);
+    Item_Callback(ITEM_PHONE) = __addressof(Phone_OnUse);
 
     // Porro
     Item_SetPreviewRot(ITEM_PORRETE, 0.000000, 0.000000, 0.000000, 1.000000);

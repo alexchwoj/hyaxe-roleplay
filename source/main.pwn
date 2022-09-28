@@ -203,6 +203,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/death/header.pwn"
 #include "player/police/header.pwn"
 #include "player/gps/header.pwn"
+#include "player/phone/header.pwn"
 
 // Functions
 ///////////////
@@ -244,6 +245,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/police/functions.pwn"
 #include "player/animation/functions.pwn"
 #include "player/gps/functions.pwn"
+#include "player/phone/functions.pwn"
 
 // Callbacks
 ///////////////
@@ -295,6 +297,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/police/callbacks.pwn"
 #include "player/weapons/callbacks.pwn"
 #include "player/gps/callbacks.pwn"
+#include "player/phone/callbacks.pwn"
 //#include "server/debug/callbacks.pwn"
 
 // Anticheat

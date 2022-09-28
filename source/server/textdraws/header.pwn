@@ -15,7 +15,8 @@ new
     Text:g_tdLevelingBar[6],
     Text:g_tdGangs[9],
     Text:g_tdGangMemberSlotBg[7],
-    Text:g_tdGangEventText
+    Text:g_tdGangEventText,
+    Text:g_tdPhone[29]
     //Text:g_tdDebugScreen[4]
 ;
 
@@ -34,5 +35,6 @@ new
     PlayerText:p_tdToyView[MAX_PLAYERS][6 char],
     PlayerText:p_tdLevelingBar[MAX_PLAYERS][2 char],
     PlayerText:p_tdItemOptions[MAX_PLAYERS][6 char],
-    PlayerText:p_tdGangMemberSlots[MAX_PLAYERS][7][3 char]
+    PlayerText:p_tdGangMemberSlots[MAX_PLAYERS][7][3 char],
+    PlayerText:p_tdPhone[MAX_PLAYERS][7 char]
 ;
