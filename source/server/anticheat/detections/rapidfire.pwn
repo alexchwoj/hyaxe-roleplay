@@ -3,13 +3,13 @@
 #endif
 #define _detections_rapidfire_
 
-static g_rgiLastShotTick[MAX_PLAYERS];
+static g_rgiLastShotTick[MAX_PLAYERS][55];
 
 public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
 {
     if (!Player_HasImmunityForCheat(playerid, CHEAT_RAPIDFIRE))
     {
-        new diff = GetTickDiff(GetTickCount(), g_rgiLastShotTick[playerid]);
+        new diff = GetTickDiff(GetTickCount(), g_rgiLastShotTick[playerid][weaponid]);
         if (diff < g_rgiWeaponsShootRate[weaponid])
         {
             printf("[rapidfire:dbg] playerid = %d, weaponid = %d, diff = %d, shot_rate = %d", playerid, weaponid, diff, g_rgiWeaponsShootRate[weaponid]);
@@ -19,7 +19,7 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
         }
     }
 
-    g_rgiLastShotTick[playerid] = GetTickCount();
+    g_rgiLastShotTick[playerid][weaponid] = GetTickCount();
 
     #if defined AC_OnPlayerWeaponShot
         return AC_OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ);
