@@ -313,6 +313,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/anticheat/detections/invalid_sync.pwn"
 #include "server/anticheat/detections/carjack.pwn"
 #include "server/anticheat/detections/airbreak.pwn"
+#include "server/anticheat/detections/rapidfire.pwn"
 
 // Commands
 //////////////

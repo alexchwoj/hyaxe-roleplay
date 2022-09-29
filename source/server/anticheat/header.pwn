@@ -15,9 +15,7 @@ enum eCheats
     CHEAT_TELEPORT,
     CHEAT_INVISIBLE,
     CHEAT_INVALID_SYNC,
-    CHEAT_AIRBREAK,
-    CHEAT_VEHICLE_AIRBREAK,
-    CHEAT_INVALID_BANNED_SYNC,
+    CHEAT_AIRBREAK
 };
 
 enum ePunishment
@@ -51,8 +49,12 @@ new g_rgeDetectionData[eCheats][eDetectionData] =
     { "Invisibilidad", true, PUNISHMENT_WARN_ADMINS, 0 },
     { "Sincronización inválida", true, PUNISHMENT_KICK, 0 },
     { "AirBreak", true, PUNISHMENT_KICK_ON_MAX_TRIGGERS, 5 },
+<<<<<<< HEAD
     { "Vehicle AirBreak", true, PUNISHMENT_KICK_ON_MAX_TRIGGERS, 3 },
     { "Sincronización fabricada", true, PUNISHMENT_BAN, 0 }
+=======
+    { "RapidFire", true, PUNISHMENT_KICK_ON_MAX_TRIGGERS, 5 }
+>>>>>>> e70e888 (Rapidfire)
 };
 
 new 
