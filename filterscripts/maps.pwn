@@ -2365,7 +2365,7 @@ public OnFilterScriptInit()
 	CA_CreateDynamicObject_SC(3462, 364.37485, 2320.16626, 1890.36768,   0.00000, 0.00000, 180.39844);
     
     // Auto Repair Shop
-    CA_CreateDynamicObject_SC(17301, -49.390598, -1140.869995, 5.203125, 0.000000, 0.000000, 0.000000);
+    //CA_CreateDynamicObject_SC(17301, -49.390598, -1140.869995, 5.203125, 0.000000, 0.000000, 0.000000);
 	tmpobjid = CA_CreateDynamicObject_SC(19454, -96.353187, -1160.901245, 2.575771, 0.000000, 0.000000, -26.199998, -1, -1, -1, 800.00, 800.00); 
 	SetDynamicObjectMaterial(tmpobjid, 0, 17547, "eastbeach4a_lae2", "bluestucco1", 0x00000000);
 	tmpobjid = CA_CreateDynamicObject_SC(18762, -93.916412, -1156.205932, 3.341221, 0.000000, 0.000000, -26.399990, -1, -1, -1, 800.00, 800.00); 
@@ -2988,8 +2988,8 @@ public OnFilterScriptInit()
     CA_RemoveBuilding(1413, -102.133, -1197.160, 2.960, 0.250);
     CA_RemoveBuilding(1447, -107.085, -1196.089, 3.039, 0.250);
     CA_RemoveBuilding(1412, -112.171, -1194.750, 3.039, 0.250);
-    CA_RemoveBuilding(17301, -49.390, -1140.869, 5.203, 0.250);
-    CA_RemoveBuilding(17421, -49.390, -1140.869, 5.203, 0.250);
+    //CA_RemoveBuilding(17301, -49.390, -1140.869, 5.203, 0.250);
+    //CA_RemoveBuilding(17421, -49.390, -1140.869, 5.203, 0.250);
 
     // Map collision fixes
     /////////////////////////
@@ -3857,8 +3857,8 @@ public OnPlayerConnect(playerid)
     RemoveBuildingForPlayer(playerid, 1413, -102.133, -1197.160, 2.960, 0.250);
     RemoveBuildingForPlayer(playerid, 1447, -107.085, -1196.089, 3.039, 0.250);
     RemoveBuildingForPlayer(playerid, 1412, -112.171, -1194.750, 3.039, 0.250);
-    RemoveBuildingForPlayer(playerid, 17301, -49.390, -1140.869, 5.203, 0.250);
-    RemoveBuildingForPlayer(playerid, 17421, -49.390, -1140.869, 5.203, 0.250);
+    //RemoveBuildingForPlayer(playerid, 17301, -49.390, -1140.869, 5.203, 0.250);
+    //RemoveBuildingForPlayer(playerid, 17421, -49.390, -1140.869, 5.203, 0.250);
 
     return 1;
 }
