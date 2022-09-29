@@ -115,3 +115,25 @@ PhoneMenu_Main(playerid)
 	Phone_AddItem(playerid, "Mis vehículos");
 	return 1;
 }
+
+command sms(playerid, const params[], "Enviar un mensaje SMS a un usuario")
+{
+	extract params -> new player:destination = 0xFFFF, string:message[144]; else {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/sms {DADADA}[jugador] [mensaje]");
+        return 1;
+    }
+
+	if (destination == INVALID_PLAYER_ID || destination == playerid)
+        return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Jugador no encontrado");
+
+	if (!Inventory_GetItemCount(playerid, ITEM_PHONE))
+		return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No puedes enviar SMS sin un teléfono celular");
+
+	new messages[2][144];
+	format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{64A752}[SMS] › {DADADA}%s (%d): %s", Player_RPName(playerid), playerid, message);
+	for(new i, j = SplitChatMessageInLines(HYAXE_UNSAFE_HUGE_STRING, messages); i < j; ++i)
+		SendClientMessage(destination, 0xDADADAFF, messages[i]);
+	
+	PlayerPlaySound(destination, 40404);
+	return 1;
+}
