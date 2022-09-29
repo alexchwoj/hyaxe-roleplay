@@ -135,7 +135,10 @@ command sms(playerid, const params[], "Enviar un mensaje SMS a un usuario")
 	new messages[2][144];
 	format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{64A752}[SMS] › {DADADA}%s (%d): %s", Player_RPName(playerid), playerid, message);
 	for(new i, j = SplitChatMessageInLines(HYAXE_UNSAFE_HUGE_STRING, messages); i < j; ++i)
+	{
 		SendClientMessage(destination, 0xDADADAFF, messages[i]);
+		SendClientMessage(playerid, 0xDADADAFF, messages[i]);
+	}
 	
 	PlayerPlaySound(destination, 40404);
 	return 1;
