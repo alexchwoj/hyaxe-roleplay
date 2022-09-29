@@ -5,6 +5,7 @@
 
 Item_SetPreviewRot(type, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fZoom = 1.0)
 {
+	printf("Item_SetPreviewRot(type = %d, Float:fRotX = %f, Float:fRotY = %f, Float:fRotZ = %f, Float:fZoom = %f)", type, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fZoom);
 	g_rgeItemData[type][e_fRotX] = fRotX;
 	g_rgeItemData[type][e_fRotY] = fRotY;
 	g_rgeItemData[type][e_fRotZ] = fRotZ;
@@ -14,6 +15,7 @@ Item_SetPreviewRot(type, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fZoom = 1.
 
 Inventory_GetFreeSlot(playerid)
 {
+	printf("Inventory_GetFreeSlot(playerid = %d)", playerid);
     for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
 		if (!g_rgePlayerInventory[playerid][i][e_bValid])
@@ -24,6 +26,7 @@ Inventory_GetFreeSlot(playerid)
 
 Inventory_Update(playerid)
 {
+	printf("Inventory_Update(playerid = %d)", playerid);
 	if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
     {
 		for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
@@ -75,6 +78,7 @@ Inventory_Update(playerid)
 
 Inventory_UpdateSlot(playerid, slot)
 {
+	printf("Inventory_UpdateSlot(playerid = %d, slot = %d)", playerid, slot);
 	if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
     {
 		if (InventorySlot_IsValid(playerid, slot))
@@ -92,6 +96,7 @@ Inventory_UpdateSlot(playerid, slot)
 
 Inventory_ResetSlot(playerid, slot)
 {
+	printf("Inventory_ResetSlot(playerid = %d, slot = %d)", playerid, slot);
 	g_rgePlayerInventory[playerid][slot][e_bValid] = 
 	bool:(g_rgePlayerInventory[playerid][slot][e_iID] = 
 	g_rgePlayerInventory[playerid][slot][e_iType] = 
@@ -102,6 +107,7 @@ Inventory_ResetSlot(playerid, slot)
 
 Inventory_UpdateDropCount(playerid)
 {
+	printf("Inventory_UpdateDropCount(playerid = %d)", playerid);
 	new string[8];
 	valstr(string, g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount]);
 	PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{2}, string);
@@ -133,6 +139,7 @@ Inventory_UpdateDropCount(playerid)
 
 Inventory_Hide(playerid)
 {
+	printf("Inventory_Hide(playerid = %d)", playerid);
 	for(new i; i < sizeof(g_tdInventoryBG); ++i)
 		TextDrawHideForPlayer(playerid, g_tdInventoryBG[i]);
 
@@ -168,6 +175,7 @@ Inventory_Hide(playerid)
 
 Inventory_Show(playerid)
 {
+	printf("Inventory_Show(playerid = %d)", playerid);
 	Bit_Set(Player_Flags(playerid), PFLAG_USING_INV, true);
 
 	// Backgrounds
@@ -214,6 +222,7 @@ Inventory_Show(playerid)
 
 InventorySlot_Delete(playerid, slot)
 {
+	printf("InventorySlot_Delete(playerid = %d, slot = %d)", playerid, slot);
 	mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `PLAYER_INVENTORY` WHERE `ID` = %d;", InventorySlot_ID(playerid, slot));
 	mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 	printf("[MIERDAS6] slot: %d, type: %d", slot, g_rgePlayerInventory[playerid][slot][e_iType]);
@@ -226,6 +235,7 @@ InventorySlot_Delete(playerid, slot)
 
 Inventory_DeleteItemByType(playerid, type)
 {
+	printf("Inventory_DeleteItemByType(playerid = %d, type = %d)", playerid, type);
 	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
 		if (InventorySlot_IsValid(playerid, i))
@@ -247,6 +257,7 @@ Inventory_DeleteItemByType(playerid, type)
 
 InventorySlot_Subtract(playerid, slot, amount = 1)
 {
+	printf("InventorySlot_Subtract(playerid = %d, slot = %d, amount = %d)", playerid, slot, amount);
 	if (InventorySlot_IsValid(playerid, slot))
 	{
 		if (!Item_SingleSlot( InventorySlot_Type(playerid, slot) ))
@@ -268,6 +279,7 @@ InventorySlot_Subtract(playerid, slot, amount = 1)
 
 Inventory_InsertItem(playerid, type, amount, extra)
 {
+	printf("Inventory_InsertItem(playerid = %d, type = %d, amount = %d, extra = %d)", playerid, type, amount, extra);
 	new slot = Inventory_GetFreeSlot(playerid);
     if (slot < HYAXE_MAX_INVENTORY_SLOTS)
 	{
@@ -283,6 +295,7 @@ Inventory_InsertItem(playerid, type, amount, extra)
 
 Inventory_AddItem(playerid, type, amount, extra)
 {
+	printf("Inventory_AddItem(playerid = %d, type = %d, amount = %d, extra = %d)", playerid, type, amount, extra);
 	new slot = Inventory_GetFreeSlot(playerid);
     if (slot < HYAXE_MAX_INVENTORY_SLOTS)
 	{
@@ -316,6 +329,7 @@ Inventory_AddItem(playerid, type, amount, extra)
 
 Inventory_GetItemAmount(playerid, type)
 {
+	printf("Inventory_GetItemAmount(playerid = %d, type = %d)", playerid, type);
 	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
 		if (InventorySlot_IsValid(playerid, i))
@@ -329,6 +343,7 @@ Inventory_GetItemAmount(playerid, type)
 
 Inventory_GetItemCount(playerid, type)
 {
+	printf("Inventory_GetItemCount(playerid = %d, type = %d)", playerid, type);
 	new count;
 	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
@@ -343,6 +358,7 @@ Inventory_GetItemCount(playerid, type)
 
 Inventory_AddFixedItem(playerid, type, amount, extra)
 {
+	printf("Inventory_AddFixedItem(playerid = %d, type = %d, amount = %d, extra = %d)", playerid, type, amount, extra);
 	if (!Inventory_AddItem(playerid, type, amount, extra))
 	{
 		DroppedItem_CreateFrontPlayer(playerid, type, amount, extra);
@@ -354,6 +370,7 @@ Inventory_AddFixedItem(playerid, type, amount, extra)
 
 DroppedItem_CreateFrontPlayer(playerid, type, amount, extra)
 {
+	printf("DroppedItem_CreateFrontPlayer(playerid = %d, type = %d, amount = %d, extra = %d)", playerid, type, amount, extra);
 	new Float:x, Float:y, Float:z, Float:angle;
 	GetPlayerPos(playerid, x, y, z);
 	GetPlayerFacingAngle(playerid, angle);
@@ -364,6 +381,7 @@ DroppedItem_CreateFrontPlayer(playerid, type, amount, extra)
 
 DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, interior = 0, playerid = INVALID_PLAYER_ID, timeout = 300)
 {
+	printf("DroppedItem_Create(type = %d, amount = %d, extra = %d, Float:x = %f, Float:y = %f, Float:z = %f, world = %d, interior = %d, playerid = %d, timeout = %d)", type, amount, extra, Float:x, Float:y, Float:z, world, interior, playerid, timeout);
 	new objectid = CreateDynamicObject(
 		Item_ModelID(type), x, y, z + 0.9,
 		RandomFloat(-180.0, 180.0), RandomFloat(-180.0, 180.0), RandomFloat(-180.0, 180.0),
@@ -405,6 +423,7 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 
 DroppedItem_Delete(area_id)
 {
+	printf("DroppedItem_Delete(area_id = %d)", area_id);
 	if(!Streamer_HasArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x49544D)))
 		return 0;
 
@@ -422,6 +441,7 @@ DroppedItem_Delete(area_id)
 
 Item_TypeToWeapon(type)
 {
+	printf("Item_TypeToWeapon(type = %d)", type);
 	switch(type)
 	{
 		case ITEM_BRASSKNUCKLE: return 1;
@@ -467,17 +487,6 @@ Item_TypeToWeapon(type)
 		case ITEM_PARACHUTE: return 46;
 	}
 	return 0;
-}
-
-command banderita(playerid, const params[], "")
-{
-	new Float:x, Float:y, Float:z, Float:angle;
-	GetPlayerPos(playerid, x, y, z);
-	GetPlayerFacingAngle(playerid, angle);
-
-	GetXYFromAngle(x, y, angle, 0.8);
-	DroppedItem_Create(ITEM_FLAG, 1, 0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
-	return 1;
 }
 
 command dropitem(playerid, const params[], "Crea un item en el suelo")

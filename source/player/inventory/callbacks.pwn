@@ -95,6 +95,7 @@ public INV_LoadFromDatabase(playerid)
     new row_count;
     cache_get_row_count(row_count);
 
+    printf("===== Loading inventory from playerid %d =====", playerid);
     for(new i = 0; i < row_count; ++i)
     {
         new slot = Inventory_GetFreeSlot(playerid);
@@ -116,6 +117,7 @@ public INV_LoadFromDatabase(playerid)
             DEBUG_PRINT("full inventory: %d", playerid);
         }
     }
+    printf("=====================================");
     return 1;
 }
 
@@ -336,6 +338,8 @@ public OnScriptInit()
 forward INV_OnItemInserted(playerid, slot, type, amount, extra);
 public INV_OnItemInserted(playerid, slot, type, amount, extra)
 {
+    printf("INV_OnItemInserted(playerid = %d, slot = %d, type = %d, amount = %d, extra = %d)", playerid, slot, type, amount, extra);
+
     printf("[MIERDAS11] slot: %d, type: %d", slot, type);
     g_rgePlayerInventory[playerid][slot][e_bValid] = true;
     g_rgePlayerInventory[playerid][slot][e_iID] = cache_insert_id();
