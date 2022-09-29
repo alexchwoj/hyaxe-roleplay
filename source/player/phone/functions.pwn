@@ -129,6 +129,9 @@ command sms(playerid, const params[], "Enviar un mensaje SMS a un usuario")
 	if (!Inventory_GetItemCount(playerid, ITEM_PHONE))
 		return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No puedes enviar SMS sin un teléfono celular");
 
+	if (!Inventory_GetItemCount(destination, ITEM_PHONE))
+		return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "El destinatario no tiene un teléfono celular para recibir el mensaje");
+
 	new messages[2][144];
 	format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{64A752}[SMS] › {DADADA}%s (%d): %s", Player_RPName(playerid), playerid, message);
 	for(new i, j = SplitChatMessageInLines(HYAXE_UNSAFE_HUGE_STRING, messages); i < j; ++i)
@@ -137,3 +140,4 @@ command sms(playerid, const params[], "Enviar un mensaje SMS a un usuario")
 	PlayerPlaySound(destination, 40404);
 	return 1;
 }
+alias:sms("pm", "md", "mp", "short_message_service")
