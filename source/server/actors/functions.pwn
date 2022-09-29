@@ -49,16 +49,8 @@ Actor_Rob(playerid, actorid)
     g_rgeRobbableActors[id][e_iRobbingPlayer] = playerid;
 
     ApplyDynamicActorAnimation(actorid, "SHOP", "null", 4.1, false, false, false, false, 0);
+    ApplyDynamicActorAnimation(actorid, "SHOP", (TryPercentage(50) ? "SHP_ROB_REACT" : "SHP_ROB_HANDSUP"), 4.1, false, false, false, true, 0);
     
-    if((random(100) + 1) % 2)
-    {
-        ApplyDynamicActorAnimation(actorid, "SHOP", "SHP_ROB_REACT", 4.1, false, false, false, true, 0);
-    }
-    else
-    {
-        ApplyDynamicActorAnimation(actorid, "SHOP", "SHP_ROB_HANDSUP", 4.1, false, false, false, true, 0);
-    }
-
     g_rgeRobbableActors[id][e_iRobberyTimer] = SetTimerEx("ROBBERY_Progress", 5000, false, "iii", playerid, actorid, 0);
     return 1;
 }
