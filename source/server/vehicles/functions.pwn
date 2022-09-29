@@ -367,9 +367,9 @@ Player_SaveVehicles(playerid)
     if(!Iter_Count(PlayerVehicles[playerid]))
         return 0;
     
-    HYAXE_UNSAFE_HUGE_STRING[0] = '\0';
+    YSI_UNSAFE_HUGE_STRING[0] = '\0';
     
-    new query[800];
+    new query[1024];
     foreach(new vehicleid : PlayerVehicles[playerid])
     {
         if(!g_rgeVehicles[vehicleid][e_bValid])
@@ -435,10 +435,10 @@ Player_SaveVehicles(playerid)
             g_rgeVehicles[vehicleid][e_iVehicleDbId]
         );
 
-        strcat(HYAXE_UNSAFE_HUGE_STRING, query);
+        strcat(YSI_UNSAFE_HUGE_STRING, query, YSI_UNSAFE_HUGE_LENGTH);
     }
 
-    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+    mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
     return 1;
 }
 

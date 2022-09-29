@@ -17,6 +17,7 @@ CHAIN_FORWARD:Database_OnScriptInit() = 1;
 public OnScriptInit()
 {
     print("[db] Connecting to database... ");
+	mysql_log(ALL);
 
 	g_hDatabase = mysql_connect_file("hyaxe_db.ini");
 	if(mysql_errno(g_hDatabase) > 0)
