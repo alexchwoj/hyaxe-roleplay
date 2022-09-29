@@ -248,9 +248,9 @@ GetXYFromAngle(&Float:x, &Float:y, Float:a, Float:distance)
 
 Str_Random(dest[], len = sizeof dest)
 {
-    dest[--len] = '\0';
-    
-    while(len-- != -1)
+    dest[len] = '\0';
+
+    while(--len != -1)
     {
         dest[len] = random(2) ? (random(26) + (random(2) ? 'a' : 'A')) : (random(10) + '0');
     }

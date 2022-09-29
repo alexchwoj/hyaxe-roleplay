@@ -33,7 +33,7 @@ public OnScriptInit()
 	SendRconCommand(!"gamemodetext Roleplay / RPG");
 
 	new pw[7];
-	Str_Random(pw);
+	Str_Random(pw, 6);
 	SendRconCommand(va_return("password %s", pw));
 
 	SetServerRule(!"lagcomp", "skinshot");

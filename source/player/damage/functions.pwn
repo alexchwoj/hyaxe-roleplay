@@ -193,3 +193,4 @@ command revive(playerid, const params[], "Revivir a un jugador")
     return 1;
 }
 flags:revive(CMD_FLAG<RANK_LEVEL_MODERATOR>)
+alias:revive("rev")
