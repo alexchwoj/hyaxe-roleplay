@@ -71,7 +71,7 @@ static HospitalShop_OnEnter(playerid)
     return 1;
 }
 
-Menu:hospital_menu(playerid, response, listitem)
+player_menu hospital_menu(playerid, response, listitem)
 {
     if (response == MENU_RESPONSE_SELECT)
     {

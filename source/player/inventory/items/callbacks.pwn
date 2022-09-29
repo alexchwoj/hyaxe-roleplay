@@ -5,7 +5,12 @@
 
 static Phone_OnUse(playerid, slot)
 {
-    Phone_Show(playerid);
+    #pragma unused slot
+    PhoneMenu_Main(playerid);
+
+    Speedometer_Hide(playerid);
+    Needs_HideBars(playerid);
+    Inventory_Hide(playerid);
     return 1;
 }
 

@@ -96,7 +96,7 @@ Needs_HideBars(playerid)
         TextDrawHideForPlayer(playerid, g_tdNeedBars[i]);
     }
 
-    for(new i = sizeof(p_tdNeedBars) - 1; i != -1; --i)
+    for(new i = 1; i != -1; --i)
     {
         PlayerTextDrawHide(playerid, p_tdNeedBars[playerid]{i});
     }

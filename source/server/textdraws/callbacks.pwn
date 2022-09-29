@@ -1024,7 +1024,7 @@ public OnScriptInit()
     // Phone
     g_tdPhone[0] = TextDrawCreate(553.000000, 455.000000, "_");
     TextDrawFont(g_tdPhone[0], 1);
-    TextDrawLetterSize(g_tdPhone[0], 0.670833, -23.699924);
+    TextDrawLetterSize(g_tdPhone[0], 0.670832, -23.699924);
     TextDrawTextSize(g_tdPhone[0], 295.000000, 98.500000);
     TextDrawSetOutline(g_tdPhone[0], 1);
     TextDrawSetShadow(g_tdPhone[0], 0);
@@ -1038,7 +1038,7 @@ public OnScriptInit()
 
     g_tdPhone[1] = TextDrawCreate(516.000000, 423.000000, "7");
     TextDrawFont(g_tdPhone[1], 2);
-    TextDrawLetterSize(g_tdPhone[1], 0.208333, 1.900000);
+    TextDrawLetterSize(g_tdPhone[1], 0.208333, 1.899999);
     TextDrawTextSize(g_tdPhone[1], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[1], 0);
     TextDrawSetShadow(g_tdPhone[1], 0);
@@ -1052,7 +1052,7 @@ public OnScriptInit()
 
     g_tdPhone[2] = TextDrawCreate(575.000000, 423.000000, "9");
     TextDrawFont(g_tdPhone[2], 2);
-    TextDrawLetterSize(g_tdPhone[2], 0.208333, 1.900000);
+    TextDrawLetterSize(g_tdPhone[2], 0.208333, 1.899999);
     TextDrawTextSize(g_tdPhone[2], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[2], 0);
     TextDrawSetShadow(g_tdPhone[2], 0);
@@ -1066,7 +1066,7 @@ public OnScriptInit()
 
     g_tdPhone[3] = TextDrawCreate(548.000000, 423.000000, "8");
     TextDrawFont(g_tdPhone[3], 2);
-    TextDrawLetterSize(g_tdPhone[3], 0.208333, 1.900000);
+    TextDrawLetterSize(g_tdPhone[3], 0.208333, 1.899999);
     TextDrawTextSize(g_tdPhone[3], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[3], 0);
     TextDrawSetShadow(g_tdPhone[3], 0);
@@ -1080,7 +1080,7 @@ public OnScriptInit()
 
     g_tdPhone[4] = TextDrawCreate(520.000000, 428.000000, "PQRS");
     TextDrawFont(g_tdPhone[4], 2);
-    TextDrawLetterSize(g_tdPhone[4], 0.133333, 0.950000);
+    TextDrawLetterSize(g_tdPhone[4], 0.133332, 0.949999);
     TextDrawTextSize(g_tdPhone[4], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[4], 0);
     TextDrawSetShadow(g_tdPhone[4], 0);
@@ -1094,7 +1094,7 @@ public OnScriptInit()
 
     g_tdPhone[5] = TextDrawCreate(552.000000, 428.000000, "TUV");
     TextDrawFont(g_tdPhone[5], 2);
-    TextDrawLetterSize(g_tdPhone[5], 0.133333, 0.950000);
+    TextDrawLetterSize(g_tdPhone[5], 0.133332, 0.949999);
     TextDrawTextSize(g_tdPhone[5], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[5], 0);
     TextDrawSetShadow(g_tdPhone[5], 0);
@@ -1108,7 +1108,7 @@ public OnScriptInit()
 
     g_tdPhone[6] = TextDrawCreate(580.000000, 428.000000, "WXYZ");
     TextDrawFont(g_tdPhone[6], 2);
-    TextDrawLetterSize(g_tdPhone[6], 0.133333, 0.950000);
+    TextDrawLetterSize(g_tdPhone[6], 0.133332, 0.949999);
     TextDrawTextSize(g_tdPhone[6], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[6], 0);
     TextDrawSetShadow(g_tdPhone[6], 0);
@@ -1122,7 +1122,7 @@ public OnScriptInit()
 
     g_tdPhone[7] = TextDrawCreate(516.000000, 406.000000, "4");
     TextDrawFont(g_tdPhone[7], 2);
-    TextDrawLetterSize(g_tdPhone[7], 0.208333, 1.900000);
+    TextDrawLetterSize(g_tdPhone[7], 0.208333, 1.899999);
     TextDrawTextSize(g_tdPhone[7], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[7], 0);
     TextDrawSetShadow(g_tdPhone[7], 0);
@@ -1136,7 +1136,7 @@ public OnScriptInit()
 
     g_tdPhone[8] = TextDrawCreate(548.000000, 406.000000, "5");
     TextDrawFont(g_tdPhone[8], 2);
-    TextDrawLetterSize(g_tdPhone[8], 0.208333, 1.900000);
+    TextDrawLetterSize(g_tdPhone[8], 0.208333, 1.899999);
     TextDrawTextSize(g_tdPhone[8], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[8], 0);
     TextDrawSetShadow(g_tdPhone[8], 0);
@@ -1150,7 +1150,7 @@ public OnScriptInit()
 
     g_tdPhone[9] = TextDrawCreate(575.000000, 406.000000, "6");
     TextDrawFont(g_tdPhone[9], 2);
-    TextDrawLetterSize(g_tdPhone[9], 0.208333, 1.900000);
+    TextDrawLetterSize(g_tdPhone[9], 0.208333, 1.899999);
     TextDrawTextSize(g_tdPhone[9], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[9], 0);
     TextDrawSetShadow(g_tdPhone[9], 0);
@@ -1164,7 +1164,7 @@ public OnScriptInit()
 
     g_tdPhone[10] = TextDrawCreate(520.000000, 411.000000, "GHI");
     TextDrawFont(g_tdPhone[10], 2);
-    TextDrawLetterSize(g_tdPhone[10], 0.133333, 0.950000);
+    TextDrawLetterSize(g_tdPhone[10], 0.133332, 0.949999);
     TextDrawTextSize(g_tdPhone[10], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[10], 0);
     TextDrawSetShadow(g_tdPhone[10], 0);
@@ -1178,7 +1178,7 @@ public OnScriptInit()
 
     g_tdPhone[11] = TextDrawCreate(552.000000, 411.000000, "JKL");
     TextDrawFont(g_tdPhone[11], 2);
-    TextDrawLetterSize(g_tdPhone[11], 0.133333, 0.950000);
+    TextDrawLetterSize(g_tdPhone[11], 0.133332, 0.949999);
     TextDrawTextSize(g_tdPhone[11], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[11], 0);
     TextDrawSetShadow(g_tdPhone[11], 0);
@@ -1192,7 +1192,7 @@ public OnScriptInit()
 
     g_tdPhone[12] = TextDrawCreate(580.000000, 411.000000, "MNO");
     TextDrawFont(g_tdPhone[12], 2);
-    TextDrawLetterSize(g_tdPhone[12], 0.133333, 0.950000);
+    TextDrawLetterSize(g_tdPhone[12], 0.133332, 0.949999);
     TextDrawTextSize(g_tdPhone[12], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[12], 0);
     TextDrawSetShadow(g_tdPhone[12], 0);
@@ -1206,7 +1206,7 @@ public OnScriptInit()
 
     g_tdPhone[13] = TextDrawCreate(516.000000, 388.000000, "1");
     TextDrawFont(g_tdPhone[13], 2);
-    TextDrawLetterSize(g_tdPhone[13], 0.208333, 1.900000);
+    TextDrawLetterSize(g_tdPhone[13], 0.208333, 1.899999);
     TextDrawTextSize(g_tdPhone[13], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[13], 0);
     TextDrawSetShadow(g_tdPhone[13], 0);
@@ -1220,7 +1220,7 @@ public OnScriptInit()
 
     g_tdPhone[14] = TextDrawCreate(548.000000, 388.000000, "2");
     TextDrawFont(g_tdPhone[14], 2);
-    TextDrawLetterSize(g_tdPhone[14], 0.208333, 1.900000);
+    TextDrawLetterSize(g_tdPhone[14], 0.208333, 1.899999);
     TextDrawTextSize(g_tdPhone[14], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[14], 0);
     TextDrawSetShadow(g_tdPhone[14], 0);
@@ -1234,7 +1234,7 @@ public OnScriptInit()
 
     g_tdPhone[15] = TextDrawCreate(575.000000, 388.000000, "3");
     TextDrawFont(g_tdPhone[15], 2);
-    TextDrawLetterSize(g_tdPhone[15], 0.208333, 1.900000);
+    TextDrawLetterSize(g_tdPhone[15], 0.208333, 1.899999);
     TextDrawTextSize(g_tdPhone[15], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[15], 0);
     TextDrawSetShadow(g_tdPhone[15], 0);
@@ -1248,7 +1248,7 @@ public OnScriptInit()
 
     g_tdPhone[16] = TextDrawCreate(520.000000, 394.000000, ".,");
     TextDrawFont(g_tdPhone[16], 2);
-    TextDrawLetterSize(g_tdPhone[16], 0.133333, 0.950000);
+    TextDrawLetterSize(g_tdPhone[16], 0.133332, 0.949999);
     TextDrawTextSize(g_tdPhone[16], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[16], 0);
     TextDrawSetShadow(g_tdPhone[16], 0);
@@ -1262,7 +1262,7 @@ public OnScriptInit()
 
     g_tdPhone[17] = TextDrawCreate(552.000000, 394.000000, "ABC");
     TextDrawFont(g_tdPhone[17], 2);
-    TextDrawLetterSize(g_tdPhone[17], 0.133333, 0.950000);
+    TextDrawLetterSize(g_tdPhone[17], 0.133332, 0.949999);
     TextDrawTextSize(g_tdPhone[17], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[17], 0);
     TextDrawSetShadow(g_tdPhone[17], 0);
@@ -1276,7 +1276,7 @@ public OnScriptInit()
 
     g_tdPhone[18] = TextDrawCreate(580.000000, 394.000000, "DEF");
     TextDrawFont(g_tdPhone[18], 2);
-    TextDrawLetterSize(g_tdPhone[18], 0.133333, 0.950000);
+    TextDrawLetterSize(g_tdPhone[18], 0.133332, 0.949999);
     TextDrawTextSize(g_tdPhone[18], 400.000000, 17.000000);
     TextDrawSetOutline(g_tdPhone[18], 0);
     TextDrawSetShadow(g_tdPhone[18], 0);
@@ -1288,51 +1288,51 @@ public OnScriptInit()
     TextDrawSetProportional(g_tdPhone[18], 1);
     TextDrawSetSelectable(g_tdPhone[18], 0);
 
-    g_tdPhone[19] = TextDrawCreate(553.000000, 272.000000, "_");
+    g_tdPhone[19] = TextDrawCreate(553.000000, 382.000000, "_");
     TextDrawFont(g_tdPhone[19], 0);
-    TextDrawLetterSize(g_tdPhone[19], 0.625000, -2.349930);
+    TextDrawLetterSize(g_tdPhone[19], 0.625000, -14.549936);
     TextDrawTextSize(g_tdPhone[19], 81.000000, 83.000000);
     TextDrawSetOutline(g_tdPhone[19], 1);
     TextDrawSetShadow(g_tdPhone[19], 0);
     TextDrawAlignment(g_tdPhone[19], 2);
     TextDrawColor(g_tdPhone[19], -1);
     TextDrawBackgroundColor(g_tdPhone[19], -1378294017);
-    TextDrawBoxColor(g_tdPhone[19], 140);
+    TextDrawBoxColor(g_tdPhone[19], -944014849);
     TextDrawUseBox(g_tdPhone[19], 1);
     TextDrawSetProportional(g_tdPhone[19], 1);
     TextDrawSetSelectable(g_tdPhone[19], 0);
 
-    g_tdPhone[20] = TextDrawCreate(594.000000, 255.000000, "FRI 07:56");
-    TextDrawFont(g_tdPhone[20], 1);
-    TextDrawLetterSize(g_tdPhone[20], 0.225000, 1.250000);
-    TextDrawTextSize(g_tdPhone[20], 400.000000, 17.000000);
-    TextDrawSetOutline(g_tdPhone[20], 0);
+    g_tdPhone[20] = TextDrawCreate(553.000000, 272.000000, "_");
+    TextDrawFont(g_tdPhone[20], 0);
+    TextDrawLetterSize(g_tdPhone[20], 0.625000, -2.349930);
+    TextDrawTextSize(g_tdPhone[20], 81.000000, 83.000000);
+    TextDrawSetOutline(g_tdPhone[20], 1);
     TextDrawSetShadow(g_tdPhone[20], 0);
-    TextDrawAlignment(g_tdPhone[20], 3);
-    TextDrawColor(g_tdPhone[20], -993737473);
-    TextDrawBackgroundColor(g_tdPhone[20], 255);
-    TextDrawBoxColor(g_tdPhone[20], 50);
-    TextDrawUseBox(g_tdPhone[20], 0);
+    TextDrawAlignment(g_tdPhone[20], 2);
+    TextDrawColor(g_tdPhone[20], -1);
+    TextDrawBackgroundColor(g_tdPhone[20], -1378294017);
+    TextDrawBoxColor(g_tdPhone[20], 140);
+    TextDrawUseBox(g_tdPhone[20], 1);
     TextDrawSetProportional(g_tdPhone[20], 1);
     TextDrawSetSelectable(g_tdPhone[20], 0);
 
-    g_tdPhone[21] = TextDrawCreate(513.000000, 267.000000, "_");
+    g_tdPhone[21] = TextDrawCreate(594.000000, 255.000000, "FRI 07:56");
     TextDrawFont(g_tdPhone[21], 1);
-    TextDrawLetterSize(g_tdPhone[21], 0.600000, -0.750000);
-    TextDrawTextSize(g_tdPhone[21], 298.500000, -2.500000);
-    TextDrawSetOutline(g_tdPhone[21], 1);
+    TextDrawLetterSize(g_tdPhone[21], 0.224999, 1.250000);
+    TextDrawTextSize(g_tdPhone[21], 400.000000, 17.000000);
+    TextDrawSetOutline(g_tdPhone[21], 0);
     TextDrawSetShadow(g_tdPhone[21], 0);
-    TextDrawAlignment(g_tdPhone[21], 2);
-    TextDrawColor(g_tdPhone[21], -1);
+    TextDrawAlignment(g_tdPhone[21], 3);
+    TextDrawColor(g_tdPhone[21], -993737473);
     TextDrawBackgroundColor(g_tdPhone[21], 255);
-    TextDrawBoxColor(g_tdPhone[21], -993737473);
-    TextDrawUseBox(g_tdPhone[21], 1);
+    TextDrawBoxColor(g_tdPhone[21], 50);
+    TextDrawUseBox(g_tdPhone[21], 0);
     TextDrawSetProportional(g_tdPhone[21], 1);
     TextDrawSetSelectable(g_tdPhone[21], 0);
 
-    g_tdPhone[22] = TextDrawCreate(515.000000, 267.000000, "_");
+    g_tdPhone[22] = TextDrawCreate(513.000000, 267.000000, "_");
     TextDrawFont(g_tdPhone[22], 1);
-    TextDrawLetterSize(g_tdPhone[22], 0.600000, -0.950000);
+    TextDrawLetterSize(g_tdPhone[22], 0.600000, -0.750000);
     TextDrawTextSize(g_tdPhone[22], 298.500000, -2.500000);
     TextDrawSetOutline(g_tdPhone[22], 1);
     TextDrawSetShadow(g_tdPhone[22], 0);
@@ -1344,9 +1344,9 @@ public OnScriptInit()
     TextDrawSetProportional(g_tdPhone[22], 1);
     TextDrawSetSelectable(g_tdPhone[22], 0);
 
-    g_tdPhone[23] = TextDrawCreate(517.000000, 267.000000, "_");
+    g_tdPhone[23] = TextDrawCreate(515.000000, 267.000000, "_");
     TextDrawFont(g_tdPhone[23], 1);
-    TextDrawLetterSize(g_tdPhone[23], 0.600000, -1.150000);
+    TextDrawLetterSize(g_tdPhone[23], 0.600000, -0.949999);
     TextDrawTextSize(g_tdPhone[23], 298.500000, -2.500000);
     TextDrawSetOutline(g_tdPhone[23], 1);
     TextDrawSetShadow(g_tdPhone[23], 0);
@@ -1358,9 +1358,9 @@ public OnScriptInit()
     TextDrawSetProportional(g_tdPhone[23], 1);
     TextDrawSetSelectable(g_tdPhone[23], 0);
 
-    g_tdPhone[24] = TextDrawCreate(519.000000, 267.000000, "_");
+    g_tdPhone[24] = TextDrawCreate(517.000000, 267.000000, "_");
     TextDrawFont(g_tdPhone[24], 1);
-    TextDrawLetterSize(g_tdPhone[24], 0.600000, -1.350000);
+    TextDrawLetterSize(g_tdPhone[24], 0.600000, -1.149999);
     TextDrawTextSize(g_tdPhone[24], 298.500000, -2.500000);
     TextDrawSetOutline(g_tdPhone[24], 1);
     TextDrawSetShadow(g_tdPhone[24], 0);
@@ -1372,24 +1372,24 @@ public OnScriptInit()
     TextDrawSetProportional(g_tdPhone[24], 1);
     TextDrawSetSelectable(g_tdPhone[24], 0);
 
-    g_tdPhone[25] = TextDrawCreate(553.000000, 382.000000, "_");
-    TextDrawFont(g_tdPhone[25], 0);
-    TextDrawLetterSize(g_tdPhone[25], 0.625000, -2.349930);
-    TextDrawTextSize(g_tdPhone[25], 81.000000, 83.000000);
+    g_tdPhone[25] = TextDrawCreate(519.000000, 267.000000, "_");
+    TextDrawFont(g_tdPhone[25], 1);
+    TextDrawLetterSize(g_tdPhone[25], 0.600000, -1.350000);
+    TextDrawTextSize(g_tdPhone[25], 298.500000, -2.500000);
     TextDrawSetOutline(g_tdPhone[25], 1);
     TextDrawSetShadow(g_tdPhone[25], 0);
     TextDrawAlignment(g_tdPhone[25], 2);
     TextDrawColor(g_tdPhone[25], -1);
-    TextDrawBackgroundColor(g_tdPhone[25], -1378294017);
-    TextDrawBoxColor(g_tdPhone[25], 140);
+    TextDrawBackgroundColor(g_tdPhone[25], 255);
+    TextDrawBoxColor(g_tdPhone[25], -993737473);
     TextDrawUseBox(g_tdPhone[25], 1);
     TextDrawSetProportional(g_tdPhone[25], 1);
     TextDrawSetSelectable(g_tdPhone[25], 0);
 
-    g_tdPhone[26] = TextDrawCreate(553.000000, 275.000000, "_");
+    g_tdPhone[26] = TextDrawCreate(553.000000, 382.000000, "_");
     TextDrawFont(g_tdPhone[26], 0);
-    TextDrawLetterSize(g_tdPhone[26], 0.625000, 9.200076);
-    TextDrawTextSize(g_tdPhone[26], 82.000000, 79.000000);
+    TextDrawLetterSize(g_tdPhone[26], 0.625000, -2.349930);
+    TextDrawTextSize(g_tdPhone[26], 81.000000, 83.000000);
     TextDrawSetOutline(g_tdPhone[26], 1);
     TextDrawSetShadow(g_tdPhone[26], 0);
     TextDrawAlignment(g_tdPhone[26], 2);
@@ -1400,33 +1400,47 @@ public OnScriptInit()
     TextDrawSetProportional(g_tdPhone[26], 1);
     TextDrawSetSelectable(g_tdPhone[26], 0);
 
-    g_tdPhone[27] = TextDrawCreate(512.000000, 366.000000, "BUTTON 1");
-    TextDrawFont(g_tdPhone[27], 1);
-    TextDrawLetterSize(g_tdPhone[27], 0.216667, 1.050000);
-    TextDrawTextSize(g_tdPhone[27], 550.500000, 114.000000);
-    TextDrawSetOutline(g_tdPhone[27], 0);
+    g_tdPhone[27] = TextDrawCreate(553.000000, 275.000000, "_");
+    TextDrawFont(g_tdPhone[27], 0);
+    TextDrawLetterSize(g_tdPhone[27], 0.625000, 9.200076);
+    TextDrawTextSize(g_tdPhone[27], 82.000000, 79.000000);
+    TextDrawSetOutline(g_tdPhone[27], 1);
     TextDrawSetShadow(g_tdPhone[27], 0);
-    TextDrawAlignment(g_tdPhone[27], 1);
-    TextDrawColor(g_tdPhone[27], 1300904959);
-    TextDrawBackgroundColor(g_tdPhone[27], 255);
-    TextDrawBoxColor(g_tdPhone[27], 50);
-    TextDrawUseBox(g_tdPhone[27], 0);
+    TextDrawAlignment(g_tdPhone[27], 2);
+    TextDrawColor(g_tdPhone[27], -1);
+    TextDrawBackgroundColor(g_tdPhone[27], -1378294017);
+    TextDrawBoxColor(g_tdPhone[27], 140);
+    TextDrawUseBox(g_tdPhone[27], 1);
     TextDrawSetProportional(g_tdPhone[27], 1);
-    TextDrawSetSelectable(g_tdPhone[27], 1);
+    TextDrawSetSelectable(g_tdPhone[27], 0);
 
-    g_tdPhone[28] = TextDrawCreate(594.000000, 366.000000, "BUTTON 2");
+    g_tdPhone[28] = TextDrawCreate(512.000000, 366.000000, "_"); // Button 1
     TextDrawFont(g_tdPhone[28], 1);
-    TextDrawLetterSize(g_tdPhone[28], 0.216667, 1.050000);
-    TextDrawTextSize(g_tdPhone[28], 628.000000, 114.000000);
+    TextDrawLetterSize(g_tdPhone[28], 0.216666, 1.049999);
+    TextDrawTextSize(g_tdPhone[28], 550.500000, 114.000000);
     TextDrawSetOutline(g_tdPhone[28], 0);
     TextDrawSetShadow(g_tdPhone[28], 0);
-    TextDrawAlignment(g_tdPhone[28], 3);
-    TextDrawColor(g_tdPhone[28], -1237434625);
+    TextDrawAlignment(g_tdPhone[28], 1);
+    TextDrawColor(g_tdPhone[28], 1300904959);
     TextDrawBackgroundColor(g_tdPhone[28], 255);
     TextDrawBoxColor(g_tdPhone[28], 50);
     TextDrawUseBox(g_tdPhone[28], 0);
     TextDrawSetProportional(g_tdPhone[28], 1);
-    TextDrawSetSelectable(g_tdPhone[28], 1);
+    TextDrawSetSelectable(g_tdPhone[28], 0);
+
+    g_tdPhone[29] = TextDrawCreate(594.000000, 366.000000, "_"); // Button 2
+    TextDrawFont(g_tdPhone[29], 1);
+    TextDrawLetterSize(g_tdPhone[29], 0.216666, 1.049999);
+    TextDrawTextSize(g_tdPhone[29], 628.000000, 114.000000);
+    TextDrawSetOutline(g_tdPhone[29], 0);
+    TextDrawSetShadow(g_tdPhone[29], 0);
+    TextDrawAlignment(g_tdPhone[29], 3);
+    TextDrawColor(g_tdPhone[29], -1237434625);
+    TextDrawBackgroundColor(g_tdPhone[29], 255);
+    TextDrawBoxColor(g_tdPhone[29], 50);
+    TextDrawUseBox(g_tdPhone[29], 0);
+    TextDrawSetProportional(g_tdPhone[29], 1);
+    TextDrawSetSelectable(g_tdPhone[29], 0);
     
     #if defined TD_OnScriptInit
         return TD_OnScriptInit();
@@ -2199,21 +2213,21 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawSetSelectable(playerid, p_tdBeatingText{playerid}, 0);
 
     // Phone
-    p_tdPhone[playerid]{0} = CreatePlayerTextDraw(playerid, 553.000000, 382.000000, "_");
-    PlayerTextDrawFont(playerid, p_tdPhone[playerid]{0}, 0);
-    PlayerTextDrawLetterSize(playerid, p_tdPhone[playerid]{0}, 0.625000, -14.549936);
-    PlayerTextDrawTextSize(playerid, p_tdPhone[playerid]{0}, 81.000000, 83.000000);
-    PlayerTextDrawSetOutline(playerid, p_tdPhone[playerid]{0}, 1);
+    p_tdPhone[playerid]{0} = CreatePlayerTextDraw(playerid, 514.000000, 275.000000, "_"); // Option 1
+    PlayerTextDrawFont(playerid, p_tdPhone[playerid]{0}, 1);
+    PlayerTextDrawLetterSize(playerid, p_tdPhone[playerid]{0}, 0.220833, 1.000000);
+    PlayerTextDrawTextSize(playerid, p_tdPhone[playerid]{0}, 592.000000, 17.000000);
+    PlayerTextDrawSetOutline(playerid, p_tdPhone[playerid]{0}, 0);
     PlayerTextDrawSetShadow(playerid, p_tdPhone[playerid]{0}, 0);
-    PlayerTextDrawAlignment(playerid, p_tdPhone[playerid]{0}, 2);
+    PlayerTextDrawAlignment(playerid, p_tdPhone[playerid]{0}, 1);
     PlayerTextDrawColor(playerid, p_tdPhone[playerid]{0}, -1);
-    PlayerTextDrawBackgroundColor(playerid, p_tdPhone[playerid]{0}, -1378294017);
-    PlayerTextDrawBoxColor(playerid, p_tdPhone[playerid]{0}, -944014849);
+    PlayerTextDrawBackgroundColor(playerid, p_tdPhone[playerid]{0}, 255);
+    PlayerTextDrawBoxColor(playerid, p_tdPhone[playerid]{0}, 0);
     PlayerTextDrawUseBox(playerid, p_tdPhone[playerid]{0}, 1);
     PlayerTextDrawSetProportional(playerid, p_tdPhone[playerid]{0}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdPhone[playerid]{0}, 0);
 
-    p_tdPhone[playerid]{1} = CreatePlayerTextDraw(playerid, 514.000000, 275.000000, "Option");
+    p_tdPhone[playerid]{1} = CreatePlayerTextDraw(playerid, 514.000000, 289.000000, "_"); // Option 2
     PlayerTextDrawFont(playerid, p_tdPhone[playerid]{1}, 1);
     PlayerTextDrawLetterSize(playerid, p_tdPhone[playerid]{1}, 0.220833, 1.000000);
     PlayerTextDrawTextSize(playerid, p_tdPhone[playerid]{1}, 592.000000, 17.000000);
@@ -2227,7 +2241,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawSetProportional(playerid, p_tdPhone[playerid]{1}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdPhone[playerid]{1}, 0);
 
-    p_tdPhone[playerid]{2} = CreatePlayerTextDraw(playerid, 514.000000, 289.000000, "Option");
+    p_tdPhone[playerid]{2} = CreatePlayerTextDraw(playerid, 514.000000, 303.000000, "_"); // Option 3
     PlayerTextDrawFont(playerid, p_tdPhone[playerid]{2}, 1);
     PlayerTextDrawLetterSize(playerid, p_tdPhone[playerid]{2}, 0.220833, 1.000000);
     PlayerTextDrawTextSize(playerid, p_tdPhone[playerid]{2}, 592.000000, 17.000000);
@@ -2236,12 +2250,12 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawAlignment(playerid, p_tdPhone[playerid]{2}, 1);
     PlayerTextDrawColor(playerid, p_tdPhone[playerid]{2}, -1);
     PlayerTextDrawBackgroundColor(playerid, p_tdPhone[playerid]{2}, 255);
-    PlayerTextDrawBoxColor(playerid, p_tdPhone[playerid]{2}, 0);
+    PlayerTextDrawBoxColor(playerid, p_tdPhone[playerid]{2}, 0); // Selected (121)
     PlayerTextDrawUseBox(playerid, p_tdPhone[playerid]{2}, 1);
     PlayerTextDrawSetProportional(playerid, p_tdPhone[playerid]{2}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdPhone[playerid]{2}, 0);
 
-    p_tdPhone[playerid]{3} = CreatePlayerTextDraw(playerid, 514.000000, 303.000000, "Selected");
+    p_tdPhone[playerid]{3} = CreatePlayerTextDraw(playerid, 514.000000, 317.000000, "_"); // Option 4
     PlayerTextDrawFont(playerid, p_tdPhone[playerid]{3}, 1);
     PlayerTextDrawLetterSize(playerid, p_tdPhone[playerid]{3}, 0.220833, 1.000000);
     PlayerTextDrawTextSize(playerid, p_tdPhone[playerid]{3}, 592.000000, 17.000000);
@@ -2250,12 +2264,12 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawAlignment(playerid, p_tdPhone[playerid]{3}, 1);
     PlayerTextDrawColor(playerid, p_tdPhone[playerid]{3}, -1);
     PlayerTextDrawBackgroundColor(playerid, p_tdPhone[playerid]{3}, 255);
-    PlayerTextDrawBoxColor(playerid, p_tdPhone[playerid]{3}, 121);
+    PlayerTextDrawBoxColor(playerid, p_tdPhone[playerid]{3}, 0);
     PlayerTextDrawUseBox(playerid, p_tdPhone[playerid]{3}, 1);
     PlayerTextDrawSetProportional(playerid, p_tdPhone[playerid]{3}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdPhone[playerid]{3}, 0);
 
-    p_tdPhone[playerid]{4} = CreatePlayerTextDraw(playerid, 514.000000, 317.000000, "Option");
+    p_tdPhone[playerid]{4} = CreatePlayerTextDraw(playerid, 514.000000, 331.000000, "_"); // Option 5
     PlayerTextDrawFont(playerid, p_tdPhone[playerid]{4}, 1);
     PlayerTextDrawLetterSize(playerid, p_tdPhone[playerid]{4}, 0.220833, 1.000000);
     PlayerTextDrawTextSize(playerid, p_tdPhone[playerid]{4}, 592.000000, 17.000000);
@@ -2269,7 +2283,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawSetProportional(playerid, p_tdPhone[playerid]{4}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdPhone[playerid]{4}, 0);
 
-    p_tdPhone[playerid]{5} = CreatePlayerTextDraw(playerid, 514.000000, 331.000000, "Option");
+    p_tdPhone[playerid]{5} = CreatePlayerTextDraw(playerid, 514.000000, 345.000000, "_"); // Option 6
     PlayerTextDrawFont(playerid, p_tdPhone[playerid]{5}, 1);
     PlayerTextDrawLetterSize(playerid, p_tdPhone[playerid]{5}, 0.220833, 1.000000);
     PlayerTextDrawTextSize(playerid, p_tdPhone[playerid]{5}, 592.000000, 17.000000);
@@ -2282,20 +2296,6 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawUseBox(playerid, p_tdPhone[playerid]{5}, 1);
     PlayerTextDrawSetProportional(playerid, p_tdPhone[playerid]{5}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdPhone[playerid]{5}, 0);
-
-    p_tdPhone[playerid]{6} = CreatePlayerTextDraw(playerid, 514.000000, 345.000000, "Option");
-    PlayerTextDrawFont(playerid, p_tdPhone[playerid]{6}, 1);
-    PlayerTextDrawLetterSize(playerid, p_tdPhone[playerid]{6}, 0.220833, 1.000000);
-    PlayerTextDrawTextSize(playerid, p_tdPhone[playerid]{6}, 592.000000, 17.000000);
-    PlayerTextDrawSetOutline(playerid, p_tdPhone[playerid]{6}, 0);
-    PlayerTextDrawSetShadow(playerid, p_tdPhone[playerid]{6}, 0);
-    PlayerTextDrawAlignment(playerid, p_tdPhone[playerid]{6}, 1);
-    PlayerTextDrawColor(playerid, p_tdPhone[playerid]{6}, -1);
-    PlayerTextDrawBackgroundColor(playerid, p_tdPhone[playerid]{6}, 255);
-    PlayerTextDrawBoxColor(playerid, p_tdPhone[playerid]{6}, 0);
-    PlayerTextDrawUseBox(playerid, p_tdPhone[playerid]{6}, 1);
-    PlayerTextDrawSetProportional(playerid, p_tdPhone[playerid]{6}, 1);
-    PlayerTextDrawSetSelectable(playerid, p_tdPhone[playerid]{6}, 0);
 
     #if defined TD_OnPlayerConnect
         return TD_OnPlayerConnect(playerid);

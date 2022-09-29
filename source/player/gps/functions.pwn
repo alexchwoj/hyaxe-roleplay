@@ -5,11 +5,10 @@
 
 Player_ShowGPS(playerid)
 {
-    Dialog_Show(playerid, "gps_main", DIALOG_STYLE_LIST, "{CB3126}Hyaxe{DADADA} - GPS", "\
-        Trabajos\n\
-        Hospitales\n\
-        Concesionarios\n\
-    ", "Ver", "Cerrar");
+    Phone_Show(playerid, "gps_main");
+	Phone_AddItem(playerid, "Trabajos");
+	Phone_AddItem(playerid, "Hospitales");
+	Phone_AddItem(playerid, "Concesionarios");
     return 1;
 }
 

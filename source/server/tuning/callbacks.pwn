@@ -165,7 +165,7 @@ public TUNING_SubComponents(playerid)
     return 1;
 }
 
-Menu:tuning_main(playerid, response, listitem)
+player_menu tuning_main(playerid, response, listitem)
 {
     if (response == MENU_RESPONSE_CLOSE)
     {
@@ -254,7 +254,7 @@ Menu:tuning_main(playerid, response, listitem)
     return 1;
 }
 
-Menu:tuning_paintjob(playerid, response, listitem)
+player_menu tuning_paintjob(playerid, response, listitem)
 {
     new vehicleid = GetPlayerVehicleID(playerid);
     if (!IsValidVehicle(vehicleid))
@@ -290,7 +290,7 @@ Menu:tuning_paintjob(playerid, response, listitem)
     return 1;
 }
 
-Menu:tuning_sel_component(playerid, response, listitem)
+player_menu tuning_sel_component(playerid, response, listitem)
 {
     new vehicleid = GetPlayerVehicleID(playerid);
     if (!IsValidVehicle(vehicleid))
@@ -333,7 +333,7 @@ Menu:tuning_sel_component(playerid, response, listitem)
     return 1;
 }
 
-Menu:tuning_color_type(playerid, response, listitem)
+player_menu tuning_color_type(playerid, response, listitem)
 {
     if (response == MENU_RESPONSE_CLOSE)
     {
@@ -360,7 +360,7 @@ Menu:tuning_color_type(playerid, response, listitem)
     return 1;
 }
 
-Menu:tuning_color(playerid, response, listitem)
+player_menu tuning_color(playerid, response, listitem)
 {
     new vehicleid = GetPlayerVehicleID(playerid);
     if (!IsValidVehicle(vehicleid))

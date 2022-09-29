@@ -3,12 +3,9 @@
 #endif
 #define _menu_header_
 
-#define MENU:%0(%1) \
+#define player_menu%4\32;%0(%1) \
 	forward menu_%0(%1); public menu_%0(%1)
-
-#define Menu:%0(%1) \
-	MENU:%0(%1)
-
+	
 #define MENU_COUNT_PAGES(%0,%1) \
 	(((%0) - 1) / (%1) + 1)
 
@@ -58,6 +55,7 @@ enum eMenuTextdraw
 	e_tdInfoIcon,
 	e_tdInfoText
 };
+
 new
 	g_rgiMenuTextDrawsID[MAX_PLAYERS + 1][eMenuTextdraw],
 	PlayerText:g_rgiMenuTextDraws[MAX_PLAYERS + 1][50]

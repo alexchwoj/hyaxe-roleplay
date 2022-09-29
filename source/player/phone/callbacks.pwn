@@ -2,3 +2,113 @@
     #endinput
 #endif
 #define _phone_callbacks_
+
+public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
+{
+	if (Bit_Get(Player_Flags(playerid), PFLAG_USING_PHONE))
+	{
+		new menu_id[32] = "phone_";
+		strcat(menu_id, g_rgePlayerMenu[playerid][e_szID]);
+
+		if (newkeys == KEY_SECONDARY_ATTACK && (GetTickCount() - g_rgePlayerMenu[playerid][e_iLastTick]) >= 160) // Enter
+		{
+			PlayerPlaySound(playerid, SOUND_BUTTON);
+			CallLocalFunction(menu_id, "iii", playerid, 0, (g_rgePlayerMenu[playerid][e_iListitem] + (g_rgePlayerMenu[playerid][e_iPage] * 5)));
+            Phone_Hide(playerid);
+		}
+		else if (newkeys == KEY_SPRINT && (GetTickCount() - g_rgePlayerMenu[playerid][e_iLastTick]) >= 160) // Space
+		{
+			PlayerPlaySound(playerid, SOUND_BUTTON);
+			CallLocalFunction(menu_id, "iii", playerid, 1, (g_rgePlayerMenu[playerid][e_iListitem] + (g_rgePlayerMenu[playerid][e_iPage] * 5)));
+    	}
+	}
+
+	#if defined PHONE_OnPlayerKeyStateChange
+		return PHONE_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
+	#else
+		return 1;
+	#endif
+}
+
+#if defined _ALS_OnPlayerKeyStateChange
+	#undef OnPlayerKeyStateChange
+#else
+	#define _ALS_OnPlayerKeyStateChange
+#endif
+#define OnPlayerKeyStateChange PHONE_OnPlayerKeyStateChange
+#if defined PHONE_OnPlayerKeyStateChange
+	forward PHONE_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
+#endif
+
+
+forward PHONE_ProcessKey(playerid);
+public PHONE_ProcessKey(playerid)
+{
+	if (Bit_Get(Player_Flags(playerid), PFLAG_USING_PHONE))
+	{
+		new keys, updown, leftright;
+		GetPlayerKeys(playerid, keys, updown, leftright);
+
+		#pragma unused leftright
+		#pragma unused keys
+
+		if (updown == KEY_DOWN && (GetTickCount() - g_rgePlayerMenu[playerid][e_iLastTick]) >= 160)
+		{
+			new listitem = (g_rgePlayerMenu[playerid][e_iListitem] + (g_rgePlayerMenu[playerid][e_iPage] * 5));
+
+			g_rgePlayerMenu[playerid][e_iLastTick] = GetTickCount();
+			PlayerPlaySound(playerid, SOUND_NEXT);
+
+			if ((listitem + 1) == g_rgePlayerMenu[playerid][e_iTotalListitems])
+			{
+				g_rgePlayerMenu[playerid][e_iListitem] = 0;
+				g_rgePlayerMenu[playerid][e_iPage] = 0;
+			}
+			else if ((g_rgePlayerMenu[playerid][e_iListitem] + 1) >= 5)
+			{
+				g_rgePlayerMenu[playerid][e_iListitem] = 0;
+				++g_rgePlayerMenu[playerid][e_iPage];
+			}
+			else
+				++g_rgePlayerMenu[playerid][e_iListitem];
+
+			Phone_UpdateListitems(playerid);
+		}
+		else if (updown == KEY_UP && (GetTickCount() - g_rgePlayerMenu[playerid][e_iLastTick]) >= 160)
+		{
+			g_rgePlayerMenu[playerid][e_iLastTick] = GetTickCount();
+			PlayerPlaySound(playerid, SOUND_BACK);
+
+			if ((g_rgePlayerMenu[playerid][e_iListitem] - 1) == -1)
+			{
+			    if (g_rgePlayerMenu[playerid][e_iPage] == 0)
+			    {
+					g_rgePlayerMenu[playerid][e_iListitem] = ((5 - ((MENU_COUNT_PAGES(g_rgePlayerMenu[playerid][e_iTotalListitems], 5) * 5) - g_rgePlayerMenu[playerid][e_iTotalListitems])) - 1);
+					g_rgePlayerMenu[playerid][e_iPage] = (MENU_COUNT_PAGES(g_rgePlayerMenu[playerid][e_iTotalListitems], 5) - 1);
+				}
+				else
+				{
+					g_rgePlayerMenu[playerid][e_iListitem] = (5 - 1);
+					--g_rgePlayerMenu[playerid][e_iPage];
+				}
+			}
+			else
+				--g_rgePlayerMenu[playerid][e_iListitem];
+
+			Phone_UpdateListitems(playerid);
+		}
+	}
+
+    return 1;
+}
+
+phone_menu main(playerid, response, listitem)
+{
+	switch(listitem)
+	{
+		case 0: Player_ShowGPS(playerid);
+		case 1: printf("camara");
+		case 2: printf("mis vehiculos");
+	}
+	return 1;
+}

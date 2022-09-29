@@ -28,10 +28,10 @@
 		{
 			"label": "Preprocesar",
 			"args": [
-				"\"source/main.pwn\"",
 				"--%",
-				"\"-icompiler/include\"",
-				"\"-icompiler\\include\\amx\"",
+				"\"${workspaceFolder}\\source\\main.pwn\"",
+				"\"-icompiler\\include\"",
+				"\"-icompiler\\include\\YSI\"",
 				"\"-isource\"",
 				"\"-ogamemodes/hyaxe.lst\"",
 				"\"-l\""

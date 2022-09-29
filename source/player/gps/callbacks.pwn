@@ -24,63 +24,58 @@ public OnPlayerDisconnect(playerid, reason)
     forward GPS_OnPlayerDisconnect(playerid, reason);
 #endif
 
-command gps(playerid, const params[], "Abre el GPS")
+phone_menu gps_main(playerid, response, listitem)
 {
-    Player_ShowGPS(playerid);
-    Chat_SendAction(playerid, "mira su GPS");
-    return 1;
-}
-
-dialog gps_main(playerid, response, listitem, inputtext[])
-{
-    if (response)
+	if (response)
     {
         switch(listitem)
         {
             case 0:
             {
-                Dialog_Show(playerid, "gps_jobs", DIALOG_STYLE_LIST, "{CB3126}Hyaxe{DADADA} - Trabajos", "\
-                    Camionero\n\
-                    Pescador\n\
-                    Cortacésped\n\
-                    Fabricante de armas\n\
-                ", "Ver", "Volver");
+                Phone_Show(playerid, "gps_jobs");
+                Phone_AddItem(playerid, "Camionero");
+                Phone_AddItem(playerid, "Pescador");
+                Phone_AddItem(playerid, "Cortacésped");
+                Phone_AddItem(playerid, "Fabricante de armas");
             }
             case 1:
             {
-                new line[128];
-                strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Nombre:\t{DADADA}Distancia\n");
+                Phone_Show(playerid, "gps_hospital");
+
+                new line[32];
                 for(new i; i < sizeof(g_rgeHospitalData); ++i)
                 {
                     new Float:distance = GetPlayerDistanceFromPoint(playerid, g_rgeHospitalData[i][e_fHospitalPosX], g_rgeHospitalData[i][e_fHospitalPosY], g_rgeHospitalData[i][e_fHospitalPosZ]);
-                    format(line, sizeof(line), "%s\t%.2f Km\n", g_rgeHospitalData[i][e_szHospitalName], distance * 0.01);
-                    strcat(HYAXE_UNSAFE_HUGE_STRING, line);
-                }
+                    new city[45], zone[45];
+                    GetPointZone(g_rgeHospitalData[i][e_fHospitalPosX], g_rgeHospitalData[i][e_fHospitalPosY], city, zone);
 
-                Dialog_Show(playerid, "gps_hospital", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Hyaxe{DADADA} - Hospitales", HYAXE_UNSAFE_HUGE_STRING, "Ver", "Volver");
+                    format(line, sizeof(line), "%s (%.0fKm)", city, distance * 0.01);
+                    Phone_AddItem(playerid, line);
+                }
             }
             case 2:
             {
-                new line[128];
-                strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Nombre:\t{DADADA}Distancia\n");
+                Phone_Show(playerid, "gps_dealership");
+                new line[32];
                 for(new i; i < sizeof(g_rgfDealershipPosition); ++i)
                 {
                     new Float:distance = GetPlayerDistanceFromPoint(playerid, g_rgfDealershipPosition[i][0], g_rgfDealershipPosition[i][1], g_rgfDealershipPosition[i][2]);
                     new city[45], zone[45];
                     GetPointZone(g_rgfDealershipPosition[i][0], g_rgfDealershipPosition[i][1], city, zone);
 
-                    format(line, sizeof(line), "%s, %s\t%.2f Km\n", zone, city, distance * 0.01);
-                    strcat(HYAXE_UNSAFE_HUGE_STRING, line);
+                    format(line, sizeof(line), "%s (%.0fKm)", city, distance * 0.01);
+                    Phone_AddItem(playerid, line);
                 }
-
-                Dialog_Show(playerid, "gps_dealership", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Hyaxe{DADADA} - Concesionarios", HYAXE_UNSAFE_HUGE_STRING, "Ver", "Volver");
             }
         }
     }
-    return 1;
+    else
+        Player_ShowGPS(playerid);
+
+	return 1;
 }
 
-dialog gps_jobs(playerid, response, listitem, inputtext[])
+phone_menu gps_jobs(playerid, response, listitem)
 {
     if (response)
     {
@@ -92,11 +87,13 @@ dialog gps_jobs(playerid, response, listitem, inputtext[])
             case 3: Player_SetGPSCheckpoint(playerid, 1976.0343, -1923.4221, 13.5469); // Fabricante de armas
         }
     }
-    else Player_ShowGPS(playerid);
+    else
+        Player_ShowGPS(playerid);
+
     return 1;
 }
 
-dialog gps_dealership(playerid, response, listitem, inputtext[])
+phone_menu gps_dealership(playerid, response, listitem)
 {
     if (response)
     {
@@ -105,11 +102,13 @@ dialog gps_dealership(playerid, response, listitem, inputtext[])
             
         Player_SetGPSCheckpoint(playerid, g_rgfDealershipPosition[listitem][0], g_rgfDealershipPosition[listitem][1], g_rgfDealershipPosition[listitem][2]);
     }
-    else Player_ShowGPS(playerid);
+    else
+        Player_ShowGPS(playerid);
+
     return 1;
 }
 
-dialog gps_hospital(playerid, response, listitem, inputtext[])
+phone_menu gps_hospital(playerid, response, listitem)
 {
     if (response)
     {
@@ -118,7 +117,9 @@ dialog gps_hospital(playerid, response, listitem, inputtext[])
 
         Player_SetGPSCheckpoint(playerid, g_rgeHospitalData[listitem][e_fHospitalPosX], g_rgeHospitalData[listitem][e_fHospitalPosY], g_rgeHospitalData[listitem][e_fHospitalPosZ]);
     }
-    else Player_ShowGPS(playerid);
+    else
+        Player_ShowGPS(playerid);
+        
     return 1;
 }
 
