@@ -157,3 +157,27 @@ public OnIncomingRPC(playerid, rpcid, BitStream:bs)
 #if defined AC_OnIncomingRPC
     forward AC_OnIncomingRPC(playerid, rpcid, BitStream:bs);
 #endif
+
+public OnPlayerDisconnect(playerid, reason)
+{
+    for(new i = sizeof(g_rgeDetectionData) - 1; i != -1; --i)
+    {
+        g_rgiAnticheatTriggers[playerid]{eCheats:i} = 0;
+    }
+
+    #if defined AC_OnPlayerDisconnect
+        return AC_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect AC_OnPlayerDisconnect
+#if defined AC_OnPlayerDisconnect
+    forward AC_OnPlayerDisconnect(playerid, reason);
+#endif

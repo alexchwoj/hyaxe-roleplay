@@ -15,7 +15,9 @@ enum eCheats
     CHEAT_TELEPORT,
     CHEAT_INVISIBLE,
     CHEAT_INVALID_SYNC,
-    CHEAT_AIRBREAK
+    CHEAT_AIRBREAK,
+    CHEAT_VEHICLE_AIRBREAK,
+    CHEAT_INVALID_BANNED_SYNC,
 };
 
 enum ePunishment
@@ -48,7 +50,9 @@ new g_rgeDetectionData[eCheats][eDetectionData] =
     { "Teletransportación", true, PUNISHMENT_KICK_ON_MAX_TRIGGERS, 20 },
     { "Invisibilidad", true, PUNISHMENT_WARN_ADMINS, 0 },
     { "Sincronización inválida", true, PUNISHMENT_KICK, 0 },
-    { "AirBreak", true, PUNISHMENT_KICK_ON_MAX_TRIGGERS, 5 }
+    { "AirBreak", true, PUNISHMENT_KICK_ON_MAX_TRIGGERS, 5 },
+    { "Vehicle AirBreak", true, PUNISHMENT_KICK_ON_MAX_TRIGGERS, 3 },
+    { "Sincronización fabricada", true, PUNISHMENT_BAN, 0 }
 };
 
 new 

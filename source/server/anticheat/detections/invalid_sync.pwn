@@ -61,3 +61,9 @@ IPacket:__ac_inv_sync_PlayerSync(playerid, BitStream:bs)
 
     return 1;
 }
+
+public OnVehicleRespray(playerid, vehicleid, color1, color2)
+{
+    Anticheat_Trigger(playerid, CHEAT_INVALID_BANNED_SYNC, 0);
+    return 0;
+}

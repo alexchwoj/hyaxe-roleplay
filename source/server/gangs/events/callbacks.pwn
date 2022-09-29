@@ -84,7 +84,7 @@ public GVENT_TruckSpawnLoot()
         new item = random( sizeof(loot) );
 
         DroppedItem_Create(
-            loot[item][0], Random(loot[item][1], loot[item][2]), 0, 
+            loot[item][0], (loot[item][1] != loot[item][2] ? Random(loot[item][1], loot[item][2]) : loot[item][1]), 0, 
             g_rgfTruckDefensePositions[g_iGangTruckIndex][0] + RandomFloat(-5.0, 5.0),
             g_rgfTruckDefensePositions[g_iGangTruckIndex][1] + RandomFloat(-5.0, 5.0),
             g_rgfTruckDefensePositions[g_iGangTruckIndex][2] + 2.0,
