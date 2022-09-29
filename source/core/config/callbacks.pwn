@@ -36,7 +36,6 @@ public OnScriptInit()
 	Str_Random(pw);
 	SendRconCommand(va_return("password %s", pw));
 
- 
 	SetServerRule(!"lagcomp", "skinshot");
 	SetServerRule(!"weburl", "hyaxe.com");
 

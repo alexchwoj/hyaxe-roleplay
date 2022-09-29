@@ -268,7 +268,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 );
             }
 
-            Dialog_Show(playerid, "vehicle_panel", DIALOG_STYLE_TABLIST, header, HYAXE_UNSAFE_HUGE_STRING, !"Seleccionar", !"Cerrar");
+            Dialog_ShowCallback(playerid, using public _hydg@vehicle_panel<iiiis>, DIALOG_STYLE_TABLIST, header, HYAXE_UNSAFE_HUGE_STRING, !"Seleccionar", !"Cerrar");
             PlayerPlaySound(playerid, SOUND_BUTTON);
         }
     }
@@ -290,7 +290,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     forward VEH_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 #endif
 
-dialog vehicle_panel(playerid, response, listitem, const inputtext[])
+dialog vehicle_panel(playerid, dialogid, response, listitem, const inputtext[])
 {
     if (response)
     {

@@ -79,7 +79,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
                         FCNPC_AimAtPlayer(g_rgiHookers[hookerid], playerid);
                         FCNPC_SetAnimationByName(g_rgiHookers[hookerid], "KISSING:GF_STREETARGUE_02", 4.1, 1, 0, 0, 0, 0);
-                        Dialog_Show(playerid, "hooker_accept", DIALOG_STYLE_TABLIST_HEADERS, 
+                        Dialog_ShowCallback(playerid, using public _hydg@hooker_accept<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, 
                                 "Prostituta", 
                                     "{DADADA}Hablaste con la prostituta y te dio sus precios.\t \n\
                                     Beso\t{64A752}50${DADADA}\n\
@@ -145,7 +145,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     forward HOOKERS_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 #endif
 
-dialog hooker_accept(playerid, response, listitem, inputtext[])
+dialog hooker_accept(playerid, dialogid, response, listitem, inputtext[])
 {
     new hookerid = g_rgiPlayerInteractingHooker[playerid];
     new npcid = g_rgiHookers[hookerid];

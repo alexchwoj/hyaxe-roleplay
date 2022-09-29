@@ -61,12 +61,12 @@ static RifleShop_OnBuy(playerid, shop_id, item_id)
 
 static MiscShop_OnEnter(playerid)
 {
-    Dialog_Show(playerid, "misc_shop", DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Varios", "{F7F7F7}Productor\t{F7F7F7}Precio\nBandera para conquistar\t{64A752}$100\nBote de spray\t{64A752}$150\n", !"Comprar", !"Cerrar");
+    Dialog_ShowCallback(playerid, using public _hydg@misc_shop<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Varios", "{F7F7F7}Productor\t{F7F7F7}Precio\nBandera para conquistar\t{64A752}$100\nBote de spray\t{64A752}$150\n", !"Comprar", !"Cerrar");
     PlayerPlaySound(playerid, SOUND_BUTTON);
     return 1;
 }
 
-dialog misc_shop(playerid, response, listitem, const inputtext[])
+dialog misc_shop(playerid, dialogid, response, listitem, const inputtext[])
 {
     if (response)
     {

@@ -37,7 +37,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
                 {DADADA}Dinero actual: {64A752}$%s{DADADA}\n\
                 Ingrese una cantidad para depositar:\
             ", Format_Thousand( Player_Money(playerid) ));
-            Dialog_Show(playerid, "bank_deposit", DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Depositar", HYAXE_UNSAFE_HUGE_STRING, "Depositar", "Cancelar");
+            Dialog_ShowCallback(playerid, using public _hydg@bank_deposit<iiiis>, DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Depositar", HYAXE_UNSAFE_HUGE_STRING, "Depositar", "Cancelar");
         }
         // Withdraw
         else if (clickedid == g_tdBankATM[4])
@@ -46,12 +46,12 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
                 {DADADA}Balance actual: {64A752}$%s{DADADA}\n\
                 Ingrese una cantidad para retirar:\
             ", Format_Thousand(g_rgePlayerData[playerid][e_iPlayerBankBalance]));
-            Dialog_Show(playerid, "bank_withdraw", DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Retirar", HYAXE_UNSAFE_HUGE_STRING, "Retirar", "Cancelar");
+            Dialog_ShowCallback(playerid, using public _hydg@bank_withdraw<iiiis>, DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Retirar", HYAXE_UNSAFE_HUGE_STRING, "Retirar", "Cancelar");
         }
         // Transfer
         else if (clickedid == g_tdBankATM[5])
         {
-            Dialog_Show(playerid, "bank_transfer", DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Transferir", "{DADADA}Ingrese la cuenta bancaria a transferir:", "Siguiente", "Cancelar");
+            Dialog_ShowCallback(playerid, using public _hydg@bank_transfer<iiiis>, DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Transferir", "{DADADA}Ingrese la cuenta bancaria a transferir:", "Siguiente", "Cancelar");
         }
 
         PlayerPlaySound(playerid, SOUND_BUTTON);
@@ -188,7 +188,7 @@ public ATM_OnFoundBankAccount(playerid, bank_account)
 
         g_rgePlayerTempData[playerid][e_iPlayerBankDest] = bank_account;
 
-        Dialog_Show(playerid, "bank_transfer_amount", DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Transferir", HYAXE_UNSAFE_HUGE_STRING, "Transferir", "Cancelar");
+        Dialog_ShowCallback(playerid, using public _hydg@bank_transfer_amount<iiiis>, DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Transferir", HYAXE_UNSAFE_HUGE_STRING, "Transferir", "Cancelar");
     }
     else
     {
@@ -235,7 +235,7 @@ public ATM_OnFinishBankTransfer(playerid, bank_account, amount)
     return 1;
 }
 
-dialog bank_deposit(playerid, response, listitem, inputtext[])
+dialog bank_deposit(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {
@@ -271,7 +271,7 @@ dialog bank_deposit(playerid, response, listitem, inputtext[])
     return 1;
 }
 
-dialog bank_withdraw(playerid, response, listitem, inputtext[])
+dialog bank_withdraw(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {
@@ -307,7 +307,7 @@ dialog bank_withdraw(playerid, response, listitem, inputtext[])
     return 1;
 }
 
-dialog bank_transfer(playerid, response, listitem, inputtext[])
+dialog bank_transfer(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {
@@ -337,7 +337,7 @@ dialog bank_transfer(playerid, response, listitem, inputtext[])
     return 1;
 }
 
-dialog bank_transfer_amount(playerid, response, listitem, inputtext[])
+dialog bank_transfer_amount(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {

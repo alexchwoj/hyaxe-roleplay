@@ -119,7 +119,7 @@ phone_menu gps_hospital(playerid, response, listitem)
     }
     else
         Player_ShowGPS(playerid);
-        
+
     return 1;
 }
 

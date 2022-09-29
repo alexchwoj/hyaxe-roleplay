@@ -106,7 +106,7 @@ Player_Ban(playerid, adminid, const reason[] = "No especificada", time_seconds =
         }
     }
 
-    Dialog_Show(playerid, "kick", DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe {DADADA}- Expulsión", YSI_UNSAFE_HUGE_STRING, "Salir");
+    Dialog_ShowCallback(playerid, using public _hydg@kick<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe {DADADA}- Expulsión", YSI_UNSAFE_HUGE_STRING, "Salir");
     KickTimed(playerid, 500);
 
     return 1;

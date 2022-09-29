@@ -62,7 +62,7 @@ command kick(playerid, const params[], "Expulsa a un jugador")
     gettime(hour, minute, second);
     getdate(year, month, day);
 
-    Dialog_Show(kicked, "kick", DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe {DADADA}- Expulsión",
+    Dialog_ShowCallback(kicked, using public _hydg@kick<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe {DADADA}- Expulsión",
         va_return(
             "{DADADA}Fuiste expulsad%c del servidor.\n\n\
             {CB3126}Razón de la expulsión\n\
@@ -317,7 +317,7 @@ command manage_admins(playerid, const params[], "Abre el panel de administradore
             strcat(HYAXE_UNSAFE_HUGE_STRING, line);
         }
 
-        Dialog_Show(playerid, "manage_admins", DIALOG_STYLE_TABLIST_HEADERS, "{415BA2}Hyaxe {DADADA}- Administradores", HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Salir");
+        Dialog_ShowCallback(playerid, using public _hydg@manage_admins<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, "{415BA2}Hyaxe {DADADA}- Administradores", HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Salir");
     }
     MySQL_TQueryInline(g_hDatabase, using inline QueryDone, 
         "\
@@ -335,7 +335,7 @@ command manage_admins(playerid, const params[], "Abre el panel de administradore
 }
 flags:manage_admins(CMD_FLAG<RANK_LEVEL_MODERATOR>)
 
-dialog manage_admins(playerid, response, listitem, const inputtext[])
+dialog manage_admins(playerid, dialogid, response, listitem, const inputtext[])
 {
     if(!response)
         return 1;
@@ -348,12 +348,12 @@ dialog manage_admins(playerid, response, listitem, const inputtext[])
     }
 
     strcat(s_rgszSelectedAdmin[playerid], inputtext, space + 1);
-    Dialog_Show(playerid, "manage_admin_options", DIALOG_STYLE_LIST, va_return("Opciones para {415BA2}%s{DADADA}...", s_rgszSelectedAdmin[playerid]), "{DADADA}Cambiar rango administrativo", "Continuar", "Atrás");
+    Dialog_ShowCallback(playerid, using public _hydg@manage_admin_options<iiiis>, DIALOG_STYLE_LIST, va_return("Opciones para {415BA2}%s{DADADA}...", s_rgszSelectedAdmin[playerid]), "{DADADA}Cambiar rango administrativo", "Continuar", "Atrás");
 
     return 1;
 }
 
-dialog manage_admin_options(playerid, response, listitem, const inputtext[])
+dialog manage_admin_options(playerid, dialogid, response, listitem, const inputtext[])
 {
     if(!response)
     {
@@ -374,14 +374,14 @@ dialog manage_admin_options(playerid, response, listitem, const inputtext[])
             }
 
             format(line, sizeof(line), "Selecciona el nuevo rango de {415BA2}%s", s_rgszSelectedAdmin[playerid]);
-            Dialog_Show(playerid, "manage_admin_new_rank", DIALOG_STYLE_LIST, line, HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Atrás");
+            Dialog_ShowCallback(playerid, using public _hydg@manage_admin_new_rank<iiiis>, DIALOG_STYLE_LIST, line, HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Atrás");
         }
     }
 
     return 1;
 }
 
-dialog manage_admin_new_rank(playerid, response, listitem, const inputtext[])
+dialog manage_admin_new_rank(playerid, dialogid, response, listitem, const inputtext[])
 {
     if(response)
     {

@@ -72,6 +72,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 {
                     PlayerPlaySound(playerid, SOUND_ERROR);
                     Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, va_return("Solo puedes tener hasta %d vehículos.", vehicles_per_privilege_level[Player_VIP(playerid)]));
+                    return 1;
                 }
 
                 g_rgePlayerTempData[playerid][e_iPlayerBuyVehicleIndex] = g_rgeVehicles[vehicleid][e_iSellIndex];
@@ -82,7 +83,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_szModelName],
                     Format_Thousand(g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_iPrice])
                 );
-                Dialog_Show(playerid, "buy_vehicle", DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe{DADADA} - Comprar vehículo", HYAXE_UNSAFE_HUGE_STRING, "Comprar", "Cancelar");
+                Dialog_ShowCallback(playerid, using public _hydg@buy_vehicle<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe{DADADA} - Comprar vehículo", HYAXE_UNSAFE_HUGE_STRING, "Comprar", "Cancelar");
             }
         }
     }
@@ -104,7 +105,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     forward CONC_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 #endif
 
-dialog buy_vehicle(playerid, response, listitem, const inputtext[])
+dialog buy_vehicle(playerid, dialogid, response, listitem, const inputtext[])
 {
     if (response)
     {

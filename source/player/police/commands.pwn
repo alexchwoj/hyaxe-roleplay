@@ -54,7 +54,7 @@ command policias(playerid, const params[], "Muestra el panel de policías")
             strcat(HYAXE_UNSAFE_HUGE_STRING, line);
         }
 
-        Dialog_Show(playerid, "police_manage", DIALOG_STYLE_TABLIST_HEADERS, "{3A86FF}Hyaxe {DADADA}- Policía", HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Salir");
+        Dialog_ShowCallback(playerid, using public _hydg@police_manage<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, "{3A86FF}Hyaxe {DADADA}- Policía", HYAXE_UNSAFE_HUGE_STRING, "Seleccionar", "Salir");
     }
     MySQL_TQueryInline(g_hDatabase, using inline QueryDone, 
         "\
@@ -74,7 +74,7 @@ command policias(playerid, const params[], "Muestra el panel de policías")
     return 1;
 }
 
-dialog police_manage(playerid, response, listitem, inputtext[])
+dialog police_manage(playerid, dialogid, response, listitem, inputtext[])
 {
     if(!response)
         return 1;
@@ -84,12 +84,12 @@ dialog police_manage(playerid, response, listitem, inputtext[])
 
     g_rgszSelectedOfficer[playerid][24] = '\0';
 
-    Dialog_Show(playerid, "police_manage_officer", DIALOG_STYLE_LIST, va_return("Opciones para {3A86FF}%s", g_rgszSelectedOfficer[playerid]), "{DADADA}Ascender o descender\n{A83225}Expulsar", "Seleccionar", "Atrás");
+    Dialog_ShowCallback(playerid, using public _hydg@police_manage_officer<iiiis>, DIALOG_STYLE_LIST, va_return("Opciones para {3A86FF}%s", g_rgszSelectedOfficer[playerid]), "{DADADA}Ascender o descender\n{A83225}Expulsar", "Seleccionar", "Atrás");
 
     return 1;
 }
 
-dialog police_manage_officer(playerid, response, listitem, inputtext[])
+dialog police_manage_officer(playerid, dialogid, response, listitem, inputtext[])
 {
     if(!response)
     {
@@ -111,7 +111,7 @@ dialog police_manage_officer(playerid, response, listitem, inputtext[])
             }
 
             format(line, sizeof(line), "Selecciona el nuevo rango de {3A86FF}%s", g_rgszSelectedOfficer[playerid]);
-            Dialog_Show(playerid, "police_change_rank", DIALOG_STYLE_LIST, line, HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Atrás");
+            Dialog_ShowCallback(playerid, using public _hydg@police_change_rank<iiiis>, DIALOG_STYLE_LIST, line, HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Atrás");
         }
         case 1: // Expulsar
         {
@@ -122,7 +122,7 @@ dialog police_manage_officer(playerid, response, listitem, inputtext[])
     return 1;
 }
 
-dialog police_change_rank(playerid, response, listitem, inputtext[])
+dialog police_change_rank(playerid, dialogid, response, listitem, inputtext[])
 {
     if(response)
     {

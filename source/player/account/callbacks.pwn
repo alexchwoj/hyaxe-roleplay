@@ -151,7 +151,7 @@ public ACCOUNT_CheckForBans(playerid)
                 (is_name_banned ? "Cuenta" : "Dirección IP"), banned_name, admin_name, admin_account_id_string,
                 reason, issued_date, expiration_date
             );
-            Dialog_Show(playerid, "kick", DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe {DADADA}- Expulsión", HYAXE_UNSAFE_HUGE_STRING, "Salir");
+            Dialog_ShowCallback(playerid, using public _hydg@kick<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe {DADADA}- Expulsión", HYAXE_UNSAFE_HUGE_STRING, "Salir");
             KickTimed(playerid, 500);
 
             return 1;

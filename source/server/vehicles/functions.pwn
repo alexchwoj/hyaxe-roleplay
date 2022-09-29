@@ -313,7 +313,8 @@ public Speedometer_Update(playerid)
 Player_RegisterVehicle(playerid, vehicleid)
 {
     g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = playerid;
-
+    Iter_Add(PlayerVehicles[playerid], vehicleid);
+    
     new panels, doors, lights, tires;
     GetVehicleDamageStatus(vehicleid, panels, doors, lights, tires);
 

@@ -48,7 +48,7 @@ Anticheat_Trigger(playerid, eCheats:cheat, extra = 0)
                     day, month, year, hour, minute, second
             );
 
-            Dialog_Show(playerid, "kick", DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe {DADADA}- Expulsión", HYAXE_UNSAFE_HUGE_STRING, "Salir");
+            Dialog_ShowCallback(playerid, using public _hydg@kick<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe {DADADA}- Expulsión", HYAXE_UNSAFE_HUGE_STRING, "Salir");
 
             KickTimed(playerid, 500);
 
