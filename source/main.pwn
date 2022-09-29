@@ -113,7 +113,6 @@ const HYAXE_MAX_NPCS = 100;
 #include <a_mysql>
 #include <colandreas>
 #include <FCNPC>
-//#include <foreach>
 #include <md-sort>
 
 /*
