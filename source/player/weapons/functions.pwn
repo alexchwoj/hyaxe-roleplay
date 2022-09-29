@@ -200,7 +200,7 @@ Player_LoadWeaponsFromCache(playerid)
 command giveweapon(playerid, const params[], "Le da un arma a un jugador")
 {
     new weaponid, ammo, destination;
-    if (sscanf(params, "p<,>k<weapon>I(32767)R(-1)", weaponid, ammo, destination))
+    if (sscanf(params, "p<,>k<weapon>I(32767)R(-1)", weaponid, ammo, destination) || weaponid == -1)
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/giveweapon {DADADA}<arma>, {969696}[munición = máx.], [jugador = tú]");
         return 1;

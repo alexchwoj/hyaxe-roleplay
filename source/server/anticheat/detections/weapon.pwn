@@ -27,31 +27,34 @@ IPacket:__ac_weapon_WeaponUpdate(playerid, BitStream:bs)
     return 1;
 }
 
-/*const __ac_weapon_PlayerSync = 207;
+const __ac_weapon_PlayerSync = 207;
 IPacket:__ac_weapon_PlayerSync(playerid, BitStream:bs)
 {
     if (Player_HasImmunityForCheat(playerid, CHEAT_WEAPON))
         return 1;
 
-    new data[PR_OnFootSync];
-    BS_IgnoreBits(bs, 8);
-    BS_ReadOnFootSync(bs, data);
+    new weapon_id;
+    BS_ReadValue(bs,
+        PR_IGNORE_BITS, 8 + 16 + 16 + 16 + (32 * 7) + 8 + 8 + 2,
+        PR_BITS, weapon_id, 6
+    );
     
-    new slot = GetWeaponSlot(data[PR_weaponId]);
-    if (data[PR_weaponId] > WEAPON_BRASSKNUCKLE && g_rgePlayerWeapons[playerid][slot][e_iWeaponId] != data[PR_weaponId])
+    new slot = GetWeaponSlot(weapon_id);
+    if (weapon_id > WEAPON_BRASSKNUCKLE && g_rgePlayerWeapons[playerid][slot][e_iWeaponId] != weapon_id)
     {
         Anticheat_Trigger(playerid, CHEAT_WEAPON, 1);
         return 0;
     }
     return 1;
-}*/
+}
 
 const __ac_weapon_BulletSync = 206;
 IPacket:__ac_weapon_BulletSync(playerid, BitStream:bs)
 {
     if (Player_HasImmunityForCheat(playerid, CHEAT_WEAPON))
         return 1;
-
+    
+    printf("bullet!");
     new data[PR_BulletSync];
     BS_IgnoreBits(bs, 8);
     BS_ReadBulletSync(bs, data);
