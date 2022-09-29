@@ -20,7 +20,7 @@ Account_Register(playerid, callback = -1)
     g_rgePlayerData[playerid][e_fPosX] = PLAYER_SPAWN_X;    
     g_rgePlayerData[playerid][e_fPosY] = PLAYER_SPAWN_Y;    
     g_rgePlayerData[playerid][e_fPosZ] = PLAYER_SPAWN_Z;    
-    g_rgePlayerData[playerid][e_fPosAngle] = PLAYER_SPAWN_ANGLE;
+    g_rgePlayerData[playerid][e_fPosAngle] = PLAYER_SPAWN_ANGLE; 
 
     inline const PasswordHashed()
     {

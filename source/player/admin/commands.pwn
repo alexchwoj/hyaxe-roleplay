@@ -584,3 +584,16 @@ command report(playerid, const params[], "Informar al personal sobre un usuario"
 	return 1;
 }
 alias:report("reportar", "re")
+
+command ls(playerid, const params[], "Ir a Los Santos")
+{
+    Player_SetHealth(playerid, 100);
+    Player_SetArmor(playerid, 100);
+
+    Player_SetPos(playerid, PLAYER_SPAWN_X, PLAYER_SPAWN_Y, PLAYER_SPAWN_Z);
+    SetPlayerFacingAngle(playerid, PLAYER_SPAWN_ANGLE);
+    SetPlayerVirtualWorld(playerid, 0);
+    SetPlayerInterior(playerid, 0);
+    return 1;
+}
+flags:ls(CMD_FLAG<RANK_LEVEL_MODERATOR>)

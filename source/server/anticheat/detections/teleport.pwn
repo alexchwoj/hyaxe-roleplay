@@ -39,7 +39,7 @@ public OnPlayerUpdate(playerid)
                 }
             }
 
-            if (!Player_HasImmunityForCheat(playerid, CHEAT_AIRBREAK))
+            /*if (!Player_HasImmunityForCheat(playerid, CHEAT_AIRBREAK))
             {
                 if (Player_Data(playerid, e_fPosZ) < -90.0 && GetPlayerSurfingVehicleID(playerid) == INVALID_VEHICLE_ID)
                 {
@@ -53,7 +53,7 @@ public OnPlayerUpdate(playerid)
                     Anticheat_Trigger(playerid, CHEAT_AIRBREAK);
                     return 0;
                 }
-            }
+            }*/
         }
 
         GetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
