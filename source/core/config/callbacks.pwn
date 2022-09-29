@@ -32,7 +32,7 @@ public OnScriptInit()
 	SendRconCommand(!"language Español / Spanish");
 	SendRconCommand(!"gamemodetext Roleplay / RPG");
 
-	new pw[6];
+	new pw[7];
 	Str_Random(pw);
 	SendRconCommand(va_return("password %s", pw));
 
