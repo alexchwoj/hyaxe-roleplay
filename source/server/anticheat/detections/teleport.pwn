@@ -5,51 +5,54 @@
 
 public OnPlayerUpdate(playerid)
 {
-    if (IsPlayerSpawned(playerid) && Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME) && !GetPlayerInterior(playerid))
+    if (IsPlayerSpawned(playerid) && Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
     {
-        new
-            const Float:max_dist = (IsPlayerInAnyVehicle(playerid) ? 340.0 : 50.0),
-            Float:dist = GetPlayerDistanceFromPoint(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ))
-        ;
-
-        if (!Player_HasImmunityForCheat(playerid, CHEAT_TELEPORT))
+        if(!GetPlayerInterior(playerid))
         {
-            if (Player_Data(playerid, e_fPosZ) < -90.0)
-            {
-                Player_SetImmunityForCheat(playerid, CHEAT_TELEPORT, 1000);
-                return 1;
-            }
+            new
+                const Float:max_dist = (IsPlayerInAnyVehicle(playerid) ? 340.0 : 50.0),
+                Float:dist = GetPlayerDistanceFromPoint(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ))
+            ;
 
-            if (dist > max_dist)
+            if (!Player_HasImmunityForCheat(playerid, CHEAT_TELEPORT))
             {
-                if (IsPlayerInAnyVehicle(playerid))
+                if (Player_Data(playerid, e_fPosZ) < -90.0)
                 {
-                    SetVehiclePos(GetPlayerVehicleID(playerid), Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
-                }
-                else
-                {
-                    SetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
+                    Player_SetImmunityForCheat(playerid, CHEAT_TELEPORT, 1000);
+                    return 1;
                 }
 
-                //printf("CHEAT_TELEPORT > dist = %f, data[PR_animationId] = %d", dist, GetPlayerAnimationIndex(playerid));
-                Anticheat_Trigger(playerid, CHEAT_TELEPORT);
-                return 0;
-            }
-        }
+                if (dist > max_dist)
+                {
+                    if (IsPlayerInAnyVehicle(playerid))
+                    {
+                        SetVehiclePos(GetPlayerVehicleID(playerid), Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
+                    }
+                    else
+                    {
+                        SetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
+                    }
 
-        if (!Player_HasImmunityForCheat(playerid, CHEAT_AIRBREAK))
-        {
-            if (Player_Data(playerid, e_fPosZ) < -90.0 && GetPlayerSurfingVehicleID(playerid) == INVALID_VEHICLE_ID)
-            {
-                Player_SetImmunityForCheat(playerid, CHEAT_AIRBREAK, 1000);
-                return 1;
+                    //printf("CHEAT_TELEPORT > dist = %f, data[PR_animationId] = %d", dist, GetPlayerAnimationIndex(playerid));
+                    Anticheat_Trigger(playerid, CHEAT_TELEPORT);
+                    return 0;
+                }
             }
 
-            if (dist >= 5.0 && !IsPlayerInAnyVehicle(playerid))
+            if (!Player_HasImmunityForCheat(playerid, CHEAT_AIRBREAK))
             {
-                //printf("CHEAT_AIRBREAK > dist = %f, data[PR_animationId] = %d", dist, GetPlayerAnimationIndex(playerid));
-                Anticheat_Trigger(playerid, CHEAT_AIRBREAK);
-                return 0;
+                if (Player_Data(playerid, e_fPosZ) < -90.0 && GetPlayerSurfingVehicleID(playerid) == INVALID_VEHICLE_ID)
+                {
+                    Player_SetImmunityForCheat(playerid, CHEAT_AIRBREAK, 1000);
+                    return 1;
+                }
+
+                if (dist >= 5.0 && !IsPlayerInAnyVehicle(playerid))
+                {
+                    //printf("CHEAT_AIRBREAK > dist = %f, data[PR_animationId] = %d", dist, GetPlayerAnimationIndex(playerid));
+                    Anticheat_Trigger(playerid, CHEAT_AIRBREAK);
+                    return 0;
+                }
             }
         }
 
