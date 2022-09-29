@@ -23,6 +23,18 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     	}
 	}
 
+	if (Bit_Get(Player_Flags(playerid), PFLAG_USING_CAMERA))
+	{
+		if (newkeys == KEY_SECONDARY_ATTACK)
+		{
+			ClearAnimations(playerid);
+			Bit_Set(Player_Flags(playerid), PFLAG_USING_CAMERA, false);
+            Phone_Hide(playerid);
+			SetCameraBehindPlayer(playerid);
+			ApplyAnimation(playerid, "COP_AMBIENT", "Coplook_loop", 4.0, 1, 1, 1, 0, 1000);
+		}
+	}
+
 	#if defined PHONE_OnPlayerKeyStateChange
 		return PHONE_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 	#else
@@ -107,7 +119,27 @@ phone_menu main(playerid, response, listitem)
 	switch(listitem)
 	{
 		case 0: Player_ShowGPS(playerid);
-		case 1: printf("camara");
+		case 1:
+		{
+			Phone_Hide(playerid);
+
+			Bit_Set(Player_Flags(playerid), PFLAG_USING_CAMERA, true);
+			TogglePlayerControllable(playerid, false);
+
+			ApplyAnimation(playerid, "PED", "gang_gunstand", 4.1, 1, 1, 1, 1, 1, 1);
+
+			new Float:x, Float:y, Float:z, Float:angle;
+			GetPlayerPos(playerid, x, y, z);
+			GetPlayerFacingAngle(playerid, angle);
+			GetXYFromAngle(x, y, angle, 0.8);
+
+			SetPlayerCameraPos(playerid, x, y, z + 0.8);
+
+			GetPlayerPos(playerid, x, y, z);
+      		SetPlayerCameraLookAt(playerid, x, y, z + 0.8);
+
+			Sound_PlayInRange(1132, 10.0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid));
+		}
 		case 2:
 		{
 			if (!Iter_Count(PlayerVehicles[playerid]))
@@ -140,7 +172,7 @@ phone_menu my_vehicles(playerid, response, listitem)
 {
 	if (!response)
 		return Player_ShowGPS(playerid);
-		
+
 	if (!Iter_Count(PlayerVehicles[playerid]))
 	{
 		Player_ShowGPS(playerid);
