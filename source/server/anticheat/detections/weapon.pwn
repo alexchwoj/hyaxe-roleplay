@@ -54,13 +54,14 @@ IPacket:__ac_weapon_BulletSync(playerid, BitStream:bs)
     if (Player_HasImmunityForCheat(playerid, CHEAT_WEAPON))
         return 1;
     
-    printf("bullet!");
-    new data[PR_BulletSync];
-    BS_IgnoreBits(bs, 8);
-    BS_ReadBulletSync(bs, data);
+    new weapon_id;
+    BS_ReadValue(bs,
+        PR_IGNORE_BITS, 8 + 8 + 16 + (32 * 9),
+        PR_UINT8, weapon_id
+    );
     
-    new slot = GetWeaponSlot(data[PR_weaponId]);
-    if (data[PR_weaponId] > WEAPON_BRASSKNUCKLE && g_rgePlayerWeapons[playerid][slot][e_iWeaponId] != data[PR_weaponId])
+    new slot = GetWeaponSlot(weapon_id);
+    if (weapon_id > WEAPON_BRASSKNUCKLE && g_rgePlayerWeapons[playerid][slot][e_iWeaponId] != weapon_id)
     {
         Anticheat_Trigger(playerid, CHEAT_WEAPON, 2);
         return 0;
@@ -81,7 +82,7 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
     }
 
     #if defined AC_WP_OnPlayerGiveDamage
-        return AC_WP_OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart);
+        return AC_WP_OnPlayerGiveDamage(playerid, damagedid, amount, weaponid, bodypart);
     #else
         return 1;
     #endif
