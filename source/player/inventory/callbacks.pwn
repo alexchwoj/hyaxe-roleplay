@@ -155,6 +155,7 @@ public OnPlayerDisconnect(playerid, reason)
     {
         Inventory_ResetSlot(playerid, i);
     }
+    
     #if defined INV_OnPlayerDisconnect
         return INV_OnPlayerDisconnect(playerid, reason);
     #else
