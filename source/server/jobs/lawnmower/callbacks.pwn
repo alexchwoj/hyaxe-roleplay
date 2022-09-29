@@ -11,12 +11,12 @@ static GenerateGrassInArea(areaid)
 
     // LOL
     new const
-        Float:min_x = (g_rgeLawnmowerAreas[areaid][e_fAreaMinX] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxX] ? g_rgeLawnmowerAreas[areaid][e_fAreaMinX] : g_rgeLawnmowerAreas[areaid][e_fAreaMaxX]),
-        Float:max_x = (g_rgeLawnmowerAreas[areaid][e_fAreaMinX] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxX] ? g_rgeLawnmowerAreas[areaid][e_fAreaMaxX] : g_rgeLawnmowerAreas[areaid][e_fAreaMinX]),
-        Float:min_y = (g_rgeLawnmowerAreas[areaid][e_fAreaMinY] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxY] ? g_rgeLawnmowerAreas[areaid][e_fAreaMinY] : g_rgeLawnmowerAreas[areaid][e_fAreaMaxY]),
-        Float:max_y = (g_rgeLawnmowerAreas[areaid][e_fAreaMinY] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxY] ? g_rgeLawnmowerAreas[areaid][e_fAreaMaxY] : g_rgeLawnmowerAreas[areaid][e_fAreaMinY]),
-        Float:min_z = (g_rgeLawnmowerAreas[areaid][e_fAreaMinZ] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ] ? g_rgeLawnmowerAreas[areaid][e_fAreaMinZ] : g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ]),
-        Float:max_z = (g_rgeLawnmowerAreas[areaid][e_fAreaMinZ] < g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ] ? g_rgeLawnmowerAreas[areaid][e_fAreaMaxZ] : g_rgeLawnmowerAreas[areaid][e_fAreaMinZ]);
+        Float:min_x = (g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinX] < g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxX] ? g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinX] : g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxX]),
+        Float:max_x = (g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinX] < g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxX] ? g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxX] : g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinX]),
+        Float:min_y = (g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinY] < g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxY] ? g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinY] : g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxY]),
+        Float:max_y = (g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinY] < g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxY] ? g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxY] : g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinY]),
+        Float:min_z = (g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinZ] < g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxZ] ? g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinZ] : g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxZ]),
+        Float:max_z = (g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinZ] < g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxZ] ? g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxZ] : g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinZ]);
 
     for(new i = grass_count; i != -1; --i)
     {
@@ -117,7 +117,7 @@ public OnScriptInit()
 {
     for(new i; i < sizeof(g_rgeLawnmowerAreas); ++i)
     {
-        g_rgeLawnmowerAreas[i][e_iAreaId] = CreateDynamicRectangle(g_rgeLawnmowerAreas[i][e_fAreaMinX], g_rgeLawnmowerAreas[i][e_fAreaMinY], g_rgeLawnmowerAreas[i][e_fAreaMaxX], g_rgeLawnmowerAreas[i][e_fAreaMaxY], .worldid = 0, .interiorid = 0);
+        g_rgeLawnmowerAreas[i][e_iAreaId] = CreateDynamicRectangle(g_rgeLawnmowerAreas[i][e_fParkAreaMinX], g_rgeLawnmowerAreas[i][e_fParkAreaMinY], g_rgeLawnmowerAreas[i][e_fParkAreaMaxX], g_rgeLawnmowerAreas[i][e_fParkAreaMaxY], .worldid = 0, .interiorid = 0);
         Streamer_SetIntData(STREAMER_TYPE_AREA, g_rgeLawnmowerAreas[i][e_iAreaId], E_STREAMER_CUSTOM(0x4c4d4a53), 1); // LMJS (LawnMower Job Site)
         Job_CreateSite(JOB_LAWNMOWER, g_rgeLawnmowerAreas[i][e_fPedContractorX], g_rgeLawnmowerAreas[i][e_fPedContractorY], g_rgeLawnmowerAreas[i][e_fPedContractorZ], 0, 0, .cb_data = i);
  
