@@ -163,3 +163,14 @@ command id(playerid, const params[], "Ver los datos de un jugador")
     return 1;
 }
 alias:id("jugador")
+
+command mypos(playerid, const params[], "")
+{
+    SendClientMessagef(
+        playerid, 0xED2B2BFF,
+        "›{DADADA} Virtual World = %d, Interior = %d",
+        GetPlayerVirtualWorld(playerid),
+        GetPlayerInterior(playerid)
+    );
+    return 1;
+}
