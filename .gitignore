@@ -16,6 +16,7 @@ crashinfo.txt
 **/out
 *.cadb
 *.so
+*.html
 
 bans.json
 log.txt

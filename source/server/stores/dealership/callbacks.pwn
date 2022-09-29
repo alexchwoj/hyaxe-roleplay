@@ -110,11 +110,11 @@ dialog buy_vehicle(playerid, dialogid, response, listitem, const inputtext[])
     if (response)
     {
         new
-            modelid = g_rgeVehiclesForSale[ g_rgePlayerTempData[playerid][e_iPlayerBuyVehicleIndex]  ][e_iVehicleModelID],
+            modelid = g_rgeVehiclesForSale[ g_rgePlayerTempData[playerid][e_iPlayerBuyVehicleIndex]  ][e_iVehicleModelID] - 400,
             dealership = g_rgeVehiclesForSale[ g_rgePlayerTempData[playerid][e_iPlayerBuyVehicleIndex]  ][e_iDealership]
         ;
 
-        if (Player_Money(playerid) < g_rgeVehicleModelData[modelid - 400][e_iPrice])
+        if (Player_Money(playerid) < g_rgeVehicleModelData[modelid][e_iPrice])
         {
             PlayerPlaySound(playerid, SOUND_ERROR);
             Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
@@ -124,13 +124,13 @@ dialog buy_vehicle(playerid, dialogid, response, listitem, const inputtext[])
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
             Compraste un(a) %s $%s\
         ",
-            g_rgeVehicleModelData[modelid - 400][e_szModelName],
-            Format_Thousand(g_rgeVehicleModelData[modelid - 400][e_iPrice])
+            g_rgeVehicleModelData[modelid][e_szModelName],
+            Format_Thousand(g_rgeVehicleModelData[modelid][e_iPrice])
         );
         Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 5000, 0x64A752FF);
 
         new vehicleid = Vehicle_Create(
-            modelid,
+            modelid + 400,
             g_rgfDealershipPosition[dealership][0],
             g_rgfDealershipPosition[dealership][1],
             g_rgfDealershipPosition[dealership][2],
@@ -142,7 +142,7 @@ dialog buy_vehicle(playerid, dialogid, response, listitem, const inputtext[])
 
         Player_AddXP(playerid, 500);
         PlayerPlaySound(playerid, 31205);
-        Player_GiveMoney(playerid, -g_rgeVehicleModelData[modelid - 400][e_iPrice]);
+        Player_GiveMoney(playerid, -g_rgeVehicleModelData[modelid][e_iPrice]);
     }
     return 1;
 }
