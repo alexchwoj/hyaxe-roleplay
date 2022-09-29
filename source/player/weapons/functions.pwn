@@ -174,7 +174,7 @@ Player_RemoveLocalWeapons(playerid)
 
 Player_LoadWeaponsFromCache(playerid)
 {
-    new szSlot[9];
+    new szSlot[10];
 
     for(new i = 1; i < MAX_WEAPON_SLOTS; ++i)
     {
