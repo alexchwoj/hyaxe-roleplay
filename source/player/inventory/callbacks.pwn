@@ -149,8 +149,12 @@ public OnPlayerAuthenticate(playerid)
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    g_rgePlayerInventory[playerid] = g_rgePlayerInventory[MAX_PLAYERS];
-
+    //g_rgePlayerInventory[playerid] = g_rgePlayerInventory[MAX_PLAYERS];
+    
+    for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+    {
+        Inventory_ResetSlot(playerid, i);
+    }
     #if defined INV_OnPlayerDisconnect
         return INV_OnPlayerDisconnect(playerid, reason);
     #else
