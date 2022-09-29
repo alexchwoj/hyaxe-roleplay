@@ -580,6 +580,7 @@ command report(playerid, const params[], "Informar al personal sobre un usuario"
 	for(new i, j = SplitChatMessageInLines(HYAXE_UNSAFE_HUGE_STRING, messages); i < j; ++i)
         Admins_SendMessage(RANK_LEVEL_HELPER, 0xDADADAFF, messages[i]);
 	
+    Notification_Show(playerid, "Reporte enviado.", 3000, 0x64A752FF);
 	return 1;
 }
 alias:report("reportar", "re")
