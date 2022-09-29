@@ -17,6 +17,10 @@ Phone_Show(playerid, const menu_id[])
         TextDrawShowForPlayer(playerid, g_tdPhone[i]);
     }
 
+	new hour, minute;
+	gettime(hour, minute);
+	TextDrawSetStringForPlayer(g_tdPhone[21], playerid, "%02i:%02i", hour, minute);
+
 	format(g_rgePlayerMenu[playerid][e_szID], 32, menu_id);
     TogglePlayerControllable(playerid, false);
     Bit_Set(Player_Flags(playerid), PFLAG_USING_PHONE, true);

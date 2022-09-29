@@ -25,6 +25,11 @@ static Convenience_OnBuy(playerid, shop_id, item_id)
             Inventory_AddFixedItem(playerid, ITEM_COFFEE, 1, 0);
             Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un vaso de café");
         }
+        case 2: // Phone
+        {
+            Inventory_AddFixedItem(playerid, ITEM_PHONE, 1, 100000 + random(100000));
+            Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un celular");
+        }
     }
 
     return 1;
@@ -105,6 +110,7 @@ public OnScriptInit()
     );
     Shop_AddItem(shopid, "Kit de reparación", 19921, 2000, 0.0, 0.0, 0.0);
     Shop_AddItem(shopid, "Vaso de cafe", 19835, 10, 0.0, 0.0, 0.0);
+    Shop_AddItem(shopid, "Celular", 18866, 1500, 0.0, 0.0, 0.0);
 
     #if defined SHOP_CONV_OnScriptInit
         return SHOP_CONV_OnScriptInit();
