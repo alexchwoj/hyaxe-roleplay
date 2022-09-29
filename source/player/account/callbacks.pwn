@@ -161,9 +161,7 @@ public ACCOUNT_CheckForBans(playerid)
         mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
     }
 
-    SetPlayerName(playerid, Player_RPName(playerid));
-
-    SendRPC(playerid, 11,
+    SendRPC(-1, 11,
         BS_UNSIGNEDSHORT, playerid,
         BS_UNSIGNEDCHAR, strlen(Player_RPName(playerid)),
         BS_STRING, Player_RPName(playerid),
