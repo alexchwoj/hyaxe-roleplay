@@ -8,15 +8,22 @@ const NOTIFICATION_TEXT_BEAT_DIFF = 4;
 
 enum eNotificationData 
 {
+    /*
     bool:notificationActive,
     notificationFrameCount,
     notificationFrameTimer,
     PlayerText:notificationTextdraw[3],
     Float:notificationHeight
+    */
+    bool:e_bActive,
+    e_iFrameCount,
+    e_iFrameTimer,
+    PlayerText:e_tdTextdraw[3],
+    Float:e_fHeight
 };
 
 new 
-    NOTIFICATION_DATA[MAX_PLAYERS][MAX_NOTIFICATIONS][eNotificationData],
+    g_rgeNotificationData[MAX_PLAYERS][MAX_NOTIFICATIONS][eNotificationData],
     g_rgiTextProcessTimer[MAX_PLAYERS],
     g_rgiTextProcessTick[MAX_PLAYERS];
 

@@ -10,13 +10,13 @@ public OnPlayerDisconnect(playerid, reason)
 {
     for(new i = 0; i < MAX_NOTIFICATIONS; i++)
     {
-        if(NOTIFICATION_DATA[playerid][i][notificationActive])
+        if (g_rgeNotificationData[playerid][i][e_bActive])
         {
             DestroyPlayerNotification(playerid, i);
         }
     }
 
-    if(g_rgiTextProcessTimer[playerid])
+    if (g_rgiTextProcessTimer[playerid])
         Timer_Kill(g_rgiTextProcessTimer[playerid]);
         
     s_rgbBeatingTextShouldHide{playerid} = false;
@@ -41,31 +41,31 @@ public OnPlayerDisconnect(playerid, reason)
 forward DestroyPlayerNotification(playerid, index);
 public DestroyPlayerNotification(playerid, index)
 {
-    NOTIFICATION_DATA[playerid][index][notificationActive] = false;
-    PlayerTextDrawDestroy(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][0]);
-    PlayerTextDrawDestroy(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][1]);
-    PlayerTextDrawDestroy(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][2]);
-    KillTimer(NOTIFICATION_DATA[playerid][index][notificationFrameTimer]);
+    g_rgeNotificationData[playerid][index][e_bActive] = false;
+    PlayerTextDrawDestroy(playerid, g_rgeNotificationData[playerid][index][e_tdTextdraw][0]);
+    PlayerTextDrawDestroy(playerid, g_rgeNotificationData[playerid][index][e_tdTextdraw][1]);
+    PlayerTextDrawDestroy(playerid, g_rgeNotificationData[playerid][index][e_tdTextdraw][2]);
+    KillTimer(g_rgeNotificationData[playerid][index][e_iFrameTimer]);
     return 1;
 }
 
 forward NotificationMoveToLeft(playerid, index, Float:pos_y, Float:max, count);
 public NotificationMoveToLeft(playerid, index, Float:pos_y, Float:max, count)
 {
-	NOTIFICATION_DATA[playerid][index][notificationFrameCount] -= count;
+	g_rgeNotificationData[playerid][index][e_iFrameCount] -= count;
 
-    new Float:pct = floatdiv(NOTIFICATION_DATA[playerid][index][notificationFrameCount], max);
+    new Float:pct = floatdiv(g_rgeNotificationData[playerid][index][e_iFrameCount], max);
     new Float:pos_x = lerp(0.0, -100.0, easeInOutCubic(pct));
 
-    PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][0], 55.000000 - pos_x, pos_y);
-    PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][1], 100.000000 - pos_x, pos_y);
-    PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][2], 22.000000 - pos_x, pos_y + 1.0);
+    PlayerTextDrawSetPos(playerid, g_rgeNotificationData[playerid][index][e_tdTextdraw][0], 55.000000 - pos_x, pos_y);
+    PlayerTextDrawSetPos(playerid, g_rgeNotificationData[playerid][index][e_tdTextdraw][1], 100.000000 - pos_x, pos_y);
+    PlayerTextDrawSetPos(playerid, g_rgeNotificationData[playerid][index][e_tdTextdraw][2], 22.000000 - pos_x, pos_y + 1.0);
 
     NotificationShowAll(playerid, index);
     
 	if (pct <= -1.0)
 	{
-		NOTIFICATION_DATA[playerid][index][notificationFrameCount] = 0;
+		g_rgeNotificationData[playerid][index][e_iFrameCount] = 0;
 		DestroyPlayerNotification(playerid, index);
 	}
 
@@ -75,30 +75,30 @@ public NotificationMoveToLeft(playerid, index, Float:pos_y, Float:max, count)
 forward NotificationWaitToLeft(playerid, index, Float:pos_y, Float:max, count);
 public NotificationWaitToLeft(playerid, index, Float:pos_y, Float:max, count)
 {
-    KillTimer(NOTIFICATION_DATA[playerid][index][notificationFrameTimer]);
-    NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationMoveToLeft", 15, true, "ddffd", playerid, index, pos_y, 300.0, count);
+    KillTimer(g_rgeNotificationData[playerid][index][e_iFrameTimer]);
+    g_rgeNotificationData[playerid][index][e_iFrameTimer] = SetTimerEx("NotificationMoveToLeft", 15, true, "ddffd", playerid, index, pos_y, 300.0, count);
 	return 1;
 }
 
 forward NotificationMoveToRight(playerid, index, time, Float:pos_y, Float:max, count);
 public NotificationMoveToRight(playerid, index, time, Float:pos_y, Float:max, count)
 {
-	NOTIFICATION_DATA[playerid][index][notificationFrameCount] += count;
+	g_rgeNotificationData[playerid][index][e_iFrameCount] += count;
 
-    new Float:pct = floatdiv(NOTIFICATION_DATA[playerid][index][notificationFrameCount], max);
+    new Float:pct = floatdiv(g_rgeNotificationData[playerid][index][e_iFrameCount], max);
     new Float:pos_x = lerp(0.0, 100.0, easeOutBack(pct));
 
-    PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][0], -45.000000 + pos_x, pos_y);
-    PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][1], 0.000000 + pos_x, pos_y);
-    PlayerTextDrawSetPos(playerid, NOTIFICATION_DATA[playerid][index][notificationTextdraw][2], -78.000000 + pos_x, pos_y + 1.0);
+    PlayerTextDrawSetPos(playerid, g_rgeNotificationData[playerid][index][e_tdTextdraw][0], -45.000000 + pos_x, pos_y);
+    PlayerTextDrawSetPos(playerid, g_rgeNotificationData[playerid][index][e_tdTextdraw][1], 0.000000 + pos_x, pos_y);
+    PlayerTextDrawSetPos(playerid, g_rgeNotificationData[playerid][index][e_tdTextdraw][2], -78.000000 + pos_x, pos_y + 1.0);
 
     NotificationShowAll(playerid, index);
     
 	if (pct >= 1.0)
 	{
-		NOTIFICATION_DATA[playerid][index][notificationFrameCount] = 0;
-		KillTimer(NOTIFICATION_DATA[playerid][index][notificationFrameTimer]);
-        NOTIFICATION_DATA[playerid][index][notificationFrameTimer] = SetTimerEx("NotificationWaitToLeft", time, false, "ddffd", playerid, index, pos_y, 300.0, count);
+		g_rgeNotificationData[playerid][index][e_iFrameCount] = 0;
+		KillTimer(g_rgeNotificationData[playerid][index][e_iFrameTimer]);
+        g_rgeNotificationData[playerid][index][e_iFrameTimer] = SetTimerEx("NotificationWaitToLeft", time, false, "ddffd", playerid, index, pos_y, 300.0, count);
 	}
 
 	return 1;
