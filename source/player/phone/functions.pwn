@@ -97,6 +97,13 @@ Phone_Hide(playerid)
     {
         TextDrawHideForPlayer(playerid, g_tdPhone[i]);
     }
+
+	if (Bit_Get(Player_Config(playerid), CONFIG_DISPLAY_SPEEDOMETER))
+        Speedometer_Show(playerid);
+
+    if (Bit_Get(Player_Config(playerid), CONFIG_DISPLAY_NEED_BARS))
+        Needs_ShowBars(playerid);
+
     return 1;
 }
 
