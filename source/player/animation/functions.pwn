@@ -3,6 +3,12 @@
 #endif
 #define _animation_functions_
 
+command parar(playerid, const params[], "Para la animación")
+{
+    ClearAnimations(playerid);
+    return 1;
+}
+
 command mear(playerid, const params[], "Echa un meo")
 {
     if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
@@ -21,7 +27,7 @@ command paja(playerid, const params[], "Hazte una paja")
 
 command dormir(playerid, const params[], "Duerme")
 {
-    ApplyAnimation(playerid, "INT_HOUSE", "BED_IN_L", 4.1, 1, 1, 1, 0, 0);
+    ApplyAnimation(playerid, "INT_HOUSE", "BED_IN_L", 4.1, 0, 1, 1, 0, 0);
     return 1;
 }
 
