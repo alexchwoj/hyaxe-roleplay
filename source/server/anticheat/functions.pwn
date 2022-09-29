@@ -5,6 +5,9 @@
 
 Anticheat_Trigger(playerid, eCheats:cheat, extra = 0)
 {
+    if(g_rgbPlayerKicked{playerid})
+        return 1;
+        
     if(g_rgeDetectionData[cheat][e_ePunishmentType] > PUNISHMENT_BAN)
     {
         if(g_rgeDetectionData[cheat][e_iMaxTriggers] > ++g_rgiAnticheatTriggers[playerid]{cheat})

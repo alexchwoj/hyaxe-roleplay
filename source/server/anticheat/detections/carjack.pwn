@@ -20,7 +20,7 @@ IPacket:__ac_cj_VehicleSync(playerid, BitStream:bs)
     new last_driver = GetVehicleLastDriver(vehicleid);
     if(last_driver != playerid && GetPlayerState(last_driver) == PLAYER_STATE_DRIVER)
     {
-        Anticheat_Trigger(playerid, CHEAT_CARJACK);
+        Anticheat_Trigger(playerid, CHEAT_CARJACK, 1);
         return 0;
     }
 
