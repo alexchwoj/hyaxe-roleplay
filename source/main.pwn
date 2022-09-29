@@ -135,6 +135,7 @@ const HYAXE_MAX_NPCS = 100;
 #include <YSI_Coding/y_va>
 #include <YSI_Data/y_bit>
 #include <YSI_Data/y_iterate>
+#include <YSI_Data/y_percent>
 #include <YSI_Extra/y_inline_mysql>
 #include <YSI_Extra/y_inline_timers>
 #include <YSI_Storage/y_amx>
