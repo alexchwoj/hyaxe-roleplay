@@ -35,7 +35,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     }
     else if ((newkeys & KEY_WALK) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
-        if(IsPlayerInAnyDynamicArea(playerid))
+        if (IsPlayerInAnyDynamicArea(playerid))
         {
             GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
             for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
@@ -66,6 +66,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
                     }
                     else return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes el inventario lleno.");
+
+                    return 1;
                 }
             }
         }
@@ -155,7 +157,7 @@ public OnPlayerDisconnect(playerid, reason)
     {
         Inventory_ResetSlot(playerid, i);
     }
-    
+
     #if defined INV_OnPlayerDisconnect
         return INV_OnPlayerDisconnect(playerid, reason);
     #else
