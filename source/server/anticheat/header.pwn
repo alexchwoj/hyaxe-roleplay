@@ -15,7 +15,8 @@ enum eCheats
     CHEAT_TELEPORT,
     CHEAT_INVISIBLE,
     CHEAT_INVALID_SYNC,
-    CHEAT_AIRBREAK
+    CHEAT_AIRBREAK,
+    CHEAT_RAPIDFIRE
 };
 
 enum ePunishment
