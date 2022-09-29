@@ -564,3 +564,22 @@ command set_skin(playerid, const params[], "Asigna la ropa de un jugador")
     return 1;
 }
 flags:set_skin(CMD_FLAG<RANK_LEVEL_MANAGER>)
+
+command report(playerid, const params[], "Informar al personal sobre un usuario")
+{
+	extract params -> new player:destination = 0xFFFF, string:message[144]; else {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/reportar {DADADA}[jugador] [descripción]");
+        return 1;
+    }
+
+	if (destination == INVALID_PLAYER_ID)
+        destination = playerid;
+
+	new messages[2][144];
+	format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{AE2012}[Reporte] › {DADADA}%s (%d) reporta a %s (%d): %s", Player_RPName(playerid), playerid, Player_RPName(destination), destination, message);
+	for(new i, j = SplitChatMessageInLines(HYAXE_UNSAFE_HUGE_STRING, messages); i < j; ++i)
+        Admins_SendMessage(RANK_LEVEL_HELPER, 0xDADADAFF, messages[i]);
+	
+	return 1;
+}
+alias:report("reportar", "re")
