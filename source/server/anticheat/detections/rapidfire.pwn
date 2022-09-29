@@ -9,7 +9,7 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 {
     if (!Player_HasImmunityForCheat(playerid, CHEAT_RAPIDFIRE))
     {
-        new diff = GetTickDiff(GetTickCount(), g_rgiLastShotTick[playerid][weaponid]);
+        new diff = GetTickCount() - g_rgiLastShotTick[playerid][weaponid];
         if (diff < g_rgiWeaponsShootRate[weaponid])
         {
             printf("[rapidfire:dbg] playerid = %d, weaponid = %d, diff = %d, shot_rate = %d", playerid, weaponid, diff, g_rgiWeaponsShootRate[weaponid]);
