@@ -57,3 +57,4 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 
 #include "core/utils/sounds.pwn"
 #include "core/utils/zones.pwn"
+#include "core/utils/calendar.pwn"

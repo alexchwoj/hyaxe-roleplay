@@ -17,9 +17,11 @@ Phone_Show(playerid, const menu_id[])
         TextDrawShowForPlayer(playerid, g_tdPhone[i]);
     }
 
-	new hour, minute;
+	new hour, minute, year, month, day, weekday_name[3];
 	gettime(hour, minute);
-	TextDrawSetStringForPlayer(g_tdPhone[21], playerid, "%02i:%02i", hour, minute);
+	getdate(year, month, day);
+	Calendar_GetWeekdayShortName(Calendar_GetWeekDay(year, month, day), weekday_name);
+	TextDrawSetStringForPlayer(g_tdPhone[21], playerid, "%s %02i:%02i", weekday_name, hour, minute);
 
 	format(g_rgePlayerMenu[playerid][e_szID], 32, menu_id);
     TogglePlayerControllable(playerid, false);
@@ -100,9 +102,14 @@ Phone_Hide(playerid)
 
 PhoneMenu_Main(playerid)
 {
+	printf("menu main 1");
 	Phone_Show(playerid, "main");
+	printf("menu main 2");
 	Phone_AddItem(playerid, "Mapa");
+	printf("menu main 3");
 	Phone_AddItem(playerid, "Cámara");
+	printf("menu main 4");
 	Phone_AddItem(playerid, "Mis vehículos");
+	printf("menu main 5");
 	return 1;
 }
