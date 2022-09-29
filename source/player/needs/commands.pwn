@@ -46,7 +46,7 @@ public SHIT_StepOne(playerid)
         int = GetPlayerInterior(playerid);
 
     if(int != 0)
-        z -= 0.5;
+        z -= 1.0;
     else
         CA_FindZ_For2DCoord(x, y, z);
 
