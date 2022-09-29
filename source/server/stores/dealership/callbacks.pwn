@@ -72,6 +72,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 {
                     PlayerPlaySound(playerid, SOUND_ERROR);
                     Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, va_return("Solo puedes tener hasta %d vehículos.", vehicles_per_privilege_level[Player_VIP(playerid)]));
+                    return 1;
                 }
 
                 g_rgePlayerTempData[playerid][e_iPlayerBuyVehicleIndex] = g_rgeVehicles[vehicleid][e_iSellIndex];

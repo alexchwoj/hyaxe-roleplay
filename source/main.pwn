@@ -131,6 +131,7 @@ const HYAXE_MAX_NPCS = 100;
 #include <YSI_Core/y_cell>
 #include <YSI_Coding/y_hooks>
 #include <YSI_Coding/y_inline>
+#include <YSI_Coding/y_stringhash>
 #include <YSI_Coding/y_va>
 #include <YSI_Data/y_bit>
 #include <YSI_Data/y_iterate>
