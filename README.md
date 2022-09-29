@@ -4,7 +4,7 @@
 - [x] VIP System
 - [x] VIP Benefits
 - [x] Vehicle dashboard
-- [ ] Phone
-- [ ] Food stores
+- [x] Phone
+- [x] Food stores
 - [ ] Police
-- [ ] Locate personal vehicles
+- [x] Locate personal vehicles
