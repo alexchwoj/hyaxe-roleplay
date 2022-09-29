@@ -7,7 +7,7 @@ static Actor_FindRobbableFreeIndex()
 {
     for(new i; i < MAX_ROBBABLE_ACTORS; ++i)
     {
-        if(!g_rgeRobbableActors[i][e_bValid])
+        if(!g_rgeRobbableActors[i][e_iActorId])
             return i;
     }
 
@@ -26,7 +26,6 @@ Actor_CreateRobbable(model, min_money, max_money, Float:x, Float:y, Float:z, Flo
     new id = CreateDynamicActor(model, x, y, z, angle, .worldid = worldid, .interiorid = interiorid);
     Streamer_SetIntData(STREAMER_TYPE_ACTOR, id, E_STREAMER_CUSTOM(0x524F42), idx);
 
-    g_rgeRobbableActors[idx][e_bValid] = true;
     g_rgeRobbableActors[idx][e_iActorId] = id;
     g_rgeRobbableActors[idx][e_iMinMoneyReward] = min_money;
     g_rgeRobbableActors[idx][e_iMaxMoneyReward] = max_money;
@@ -43,7 +42,7 @@ Actor_Rob(playerid, actorid)
         
     new id = Streamer_GetIntData(STREAMER_TYPE_ACTOR, actorid, E_STREAMER_CUSTOM(0x524F42));
 
-    if(!(0 <= id < sizeof(g_rgeRobbableActors)) || !g_rgeRobbableActors[id][e_bValid] || g_rgeRobbableActors[id][e_iRobbingPlayer] != INVALID_PLAYER_ID)
+    if(!(0 <= id < sizeof(g_rgeRobbableActors)) || !g_rgeRobbableActors[id][e_iActorId] || g_rgeRobbableActors[id][e_iRobbingPlayer] != INVALID_PLAYER_ID)
         return 0;
 
     Bit_Set(Player_Flags(playerid), PFLAG_ROBBING_STORE, true);

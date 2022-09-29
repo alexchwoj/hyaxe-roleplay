@@ -3,11 +3,10 @@
 #endif
 #define _actors_header_
 
-const MAX_ROBBABLE_ACTORS = 20;
+const MAX_ROBBABLE_ACTORS = 128;
 
 enum eRobbableActor
 {
-    bool:e_bValid,
     e_iActorId,
     e_iLastStealTick,
     e_iMinMoneyReward,
