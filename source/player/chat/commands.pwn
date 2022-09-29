@@ -112,7 +112,7 @@ command duda(playerid, const params[], "Envia un mensaje al canal de dudas")
     Chat_SendDoubt(playerid, params);
     return 1;
 }
-alias:duda("n")
+alias:duda("n", "d")
 
 command id(playerid, const params[], "Ver los datos de un jugador")
 {

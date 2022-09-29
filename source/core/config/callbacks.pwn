@@ -45,7 +45,7 @@ public OnScriptInit()
 	SetServerRuleFlags(!"mapname", CON_VARFLAG_READONLY);
 
 	AddServerRule(!"versión de sa-mp", !"0.3.7");
-	AddServerRule(!"discord", !"hyaxe.com/discord");
+	AddServerRule(!"discord", !"discord.hyaxe.com");
 
 	new d, m, y;
 	getdate(y, m, d);
