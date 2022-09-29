@@ -102,14 +102,9 @@ Phone_Hide(playerid)
 
 PhoneMenu_Main(playerid)
 {
-	printf("menu main 1");
 	Phone_Show(playerid, "main");
-	printf("menu main 2");
 	Phone_AddItem(playerid, "Mapa");
-	printf("menu main 3");
 	Phone_AddItem(playerid, "Cámara");
-	printf("menu main 4");
 	Phone_AddItem(playerid, "Mis vehículos");
-	printf("menu main 5");
 	return 1;
 }

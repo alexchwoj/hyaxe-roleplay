@@ -108,7 +108,56 @@ phone_menu main(playerid, response, listitem)
 	{
 		case 0: Player_ShowGPS(playerid);
 		case 1: printf("camara");
-		case 2: printf("mis vehiculos");
+		case 2:
+		{
+			if (!Iter_Count(PlayerVehicles[playerid]))
+			{
+				Player_ShowGPS(playerid);
+				Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes vehículos");
+				return 0;
+			}
+
+			Phone_Show(playerid, "my_vehicles");
+
+			foreach(new vehicleid : PlayerVehicles[playerid])
+			{
+				if (!g_rgeVehicles[vehicleid][e_bValid])
+					continue;
+
+				GetVehiclePos(vehicleid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
+				new Float:distance = GetPlayerDistanceFromPoint(playerid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
+
+				new line[32];
+				format(line, sizeof(line), "%s (%.0fKm)", g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_szModelName], distance * 0.01);
+				Phone_AddItem(playerid, line, .extra = vehicleid);
+			}
+		}
 	}
+	return 1;
+}
+
+phone_menu my_vehicles(playerid, response, listitem)
+{
+	if (!response)
+		return Player_ShowGPS(playerid);
+		
+	if (!Iter_Count(PlayerVehicles[playerid]))
+	{
+		Player_ShowGPS(playerid);
+		Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes vehículos");
+		return 0;
+	}
+
+	new vehicleid = Listitem_Extra(listitem);
+	GetVehiclePos(vehicleid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
+	Player_SetGPSCheckpoint(playerid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
+	
+	new Float:distance = GetPlayerDistanceFromPoint(playerid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
+
+	new city[45], zone[45];
+	GetPointZone(g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], city, zone);
+
+	format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Tu %s se encuentra en %s, %s. A %.2f kilómetros de distancia.", g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_szModelName], zone, city, distance * 0.01);
+	Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 5000, 0xDAA838FF);
 	return 1;
 }

@@ -60,3 +60,5 @@ new
 	g_rgiMenuTextDrawsID[MAX_PLAYERS + 1][eMenuTextdraw],
 	PlayerText:g_rgiMenuTextDraws[MAX_PLAYERS + 1][50]
 ;
+
+#define Listitem_Extra(%0) (g_rgeMenuListitem[playerid][%0][e_iExtra])

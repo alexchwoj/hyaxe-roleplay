@@ -18,5 +18,6 @@ Player_SetGPSCheckpoint(playerid, Float:x, Float:y, Float:z, world = 0, interior
 	    DestroyDynamicCP(g_rgiGPSCheckpoint[playerid]);
 
 	g_rgiGPSCheckpoint[playerid] = CreateDynamicCP(x, y, z, 5.0, world, interior, playerid, 9999999999.0);
+    Phone_Hide(playerid);
     return 1;
 }
