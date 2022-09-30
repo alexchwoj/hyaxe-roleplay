@@ -47,3 +47,31 @@ public OnPlayerDisconnect(playerid, reason)
 #if defined WP_OnPlayerDisconnect
     forward WP_OnPlayerDisconnect(playerid, reason);
 #endif
+
+public OnPlayerConnect(playerid)
+{
+    printf("WAAAAAAAA 111");
+    for(new i = MAX_WEAPON_SLOTS - 1; i != -1; --i)
+    {
+        printf("WAAAAAAAA 222 > %d", i);
+        g_rgePlayerWeapons[playerid][i][e_iWeaponId] = 0;
+        g_rgePlayerWeapons[playerid][i][e_iWeaponAmmo] = 0;
+        g_rgePlayerWeapons[playerid][i][e_bWeaponDisabled] = false;
+    }
+
+    #if defined WP_OnPlayerConnect
+        return WP_OnPlayerConnect(playerid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerConnect
+    #undef OnPlayerConnect
+#else
+    #define _ALS_OnPlayerConnect
+#endif
+#define OnPlayerConnect WP_OnPlayerConnect
+#if defined WP_OnPlayerConnect
+    forward WP_OnPlayerConnect(playerid);
+#endif
