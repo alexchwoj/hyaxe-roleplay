@@ -46,6 +46,9 @@ dialog fuel_station(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {
+        if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+            return 0;
+            
         new vehicle_id = GetPlayerVehicleID(playerid);
         if (vehicle_id == INVALID_VEHICLE_ID)
             return 0;
