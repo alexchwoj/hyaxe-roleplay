@@ -51,6 +51,7 @@ static LawnMower_ClearJob(playerid)
 
     StopAudioStreamForPlayer(playerid);
 
+    Player_SetImmunityForCheat(playerid, CHEAT_CARJACK, 3000);
     Vehicle_Destroy(g_rgeLawnmowerAreas[parkid][e_iMowerId]);
 
     for(new i; i < MAX_GRASS_PER_AREA; ++i)
@@ -86,6 +87,7 @@ static LawnMowerEvent(playerid, eJobEvent:event, areaid)
             new mowerid = Vehicle_Create(572, g_rgeLawnmowerAreas[areaid][e_fVehicleSpawnX], g_rgeLawnmowerAreas[areaid][e_fVehicleSpawnY], g_rgeLawnmowerAreas[areaid][e_fVehicleSpawnZ], g_rgeLawnmowerAreas[areaid][e_fVehicleSpawnRot], -1, -1, -1);
             Vehicle_Type(mowerid) = VEHICLE_TYPE_WORK;
             Vehicle_ToggleEngine(mowerid, VEHICLE_STATE_ON);
+            Player_SetImmunityForCheat(playerid, CHEAT_CARJACK, 3000);
             Player_PutInVehicle(playerid, mowerid);
             g_rgeLawnmowerAreas[areaid][e_iMowerId] = mowerid;
 
