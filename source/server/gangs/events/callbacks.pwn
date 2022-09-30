@@ -255,7 +255,7 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerAuthenticate(playerid)
 {
-    if (Player_Gang(i) != -1 && g_iGangEventType != EVENT_INVALID)
+    if (Player_Gang(playerid) != -1 && g_iGangEventType != EVENT_INVALID)
         TextDrawShowForPlayer(playerid, g_tdGangEventText);
 
     #if defined GVENT_OnPlayerAuthenticate
