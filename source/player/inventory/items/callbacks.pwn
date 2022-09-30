@@ -224,6 +224,12 @@ static MediKit_OnUse(playerid, slot)
         return 1;
     }
 
+    if(!Bit_Get(Player_Flags(target), PFLAG_INJURED))
+    {
+        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, va_return("%s no está herid%c", (Player_Sex(target) == SEX_MALE ? "Este jugador" : "Esta jugadora"), (Player_Sex(target) == SEX_MALE ? 'o' : 'a')));
+        return 1;
+    }
+
     Inventory_Hide(playerid);
     InventorySlot_Subtract(playerid, slot);
 
