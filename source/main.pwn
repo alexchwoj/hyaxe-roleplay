@@ -93,7 +93,7 @@ JYYYYYYJJJJJJJJ7!?JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ??????????!!777777777777777777
 
 #define SERVER_VERSION "v1.0.0-alpha"
 
-#define NDEBUG 1
+#define NDEBUG 0
 
 #if NDEBUG
 	#pragma option -d0
@@ -395,3 +395,10 @@ command sinfo(playerid, const params[], "Información del servidor")
 	SendClientMessage(playerid, 0xED2B2BFF,  "===========================");
 
 }
+
+command gmx(playerid, const params[], "Reinicia")
+{
+	SendRconCommand("gmx");
+	return 1;
+}
+flags:gmx(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)

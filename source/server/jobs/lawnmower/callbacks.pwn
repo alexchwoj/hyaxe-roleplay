@@ -206,6 +206,8 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
         {
             SendClientMessagef(playerid, 0xDADADAFF, "Te quedan {ED2B2B}%i{DADADA} matorrales.", g_rgeLawnmowerAreas[park_id][e_iCurrentGrassCount]);
         }
+
+        return 1;
     }
 
     #if defined JOB_LM_OnPlayerEnterDynamicArea

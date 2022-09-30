@@ -59,10 +59,11 @@ Weapon_GetSlot(weaponid)
 
 Player_GiveWeapon(playerid, weaponid, ammo)
 {
+    printf("[func] Player_GiveWeapon(playerid = %d, weaponid = %d, ammo = %d)", playerid, weaponid, ammo);
+
     Player_SetImmunityForCheat(playerid, CHEAT_WEAPON, 1500 + GetPlayerPing(playerid));
 
     new slot = GetWeaponSlot(weaponid);
-    printf("playerid = %d, weaponid = %d, ammo = %d, slot = %d", playerid, weaponid, ammo, slot);
     Player_WeaponSlot(playerid, slot)[e_iWeaponId] = weaponid;
     Player_WeaponSlot(playerid, slot)[e_iWeaponAmmo] = ammo;
     GivePlayerWeapon(playerid, weaponid, ammo);
