@@ -5,7 +5,7 @@
 
 command parar(playerid, const params[], "Para la animación")
 {
-    ClearAnimations(playerid);
+    ClearAnimations(playerid, 1);
     return 1;
 }
 

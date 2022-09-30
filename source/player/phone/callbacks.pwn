@@ -27,11 +27,11 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	{
 		if (newkeys == KEY_SECONDARY_ATTACK)
 		{
-			ClearAnimations(playerid);
+			ClearAnimations(playerid, 1);
 			Bit_Set(Player_Flags(playerid), PFLAG_USING_CAMERA, false);
             Phone_Hide(playerid);
 			SetCameraBehindPlayer(playerid);
-			ApplyAnimation(playerid, "COP_AMBIENT", "Coplook_loop", 4.0, 1, 1, 1, 0, 1000);
+			ApplyAnimation(playerid, "COP_AMBIENT", "Coplook_loop", 4.0, 1, 1, 1, 0, 1000, 1);
 		}
 	}
 

@@ -303,8 +303,16 @@ public OnPlayerSpawn(playerid)
     gettime(hour, minute);
     SetPlayerTime(playerid, hour, minute);
 
-    ApplyAnimation(playerid, "CAR", "null", 4.1, 0, 0, 0, 0, 0, 0);
-    ApplyAnimation(playerid, "PED", "null", 4.1, 0, 0, 0, 0, 0, 0);
+    inline const Due()
+    {
+        ApplyAnimation(playerid, "CAR", "null", 4.1, 0, 0, 0, 0, 0, 0);
+        ApplyAnimation(playerid, "PED", "null", 4.1, 0, 0, 0, 0, 0, 0);
+        ApplyAnimation(playerid, "INT_OFFICE", "null", 4.1, 0, 0, 0, 0, 0, 0);
+        ApplyAnimation(playerid, "INT_HOUSE", "null", 4.1, 0, 0, 0, 0, 0, 0);
+        ApplyAnimation(playerid, "PAULNMAC", "null", 4.1, 0, 0, 0, 0, 0, 0);
+        ApplyAnimation(playerid, "COP_AMBIENT", "null", 4.1, 0, 0, 0, 0, 0, 0);
+    }
+    Timer_CreateCallback(using inline Due, 3000, 1);
 
     #if defined ACC_OnPlayerSpawn
         return ACC_OnPlayerSpawn(playerid);
