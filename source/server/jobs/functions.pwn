@@ -52,5 +52,5 @@ Job_TriggerCallback(playerid, eJobs:jobid, eJobEvent:event, data = -1)
 Job_ApplyPaycheckBenefits(playerid, amount)
 {
     static const added_percentage_per_level[] = { 0, 5, 20, 80 };
-    return amount * Percent:added_percentage_per_level[Player_VIP(playerid)];
+    return amount + (amount * Percent:added_percentage_per_level[Player_VIP(playerid)]);
 }
