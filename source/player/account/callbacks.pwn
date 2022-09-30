@@ -311,6 +311,9 @@ public OnPlayerSpawn(playerid)
         ApplyAnimation(playerid, "INT_HOUSE", "null", 4.1, 0, 0, 0, 0, 0, 0);
         ApplyAnimation(playerid, "PAULNMAC", "null", 4.1, 0, 0, 0, 0, 0, 0);
         ApplyAnimation(playerid, "COP_AMBIENT", "null", 4.1, 0, 0, 0, 0, 0, 0);
+        ApplyAnimation(playerid, "KNIFE", "null", 4.1, 0, 0, 0, 0, 0, 0);
+        ApplyAnimation(playerid, "SWEET", "null", 4.1, 0, 0, 0, 0, 0, 0);
+        ApplyAnimation(playerid, "WUZI", "null", 4.1, 0, 0, 0, 0, 0, 0);
     }
     Timer_CreateCallback(using inline Due, 3000, 1);
 
