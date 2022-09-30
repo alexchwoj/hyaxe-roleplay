@@ -352,3 +352,39 @@ public HOOKER_BlowingEnd(hookerid, playerid)
 
     return 1;
 }
+
+public OnPlayerDisconnect(playerid, reason)
+{
+    if(g_rgiPlayerInteractingHooker[playerid] != INVALID_PLAYER_ID)
+    {
+        new hookerid = g_rgiPlayerInteractingHooker[playerid];
+
+        FCNPC_ClearAnimations(g_rgiHookers[hookerid]);
+        FCNPC_GoTo(g_rgiHookers[hookerid], g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2]);
+        g_rgiHookerPendingTask[hookerid] = HOOKER_WALK_BACK_TO_SITE;
+        
+        g_rgiHookerInteractingPlayer[hookerid] = 
+        g_rgiPlayerInteractingHooker[playerid] = INVALID_PLAYER_ID;
+        
+        if(g_rgiHookerUpdateTimer[hookerid])
+            Timer_Kill(g_rgiHookerUpdateTimer[hookerid]);
+        
+        g_rgbHookerAvailable{hookerid} = true;
+    }
+
+    #if defined HOOKERS_OnPlayerDisconnect
+        return HOOKERS_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect HOOKERS_OnPlayerDisconnect
+#if defined HOOKERS_OnPlayerDisconnect
+    forward HOOKERS_OnPlayerDisconnect(playerid, reason);
+#endif
