@@ -146,6 +146,8 @@ Inventory_UpdateDropCount(playerid)
 Inventory_Hide(playerid)
 {
 	printf("Inventory_Hide(playerid = %d)", playerid);
+	g_rgePlayerTempData[playerid][e_iPlayerItemSlot] = -1;
+
 	for(new i; i < sizeof(g_tdInventoryBG); ++i)
 		TextDrawHideForPlayer(playerid, g_tdInventoryBG[i]);
 

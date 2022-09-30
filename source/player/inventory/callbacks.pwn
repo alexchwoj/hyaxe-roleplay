@@ -183,42 +183,52 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 {
     if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
     {
+        // Select item
         for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	    {
             if (playertextid == p_tdItemView[playerid]{i})
             {
-                g_rgePlayerTempData[playerid][e_iPlayerItemSlot] = i;
-                g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] = 1;
-
-                for(new j; j < 6; ++j)
-                    PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{j});
-
-                if ( InventorySlot_IsValid(playerid, i) )
+                if (i == g_rgePlayerTempData[playerid][e_iPlayerItemSlot])
                 {
-                    PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{0});
-                    PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{1});
+                    g_rgePlayerTempData[playerid][e_iPlayerItemSlot] = i;
+                    g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] = 1;
+                    OnPlayerClickPlayerTextDraw(playerid, p_tdItemOptions[playerid]{1});
+                }
+                else
+                {
+                    g_rgePlayerTempData[playerid][e_iPlayerItemSlot] = i;
+                    g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] = 1;
 
-                    PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{5});
-                    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s~n~~w~(%s~w~)", Item_Name( InventorySlot_Type(playerid, i) ), Item_RarityName( Item_Rarity( InventorySlot_Type(playerid, i) ) ));
-                    Str_FixEncoding_Ref(HYAXE_UNSAFE_HUGE_STRING);
-                    PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{5}, HYAXE_UNSAFE_HUGE_STRING);
+                    for(new j; j < 6; ++j)
+                        PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{j});
 
-                    if (!Item_SingleSlot( InventorySlot_Type(playerid, i) ))
+                    if ( InventorySlot_IsValid(playerid, i) )
                     {
-                        PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{2}, "1");
-                        PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{2});
+                        PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{0});
+                        PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{1});
 
-                        PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{3});
-                        PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{4});
+                        PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{5});
+                        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s~n~~w~(%s~w~)", Item_Name( InventorySlot_Type(playerid, i) ), Item_RarityName( Item_Rarity( InventorySlot_Type(playerid, i) ) ));
+                        Str_FixEncoding_Ref(HYAXE_UNSAFE_HUGE_STRING);
+                        PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{5}, HYAXE_UNSAFE_HUGE_STRING);
 
-                        Inventory_UpdateDropCount(playerid);
+                        if (!Item_SingleSlot( InventorySlot_Type(playerid, i) ))
+                        {
+                            PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{2}, "1");
+                            PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{2});
+
+                            PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{3});
+                            PlayerTextDrawShow(playerid, p_tdItemOptions[playerid]{4});
+
+                            Inventory_UpdateDropCount(playerid);
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }
 
-        if (playertextid == p_tdItemOptions[playerid]{4})
+        if (playertextid == p_tdItemOptions[playerid]{4}) // Increase drop count
         {
             ++g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount];
             if (g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] > InventorySlot_Amount(playerid, g_rgePlayerTempData[playerid][e_iPlayerItemSlot]))
@@ -228,7 +238,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
             PlayerPlaySound(playerid, SOUND_BACK);
         }
 
-        if (playertextid == p_tdItemOptions[playerid]{3})
+        if (playertextid == p_tdItemOptions[playerid]{3}) // Reduce drop count
         {
             --g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount];
             if (g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] < 1)
@@ -238,7 +248,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
             PlayerPlaySound(playerid, SOUND_NEXT);
         }
 
-        if (playertextid == p_tdItemOptions[playerid]{1})
+        if (playertextid == p_tdItemOptions[playerid]{1}) // Use item
         {
             new
                 callback = Item_Callback( InventorySlot_Type(playerid, g_rgePlayerTempData[playerid][e_iPlayerItemSlot]) ),
@@ -264,7 +274,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
             }
         }
 
-        if (playertextid == p_tdItemOptions[playerid]{0})
+        if (playertextid == p_tdItemOptions[playerid]{0}) // Drop item
         {
             for(new j; j < 6; ++j)
 		        PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{j});
