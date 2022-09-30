@@ -5,8 +5,12 @@
 
 public Timer_WeatherUpdate()
 {
-    g_iWeatherType = g_iWeatherTypesList[ random( sizeof(g_iWeatherTypesList) ) ];
-    printf("g_iWeatherType = %d", g_iWeatherType);
+    g_iWeatherIndex ++;
+    if (g_iWeatherIndex > sizeof(g_iWeatherTypesList))
+        g_iWeatherIndex = 0;
+
+    g_iWeatherType = g_iWeatherTypesList[g_iWeatherIndex];
+    printf("[wather:dbg] g_iWeatherType = %d, g_iWeatherIndex = %d", g_iWeatherType, g_iWeatherIndex);
 
     foreach(new i : LoggedIn)
     {
