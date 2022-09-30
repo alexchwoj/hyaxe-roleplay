@@ -121,6 +121,13 @@ phone_menu main(playerid, response, listitem)
 		case 0: Player_ShowGPS(playerid);
 		case 1:
 		{
+			if (IsPlayerInAnyVehicle(playerid))
+			{
+				PhoneMenu_Main(playerid);
+				Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes hacer esto mientras estás en un vehículo");
+				return 0;
+			}
+
 			Phone_Hide(playerid);
 
 			Bit_Set(Player_Flags(playerid), PFLAG_USING_CAMERA, true);

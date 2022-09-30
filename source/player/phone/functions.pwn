@@ -28,6 +28,10 @@ Phone_Show(playerid, const menu_id[])
     Bit_Set(Player_Flags(playerid), PFLAG_USING_PHONE, true);
 
 	g_rgePlayerMenu[playerid][e_iKeyProcessTimer] = SetTimerEx("PHONE_ProcessKey", 100, true, "i", playerid);
+
+	Needs_HideBars(playerid);
+    Inventory_Hide(playerid);
+	Speedometer_Hide(playerid);
     return 1;
 }
 

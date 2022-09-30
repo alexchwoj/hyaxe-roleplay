@@ -252,7 +252,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
                     Ventana\t%s\n\
                     Motor\t%s\n\
-                    Luces\t%s\
+                    Luces\t%s\n\
+                    Ver celular\t\
                 ",
                     (windows[player_seat] ? "{CB3126}Cerrada" : "{64A752}Abierta"),
                     (Vehicle_GetEngineState(vehicleid) ? "{64A752}Encendido" : "{CB3126}Apagado"),
@@ -262,7 +263,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             else if (GetPlayerState(playerid) == PLAYER_STATE_PASSENGER)
             {
                 format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-                    Ventana\t%s\n\
+                    Ventana\t%s\
                 ",
                     (windows[player_seat] ? "{CB3126}Cerrada" : "{64A752}Abierta")
                 );
@@ -323,6 +324,13 @@ dialog vehicle_panel(playerid, dialogid, response, listitem, const inputtext[])
             {
                 Vehicle_PlayerEnableLights(playerid);
                 PlayerPlaySound(playerid, SOUND_CAR_DOORS);
+            }
+            case 3:
+            {
+                if (!Inventory_GetItemCount(playerid, ITEM_PHONE))
+		            return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes un teléfono celular");
+
+                PhoneMenu_Main(playerid);
             }
         }
     }
