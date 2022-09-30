@@ -169,12 +169,6 @@ public GVENT_UpdateGraffiti(playerid)
                     TextDrawSetString(g_tdGangEventText, va_return("%s: ~y~%.2f%%", Gang_Data( Player_Gang(playerid) )[e_szGangName], g_rgfGangGraffitiProgress[ Player_Gang(playerid) ]));
                     SetDynamicObjectMaterialText(g_rgeGraffiti[ graffiti_id ][e_iGraffitiObject], 0, Gang_Data( Player_Gang(playerid) )[e_szGangName], OBJECT_MATERIAL_SIZE_512x64, "Comic Sans MS", 60, 0, RGBAToARGB( Gang_Data( Player_Gang(playerid) )[e_iGangColor] ), 0x00000000, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
 
-                    foreach(new i : Player)
-                    {
-                        if (Player_Gang(i) != -1)
-                            TextDrawShowForPlayer(i, g_tdGangEventText);
-                    }
-
                     if (g_rgfGangGraffitiProgress[ Player_Gang(playerid) ] >= 100.0)
                     {
                         Graffiti_Finish();
@@ -257,4 +251,26 @@ public OnPlayerDisconnect(playerid, reason)
 #define OnPlayerDisconnect GVENT_OnPlayerDisconnect
 #if defined GVENT_OnPlayerDisconnect
     forward GVENT_OnPlayerDisconnect(playerid, reason);
+#endif
+
+public OnPlayerAuthenticate(playerid)
+{
+    if (Player_Gang(i) != -1 && g_iGangEventType != EVENT_INVALID)
+        TextDrawShowForPlayer(playerid, g_tdGangEventText);
+
+    #if defined GVENT_OnPlayerAuthenticate
+        return GVENT_OnPlayerAuthenticate(playerid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerAuthenticate
+    #undef OnPlayerAuthenticate
+#else
+    #define _ALS_OnPlayerAuthenticate
+#endif
+#define OnPlayerAuthenticate GVENT_OnPlayerAuthenticate
+#if defined GVENT_OnPlayerAuthenticate
+    forward GVENT_OnPlayerAuthenticate(playerid);
 #endif
