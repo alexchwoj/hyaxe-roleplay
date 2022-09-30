@@ -215,11 +215,39 @@ public REPAIRKIT_ActionFinished(playerid, vehicleid)
     return 1;
 }
 
+static MediKit_OnUse(playerid, slot)
+{
+    new target = GetPlayerCameraTargetPlayer(playerid);
+    if(!IsPlayerConnected(target))
+    {
+        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Necesitas ver a un jugador para usar esto");
+        return 1;
+    }
+
+    Inventory_Hide(playerid);
+    InventorySlot_Subtract(playerid, slot);
+
+    ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 1, 1, 1, 1, 5000, 1);
+    Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, va_return("Reanimando %s...", Player_Sex(target) == SEX_MALE ? "jugador" : "jugadora"));
+    Notification_Show(target, va_return("Estás siendo reanimad%c por ~r~%s~w~.", (Player_Sex(target) == SEX_MALE ? 'o' : 'a'), Player_RPName(playerid)), 5000);
+
+    inline const Due()
+    {
+        Player_SetHealth(target, (Player_VIP(playerid) >= 3 ? 100 : 25));
+	    Player_Revive(target);
+        ClearAnimations(playerid);
+    }
+    Timer_CreateCallback(using inline Due, 5000, 1);
+
+    return 1;
+}
+
 public OnScriptInit()
 {
     /* Medical */
 
     // Medic kit
+    Item_Callback(ITEM_MEDIC_KIT) = __addressof(MediKit_OnUse);
     Item_SetPreviewRot(ITEM_MEDIC_KIT, 1.000000, 0.000000, -28.000000, 1.000000);
 
     // Medicine
