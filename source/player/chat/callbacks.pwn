@@ -59,3 +59,26 @@ public OnPlayerText(playerid, text[])
     g_rgePlayerTempData[playerid][e_iPlayerChatTick] = GetTickCount();
     return 0;
 }
+
+public OnPlayerDisconnect(playerid, reason)
+{
+    new reason_name[3][24] = {"Crash/Desconexión", "Voluntariamente", "Expulsado/Baneado"};
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s (%d) se ha desconectado del servidor. {DAA838}%s", Player_RPName(playerid), playerid, reason_name[reason]);
+    Chat_SendMessageToRange(playerid, 0xDADADAFF, 60.0, HYAXE_UNSAFE_HUGE_STRING);
+
+    #if defined CHAT_OnPlayerDisconnect
+        return CHAT_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect CHAT_OnPlayerDisconnect
+#if defined CHAT_OnPlayerDisconnect
+    forward CHAT_OnPlayerDisconnect(playerid, reason);
+#endif
