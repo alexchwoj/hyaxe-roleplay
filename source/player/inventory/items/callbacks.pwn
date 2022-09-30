@@ -230,9 +230,10 @@ static MediKit_OnUse(playerid, slot)
     Inventory_Hide(playerid);
     InventorySlot_Subtract(playerid, slot);
 
+    new const time = (Player_VIP(playerid) >= 3 ? 5000 : 15000);
     ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 1, 1, 1, 1, 0, 1);
-    Notification_ShowBeatingText(playerid, 15000, 0xED2B2B, 100, 255, va_return("Reanimando %s...", Player_Sex(target) == SEX_MALE ? "jugador" : "jugadora"));
-    Notification_Show(target, va_return("Estás siendo reanimad%c por ~r~%s~w~.", (Player_Sex(target) == SEX_MALE ? 'o' : 'a'), Player_RPName(playerid)), 15000);
+    Notification_ShowBeatingText(playerid, time, 0xED2B2B, 100, 255, va_return("Reanimando %s...", Player_Sex(target) == SEX_MALE ? "jugador" : "jugadora"));
+    Notification_Show(target, va_return("Estás siendo reanimad%c por ~r~%s~w~.", (Player_Sex(target) == SEX_MALE ? 'o' : 'a'), Player_RPName(playerid)), time);
 
     inline const Due()
     {
@@ -240,7 +241,7 @@ static MediKit_OnUse(playerid, slot)
 	    Player_Revive(target);
         ClearAnimations(playerid);
     }
-    Timer_CreateCallback(using inline Due, 15000, 1);
+    Timer_CreateCallback(using inline Due, time, 1);
 
     return 1;
 }
