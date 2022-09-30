@@ -87,6 +87,7 @@ static LawnMowerEvent(playerid, eJobEvent:event, areaid)
             new mowerid = Vehicle_Create(572, g_rgeLawnmowerAreas[areaid][e_fVehicleSpawnX], g_rgeLawnmowerAreas[areaid][e_fVehicleSpawnY], g_rgeLawnmowerAreas[areaid][e_fVehicleSpawnZ], g_rgeLawnmowerAreas[areaid][e_fVehicleSpawnRot], -1, -1, -1);
             Vehicle_Type(mowerid) = VEHICLE_TYPE_WORK;
             Vehicle_ToggleEngine(mowerid, VEHICLE_STATE_ON);
+            Streamer_UpdateEx(playerid, g_rgeLawnmowerAreas[areaid][e_fVehicleSpawnX], g_rgeLawnmowerAreas[areaid][e_fVehicleSpawnY], g_rgeLawnmowerAreas[areaid][e_fVehicleSpawnZ], .worldid = 0, .interiorid = 0, .compensatedtime = 1000);
             Player_SetImmunityForCheat(playerid, CHEAT_CARJACK, 3000);
             Player_PutInVehicle(playerid, mowerid);
             g_rgeLawnmowerAreas[areaid][e_iMowerId] = mowerid;

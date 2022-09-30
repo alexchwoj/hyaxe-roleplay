@@ -26,3 +26,24 @@ public OnPlayerConnect(playerid)
 #if defined WP_OnPlayerConnect
     forward WP_OnPlayerConnect(playerid);
 #endif
+
+public OnPlayerDisconnect(playerid, reason)
+{
+    g_rgePlayerWeapons[playerid] = g_rgePlayerWeapons[MAX_PLAYERS];
+
+    #if defined WP_OnPlayerDisconnect
+        return WP_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect WP_OnPlayerDisconnect
+#if defined WP_OnPlayerDisconnect
+    forward WP_OnPlayerDisconnect(playerid, reason);
+#endif
