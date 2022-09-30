@@ -35,9 +35,12 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     }
     else if ((newkeys & KEY_WALK) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
-        if (IsPlayerInAnyDynamicArea(playerid))
+        new areas = GetPlayerNumberDynamicAreas(playerid);
+        if (areas)
         {
+            YSI_UNSAFE_HUGE_STRING[areas] = INVALID_STREAMER_ID;
             GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
+
             for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
             {
                 new areaid = YSI_UNSAFE_HUGE_STRING[i];

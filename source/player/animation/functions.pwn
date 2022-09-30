@@ -76,7 +76,7 @@ command bailar(playerid, const params[], "Baila")
 
 command borracho(playerid, const params[], "Camina borracho")
 {
-    ApplyAnimation(playerid, "PED", "WALK_DRUNK", 4.1, 1, 0, 0, 0, 0);
+    ApplyAnimation(playerid, "PED", "WALK_DRUNK", 4.0, 1, 1, 1, 1, 500);
     return 1;
 }
 

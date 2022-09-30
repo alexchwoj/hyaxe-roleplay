@@ -79,8 +79,8 @@ Player_GoToTheNearestHospital(playerid)
         1000
     );
 
-    new cost = -(Player_Money(playerid) > 1500 ? 1500 : Player_Money(playerid));
-    Player_GiveMoney(playerid, cost);
+    new cost = (Player_Money(playerid) > 1500 ? 1500 : Player_Money(playerid));
+    Player_GiveMoney(playerid, -cost);
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Estás siendo atendido en el ~b~%s~w~, el costo es de $%d.", g_rgeHospitalData[ nearest_hospital ][e_szHospitalName], cost);
     Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 5000, 0x415BA2FF);
 

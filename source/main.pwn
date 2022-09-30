@@ -54,11 +54,11 @@
 
 #define SERVER_VERSION "v1.0.0-alpha"
 
-#define NDEBUG 0
+#define NDEBUG 1
 
 #if NDEBUG
 	#pragma option -d0
-	#pragma option -O1
+	#pragma option -O0
 #else
 	#pragma option -d3
 	#include <crashdetect>
@@ -345,4 +345,14 @@ SSCANF:boolean(string[])
 	else if(!strcmp(string, "no", true)) return 0;
 
 	return 0;
+}
+
+command sinfo(playerid, const params[], "Información del servidor")
+{
+	SendClientMessage(playerid, 0xED2B2BFF,  "========== DEBUG ==========");
+	SendClientMessage(playerid, 0xED2B2BFF,  "|");
+	SendClientMessagef(playerid, 0xED2B2BFF, "|{DADADA} Tickrate: %i", GetServerTickRate());
+	SendClientMessage(playerid, 0xED2B2BFF,  "|");
+	SendClientMessage(playerid, 0xED2B2BFF,  "===========================");
+
 }

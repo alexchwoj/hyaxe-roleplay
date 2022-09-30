@@ -182,6 +182,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     new areas = GetPlayerNumberDynamicAreas(playerid);
     if(areas > 0)
     {
+        YSI_UNSAFE_HUGE_STRING[areas] = INVALID_STREAMER_ID;
         GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
 
         for(new i; i < areas; ++i)

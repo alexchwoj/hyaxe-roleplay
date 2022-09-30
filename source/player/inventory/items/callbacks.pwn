@@ -24,9 +24,12 @@ static Flag_OnUse(playerid, slot)
 
     new territory_index = -1;
 
-    if(IsPlayerInAnyDynamicArea(playerid))
+    new areas = GetPlayerNumberDynamicAreas(playerid);
+    if (areas)
     {
+        YSI_UNSAFE_HUGE_STRING[areas] = INVALID_STREAMER_ID;
         GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
+
         for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
         {
             new areaid = YSI_UNSAFE_HUGE_STRING[i];

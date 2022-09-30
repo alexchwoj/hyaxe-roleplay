@@ -55,9 +55,12 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     new const player_state = GetPlayerState(playerid);
     if((player_state == PLAYER_STATE_ONFOOT && (newkeys & KEY_CTRL_BACK) != 0) || (player_state == PLAYER_STATE_DRIVER && (newkeys & KEY_CROUCH) != 0))
     {
-        if(IsPlayerInAnyDynamicArea(playerid))
+        new areas = GetPlayerNumberDynamicAreas(playerid);
+        if (areas)
         {
+            YSI_UNSAFE_HUGE_STRING[areas] = INVALID_STREAMER_ID;
             GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
+            
             for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
             {
                 new areaid = YSI_UNSAFE_HUGE_STRING[i];
