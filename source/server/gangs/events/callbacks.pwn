@@ -168,7 +168,13 @@ public GVENT_UpdateGraffiti(playerid)
                     g_rgfGangGraffitiProgress[ Player_Gang(playerid) ] += 0.5;
                     TextDrawSetString(g_tdGangEventText, va_return("%s: ~y~%.2f%%", Gang_Data( Player_Gang(playerid) )[e_szGangName], g_rgfGangGraffitiProgress[ Player_Gang(playerid) ]));
                     SetDynamicObjectMaterialText(g_rgeGraffiti[ graffiti_id ][e_iGraffitiObject], 0, Gang_Data( Player_Gang(playerid) )[e_szGangName], OBJECT_MATERIAL_SIZE_512x64, "Comic Sans MS", 60, 0, RGBAToARGB( Gang_Data( Player_Gang(playerid) )[e_iGangColor] ), 0x00000000, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
-                
+
+                    foreach(new i : Player)
+                    {
+                        if (Player_Gang(i) != -1)
+                            TextDrawShowForPlayer(i, g_tdGangEventText);
+                    }
+
                     if (g_rgfGangGraffitiProgress[ Player_Gang(playerid) ] >= 100.0)
                     {
                         Graffiti_Finish();

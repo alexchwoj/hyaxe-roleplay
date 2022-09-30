@@ -63,7 +63,7 @@ public OnPlayerText(playerid, text[])
 public OnPlayerDisconnect(playerid, reason)
 {
     static const reason_name[3][24] = {"Crash/Desconexión", "Voluntariamente", "Expulsado/Baneado"};
-    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s (%d) se ha desconectado del servidor. {DAA838}%s", Player_RPName(playerid), playerid, reason_name[reason]);
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s (%d) se ha desconectado del servidor. {DAA838}(%s)", Player_RPName(playerid), playerid, reason_name[reason]);
     Chat_SendMessageToRange(playerid, 0xDADADAFF, 60.0, HYAXE_UNSAFE_HUGE_STRING);
 
     #if defined CHAT_OnPlayerDisconnect
