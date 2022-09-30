@@ -50,13 +50,11 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerConnect(playerid)
 {
-    printf("WAAAAAAAA 111");
+    static const empty[eWeaponData];
     for(new i = MAX_WEAPON_SLOTS - 1; i != -1; --i)
     {
         printf("WAAAAAAAA 222 > %d", i);
-        g_rgePlayerWeapons[playerid][i][e_iWeaponId] = 0;
-        g_rgePlayerWeapons[playerid][i][e_iWeaponAmmo] = 0;
-        g_rgePlayerWeapons[playerid][i][e_bWeaponDisabled] = false;
+        g_rgePlayerWeapons[playerid][i] = empty;
     }
 
     #if defined WP_OnPlayerConnect

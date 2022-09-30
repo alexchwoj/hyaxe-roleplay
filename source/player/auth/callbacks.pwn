@@ -228,7 +228,7 @@ dialog login(playerid, dialogid, response, listitem, inputtext[])
     if(!response)
         return Kick(playerid);
 
-    inline const CheckDone()
+    inline CheckDone()
     {
         if(!argon_is_equal())
         {
