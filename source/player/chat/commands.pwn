@@ -125,7 +125,7 @@ command id(playerid, const params[], "Ver los datos de un jugador")
         destination = playerid;
 
     if (!IsPlayerConnected(destination))
-        return SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} No hay un usuario que concuerde con el ID: {ED2B2B}%s{DADADA}.", destination);
+        return SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No hay un usuario que concuerde con el ID o nombre dados.");
 
     new const
         Float:max_packetloss_percentage = NetStats_PacketLossPercent(destination) / 10.0,
@@ -154,8 +154,9 @@ command id(playerid, const params[], "Ver los datos de un jugador")
     {
         SendClientMessagef(
             playerid, 0x415BA2FF,
-            "›{DADADA} Admin:{BBBBBB} IP: %s, %dB sent, %dB received",
+            "›{DADADA} Admin:{BBBBBB} IP: %s, Cuenta: %d, %dB sent, %dB received",
             RawIpToString(Player_IP(destination)),
+            Player_AccountID(destination),
             NetStats_BytesSent(destination),
             NetStats_BytesReceived(destination)
         );

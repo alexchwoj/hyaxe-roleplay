@@ -53,7 +53,7 @@ public OnGameModeExit()
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     new const player_state = GetPlayerState(playerid);
-    if((player_state == PLAYER_STATE_ONFOOT && (newkeys & KEY_CTRL_BACK) != 0) || (player_state == PLAYER_STATE_DRIVER && (newkeys & KEY_CROUCH) != 0))
+    if(player_state == PLAYER_STATE_ONFOOT && (newkeys & KEY_CTRL_BACK) != 0 && g_rgiPlayerInteractingHooker[playerid] == INVALID_PLAYER_ID)
     {
         new areas = GetPlayerNumberDynamicAreas(playerid);
         if (areas)
