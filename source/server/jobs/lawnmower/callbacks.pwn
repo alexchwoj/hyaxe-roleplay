@@ -169,6 +169,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
         g_rgeLawnmowerAreas[park_id][e_iCurrentGrassCount]--;        
         if(!g_rgeLawnmowerAreas[park_id][e_iCurrentGrassCount])
         {
+            Player_SetImmunityForCheat(playerid, CHEAT_CARJACK, 3000);
             StopAudioStreamForPlayer(playerid);
             Vehicle_Destroy(g_rgeLawnmowerAreas[park_id][e_iMowerId]);
             
