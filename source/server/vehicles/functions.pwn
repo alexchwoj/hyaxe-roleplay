@@ -313,6 +313,7 @@ public Speedometer_Update(playerid)
 Player_RegisterVehicle(playerid, vehicleid)
 {
     g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = playerid;
+    Vehicle_Type(vehicleid) = VEHICLE_TYPE_PERSONAL;
     Iter_Add(PlayerVehicles[playerid], vehicleid);
     
     new panels, doors, lights, tires;

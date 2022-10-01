@@ -190,9 +190,9 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     else if ((newkeys & KEY_YES) != 0)
     {
         new vehicleid = (IsPlayerInAnyVehicle(playerid) ? GetPlayerVehicleID(playerid) : GetPlayerCameraTargetVehicle(playerid));
-        if(vehicleid != INVALID_VEHICLE_ID)
+        if(IsValidVehicle(vehicleid))
         {
-            if(Vehicle_OwnerId(vehicleid) == playerid || Vehicle_Type(vehicleid) == VEHICLE_TYPE_ADMIN)
+            if(Vehicle_OwnerId(vehicleid) == playerid || (Vehicle_Type(vehicleid) == VEHICLE_TYPE_ADMIN && Player_AdminLevel(playerid) >= RANK_LEVEL_HELPER))
             {
                 Vehicle_ToggleLock(vehicleid);
                 SetPlayerChatBubble(playerid, (g_rgeVehicles[vehicleid][e_bLocked] ? "* Bloqueó su vehículo" : "* Desbloqueó su vehículo"), 0xB39B6BFF, 15.0, 5000);
@@ -416,7 +416,8 @@ public VEHICLE_LoadFromDatabase(playerid)
         
         cache_get_value_name_int(i, "VEHICLE_ID", g_rgeVehicles[vehicleid][e_iVehicleDbId]);
         g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = playerid;
-
+        Vehicle_Type(vehicleid) = VEHICLE_TYPE_PERSONAL;
+        
         cache_get_value_name_float(i, "HEALTH", g_rgeVehicles[vehicleid][e_fHealth]);
         cache_get_value_name_float(i, "FUEL", g_rgeVehicles[vehicleid][e_fFuel]);
         cache_get_value_name_int(i, "PANELS_STATUS", panels);
