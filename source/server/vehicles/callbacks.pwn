@@ -408,6 +408,11 @@ public VEHICLE_LoadFromDatabase(playerid)
         cache_get_value_name_float(i, "ANGLE", angle);
 
         new vehicleid = Vehicle_Create(model, x, y, z, angle, colorone, colortwo, -1);
+        if(vehicleid == INVALID_VEHICLE_ID)
+        {
+            printf("[vehicles] Failed to create vehicle of playerid %i (model: %i)", playerid, model);
+            continue;
+        }
         
         cache_get_value_name_int(i, "VEHICLE_ID", g_rgeVehicles[vehicleid][e_iVehicleDbId]);
         g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = playerid;
