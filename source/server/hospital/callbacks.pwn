@@ -37,6 +37,8 @@ public HP_HealPlayer(playerid)
 
     if (Player_Health(playerid) >= max_health)
     {
+        Player_SetHealth(playerid, max_health);
+        
         Notification_ShowBeatingText(playerid, 1000, 0xF7F7F7, 100, 255, "Curando las heridas... ~r~100%");
         
         //SpawnPlayer(playerid);

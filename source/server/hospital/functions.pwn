@@ -8,7 +8,8 @@ Player_GoToTheNearestHospital(playerid)
     Bit_Set(Player_Flags(playerid), PFLAG_HOSPITAL, true);
 
     KillTimer(g_rgiHospitalHealthTimer[playerid]);
-    GetPlayerPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
+    if(Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
+        GetPlayerPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
 
     new
         Float:nearest_point = VectorSize(

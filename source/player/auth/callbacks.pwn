@@ -256,22 +256,28 @@ public AUTH_PasswordCheckDone(playerid)
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
     Account_RegisterConnection(playerid);
 
-    CallLocalFunction(!"OnPlayerAuthenticate", !"i", playerid);
-
-    SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle], 0, 0, 0, 0, 0, 0);
-    Streamer_UpdateEx(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], Player_VirtualWorld(playerid), Player_Interior(playerid), .compensatedtime = 2000, .freezeplayer = 1);
-    TogglePlayerSpectating(playerid, false);
-    
+    new text[116];
+    format(text, sizeof(text), "Bienvenid%c a ~r~Hyaxe~w~, %s. Tu último inicio de sesión fue el ~r~%s~w~.", (Player_Sex(playerid) == SEX_MALE ? 'o' : 'a'), Player_Name(playerid), Player_LastConnection(playerid));
+    Notification_Show(playerid, text, 6000);
     g_rgePlayerData[playerid][e_iCurrentConnectionTime] = gettime();
-    SetPlayerVirtualWorld(playerid, Player_VirtualWorld(playerid));
-    SetPlayerInterior(playerid, Player_Interior(playerid));
+
+    CallLocalFunction(!"OnPlayerAuthenticate", !"i", playerid);
     
     if(Player_Health(playerid) == 0)
     {
+        Player_SetArmor(playerid, 0);
+        Player_SetHealth(playerid, 4);
         Player_GoToTheNearestHospital(playerid);
     }
     else
     {
+        SetPlayerVirtualWorld(playerid, Player_VirtualWorld(playerid));
+        SetPlayerInterior(playerid, Player_Interior(playerid));
+
+        SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle], 0, 0, 0, 0, 0, 0);
+        Streamer_UpdateEx(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], Player_VirtualWorld(playerid), Player_Interior(playerid), .compensatedtime = 2000, .freezeplayer = 1);
+        TogglePlayerSpectating(playerid, false);
+
         Player_SetHealth(playerid, Player_Health(playerid));
         Player_SetArmor(playerid, Player_Armor(playerid));
     }
@@ -289,10 +295,6 @@ public AUTH_PasswordCheckDone(playerid)
     Bit_Set(Player_Flags(playerid), PFLAG_AUTHENTICATING, false);
     Bit_Set(Player_Flags(playerid), PFLAG_IN_GAME, true);
     printf("PFLAG_IN_GAME = true");
-
-    new text[116];
-    format(text, sizeof(text), "Bienvenid%c a ~r~Hyaxe~w~, %s. Tu último inicio de sesión fue el ~r~%s~w~.", (Player_Sex(playerid) == SEX_MALE ? 'o' : 'a'), Player_Name(playerid), Player_LastConnection(playerid));
-    Notification_Show(playerid, text, 6000);
 
     Needs_ShowBars(playerid);
     Needs_StartUpdating(playerid);
