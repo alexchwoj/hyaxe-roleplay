@@ -175,7 +175,7 @@ static
 command tp(playerid, const params[], "Teletransportate a la posición de un jugador")
 {
     new destination, player_two;
-    if(sscanf(params, "rR(-1)", destination, player_two))
+    if(sscanf(params, "rR(-1)", destination, player_two) || !IsPlayerConnected(destination))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/tp{DADADA} <jugador de destino> {969696}[jugador]");
         return 1;
