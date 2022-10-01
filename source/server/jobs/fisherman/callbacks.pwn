@@ -61,7 +61,7 @@ static Fisherman_KeyGameCallback(playerid, bool:success)
 
     if (success)
     {
-        Player_AddXP(playerid, 20);
+        Player_AddXP(playerid, 10);
         Inventory_AddFixedItem(playerid, ITEM_FISH, 1, 0);
         
         Notification_Show(playerid, "¡Bien ahí! Has pescado un pez.", 3000, 0x64A752FF);
@@ -104,7 +104,7 @@ dialog sell_fish(playerid, dialogid, response, listitem, inputtext[])
         new amount = Inventory_GetItemAmount(playerid, ITEM_FISH);
         new pay = Job_ApplyPaycheckBenefits(playerid, 10 * amount);
 
-        Player_AddXP(playerid, 50);
+        Player_AddXP(playerid, amount);
         Player_GiveMoney(playerid, pay);
         PlayerPlaySound(playerid, SOUND_SUCCESS);
 
