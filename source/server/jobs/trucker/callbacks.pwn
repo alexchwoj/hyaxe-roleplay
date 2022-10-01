@@ -300,6 +300,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
             pay = Job_ApplyPaycheckBenefits(playerid, pay);
             Job_TriggerCallback(playerid, JOB_TRUCKER, JOB_EV_LEAVE);
             Player_GiveMoney(playerid, pay);
+            Player_AddXP(playerid, Random(150, 250));
 
             if(pay_subtracted)
             {
