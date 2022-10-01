@@ -527,6 +527,12 @@ command dv(playerid, const params[], "Destruye un vehículo")
         }
     }
 
+    if(!IsValidVehicle(vehicleid))
+    {
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} Vehículo inválido.");
+        return 1;
+    }
+
     if(Vehicle_Type(vehicleid) != VEHICLE_TYPE_ADMIN)
     {
         g_rgeVehicles[vehicleid][e_bSpawned] = false;
