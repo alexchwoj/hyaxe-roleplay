@@ -51,6 +51,12 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
         // Transfer
         else if (clickedid == g_tdBankATM[5])
         {
+            if(Player_Level(playerid) < 2)
+            {
+                Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas ser nivel 2 para usar esto");
+                return 1;
+            }
+            
             Dialog_ShowCallback(playerid, using public _hydg@bank_transfer<iiiis>, DIALOG_STYLE_INPUT, "{64A752}Banco{DADADA} - Transferir", "{DADADA}Ingrese la cuenta bancaria a transferir:", "Siguiente", "Cancelar");
         }
 

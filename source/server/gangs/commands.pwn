@@ -37,7 +37,7 @@ command banda(playerid, const params[], "Abre el panel de creación de una banda"
 
     strcpy(s_rgszGangCreationName[playerid], "Mi banda");
     s_rgiGangCreationIcon{playerid} = 0;
-    s_rgiGangCreationColor[playerid] = Random(0, 0xFFFFFFFF) | 0xFF;
+    s_rgiGangCreationColor[playerid] = 0xCB3126FF;
 
     GangCreation_ShowDialog(playerid);
 
