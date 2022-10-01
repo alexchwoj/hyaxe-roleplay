@@ -19,7 +19,6 @@ forward Player_RemoveWeapon(playerid, weaponid);
 forward Player_GiveLocalWeapons(playerid);
 forward Player_RemoveLocalWeapons(playerid);
 forward Player_RemoveAllWeapons(playerid);
-forward bool:Player_HasWeaponAtSlot(playerid, weaponslot);
 forward bool:Player_HasWeapon(playerid, weaponid);
 // forward Weapon_GetSlot(weaponid);
 forward Player_LoadWeaponsFromCache(playerid);
@@ -27,3 +26,5 @@ forward Player_LoadWeaponsFromCache(playerid);
 #define Player_WeaponSlot(%0,%1) g_rgePlayerWeapons[(%0)][(%1)]
 forward Weapon_PackIdAndAmmo(weaponid, ammo);
 forward Weapon_UnpackIdAndAmmo(weapon_and_ammo, &weapon, &ammo);
+
+#define Player_HasWeaponAtSlot(%0,%1) (g_rgePlayerWeapons[(%0)][(%1)][e_iWeaponId] != 0)

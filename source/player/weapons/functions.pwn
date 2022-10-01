@@ -134,11 +134,6 @@ Player_RemoveAllWeapons(playerid)
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 }
 
-bool:Player_HasWeaponAtSlot(playerid, weaponslot)
-{
-    return (g_rgePlayerWeapons[playerid][weaponslot][e_iWeaponId] != 0);
-}
-
 bool:Player_HasWeapon(playerid, weaponid)
 {
     new slot = GetWeaponSlot(weaponid);
