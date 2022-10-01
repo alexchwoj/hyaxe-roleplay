@@ -26,8 +26,8 @@ public OnPlayerDisconnect(playerid, reason)
 #endif
 
 
-forward HP_HealPlayer(playerid);
-public HP_HealPlayer(playerid)
+forward HP_HealPlayer(playerid, nearest_hospital);
+public HP_HealPlayer(playerid, nearest_hospital)
 {
     new const max_health = (Player_VIP(playerid) >= 3 ? 100 : 50);
     new progress = floatround(floatdiv(float(Player_Health(playerid)), float(max_health)) * 100.0);
@@ -38,16 +38,26 @@ public HP_HealPlayer(playerid)
     if (Player_Health(playerid) >= max_health)
     {
         Player_SetHealth(playerid, max_health);
-        
         Notification_ShowBeatingText(playerid, 1000, 0xF7F7F7, 100, 255, "Curando las heridas... ~r~100%");
         
-        //SpawnPlayer(playerid);
-        //TogglePlayerSpectating(playerid, true);
         TogglePlayerSpectating(playerid, false);
 
-        Player_SetPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
-        SetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fPosAngle]);
+        SetSpawnInfo(
+            playerid, NO_TEAM, Player_Skin(playerid),
+            g_rgeHospitalData[ nearest_hospital ][e_fHospitalPosX],
+            g_rgeHospitalData[ nearest_hospital ][e_fHospitalPosY],
+            g_rgeHospitalData[ nearest_hospital ][e_fHospitalPosZ],
+            g_rgeHospitalData[ nearest_hospital ][e_fHospitalAngle],
+            0, 0, 0, 0, 0, 0
+        );
 
+        Player_SetPos(playerid,
+            g_rgeHospitalData[ nearest_hospital ][e_fHospitalPosX],
+            g_rgeHospitalData[ nearest_hospital ][e_fHospitalPosY],
+            g_rgeHospitalData[ nearest_hospital ][e_fHospitalPosZ]
+        );
+        
+        SetPlayerFacingAngle(playerid, g_rgeHospitalData[ nearest_hospital ][e_fHospitalAngle]);
         SetCameraBehindPlayer(playerid);
 
         if(Player_VIP(playerid) >= 3)
