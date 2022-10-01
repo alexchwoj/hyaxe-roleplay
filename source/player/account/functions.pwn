@@ -94,7 +94,7 @@ Account_Save(playerid, bool:disconnect = false)
         (Player_MutedTime(playerid) - gettime() ? Player_MutedTime(playerid) - gettime() : 0),
         g_rgePlayerData[playerid][e_iPlayerPausedTime],
         g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle],
-        Player_VirtualWorld(playerid), Player_Interior(playerid), Player_Health(playerid), Player_Armor(playerid), Player_Hunger(playerid), Player_Thirst(playerid),
+        Player_VirtualWorld(playerid), Player_Interior(playerid), (Bit_Get(Player_Flags(playerid), PFLAG_INJURED) ? 0 : Player_Health(playerid)), Player_Armor(playerid), Player_Hunger(playerid), Player_Thirst(playerid),
         Player_Skin(playerid), Player_Level(playerid), Player_XP(playerid), Player_Money(playerid),
         (disconnect ? -1 : playerid), (disconnect ? ", CURRENT_CONNECTION = 0" : ""), 
         Player_AccountID(playerid)

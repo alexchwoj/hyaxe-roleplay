@@ -266,9 +266,16 @@ public AUTH_PasswordCheckDone(playerid)
     SetPlayerVirtualWorld(playerid, Player_VirtualWorld(playerid));
     SetPlayerInterior(playerid, Player_Interior(playerid));
     
-    Player_SetHealth(playerid, Player_Health(playerid));
-    Player_SetArmor(playerid, Player_Armor(playerid));
-    
+    if(Player_Health(playerid) == 0)
+    {
+        Player_GoToTheNearestHospital(playerid);
+    }
+    else
+    {
+        Player_SetHealth(playerid, Player_Health(playerid));
+        Player_SetArmor(playerid, Player_Armor(playerid));
+    }
+
     GivePlayerMoney(playerid, Player_Money(playerid));
     Player_GiveAllWeapons(playerid);
     SetPlayerArmedWeapon(playerid, 0);
