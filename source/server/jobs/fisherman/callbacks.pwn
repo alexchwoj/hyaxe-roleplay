@@ -11,6 +11,9 @@ static RodStore_OnKeyPress(playerid)
 
 static FishMarket_OnKeyPress(playerid)
 {
+    if (!Inventory_GetItemCount(playerid, ITEM_FISH))
+        return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Necesitas al menos 5 peces.");
+        
     new amount = Inventory_GetItemAmount(playerid, ITEM_FISH);
     if (amount < 5)
         return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Necesitas al menos 5 peces.");

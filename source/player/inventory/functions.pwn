@@ -253,7 +253,7 @@ Inventory_DeleteItemByType(playerid, type)
 				mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `PLAYER_INVENTORY` WHERE `ID` = %d;", InventorySlot_ID(playerid, i));
 				mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 				printf("[MIERDAS5] slot: %d, type: %d", i, g_rgePlayerInventory[playerid][i][e_iType]);
-				Inventory_ResetSlot(playerid, 0);
+				Inventory_ResetSlot(playerid, i);
 				printf("[MIERDAS4] slot: %d, type: %d", i, g_rgePlayerInventory[playerid][i][e_iType]);
 			}
 		}
