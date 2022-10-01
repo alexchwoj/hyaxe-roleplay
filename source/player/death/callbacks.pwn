@@ -44,6 +44,8 @@ public OnPlayerDeath(playerid, killerid, reason)
 
             KillTimer(g_rgeCrawlData[playerid][e_iCrawlKeyTimer]);
             Player_GoToTheNearestHospital(playerid);
+
+            Player_RemoveAllWeapons(playerid);
         }
         else
         {

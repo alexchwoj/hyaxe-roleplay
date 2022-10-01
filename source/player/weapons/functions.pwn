@@ -65,3 +65,26 @@ Player_LoadWeaponsFromCache(playerid)
 
     return 1;
 }
+
+Player_RemoveAllWeapons(playerid)
+{
+    ResetPlayerWeapons(playerid);
+
+    mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYER_WEAPONS` SET \
+        SLOT_1 = 0, \
+        SLOT_2 = 0, \
+        SLOT_3 = 0, \
+        SLOT_4 = 0, \
+        SLOT_5 = 0, \
+        SLOT_6 = 0, \
+        SLOT_7 = 0, \
+        SLOT_8 = 0, \
+        SLOT_9 = 0, \
+        SLOT_10 = 0, \
+        SLOT_11 = 0, \
+        SLOT_12 = 0 \
+    WHERE `ACCOUNT_ID` = %i;", Player_AccountID(playerid));
+    mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+
+    return 1;
+}
