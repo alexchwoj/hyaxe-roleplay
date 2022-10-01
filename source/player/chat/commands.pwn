@@ -109,10 +109,63 @@ command duda(playerid, const params[], "Envia un mensaje al canal de dudas")
     if (!Bit_Get(Player_Config(playerid), CONFIG_SHOW_DOUBT_CHANNEL))
         return SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} Activa el canal de dudas para poder usarlo.");
 
+    if (Player_MutedTime(playerid) > gettime())
+        return SendClientMessage(playerid, 0xED2B2BFF, va_return("›{DADADA} Estás silenciado durante %d segundos.", Player_MutedTime(playerid) - gettime()));
+
     Chat_SendDoubt(playerid, params);
     return 1;
 }
 alias:duda("n", "d")
+
+command mutear(playerid, const params[], "Silenciar a un usuario del canal de dudas.")
+{
+    new destination, time, reason[51];
+    if (sscanf(params, "rI(60)S(No especificada)[50]", destination, time, reason))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/mutear {DADADA}<jugador> {969696}[tiempo en segundos = 60 (1 minuto)] [razón = \"No especificada\"]");
+        return 1;
+    }
+
+    if (!IsPlayerConnected(destination))
+    {
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} Usuario no encontrado.");
+        return 1;
+    }
+
+    if (Player_AdminLevel(destination) > Player_AdminLevel(playerid))
+    {
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No puedes mutear a alguien superior a ti.");
+        return 1;
+    }
+
+    Player_MutedTime(destination) = gettime() + time;
+    Chat_SendDoubt(playerid, va_return("silenció a {91B787}%s (%d){DADADA} por {91B787}%d{DADADA} segundos, motivo: %s.", Player_RPName(destination), destination, time, reason));
+    return 1;
+}
+alias:mutear("mute", "silenciar")
+flags:mutear(CMD_FLAG<RANK_LEVEL_HELPER>)
+
+command desmutear(playerid, const params[], "Desilenciar a un usuario del canal de dudas.")
+{
+    new destination;
+    if (sscanf(params, "r", destination))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/desmutear {DADADA}<jugador>");
+        return 1;
+    }
+
+    if (!IsPlayerConnected(destination))
+    {
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} Usuario no encontrado.");
+        return 1;
+    }
+
+    Player_MutedTime(destination) = 0;
+    Chat_SendDoubt(playerid, va_return("desilenció a {91B787}%s (%d){DADADA}.", Player_RPName(destination), destination));
+    return 1;
+}
+alias:desmutear("unmute", "desilenciar")
+flags:desmutear(CMD_FLAG<RANK_LEVEL_HELPER>)
 
 command id(playerid, const params[], "Ver los datos de un jugador")
 {

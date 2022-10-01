@@ -72,6 +72,7 @@ Account_Save(playerid, bool:disconnect = false)
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
         UPDATE `ACCOUNT` SET \
+            `MUTED_TIME` = %d, \
             `PLAYED_TIME` = (`PLAYED_TIME` + (UNIX_TIMESTAMP() - `CURRENT_CONNECTION`)) - %i, \
             `POS_X` = %.2f, \
             `POS_Y` = %.2f, \
@@ -90,6 +91,7 @@ Account_Save(playerid, bool:disconnect = false)
             `CURRENT_PLAYERID` = %i%s \
         WHERE `ID` = %i;\
     ", 
+        (Player_MutedTime(playerid) - gettime() ? Player_MutedTime(playerid) - gettime() : 0),
         g_rgePlayerData[playerid][e_iPlayerPausedTime],
         g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle],
         Player_VirtualWorld(playerid), Player_Interior(playerid), Player_Health(playerid), Player_Armor(playerid), Player_Hunger(playerid), Player_Thirst(playerid),
@@ -131,7 +133,12 @@ Account_LoadFromCache(playerid)
     cache_get_value_name_int(0, !"LEVEL", Player_Level(playerid));
     cache_get_value_name_int(0, !"ADMIN_LEVEL", Player_AdminLevel(playerid));
     cache_get_value_name_int(0, !"PLAYED_TIME", Player_SavedPlayedTime(playerid));
+    cache_get_value_name_int(0, !"MUTED_TIME", Player_MutedTime(playerid));
 
+    // Muted time
+    Player_MutedTime(playerid) += gettime();
+
+    // Gang load
     new bool:no_gang;
     cache_is_value_name_null(0, "GANG_ID", no_gang);
     if(!no_gang)
