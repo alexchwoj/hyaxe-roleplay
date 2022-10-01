@@ -615,7 +615,7 @@ command ife(playerid, const params[], "Da dinero a todos los jugadores")
     foreach(new i : Player)
     {
         Player_GiveMoney(i, amount, false);
-        SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Un administrador te dio {ED2B2B}%i$", amount);
+        SendClientMessagef(i, 0xED2B2BFF, "›{DADADA} Un administrador te dio {ED2B2B}%i$", amount);
     }
 
     mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `MONEY` = `MONEY` + %i WHERE `CURRENT_PLAYERID` != -1;", amount);
