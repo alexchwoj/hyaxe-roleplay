@@ -24,6 +24,9 @@ public OnPlayerConnect(playerid)
 
 public OnPlayerDisconnect(playerid, reason)
 {
+    for(new i; i < sizeof(g_rgiPlayerWeapons[]); ++i)
+        g_rgiPlayerWeapons[playerid][i] = 0;
+        
     #if defined WP_OnPlayerDisconnect
         return WP_OnPlayerDisconnect(playerid, reason);
     #else
