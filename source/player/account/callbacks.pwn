@@ -333,3 +333,25 @@ public OnPlayerSpawn(playerid)
 #if defined ACC_OnPlayerSpawn
     forward ACC_OnPlayerSpawn(playerid);
 #endif
+
+public OnPlayerRequestClass(playerid, classid)
+{
+    SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle], 0, 0, 0, 0, 0, 0);
+    SpawnPlayer(playerid);
+
+    #if defined ACC_OnPlayerRequestClass
+        return ACC_OnPlayerRequestClass(playerid, classid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerRequestClass
+    #undef OnPlayerRequestClass
+#else
+    #define _ALS_OnPlayerRequestClass
+#endif
+#define OnPlayerRequestClass ACC_OnPlayerRequestClass
+#if defined ACC_OnPlayerRequestClass
+    forward ACC_OnPlayerRequestClass(playerid, classid);
+#endif
