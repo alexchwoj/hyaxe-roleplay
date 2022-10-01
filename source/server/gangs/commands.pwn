@@ -223,7 +223,8 @@ public GANG_Inserted(playerid)
 
     Player_Gang(playerid) = idx;
     Player_GangRank(playerid) = 9;
-
+    Iter_Add(GangMember[idx], playerid);
+    
     Dialog_Show(playerid, DIALOG_STYLE_MSGBOX, "{CB3126}>{DADADA} ¡Tu banda fue creada con éxito!", "{DADADA}Como líder de la banda, puedes empezar por abrir el panel de configuración presionando las teclas {CB3126}ESPACIO{DADADA} y {CB3126}Y{DADADA} simultáneamente.", "Entendido");
     return 1;
 }
