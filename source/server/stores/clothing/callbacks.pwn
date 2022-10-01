@@ -192,31 +192,3 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 #if defined CLOTH_OnPlayerClickTextDraw
     forward CLOTH_OnPlayerClickTextDraw(playerid, Text:clickedid);
 #endif
-
-
-public OnPlayerCancelTDSelection(playerid)
-{
-    if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES))
-    {
-        SetPlayerVirtualWorld(playerid, g_rgePlayerTempData[playerid][e_iPlayerLastWorld]);
-        Player_StopShopping(playerid);
-        SetPlayerSkin(playerid, Player_Skin(playerid));
-        return 1;
-    }
-
-    #if defined CLOTH_OnPlayerCancelTDSelection
-        return CLOTH_OnPlayerCancelTDSelection(playerid);
-    #else
-        return 1;
-    #endif
-}
-
-#if defined _ALS_OnPlayerCancelTDSelection
-    #undef OnPlayerCancelTDSelection
-#else
-    #define _ALS_OnPlayerCancelTDSelection
-#endif
-#define OnPlayerCancelTDSelection CLOTH_OnPlayerCancelTDSelection
-#if defined CLOTH_OnPlayerCancelTDSelection
-    forward CLOTH_OnPlayerCancelTDSelection(playerid);
-#endif

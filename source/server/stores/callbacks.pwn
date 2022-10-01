@@ -160,6 +160,14 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 
 public OnPlayerCancelTDSelection(playerid)
 {
+    if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES))
+    {
+        SetPlayerVirtualWorld(playerid, g_rgePlayerTempData[playerid][e_iPlayerLastWorld]);
+        Player_StopShopping(playerid);
+        SetPlayerSkin(playerid, Player_Skin(playerid));
+        return 1;
+    }
+
     if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING))
     {
         KillTimer(g_rgiRotateSkinTimer[playerid]);
