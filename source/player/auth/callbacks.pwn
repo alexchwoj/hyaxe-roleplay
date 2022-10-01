@@ -166,16 +166,36 @@ dialog register_email(playerid, dialogid, response, listitem, inputtext[])
         return 1;
     }
 
-    strcpy(Player_Email(playerid), inputtext);
-    
-    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-        {DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta no está registrada.\n\n\
-        \t{5C5C5C}1. Contraseña\n\
-        \t{5C5C5C}2. Correo\n\
-        \t{E3E3E3}3. Sexo del personaje{DADADA}\n\n\
-        Este va a ser el sexo inicial de su personaje.\
-    ", Player_RPName(playerid));
-    Dialog_ShowCallback(playerid, using public _hydg@register_sex<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Hombre", "Mujer");
+    inline const QueryDone()
+    {
+        new exists;
+        cache_get_value_index_int(0, 0, exists);
+        if(exists)
+        {
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+                {DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta no está registrada.\n\n\
+                \t{5C5C5C}1. Contraseña\n\
+                \t{E3E3E3}2. Correo\n\
+                \t{5C5C5C}3. Sexo del personaje{DADADA}\n\n\
+                Ya hay una cuenta registrada con ese correo.\
+            ", Player_RPName(playerid));
+            Dialog_ShowCallback(playerid, using public _hydg@register_email<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Atrás");
+            return 1;
+        }
+
+        strcpy(Player_Email(playerid), inputtext);
+        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+            {DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta no está registrada.\n\n\
+            \t{5C5C5C}1. Contraseña\n\
+            \t{5C5C5C}2. Correo\n\
+            \t{E3E3E3}3. Sexo del personaje{DADADA}\n\n\
+            Este va a ser el sexo inicial de su personaje.\
+        ", Player_RPName(playerid));
+        Dialog_ShowCallback(playerid, using public _hydg@register_sex<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Hombre", "Mujer");
+        return 1;
+    }
+    MySQL_TQueryInline(g_hDatabase, using inline QueryDone, "SELECT EXISTS(SELECT * FROM `ACCOUNT` WHERE `EMAIL` = '%e');", inputtext);
+
     return 1;
 }
 
