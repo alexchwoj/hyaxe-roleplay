@@ -93,7 +93,7 @@ JYYYYYYJJJJJJJJ7!?JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ??????????!!777777777777777777
 #pragma warning disable 239
 #pragma warning disable 214
 
-#define SERVER_VERSION "v1.0.0-alpha"
+#define SERVER_VERSION "v1.0.1-alpha"
 
 #define NDEBUG 0
 
@@ -405,3 +405,10 @@ command gmx(playerid, const params[], "Reinicia")
 	return 1;
 }
 flags:gmx(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)
+
+command closeserver(playerid, const params[], "Apagar el servidor")
+{
+	SendRconCommand("exit");
+	return 1;
+}
+flags:closeserver(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)
