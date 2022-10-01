@@ -52,11 +52,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     new weapon = Item_TypeToWeapon(info[0]);
                     if (weapon)
                     {
-                        new ammo = 9999;
-                        if (Weapon_IsExplosive(weapon))
-                            ammo = info[1];
-
-                        Player_GiveWeapon(playerid, weapon, ammo);
+                        Player_GiveWeapon(playerid, weapon);
 
                         DroppedItem_Delete(areaid);
                         PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);

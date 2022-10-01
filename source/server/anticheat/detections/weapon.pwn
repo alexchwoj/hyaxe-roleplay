@@ -13,11 +13,11 @@ IPacket:__ac_weapon_WeaponUpdate(playerid, BitStream:bs)
     BS_IgnoreBits(bs, 8);
     BS_ReadWeaponsUpdate(bs, data);
 
-    for (new i; i < sizeof(g_rgePlayerWeapons[]); ++i)
+    for (new i; i < MAX_WEAPON_SLOTS; ++i)
 	{
 		if (data[PR_slotWeaponId][i] > WEAPON_BRASSKNUCKLE && data[PR_slotWeaponId][i] != WEAPON_PARACHUTE)
 		{
-            if (g_rgePlayerWeapons[playerid][i][e_iWeaponId] != data[PR_slotWeaponId][i])
+            if (g_rgiPlayerWeapons[playerid][i] != data[PR_slotWeaponId][i])
             {
                 Anticheat_Trigger(playerid, CHEAT_WEAPON, 0);
 				return 0;
@@ -40,7 +40,7 @@ IPacket:__ac_weapon_PlayerSync(playerid, BitStream:bs)
     );
     
     new slot = GetWeaponSlot(weapon_id);
-    if (weapon_id > WEAPON_BRASSKNUCKLE && g_rgePlayerWeapons[playerid][slot][e_iWeaponId] != weapon_id)
+    if (weapon_id > WEAPON_BRASSKNUCKLE && g_rgiPlayerWeapons[playerid][slot] != weapon_id)
     {
         Anticheat_Trigger(playerid, CHEAT_WEAPON, 1);
         return 0;
@@ -61,7 +61,7 @@ IPacket:__ac_weapon_BulletSync(playerid, BitStream:bs)
     );
     
     new slot = GetWeaponSlot(weapon_id);
-    if (weapon_id > WEAPON_BRASSKNUCKLE && g_rgePlayerWeapons[playerid][slot][e_iWeaponId] != weapon_id)
+    if (weapon_id > WEAPON_BRASSKNUCKLE && g_rgiPlayerWeapons[playerid][slot] != weapon_id)
     {
         Anticheat_Trigger(playerid, CHEAT_WEAPON, 2);
         return 0;
@@ -75,7 +75,7 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
         return 1;
         
     new slot = GetWeaponSlot(weaponid);
-    if (weaponid > WEAPON_BRASSKNUCKLE && g_rgePlayerWeapons[playerid][slot][e_iWeaponId] != weaponid)
+    if (weaponid > WEAPON_BRASSKNUCKLE && g_rgiPlayerWeapons[playerid][slot] != weaponid)
     {
         Anticheat_Trigger(playerid, CHEAT_WEAPON, 3);
         return 0;

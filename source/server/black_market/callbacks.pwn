@@ -7,9 +7,9 @@ static PistolShop_OnBuy(playerid, shop_id, item_id)
 {
     switch(item_id)
     {
-        case 0: Player_GiveWeapon(playerid, 22, 99999);
-        case 1: Player_GiveWeapon(playerid, 23, 99999);
-        case 2: Player_GiveWeapon(playerid, 24, 99999);
+        case 0: Player_GiveWeapon(playerid, 22);
+        case 1: Player_GiveWeapon(playerid, 23);
+        case 2: Player_GiveWeapon(playerid, 24);
     }
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Compraste un(a) %s a ~g~$%d", g_rgeShopItems[shop_id][item_id][e_szItemName], g_rgeShopItems[shop_id][item_id][e_iItemPrice]);
@@ -21,9 +21,9 @@ static ShotgunShop_OnBuy(playerid, shop_id, item_id)
 {
     switch(item_id)
     {
-        case 0: Player_GiveWeapon(playerid, 25, 99999);
-        case 1: Player_GiveWeapon(playerid, 26, 99999);
-        case 2: Player_GiveWeapon(playerid, 27, 99999);
+        case 0: Player_GiveWeapon(playerid, 25);
+        case 1: Player_GiveWeapon(playerid, 26);
+        case 2: Player_GiveWeapon(playerid, 27);
     }
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Compraste un(a) %s a ~g~$%d", g_rgeShopItems[shop_id][item_id][e_szItemName], g_rgeShopItems[shop_id][item_id][e_iItemPrice]);
@@ -35,9 +35,9 @@ static SubmachineShop_OnBuy(playerid, shop_id, item_id)
 {
     switch(item_id)
     {
-        case 0: Player_GiveWeapon(playerid, 28, 99999);
-        case 1: Player_GiveWeapon(playerid, 29, 99999);
-        case 2: Player_GiveWeapon(playerid, 32, 99999);
+        case 0: Player_GiveWeapon(playerid, 28);
+        case 1: Player_GiveWeapon(playerid, 29);
+        case 2: Player_GiveWeapon(playerid, 32);
     }
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Compraste un(a) %s a ~g~$%d", g_rgeShopItems[shop_id][item_id][e_szItemName], g_rgeShopItems[shop_id][item_id][e_iItemPrice]);
@@ -49,9 +49,9 @@ static RifleShop_OnBuy(playerid, shop_id, item_id)
 {
     switch(item_id)
     {
-        case 0: Player_GiveWeapon(playerid, 30, 99999);
-        case 1: Player_GiveWeapon(playerid, 31, 99999);
-        case 2: Player_GiveWeapon(playerid, 33, 99999);
+        case 0: Player_GiveWeapon(playerid, 30);
+        case 1: Player_GiveWeapon(playerid, 31);
+        case 2: Player_GiveWeapon(playerid, 33);
     }
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Compraste un(a) %s a ~g~$%d", g_rgeShopItems[shop_id][item_id][e_szItemName], g_rgeShopItems[shop_id][item_id][e_iItemPrice]);
@@ -103,7 +103,7 @@ dialog misc_shop(playerid, dialogid, response, listitem, const inputtext[])
                     return 1;
                 }
 
-                Player_GiveWeapon(playerid, 41, 99999);
+                Player_GiveWeapon(playerid, 41);
 
                 Player_GiveMoney(playerid, -150);
                 PlayerPlaySound(playerid, SOUND_SUCCESS);

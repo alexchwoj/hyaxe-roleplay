@@ -5,27 +5,6 @@
 
 public OnPlayerConnect(playerid)
 {
-    SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL, 40);
-    SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL_SILENCED, 500);
-    SetPlayerSkillLevel(playerid, WEAPONSKILL_SAWNOFF_SHOTGUN, 200);
-    SetPlayerSkillLevel(playerid, WEAPONSKILL_MICRO_UZI, 50);
-
-    printf("OnPlayerConnect(playerid = %d)", playerid);
-    for(new i = 1; i < MAX_WEAPON_SLOTS; ++i)
-    {
-        printf("[playerid = %d] Cleaning slot %d/%d", playerid, i, MAX_WEAPON_SLOTS);
-        g_rgePlayerWeapons[playerid][i][e_iWeaponId] = 0;
-        g_rgePlayerWeapons[playerid][i][e_iWeaponAmmo] = 0;
-        g_rgePlayerWeapons[playerid][i][e_bWeaponDisabled] = false;
-    }
-
-    /*static const empty[eWeaponData];
-    for(new i = MAX_WEAPON_SLOTS - 1; i != -1; --i)
-    {
-        printf("WAAAAAAAA 222 > %d", i);
-        g_rgePlayerWeapons[playerid][i] = empty;
-    }*/
-
     #if defined WP_OnPlayerConnect
         return WP_OnPlayerConnect(playerid);
     #else
@@ -45,8 +24,6 @@ public OnPlayerConnect(playerid)
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    g_rgePlayerWeapons[playerid] = g_rgePlayerWeapons[MAX_PLAYERS];
-
     #if defined WP_OnPlayerDisconnect
         return WP_OnPlayerDisconnect(playerid, reason);
     #else
