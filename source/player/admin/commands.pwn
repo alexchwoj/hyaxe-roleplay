@@ -361,6 +361,13 @@ dialog manage_admin_options(playerid, dialogid, response, listitem, const inputt
         return 1;
     }
 
+    if(Player_AdminLevel(playerid) != RANK_LEVEL_SUPERADMIN)
+    {
+        PC_EmulateCommand(playerid, "/manage_admins");
+        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes hacer eso");
+        return 1;
+    }
+
     switch(listitem)
     {
         case 0:
