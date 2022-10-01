@@ -14,7 +14,7 @@ public Timer_WeatherUpdate()
 
     foreach(new i : LoggedIn)
     {
-        if (!Bit_Get(Player_Flags(i), PFLAG_IN_GAME))
+        if (!Bit_Get(Player_Flags(i), PFLAG_IN_GAME) || Bit_Get(Player_Config(i), CONFIG_PERFORMANCE_MODE))
             continue;
 
         SetPlayerWeather(i, g_iWeatherType);
@@ -22,30 +22,31 @@ public Timer_WeatherUpdate()
     return 1;
 }
 
-public OnPlayerConnect(playerid)
+public OnPlayerAuthenticate(playerid)
 {
-    SetPlayerWeather(playerid, g_iWeatherType);
+    if (!Bit_Get(Player_Config(playerid), CONFIG_PERFORMANCE_MODE))
+        SetPlayerWeather(playerid, g_iWeatherType);
 
-    #if defined Clock_OnPlayerConnect
-        return Clock_OnPlayerConnect(playerid);
+    #if defined WEATHER_OnPlayerAuthenticate
+        return WEATHER_OnPlayerAuthenticate(playerid);
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnPlayerConnect
-    #undef OnPlayerConnect
+#if defined _ALS_OnPlayerAuthenticate
+    #undef OnPlayerAuthenticate
 #else
-    #define _ALS_OnPlayerConnect
+    #define _ALS_OnPlayerAuthenticate
 #endif
-#define OnPlayerConnect Clock_OnPlayerConnect
-#if defined Clock_OnPlayerConnect
-    forward Clock_OnPlayerConnect(playerid);
+#define OnPlayerAuthenticate WEATHER_OnPlayerAuthenticate
+#if defined WEATHER_OnPlayerAuthenticate
+    forward WEATHER_OnPlayerAuthenticate(playerid);
 #endif
 
 public OnPlayerPauseStateChange(playerid, pausestate)
 {
-    if (!pausestate)
+    if (!pausestate && !Bit_Get(Player_Config(playerid), CONFIG_PERFORMANCE_MODE))
     {
         SetPlayerWeather(playerid, g_iWeatherType);
     }
