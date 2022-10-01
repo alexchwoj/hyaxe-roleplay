@@ -51,12 +51,12 @@ enum _:eRankLevels
 };
 
 new const g_rgszRankLevelNames[eRankLevels][2][24] = {
-    { "Usuario", "Usuario" },
-    { "Ayudante", "Ayudante" },
-    { "Moderadora", "Moderador" },
-    { "Encargada", "Encargado"},
-    { "Administradora", "Administrador" },
-    { "Superadministradora", "Superadministrador" }
+    { "Usuario", "Usuario" }, // 0
+    { "Ayudante", "Ayudante" }, // 1
+    { "Moderadora", "Moderador" }, // 2
+    { "Encargada", "Encargado"}, // 3
+    { "Administradora", "Administrador" }, // 4
+    { "Superadministradora", "Superadministrador" } // 5
 };
 
 enum ePlayerData

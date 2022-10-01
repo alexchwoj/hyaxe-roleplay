@@ -70,6 +70,10 @@ Account_Save(playerid, bool:disconnect = false)
         Player_Interior(playerid) = GetPlayerInterior(playerid);
     }
 
+    new muted_time = Player_MutedTime(playerid) - gettime();
+    if (muted_time < 0)
+        muted_time = 0;
+
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
         UPDATE `ACCOUNT` SET \
             `MUTED_TIME` = %d, \
@@ -91,7 +95,7 @@ Account_Save(playerid, bool:disconnect = false)
             `CURRENT_PLAYERID` = %i%s \
         WHERE `ID` = %i;\
     ", 
-        (Player_MutedTime(playerid) - gettime() ? Player_MutedTime(playerid) - gettime() : 0),
+        muted_time,
         g_rgePlayerData[playerid][e_iPlayerPausedTime],
         g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle],
         Player_VirtualWorld(playerid), Player_Interior(playerid), (Bit_Get(Player_Flags(playerid), PFLAG_INJURED) ? 0 : Player_Health(playerid)), Player_Armor(playerid), Player_Hunger(playerid), Player_Thirst(playerid),
