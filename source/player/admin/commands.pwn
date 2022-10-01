@@ -604,3 +604,25 @@ command ls(playerid, const params[], "Ir a Los Santos")
     return 1;
 }
 flags:ls(CMD_FLAG<RANK_LEVEL_MODERATOR>)
+
+command ife(playerid, const params[], "Da dinero a todos los jugadores")
+{
+    extract params -> new amount; else {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/ife{DADADA} <cantidad>");
+        return 1;
+    }
+
+    foreach(new i : Player)
+    {
+        Player_GiveMoney(i, amount, false);
+        SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Un administrador te dio {ED2B2B}%i$", amount);
+    }
+
+    mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `MONEY` = `MONEY` + %i WHERE `CURRENT_PLAYERID` != -1;", amount);
+    mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+
+    SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Le diste {ED2B2B}%i${DADADA} a todos los jugadores.", amount);
+
+    return 1;
+}
+flags:ife(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)
