@@ -31,8 +31,15 @@ Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, c
 
 Vehicle_Destroy(vehicleid)
 {
-    if(!DestroyVehicle(vehicleid))
+    if (!DestroyVehicle(vehicleid))
         return 0;
+
+    new last_driver = GetVehicleLastDriver(vehicleid);
+    if (IsPlayerConnected(last_driver))
+    {
+        Player_SetImmunityForCheat(last_driver, CHEAT_TELEPORT, 1000);
+        Player_SetImmunityForCheat(last_driver, CHEAT_AIRBREAK, 1000);
+    }
 
     Vehicle_StopUpdating(vehicleid);
     g_rgeVehicles[vehicleid][e_bValid] = false;
