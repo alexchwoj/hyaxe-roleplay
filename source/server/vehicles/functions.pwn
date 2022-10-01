@@ -515,3 +515,30 @@ command set_veh_health(playerid, const params[], "Cambia la vida de un vehículo"
 }
 alias:set_veh_health("setvehhealth", "svh", "rv", "repairveh", "repairvehicle")
 flags:set_veh_health(CMD_FLAG<RANK_LEVEL_MODERATOR>)
+
+command dv(playerid, const params[], "Destruye un vehículo")
+{
+    extract params -> new vehicleid; else {
+        vehicleid = GetPlayerVehicleID(playerid);
+        if(!vehicleid)
+        {
+            SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/dv{969696} [id]");
+            return 1;
+        }
+    }
+
+    if(Vehicle_Type(vehicleid) != VEHICLE_TYPE_ADMIN)
+    {
+        g_rgeVehicles[vehicleid][e_bSpawned] = false;
+        g_rgeVehicles[vehicleid][e_fHealth] = 1000.0;
+        g_rgeVehicles[vehicleid][e_fFuel] = g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_fMaxFuel];
+        SetVehicleToRespawn(vehicleid);
+    }
+    else
+    {
+        Vehicle_Destroy(vehicleid);
+    }
+
+    return 1;
+}
+flags:dv(CMD_FLAG<RANK_LEVEL_MODERATOR>)
