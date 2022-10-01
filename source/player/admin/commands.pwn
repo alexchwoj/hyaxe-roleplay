@@ -181,7 +181,7 @@ command tp(playerid, const params[], "Teletransportate a la posición de un jugad
         return 1;
     }
 
-    if(player_two != -1 && player_two != INVALID_PLAYER_ID)
+    if(IsPlayerConnected(player_two))
         playerid = player_two;
 
     GetPlayerPos(playerid, s_rgfPreviousPositions[playerid][0], s_rgfPreviousPositions[playerid][1], s_rgfPreviousPositions[playerid][2]);
