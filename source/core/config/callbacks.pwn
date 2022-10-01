@@ -16,6 +16,12 @@ CHAIN_FORWARD:Config_OnScriptInit() = 1;
 
 public OnScriptInit()
 {
+	if(GetSVarInt("hyaxe_exit") == 1)
+	{
+		SendRconCommand("exit");
+		return 1;
+	}
+	
     print("[config] Setting up...");
     
 	argon_set_thread_count(-1);

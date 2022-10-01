@@ -408,7 +408,8 @@ flags:gmx(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)
 
 command closeserver(playerid, const params[], "Apagar el servidor")
 {
-	SendRconCommand("exit");
+	SetSVarInt("hyaxe_exit", 1);
+	SendRconCommand("gmx");
 	return 1;
 }
 flags:closeserver(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)
