@@ -24,6 +24,9 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
 
             if(g_rgiPlayerUsingTruck[playerid])
             {
+                Player_SetImmunityForCheat(playerid, CHEAT_TELEPORT, 1000);
+                Player_SetImmunityForCheat(playerid, CHEAT_AIRBREAK, 1000);
+
                 SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 0, 0);
 
                 new engine, lights, alarm, doors, bonnet, boot, objective;
