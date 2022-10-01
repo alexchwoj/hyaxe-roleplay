@@ -10,6 +10,22 @@ public OnPlayerConnect(playerid)
     SetPlayerSkillLevel(playerid, WEAPONSKILL_SAWNOFF_SHOTGUN, 200);
     SetPlayerSkillLevel(playerid, WEAPONSKILL_MICRO_UZI, 50);
 
+    printf("OnPlayerConnect(playerid = %d)", playerid);
+    for(new i = 1; i < MAX_WEAPON_SLOTS; ++i)
+    {
+        printf("[playerid = %d] Cleaning slot %d/%d", playerid, i, MAX_WEAPON_SLOTS);
+        g_rgePlayerWeapons[playerid][i][e_iWeaponId] = 0;
+        g_rgePlayerWeapons[playerid][i][e_iWeaponAmmo] = 0;
+        g_rgePlayerWeapons[playerid][i][e_bWeaponDisabled] = false;
+    }
+
+    /*static const empty[eWeaponData];
+    for(new i = MAX_WEAPON_SLOTS - 1; i != -1; --i)
+    {
+        printf("WAAAAAAAA 222 > %d", i);
+        g_rgePlayerWeapons[playerid][i] = empty;
+    }*/
+
     #if defined WP_OnPlayerConnect
         return WP_OnPlayerConnect(playerid);
     #else
@@ -46,30 +62,4 @@ public OnPlayerDisconnect(playerid, reason)
 #define OnPlayerDisconnect WP_OnPlayerDisconnect
 #if defined WP_OnPlayerDisconnect
     forward WP_OnPlayerDisconnect(playerid, reason);
-#endif
-
-public OnPlayerConnect(playerid)
-{
-    static const empty[eWeaponData];
-    for(new i = MAX_WEAPON_SLOTS - 1; i != -1; --i)
-    {
-        printf("WAAAAAAAA 222 > %d", i);
-        g_rgePlayerWeapons[playerid][i] = empty;
-    }
-
-    #if defined WP_OnPlayerConnect
-        return WP_OnPlayerConnect(playerid);
-    #else
-        return 1;
-    #endif
-}
-
-#if defined _ALS_OnPlayerConnect
-    #undef OnPlayerConnect
-#else
-    #define _ALS_OnPlayerConnect
-#endif
-#define OnPlayerConnect WP_OnPlayerConnect
-#if defined WP_OnPlayerConnect
-    forward WP_OnPlayerConnect(playerid);
 #endif
