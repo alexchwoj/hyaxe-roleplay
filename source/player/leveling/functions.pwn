@@ -149,7 +149,7 @@ command add_xp(playerid, const params[], "Dar experiencia a un jugador")
     SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Le diste {ED2B2B}%i{DADADA} puntos de experiencia a {ED2B2B}%s{DADADA}.", xp, Player_RPName(destination));
     if(destination != playerid)
     {
-        SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Un administrador te asignó {ED2B2B}%i{DADADA} puntos de experiencia.", xp);
+        SendClientMessagef(destination, 0xED2B2BFF, "›{DADADA} Un administrador te asignó {ED2B2B}%i{DADADA} puntos de experiencia.", xp);
     }
 
     Player_AddXP(destination, xp);
@@ -170,7 +170,7 @@ command set_level(playerid, const params[], "Asigna el nivel de un jugador")
     SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Asignaste el nivel {ED2B2B}%i{DADADA} para {ED2B2B}%s{DADADA}.", level, Player_RPName(destination));
     if(destination != playerid)
     {
-        SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Un administrador te asignó el nivel {ED2B2B}%i{DADADA}.", level);
+        SendClientMessagef(destination, 0xED2B2BFF, "›{DADADA} Un administrador te asignó el nivel {ED2B2B}%i{DADADA}.", level);
     }
 
     Player_SetLevel(destination, level);
