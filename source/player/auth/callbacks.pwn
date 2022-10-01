@@ -166,12 +166,15 @@ dialog register_email(playerid, dialogid, response, listitem, inputtext[])
         return 1;
     }
 
+    strcpy(Player_Email(playerid), inputtext);
+    
     inline const QueryDone()
     {
         new exists;
         cache_get_value_index_int(0, 0, exists);
         if(exists)
         {
+            Player_Email(playerid)[0] = '\0';
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
                 {DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta no está registrada.\n\n\
                 \t{5C5C5C}1. Contraseña\n\
@@ -183,7 +186,6 @@ dialog register_email(playerid, dialogid, response, listitem, inputtext[])
             return 1;
         }
 
-        strcpy(Player_Email(playerid), inputtext);
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
             {DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta no está registrada.\n\n\
             \t{5C5C5C}1. Contraseña\n\
