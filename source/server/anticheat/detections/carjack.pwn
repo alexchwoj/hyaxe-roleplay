@@ -23,6 +23,9 @@ IPacket:__ac_cj_VehicleSync(playerid, BitStream:bs)
     new driver = INVALID_PLAYER_ID;
     foreach(new i : Player)
     {
+        if(i == playerid)
+            continue;
+            
         if(GetPlayerVehicleID(i) == vehicleid && GetPlayerVehicleSeat(i) == 0)
         {
             driver = i;
