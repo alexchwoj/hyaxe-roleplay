@@ -342,7 +342,7 @@ public OnPlayerRequestClass(playerid, classid)
     #if defined ACC_OnPlayerRequestClass
         return ACC_OnPlayerRequestClass(playerid, classid);
     #else
-        return 1;
+        return 0;
     #endif
 }
 
