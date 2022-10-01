@@ -30,7 +30,7 @@ Player_GiveWeapon(playerid, weaponid)
     g_rgiPlayerWeapons[playerid][slot] = weaponid;
     GivePlayerWeapon(playerid, weaponid, 32767);
 
-    mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYER_WEAPONS` SET `SLOT_%i` = %i WHERE `ACCOUNT_ID` = %i LIMIT 1;", weaponid);
+    mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYER_WEAPONS` SET `SLOT_%i` = %i WHERE `ACCOUNT_ID` = %i LIMIT 1;", slot, weaponid, Player_AccountID(playerid));
     mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
 
     return 1;
@@ -51,14 +51,16 @@ Player_GiveAllWeapons(playerid)
 
 Player_LoadWeaponsFromCache(playerid)
 {
+    DEBUG_PRINT("[func] Player_LoadWeaponsFromCache(playerid = %i)", playerid);
+
     new slot[10];
 
     for(new i = 1; i < MAX_WEAPON_SLOTS; ++i)
     {
         format(slot, sizeof(slot), "SLOT_%d", i);
-
-        new value;
+        DEBUG_PRINT("Loading slot %s", slot);
         cache_get_value_name_int(0, slot, g_rgiPlayerWeapons[playerid][i]);
+        DEBUG_PRINT("Slot value: %i", g_rgiPlayerWeapons[playerid][i]);
     }
 
     return 1;
