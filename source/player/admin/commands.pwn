@@ -460,7 +460,7 @@ flags:specoff(CMD_FLAG<RANK_LEVEL_MODERATOR>)
 command spec(playerid, const params[], "Spectea a un jugador")
 {
     new destination;
-    if(sscanf(params, "r", destination))
+    if(sscanf(params, "r", destination) || !IsPlayerConnected(destination))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/spec {DADADA} <jugador>");
         return 1;
@@ -487,7 +487,7 @@ flags:spec(CMD_FLAG<RANK_LEVEL_MODERATOR>)
 command freeze(playerid, const params[], "Congela a un jugador")
 {
     new destination;
-    if(sscanf(params, "r", destination))
+    if(sscanf(params, "r", destination) || !IsPlayerConnected(destination))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/freeze {DADADA} <jugador>");
         return 1;
@@ -502,7 +502,7 @@ flags:freeze(CMD_FLAG<RANK_LEVEL_MODERATOR>)
 command unfreeze(playerid, const params[], "Congela a un jugador")
 {
     new destination;
-    if(sscanf(params, "r", destination))
+    if(sscanf(params, "r", destination) || !IsPlayerConnected(destination))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/unfreeze {DADADA} <jugador>");
         return 1;
