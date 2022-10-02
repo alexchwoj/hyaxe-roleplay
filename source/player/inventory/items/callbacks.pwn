@@ -53,7 +53,7 @@ static Flag_OnUse(playerid, slot)
     new members;
     foreach(new i : Player)
     {
-        if (IsPlayerInDynamicArea(i, g_rgeTerritories[territory_index][e_iArea]) && !Bit_Get(Player_Flags(i), PFLAG_INJURED) && Player_Gang(i) == g_rgeTerritories[territory_index][e_iGangAttaking])
+        if (IsPlayerInDynamicArea(i, g_rgeTerritories[territory_index][e_iArea]) && !Bit_Get(Player_Flags(i), PFLAG_INJURED) && Player_Gang(i) == Player_Gang(playerid))
             ++members;
     }
 
