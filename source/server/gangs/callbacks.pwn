@@ -25,6 +25,8 @@ public OnScriptInit()
         cache_get_value_name_int(i, "CREATOR_ID", g_rgeGangs[i][e_iGangOwnerId]);
         gang_link_dbid(g_rgeGangs[i][e_iGangDbId], i);
 
+        ReplaceStringByRegex(Gang_Data(i)[e_szGangName], "~", "", Gang_Data(i)[e_szGangName]);
+
         mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "SELECT `RANK_ID`, `RANK_NAME`, `RANK_HIERARCHY`, `RANK_PERMISSIONS` FROM `GANG_RANKS` WHERE `GANG_ID` = %i ORDER BY `RANK_HIERARCHY` DESC;", g_rgeGangs[i][e_iGangDbId]);
         new Cache:rank_cache = mysql_query(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, .use_cache = true);
         #pragma nodestruct rank_cache
@@ -652,6 +654,8 @@ dialog gang_change_name(playerid, dialogid, response, listitem, inputtext[])
     }
     
     strcpy(Gang_Data(Player_Gang(playerid))[e_szGangName], inputtext);
+
+    ReplaceStringByRegex(Gang_Data( Player_Gang(playerid) )[e_szGangName], "~", "", Gang_Data( Player_Gang(playerid) )[e_szGangName]);
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "[BANDA] {DADADA}%s cambió el nombre de la banda a %s.", Player_RPName(playerid), inputtext);
     Gang_SendMessage(Player_Gang(playerid), HYAXE_UNSAFE_HUGE_STRING);

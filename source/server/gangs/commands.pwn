@@ -116,6 +116,8 @@ dialog gang_creation_name(playerid, dialogid, response, listitem, const inputtex
     }
 
     strcpy(s_rgszGangCreationName[playerid], inputtext);
+    ReplaceStringByRegex(s_rgszGangCreationName[playerid], "~", "", s_rgszGangCreationName[playerid]);
+
     GangCreation_ShowDialog(playerid);
 
     return 1;
@@ -212,6 +214,9 @@ public GANG_Inserted(playerid)
     new idx = Gangs_FindFreeIndex();
     g_rgeGangs[idx][e_iGangDbId] = gangid;
     strcpy(g_rgeGangs[idx][e_szGangName], s_rgszGangCreationName[playerid]);
+
+    ReplaceStringByRegex(Gang_Data(idx)[e_szGangName], "~", "", Gang_Data(idx)[e_szGangName]);
+
     g_rgeGangs[idx][e_iGangColor] = s_rgiGangCreationColor[playerid];
     g_rgeGangs[idx][e_iGangIcon] = s_rgiGangCreationIcon{playerid};
     g_rgeGangs[idx][e_iGangOwnerId] = Player_AccountID(playerid);
