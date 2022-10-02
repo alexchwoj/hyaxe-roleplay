@@ -3,28 +3,35 @@
 #endif
 #define _weapons_callbacks_
 
-public OnPlayerConnect(playerid)
+public OnPlayerSpawn(playerid)
 {
     SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL, 40);
     SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL_SILENCED, 500);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_DESERT_EAGLE, 200);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_SHOTGUN, 200);
     SetPlayerSkillLevel(playerid, WEAPONSKILL_SAWNOFF_SHOTGUN, 200);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_SPAS12_SHOTGUN, 200);
     SetPlayerSkillLevel(playerid, WEAPONSKILL_MICRO_UZI, 50);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_MP5, 250);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_AK47, 200);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_M4, 200);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_SNIPERRIFLE, 300);
 
-    #if defined WP_OnPlayerConnect
-        return WP_OnPlayerConnect(playerid);
+    #if defined WP_OnPlayerSpawn
+        return WP_OnPlayerSpawn(playerid);
     #else
         return 1;
     #endif
 }
 
-#if defined _ALS_OnPlayerConnect
-    #undef OnPlayerConnect
+#if defined _ALS_OnPlayerSpawn
+    #undef OnPlayerSpawn
 #else
-    #define _ALS_OnPlayerConnect
+    #define _ALS_OnPlayerSpawn
 #endif
-#define OnPlayerConnect WP_OnPlayerConnect
-#if defined WP_OnPlayerConnect
-    forward WP_OnPlayerConnect(playerid);
+#define OnPlayerSpawn WP_OnPlayerSpawn
+#if defined WP_OnPlayerSpawn
+    forward WP_OnPlayerSpawn(playerid);
 #endif
 
 public OnPlayerDisconnect(playerid, reason)
