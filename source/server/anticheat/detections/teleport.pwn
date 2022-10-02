@@ -51,6 +51,7 @@ public OnPlayerUpdate(playerid)
                 {
                     //printf("CHEAT_AIRBREAK > dist = %f, data[PR_animationId] = %d", dist, GetPlayerAnimationIndex(playerid));
                     Anticheat_Trigger(playerid, CHEAT_AIRBREAK);
+                    Player_SetImmunityForCheat(playerid, CHEAT_AIRBREAK, 1000);
                     return 0;
                 }
             }
