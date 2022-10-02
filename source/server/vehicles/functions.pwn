@@ -333,22 +333,33 @@ Player_RegisterVehicle(playerid, vehicleid)
     new components[70], tmp = 0;
     format(components, sizeof(components), "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d", PP_LOOP<14>(g_rgeVehicles[vehicleid][e_iComponents][tmp++])(,));
 
-    mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-        INSERT INTO `PLAYER_VEHICLES` \
-            (OWNER_ID, MODEL, HEALTH, FUEL, PANELS_STATUS, DOORS_STATUS, LIGHTS_STATUS, TIRES_STATUS, COLOR_ONE, COLOR_TWO, PAINTJOB, POS_X, POS_Y, POS_Z, ANGLE, INTERIOR, VW, COMPONENTS, PARAMS) \
-        VALUES \
-            (%d, %d, %f, %f, %d, %d, %d, %d, %d, %d, %d, %f, %f, %f, %f, %d, %d, '%s', %d);\
-    ",
-        Player_AccountID(playerid),
-        GetVehicleModel(vehicleid),
-        g_rgeVehicles[vehicleid][e_fHealth], g_rgeVehicles[vehicleid][e_fFuel], panels, doors, lights, tires,
-        g_rgeVehicles[vehicleid][e_iColorOne], g_rgeVehicles[vehicleid][e_iColorTwo], g_rgeVehicles[vehicleid][e_iPaintjob],
-        g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ], g_rgeVehicles[vehicleid][e_fPosAngle],
-        g_rgeVehicles[vehicleid][e_iVehInterior] ,g_rgeVehicles[vehicleid][e_iVehWorld],
-        components, params
-    );
-
-    mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+    if(!g_rgeVehicles[vehicleid][e_iVehicleDbId])
+    {
+        inline const QueryDone()
+        {
+            g_rgeVehicles[vehicleid][e_iVehicleDbId] = cache_insert_id();
+        }
+        mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "\
+            INSERT INTO `PLAYER_VEHICLES` \
+                (OWNER_ID, MODEL, HEALTH, FUEL, PANELS_STATUS, DOORS_STATUS, LIGHTS_STATUS, TIRES_STATUS, COLOR_ONE, COLOR_TWO, PAINTJOB, POS_X, POS_Y, POS_Z, ANGLE, INTERIOR, VW, COMPONENTS, PARAMS) \
+            VALUES \
+                (%d, %d, %f, %f, %d, %d, %d, %d, %d, %d, %d, %f, %f, %f, %f, %d, %d, '%s', %d);\
+        ",
+            Player_AccountID(playerid),
+            GetVehicleModel(vehicleid),
+            g_rgeVehicles[vehicleid][e_fHealth], g_rgeVehicles[vehicleid][e_fFuel], panels, doors, lights, tires,
+            g_rgeVehicles[vehicleid][e_iColorOne], g_rgeVehicles[vehicleid][e_iColorTwo], g_rgeVehicles[vehicleid][e_iPaintjob],
+            g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ], g_rgeVehicles[vehicleid][e_fPosAngle],
+            g_rgeVehicles[vehicleid][e_iVehInterior] ,g_rgeVehicles[vehicleid][e_iVehWorld],
+            components, params
+        );
+        MySQL_TQueryInline(g_hDatabase, using inline QueryDone, YSI_UNSAFE_HUGE_STRING);
+    }
+    else
+    {
+        mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYER_VEHICLES` SET `OWNER_ID` = %d WHERE `VEHICLE_ID` = %d;", Player_AccountID(playerid), g_rgeVehicles[vehicleid][e_iVehicleDbId]);
+        mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+    }
 
     return 1;
 }

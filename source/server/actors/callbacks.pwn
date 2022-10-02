@@ -10,8 +10,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         new actorid = GetPlayerTargetDynamicActor(playerid);
         if(actorid != INVALID_STREAMER_ID)
         {
-            Actor_Rob(playerid, actorid);
-            return 1;
+            if(Actor_Rob(playerid, actorid))
+                return 1;
         }
     }
 
@@ -59,7 +59,7 @@ public ROBBERY_Progress(playerid, actorid, phase)
             {*/
             ApplyDynamicActorAnimation(actorid, "SHOP", "SHP_ROB_GIVECASH", 4.1, false, false, false, true, 0);
 
-            new money = random(g_rgeRobbableActors[id][e_iMaxMoneyReward] - g_rgeRobbableActors[id][e_iMinMoneyReward]) + g_rgeRobbableActors[id][e_iMinMoneyReward];
+            new money = Random(g_rgeRobbableActors[id][e_iMinMoneyReward], g_rgeRobbableActors[id][e_iMaxMoneyReward]);
             Player_GiveMoney(playerid, money);
 
             new message[85];
