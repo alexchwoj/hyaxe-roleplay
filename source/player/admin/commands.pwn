@@ -646,11 +646,11 @@ command unban(playerid, const params[], "Desbanear a un jugador")
     {
         if(cache_affected_rows())
         {
-            SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Usuarios desbaneado: {ED2B2B}%s{DADADA}.", name);
+            SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Usuario desbaneado: {ED2B2B}%s{DADADA}.", name);
         }
         else
         {
-            SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No hay usuarios baneados con ese nombre.");
+            SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No hay un usuario baneado con ese nombre.");
         }
     }
     MySQL_TQueryInline(g_hDatabase, using inline QueryDone, "DELETE FROM `BANS` WHERE `BANNED_USER` = '%e';", name);
