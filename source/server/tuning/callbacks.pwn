@@ -327,11 +327,6 @@ player_menu tuning_sel_component(playerid, response, listitem)
 
         new component = g_rgeTuningMenu[playerid][listitem][e_iID];
         g_rgeVehicles[vehicleid][e_iComponents][GetVehicleComponentType(component)] = component;
-
-        for(new i; i < 14; ++i)
-        {
-            printf("Tunning: g_rgeVehicles[vehicleid][e_iComponents][%d] = %d", i, g_rgeVehicles[vehicleid][e_iComponents][i]);
-        }
     }
     else if (response == MENU_RESPONSE_DOWN || response == MENU_RESPONSE_UP)
     {
