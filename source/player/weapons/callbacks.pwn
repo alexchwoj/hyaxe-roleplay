@@ -12,7 +12,7 @@ public OnPlayerSpawn(playerid)
     SetPlayerSkillLevel(playerid, WEAPONSKILL_SAWNOFF_SHOTGUN, 201);
     SetPlayerSkillLevel(playerid, WEAPONSKILL_SPAS12_SHOTGUN, 999);
     SetPlayerSkillLevel(playerid, WEAPONSKILL_MICRO_UZI, 51);
-    SetPlayerSkillLevel(playerid, WEAPONSKILL_MP5, 251);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_MP5, 999);
     SetPlayerSkillLevel(playerid, WEAPONSKILL_AK47, 999);
     SetPlayerSkillLevel(playerid, WEAPONSKILL_M4, 999);
     SetPlayerSkillLevel(playerid, WEAPONSKILL_SNIPERRIFLE, 301);
