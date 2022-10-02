@@ -34,6 +34,30 @@ static Pizza_OnBuy(playerid, shop_id, item_id)
             Player_AddHunger(playerid, -10.0);
             Player_AddThirst(playerid, 1.0);
         }
+        case 1:
+        {
+            SendClientMessage(playerid, 0xDADADAFF, "Compraste una {CB3126}pizza con papas fritas{DADADA}.");
+            Player_AddHunger(playerid, -15.0);
+            Player_AddThirst(playerid, 1.5);
+        }
+        case 2:
+        {
+            SendClientMessage(playerid, 0xDADADAFF, "Compraste una {CB3126}ensalada con pollo{DADADA}.");
+            Player_AddHunger(playerid, -12.5);
+            Player_AddThirst(playerid, -5.0);
+        }
+        case 3:
+        {
+            SendClientMessage(playerid, 0xDADADAFF, "Compraste una {CB3126}porción de pizza con ensalada{DADADA}.");
+            Player_AddHunger(playerid, -16.0);
+            Player_AddThirst(playerid, -2.0);
+        }
+        case 4:
+        {
+            SendClientMessage(playerid, 0xDADADAFF, "Compraste una {CB3126}pizza grande{DADADA}.");
+            Player_AddHunger(playerid, -50.0);
+            Player_AddThirst(playerid, 15.0);
+        }
     }
 
     if(g_rgePlayerTempData[playerid][e_iPlayerEatCount] >= (Player_Skin(playerid) == 5 ? 10 : 5))
@@ -115,7 +139,7 @@ public OnScriptInit()
     Shop_AddItem(ugis, "Pizza con papas fritas", 2220, 35, -25.29, 23.39, 74.69); // Pizza with extras
     Shop_AddItem(ugis, "Ensalada con pollo", 2355, 40, -25.29, 23.39, 74.69 ); // Chicken Salad
     Shop_AddItem(ugis, "Porción de pizza con ensalada", 2219, 50, -25.29, 23.39, 74.69); // Pizza and salad
-    Shop_AddItem(ugis, "Pizza grande", 19580, 100, -25.29, 23.39, 74.69); // Large pizza
+    Shop_AddItem(ugis, "Pizza grande", 19580, 100, 0.0, 0.0, 0.0); // Large pizza
 
     #if defined PIZZA_OnScriptInit
         return PIZZA_OnScriptInit();
