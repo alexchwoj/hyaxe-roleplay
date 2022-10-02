@@ -100,7 +100,8 @@ public OnFilterScriptInit()
     new tmpobjid;
 
     // Trucker
-    CreateDynamicObject(3578, 0.00000, 0.00000, 0.00000,  0.00000, 0.00000, 0.00000);
+    CreateDynamicObject(3578, -43.89650, 147.64136, -0.63565,   0.00000, 0.00000, 0.00000);
+    CreateDynamicObject(3578, 43.89650, -147.64136, 0.63565,   0.00000, 0.00000, 0.00000);
 
     // Spraycan
     CreateDynamicObject(2752, 2380.7924, -1243.3140, 23.8157, 0.0000, 0.0000, 0.0000); //CJ_hairspray2
