@@ -55,6 +55,7 @@ public OnScriptInit()
     EnterExit_Create(19902, "{ED2B2B}24/7", "{DADADA}Salida", -1676.0208, 432.0192, 7.1797, 223.0368, 0, 0, 6.0728,-31.3407, 1003.5494, 6.2127, 15, 10, -1, 0);
     EnterExit_Create(19902, "{ED2B2B}24/7", "{DADADA}Salida", -2419.8621, 969.9724, 45.2969, 271.3646, 0, 0, 6.0728,-31.3407, 1003.5494, 6.2127, 16, 10, -1, 0);
     EnterExit_Create(19902, "{ED2B2B}24/7", "{DADADA}Salida", -2442.8604, 755.0207, 35.1719, 179.8825, 0, 0, 6.0728,-31.3407, 1003.5494, 6.2127, 17, 10, -1, 0);
+    EnterExit_Create(19902, "{ED2B2B}24/7", "{DADADA}Salida", 1582.2601, -1170.5659, 24.0781, 357.4225, 0, 0, 6.0728,-31.3407, 1003.5494, 6.2127, 18, 10, -1, 0);
 
     // Actors
     Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 0, .interiorid = 10);
@@ -75,6 +76,7 @@ public OnScriptInit()
     Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 15, .interiorid = 10);
     Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 16, .interiorid = 10);
     Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 17, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 18, .interiorid = 10);
     
     // MapIcons
     CreateDynamicMapIcon(2001.8507, -1761.6123, 13.5391, 17, -1, .worldid = 0, .interiorid = 0);
@@ -96,6 +98,7 @@ public OnScriptInit()
     CreateDynamicMapIcon(-1676.0208, 432.0192, 7.1797, 17, -1, .worldid = 0, .interiorid = 0);
     CreateDynamicMapIcon(-2419.8621, 969.9724, 45.2969, 17, -1, .worldid = 0, .interiorid = 0);
     CreateDynamicMapIcon(-2442.8604, 755.0207, 35.1719, 17, -1, .worldid = 0, .interiorid = 0);
+    CreateDynamicMapIcon(1582.2601, -1170.5659, 24.0781, 17, -1, .worldid = 0, .interiorid = 0);
 
     new shopid = Shop_Create("24/7", 
         2.1105, -29.0141, 1003.5494, -1, 10,

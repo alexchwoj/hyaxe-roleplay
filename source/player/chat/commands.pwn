@@ -112,7 +112,11 @@ command duda(playerid, const params[], "Envia un mensaje al canal de dudas")
     if (Player_MutedTime(playerid) > gettime())
         return SendClientMessage(playerid, 0xED2B2BFF, va_return("›{DADADA} Estás silenciado durante %d segundos.", Player_MutedTime(playerid) - gettime()));
 
+    if (g_rgePlayerTempData[playerid][e_iDoubtSentTime] > gettime() && !Player_AdminLevel(playerid))
+        return SendClientMessage(playerid, 0xED2B2BFF, va_return("›{DADADA} Hay que esperar %d segundos para poder enviar otra pregunta.", g_rgePlayerTempData[playerid][e_iDoubtSentTime] - gettime()));
+
     Chat_SendDoubt(playerid, params);
+    g_rgePlayerTempData[playerid][e_iDoubtSentTime] = gettime() + 15;
     return 1;
 }
 alias:duda("n", "d")

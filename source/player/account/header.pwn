@@ -3,7 +3,7 @@
 #endif
 #define _account_header_
 
-const PLAYER_DEFAULT_MONEY = 1500;
+const PLAYER_DEFAULT_MONEY = 2000;
 const Float:PLAYER_SPAWN_X = 1728.8326;
 const Float:PLAYER_SPAWN_Y = -1174.8977;
 const Float:PLAYER_SPAWN_Z = 23.8315;
@@ -122,7 +122,8 @@ enum ePlayerTemp
     e_iPlayerCarJackAmount,
     e_rgiTimers[ePlayerTimers],
     e_iMedicineUseTime,
-    e_iCrackUseTime
+    e_iCrackUseTime,
+    e_iDoubtSentTime
 };
 
 new 
