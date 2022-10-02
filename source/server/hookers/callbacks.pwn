@@ -106,7 +106,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         if(g_rgiPlayerInteractingHooker[playerid] != INVALID_PLAYER_ID)
         {
             new hookerid = g_rgiPlayerInteractingHooker[playerid];
-            if(g_rgiHookerPendingTask[hookerid] == HOOKER_WAIT_FOR_AREA)
+            if(g_rgiHookerPendingTask{hookerid} == HOOKER_WAIT_FOR_AREA)
             {
                 KillTimer(g_rgiHookerUpdateTimer[hookerid]);
                 g_rgiHookerUpdateTimer[hookerid] = 0;
@@ -122,7 +122,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
                 FCNPC_AimAtPlayer(g_rgiHookers[hookerid], playerid);
                 FCNPC_GoTo(g_rgiHookers[hookerid], x, y, z, FCNPC_MOVE_TYPE_WALK);
-                g_rgiHookerPendingTask[hookerid] = HOOKER_BLOWJOB;
+                g_rgiHookerPendingTask{hookerid} = HOOKER_BLOWJOB;
 
                 ApplyAnimation(g_rgiHookerInteractingPlayer[hookerid], "BLOWJOBZ", "BJ_STAND_START_P", 4.1, 0, 0, 0, 1, 0);
 
@@ -162,7 +162,7 @@ dialog hooker_accept(playerid, dialogid, response, listitem, inputtext[])
         FCNPC_StopAim(g_rgiHookers[hookerid]);
         g_rgbHookerAvailable{hookerid} = true;
 
-        if(g_rgiHookerPendingTask[hookerid] == HOOKER_WALK_BACK_TO_SITE)
+        if(g_rgiHookerPendingTask{hookerid} == HOOKER_WALK_BACK_TO_SITE)
         {
             FCNPC_GoTo(g_rgiHookers[hookerid], g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2]);
         }
@@ -192,13 +192,13 @@ dialog hooker_accept(playerid, dialogid, response, listitem, inputtext[])
 
             FCNPC_GoTo(npcid, x, y, z, FCNPC_MOVE_TYPE_WALK);
             TogglePlayerControllable(playerid, false);
-            g_rgiHookerPendingTask[hookerid] = HOOKER_KISS_ONFOOT;
+            g_rgiHookerPendingTask{hookerid} = HOOKER_KISS_ONFOOT;
             ApplyAnimation(playerid, "KISSING", "null", 4.1, 0, 0, 0, 0, 0, 0);
         }
         case 1:
         {
             FCNPC_StopAim(g_rgiHookers[hookerid]);
-            g_rgiHookerPendingTask[hookerid] = HOOKER_WAIT_FOR_AREA;
+            g_rgiHookerPendingTask{hookerid} = HOOKER_WAIT_FOR_AREA;
             g_rgiHookerUpdateTimer[hookerid] = SetTimerEx("HOOKER_Update", 750, true, "i", hookerid);
             FCNPC_ResetAnimation(npcid);
 
@@ -219,7 +219,7 @@ public FCNPC_OnReachDestination(npcid)
     new hookerid = binary_search(g_rgiHookers, npcid);
     if(hookerid != -1)
     {
-        if(g_rgiHookerPendingTask[hookerid] == HOOKER_KISS_ONFOOT)
+        if(g_rgiHookerPendingTask{hookerid} == HOOKER_KISS_ONFOOT)
         {
             new playerid = g_rgiHookerInteractingPlayer[hookerid];
             TogglePlayerControllable(playerid, true);
@@ -230,13 +230,13 @@ public FCNPC_OnReachDestination(npcid)
 
             SetTimerEx("HOOKER_KissingDone", 5500, false, "ii", playerid, hookerid);
         }
-        else if(g_rgiHookerPendingTask[hookerid] == HOOKER_WALK_BACK_TO_SITE)
+        else if(g_rgiHookerPendingTask{hookerid} == HOOKER_WALK_BACK_TO_SITE)
         {
             FCNPC_SetAngle(npcid, g_rgfHookerPos[hookerid][3]);
             FCNPC_SetAnimationByName(npcid, "BAR:BARCUSTOM_LOOP", 4.1, 1, 0, 0, 0, 0);
-            g_rgiHookerPendingTask[hookerid] = HOOKER_NONE;
+            g_rgiHookerPendingTask{hookerid} = HOOKER_NONE;
         }
-        else if(g_rgiHookerPendingTask[hookerid] == HOOKER_BLOWJOB)
+        else if(g_rgiHookerPendingTask{hookerid} == HOOKER_BLOWJOB)
         {
             FCNPC_StopAim(g_rgiHookers[hookerid]);
             FCNPC_ApplyAnimation(npcid, "BLOWJOBZ", "BJ_STAND_START_W", 4.1, 0, 0, 0, 1, 0);
@@ -269,7 +269,7 @@ public HOOKER_KissingDone(playerid, hookerid)
 
     FCNPC_StopAim(g_rgiHookers[hookerid]);
     FCNPC_GoTo(g_rgiHookers[hookerid], g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2]);
-    g_rgiHookerPendingTask[hookerid] = HOOKER_WALK_BACK_TO_SITE;
+    g_rgiHookerPendingTask{hookerid} = HOOKER_WALK_BACK_TO_SITE;
 
     g_rgiHookerInteractingPlayer[hookerid] = 
     g_rgiPlayerInteractingHooker[playerid] = INVALID_PLAYER_ID;
@@ -282,7 +282,7 @@ public HOOKER_Update(hookerid)
 {
     new npcid = g_rgiHookers[hookerid];
 
-    if(g_rgiHookerPendingTask[hookerid] == HOOKER_WAIT_FOR_AREA)
+    if(g_rgiHookerPendingTask{hookerid} == HOOKER_WAIT_FOR_AREA)
     {
         new playerid = g_rgiHookerInteractingPlayer[hookerid];
         FCNPC_GoToPlayer(npcid, playerid, .pathfinding = FCNPC_MOVE_PATHFINDING_RAYCAST);
@@ -326,7 +326,7 @@ public HOOKER_FinishBlowingAnim(hookerid, playerid)
         
         g_rgbHookerAvailable{hookerid} = true;
         FCNPC_GoTo(g_rgiHookers[hookerid], g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2]);
-        g_rgiHookerPendingTask[hookerid] = HOOKER_WALK_BACK_TO_SITE;
+        g_rgiHookerPendingTask{hookerid} = HOOKER_WALK_BACK_TO_SITE;
 
         g_rgiHookerInteractingPlayer[hookerid] = 
         g_rgiPlayerInteractingHooker[playerid] = INVALID_PLAYER_ID;
@@ -343,7 +343,7 @@ public HOOKER_BlowingEnd(hookerid, playerid)
 {
     Player_Puke(playerid);
     FCNPC_GoTo(g_rgiHookers[hookerid], g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2]);
-    g_rgiHookerPendingTask[hookerid] = HOOKER_WALK_BACK_TO_SITE;
+    g_rgiHookerPendingTask{hookerid} = HOOKER_WALK_BACK_TO_SITE;
 
     g_rgiHookerInteractingPlayer[hookerid] = 
     g_rgiPlayerInteractingHooker[playerid] = INVALID_PLAYER_ID;
@@ -361,7 +361,7 @@ public OnPlayerDisconnect(playerid, reason)
 
         FCNPC_ClearAnimations(g_rgiHookers[hookerid]);
         FCNPC_GoTo(g_rgiHookers[hookerid], g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2]);
-        g_rgiHookerPendingTask[hookerid] = HOOKER_WALK_BACK_TO_SITE;
+        g_rgiHookerPendingTask{hookerid} = HOOKER_WALK_BACK_TO_SITE;
         
         g_rgiHookerInteractingPlayer[hookerid] = 
         g_rgiPlayerInteractingHooker[playerid] = INVALID_PLAYER_ID;
