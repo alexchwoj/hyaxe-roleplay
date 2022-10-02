@@ -389,6 +389,15 @@ SSCANF:boolean(string[])
 	return 0;
 }
 
+SSCANF:time_unit(string[])
+{
+	if(!strcmp(string, "segundos", true) || !strcmp(string, "segundo", true)) return 1;
+	else if(!strcmp(string, "minutos", true) || !strcmp(string, "minuto", true)) return 2;
+	else if(!strcmp(string, "horas", true) || !strcmp(string, "hora", true)) return 3;
+
+	return 0;
+}
+
 command sinfo(playerid, const params[], "Información del servidor")
 {
 	SendClientMessage(playerid, 0xED2B2BFF,  "========== DEBUG ==========");

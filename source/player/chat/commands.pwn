@@ -123,11 +123,23 @@ alias:duda("n", "d")
 
 command mutear(playerid, const params[], "Silenciar a un usuario del canal de dudas.")
 {
-    new destination, time, reason[51];
-    if (sscanf(params, "rI(60)S(No especificada)[50]", destination, time, reason))
+    new destination, time, time_unit, reason[51];
+    if (sscanf(params, "rI(1)K<time_unit>(segundos)S(No especificada)[50]", destination, time, time_unit, reason))
     {
-        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/mutear {DADADA}<jugador> {969696}[tiempo en segundos = 60 (1 minuto)] [razón = \"No especificada\"]");
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/mutear {DADADA}<jugador> {969696}[tiempo = 1] [unidad de tiempo (horas, minutos, segundos) = minutos] [razón = \"No especificada\"]");
         return 1;
+    }
+
+    switch(time_unit)
+    {
+        case 1: {}
+        case 2: time *= 60;
+        case 3: time *= 3600;
+        default:
+        {
+            SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} Unidad de tiempo inválida. Debe ser {ED2B2B}horas{DADADA}, {ED2B2B}minutos{DADADA}, o {ED2B2B}segundos{DADADA}.");
+            return 1;
+        }
     }
 
     if (!IsPlayerConnected(destination))
