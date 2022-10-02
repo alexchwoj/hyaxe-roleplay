@@ -50,6 +50,16 @@ static Flag_OnUse(playerid, slot)
     if (g_rgeTerritories[territory_index][e_iGangID] == Gang_Data(Player_Gang(playerid))[e_iGangDbId])
         return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Este territorio ya pertenece a la banda.");
 
+    new members;
+    foreach(new i : Player)
+    {
+        if (IsPlayerInDynamicArea(i, g_rgeTerritories[territory_index][e_iArea]) && !Bit_Get(Player_Flags(i), PFLAG_INJURED) && Player_Gang(i) == g_rgeTerritories[territory_index][e_iGangAttaking])
+            ++members;
+    }
+
+    if (members < 4)
+        return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Se necesitan al menos 4 miembros de la banda para conquistar.");
+
     Gang_PlayerStartConquest(playerid, territory_index);
 
     Inventory_Hide(playerid);
