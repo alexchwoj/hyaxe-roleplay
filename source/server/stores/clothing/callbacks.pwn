@@ -113,6 +113,9 @@ public OnPlayerDisconnect(playerid, reason)
 forward CLOTH_RotatePlayerSkin(playerid, Float:delta);
 public CLOTH_RotatePlayerSkin(playerid, Float:delta)
 {
+    if (!Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES))
+        return KillTimer(g_rgiRotateSkinTimer[playerid]);
+
     new Float:angle;
     GetPlayerFacingAngle(playerid, angle);
     angle += delta;
