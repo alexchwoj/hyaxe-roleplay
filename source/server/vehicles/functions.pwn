@@ -443,6 +443,11 @@ Player_SaveVehicles(playerid)
         GetVehicleParamsEx(vehicleid, engine, lights_p, alarm, doors_p, bonnet, boot, objective);
         new params = engine | (lights_p << 1) | (alarm << 2) | (doors_p << 3) | (bonnet << 4) | (boot << 5) | (objective << 6);
 
+        for(new i; i < 14; ++i)
+        {
+            printf("Player_SaveVehicles: g_rgeVehicles[vehicleid][e_iComponents][%d] = %d", i, g_rgeVehicles[vehicleid][e_iComponents][i]);
+        }
+
         new components[70], tmp = 0;
         format(components, sizeof(components), "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d", PP_LOOP<14>(g_rgeVehicles[vehicleid][e_iComponents][tmp++])(,));
 
