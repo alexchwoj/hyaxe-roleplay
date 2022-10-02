@@ -29,7 +29,7 @@ public OnScriptInit()
 
         if (g_rgeTerritories[i][e_bIsConquerable])
         {   
-            g_rgeTerritories[i][e_iGangAttaking] = -1;
+            g_rgeTerritories[i][e_iGangAttacking] = -1;
             g_rgeTerritories[i][e_iColor] = 0xD1D1D133;
             g_rgeTerritories[i][e_iGangZone] = GangZoneCreate(g_rgeTerritories[i][e_fMinX], g_rgeTerritories[i][e_fMinY], g_rgeTerritories[i][e_fMaxX], g_rgeTerritories[i][e_fMaxY]);
             g_rgeTerritories[i][e_iArea] = CreateDynamicCube(
@@ -122,14 +122,14 @@ public TERR_UpdateProgress(territory_index)
     new members;
     foreach(new i : Player)
     {
-        if (IsPlayerInDynamicArea(i, g_rgeTerritories[territory_index][e_iArea]) && !Bit_Get(Player_Flags(i), PFLAG_INJURED) && Player_Gang(i) == g_rgeTerritories[territory_index][e_iGangAttaking])
+        if (IsPlayerInDynamicArea(i, g_rgeTerritories[territory_index][e_iArea]) && !Bit_Get(Player_Flags(i), PFLAG_INJURED) && Player_Gang(i) == g_rgeTerritories[territory_index][e_iGangAttacking])
             ++members;
     }
 
     if (!members)
     {
         new str_text[164];
-        format(str_text, sizeof(str_text), "La banda ~y~%s~w~ no pudo conquistar el territorio en ~y~%s~w~ porque no hay quien lo defienda.", Gang_Data(g_rgeTerritories[territory_index][e_iGangAttaking])[e_szGangName], g_rgeTerritories[territory_index][e_szName]);
+        format(str_text, sizeof(str_text), "La banda ~y~%s~w~ no pudo conquistar el territorio en ~y~%s~w~ porque no hay quien lo defienda.", Gang_Data(g_rgeTerritories[territory_index][e_iGangAttacking])[e_szGangName], g_rgeTerritories[territory_index][e_szName]);
         GangEvent_SendNotification(str_text, 5000, 0xDAA838FF);
 
         Territory_CancelConquest(territory_index);
@@ -141,16 +141,16 @@ public TERR_UpdateProgress(territory_index)
     if (g_rgeTerritories[territory_index][e_fConquestProgress] >= 100.0)
     {
         new str_text[164], payment = 100 + random(500);
-        format(str_text, sizeof(str_text), "La banda ~y~%s~w~ ha conquistado el territorio en ~y~%s~w~, y cada miembro ha ganado $%s.", Gang_Data(g_rgeTerritories[territory_index][e_iGangAttaking])[e_szGangName], g_rgeTerritories[territory_index][e_szName], Format_Thousand(payment));
+        format(str_text, sizeof(str_text), "La banda ~y~%s~w~ ha conquistado el territorio en ~y~%s~w~, y cada miembro ha ganado $%s.", Gang_Data(g_rgeTerritories[territory_index][e_iGangAttacking])[e_szGangName], g_rgeTerritories[territory_index][e_szName], Format_Thousand(payment));
         GangEvent_SendNotification(str_text, 5000, 0xDAA838FF);
 
         foreach(new i : Player)
         {
-            if (Player_Gang(i) == g_rgeTerritories[territory_index][e_iGangAttaking])
+            if (Player_Gang(i) == g_rgeTerritories[territory_index][e_iGangAttacking])
                 Player_GiveMoney(i, payment);
         }
 
-        Territory_SetGang(territory_index, g_rgeTerritories[territory_index][e_iGangAttaking]);
+        Territory_SetGang(territory_index, g_rgeTerritories[territory_index][e_iGangAttacking]);
         Territory_CancelConquest(territory_index);
         return 0;
     }

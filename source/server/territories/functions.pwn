@@ -5,7 +5,7 @@
 
 Territory_CancelConquest(territory_index)
 {
-    g_rgeTerritories[territory_index][e_iGangAttaking] = -1;
+    g_rgeTerritories[territory_index][e_iGangAttacking] = -1;
     g_rgeTerritories[territory_index][e_fConquestProgress] = 0.0;
     
     DestroyDynamicObject(g_rgeTerritories[territory_index][e_iFlagObject]);

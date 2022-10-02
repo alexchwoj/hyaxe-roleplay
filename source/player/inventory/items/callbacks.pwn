@@ -41,7 +41,7 @@ static Flag_OnUse(playerid, slot)
     if (!g_rgeTerritories[territory_index][e_bIsConquerable])
         return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No te encuentras en una zona conquistable.");
 
-    if (g_rgeTerritories[territory_index][e_iGangAttaking] != -1)
+    if (g_rgeTerritories[territory_index][e_iGangAttacking] != -1)
         return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Este territorio ya está siendo conquistado.");
 
     if (g_rgeGangs[Player_Gang(playerid)][e_bGangAttacking])

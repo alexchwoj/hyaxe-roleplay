@@ -224,7 +224,7 @@ Gang_PlayerStartConquest(playerid, territory_index)
     g_rgeTerritories[territory_index][e_iMapIcon] = CreateDynamicMapIcon(x, y, z, 19, -1, 0, 0, .style = MAPICON_GLOBAL, .streamdistance = 2064.0);
     
     g_rgeTerritories[territory_index][e_iConquestTimer] = SetTimerEx("TERR_UpdateProgress", 6000, true, "i", territory_index);
-    g_rgeTerritories[territory_index][e_iGangAttaking] = Player_Gang(playerid);
+    g_rgeTerritories[territory_index][e_iGangAttacking] = Player_Gang(playerid);
 
     new str_text[164];
     format(str_text, sizeof(str_text), "La banda ~y~%s~w~ está conquistando un territorio en ~y~%s~w~.", Gang_Data(Player_Gang(playerid))[e_szGangName], g_rgeTerritories[territory_index][e_szName]);

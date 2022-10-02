@@ -20,7 +20,7 @@ enum eTerritoryInfo
     bool:e_bIsConquerable,
 	Float:e_fConquestProgress,
 	e_iConquestTimer,
-	e_iGangAttaking,
+	e_iGangAttacking,
 
 	e_iArea,
 	e_iGangZone,
