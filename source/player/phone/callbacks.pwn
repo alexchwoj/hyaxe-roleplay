@@ -188,6 +188,13 @@ phone_menu my_vehicles(playerid, response, listitem)
 	}
 
 	new vehicleid = Listitem_Extra(listitem);
+	if (!IsValidVehicle(vehicleid))
+	{
+		Player_ShowGPS(playerid);
+		Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "El vehículo se encuentra destruido");
+		return 0;
+	}
+
 	GetVehiclePos(vehicleid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
 	Player_SetGPSCheckpoint(playerid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
 	
