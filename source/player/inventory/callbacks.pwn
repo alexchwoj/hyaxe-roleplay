@@ -184,7 +184,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 	    {
             if (playertextid == p_tdItemView[playerid]{i})
             {
-                if (i == g_rgePlayerTempData[playerid][e_iPlayerItemSlot])
+                if (i == g_rgePlayerTempData[playerid][e_iPlayerItemSlot] && InventorySlot_IsValid(playerid, i))
                 {
                     g_rgePlayerTempData[playerid][e_iPlayerItemSlot] = i;
                     g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] = 1;
