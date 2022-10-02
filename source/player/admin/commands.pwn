@@ -642,7 +642,7 @@ command unban(playerid, const params[], "Desbanear a un jugador")
         return 1;
     }
 
-    mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "DELETE `BANS` WHERE BANNED_USER = '%s';", name);
+    mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "DELETE `BANS` WHERE `BANNED_USER` = '%s';", name);
     mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
 
     SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Usuarios desbaneado: {ED2B2B}%s{DADADA}.", name);

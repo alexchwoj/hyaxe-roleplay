@@ -70,6 +70,7 @@ public OnPlayerPauseStateChange(playerid, pausestate)
 
 public OnScriptInit()
 {
+    g_iWeatherIndex = random(sizeof(g_iWeatherTypesList));
     SetTimer("Timer_WeatherUpdate", HYAXE_WEATHER_INTERVAL, true);
 
     #if defined Clock_OnScriptInit
