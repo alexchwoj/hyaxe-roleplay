@@ -5,6 +5,8 @@
 
 static Clothing_OnPress(playerid, store_type)
 {
+    KillTimer(g_rgiRotateSkinTimer[playerid]);
+
     Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING, true);
     Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES, true);
     TogglePlayerControllable(playerid, false);
