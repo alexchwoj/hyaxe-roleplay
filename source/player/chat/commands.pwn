@@ -124,7 +124,7 @@ alias:duda("n", "d")
 command mutear(playerid, const params[], "Silenciar a un usuario del canal de dudas.")
 {
     new destination, time, time_unit, reason[51];
-    if (sscanf(params, "rI(1)K<time_unit>(segundos)S(No especificada)[50]", destination, time, time_unit, reason))
+    if (sscanf(params, "rI(1)K<time_unit>(0)S(No especificada)[50]", destination, time, time_unit, reason))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/mutear {DADADA}<jugador> {969696}[tiempo = 1] [unidad de tiempo (horas, minutos, segundos) = minutos] [razón = \"No especificada\"]");
         return 1;
