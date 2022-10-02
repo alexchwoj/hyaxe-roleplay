@@ -6,7 +6,7 @@
 public Timer_WeatherUpdate()
 {
     g_iWeatherIndex ++;
-    if (g_iWeatherIndex > sizeof(g_iWeatherTypesList))
+    if (g_iWeatherIndex >= sizeof(g_iWeatherTypesList))
         g_iWeatherIndex = 0;
 
     g_iWeatherType = g_iWeatherTypesList[g_iWeatherIndex];

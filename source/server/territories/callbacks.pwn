@@ -122,7 +122,7 @@ public TERR_UpdateProgress(territory_index)
     new members;
     foreach(new i : Player)
     {
-        if (IsPlayerInDynamicArea(i, g_rgeTerritories[territory_index][e_iArea]) && !Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+        if (IsPlayerInDynamicArea(i, g_rgeTerritories[territory_index][e_iArea]) && !Bit_Get(Player_Flags(i), PFLAG_INJURED))
             ++members;
     }
 

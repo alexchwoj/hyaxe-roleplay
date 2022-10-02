@@ -324,6 +324,8 @@ player_menu tuning_sel_component(playerid, response, listitem)
 
         Player_GiveMoney(playerid, -g_rgeTuningMenu[playerid][listitem][e_iPrice]);
         PlayerPlaySound(playerid, 1133);
+        new component = g_rgeTuningMenu[playerid][listitem][e_iID];
+        g_rgeVehicles[vehicleid][e_iComponents][GetVehicleComponentType(component)] = component;
     }
     else if (response == MENU_RESPONSE_DOWN || response == MENU_RESPONSE_UP)
     {

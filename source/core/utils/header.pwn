@@ -8,23 +8,6 @@ const cellbytes = (cellbits / charbits);
 const HYAXE_UNSAFE_HUGE_LENGTH = 2048;
 new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 
-#if defined isnull
-	#undef isnull
-#endif
-#define isnull(%0) ((%0[(%0[0])=='\1'])=='\0')
-
-#if !defined strcpy
-	#define strcpy(%0,%1) strcat((%0[0] = '\0', %0), %1)
-#endif
-
-#if !defined IS_IN_RANGE
-	#define IS_IN_RANGE(%0,%1,%2) (((%0)-((%1)+cellmin))<((%2)-((%1)+cellmin)))
-#endif
-
-#if !defined NOT_IN_RANGE
-	#define NOT_IN_RANGE(%0,%1,%2) (((%0)-((%1)+cellmin))>=((%2)-((%1)+cellmin)))
-#endif
-
 /*  
 ** %0 = Array to fill
 ** %1 = Value to fill array with (must be constant)

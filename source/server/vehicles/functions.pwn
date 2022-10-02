@@ -330,23 +330,8 @@ Player_RegisterVehicle(playerid, vehicleid)
     GetVehicleParamsEx(vehicleid, engine, lights_p, alarm, doors_p, bonnet, boot, objective);
     params = engine | (lights_p << 1) | (alarm << 2) | (doors_p << 3) | (bonnet << 4) | (boot << 5) | (objective << 6);
 
-    new components[70];
-    format(components, sizeof(components), "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
-        g_rgeVehicles[vehicleid][e_iComponents][0],
-        g_rgeVehicles[vehicleid][e_iComponents][1],
-        g_rgeVehicles[vehicleid][e_iComponents][2],
-        g_rgeVehicles[vehicleid][e_iComponents][3],
-        g_rgeVehicles[vehicleid][e_iComponents][4],
-        g_rgeVehicles[vehicleid][e_iComponents][5],
-        g_rgeVehicles[vehicleid][e_iComponents][6],
-        g_rgeVehicles[vehicleid][e_iComponents][7],
-        g_rgeVehicles[vehicleid][e_iComponents][8],
-        g_rgeVehicles[vehicleid][e_iComponents][9],
-        g_rgeVehicles[vehicleid][e_iComponents][10],
-        g_rgeVehicles[vehicleid][e_iComponents][11],
-        g_rgeVehicles[vehicleid][e_iComponents][12],
-        g_rgeVehicles[vehicleid][e_iComponents][13]
-    );
+    new components[70], tmp = 0;
+    format(components, sizeof(components), "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d", PP_LOOP<14>(g_rgeVehicles[vehicleid][e_iComponents][tmp++])(,));
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
         INSERT INTO `PLAYER_VEHICLES` \
@@ -375,7 +360,7 @@ Player_SaveVehicles(playerid)
     if(!Iter_Count(PlayerVehicles[playerid]))
         return 0;
     
-    YSI_UNSAFE_HUGE_STRING[0] = '\0';
+    StrCpy(YSI_UNSAFE_HUGE_STRING, "START TRANSACTION;", YSI_UNSAFE_HUGE_LENGTH);
     
     new query[1024];
     foreach(new vehicleid : PlayerVehicles[playerid])
@@ -393,23 +378,8 @@ Player_SaveVehicles(playerid)
         GetVehicleParamsEx(vehicleid, engine, lights_p, alarm, doors_p, bonnet, boot, objective);
         new params = engine | (lights_p << 1) | (alarm << 2) | (doors_p << 3) | (bonnet << 4) | (boot << 5) | (objective << 6);
 
-        new components[70];
-        format(components, sizeof(components), "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
-            g_rgeVehicles[vehicleid][e_iComponents][0],
-            g_rgeVehicles[vehicleid][e_iComponents][1],
-            g_rgeVehicles[vehicleid][e_iComponents][2],
-            g_rgeVehicles[vehicleid][e_iComponents][3],
-            g_rgeVehicles[vehicleid][e_iComponents][4],
-            g_rgeVehicles[vehicleid][e_iComponents][5],
-            g_rgeVehicles[vehicleid][e_iComponents][6],
-            g_rgeVehicles[vehicleid][e_iComponents][7],
-            g_rgeVehicles[vehicleid][e_iComponents][8],
-            g_rgeVehicles[vehicleid][e_iComponents][9],
-            g_rgeVehicles[vehicleid][e_iComponents][10],
-            g_rgeVehicles[vehicleid][e_iComponents][11],
-            g_rgeVehicles[vehicleid][e_iComponents][12],
-            g_rgeVehicles[vehicleid][e_iComponents][13]
-        );
+        new components[70], tmp = 0;
+        format(components, sizeof(components), "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d", PP_LOOP<14>(g_rgeVehicles[vehicleid][e_iComponents][tmp++])(,));
 
         mysql_format(g_hDatabase, query, sizeof(query), "\
             UPDATE `PLAYER_VEHICLES` SET \
@@ -446,6 +416,7 @@ Player_SaveVehicles(playerid)
         strcat(YSI_UNSAFE_HUGE_STRING, query, YSI_UNSAFE_HUGE_LENGTH);
     }
 
+    strcat(YSI_UNSAFE_HUGE_STRING, "COMMIT;", YSI_UNSAFE_HUGE_LENGTH);
     mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
     return 1;
 }

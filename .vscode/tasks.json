@@ -47,7 +47,7 @@
 				"\"source/main.pwn\"",
 				"--%",
 				"\"-icompiler/include\"",
-				"\"-icompiler\\include\\amx\"",
+				"\"-icompiler\\include\\YSI\"",
 				"\"-isource\"",
 				"\"-ogamemodes/hyaxe.asm\"",
 				"\"-a\"",
@@ -62,7 +62,7 @@
 			"args": [
 				"\"${relativeFile}\"",
 				"\"-icompiler/include\"",
-				"\"-icompiler\\include\\amx\"",
+				"\"-icompiler\\include\\YSI\"",
 				"\"-isource\"",
 				"\"-o${fileDirname}\\${fileBasenameNoExtension}.amx\"",
 			],
