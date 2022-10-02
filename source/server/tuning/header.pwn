@@ -16,7 +16,7 @@ enum eTuningMenu
 new g_rgeTuningMenu[MAX_PLAYERS + 1][MAX_TUNING_PARTS_COMPONENTS][eTuningMenu];
 
 new 
-    Float:s_rgfPreviusTuningPos[MAX_PLAYERS][4],
+    Float:s_rgfPreviousTuningPos[MAX_PLAYERS][4],
     s_rgiPreviusTuningInterior[MAX_PLAYERS],
     s_rgiPreviusTuningWorld[MAX_PLAYERS],
     g_rgiActualTuningComponent[MAX_PLAYERS],

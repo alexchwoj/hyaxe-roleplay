@@ -53,8 +53,8 @@ Tuning_Open(playerid)
     Bit_Set(Player_Flags(playerid), PFLAG_IN_TUNING, true);
 
     // Put the player in the garage
-    GetVehiclePos(vehicle_id, s_rgfPreviusTuningPos[playerid][0], s_rgfPreviusTuningPos[playerid][1], s_rgfPreviusTuningPos[playerid][2]);
-    GetVehicleZAngle(vehicle_id, s_rgfPreviusTuningPos[playerid][3]);
+    GetVehiclePos(vehicle_id, s_rgfPreviousTuningPos[playerid][0], s_rgfPreviousTuningPos[playerid][1], s_rgfPreviousTuningPos[playerid][2]);
+    GetVehicleZAngle(vehicle_id, s_rgfPreviousTuningPos[playerid][3]);
     s_rgiPreviusTuningInterior[playerid] = GetPlayerInterior(playerid);
     s_rgiPreviusTuningWorld[playerid] = GetPlayerVirtualWorld(playerid);
 
@@ -95,21 +95,23 @@ Tuning_Back(playerid)
     if (Bit_Get(Player_Config(playerid), CONFIG_DISPLAY_NEED_BARS))
         Needs_ShowBars(playerid);
 
-    Player_SetPos(playerid, s_rgfPreviusTuningPos[playerid][0], s_rgfPreviusTuningPos[playerid][1], s_rgfPreviusTuningPos[playerid][2]);
-    SetPlayerFacingAngle(playerid, s_rgfPreviusTuningPos[playerid][3]);
+    Player_SetPos(playerid, s_rgfPreviousTuningPos[playerid][0], s_rgfPreviousTuningPos[playerid][1], s_rgfPreviousTuningPos[playerid][2]);
+    SetPlayerFacingAngle(playerid, s_rgfPreviousTuningPos[playerid][3]);
     SetPlayerInterior(playerid, s_rgiPreviusTuningInterior[playerid]);
     SetPlayerVirtualWorld(playerid, s_rgiPreviusTuningWorld[playerid]);
 
     new vehicle_id = GetPlayerVehicleID(playerid);
     if (IsValidVehicle(vehicle_id))
     {
-        SetVehiclePos(vehicle_id, s_rgfPreviusTuningPos[playerid][0], s_rgfPreviusTuningPos[playerid][1], s_rgfPreviusTuningPos[playerid][2]);
-        SetVehicleZAngle(vehicle_id, s_rgfPreviusTuningPos[playerid][3]);
+        SetVehiclePos(vehicle_id, s_rgfPreviousTuningPos[playerid][0], s_rgfPreviousTuningPos[playerid][1], s_rgfPreviousTuningPos[playerid][2]);
+        SetVehicleZAngle(vehicle_id, s_rgfPreviousTuningPos[playerid][3]);
         SetVehicleVirtualWorld(vehicle_id, s_rgiPreviusTuningWorld[playerid]);
         LinkVehicleToInterior(vehicle_id, s_rgiPreviusTuningInterior[playerid]);
         Player_PutInVehicle(playerid, vehicle_id);
 
         ChangeVehicleColor(vehicle_id, g_rgeVehicles[vehicle_id][e_iColorOne], g_rgeVehicles[vehicle_id][e_iColorTwo]);
+
+        Vehicle_Save(vehicle_id);
     }
 
     TogglePlayerControllable(playerid, true);

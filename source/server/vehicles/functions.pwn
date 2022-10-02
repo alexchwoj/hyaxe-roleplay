@@ -364,6 +364,60 @@ Player_RegisterVehicle(playerid, vehicleid)
     return 1;
 }
 
+Vehicle_Save(vehicleid)
+{
+    if(!g_rgeVehicles[vehicleid][e_bValid])
+        return 0;
+
+    new panels, doors, lights, tires;
+    GetVehicleDamageStatus(vehicleid, panels, doors, lights, tires);
+
+    GetVehiclePos(vehicleid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
+    GetVehicleZAngle(vehicleid, g_rgeVehicles[vehicleid][e_fPosAngle]);
+
+    new engine, lights_p, alarm, doors_p, bonnet, boot, objective;
+    GetVehicleParamsEx(vehicleid, engine, lights_p, alarm, doors_p, bonnet, boot, objective);
+    new params = engine | (lights_p << 1) | (alarm << 2) | (doors_p << 3) | (bonnet << 4) | (boot << 5) | (objective << 6);
+
+    new components[70], tmp = 0;
+    format(components, sizeof(components), "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d", PP_LOOP<14>(g_rgeVehicles[vehicleid][e_iComponents][tmp++])(,));
+
+    mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "\
+        UPDATE `PLAYER_VEHICLES` SET \
+            HEALTH = %.2f, \
+            FUEL = %f, \
+            PANELS_STATUS = %d, \
+            DOORS_STATUS = %d, \
+            LIGHTS_STATUS = %d, \
+            TIRES_STATUS = %d, \
+            COLOR_ONE = %d, \
+            COLOR_TWO = %d, \
+            PAINTJOB = %d, \
+            POS_X = %f, \
+            POS_Y = %f, \
+            POS_Z = %f, \
+            ANGLE = %f, \
+            INTERIOR = %d, \
+            VW = %d, \
+            COMPONENTS = '%s', \
+            PARAMS = %d \
+        WHERE `VEHICLE_ID` = %d; \
+    ",
+        g_rgeVehicles[vehicleid][e_fHealth],
+        g_rgeVehicles[vehicleid][e_fFuel],
+        panels, doors, lights, tires,
+        g_rgeVehicles[vehicleid][e_iColorOne], g_rgeVehicles[vehicleid][e_iColorTwo], g_rgeVehicles[vehicleid][e_iPaintjob],
+        g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ], g_rgeVehicles[vehicleid][e_fPosAngle],
+        g_rgeVehicles[vehicleid][e_iVehInterior], g_rgeVehicles[vehicleid][e_iVehWorld],
+        components,
+        params,
+        g_rgeVehicles[vehicleid][e_iVehicleDbId]
+    );
+    mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+
+    return 1;
+}
+
 Player_SaveVehicles(playerid)
 {
     DEBUG_PRINT("[veh] Saving player %i vehicles", playerid);
