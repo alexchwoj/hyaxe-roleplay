@@ -53,10 +53,11 @@ static Flag_OnUse(playerid, slot)
     new members;
     foreach(new i : Player)
     {
-        if (IsPlayerInDynamicArea(i, g_rgeTerritories[territory_index][e_iArea]) && !Bit_Get(Player_Flags(i), PFLAG_INJURED) && Player_Gang(i) == Player_Gang(playerid))
+        if (IsPlayerInDynamicArea(i, g_rgeTerritories[territory_index][e_iArea]) && Player_Gang(i) == Player_Gang(playerid))
             ++members;
     }
 
+    printf("Flag_OnUse, territory members: %d", members);
     if (members < 4)
         return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Se necesitan al menos 4 miembros de la banda para conquistar.");
 

@@ -125,6 +125,7 @@ public TERR_UpdateProgress(territory_index)
         if (IsPlayerInDynamicArea(i, g_rgeTerritories[territory_index][e_iArea]) && !Bit_Get(Player_Flags(i), PFLAG_INJURED) && Player_Gang(i) == g_rgeTerritories[territory_index][e_iGangAttacking])
             ++members;
     }
+    printf("TERR_UpdateProgress, territory members: %d", members);
 
     if (!members)
     {
