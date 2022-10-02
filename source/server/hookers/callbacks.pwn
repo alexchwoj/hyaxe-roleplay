@@ -181,6 +181,27 @@ dialog hooker_accept(playerid, dialogid, response, listitem, inputtext[])
     {
         case 0:
         {
+            if(Player_Money(playerid) < 50)
+            {
+                Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No tienes dinero para esto");
+
+                FCNPC_StopAim(g_rgiHookers[hookerid]);
+                g_rgbHookerAvailable{hookerid} = true;
+
+                if(g_rgiHookerPendingTask{hookerid} == HOOKER_WALK_BACK_TO_SITE)
+                {
+                    FCNPC_GoTo(g_rgiHookers[hookerid], g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2]);
+                }
+                else
+                {
+                    FCNPC_SetAngle(npcid, g_rgfHookerPos[hookerid][3]);
+                    FCNPC_SetAnimationByName(npcid, "BAR:BARCUSTOM_LOOP", 4.1, 1, 0, 0, 0, 0);
+                }
+
+                g_rgiPlayerInteractingHooker[playerid] = INVALID_PLAYER_ID;
+
+                return 1;
+            }
             Player_GiveMoney(playerid, -50);
 
             new Float:x, Float:y, Float:z, Float:angle;
@@ -197,6 +218,28 @@ dialog hooker_accept(playerid, dialogid, response, listitem, inputtext[])
         }
         case 1:
         {
+            if(Player_Money(playerid) < 200)
+            {
+                Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No tienes dinero para esto");
+                
+                FCNPC_StopAim(g_rgiHookers[hookerid]);
+                g_rgbHookerAvailable{hookerid} = true;
+
+                if(g_rgiHookerPendingTask{hookerid} == HOOKER_WALK_BACK_TO_SITE)
+                {
+                    FCNPC_GoTo(g_rgiHookers[hookerid], g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2]);
+                }
+                else
+                {
+                    FCNPC_SetAngle(npcid, g_rgfHookerPos[hookerid][3]);
+                    FCNPC_SetAnimationByName(npcid, "BAR:BARCUSTOM_LOOP", 4.1, 1, 0, 0, 0, 0);
+                }
+
+                g_rgiPlayerInteractingHooker[playerid] = INVALID_PLAYER_ID;
+
+                return 1;
+            }
+            
             FCNPC_StopAim(g_rgiHookers[hookerid]);
             g_rgiHookerPendingTask{hookerid} = HOOKER_WAIT_FOR_AREA;
             g_rgiHookerUpdateTimer[hookerid] = SetTimerEx("HOOKER_Update", 750, true, "i", hookerid);
