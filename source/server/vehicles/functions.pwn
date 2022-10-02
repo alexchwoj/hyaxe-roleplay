@@ -366,7 +366,7 @@ Player_RegisterVehicle(playerid, vehicleid)
 
 Vehicle_Save(vehicleid)
 {
-    if(!g_rgeVehicles[vehicleid][e_bValid])
+    if(!g_rgeVehicles[vehicleid][e_bValid] || !g_rgeVehicles[vehicleid][e_iVehicleDbId])
         return 0;
 
     new panels, doors, lights, tires;
