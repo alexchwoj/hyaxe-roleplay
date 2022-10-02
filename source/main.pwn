@@ -168,18 +168,19 @@ const HYAXE_MAX_NPCS = 100;
 #define FOREACH_NO_VEHICLES
 #define FOREACH_NO_ACTORS
 
-#include <YSI_Core/y_cell>
-#include <YSI_Coding/y_hooks>
-#include <YSI_Coding/y_inline>
-#include <YSI_Coding/y_stringhash>
-#include <YSI_Coding/y_va>
-#include <YSI_Data/y_bit>
-#include <YSI_Data/y_iterate>
-#include <YSI_Data/y_percent>
-#include <YSI_Extra/y_inline_mysql>
-#include <YSI_Extra/y_inline_timers>
-#include <YSI_Storage/y_amx>
-#include <YSI_Visual/y_dialog>
+#include <YSI_Core\y_cell>
+#include <YSI_Core\y_utils>
+#include <YSI_Coding\y_hooks>
+#include <YSI_Coding\y_inline>
+#include <YSI_Coding\y_stringhash>
+#include <YSI_Coding\y_va>
+#include <YSI_Data\y_bit>
+#include <YSI_Data\y_iterate>
+#include <YSI_Data\y_percent>
+#include <YSI_Extra\y_inline_mysql>
+#include <YSI_Extra\y_inline_timers>
+#include <YSI_Storage\y_amx>
+#include <YSI_Visual\y_dialog>
 #include <amx/amx_header>
 
 // Plugin
@@ -270,7 +271,6 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/gangs/events/functions.pwn"
 #include "server/territories/functions.pwn"
 #include "server/fuel_station/functions.pwn"
-#include "server/weather/functions.pwn"
 #include "server/tuning/functions.pwn"
 #include "player/account/functions.pwn"
 #include "player/config/functions.pwn"

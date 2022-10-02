@@ -64,6 +64,7 @@ IPacket:__ac_inv_sync_PlayerSync(playerid, BitStream:bs)
 
 public OnVehicleRespray(playerid, vehicleid, color1, color2)
 {
+    printf("[func] OnVehicleRespray(playerid = %i, vehicleid = %i (model: %i), color1 = %i, color2 = %i)", playerid, vehicleid, GetVehicleModel(vehicleid), color1, color2);
     Anticheat_Trigger(playerid, CHEAT_INVALID_BANNED_SYNC, 0);
     return 0;
 }
