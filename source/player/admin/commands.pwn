@@ -579,6 +579,9 @@ command report(playerid, const params[], "Informar al personal sobre un usuario"
         return 1;
     }
 
+    if (g_rgePlayerTempData[playerid][e_iReportSentTime] > gettime() && !Player_AdminLevel(playerid))
+        return SendClientMessage(playerid, 0xED2B2BFF, va_return("›{DADADA} Hay que esperar %d segundos para poder enviar otra pregunta.", g_rgePlayerTempData[playerid][e_iReportSentTime] - gettime()));
+
 	if (destination == INVALID_PLAYER_ID)
         destination = playerid;
 
@@ -588,6 +591,7 @@ command report(playerid, const params[], "Informar al personal sobre un usuario"
         Admins_SendMessage(RANK_LEVEL_HELPER, 0xDADADAFF, messages[i]);
 	
     Notification_Show(playerid, "Reporte enviado.", 3000, 0x64A752FF);
+    g_rgePlayerTempData[playerid][e_iReportSentTime] = gettime() + 15;
 	return 1;
 }
 alias:report("reportar", "re")

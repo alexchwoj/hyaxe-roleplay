@@ -123,7 +123,8 @@ enum ePlayerTemp
     e_rgiTimers[ePlayerTimers],
     e_iMedicineUseTime,
     e_iCrackUseTime,
-    e_iDoubtSentTime
+    e_iDoubtSentTime,
+    e_iReportSentTime
 };
 
 new 
