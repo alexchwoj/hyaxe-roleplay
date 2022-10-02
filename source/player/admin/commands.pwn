@@ -638,14 +638,23 @@ flags:ife(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)
 command unban(playerid, const params[], "Desbanear a un jugador")
 {
     extract params -> new string:name[24]; else {
-        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/unban {DADADA}[nombre]");
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/unban {DADADA}<nombre>");
         return 1;
     }
 
-    mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "DELETE `BANS` WHERE `BANNED_USER` = '%s';", name);
-    mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+    inline const QueryDone()
+    {
+        if(cache_affected_rows())
+        {
+            SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Usuarios desbaneado: {ED2B2B}%s{DADADA}.", name);
+        }
+        else
+        {
+            SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No hay usuarios baneados con ese nombre.");
+        }
+    }
+    MySQL_TQueryInline(g_hDatabase, using inline QueryDone, "DELETE FROM `BANS` WHERE `BANNED_USER` = '%e';", name);
 
-    SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Usuarios desbaneado: {ED2B2B}%s{DADADA}.", name);
     return 1;
 }
 flags:unban(CMD_FLAG<RANK_LEVEL_MODERATOR>)
