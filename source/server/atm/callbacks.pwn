@@ -154,6 +154,8 @@ public OnScriptInit()
         );
     }
 
+    EnterExit_Create(19902, "{CB3126}Banco Hyaxero", "{DADADA}Salida", 1467.2944, -1010.4169, 26.8438, 176.4286, 0, 0, 1476.4154, -1009.9702, 3035.7476, 354.2045, 0, 0);
+
     #if defined ATM_OnScriptInit
         return ATM_OnScriptInit();
     #else
