@@ -31,7 +31,28 @@ IPacket:__ac_cj_VehicleSync(playerid, BitStream:bs)
         SetPlayerPos(playerid, x, y, z);
 
         ClearAnimations(playerid);
+
+        new Float:z_ang;
+        GetVehiclePos(vehicleid, x, y, z);
+        GetVehicleZAngle(vehicleid, z_ang);
+
+        new BitStream:rpc_bs = BS_New();
+        BS_WriteValue(rpc_bs,
+            PR_UINT16, vehicleid,
+            PR_FLOAT, x,
+            PR_FLOAT, y,
+            PR_FLOAT, z
+        );
+        PR_SendRPC(rpc_bs, playerid, 159);
+        BS_Reset(rpc_bs);
         
+        BS_WriteValue(rpc_bs,
+            PR_UINT16, vehicleid,
+            PR_FLOAT, z_ang
+        );
+        PR_SendRPC(rpc_bs, playerid, 160);
+        BS_Delete(rpc_bs);
+
         return 0;
     }
 
