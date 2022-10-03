@@ -193,7 +193,12 @@ public OnPlayerDisconnect(playerid, reason)
         cache_delete(Player_Cache(playerid));
     
     if(Bit_Get(Player_Flags(playerid), PFLAG_IN_TUNING))
-        Tuning_Back(playerid);
+    {
+        Player_SetPos(playerid, s_rgfPreviousTuningPos[playerid][0], s_rgfPreviousTuningPos[playerid][1], s_rgfPreviousTuningPos[playerid][2]);
+        SetPlayerFacingAngle(playerid, s_rgfPreviousTuningPos[playerid][3]);
+        SetPlayerInterior(playerid, s_rgiPreviusTuningInterior[playerid]);
+        SetPlayerVirtualWorld(playerid, s_rgiPreviusTuningWorld[playerid]);
+    }
 
     g_rgbPlayerKicked{playerid} = false;
     Account_Save(playerid, true);

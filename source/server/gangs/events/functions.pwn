@@ -87,6 +87,7 @@ GangEvent_Start(event_type)
             // Create truck
             g_iGangTruckIndex = random( sizeof(g_rgfTruckDefensePositions) );
 
+            Vehicle_Destroy(g_iGangTruckVehicleID);
             g_iGangTruckVehicleID = Vehicle_Create(
                 498,
                 g_rgfTruckDefensePositions[g_iGangTruckIndex][0],

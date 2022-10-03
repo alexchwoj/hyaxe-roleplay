@@ -190,7 +190,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             Vehicle_PlayerStartEngine(playerid);
         }
     }
-    else if ((newkeys & KEY_YES) != 0)
+    else if ((newkeys & KEY_YES) != 0 && !(newkeys & KEY_SPRINT))
     {
         if(GetTickCount() - s_rgiVehicleLockTick[playerid] > 500)
         {
@@ -482,6 +482,12 @@ public VEHICLE_LoadFromDatabase(playerid)
         }
 
         Iter_Add(PlayerVehicles[playerid], vehicleid);
+
+        // Load trunk
+        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+            SELECT * FROM `VEHICLE_TRUNK` WHERE `VEHICLE_ID` = %i;\
+        ", g_rgeVehicles[vehicleid][e_iVehicleDbId]);
+        mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "TRUNK_LoadFromDatabase", "i", vehicleid);
     }
 
     return 1;

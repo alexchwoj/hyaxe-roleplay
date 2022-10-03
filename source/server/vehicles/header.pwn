@@ -68,6 +68,16 @@ enum eVehicleData
 
 new g_rgeVehicles[MAX_VEHICLES][eVehicleData];
 
+enum eTrunk
+{
+    bool:e_bValid,
+    e_iID,
+    e_iType,
+    e_iAmount,
+    e_iExtra
+};
+new g_rgeVehicleTrunk[MAX_VEHICLES][7][eTrunk];
+
 enum eVehicleModelData
 {
     e_szModelName[20],
@@ -331,6 +341,7 @@ new
 #define Vehicle_GetModelPrice(%0) (g_rgeVehicleModelData[(%0) - 400][e_iPrice])
 
 forward Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, bool:addsiren = false, bool:static_veh = false);
+#define Vehicle_ID(%0) (g_rgeVehicles[(%0)][e_iVehicleDbId])
 #define Vehicle_OwnerId(%0) (g_rgeVehicles[(%0)][e_iVehicleOwnerId])
 #define Vehicle_Type(%0) (g_rgeVehicles[(%0)][e_iVehicleType])
 #define Vehicle_Job(%0) (g_rgeVehicles[(%0)][e_iVehicleWork])

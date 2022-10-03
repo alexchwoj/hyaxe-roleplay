@@ -4,6 +4,7 @@
 #define _inventory_header_
 
 const HYAXE_MAX_INVENTORY_SLOTS = 21;
+const HYAXE_MAX_TRUNK_SLOTS = 7;
 const HYAXE_MAX_DROPPED_ITEMS = 2048;
 const Float:EXP_BAR_MIN_X = 220.500;
 const Float:EXP_BAR_MAX_X = 408.0;
@@ -116,7 +117,7 @@ enum eItemData
     Float:e_fThirst
 }
 
-enum ePlayerInventory 
+enum eInventory 
 {
     bool:e_bValid,
     e_iID,
@@ -202,7 +203,7 @@ new
 
 		{"Invalid item", 18631, false, -1} // ITEM_INVALID
 	},
-    g_rgePlayerInventory[MAX_PLAYERS + 1][HYAXE_MAX_INVENTORY_SLOTS][ePlayerInventory],
+    g_rgePlayerInventory[MAX_PLAYERS + 1][HYAXE_MAX_INVENTORY_SLOTS][eInventory],
     g_rgszRarityName[][] = {
         "~h~~g~COMÚN", "~h~~p~RARO", "~h~~b~ÉPICO", "~h~~y~LEGENDARIO", "~h~~r~MÍTICO"
     },
@@ -219,11 +220,18 @@ new
 #define Item_DrunkLevel(%0) (g_rgeItemData[(%0)][e_iDrunkLevel])
 #define Item_RarityName(%0) (g_rgszRarityName[(%0)])
 #define Item_Rarity(%0) (g_rgeItemData[(%0)][e_iRarityLevel])
+
 #define InventorySlot_ID(%0,%1) (g_rgePlayerInventory[(%0)][(%1)][e_iID])
 #define InventorySlot_Amount(%0,%1) (g_rgePlayerInventory[(%0)][(%1)][e_iAmount])
 #define InventorySlot_Type(%0,%1) (g_rgePlayerInventory[(%0)][(%1)][e_iType])
 #define InventorySlot_Extra(%0,%1) (g_rgePlayerInventory[(%0)][(%1)][e_iExtra])
 #define InventorySlot_IsValid(%0,%1) (g_rgePlayerInventory[(%0)][(%1)][e_bValid])
+
+#define TrunkSlot_ID(%0,%1) (g_rgeVehicleTrunk[(%0)][(%1)][e_iID])
+#define TrunkSlot_Amount(%0,%1) (g_rgeVehicleTrunk[(%0)][(%1)][e_iAmount])
+#define TrunkSlot_Type(%0,%1) (g_rgeVehicleTrunk[(%0)][(%1)][e_iType])
+#define TrunkSlot_Extra(%0,%1) (g_rgeVehicleTrunk[(%0)][(%1)][e_iExtra])
+#define TrunkSlot_IsValid(%0,%1) (g_rgeVehicleTrunk[(%0)][(%1)][e_bValid])
 
 forward Inventory_GetItemAmount(playerid, type);
 forward Inventory_AddFixedItem(playerid, type, amount, extra);

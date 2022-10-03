@@ -479,6 +479,11 @@ Player_SaveVehicles(playerid)
         );
 
         strcat(YSI_UNSAFE_HUGE_STRING, query, YSI_UNSAFE_HUGE_LENGTH);
+
+        for(new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
+        {
+            Trunk_ResetSlot(vehicleid, i);
+        }
     }
 
     strcat(YSI_UNSAFE_HUGE_STRING, "COMMIT;", YSI_UNSAFE_HUGE_LENGTH);

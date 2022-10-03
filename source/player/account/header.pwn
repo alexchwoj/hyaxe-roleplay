@@ -24,6 +24,7 @@ enum
     PFLAG_CAN_USE_SHOP_BUTTONS,
     PFLAG_IS_PUKING,
     PFLAG_USING_INV,
+    PFLAG_USING_SECONDARY_INV,
     PFLAG_GANG_PANEL_OPEN,
     PFLAG_HOSPITAL,
     PFLAG_IN_KEYGAME,
@@ -130,7 +131,8 @@ enum ePlayerTemp
     e_iMedicineUseTime,
     e_iCrackUseTime,
     e_iDoubtSentTime,
-    e_iReportSentTime
+    e_iReportSentTime,
+    e_iLastTrunk
 };
 
 new 

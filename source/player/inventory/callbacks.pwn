@@ -6,7 +6,7 @@
 
 public OnPlayerCancelTDSelection(playerid)
 {
-    if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV) || Bit_Get(Player_Flags(playerid), PFLAG_USING_SECONDARY_INV))
         Inventory_Hide(playerid);
 
     #if defined INV_OnPlayerCancelTDSelection
@@ -28,7 +28,33 @@ public OnPlayerCancelTDSelection(playerid)
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if ((newkeys & KEY_NO) != 0)
+    if ((newkeys & KEY_SPRINT) && (newkeys & KEY_NO) && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
+    {
+        new vehicleid = GetPlayerCameraTargetVehicle(playerid);
+        if (IsValidVehicle(vehicleid))
+        {
+            new Float:x, Float:y, Float:z;
+            GetVehiclePos(vehicleid, x, y, z);
+            if (IsPlayerInRangeOfPoint(playerid, 5.0, x, y, z))
+            {
+                if (Vehicle_OwnerId(vehicleid) == playerid)
+                {
+                    new weapon = GetPlayerWeapon(playerid);
+                    if (weapon)
+                    {
+                        if (Trunk_InsertItem(vehicleid, InventorySlot_Type(playerid, i), InventorySlot_Amount(playerid, i), InventorySlot_Extra(playerid, i), playerid))
+                        {
+                            InventorySlot_Delete(playerid, i);
+                            PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
+                        }
+                    }
+                    else
+                        Trunk_Show(playerid, vehicleid);
+                }
+            }
+        }
+    }
+    else if ((newkeys & KEY_NO) != 0)
     {
         if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER && !Bit_Get(Player_Flags(playerid), PFLAG_IN_KEYGAME) && !Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
             Inventory_Show(playerid);
@@ -122,6 +148,33 @@ public INV_LoadFromDatabase(playerid)
     return 1;
 }
 
+forward TRUNK_LoadFromDatabase(vehicleid);
+public TRUNK_LoadFromDatabase(vehicleid)
+{
+    new row_count;
+    cache_get_row_count(row_count);
+
+    printf("===== Loading trunk from vehicleid %d =====", vehicleid);
+    for(new i = 0; i < row_count; ++i)
+    {
+        new slot = Trunk_GetFreeSlot(vehicleid);
+        if (slot < HYAXE_MAX_TRUNK_SLOTS)
+        {
+            g_rgeVehicleTrunk[vehicleid][slot][e_bValid] = true;
+            cache_get_value_name_int(i, "ID", g_rgeVehicleTrunk[vehicleid][slot][e_iID]);
+            cache_get_value_name_int(i, "ITEM_TYPE", g_rgeVehicleTrunk[vehicleid][slot][e_iType]);
+            cache_get_value_name_int(i, "AMOUNT", g_rgeVehicleTrunk[vehicleid][slot][e_iAmount]);
+            cache_get_value_name_int(i, "EXTRA", g_rgeVehicleTrunk[vehicleid][slot][e_iExtra]);
+        }
+        else
+        {
+            DEBUG_PRINT("full trunk: %d", vehicleid);
+        }
+    }
+    printf("=====================================");
+    return 1;
+}
+
 public OnPlayerAuthenticate(playerid)
 {
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
@@ -150,8 +203,6 @@ public OnPlayerAuthenticate(playerid)
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    //g_rgePlayerInventory[playerid] = g_rgePlayerInventory[MAX_PLAYERS];
-    
     for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
     {
         Inventory_ResetSlot(playerid, i);
@@ -296,6 +347,59 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
         }
     }
 
+    if (Bit_Get(Player_Flags(playerid), PFLAG_USING_SECONDARY_INV))
+    {
+        new vehicleid = g_rgePlayerTempData[playerid][e_iLastTrunk];
+        if (!IsValidVehicle(vehicleid))
+            return Inventory_Hide(playerid);
+
+        // Inventory slots
+        for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+	    {
+            if (playertextid == p_tdItemView[playerid]{i})
+            {
+                if ( InventorySlot_IsValid(playerid, i) )
+                {
+                    if (Trunk_InsertItem(vehicleid, InventorySlot_Type(playerid, i), InventorySlot_Amount(playerid, i), InventorySlot_Extra(playerid, i), playerid))
+                    {
+                        InventorySlot_Delete(playerid, i);
+                        PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
+                    }
+                    break;
+                }
+            }
+        }
+
+        // Trunk slots
+        for(new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
+	    {
+            if (playertextid == p_tdTrunkItemView[playerid]{i})
+            {
+                if ( TrunkSlot_IsValid(vehicleid, i) )
+                {
+                    new weapon = Item_TypeToWeapon(TrunkSlot_Type(vehicleid, i));
+                    if (weapon)
+                    {
+                        Player_GiveWeapon(playerid, weapon);
+
+                        TrunkSlot_Delete(vehicleid, i);
+                        Trunk_Update(playerid, vehicleid);
+
+                        PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
+                    }
+                    else if (Inventory_AddItem(playerid, TrunkSlot_Type(vehicleid, i), TrunkSlot_Amount(vehicleid, i), TrunkSlot_Extra(vehicleid, i)))
+                    {
+                        TrunkSlot_Delete(vehicleid, i);
+                        Trunk_Update(playerid, vehicleid);
+
+                        PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
     #if defined INV_OnPlayerClickPlayerTD
         return INV_OnPlayerClickPlayerTD(playerid, PlayerText:playertextid);
     #else
@@ -356,13 +460,33 @@ public INV_OnItemInserted(playerid, slot, type, amount, extra)
 {
     printf("INV_OnItemInserted(playerid = %d, slot = %d, type = %d, amount = %d, extra = %d)", playerid, slot, type, amount, extra);
 
-    printf("[MIERDAS11] slot: %d, type: %d", slot, type);
     g_rgePlayerInventory[playerid][slot][e_bValid] = true;
     g_rgePlayerInventory[playerid][slot][e_iID] = cache_insert_id();
     g_rgePlayerInventory[playerid][slot][e_iType] = type;
-    printf("[MIERDAS2] slot: %d, type: %d", slot, g_rgePlayerInventory[playerid][slot][e_iType]);
     g_rgePlayerInventory[playerid][slot][e_iAmount] = amount;
     g_rgePlayerInventory[playerid][slot][e_iExtra] = extra;
+
+    Inventory_Update(playerid);
+    return 1;
+}
+
+forward TRUNK_OnItemInserted(vehicleid, slot, type, amount, extra, playerid);
+public TRUNK_OnItemInserted(vehicleid, slot, type, amount, extra, playerid)
+{
+    printf("TRUNK_OnItemInserted(vehicleid = %d, slot = %d, type = %d, amount = %d, extra = %d, playerid = %d)", vehicleid, slot, type, amount, extra, playerid);
+    g_rgeVehicleTrunk[vehicleid][slot][e_bValid] = true;
+    g_rgeVehicleTrunk[vehicleid][slot][e_iID] = cache_insert_id();
+    g_rgeVehicleTrunk[vehicleid][slot][e_iType] = type;
+    g_rgeVehicleTrunk[vehicleid][slot][e_iAmount] = amount;
+    g_rgeVehicleTrunk[vehicleid][slot][e_iExtra] = extra;
+
+    if (IsPlayerConnected(playerid))
+    {
+        if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV) || Bit_Get(Player_Flags(playerid), PFLAG_USING_SECONDARY_INV))
+        {
+            Trunk_Update(playerid, g_rgePlayerTempData[playerid][e_iLastTrunk]);
+        }
+    }
     return 1;
 }
 

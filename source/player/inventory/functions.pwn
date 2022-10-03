@@ -3,6 +3,7 @@
 #endif
 #define _inventory_functions_
 
+// Items
 Item_SetPreviewRot(type, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fZoom = 1.0)
 {
 	printf("Item_SetPreviewRot(type = %d, Float:fRotX = %f, Float:fRotY = %f, Float:fRotZ = %f, Float:fZoom = %f)", type, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fZoom);
@@ -13,6 +14,107 @@ Item_SetPreviewRot(type, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fZoom = 1.
 	return 1;
 }
 
+Item_TypeToWeapon(type)
+{
+	printf("Item_TypeToWeapon(type = %d)", type);
+	switch(type)
+	{
+		case ITEM_BRASSKNUCKLE: return 1;
+		case ITEM_GOLFCLUB: return 2;
+		case ITEM_NITESTICK: return 3;
+		case ITEM_KNIFE: return 4;
+		case ITEM_BAT: return 5;
+		case ITEM_SHOVEL: return 6;
+		case ITEM_POOLSTICK: return 7;
+		case ITEM_KATANA: return 8;
+		case ITEM_CHAINSAW: return 9;
+		case ITEM_DILDO: return 10;
+		case ITEM_DILDO2: return 11;
+		case ITEM_VIBRATOR: return 12;
+		case ITEM_VIBRATOR2: return 13;
+		case ITEM_FLOWER: return 14;
+		case ITEM_CANE: return 15;
+		case ITEM_GRENADE: return 16;
+		case ITEM_TEARGAS: return 17;
+		case ITEM_MOLTOV: return 18;
+		case ITEM_COLT45: return 22;
+		case ITEM_SILENCED: return 23;
+		case ITEM_DEAGLE: return 24;
+		case ITEM_SHOTGUN: return 25;
+		case ITEM_SAWEDOFF: return 26;
+		case ITEM_SHOTGSPA: return 27;
+		case ITEM_UZI: return 28;
+		case ITEM_MP5: return 29;
+		case ITEM_AK47: return 30;
+		case ITEM_M4: return 31;
+		case ITEM_TEC9: return 32;
+		case ITEM_RIFLE: return 33;
+		case ITEM_SNIPER: return 34;
+		case ITEM_ROCKETLAUNCHER: return 35;
+		case ITEM_HEATSEEKER: return 36;
+		case ITEM_FLAMETHROWER: return 37;
+		case ITEM_MINIGUN: return 38;
+		case ITEM_SATCHEL: return 39;
+		case ITEM_BOMB: return 40;
+		case ITEM_SPRAYCAN: return 41;
+		case ITEM_FIREEXTINGUISHER: return 42;
+		case ITEM_CAMERA: return 43;
+		case ITEM_PARACHUTE: return 46;
+	}
+	return 0;
+}
+
+Item_WeaponToType(type)
+{
+	printf("Item_WeaponToType(type = %d)", type);
+	switch(type)
+	{
+		case 1: return ITEM_BRASSKNUCKLE;
+		case 2: return ITEM_GOLFCLUB;
+		case 3: return ITEM_NITESTICK;
+		case 4: return ITEM_KNIFE;
+		case 5: return ITEM_BAT;
+		case 6: return ITEM_SHOVEL;
+		case 7: return ITEM_POOLSTICK;
+		case 8: return ITEM_KATANA;
+		case 9: return ITEM_CHAINSAW;
+		case 10: return ITEM_DILDO;
+		case 11: return ITEM_DILDO2;
+		case 12: return ITEM_VIBRATOR;
+		case 13: return ITEM_VIBRATOR2;
+		case 14: return ITEM_FLOWER;
+		case 15: return ITEM_CANE;
+		case 16: return ITEM_GRENADE;
+		case 17: return ITEM_TEARGAS;
+		case 18: return ITEM_MOLTOV;
+		case 22: return ITEM_COLT45;
+		case 23: return ITEM_SILENCED;
+		case 24: return ITEM_DEAGLE;
+		case 25: return ITEM_SHOTGUN;
+		case 26: return ITEM_SAWEDOFF;
+		case 27: return ITEM_SHOTGSPA;
+		case 28: return ITEM_UZI;
+		case 29: return ITEM_MP5;
+		case 30: return ITEM_AK47;
+		case 31: return ITEM_M4;
+		case 32: return ITEM_TEC9;
+		case 33: return ITEM_RIFLE;
+		case 34: return ITEM_SNIPER;
+		case 35: return ITEM_ROCKETLAUNCHER;
+		case 36: return ITEM_HEATSEEKER;
+		case 37: return ITEM_FLAMETHROWER;
+		case 38: return ITEM_MINIGUN;
+		case 39: return ITEM_SATCHEL;
+		case 40: return ITEM_BOMB;
+		case 41: return ITEM_SPRAYCAN;
+		case 42: return ITEM_FIREEXTINGUISHER;
+		case 43: return ITEM_CAMERA;
+		case 46: return ITEM_PARACHUTE;
+	}
+	return 0;
+}
+
+// Inventory
 Inventory_GetFreeSlot(playerid)
 {
 	printf("Inventory_GetFreeSlot(playerid = %d)", playerid);
@@ -27,7 +129,7 @@ Inventory_GetFreeSlot(playerid)
 Inventory_Update(playerid)
 {
 	printf("Inventory_Update(playerid = %d)", playerid);
-	if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
+	if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV) || Bit_Get(Player_Flags(playerid), PFLAG_USING_SECONDARY_INV))
     {
 		for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 		{
@@ -97,11 +199,6 @@ Inventory_UpdateSlot(playerid, slot)
 Inventory_ResetSlot(playerid, slot)
 {
 	printf("Inventory_ResetSlot(playerid = %d, slot = %d)", playerid, slot);
-	/*g_rgePlayerInventory[playerid][slot][e_bValid] = 
-	bool:(g_rgePlayerInventory[playerid][slot][e_iID] = 
-	g_rgePlayerInventory[playerid][slot][e_iType] = 
-	g_rgePlayerInventory[playerid][slot][e_iAmount] = 
-	g_rgePlayerInventory[playerid][slot][e_iExtra] = 0);*/
 
 	g_rgePlayerInventory[playerid][slot][e_bValid] = false;
 	g_rgePlayerInventory[playerid][slot][e_iID] = 0;
@@ -148,6 +245,13 @@ Inventory_Hide(playerid)
 	printf("Inventory_Hide(playerid = %d)", playerid);
 	g_rgePlayerTempData[playerid][e_iPlayerItemSlot] = -1;
 
+	if (IsValidVehicle(g_rgePlayerTempData[playerid][e_iLastTrunk]))
+	{
+		new engine, lights, alarm, doors, bonnet, boot, objective;
+		GetVehicleParamsEx(g_rgePlayerTempData[playerid][e_iLastTrunk], engine, lights, alarm, doors, bonnet, boot, objective);
+		SetVehicleParamsEx(g_rgePlayerTempData[playerid][e_iLastTrunk], engine, lights, alarm, doors, bonnet, 0, objective);
+	}
+
 	for(new i; i < sizeof(g_tdInventoryBG); ++i)
 		TextDrawHideForPlayer(playerid, g_tdInventoryBG[i]);
 
@@ -158,6 +262,15 @@ Inventory_Hide(playerid)
 	{
 		PlayerTextDrawHide(playerid, p_tdToyView[playerid]{i});
 		PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{i});
+	}
+
+	TextDrawHideForPlayer(playerid, g_tdInveotrySections[0]);
+	TextDrawHideForPlayer(playerid, g_tdInveotrySections[1]);
+
+	for(new i; i < 7; ++i)
+	{
+		PlayerTextDrawHide(playerid, p_tdTrunkItemView[playerid]{i});
+		PlayerTextDrawHide(playerid, p_tdTrunkItemCount[playerid]{i});
 	}
 
 	/*
@@ -177,6 +290,7 @@ Inventory_Hide(playerid)
 	PlayerTextDrawHide(playerid, p_tdInventoryExpText{playerid});
 
 	Bit_Set(Player_Flags(playerid), PFLAG_USING_INV, false);
+	Bit_Set(Player_Flags(playerid), PFLAG_USING_SECONDARY_INV, false);
 	CancelSelectTextDraw(playerid);
 	return 1;
 }
@@ -187,7 +301,7 @@ Inventory_Show(playerid)
 	Bit_Set(Player_Flags(playerid), PFLAG_USING_INV, true);
 
 	// Backgrounds
-	for(new i; i < sizeof(g_tdInventoryBG); ++i)
+	for(new i; i < sizeof(g_tdInventoryBG) - 2; ++i)
 		TextDrawShowForPlayer(playerid, g_tdInventoryBG[i]);
 
 	// Username
@@ -223,6 +337,9 @@ Inventory_Show(playerid)
 	PlayerTextDrawShow(playerid, p_tdInventoryExpBar{playerid});
 	if(!IsPlayerTextDrawVisible(playerid, p_tdInventoryExpText{playerid}))
 		PlayerTextDrawShow(playerid, p_tdInventoryExpText{playerid});
+
+	PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{0}, "TIRAR");
+	PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{1}, "USAR");
 
 	SelectTextDraw(playerid, 0xDAA838FF);
 	return 1;
@@ -323,6 +440,7 @@ Inventory_AddItem(playerid, type, amount, extra)
 						UPDATE `PLAYER_INVENTORY` SET `AMOUNT` = %d WHERE `ID` = %i;\
 						", InventorySlot_Amount(playerid, i), InventorySlot_ID(playerid, i));
 						mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+						Inventory_Update(playerid);
 						return 1;
 					}
 				}
@@ -376,6 +494,7 @@ Inventory_AddFixedItem(playerid, type, amount, extra)
 	return 1;
 }
 
+// Dropped items
 DroppedItem_CreateFrontPlayer(playerid, type, amount, extra)
 {
 	printf("DroppedItem_CreateFrontPlayer(playerid = %d, type = %d, amount = %d, extra = %d)", playerid, type, amount, extra);
@@ -447,69 +566,135 @@ DroppedItem_Delete(area_id)
 	return next;
 }
 
-Item_TypeToWeapon(type)
+// Trunk
+Trunk_Show(playerid, vehicleid)
 {
-	printf("Item_TypeToWeapon(type = %d)", type);
-	switch(type)
+	if (!IsValidVehicle(vehicleid))
+		return 0;
+
+	Bit_Set(Player_Flags(playerid), PFLAG_USING_SECONDARY_INV, true);
+
+	g_rgePlayerTempData[playerid][e_iLastTrunk] = vehicleid;
+
+	new engine, lights, alarm, doors, bonnet, boot, objective;
+	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+	SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, 1, objective);
+
+	TextDrawShowForPlayer(playerid, g_tdInventoryBG[3]);
+	TextDrawShowForPlayer(playerid, g_tdInventoryBG[4]);
+	TextDrawShowForPlayer(playerid, g_tdInventoryBG[1]);
+
+	TextDrawShowForPlayer(playerid, g_tdInveotrySections[0]);
+	TextDrawShowForPlayer(playerid, g_tdInveotrySections[1]);
+
+	TextDrawSetStringForPlayer(g_tdInveotrySections[1], playerid, "%s", g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_szModelName]);
+
+	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
-		case ITEM_BRASSKNUCKLE: return 1;
-		case ITEM_GOLFCLUB: return 2;
-		case ITEM_NITESTICK: return 3;
-		case ITEM_KNIFE: return 4;
-		case ITEM_BAT: return 5;
-		case ITEM_SHOVEL: return 6;
-		case ITEM_POOLSTICK: return 7;
-		case ITEM_KATANA: return 8;
-		case ITEM_CHAINSAW: return 9;
-		case ITEM_DILDO: return 10;
-		case ITEM_DILDO2: return 11;
-		case ITEM_VIBRATOR: return 12;
-		case ITEM_VIBRATOR2: return 13;
-		case ITEM_FLOWER: return 14;
-		case ITEM_CANE: return 15;
-		case ITEM_GRENADE: return 16;
-		case ITEM_TEARGAS: return 17;
-		case ITEM_MOLTOV: return 18;
-		case ITEM_COLT45: return 22;
-		case ITEM_SILENCED: return 23;
-		case ITEM_DEAGLE: return 24;
-		case ITEM_SHOTGUN: return 25;
-		case ITEM_SAWEDOFF: return 26;
-		case ITEM_SHOTGSPA: return 27;
-		case ITEM_UZI: return 28;
-		case ITEM_MP5: return 29;
-		case ITEM_AK47: return 30;
-		case ITEM_M4: return 31;
-		case ITEM_TEC9: return 32;
-		case ITEM_RIFLE: return 33;
-		case ITEM_SNIPER: return 34;
-		case ITEM_ROCKETLAUNCHER: return 35;
-		case ITEM_HEATSEEKER: return 36;
-		case ITEM_FLAMETHROWER: return 37;
-		case ITEM_MINIGUN: return 38;
-		case ITEM_SATCHEL: return 39;
-		case ITEM_BOMB: return 40;
-		case ITEM_SPRAYCAN: return 41;
-		case ITEM_FIREEXTINGUISHER: return 42;
-		case ITEM_CAMERA: return 43;
-		case ITEM_PARACHUTE: return 46;
+		PlayerTextDrawShow(playerid, p_tdItemView[playerid]{i});
+		PlayerTextDrawShow(playerid, p_tdItemCount[playerid]{i});
+	}
+
+	for(new i; i < 7; ++i)
+	{
+		PlayerTextDrawShow(playerid, p_tdTrunkItemView[playerid]{i});
+		PlayerTextDrawShow(playerid, p_tdTrunkItemCount[playerid]{i});
+	}
+
+	Inventory_Update(playerid);
+	Trunk_Update(playerid, vehicleid);
+
+	SelectTextDraw(playerid, 0xDAA838FF);
+	return 1;
+}
+
+Trunk_GetFreeSlot(vehicleid)
+{
+    for(new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
+	{
+		if (!g_rgeVehicleTrunk[vehicleid][i][e_bValid])
+		    return i;
+	}
+    return HYAXE_MAX_TRUNK_SLOTS + 1;
+}
+
+Trunk_ResetSlot(vehicleid, slot)
+{
+	printf("Trunk_ResetSlot(vehicleid = %d, slot = %d)", vehicleid, slot);
+	g_rgeVehicleTrunk[vehicleid][slot][e_bValid] = false;
+	g_rgeVehicleTrunk[vehicleid][slot][e_iID] = 0;
+	g_rgeVehicleTrunk[vehicleid][slot][e_iType] = 0;
+	g_rgeVehicleTrunk[vehicleid][slot][e_iAmount] = 0 ;
+	g_rgeVehicleTrunk[vehicleid][slot][e_iExtra] = 0;
+	return 1;
+}
+
+Trunk_InsertItem(vehicleid, type, amount, extra, playerid = INVALID_PLAYER_ID)
+{
+	printf("Trunk_InsertItem(vehicleid = %d, type = %d, amount = %d, extra = %d, playerid = %d)", vehicleid, type, amount, extra, playerid);
+	new slot = Trunk_GetFreeSlot(vehicleid);
+    if (slot < HYAXE_MAX_TRUNK_SLOTS)
+	{
+		mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+			INSERT INTO `VEHICLE_TRUNK` (`ITEM_TYPE`, `AMOUNT`, `EXTRA`, `VEHICLE_ID`) VALUES (%d, %d, %d, %i);\
+		", type, amount, extra, Vehicle_ID(vehicleid));
+		mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, "TRUNK_OnItemInserted", !"iddddd", vehicleid, slot, type, amount, extra, playerid);
+		return 1;
 	}
 	return 0;
 }
 
-command dropitem(playerid, const params[], "Crea un item en el suelo")
+TrunkSlot_Delete(vehicleid, slot)
 {
-	extract params -> new item_id, amount = 1, extra = 0; else {
-        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/dropitem {DADADA}<item> {969696}[cantidad = 100] [extra = 0]");
-        return 1;
-    }
-	
-	new Float:x, Float:y, Float:z, Float:angle;
-	GetPlayerPos(playerid, x, y, z);
-	GetPlayerFacingAngle(playerid, angle);
-
-	GetXYFromAngle(x, y, angle, 0.8);
-	DroppedItem_Create(item_id, amount, extra, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
+	printf("TrunkSlot_Delete(vehicleid = %d, slot = %d)", vehicleid, slot);
+	mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `VEHICLE_TRUNK` WHERE `ID` = %d;", TrunkSlot_ID(vehicleid, slot));
+	mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+	Trunk_ResetSlot(vehicleid, slot);
 	return 1;
 }
-flags:dropitem(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)
+
+Trunk_Update(playerid, vehicleid)
+{
+	if (Bit_Get(Player_Flags(playerid), PFLAG_USING_SECONDARY_INV))
+    {
+		for(new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
+		{
+			if (TrunkSlot_IsValid(vehicleid, i))
+			{
+				if (TrunkSlot_Type(vehicleid, i) >= ITEM_INVALID)
+				{
+					Trunk_ResetSlot(vehicleid, i);
+				}
+				else
+				{
+					PlayerTextDrawSetPreviewModel(playerid, p_tdTrunkItemView[playerid]{i}, Item_ModelID( TrunkSlot_Type(vehicleid, i) ));
+
+					PlayerTextDrawSetPreviewRot(
+						playerid, p_tdTrunkItemView[playerid]{i},
+						g_rgeItemData[ TrunkSlot_Type(vehicleid, i) ][e_fRotX],
+						g_rgeItemData[ TrunkSlot_Type(vehicleid, i) ][e_fRotY],
+						g_rgeItemData[ TrunkSlot_Type(vehicleid, i) ][e_fRotZ],
+						g_rgeItemData[ TrunkSlot_Type(vehicleid, i) ][e_fZoom]
+					);
+
+					if (!Item_SingleSlot( TrunkSlot_Type(vehicleid, i) ))
+					{
+						new string[8];
+						valstr(string, TrunkSlot_Amount(vehicleid, i));
+						PlayerTextDrawSetString(playerid, p_tdTrunkItemCount[playerid]{i}, string);
+					}
+					else PlayerTextDrawSetString(playerid, p_tdTrunkItemCount[playerid]{i}, "_");
+				}
+			}
+			else
+			{
+				PlayerTextDrawSetString(playerid, p_tdTrunkItemCount[playerid]{i}, "_");
+				PlayerTextDrawSetPreviewModel(playerid, p_tdTrunkItemView[playerid]{i}, 19482);
+			}
+
+			PlayerTextDrawShow(playerid, p_tdTrunkItemView[playerid]{i});
+			PlayerTextDrawShow(playerid, p_tdTrunkItemCount[playerid]{i});
+		}
+	}
+	return 1;
+}
