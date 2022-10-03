@@ -79,6 +79,12 @@ dialog police_manage(playerid, dialogid, response, listitem, inputtext[])
     if(!response)
         return 1;
 
+    if(Police_Rank(playerid) < _:POLICE_RANK_COMMISSIONER && Player_AdminLevel(playerid) < RANK_LEVEL_ADMINISTRATOR)
+    {
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Solo los comisarios pueden hacer esto");
+        return 1;
+    }
+
     if(sscanf(inputtext, "s[24]P<()>{s[2]}i", g_rgszSelectedOfficer[playerid], g_rgszSelectedOfficer[playerid][25]))
         return 1;
 
@@ -104,9 +110,9 @@ dialog police_manage_officer(playerid, dialogid, response, listitem, inputtext[]
             HYAXE_UNSAFE_HUGE_STRING[0] = '\0';
             
             new line[64];
-            for(new i = sizeof(g_rgszPoliceRankNames) - 1; i != 0; --i)
+            for(new i = sizeof(g_rgszPoliceRankNames) - 2; i != 0; --i)
             {
-                format(line, sizeof(line), "%i. %s\n", i, g_rgszPoliceRankNames[i]);
+                format(line, sizeof(line), "{3A86FF}%2i.{DADADA} %s\n", i, g_rgszPoliceRankNames[i]);
                 strcat(HYAXE_UNSAFE_HUGE_STRING, line);
             }
 
@@ -127,6 +133,24 @@ dialog police_change_rank(playerid, dialogid, response, listitem, inputtext[])
     if(response)
     {
         new new_rank = _:POLICE_RANK_GEN_COMMISSIONER - listitem;
+        if(new_rank > Police_Rank(playerid))
+        {
+            Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Debes asignar un rango menor o igual al tuyo");
+            
+            HYAXE_UNSAFE_HUGE_STRING[0] = '\0';
+            
+            new line[64];
+            for(new i = sizeof(g_rgszPoliceRankNames) - 2; i != 0; --i)
+            {
+                format(line, sizeof(line), "{3A86FF}%2i.{DADADA} %s\n", i, g_rgszPoliceRankNames[i]);
+                strcat(HYAXE_UNSAFE_HUGE_STRING, line);
+            }
+
+            format(line, sizeof(line), "Selecciona el nuevo rango de {3A86FF}%s", g_rgszSelectedOfficer[playerid]);
+            Dialog_ShowCallback(playerid, using public _hydg@police_change_rank<iiiis>, DIALOG_STYLE_LIST, line, HYAXE_UNSAFE_HUGE_STRING, "Cambiar", "Atrás");
+            
+            return 1;
+        }
 
         mysql_tquery(g_hDatabase, va_return("UPDATE `POLICE_OFFICERS` SET `RANK` = %i WHERE `ACCOUNT_ID` = %i;", new_rank, g_rgszSelectedOfficer[playerid][25]));
         
@@ -239,5 +263,65 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
 
     Player_SetWantedLevel(target, charges);
 
+    return 1;
+}
+
+command reclutar(playerid, const params[], "Recluta a alguien como policía")
+{
+    if(Police_Rank(playerid) < _:POLICE_RANK_COMMISSIONER && Player_AdminLevel(playerid) < RANK_LEVEL_ADMINISTRATOR)
+    {
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes permiso para hacer esto");
+        return 1;
+    }
+
+    extract params -> new player:target; else {
+        SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} USO: {3A86FF}/reclutar{DADADA} <jugador>");
+        return 1;
+    }
+
+    if(!IsPlayerConnected(target))
+    {
+        SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Jugador inválido.");
+        return 1;
+    }
+
+    if(Player_IsPolice(target))
+    {
+        SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Este jugador ya es policía.");
+        return 1;
+    }
+
+    inline const Response(response, listitem, string:inputtext[])
+    {
+        #pragma unused listitem, inputtext
+
+        if(!response)
+        {
+            SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} %s rechazó unirse a LSPD.", Player_RPName(target));
+            return 1;
+        }
+
+        Police_Rank(target) = POLICE_RANK_OFFICER;
+        Iter_Add(Police, target);
+
+        mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "INSERT INTO `POLICE_OFFICERS` (`ACCOUNT_ID`, `RECRUITED_BY`) VALUES (%d, %d);", Player_AccountID(target), Player_AccountID(playerid));
+        mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+
+        new message[144];
+        format(message, sizeof(message), 
+            "[Policía] ›{DADADA} %s %s se unió a LSPD con el rango de %s.",
+            (Player_Sex(target) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(target), Police_GetRankName(POLICE_RANK_OFFICER)
+        );
+
+        Police_OnDuty(target) = true;
+        Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, message);
+        Police_OnDuty(target) = false;
+
+        if(!Police_OnDuty(playerid))
+            SendClientMessage(playerid, 0x3A86FFFF, message);
+    }
+    Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_MSGBOX, "{3A86FF}Hyaxe{DADADA} - Policía", va_return("{3A86FF}%s{DADADA} ofrecio unirte a LSPD con el rango de %s.", Player_RPName(playerid), Police_GetRankName(POLICE_RANK_OFFICER)), "Aceptar", "Cancelar");
+
+    SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Invitación enviada.");
     return 1;
 }

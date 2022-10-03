@@ -140,3 +140,28 @@ public POLICE_UserLoaded(playerid)
 
     return 1;
 }
+
+public OnPlayerDisconnect(playerid, reason)
+{
+    Police_OnDuty(playerid) = false;
+    Police_Rank(playerid) = POLICE_RANK_NONE;
+
+    if(Iter_Contains(Police, playerid))
+        Iter_Remove(Police, playerid);
+        
+    #if defined POLICE_OnPlayerDisconnect
+        return POLICE_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect POLICE_OnPlayerDisconnect
+#if defined POLICE_OnPlayerDisconnect
+    forward POLICE_OnPlayerDisconnect(playerid, reason);
+#endif
