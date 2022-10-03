@@ -22,9 +22,9 @@ Actor_CreateRobbable(model, min_money, max_money, Float:x, Float:y, Float:z, Flo
 
         new t = min_money;
         min_money = max_money;
-        min_money = max_money;
+        max_money = t;
     }
-    
+
     new idx = Actor_FindRobbableFreeIndex();
     if(idx == -1)
     {
