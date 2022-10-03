@@ -26,8 +26,8 @@ public OnPlayerCancelTDSelection(playerid)
     forward INV_OnPlayerCancelTDSelection(playerid);
 #endif
 
-forward TRUNK_CloseVehicleBoot(vehicleid);
-public TRUNK_CloseVehicleBoot(vehicleid)
+forward TRUNK_CloseVehicleBoot(playerid, vehicleid);
+public TRUNK_CloseVehicleBoot(playerid, vehicleid)
 {
     new engine, lights, alarm, doors, bonnet, boot, objective;
     GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
@@ -38,7 +38,7 @@ public TRUNK_CloseVehicleBoot(vehicleid)
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if ((newkeys & KEY_SPRINT) && (newkeys & KEY_NO) && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT && !g_rgePlayerTempData[playerid][e_bPassingItems] && !Bit_Get(Player_Flags(i), PFLAG_INJURED))
+    if ((newkeys & KEY_SPRINT) && (newkeys & KEY_NO) && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT && !g_rgePlayerTempData[playerid][e_bPassingItems] && !Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
     {
         new vehicleid = GetPlayerCameraTargetVehicle(playerid);
         if (IsValidVehicle(vehicleid))
@@ -64,7 +64,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                             PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
                             ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 2000, 1);
 
-                            SetTimerEx("TRUNK_CloseVehicleBoot", 1500, false, "i", vehicleid);
+                            SetTimerEx("TRUNK_CloseVehicleBoot", 1500, false, "ii", playerid, vehicleid);
                             g_rgePlayerTempData[playerid][e_bPassingItems] = true;
                         }
                         else
@@ -76,7 +76,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             }
         }
     }
-    else if ((newkeys & KEY_NO) != 0)
+    else if ((newkeys & KEY_NO) != 0 && !g_rgePlayerTempData[playerid][e_bPassingItems])
     {
         if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER && !Bit_Get(Player_Flags(playerid), PFLAG_IN_KEYGAME) && !Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
             Inventory_Show(playerid);
