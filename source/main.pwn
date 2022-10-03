@@ -325,6 +325,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/car_rental/callbacks.pwn"
 #include "server/weather/callbacks.pwn"
 #include "server/tuning/callbacks.pwn"
+#include "server/townhall/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/damage/callbacks.pwn"
 #include "player/leveling/callbacks.pwn"
@@ -340,7 +341,6 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/weapons/callbacks.pwn"
 #include "player/gps/callbacks.pwn"
 #include "player/phone/callbacks.pwn"
-//#include "server/debug/callbacks.pwn"
 
 // Anticheat
 ///////////////
