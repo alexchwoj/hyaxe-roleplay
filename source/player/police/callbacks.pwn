@@ -11,8 +11,8 @@ static PoliceLocker_OnKeyPress(playerid)
 public OnScriptInit()
 {
     Key_Alert(1569.2075, -1688.7084, 20.6049, 1.0, KEYNAME_NO, .callback_on_press = __addressof(PoliceLocker_OnKeyPress));    
-    CreateDynamicPickup(1275, 1569.2075, -1688.7084, 20.6049, 0, 0);
-    CreateDynamicPickup(2044, 1568.6139,-1694.9478,20.6049, 0, 0);
+    CreateDynamicPickup(1275, 1, 1569.2075, -1688.7084, 20.6049, 0, 0);
+    CreateDynamicPickup(2044, 1, 1568.6139,-1694.9478, 20.6049, 0, 0);
 
     EnterExit_Create(19902, "{ED2B2B}LSPD", "{DADADA}Salida", 1554.9965, -1675.5953, 16.1953, 82.5943, 0, 0, 1560.6276, -1675.4996, 20.5919, 271.2696, 0, 0);
     CreateDynamicMapIcon(1554.9965, -1675.5953, 16.1953, 30, -1, 0, 0);
