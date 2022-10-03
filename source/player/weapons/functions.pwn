@@ -50,11 +50,17 @@ Player_GiveAllWeapons(playerid)
     return 1;
 }
 
-Player_RemoveWeaponSlot(playerid, slot)
+Player_RemoveWeaponSlot(playerid, slot, bool:save = true)
 {
     ResetPlayerWeapons(playerid);
     g_rgiPlayerWeapons[playerid][slot] = 0;
     Player_GiveAllWeapons(playerid);
+
+    if(save && slot > 1)
+    {
+        mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYER_WEAPONS` SET `SLOT_%i` = 0 WHERE `ACCOUNT_ID` = %i LIMIT 1;", slot, Player_AccountID(playerid));
+        mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+    }
     return 1;
 }
 

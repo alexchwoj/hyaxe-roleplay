@@ -54,9 +54,9 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     {
                         if (Trunk_InsertItem(vehicleid, Item_WeaponToType(weaponid), 1, 1))
                         {
-                            SetPlayerArmedWeapon(playerid, 0);
                             Player_RemoveWeaponSlot(playerid, GetWeaponSlot(weaponid));
-
+                            SetPlayerArmedWeapon(playerid, 0);
+                            
                             new engine, lights, alarm, doors, bonnet, boot, objective;
 	                        GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 	                        SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, 1, objective);
