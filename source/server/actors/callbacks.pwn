@@ -5,7 +5,7 @@
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if((newkeys & KEY_CTRL_BACK) != 0)
+    if((newkeys & KEY_CTRL_BACK) != 0 && GetWeaponSlot(GetPlayerWeapon(playerid)) > 0)
     {
         new actorid = GetPlayerTargetDynamicActor(playerid);
         if(actorid != INVALID_STREAMER_ID)
