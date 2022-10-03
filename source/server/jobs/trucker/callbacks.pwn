@@ -86,7 +86,7 @@ public OnScriptInit()
         g_rgeTruckerRoutes[i][e_iBoxUnloadCp] = CreateDynamicCP(g_rgeTruckerRoutes[i][e_fBoxUnloadX], g_rgeTruckerRoutes[i][e_fBoxUnloadY], g_rgeTruckerRoutes[i][e_fBoxUnloadZ], 3.0, .streamdistance = 99999999.0);
     }
 
-    Key_Alert(91.6690, -313.3107, 1.5781, 3.0, KEYNAME_WALK, 0, 0);
+    Key_Alert(91.6690, -313.3107, 1.5781, 3.0, KEY_CTRL_BACK, 0, 0);
     g_iPickBoxCheckpoint = CreateDynamicCP(91.6690, -313.3107, 1.5781, 3.0);
     g_iTruckerCentralArea = CreateDynamicRectangle(16.7866, -217.4639, 205.3851, -346.3419);
     g_iTruckerCentralCp = CreateDynamicCP(137.0536, -277.4443, 1.5781, 5.0, .streamdistance = 99999999.0);
@@ -339,7 +339,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if((newkeys & KEY_WALK) != 0)
+    if((newkeys & KEY_CTRL_BACK) != 0)
     {
         if(!g_rgbPlayerHasBoxInHands{playerid})
         {
