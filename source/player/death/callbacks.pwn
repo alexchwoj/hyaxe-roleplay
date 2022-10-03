@@ -7,61 +7,70 @@ public OnPlayerDeath(playerid, killerid, reason)
 {
     if (Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
     {
-        GetPlayerPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
-        GetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fPosAngle]);
-        SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle], 0, 0, 0, 0, 0, 0);
-            
-        SpawnPlayer(playerid);
-        TogglePlayerSpectating(playerid, true);
-        TogglePlayerSpectating(playerid, false);
-
-        RemovePlayerFromVehicle(playerid);
-        Player_SetPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
-        SetCameraBehindPlayer(playerid);
-
-        ApplyAnimation(playerid, "SWEET", "null", 4.0, 0, 0, 0, 0, 0, 1);
-
-        if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+        if(Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL))
         {
-            ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, 0, 0, 0, 1, 0);
-
-            KillTimer(g_rgiPlayerCorpseTimer[playerid]);
-            DestroyDynamicActor(g_rgiPlayerCorpseActor[playerid]);
-
-            g_rgiPlayerCorpseActor[playerid] = CreateDynamicActor(
-                Player_Skin(playerid),
-                g_rgePlayerData[playerid][e_fPosX],
-                g_rgePlayerData[playerid][e_fPosY],
-                g_rgePlayerData[playerid][e_fPosZ],
-                g_rgePlayerData[playerid][e_fPosAngle],
-                .worldid = GetPlayerVirtualWorld(playerid), .interiorid = GetPlayerInterior(playerid)
-            );
-            ApplyDynamicActorAnimation(g_rgiPlayerCorpseActor[playerid], "WUZI", "CS_Dead_Guy", 4.1, 0, 0, 0, 1, 0);
-            g_rgiPlayerCorpseTimer[playerid] = SetTimerEx("DEATH_DeleteCorpse", 60000, false, "i", playerid);
-            
-            Player_SetHealth(playerid, 4);
-            Bit_Set(Player_Flags(playerid), PFLAG_INJURED, false);
-
-            KillTimer(g_rgeCrawlData[playerid][e_iCrawlKeyTimer]);
-            Player_GoToTheNearestHospital(playerid);
-
-            Player_RemoveAllWeapons(playerid);
+            Player_SpawnInPrison(playerid);
+            SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle], 0, 0, 0, 0, 0, 0);
+            SpawnPlayer(playerid);
         }
         else
         {
-            new Float:x, Float:y, Float:z;
-            GetPlayerPos(playerid, x, y, z);
-            Sound_PlayInRange(
-                1136,
-                15.0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid)
-            );
+            GetPlayerPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
+            GetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fPosAngle]);
+            SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle], 0, 0, 0, 0, 0, 0);
+                
+            SpawnPlayer(playerid);
+            TogglePlayerSpectating(playerid, true);
+            TogglePlayerSpectating(playerid, false);
 
-            Player_SetHealth(playerid, 100);
-            Bit_Set(Player_Flags(playerid), PFLAG_INJURED, true);
+            RemovePlayerFromVehicle(playerid);
+            Player_SetPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
+            SetCameraBehindPlayer(playerid);
 
-            ApplyAnimation(playerid, "SWEET", "SWEET_INJUREDLOOP", 4.1, true, false, false, 1, 0, 1);
-            KillTimer(g_rgeCrawlData[playerid][e_iCrawlKeyTimer]);
-            g_rgeCrawlData[playerid][e_iCrawlKeyTimer] = SetTimerEx("CRAWL_ProcessKey", 200, true, "i", playerid);
+            ApplyAnimation(playerid, "SWEET", "null", 4.0, 0, 0, 0, 0, 0, 1);
+
+            if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+            {
+                ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, 0, 0, 0, 1, 0);
+
+                KillTimer(g_rgiPlayerCorpseTimer[playerid]);
+                DestroyDynamicActor(g_rgiPlayerCorpseActor[playerid]);
+
+                g_rgiPlayerCorpseActor[playerid] = CreateDynamicActor(
+                    Player_Skin(playerid),
+                    g_rgePlayerData[playerid][e_fPosX],
+                    g_rgePlayerData[playerid][e_fPosY],
+                    g_rgePlayerData[playerid][e_fPosZ],
+                    g_rgePlayerData[playerid][e_fPosAngle],
+                    .worldid = GetPlayerVirtualWorld(playerid), .interiorid = GetPlayerInterior(playerid)
+                );
+                ApplyDynamicActorAnimation(g_rgiPlayerCorpseActor[playerid], "WUZI", "CS_Dead_Guy", 4.1, 0, 0, 0, 1, 0);
+                g_rgiPlayerCorpseTimer[playerid] = SetTimerEx("DEATH_DeleteCorpse", 60000, false, "i", playerid);
+                
+                Player_SetHealth(playerid, 4);
+                Bit_Set(Player_Flags(playerid), PFLAG_INJURED, false);
+
+                KillTimer(g_rgeCrawlData[playerid][e_iCrawlKeyTimer]);
+                Player_GoToTheNearestHospital(playerid);
+
+                Player_RemoveAllWeapons(playerid);
+            }
+            else
+            {
+                new Float:x, Float:y, Float:z;
+                GetPlayerPos(playerid, x, y, z);
+                Sound_PlayInRange(
+                    1136,
+                    15.0, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid)
+                );
+
+                Player_SetHealth(playerid, 100);
+                Bit_Set(Player_Flags(playerid), PFLAG_INJURED, true);
+
+                ApplyAnimation(playerid, "SWEET", "SWEET_INJUREDLOOP", 4.1, true, false, false, 1, 0, 1);
+                KillTimer(g_rgeCrawlData[playerid][e_iCrawlKeyTimer]);
+                g_rgeCrawlData[playerid][e_iCrawlKeyTimer] = SetTimerEx("CRAWL_ProcessKey", 200, true, "i", playerid);
+            }
         }
     }
 
