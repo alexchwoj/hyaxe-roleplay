@@ -3,6 +3,8 @@
 #endif
 #define _detections_carjack_
 
+#include <YSI_Coding/y_hooks>
+
 static 
     bool:s_rgbDriver[MAX_PLAYERS char] = { false, ... };
 
@@ -19,6 +21,17 @@ IPacket:__ac_cj_VehicleSync(playerid, BitStream:bs)
         PR_IGNORE_BITS, 8,
         PR_UINT16, vehicleid
     );
+
+    if(Vehicle_Locked(vehicleid))
+    {
+        RemovePlayerFromVehicle(playerid);
+
+        new Float:x, Float:y, Float:z;
+        GetPlayerPos(playerid, x, y, z);
+        SetPlayerPos(playerid, x, y, z);
+
+        return 0;
+    }
 
     new driver = INVALID_PLAYER_ID;
     foreach(new i : Player)
@@ -88,3 +101,9 @@ public OnPlayerDisconnect(playerid, reason)
 #if defined AC_CJ_OnPlayerDisconnect
     forward AC_CJ_OnPlayerDisconnect(playerid, reason);
 #endif
+
+hook native PutPlayerInVehicle(playerid, vehicleid, seatid)
+{
+    s_rgbDriver{playerid} = true;
+    return continue(playerid, vehicleid, seatid);
+}
