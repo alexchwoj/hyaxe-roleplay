@@ -4910,7 +4910,7 @@ public OnFilterScriptInit()
 	SetDynamicObjectMaterial(tmpobjid, 0, 18031, "cj_exp", "mp_cloth_wall", 0);
 	tmpobjid = CreateDynamicObjectEx(19325,1565.893,-1674.359,21.725,0.000,0.000,0.000,777.700,777.700);
 	SetDynamicObjectMaterial(tmpobjid, 0, 10023, "bigwhitesfe", "sfe_arch8", 0);
-	SetDynamicObjectMaterialText(tmpobjid, 0, "tmpobjid", 140, "Ariel", 100, 1, -16777216, 0, 1);
+	SetDynamicObjectMaterialText(tmpobjid, 0, "LSPD", 140, "Ariel", 100, 1, -16777216, 0, 1);
 	tmpobjid = CreateDynamicObjectEx(19370,1559.974,-1674.974,20.754,0.000,0.000,0.000,777.700,777.700);
 	SetDynamicObjectMaterial(tmpobjid, 0, 17547, "eastbeach4a_lae2", "bluestucco1", 0);
 	tmpobjid = CreateDynamicObjectEx(19912,1603.354,-1722.276,10.569,0.000,0.000,0.000,777.700,777.700);
