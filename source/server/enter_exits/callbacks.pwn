@@ -23,7 +23,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes hacer esto");
                         return 1;
                     }
-                    
+
                     new info[2];
                     Streamer_GetArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x4545), info);
 
@@ -63,7 +63,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         g_rgePlayerData[playerid][e_fPosY] = g_rgeEnterExits[id][e_fExitY];
                         g_rgePlayerData[playerid][e_fPosZ] = g_rgeEnterExits[id][e_fExitZ];
 
-                        Streamer_UpdateEx(playerid, g_rgeEnterExits[id][e_fExitX], g_rgeEnterExits[id][e_fExitY], g_rgeEnterExits[id][e_fExitZ], .worldid = g_rgeEnterExits[id][e_iExitWorld], .interiorid = g_rgeEnterExits[id][e_iExitInterior], .compensatedtime = 1, .freezeplayer = true);
+                        Streamer_UpdateEx(playerid, g_rgeEnterExits[id][e_fExitX], g_rgeEnterExits[id][e_fExitY], g_rgeEnterExits[id][e_fExitZ], .worldid = g_rgeEnterExits[id][e_iExitWorld], .interiorid = g_rgeEnterExits[id][e_iExitInterior], .compensatedtime = 3000, .freezeplayer = true);
 
                         new hour, minute;
                         gettime(hour, minute);
@@ -79,7 +79,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         g_rgePlayerData[playerid][e_fPosY] = g_rgeEnterExits[id][e_fEnterY];
                         g_rgePlayerData[playerid][e_fPosZ] = g_rgeEnterExits[id][e_fEnterZ];
 
-                        Streamer_UpdateEx(playerid, g_rgeEnterExits[id][e_fEnterX], g_rgeEnterExits[id][e_fEnterY], g_rgeEnterExits[id][e_fEnterZ], .worldid = g_rgeEnterExits[id][e_iEnterWorld], .interiorid = g_rgeEnterExits[id][e_iEnterInterior], .compensatedtime = 1, .freezeplayer = 1);
+                        Streamer_UpdateEx(playerid, g_rgeEnterExits[id][e_fEnterX], g_rgeEnterExits[id][e_fEnterY], g_rgeEnterExits[id][e_fEnterZ], .worldid = g_rgeEnterExits[id][e_iEnterWorld], .interiorid = g_rgeEnterExits[id][e_iEnterInterior], .compensatedtime = 1000, .freezeplayer = 1);
                     }
 
                     Player_SetImmunityForCheat(playerid, CHEAT_AIRBREAK, 2000);
