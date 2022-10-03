@@ -50,6 +50,14 @@ Player_GiveAllWeapons(playerid)
     return 1;
 }
 
+Player_RemoveWeaponSlot(playerid, slot)
+{
+    ResetPlayerWeapons(playerid);
+    g_rgiPlayerWeapons[playerid][slot] = 0;
+    Player_GiveAllWeapons(playerid);
+    return 1;
+}
+
 Player_LoadWeaponsFromCache(playerid)
 {
     DEBUG_PRINT("[func] Player_LoadWeaponsFromCache(playerid = %i)", playerid);

@@ -26,9 +26,19 @@ public OnPlayerCancelTDSelection(playerid)
     forward INV_OnPlayerCancelTDSelection(playerid);
 #endif
 
+forward TRUNK_CloseVehicleBoot(vehicleid);
+public TRUNK_CloseVehicleBoot(vehicleid)
+{
+    new engine, lights, alarm, doors, bonnet, boot, objective;
+    GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+    SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, 0, objective);
+    g_rgePlayerTempData[playerid][e_bPassingItems] = false;
+    return 1;
+}
+
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if ((newkeys & KEY_SPRINT) && (newkeys & KEY_NO) && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
+    if ((newkeys & KEY_SPRINT) && (newkeys & KEY_NO) && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT && !g_rgePlayerTempData[playerid][e_bPassingItems] && !Bit_Get(Player_Flags(i), PFLAG_INJURED))
     {
         new vehicleid = GetPlayerCameraTargetVehicle(playerid);
         if (IsValidVehicle(vehicleid))
@@ -39,14 +49,26 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             {
                 if (Vehicle_OwnerId(vehicleid) == playerid)
                 {
-                    new weapon = GetPlayerWeapon(playerid);
-                    if (weapon)
+                    new weaponid = GetPlayerWeapon(playerid);
+                    if (weaponid)
                     {
-                        if (Trunk_InsertItem(vehicleid, InventorySlot_Type(playerid, i), InventorySlot_Amount(playerid, i), InventorySlot_Extra(playerid, i), playerid))
+                        if (Trunk_InsertItem(vehicleid, Item_WeaponToType(weaponid), 1, 1))
                         {
-                            InventorySlot_Delete(playerid, i);
+                            SetPlayerArmedWeapon(playerid, 0);
+                            Player_RemoveWeaponSlot(playerid, GetWeaponSlot(weaponid));
+
+                            new engine, lights, alarm, doors, bonnet, boot, objective;
+	                        GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+	                        SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, 1, objective);
+
                             PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
+                            ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 2000, 1);
+
+                            SetTimerEx("TRUNK_CloseVehicleBoot", 1500, false, "i", vehicleid);
+                            g_rgePlayerTempData[playerid][e_bPassingItems] = true;
                         }
+                        else
+                            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "El maletero está lleno.");
                     }
                     else
                         Trunk_Show(playerid, vehicleid);
@@ -131,7 +153,6 @@ public INV_LoadFromDatabase(playerid)
             g_rgePlayerInventory[playerid][slot][e_bValid] = true;
             cache_get_value_name_int(i, "ID", g_rgePlayerInventory[playerid][slot][e_iID]);
             cache_get_value_name_int(i, "ITEM_TYPE", g_rgePlayerInventory[playerid][slot][e_iType]);
-            printf("[MIERDAS1] slot: %d, type: %d", slot, g_rgePlayerInventory[playerid][slot][e_iType]);
             cache_get_value_name_int(i, "AMOUNT", g_rgePlayerInventory[playerid][slot][e_iAmount]);
             cache_get_value_name_int(i, "EXTRA", g_rgePlayerInventory[playerid][slot][e_iExtra]);
 
@@ -381,6 +402,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
                     if (weapon)
                     {
                         Player_GiveWeapon(playerid, weapon);
+                        SetPlayerArmedWeapon(playerid, 0);
 
                         TrunkSlot_Delete(vehicleid, i);
                         Trunk_Update(playerid, vehicleid);

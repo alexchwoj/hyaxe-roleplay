@@ -132,7 +132,8 @@ enum ePlayerTemp
     e_iCrackUseTime,
     e_iDoubtSentTime,
     e_iReportSentTime,
-    e_iLastTrunk
+    e_iLastTrunk,
+    bool:e_bPassingItems
 };
 
 new 

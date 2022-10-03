@@ -139,7 +139,6 @@ Inventory_Update(playerid)
 				{
 					printf("[inventory]: Invalid item > playerid: %d, slot: %d, type: %d, db_id: %d", playerid, i, InventorySlot_Type(playerid, i), InventorySlot_ID(playerid, i));
 					Inventory_ResetSlot(playerid, i);
-					printf("[MIERDAS8] slot: %d, type: %d", i, g_rgePlayerInventory[playerid][i][e_iType]);
 				}
 				else
 				{
@@ -350,9 +349,7 @@ InventorySlot_Delete(playerid, slot)
 	printf("InventorySlot_Delete(playerid = %d, slot = %d)", playerid, slot);
 	mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `PLAYER_INVENTORY` WHERE `ID` = %d;", InventorySlot_ID(playerid, slot));
 	mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
-	printf("[MIERDAS6] slot: %d, type: %d", slot, g_rgePlayerInventory[playerid][slot][e_iType]);
 	Inventory_ResetSlot(playerid, slot);
-	printf("[MIERDAS7] slot: %d, type: %d", slot, g_rgePlayerInventory[playerid][slot][e_iType]);
 
 	Inventory_Update(playerid);
 	return 1;
@@ -369,9 +366,7 @@ Inventory_DeleteItemByType(playerid, type)
 			{
 				mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `PLAYER_INVENTORY` WHERE `ID` = %d;", InventorySlot_ID(playerid, i));
 				mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
-				printf("[MIERDAS5] slot: %d, type: %d", i, g_rgePlayerInventory[playerid][i][e_iType]);
 				Inventory_ResetSlot(playerid, i);
-				printf("[MIERDAS4] slot: %d, type: %d", i, g_rgePlayerInventory[playerid][i][e_iType]);
 			}
 		}
 	}
@@ -408,7 +403,6 @@ Inventory_InsertItem(playerid, type, amount, extra)
 	new slot = Inventory_GetFreeSlot(playerid);
     if (slot < HYAXE_MAX_INVENTORY_SLOTS)
 	{
-		printf("[MIERDAS10] slot: %d, type: %d", slot, g_rgePlayerInventory[playerid][slot][e_iType]);
 		mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
 			INSERT INTO `PLAYER_INVENTORY` (`ITEM_TYPE`, `AMOUNT`, `EXTRA`, `ACCOUNT_ID`) VALUES (%d, %d, %d, %i);\
 		", type, amount, extra, Player_AccountID(playerid));
@@ -424,7 +418,6 @@ Inventory_AddItem(playerid, type, amount, extra)
 	new slot = Inventory_GetFreeSlot(playerid);
     if (slot < HYAXE_MAX_INVENTORY_SLOTS)
 	{
-		printf("[MIERDAS9] slot: %d, type: %d", slot, g_rgePlayerInventory[playerid][slot][e_iType]);
 		if (Item_SingleSlot(type))
 			Inventory_InsertItem(playerid, type, amount, extra);
 		else
