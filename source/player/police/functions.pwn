@@ -19,7 +19,7 @@ Police_SendMessage(ePoliceRanks:rank, color, const message[])
 {
     foreach(new i : Police)
     {
-        if(Police_Rank(i) >= _:rank)
+        if(Police_OnDuty(i) && Police_Rank(i) >= _:rank)
         {
             SendClientMessage(i, color, message);
         }

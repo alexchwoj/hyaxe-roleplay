@@ -11,12 +11,72 @@ static PoliceLocker_OnKeyPress(playerid)
         return 1;
     }
 
+    if(Police_OnDuty(playerid))
+    {
+        Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s oficial %s ahora está fuera de servicio.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid)));
+
+        SetPlayerSkin(playerid, Player_Skin(playerid));
+        ResetPlayerWeapons(playerid);
+        Player_ClearWeaponsArray(playerid);
+        Police_OnDuty(playerid) = false;
+
+        Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Saliste de tu jornada como policía");
+
+        return 1;
+    }
+
+    if(Player_VIP(playerid) >= 2)
+    {
+        inline const Response(response, listitem, string:inputtext[])
+        {
+            #pragma unused inputtext
+
+            if(response)
+            {
+                Police_OnDuty(playerid) = true;
+
+                if(listitem == 1)
+                {
+                    SetPlayerSkin(playerid, 285);
+                    Player_GiveWeapon(playerid, 3, false);  // Nightstick
+                    Player_GiveWeapon(playerid, 24, false); // Desert Eagle
+                    Player_GiveWeapon(playerid, 27, false); // Combat Shotgun
+
+                    Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s oficial %s ahora está de servicio como Operaciones Especiales.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid)));
+                }
+                else
+                {
+                    SetPlayerSkin(playerid, 281 + _:TryPercentage(50));
+                    Player_GiveWeapon(playerid, 3, false);  // Nightstick
+                    Player_GiveWeapon(playerid, 24, false); // Desert Eagle
+                    Player_GiveWeapon(playerid, 31, false); // M4
+
+                    Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s oficial %s ahora está de servicio como %s.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid), Police_GetRankName(Police_Rank(playerid))));
+                }
+
+                SetPlayerArmedWeapon(playerid, 0);
+            }
+        }
+        Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_LIST, "{DADADA}Selección de {3A86FF}rango policial", va_return("{3A86FF}›{DADADA}%s\n{3A86FF}›{DADADA}Operaciones Especiales {CB3126}(VIP)", Police_GetRankName(Police_Rank(playerid))), "Seleccionar", "Cancelar");
+    }
+    else
+    {
+        Police_OnDuty(playerid) = true;
+        SetPlayerSkin(playerid, 281 + _:TryPercentage(50));
+        Player_GiveWeapon(playerid, 3, false);  // Nightstick
+        Player_GiveWeapon(playerid, 24, false); // Desert Eagle
+        Player_GiveWeapon(playerid, 31, false); // M4
+        SetPlayerArmedWeapon(playerid, 0);
+
+        Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s oficial %s ahora está de servicio como %s.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid), Police_GetRankName(Police_Rank(playerid))));
+    }
+
     return 1;
 }
 
 public OnScriptInit()
 {
-    Key_Alert(1569.2075, -1688.7084, 20.6049, 1.0, KEYNAME_NO, .callback_on_press = __addressof(PoliceLocker_OnKeyPress));    
+    Key_Alert(1569.2075, -1688.7084, 20.6049, 1.0, KEYNAME_YES, .callback_on_press = __addressof(PoliceLocker_OnKeyPress));    
     CreateDynamicPickup(1275, 1, 1569.2075, -1688.7084, 20.6049, 0, 0);
     CreateDynamicPickup(2044, 1, 1568.6139,-1694.9478, 20.6049, 0, 0);
 

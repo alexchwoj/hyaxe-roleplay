@@ -52,13 +52,14 @@ new const g_rgszPoliceRankNames[_:ePoliceRanks][] = {
 new 
     Iterator:Police<MAX_PLAYERS>,
     g_rgiPlayerPoliceRank[MAX_PLAYERS char],
+    bool:g_rgbPlayerOnPoliceDuty[MAX_PLAYERS char],
     g_rgszSelectedOfficer[MAX_PLAYERS][26];
 
 #define Player_IsPolice(%0) (g_rgiPlayerPoliceRank{(%0)} != _:POLICE_RANK_NONE)
+#define Police_OnDuty(%0) (g_rgbPlayerOnPoliceDuty{(%0)})
 #define Police_Rank(%0) (g_rgiPlayerPoliceRank{(%0)})
 #define Police_GetRankName(%0) (g_rgszPoliceRankNames[(%0)])
 
 forward Police_SetRank(playerid, ePoliceRanks:new_rank);
 forward Police_SendMessage(ePoliceRanks:rank, color, const message[]);
-forward Police_SendMessage_s(ePoliceRanks:rank, color, ConstString:message);
 forward POLICE_UserLoaded(playerid);

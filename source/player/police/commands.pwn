@@ -162,3 +162,8 @@ dialog police_change_rank(playerid, dialogid, response, listitem, inputtext[])
     PC_EmulateCommand(playerid, "/policias");
     return 1;
 }
+
+command cargos(playerid, const params[], "Dale cargos a un jugador")
+{
+    
+}

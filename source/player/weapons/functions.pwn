@@ -21,17 +21,18 @@ bool:Weapon_IsExplosive(weapon)
     return false;
 }
 
-Player_GiveWeapon(playerid, weaponid)
+Player_GiveWeapon(playerid, weaponid, bool:save = true)
 {
     new slot = GetWeaponSlot(weaponid);
-    if(slot < 1)
-        return 0;
 
     g_rgiPlayerWeapons[playerid][slot] = weaponid;
     GivePlayerWeapon(playerid, weaponid, 32767);
 
-    mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYER_WEAPONS` SET `SLOT_%i` = %i WHERE `ACCOUNT_ID` = %i LIMIT 1;", slot, weaponid, Player_AccountID(playerid));
-    mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+    if(save && slot > 1)
+    {
+        mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYER_WEAPONS` SET `SLOT_%i` = %i WHERE `ACCOUNT_ID` = %i LIMIT 1;", slot, weaponid, Player_AccountID(playerid));
+        mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+    }
 
     return 1;
 }
@@ -69,7 +70,8 @@ Player_LoadWeaponsFromCache(playerid)
 Player_RemoveAllWeapons(playerid)
 {
     ResetPlayerWeapons(playerid);
-
+    Player_ClearWeaponsArray(playerid);
+    
     mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYER_WEAPONS` SET \
         SLOT_1 = 0, \
         SLOT_2 = 0, \
@@ -87,4 +89,10 @@ Player_RemoveAllWeapons(playerid)
     mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
 
     return 1;
+}
+
+Player_ClearWeaponsArray(playerid)
+{
+    for(new i; i < sizeof(g_rgiPlayerWeapons[]); ++i)
+        g_rgiPlayerWeapons[playerid][i] = 0;
 }
