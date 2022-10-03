@@ -316,6 +316,7 @@ public OnPlayerSpawn(playerid)
         ApplyAnimation(playerid, "KNIFE", "null", 4.1, 0, 0, 0, 0, 0, 0);
         ApplyAnimation(playerid, "SWEET", "null", 4.1, 0, 0, 0, 0, 0, 0);
         ApplyAnimation(playerid, "WUZI", "null", 4.1, 0, 0, 0, 0, 0, 0);
+        ApplyAnimation(playerid, "SHOP", "null", 4.1, 0, 0, 0, 0, 0, 0);
     }
     Timer_CreateCallback(using inline Due, 3000, 1);
 
