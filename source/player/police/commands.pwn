@@ -426,6 +426,8 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
         s_rgiPoliceArrestingPlayer[playerid] = INVALID_PLAYER_ID;
         
         Bit_Set(Player_Flags(target), PFLAG_IN_JAIL, true);
+        Bit_Set(Player_Flags(target), PFLAG_ARRESTED, false);
+        
         RemovePlayerFromVehicle(target);
         TogglePlayerControllable(target, true);
         SetPlayerSpecialAction(target, SPECIAL_ACTION_NONE);
@@ -498,3 +500,16 @@ public OnPlayerDisconnect(playerid, reason)
 #if defined ARREST_OnPlayerDisconnect
     forward ARREST_OnPlayerDisconnect(playerid, reason);
 #endif
+
+command tiempo(playerid, const params[], "Ve el tiempo restante de condena")
+{
+    if(!Player_Data(playerid, e_iJailTime))
+    {
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No estás en prisión.");
+        return 1;
+    }
+
+    new time = Player_Data(playerid, e_iJailTime) - gettime();
+    SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Te quedan {ED2B2B}%d segundos{DADADA} de condena.", time);
+    return 1;
+}

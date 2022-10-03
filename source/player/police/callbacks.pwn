@@ -250,6 +250,8 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
 forward ARREST_ReleaseFromPrison(playerid);
 public ARREST_ReleaseFromPrison(playerid)
 {
+    DEBUG_PRINT("[func] ARREST_ReleaseFromPrison(playerid = %i)", playerid);
+    
     Bit_Set(Player_Flags(playerid), PFLAG_IN_JAIL, false);
     Player_Data(playerid, e_iJailTime) = 0;
 

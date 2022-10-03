@@ -34,3 +34,15 @@ Police_SendMessage(ePoliceRanks:rank, color, const message[], soundid = 0, suspe
 
     return 1;
 }
+
+Player_SpawnInPrison(playerid)
+{
+    new pos = random(sizeof(g_rgfJailPositions));
+    g_rgePlayerData[playerid][e_fPosX] = g_rgfJailPositions[pos][0];
+    g_rgePlayerData[playerid][e_fPosY] = g_rgfJailPositions[pos][1];
+    g_rgePlayerData[playerid][e_fPosZ] = g_rgfJailPositions[pos][2];
+    Player_VirtualWorld(playerid) = 0;
+    Player_Interior(playerid) = 0;
+
+    return 1;
+}

@@ -150,9 +150,20 @@ Account_LoadFromCache(playerid)
     cache_get_value_name_int(0, !"ADMIN_LEVEL", Player_AdminLevel(playerid));
     cache_get_value_name_int(0, !"PLAYED_TIME", Player_SavedPlayedTime(playerid));
     cache_get_value_name_int(0, !"MUTED_TIME", Player_MutedTime(playerid));
+    cache_get_value_name_int(0, !"JAIL_TIME", Player_Data(playerid, e_iJailTime));
 
     // Muted time
     Player_MutedTime(playerid) += gettime();
+
+    printf("jailtime = %i", Player_Data(playerid, e_iJailTime));
+    if(Player_Data(playerid, e_iJailTime))
+    {
+        Bit_Set(Player_Flags(playerid), PFLAG_IN_JAIL, true);
+
+        Player_Timer(playerid, e_iPlayerJailTimer) = SetTimerEx("ARREST_ReleaseFromPrison", Player_Data(playerid, e_iJailTime) * 1000, false, "i", playerid);
+        Player_Data(playerid, e_iJailTime) += gettime();
+        Player_SpawnInPrison(playerid);
+    }
 
     // Gang load
     new bool:no_gang;
