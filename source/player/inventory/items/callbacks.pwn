@@ -72,6 +72,12 @@ static Flag_OnUse(playerid, slot)
 
 static Medicine_OnUse(playerid, slot)
 {
+    if(Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+    {
+        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes usar esto abatido");
+        return 1;
+    }
+
     if (Player_Health(playerid) >= 100)
         return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Tienes la vida llena.");
 
@@ -94,6 +100,12 @@ static Medicine_OnUse(playerid, slot)
 
 static Crack_OnUse(playerid, slot)
 {
+    if(Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+    {
+        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes usar esto abatido");
+        return 1;
+    }
+
     if (Player_Armor(playerid) >= 100)
         return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Tienes el chaleco lleno.");
 
@@ -115,6 +127,12 @@ static Crack_OnUse(playerid, slot)
 
 static Food_OnUse(playerid, slot)
 {
+    if(Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+    {
+        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes usar esto abatido");
+        return 1;
+    }
+
     new type = InventorySlot_Type(playerid, slot);
 
     if (Item_Puke(type))
@@ -149,6 +167,12 @@ static Food_OnUse(playerid, slot)
 
 static RepairKit_OnUse(playerid, slot)
 {
+    if(Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+    {
+        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes usar esto abatido");
+        return 1;
+    }
+    
     new vehicleid = GetPlayerCameraTargetVehicle(playerid);
     if(vehicleid == INVALID_VEHICLE_ID)
     {
@@ -225,6 +249,12 @@ public REPAIRKIT_ActionFinished(playerid, vehicleid)
 
 static MediKit_OnUse(playerid, slot)
 {
+    if(Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+    {
+        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes usar esto abatido");
+        return 1;
+    }
+
     new target = GetPlayerCameraTargetPlayer(playerid);
     if(!IsPlayerConnected(target))
     {
