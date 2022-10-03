@@ -237,7 +237,16 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
         
         if(!Player_IsGangOwner(playerid) && !(Player_GangRankData(playerid)[e_iRankPermisionFlags] & _:(~(GANG_PERM_KICK_MEMBERS | GANG_PERM_EDIT_MEMBERS))))
         {
-            Dialog_Show(playerid, DIALOG_STYLE_MSGBOX, caption, "{DADADA}No tienes permisos para modificar esta banda.", "Entendido");
+            inline const Response(response, listitem, string:inputtext[])
+            {
+                #pragma unused inputtext
+                
+                if(response && listitem == 0)
+                {
+                    Dialog_ShowCallback(playerid, using public _hydg@gang_abandon<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}>{DADADA} Abandonar banda", "{DADADA}¿Estás seguro de que quieres abandonar tu banda?", "Abandonar", "Cancelar");
+                }
+            }
+            Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_LIST, caption, "{CB3126}>>{DADADA} Abandonar banda", "Seleccionar", "Salir");
             return 1;
         }
 

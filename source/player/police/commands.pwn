@@ -167,7 +167,7 @@ dialog police_change_rank(playerid, dialogid, response, listitem, inputtext[])
 
                     new message[40];
                     format(message, sizeof(message), "Has sido %s a %s.", (is_lower ? "descendido" : "ascendido"), Police_GetRankName(new_rank));
-                    Notification_Show(playerid, message, 10000, 0x3A86FFFF);
+                    Notification_Show(i, message, 10000, 0x3A86FFFF);
                     Police_SendMessage(POLICE_RANK_NONE, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s ahora es {3A86FF}%s{DADADA}.", Player_RPName(i), Police_GetRankName(new_rank)));
                 }
 
@@ -320,7 +320,7 @@ command reclutar(playerid, const params[], "Recluta a alguien como policía")
         if(!Police_OnDuty(playerid))
             SendClientMessage(playerid, 0x3A86FFFF, message);
     }
-    Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_MSGBOX, "{3A86FF}Hyaxe{DADADA} - Policía", va_return("{3A86FF}%s{DADADA} ofrecio unirte a LSPD con el rango de %s.", Player_RPName(playerid), Police_GetRankName(POLICE_RANK_OFFICER)), "Aceptar", "Cancelar");
+    Dialog_ShowCallback(target, using inline Response, DIALOG_STYLE_MSGBOX, "{3A86FF}Hyaxe{DADADA} - Policía", va_return("{3A86FF}%s{DADADA} ofrecio unirte a LSPD con el rango de %s.", Player_RPName(playerid), Police_GetRankName(POLICE_RANK_OFFICER)), "Aceptar", "Cancelar");
 
     SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Invitación enviada.");
     return 1;

@@ -25,7 +25,7 @@ Police_SendMessage(ePoliceRanks:rank, color, const message[])
         if(Police_OnDuty(i) && Police_Rank(i) >= _:rank)
         {
             for(new j; j < count; ++j)
-                SendClientMessage(i, color, messages[i]);
+                SendClientMessage(i, color, messages[j]);
         }
     }
 
