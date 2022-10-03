@@ -5,6 +5,8 @@
 
 static PoliceLocker_OnKeyPress(playerid)
 {
+    static const male_skins[] = { 280, 281, 265, 266, 267, 300, 301 };
+
     if(!Police_Rank(playerid))
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No eres policía");
@@ -46,7 +48,7 @@ static PoliceLocker_OnKeyPress(playerid)
                 }
                 else
                 {
-                    SetPlayerSkin(playerid, (Player_Sex(playerid) == SEX_MALE ? 280 : 306) + _:TryPercentage(50));
+                    SetPlayerSkin(playerid, (Player_Sex(playerid) == SEX_MALE ? (male_skins[random(sizeof(male_skins))]) : (306 + _:TryPercentage(50))));
                     Player_GiveWeapon(playerid, 3, false);  // Nightstick
                     Player_GiveWeapon(playerid, 24, false); // Desert Eagle
                     Player_GiveWeapon(playerid, 31, false); // M4
@@ -62,7 +64,7 @@ static PoliceLocker_OnKeyPress(playerid)
     else
     {
         Police_OnDuty(playerid) = true;
-        SetPlayerSkin(playerid, (Player_Sex(playerid) == SEX_MALE ? 280 : 306) + _:TryPercentage(50));
+        SetPlayerSkin(playerid, (Player_Sex(playerid) == SEX_MALE ? (male_skins[random(sizeof(male_skins))]) : (306 + _:TryPercentage(50))));
         Player_GiveWeapon(playerid, 3, false);  // Nightstick
         Player_GiveWeapon(playerid, 24, false); // Desert Eagle
         Player_GiveWeapon(playerid, 31, false); // M4

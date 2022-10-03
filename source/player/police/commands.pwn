@@ -325,3 +325,8 @@ command reclutar(playerid, const params[], "Recluta a alguien como policía")
     SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Invitación enviada.");
     return 1;
 }
+
+command arrestar(playerid, const params[], "Arresta a un jugador")
+{
+    
+}
