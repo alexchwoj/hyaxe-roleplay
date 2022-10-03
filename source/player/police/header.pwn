@@ -24,6 +24,14 @@ new const g_rgeCopCars[][eVehicleCarData] = {
     { 599, 1587.6093, -1709.0687, 5.9886, 0.0000 }
 };
 
+new const Float:g_rgfJailPositions[][3] = {
+    { 1562.0920, -1655.3381, 20.6049 },
+    { 1565.4879, -1656.1748, 20.6049 },
+    { 1569.7051, -1657.1235, 20.6049 },
+    { 1570.5763, -1662.3217, 20.6049 },
+    { 1569.2526, -1665.7942, 20.604 }
+};
+
 enum ePoliceRanks
 {
     POLICE_RANK_NONE,
@@ -74,7 +82,8 @@ new
     Iterator:Police<MAX_PLAYERS>,
     g_rgiPlayerPoliceRank[MAX_PLAYERS char],
     bool:g_rgbPlayerOnPoliceDuty[MAX_PLAYERS char],
-    g_rgszSelectedOfficer[MAX_PLAYERS][26];
+    g_rgszSelectedOfficer[MAX_PLAYERS][26],
+    g_iArrestCheckpoint;
 
 #define Player_IsPolice(%0) (g_rgiPlayerPoliceRank{(%0)} != _:POLICE_RANK_NONE)
 #define Police_OnDuty(%0) (g_rgbPlayerOnPoliceDuty{(%0)})
@@ -82,5 +91,5 @@ new
 #define Police_GetRankName(%0) (g_rgszPoliceRankNames[(%0)])
 
 forward Police_SetRank(playerid, ePoliceRanks:new_rank);
-forward Police_SendMessage(ePoliceRanks:rank, color, const message[]);
+forward Police_SendMessage(ePoliceRanks:rank, color, const message[], soundid = 0, suspect = INVALID_PLAYER_ID);
 forward POLICE_UserLoaded(playerid);

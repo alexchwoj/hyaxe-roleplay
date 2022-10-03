@@ -15,7 +15,7 @@ static PoliceLocker_OnKeyPress(playerid)
 
     if(Police_OnDuty(playerid))
     {
-        Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s oficial %s ahora está fuera de servicio.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid)));
+        Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s oficial %s ahora está fuera de servicio.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid)), 21, playerid);
 
         SetPlayerSkin(playerid, Player_Skin(playerid));
         ResetPlayerWeapons(playerid);
@@ -78,6 +78,8 @@ static PoliceLocker_OnKeyPress(playerid)
 
 public OnScriptInit()
 {
+    g_iArrestCheckpoint = CreateDynamicCP(1568.1835, -1695.7062, 5.8906, 5.0, 0, 0, .streamdistance = 5000.0);
+
     Key_Alert(1569.2075, -1688.7084, 20.6049, 1.0, KEYNAME_YES, .callback_on_press = __addressof(PoliceLocker_OnKeyPress));    
     CreateDynamicPickup(1275, 1, 1569.2075, -1688.7084, 20.6049, 0, 0);
     CreateDynamicPickup(2044, 1, 1568.6139,-1694.9478, 20.6049, 0, 0);
@@ -244,3 +246,24 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
 #if defined POLICE_OnPlayerStateChange
     forward POLICE_OnPlayerStateChange(playerid, newstate, oldstate);
 #endif
+
+forward ARREST_ReleaseFromPrison(playerid);
+public ARREST_ReleaseFromPrison(playerid)
+{
+    Bit_Set(Player_Flags(playerid), PFLAG_IN_JAIL, false);
+    Player_Data(playerid, e_iJailTime) = 0;
+
+    SetPlayerVirtualWorld(playerid, 0);
+    SetPlayerInterior(playerid, 0);
+    SetPlayerPos(playerid, 1561.5903, -1669.4990, 20.6049);
+    SetPlayerFacingAngle(playerid, 193.2624);
+
+    ClearAnimations(playerid);
+
+    Notification_Show(playerid, "Fuiste liberado de prisión.", 5000);
+
+    mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `JAIL_TIME` = 0 WHERE `ID` = %d;", Player_AccountID(playerid));
+    mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+    
+    return 1;
+}

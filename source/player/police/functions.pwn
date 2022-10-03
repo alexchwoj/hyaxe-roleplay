@@ -15,7 +15,7 @@ Police_SetRank(playerid, ePoliceRanks:new_rank)
     return 1;
 }
 
-Police_SendMessage(ePoliceRanks:rank, color, const message[])
+Police_SendMessage(ePoliceRanks:rank, color, const message[], soundid = 0, suspect = INVALID_PLAYER_ID)
 {
     new messages[2][145];
     new count = SplitChatMessageInLines(message, messages);
@@ -26,6 +26,9 @@ Police_SendMessage(ePoliceRanks:rank, color, const message[])
         {
             for(new j; j < count; ++j)
                 SendClientMessage(i, color, messages[j]);
+
+            if(soundid && suspect != INVALID_PLAYER_ID)
+                PlayCrimeReportForPlayer(i, suspect, soundid);
         }
     }
 

@@ -30,6 +30,8 @@ enum
     PFLAG_IN_TUNING,
     PFLAG_USING_PHONE,
     PFLAG_USING_CAMERA,
+    PFLAG_ARRESTED,
+    PFLAG_IN_JAIL,
     
     MAX_PLAYER_FLAGS
 };
@@ -97,12 +99,14 @@ enum ePlayerData
     e_iCurrentConnectionTime,
     e_iPlayerPausedTick,
     e_iPlayerPausedTime,
-    e_iMutedTime
+    e_iMutedTime,
+    e_iJailTime,
 };
 
 enum _:ePlayerTimers
 {
     e_iPlayerShitTimer,
+    e_iPlayerJailTimer,
 
     e_iMaxTimer
 };

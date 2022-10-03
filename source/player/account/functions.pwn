@@ -73,6 +73,15 @@ Account_Save(playerid, bool:disconnect = false)
     new muted_time = Player_MutedTime(playerid) - gettime();
     if (muted_time < 0)
         muted_time = 0;
+    
+    new jailtime = 0;
+    if(Player_Data(playerid, e_iJailTime))
+        jailtime = Player_Data(playerid, e_iJailTime) - gettime();
+    else if(Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
+    {
+        jailtime = (Player_WantedLevel(playerid) * 2) * 60;
+        Player_WantedLevel(playerid) = 0;
+    }
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
         UPDATE `ACCOUNT` SET \
@@ -92,6 +101,8 @@ Account_Save(playerid, bool:disconnect = false)
             `LEVEL` = %i, \
             `XP` = %i, \
             `MONEY` = %i, \
+            `JAIL_TIME` = %d, \
+            `WANTED_LEVEL` = %d, \
             `CURRENT_PLAYERID` = %i%s \
         WHERE `ID` = %i;\
     ", 
@@ -100,6 +111,7 @@ Account_Save(playerid, bool:disconnect = false)
         g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle],
         Player_VirtualWorld(playerid), Player_Interior(playerid), (Bit_Get(Player_Flags(playerid), PFLAG_INJURED) ? 0 : Player_Health(playerid)), Player_Armor(playerid), Player_Hunger(playerid), Player_Thirst(playerid),
         Player_Skin(playerid), Player_Level(playerid), Player_XP(playerid), Player_Money(playerid),
+        jailtime, Player_WantedLevel(playerid),
         (disconnect ? -1 : playerid), (disconnect ? ", CURRENT_CONNECTION = 0" : ""), 
         Player_AccountID(playerid)
     );
@@ -272,6 +284,6 @@ Player_SetWantedLevel(playerid, level)
         mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `WANTED_LEVEL` = %d WHERE `ID` = %d;", level, Player_AccountID(playerid));
         mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
     }
-    
+
     return ret;
 }

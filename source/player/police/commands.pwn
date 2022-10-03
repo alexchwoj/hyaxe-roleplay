@@ -230,8 +230,8 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
             va_return(
                 "[Arresto] ›{DADADA} %s oficial %s canceló la orden de arresto contra {ED2B2B}%s{DADADA}.", 
                 (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid), Player_RPName(target)
-            )
-        );
+            ),
+        10, target);
     }
     else if(!Player_WantedLevel(target))
     {
@@ -239,8 +239,8 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
             va_return(
                 "[Arresto] ›{DADADA} %s oficial %s puso una orden de arresto de nivel %d contra {ED2B2B}%s{DADADA}.", 
                 (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid), charges, Player_RPName(target)
-            )
-        );
+            ),
+        10, target);
     }
     else if(Player_WantedLevel(target) > charges)
     {
@@ -248,8 +248,8 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
             va_return(
                 "[Arresto] ›{DADADA} %s oficial %s aumentó el nivel de la orden de arresto contra {ED2B2B}%s{DADADA} a nivel %d.", 
                 (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid), Player_RPName(target), charges
-            )
-        );
+            ),
+        10, target);
     }
     else
     {
@@ -257,8 +257,8 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
             va_return(
                 "[Arresto] ›{DADADA} %s oficial %s disminuyó el nivel de la orden de arresto contra {ED2B2B}%s{DADADA} a nivel %d.", 
                 (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid), Player_RPName(target), charges
-            )
-        );
+            ),
+        10, target);
     }
 
     Player_SetWantedLevel(target, charges);
@@ -326,7 +326,173 @@ command reclutar(playerid, const params[], "Recluta a alguien como policía")
     return 1;
 }
 
+static
+    s_rgiPoliceArrestingPlayer[MAX_PLAYERS] = { INVALID_PLAYER_ID, ... };
+
 command arrestar(playerid, const params[], "Arresta a un jugador")
 {
-    
+    new target = GetPlayerCameraTargetPlayer(playerid);
+    if(!IsPlayerConnected(target))
+    {
+        SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Necesitas estar viendo a un jugador para arrestarlo.");
+        return 1;
+    }
+
+    if(!Player_WantedLevel(target))
+    {
+        SendClientMessagef(playerid, 0x3A86FFFF, "›{DADADA} %s no tiene nivel de búsqueda.", Player_Sex(target) == SEX_MALE ? "Este jugador" : "Esta jugadora");
+        return 1;
+    }
+
+    new Float:x, Float:y, Float:z;
+    GetPlayerPos(target, x, y, z);
+    if(!IsPlayerInRangeOfPoint(playerid, 2.0, x, y, z))
+    {
+        SendClientMessagef(playerid, 0x3A86FFFF, "›{DADADA} Necesitas estar más cerca de%s", (Player_Sex(target) == SEX_MALE ? "l jugador" : " la jugadora"));
+        return 1;
+    }
+
+    Player_RemoveAllWeapons(target);
+
+    if(Bit_Get(Player_Flags(target), PFLAG_INJURED))
+    {
+        Player_Revive(target);
+    }
+
+    Bit_Set(Player_Flags(target), PFLAG_ARRESTED, true);
+    s_rgiPoliceArrestingPlayer[playerid] = target;
+
+    TogglePlayerControllable(target, false);
+    SetPlayerSpecialAction(target, SPECIAL_ACTION_CUFFED);
+
+    Notification_Show(playerid, va_return("Arrestaste a %s. Sube a una patrulla para trasladarl%c.", Player_RPName(target), (Player_Sex(target) == SEX_MALE ? 'o' : 'a')), 5000, 0x3A86FFFF);
+    Police_SendMessage(POLICE_RANK_OFFICER, 0xED2B2BFF, va_return("[Policía] {DADADA}%s {ED2B2B}›{DADADA} Sospechos%c %s arrestad%c.", Player_RPName(playerid), (Player_Sex(target) == SEX_MALE ? 'o' : 'a'), Player_RPName(target), (Player_Sex(target) == SEX_MALE ? 'o' : 'a')), 12, target);
+
+    return 1;
 }
+
+public OnPlayerStateChange(playerid, newstate, oldstate)
+{
+    if(newstate == PLAYER_STATE_DRIVER && s_rgiPoliceArrestingPlayer[playerid] != INVALID_PLAYER_ID)
+    {
+        new vehicleid = GetPlayerVehicleID(playerid);
+        if(IsValidVehicle(vehicleid) && Vehicle_Type(vehicleid) == VEHICLE_TYPE_POLICE)
+        {
+            new occupied_seats = 0;
+            foreach(new i : VehicleOccupant(vehicleid, .includeDriver = false))
+            {
+                occupied_seats = (1 << GetPlayerVehicleSeat(i));
+            }
+
+            if(occupied_seats >= 0b1100)
+            {
+                Notification_Show(playerid, "No se pudo subir al sospechoso a la patrulla. Libera uno de los asientos traseros.", 5000);
+            }
+            else
+            {
+                occupied_seats |= 0b11;
+                Cell_GetLowestBlank(occupied_seats);
+                PutPlayerInVehicle(s_rgiPoliceArrestingPlayer[playerid], GetPlayerVehicleID(playerid), Cell_GetLowestBlank(occupied_seats));
+                Notification_Show(playerid, "Lleva al sospechoso a la comisaría para procesarlo.", 5000);
+                TogglePlayerDynamicCP(playerid, g_iArrestCheckpoint, true);
+            }
+        }
+    }
+
+    #if defined ARREST_OnPlayerStateChange
+        return ARREST_OnPlayerStateChange(playerid, newstate, oldstate);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerStateChange
+    #undef OnPlayerStateChange
+#else
+    #define _ALS_OnPlayerStateChange
+#endif
+#define OnPlayerStateChange ARREST_OnPlayerStateChange
+#if defined ARREST_OnPlayerStateChange
+    forward ARREST_OnPlayerStateChange(playerid, newstate, oldstate);
+#endif
+
+public OnPlayerEnterDynamicCP(playerid, checkpointid)
+{
+    if(checkpointid == g_iArrestCheckpoint)
+    {
+        TogglePlayerDynamicCP(playerid, g_iArrestCheckpoint, false);
+
+        new target = s_rgiPoliceArrestingPlayer[playerid];
+        s_rgiPoliceArrestingPlayer[playerid] = INVALID_PLAYER_ID;
+        
+        Bit_Set(Player_Flags(target), PFLAG_IN_JAIL, true);
+        RemovePlayerFromVehicle(target);
+        TogglePlayerControllable(target, true);
+        SetPlayerSpecialAction(target, SPECIAL_ACTION_NONE);
+
+        Player_GiveMoney(playerid, 500);
+        Notification_Show(playerid, va_return("Arrestaste a %s y se te dio un bono de ~g~500$", Player_RPName(target)), 5000);
+
+        new jailtime = (Player_WantedLevel(target) * 2) * 60;
+        Player_Data(target, e_iJailTime) = gettime() + jailtime;
+        Player_Timer(target, e_iPlayerJailTimer) = SetTimerEx("ARREST_ReleaseFromPrison", jailtime * 1000, false, "i", target);
+
+        new pos = random(sizeof(g_rgfJailPositions));
+        SetPlayerVirtualWorld(playerid, 0);
+        SetPlayerInterior(playerid, 0);
+        SetPlayerPos(playerid, g_rgfJailPositions[pos][0], g_rgfJailPositions[pos][1], g_rgfJailPositions[pos][2]);
+        Notification_Show(target, va_return("Estás en prisión y cumples una condena de ~r~%d minutos~w~. Para ver el tiempo restante usa ~r~/tiempo~w~.", Player_WantedLevel(target) * 2), 10000);
+        
+        mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `WANTED_LEVEL` = 0, `JAIL_TIME` = %d WHERE `ID` = %d;", jailtime, Player_AccountID(target));
+        mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+    }
+
+    #if defined ARREST_OnPlayerEnterDynamicCP
+        return ARREST_OnPlayerEnterDynamicCP(playerid, checkpointid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerEnterDynamicCP
+    #undef OnPlayerEnterDynamicCP
+#else
+    #define _ALS_OnPlayerEnterDynamicCP
+#endif
+#define OnPlayerEnterDynamicCP ARREST_OnPlayerEnterDynamicCP
+#if defined ARREST_OnPlayerEnterDynamicCP
+    forward ARREST_OnPlayerEnterDynamicCP(playerid, checkpointid);
+#endif
+
+public OnPlayerDisconnect(playerid, reason)
+{
+    if(Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
+    {
+        foreach(new i : Police)
+        {
+            if(s_rgiPoliceArrestingPlayer[i] == playerid)
+            {
+                Notification_Show(i, "El jugador al que arrestabas se desconecto. Se te dio una bonificación de ~r~500$~w~ por su arresto.", 10000);
+                s_rgiPoliceArrestingPlayer[i] = INVALID_PLAYER_ID;
+                TogglePlayerDynamicCP(playerid, g_iArrestCheckpoint, false);
+                break;
+            }
+        }
+    }
+
+    #if defined ARREST_OnPlayerDisconnect
+        return ARREST_OnPlayerDisconnect(playerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDisconnect
+    #undef OnPlayerDisconnect
+#else
+    #define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect ARREST_OnPlayerDisconnect
+#if defined ARREST_OnPlayerDisconnect
+    forward ARREST_OnPlayerDisconnect(playerid, reason);
+#endif
