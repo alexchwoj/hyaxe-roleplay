@@ -11,6 +11,9 @@ command parar(playerid, const params[], "Para la animación")
 
 command mear(playerid, const params[], "Echa un meo")
 {
+    if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING) || Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
+        return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes hacer eso");
+        
     if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
         return SendClientMessage(playerid, 0xDADADAFF, "No estas {CB3126}de pie{DADADA}.");
 

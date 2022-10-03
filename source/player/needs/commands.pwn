@@ -5,7 +5,7 @@
 
 command cagar(playerid, const params[], "Echa un cago")
 {
-    if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING))
+    if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING) || Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
         return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes hacer eso");
 
     if(GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)

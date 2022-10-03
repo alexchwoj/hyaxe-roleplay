@@ -30,7 +30,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if ((newkeys & KEY_NO) != 0)
     {
-        if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER && !Bit_Get(Player_Flags(playerid), PFLAG_IN_KEYGAME))
+        if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER && !Bit_Get(Player_Flags(playerid), PFLAG_IN_KEYGAME) && !Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
             Inventory_Show(playerid);
     }
     else if ((newkeys & KEY_WALK) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
