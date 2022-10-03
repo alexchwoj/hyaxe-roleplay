@@ -431,11 +431,13 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
         SetPlayerSpecialAction(target, SPECIAL_ACTION_NONE);
 
         Player_GiveMoney(playerid, 500);
-        Notification_Show(playerid, va_return("Arrestaste a %s y se te dio un bono de ~g~500$", Player_RPName(target)), 5000);
+        Notification_Show(playerid, va_return("Arrestaste a %s y se te dio una bonificación de ~g~500$", Player_RPName(target)), 5000);
 
         new jailtime = (Player_WantedLevel(target) * 2) * 60;
         Player_Data(target, e_iJailTime) = gettime() + jailtime;
         Player_Timer(target, e_iPlayerJailTimer) = SetTimerEx("ARREST_ReleaseFromPrison", jailtime * 1000, false, "i", target);
+        Player_WantedLevel(target) = 0;
+        SetPlayerWantedLevel(target, 0);
 
         new pos = random(sizeof(g_rgfJailPositions));
         SetPlayerVirtualWorld(target, 0);
