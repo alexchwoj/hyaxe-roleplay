@@ -15,6 +15,7 @@ static PoliceLocker_OnKeyPress(playerid)
 
     if(Police_OnDuty(playerid))
     {
+        Police_ClearMarkers(playerid);
         Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s oficial %s ahora está fuera de servicio.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid)), 21, playerid);
 
         SetPlayerSkin(playerid, Player_Skin(playerid));
@@ -57,6 +58,7 @@ static PoliceLocker_OnKeyPress(playerid)
                 }
 
                 SetPlayerArmedWeapon(playerid, 0);
+                Police_SetMarkers(playerid);
             }
         }
         Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_LIST, "{DADADA}Selección de {3A86FF}rango policial", va_return("{3A86FF}›{DADADA}%s\n{3A86FF}›{DADADA}Operaciones Especiales {CB3126}(VIP)", Police_GetRankName(Police_Rank(playerid))), "Seleccionar", "Cancelar");
@@ -69,6 +71,7 @@ static PoliceLocker_OnKeyPress(playerid)
         Player_GiveWeapon(playerid, 24, false); // Desert Eagle
         Player_GiveWeapon(playerid, 31, false); // M4
         SetPlayerArmedWeapon(playerid, 0);
+        Police_SetMarkers(playerid);
 
         Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s oficial %s ahora está de servicio como %s.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid), Police_GetRankName(Police_Rank(playerid))));
     }
@@ -155,7 +158,8 @@ public OnPlayerDisconnect(playerid, reason)
 {
     Police_OnDuty(playerid) = false;
     Police_Rank(playerid) = POLICE_RANK_NONE;
-
+    Police_ClearMarkers(playerid);
+    
     if(Iter_Contains(Police, playerid))
         Iter_Remove(Police, playerid);
 
@@ -251,7 +255,7 @@ forward ARREST_ReleaseFromPrison(playerid);
 public ARREST_ReleaseFromPrison(playerid)
 {
     DEBUG_PRINT("[func] ARREST_ReleaseFromPrison(playerid = %i)", playerid);
-    
+
     Bit_Set(Player_Flags(playerid), PFLAG_IN_JAIL, false);
     Player_Data(playerid, e_iJailTime) = 0;
 

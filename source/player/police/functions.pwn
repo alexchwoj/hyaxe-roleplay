@@ -46,3 +46,25 @@ Player_SpawnInPrison(playerid)
 
     return 1;
 }
+
+Police_SetMarkers(playerid)
+{
+    foreach(new i : Player)
+    {
+        if(Player_WantedLevel(i))
+        {
+            SetPlayerMarkerForPlayer(playerid, i, 0xCB3126FF);
+        }
+    }
+}
+
+Police_ClearMarkers(playerid)
+{
+    foreach(new i : Player)
+    {
+        if(Player_WantedLevel(i))
+        {
+            ResetPlayerMarkerForPlayer(playerid, i);
+        }
+    }
+}
