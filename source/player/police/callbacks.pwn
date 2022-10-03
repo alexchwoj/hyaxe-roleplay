@@ -46,7 +46,7 @@ static PoliceLocker_OnKeyPress(playerid)
                 }
                 else
                 {
-                    SetPlayerSkin(playerid, 281 + _:TryPercentage(50));
+                    SetPlayerSkin(playerid, (Player_Sex(playerid) == SEX_MALE ? 280 : 306) + _:TryPercentage(50));
                     Player_GiveWeapon(playerid, 3, false);  // Nightstick
                     Player_GiveWeapon(playerid, 24, false); // Desert Eagle
                     Player_GiveWeapon(playerid, 31, false); // M4
@@ -62,7 +62,7 @@ static PoliceLocker_OnKeyPress(playerid)
     else
     {
         Police_OnDuty(playerid) = true;
-        SetPlayerSkin(playerid, 281 + _:TryPercentage(50));
+        SetPlayerSkin(playerid, (Player_Sex(playerid) == SEX_MALE ? 280 : 306) + _:TryPercentage(50));
         Player_GiveWeapon(playerid, 3, false);  // Nightstick
         Player_GiveWeapon(playerid, 24, false); // Desert Eagle
         Player_GiveWeapon(playerid, 31, false); // M4
