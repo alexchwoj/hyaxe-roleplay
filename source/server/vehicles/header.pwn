@@ -76,7 +76,7 @@ enum eTrunk
     e_iAmount,
     e_iExtra
 };
-new g_rgeVehicleTrunk[MAX_VEHICLES][7][eTrunk];
+new g_rgeVehicleTrunk[MAX_VEHICLES][14][eTrunk];
 
 enum eVehicleModelData
 {

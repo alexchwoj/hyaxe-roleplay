@@ -4,7 +4,7 @@
 #define _inventory_header_
 
 const HYAXE_MAX_INVENTORY_SLOTS = 21;
-const HYAXE_MAX_TRUNK_SLOTS = 7;
+const HYAXE_MAX_TRUNK_SLOTS = 14;
 const HYAXE_MAX_DROPPED_ITEMS = 2048;
 const Float:EXP_BAR_MIN_X = 220.500;
 const Float:EXP_BAR_MAX_X = 408.0;

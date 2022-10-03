@@ -572,7 +572,7 @@ public OnScriptInit()
 
     g_tdInventoryBG[3] = TextDrawCreate(316.000000, 377.000000, "_");
     TextDrawFont(g_tdInventoryBG[3], 1);
-    TextDrawLetterSize(g_tdInventoryBG[3], 0.600000, -20.000000);
+    TextDrawLetterSize(g_tdInventoryBG[3], 0.600000, -23.400000);
     TextDrawTextSize(g_tdInventoryBG[3], 364.000000, 195.500000);
     TextDrawSetOutline(g_tdInventoryBG[3], 1);
     TextDrawSetShadow(g_tdInventoryBG[3], 0);
@@ -628,7 +628,7 @@ public OnScriptInit()
 
     g_tdInventoryBG[4] = TextDrawCreate(316.000000, 310.000000, "_");
     TextDrawFont(g_tdInventoryBG[4], 1);
-    TextDrawLetterSize(g_tdInventoryBG[4], 0.600000, -12.100027);
+    TextDrawLetterSize(g_tdInventoryBG[4], 0.600000, -15.400000);
     TextDrawTextSize(g_tdInventoryBG[4], 362.000000, 188.500000);
     TextDrawSetOutline(g_tdInventoryBG[4], 1);
     TextDrawSetShadow(g_tdInventoryBG[4], 0);
@@ -682,7 +682,7 @@ public OnScriptInit()
     TextDrawSetProportional(g_tdInventoryUsername, 1);
     TextDrawSetSelectable(g_tdInventoryUsername, 0);
 
-    g_tdInveotrySections[0] = TextDrawCreate(223.000000, 257.000000, "Inventario");
+    g_tdInveotrySections[0] = TextDrawCreate(223.000000, 259.000000, "Inventario");
     TextDrawFont(g_tdInveotrySections[0], 1);
     TextDrawLetterSize(g_tdInveotrySections[0], 0.191666, 1.000000);
     TextDrawTextSize(g_tdInveotrySections[0], 400.000000, 302.500000);
@@ -696,7 +696,7 @@ public OnScriptInit()
     TextDrawSetProportional(g_tdInveotrySections[0], 1);
     TextDrawSetSelectable(g_tdInveotrySections[0], 0);
 
-    g_tdInveotrySections[1] = TextDrawCreate(223.000000, 208.000000, "_");
+    g_tdInveotrySections[1] = TextDrawCreate(223.000000, 177.000000, "_");
     TextDrawFont(g_tdInveotrySections[1], 1);
     TextDrawLetterSize(g_tdInveotrySections[1], 0.191666, 1.000000);
     TextDrawTextSize(g_tdInveotrySections[1], 400.000000, 302.500000);
@@ -1853,8 +1853,15 @@ public OnPlayerConnect(playerid)
     slot_x = 223.000000;
     slot_y = 220.000000;
 
-    for(new i; i < 7; ++i)
+    for(new i; i < 14; ++i)
 	{
+        if (column >= 7)
+        {
+            column = 0;
+            slot_x = 223.000000;
+            ++row;
+        }
+
         p_tdTrunkItemView[playerid]{i} = CreatePlayerTextDraw(playerid, slot_x + (27.0 * column), slot_y - (33.0 * row), "Preview_Model");
         PlayerTextDrawFont(playerid, p_tdTrunkItemView[playerid]{i}, 5);
         PlayerTextDrawLetterSize(playerid, p_tdTrunkItemView[playerid]{i}, 0.600000, 2.000000);

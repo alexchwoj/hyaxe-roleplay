@@ -266,7 +266,7 @@ Inventory_Hide(playerid)
 	TextDrawHideForPlayer(playerid, g_tdInveotrySections[0]);
 	TextDrawHideForPlayer(playerid, g_tdInveotrySections[1]);
 
-	for(new i; i < 7; ++i)
+	for(new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
 	{
 		PlayerTextDrawHide(playerid, p_tdTrunkItemView[playerid]{i});
 		PlayerTextDrawHide(playerid, p_tdTrunkItemCount[playerid]{i});
@@ -588,7 +588,7 @@ Trunk_Show(playerid, vehicleid)
 		PlayerTextDrawShow(playerid, p_tdItemCount[playerid]{i});
 	}
 
-	for(new i; i < 7; ++i)
+	for(new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
 	{
 		PlayerTextDrawShow(playerid, p_tdTrunkItemView[playerid]{i});
 		PlayerTextDrawShow(playerid, p_tdTrunkItemCount[playerid]{i});
