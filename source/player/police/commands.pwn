@@ -263,8 +263,14 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
 
     Player_SetWantedLevel(target, charges);
 
+    foreach(new i : Police)
+    {
+        SetPlayerMarkerForPlayer(i, target, (charges ? 0xCB3126FF : 0xF7F7F700));
+    }
+    
     return 1;
 }
+alias:cargos("c")
 
 command reclutar(playerid, const params[], "Recluta a alguien como policía")
 {
@@ -464,6 +470,11 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
         
         mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `WANTED_LEVEL` = 0, `JAIL_TIME` = %d WHERE `ID` = %d;", jailtime, Player_AccountID(target));
         mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+
+        foreach(new i : Police)
+        {
+            SetPlayerMarkerForPlayer(i, target, 0xF7F7F700);
+        }
     }
 
     #if defined ARREST_OnPlayerEnterDynamicCP

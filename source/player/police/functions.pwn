@@ -64,7 +64,7 @@ Police_ClearMarkers(playerid)
     {
         if(Player_WantedLevel(i))
         {
-            ResetPlayerMarkerForPlayer(playerid, i);
+            SetPlayerMarkerForPlayer(playerid, i, 0xF7F7F700);
         }
     }
 }
