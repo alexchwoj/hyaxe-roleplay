@@ -56,7 +56,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         {
                             Player_RemoveWeaponSlot(playerid, GetWeaponSlot(weaponid));
                             SetPlayerArmedWeapon(playerid, 0);
-                            
+
                             new engine, lights, alarm, doors, bonnet, boot, objective;
 	                        GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 	                        SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, 1, objective);
@@ -398,10 +398,21 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
             {
                 if ( TrunkSlot_IsValid(vehicleid, i) )
                 {
-                    new weapon = Item_TypeToWeapon(TrunkSlot_Type(vehicleid, i));
-                    if (weapon)
+                    new weaponid = Item_TypeToWeapon(TrunkSlot_Type(vehicleid, i));
+                    if (weaponid)
                     {
-                        Player_GiveWeapon(playerid, weapon);
+                        new slot = GetWeaponSlot(weaponid);
+                        if (g_rgiPlayerWeapons[playerid][slot])
+                        {
+                            new name[32];
+                            GetWeaponName(g_rgiPlayerWeapons[playerid][slot], name);
+
+                            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "No puedes quitar esta arma porque tienes otra que ocupa su lugar (%s).", name);
+                            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
+                            return 1;
+                        }
+
+                        Player_GiveWeapon(playerid, weaponid);
                         SetPlayerArmedWeapon(playerid, 0);
 
                         TrunkSlot_Delete(vehicleid, i);
