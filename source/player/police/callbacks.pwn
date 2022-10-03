@@ -38,6 +38,9 @@ static PoliceLocker_OnKeyPress(playerid)
             {
                 Police_OnDuty(playerid) = true;
 
+                ResetPlayerWeapons(playerid);
+                Player_ClearWeaponsArray(playerid);
+
                 if(listitem == 1)
                 {
                     SetPlayerSkin(playerid, 285);
@@ -66,6 +69,10 @@ static PoliceLocker_OnKeyPress(playerid)
     else
     {
         Police_OnDuty(playerid) = true;
+
+        ResetPlayerWeapons(playerid);
+        Player_ClearWeaponsArray(playerid);
+        
         SetPlayerSkin(playerid, (Player_Sex(playerid) == SEX_MALE ? (male_skins[random(sizeof(male_skins))]) : (306 + _:TryPercentage(50))));
         Player_GiveWeapon(playerid, 3, false);  // Nightstick
         Player_GiveWeapon(playerid, 24, false); // Desert Eagle
