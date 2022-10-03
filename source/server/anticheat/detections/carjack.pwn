@@ -30,6 +30,8 @@ IPacket:__ac_cj_VehicleSync(playerid, BitStream:bs)
         GetPlayerPos(playerid, x, y, z);
         SetPlayerPos(playerid, x, y, z);
 
+        ClearAnimations(playerid);
+        
         return 0;
     }
 
