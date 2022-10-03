@@ -265,5 +265,13 @@ Player_SetSkin(playerid, skinid, bool:update = true)
 Player_SetWantedLevel(playerid, level)
 {
     Player_WantedLevel(playerid) = level;
-    return SetPlayerWantedLevel(playerid, level);
+    new const ret = SetPlayerWantedLevel(playerid, level);
+
+    if(ret)
+    {
+        mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `WANTED_LEVEL` = %d WHERE `ID` = %d;", level, Player_AccountID(playerid));
+        mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+    }
+    
+    return ret;
 }

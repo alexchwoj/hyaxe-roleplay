@@ -165,5 +165,79 @@ dialog police_change_rank(playerid, dialogid, response, listitem, inputtext[])
 
 command cargos(playerid, const params[], "Dale cargos a un jugador")
 {
-    
+    if(!Police_OnDuty(playerid))
+    {
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No estas de servicio como policía");
+        return 1;
+    }
+
+    extract params -> new player:target, charges; else {
+        SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} USO: {3A86FF}/cargos{DADADA} <jugador> <cantidad>");
+        return 1;
+    }
+
+    if(!IsPlayerConnected(target))
+    {
+        SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Jugador inválido");
+        return 1;
+    }
+
+    if(target == playerid)
+    {
+        SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} No puedes darte cargos a ti mismo.");
+        return 1;
+    }
+
+    if(Police_OnDuty(target))
+    {
+        SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} No puedes darle cargos a un policía en servicio.");
+        return 1;
+    }
+
+    if(Player_WantedLevel(target) == charges)
+    {
+        SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} El jugador ya tiene esa cantidad de cargos.");
+        return 1;
+    }
+
+    if(!charges && Player_WantedLevel(target))
+    {
+        Police_SendMessage(POLICE_RANK_OFFICER, 0xED2B2BFF, 
+            va_return(
+                "[Arresto] ›{DADADA} %s oficial %s canceló la orden de arresto contra {ED2B2B}%s{DADADA}.", 
+                (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid), Player_RPName(target)
+            )
+        );
+    }
+    else if(!Player_WantedLevel(target))
+    {
+        Police_SendMessage(POLICE_RANK_OFFICER, 0xED2B2BFF, 
+            va_return(
+                "[Arresto] ›{DADADA} %s oficial %s puso una orden de arresto de nivel %d contra {ED2B2B}%s{DADADA}.", 
+                (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid), charges, Player_RPName(target)
+            )
+        );
+    }
+    else if(Player_WantedLevel(target) > charges)
+    {
+        Police_SendMessage(POLICE_RANK_OFFICER, 0xED2B2BFF, 
+            va_return(
+                "[Arresto] ›{DADADA} %s oficial %s aumentó el nivel de la orden de arresto contra {ED2B2B}%s{DADADA} a nivel %d.", 
+                (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid), Player_RPName(target), charges
+            )
+        );
+    }
+    else
+    {
+        Police_SendMessage(POLICE_RANK_OFFICER, 0xED2B2BFF, 
+            va_return(
+                "[Arresto] ›{DADADA} %s oficial %s disminuyó el nivel de la orden de arresto contra {ED2B2B}%s{DADADA} a nivel %d.", 
+                (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid), Player_RPName(target), charges
+            )
+        );
+    }
+
+    Player_SetWantedLevel(target, charges);
+
+    return 1;
 }

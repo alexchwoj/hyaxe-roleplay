@@ -165,6 +165,8 @@ new
 #define Player_VIP(%0) (g_rgePlayerData[(%0)][e_iVipLevel])
 #define Player_WantedLevel(%0) (g_rgePlayerData[(%0)][e_iPlayerWantedLevel])
 
+forward Player_SetWantedLevel(playerid, level);
+
 forward ACCOUNT_CheckForBans(playerid);
 forward OnPlayerDataFetched(playerid);
 forward OnPlayerDataLoaded(playerid);

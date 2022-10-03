@@ -17,11 +17,15 @@ Police_SetRank(playerid, ePoliceRanks:new_rank)
 
 Police_SendMessage(ePoliceRanks:rank, color, const message[])
 {
+    new messages[2][145];
+    new count = SplitChatMessageInLines(message, messages);
+
     foreach(new i : Police)
     {
         if(Police_OnDuty(i) && Police_Rank(i) >= _:rank)
         {
-            SendClientMessage(i, color, message);
+            for(new j; j < count; ++j)
+                SendClientMessage(i, color, messages[i]);
         }
     }
 
