@@ -261,3 +261,9 @@ Player_SetSkin(playerid, skinid, bool:update = true)
 
     return SetPlayerSkin(playerid, skinid);
 }
+
+Player_SetWantedLevel(playerid, level)
+{
+    Player_WantedLevel(playerid) = level;
+    return SetPlayerWantedLevel(playerid, level);
+}

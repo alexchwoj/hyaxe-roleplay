@@ -58,25 +58,25 @@ public OnScriptInit()
     EnterExit_Create(19902, "{ED2B2B}24/7", "{DADADA}Salida", 1582.2601, -1170.5659, 24.0781, 357.4225, 0, 0, 6.0728,-31.3407, 1003.5494, 6.2127, 18, 10, -1, 0);
 
     // Actors
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 0, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 1, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 2, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 3, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 4, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 5, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 6, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 7, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 8, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 9, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 10, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 11, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 12, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 13, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 14, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 15, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 16, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 17, .interiorid = 10);
-    Actor_CreateRobbable(229, 500, 100, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 18, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 0, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 1, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 2, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 3, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 4, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 5, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 6, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 7, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 8, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 9, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 10, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 11, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 12, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 13, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 14, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 15, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 16, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 17, .interiorid = 10);
+    Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 18, .interiorid = 10);
     
     // MapIcons
     CreateDynamicMapIcon(2001.8507, -1761.6123, 13.5391, 17, -1, .worldid = 0, .interiorid = 0);

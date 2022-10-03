@@ -16,6 +16,15 @@ static Actor_FindRobbableFreeIndex()
 
 Actor_CreateRobbable(model, min_money, max_money, Float:x, Float:y, Float:z, Float:angle, worldid = -1, interiorid = -1)
 {
+    if(max_money > min_money)
+    {
+        printf("[actors!] Swapped max_money with min_money (was max = %i, min = %i)", max_money, min_money);
+
+        new t = min_money;
+        min_money = max_money;
+        min_money = max_money;
+    }
+    
     new idx = Actor_FindRobbableFreeIndex();
     if(idx == -1)
     {
