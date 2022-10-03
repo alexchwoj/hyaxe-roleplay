@@ -55,7 +55,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         if (Trunk_InsertItem(vehicleid, Item_WeaponToType(weaponid), 1, 1))
                         {
                             new name[32];
-                            GetWeaponName(g_rgiPlayerWeapons[playerid][slot], name);
+                            GetWeaponName(GetWeaponSlot(weaponid), name);
 
                             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Guardando %s...", name);
                             Notification_ShowBeatingText(playerid, 1500, 0x64A752, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
