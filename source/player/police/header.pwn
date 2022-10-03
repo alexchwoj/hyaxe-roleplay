@@ -83,7 +83,8 @@ new
     g_rgiPlayerPoliceRank[MAX_PLAYERS char],
     bool:g_rgbPlayerOnPoliceDuty[MAX_PLAYERS char],
     g_rgszSelectedOfficer[MAX_PLAYERS][26],
-    g_iArrestCheckpoint;
+    g_iArrestCheckpoint,
+    g_iPrisonArea;
 
 #define Player_IsPolice(%0) (g_rgiPlayerPoliceRank{(%0)} != _:POLICE_RANK_NONE)
 #define Police_OnDuty(%0) (g_rgbPlayerOnPoliceDuty{(%0)})

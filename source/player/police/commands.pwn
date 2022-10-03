@@ -267,7 +267,7 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
     {
         SetPlayerMarkerForPlayer(i, target, (charges ? 0xCB3126FF : 0xF7F7F700));
     }
-    
+
     return 1;
 }
 alias:cargos("c")
@@ -465,7 +465,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
         new pos = random(sizeof(g_rgfJailPositions));
         SetPlayerVirtualWorld(target, 0);
         SetPlayerInterior(target, 0);
-        SetPlayerPos(target, g_rgfJailPositions[pos][0], g_rgfJailPositions[pos][1], g_rgfJailPositions[pos][2]);
+        Player_SetPos(target, g_rgfJailPositions[pos][0], g_rgfJailPositions[pos][1], g_rgfJailPositions[pos][2]);
         Notification_Show(target, va_return("Estás en prisión y cumples una condena de ~r~%d minutos~w~. Para ver el tiempo restante usa ~r~/tiempo~w~.", Player_WantedLevel(target) * 2), 10000);
         
         mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `WANTED_LEVEL` = 0, `JAIL_TIME` = %d WHERE `ID` = %d;", jailtime, Player_AccountID(target));

@@ -82,6 +82,7 @@ static PoliceLocker_OnKeyPress(playerid)
 public OnScriptInit()
 {
     g_iArrestCheckpoint = CreateDynamicCP(1568.1835, -1695.7062, 5.8906, 5.0, 0, 0, .streamdistance = 5000.0);
+    g_iPrisonArea = CreateDynamicRectangle(1559.9874, -1668.9266, 1573.2426, -1653.5897, .worldid = 0, .interiorid = 0);
 
     Key_Alert(1569.2075, -1688.7084, 20.6049, 1.0, KEYNAME_YES, .callback_on_press = __addressof(PoliceLocker_OnKeyPress));    
     CreateDynamicPickup(1275, 1, 1569.2075, -1688.7084, 20.6049, 0, 0);
@@ -159,7 +160,7 @@ public OnPlayerDisconnect(playerid, reason)
     Police_OnDuty(playerid) = false;
     Police_Rank(playerid) = POLICE_RANK_NONE;
     Police_ClearMarkers(playerid);
-    
+
     if(Iter_Contains(Police, playerid))
         Iter_Remove(Police, playerid);
 
@@ -261,7 +262,7 @@ public ARREST_ReleaseFromPrison(playerid)
 
     SetPlayerVirtualWorld(playerid, 0);
     SetPlayerInterior(playerid, 0);
-    SetPlayerPos(playerid, 1561.5903, -1669.4990, 20.6049);
+    Player_SetPos(playerid, 1561.5903, -1669.4990, 20.6049);
     SetPlayerFacingAngle(playerid, 193.2624);
 
     ClearAnimations(playerid);
@@ -273,3 +274,28 @@ public ARREST_ReleaseFromPrison(playerid)
     
     return 1;
 }
+
+public OnPlayerLeaveDynamicArea(playerid, areaid)
+{
+    if(areaid == g_iPrisonArea && Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL))
+    {
+        new pos = random(sizeof(g_rgfJailPositions));
+        Player_SetPos(playerid, g_rgfJailPositions[pos][0], g_rgfJailPositions[pos][1], g_rgfJailPositions[pos][2]);
+    }
+
+    #if defined POLICE_OnPlayerLeaveDynamicArea
+        return POLICE_OnPlayerLeaveDynamicArea(playerid, areaid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerLeaveDynamicArea
+    #undef OnPlayerLeaveDynamicArea
+#else
+    #define _ALS_OnPlayerLeaveDynamicArea
+#endif
+#define OnPlayerLeaveDynamicArea POLICE_OnPlayerLeaveDynamicArea
+#if defined POLICE_OnPlayerLeaveDynamicArea
+    forward POLICE_OnPlayerLeaveDynamicArea(playerid, areaid);
+#endif

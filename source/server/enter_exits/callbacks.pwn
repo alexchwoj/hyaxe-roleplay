@@ -18,6 +18,12 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 new area = YSI_UNSAFE_HUGE_STRING[i];
                 if(Streamer_HasArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x4545)))
                 {
+                    if(Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED) || Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL))
+                    {
+                        Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes hacer esto");
+                        return 1;
+                    }
+                    
                     new info[2];
                     Streamer_GetArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x4545), info);
 
