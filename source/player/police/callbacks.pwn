@@ -5,7 +5,13 @@
 
 static PoliceLocker_OnKeyPress(playerid)
 {
-    return 0;
+    if(!Police_Rank(playerid))
+    {
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No eres policía");
+        return 1;
+    }
+
+    return 1;
 }
 
 public OnScriptInit()
