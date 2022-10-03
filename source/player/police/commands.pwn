@@ -331,6 +331,12 @@ static
 
 command arrestar(playerid, const params[], "Arresta a un jugador")
 {
+    if(!Police_OnDuty(playerid))
+    {
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas estar de servicio como policía");
+        return 1;
+    }
+
     new target = GetPlayerCameraTargetPlayer(playerid);
     if(!IsPlayerConnected(target))
     {
@@ -341,6 +347,12 @@ command arrestar(playerid, const params[], "Arresta a un jugador")
     if(!Player_WantedLevel(target))
     {
         SendClientMessagef(playerid, 0x3A86FFFF, "›{DADADA} %s no tiene nivel de búsqueda.", Player_Sex(target) == SEX_MALE ? "Este jugador" : "Esta jugadora");
+        return 1;
+    }
+
+    if(Bit_Get(Player_Flags(target), PFLAG_ARRESTED))
+    {
+        SendClientMessagef(playerid, 0x3A86FFFF, "›{DADADA} %s ya está esposad%c.", Player_Sex(target) == SEX_MALE ? "Este jugador" : "Esta jugadora", Player_Sex(target) == SEX_MALE ? 'o' : 'a');
         return 1;
     }
 
@@ -366,7 +378,7 @@ command arrestar(playerid, const params[], "Arresta a un jugador")
     SetPlayerSpecialAction(target, SPECIAL_ACTION_CUFFED);
 
     Notification_Show(playerid, va_return("Arrestaste a %s. Sube a una patrulla para trasladarl%c.", Player_RPName(target), (Player_Sex(target) == SEX_MALE ? 'o' : 'a')), 5000, 0x3A86FFFF);
-    Police_SendMessage(POLICE_RANK_OFFICER, 0xED2B2BFF, va_return("[Policía] {DADADA}%s {ED2B2B}›{DADADA} Sospechos%c %s arrestad%c.", Player_RPName(playerid), (Player_Sex(target) == SEX_MALE ? 'o' : 'a'), Player_RPName(target), (Player_Sex(target) == SEX_MALE ? 'o' : 'a')), 12, target);
+    Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] {DADADA}%s {ED2B2B}›{DADADA} Sospechos%c %s arrestad%c.", Player_RPName(playerid), (Player_Sex(target) == SEX_MALE ? 'o' : 'a'), Player_RPName(target), (Player_Sex(target) == SEX_MALE ? 'o' : 'a')), 12, target);
 
     return 1;
 }
@@ -427,13 +439,16 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
         
         Bit_Set(Player_Flags(target), PFLAG_IN_JAIL, true);
         Bit_Set(Player_Flags(target), PFLAG_ARRESTED, false);
-        
+
         RemovePlayerFromVehicle(target);
         TogglePlayerControllable(target, true);
         SetPlayerSpecialAction(target, SPECIAL_ACTION_NONE);
 
         Player_GiveMoney(playerid, 500);
+        Player_AddXP(playerid, 250);
         Notification_Show(playerid, va_return("Arrestaste a %s y se te dio una bonificación de ~g~500$", Player_RPName(target)), 5000);
+
+        Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] {DADADA}%s {ED2B2B}›{DADADA} Sospechos%c %s procesad%c.", Player_RPName(playerid), (Player_Sex(target) == SEX_MALE ? 'o' : 'a'), Player_RPName(target), (Player_Sex(target) == SEX_MALE ? 'o' : 'a')), 6, target);
 
         new jailtime = (Player_WantedLevel(target) * 2) * 60;
         Player_Data(target, e_iJailTime) = gettime() + jailtime;
@@ -511,5 +526,44 @@ command tiempo(playerid, const params[], "Ve el tiempo restante de condena")
 
     new time = Player_Data(playerid, e_iJailTime) - gettime();
     SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Te quedan {ED2B2B}%d segundos{DADADA} de condena.", time);
+    return 1;
+}
+
+command liberar(playerid, const params[], "Libera a un jugador de sus esposas")
+{
+    if(!Police_OnDuty(playerid))
+    {
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas estar de servicio como policía");
+        return 1;
+    }
+
+    new target = GetPlayerCameraTargetPlayer(playerid);
+    if(!IsPlayerConnected(target))
+    {
+        SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Necesitas estar viendo a un jugador para liberarlo.");
+        return 1;
+    }
+
+    if(!Bit_Get(Player_Flags(target), PFLAG_ARRESTED))
+    {
+        SendClientMessagef(playerid, 0x3A86FFFF, "›{DADADA} %s no está arrestad%c.", (Player_Sex(target) == SEX_MALE ? "Este jugador" : "Esta jugadora"), (Player_Sex(target) == SEX_MALE ? 'o' : 'a'));
+        return 1;
+    }
+
+    Bit_Set(Player_Flags(target), PFLAG_ARRESTED, false);
+    SetPlayerSpecialAction(target, SPECIAL_ACTION_NONE);
+    TogglePlayerControllable(target, true);
+
+    foreach(new i : Police)
+    {
+        if(s_rgiPoliceArrestingPlayer[i] == playerid)
+        {
+            s_rgiPoliceArrestingPlayer[i] = INVALID_PLAYER_ID;
+            break;
+        }
+    }
+
+    Police_SendMessage(POLICE_RANK_OFFICER, 0xED2B2BFF, va_return("[Policía] {DADADA}%s {ED2B2B}›{DADADA} Sospechos%c %s liberad%c.", Player_RPName(playerid), (Player_Sex(target) == SEX_MALE ? 'o' : 'a'), Player_RPName(target), (Player_Sex(target) == SEX_MALE ? 'o' : 'a')), 6, target);
+
     return 1;
 }

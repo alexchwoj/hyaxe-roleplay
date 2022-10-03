@@ -30,3 +30,4 @@ command giveweapon(playerid, const params[], "Dale un arma a alguien")
 
     return 1;
 }
+flags:giveweapon(CMD_FLAG<RANK_LEVEL_MODERATOR>)
