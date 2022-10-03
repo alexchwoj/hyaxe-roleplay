@@ -83,6 +83,12 @@ public OnScriptInit()
     EnterExit_Create(19902, "{ED2B2B}LSPD", "{DADADA}Salida", 1554.9965, -1675.5953, 16.1953, 82.5943, 0, 0, 1560.6276, -1675.4996, 20.5919, 271.2696, 0, 0);
     CreateDynamicMapIcon(1554.9965, -1675.5953, 16.1953, 30, -1, 0, 0);
 
+    for(new i = sizeof(g_rgeCopCars) - 1; i != -1; --i)
+    {
+        new vehicleid = Vehicle_Create(g_rgeCopCars[i][e_iModel], g_rgeCopCars[i][e_fPosX], g_rgeCopCars[i][e_fPosY], g_rgeCopCars[i][e_fPosZ], g_rgeCopCars[i][e_fAngle], 0, 1, 600, .addsiren = true);
+        Vehicle_Type(vehicleid) = VEHICLE_TYPE_POLICE;
+    }
+
     #if defined POLICE_OnScriptInit
         return POLICE_OnScriptInit();
     #else
@@ -148,7 +154,7 @@ public OnPlayerDisconnect(playerid, reason)
 
     if(Iter_Contains(Police, playerid))
         Iter_Remove(Police, playerid);
-        
+
     #if defined POLICE_OnPlayerDisconnect
         return POLICE_OnPlayerDisconnect(playerid, reason);
     #else
@@ -164,4 +170,75 @@ public OnPlayerDisconnect(playerid, reason)
 #define OnPlayerDisconnect POLICE_OnPlayerDisconnect
 #if defined POLICE_OnPlayerDisconnect
     forward POLICE_OnPlayerDisconnect(playerid, reason);
+#endif
+
+public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
+{
+    if(Vehicle_Type(vehicleid) == VEHICLE_TYPE_POLICE && !Police_OnDuty(playerid))
+    {
+        ClearAnimations(playerid, 1);
+
+        new Float:x, Float:y, Float:z;
+        GetPlayerPos(playerid, x, y, z);
+        SetPlayerPos(playerid, x, y, z);
+        TogglePlayerControllable(playerid, false);
+
+        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Necesitas estar de servicio como policía");
+
+        inline const Due()
+        {
+            TogglePlayerControllable(playerid, true);
+        }
+        Timer_CreateCallback(using inline Due, 2000, 1);
+
+        return 1;
+    }
+
+    #if defined POLICE_OnPlayerEnterVehicle
+        return POLICE_OnPlayerEnterVehicle(playerid, vehicleid, ispassenger);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerEnterVehicle
+    #undef OnPlayerEnterVehicle
+#else
+    #define _ALS_OnPlayerEnterVehicle
+#endif
+#define OnPlayerEnterVehicle POLICE_OnPlayerEnterVehicle
+#if defined POLICE_OnPlayerEnterVehicle
+    forward POLICE_OnPlayerEnterVehicle(playerid, vehicleid, ispassenger);
+#endif
+
+public OnPlayerStateChange(playerid, newstate, oldstate)
+{
+    if(newstate == PLAYER_STATE_DRIVER)
+    {
+        new vehicleid = GetPlayerVehicleID(playerid);
+        if(IsValidVehicle(vehicleid))
+        {
+            if(Vehicle_Type(vehicleid) == VEHICLE_TYPE_POLICE && !Police_OnDuty(playerid))
+            {
+                Anticheat_Trigger(playerid, CHEAT_CARJACK, 2);
+                return 1;
+            }
+        }
+    }
+
+    #if defined POLICE_OnPlayerStateChange
+        return POLICE_OnPlayerStateChange(playerid, newstate, oldstate);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerStateChange
+    #undef OnPlayerStateChange
+#else
+    #define _ALS_OnPlayerStateChange
+#endif
+#define OnPlayerStateChange POLICE_OnPlayerStateChange
+#if defined POLICE_OnPlayerStateChange
+    forward POLICE_OnPlayerStateChange(playerid, newstate, oldstate);
 #endif
