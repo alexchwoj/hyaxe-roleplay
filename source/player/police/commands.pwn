@@ -459,14 +459,14 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
         new jailtime = (Player_WantedLevel(target) * 2) * 60;
         Player_Data(target, e_iJailTime) = gettime() + jailtime;
         Player_Timer(target, e_iPlayerJailTimer) = SetTimerEx("ARREST_ReleaseFromPrison", jailtime * 1000, false, "i", target);
-        Player_WantedLevel(target) = 0;
-        SetPlayerWantedLevel(target, 0);
 
         new pos = random(sizeof(g_rgfJailPositions));
         SetPlayerVirtualWorld(target, 0);
         SetPlayerInterior(target, 0);
         Player_SetPos(target, g_rgfJailPositions[pos][0], g_rgfJailPositions[pos][1], g_rgfJailPositions[pos][2]);
         Notification_Show(target, va_return("Estás en prisión y cumples una condena de ~r~%d minutos~w~. Para ver el tiempo restante usa ~r~/tiempo~w~.", Player_WantedLevel(target) * 2), 10000);
+        Player_WantedLevel(target) = 0;
+        SetPlayerWantedLevel(target, 0);
         
         mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `WANTED_LEVEL` = 0, `JAIL_TIME` = %d WHERE `ID` = %d;", jailtime, Player_AccountID(target));
         mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
