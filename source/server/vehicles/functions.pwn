@@ -29,11 +29,15 @@ Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, c
     return vehicleid;
 }
 
-Vehicle_Destroy(vehicleid)
+Vehicle_Destroy(&vehicleid)
 {
+    DEBUG_PRINT("Destroying vehicleid %i (model = %i, ownerid = %i)", vehicleid, GetVehicleModel(vehicleid), Vehicle_OwnerId(vehicleid));
+
     if (!DestroyVehicle(vehicleid))
         return 0;
 
+    DEBUG_PRINT("Destroy native called (vehicle existed)");
+    
     new last_driver = GetVehicleLastDriver(vehicleid);
     if (IsPlayerConnected(last_driver))
     {
@@ -42,9 +46,16 @@ Vehicle_Destroy(vehicleid)
     }
 
     Vehicle_StopUpdating(vehicleid);
-    g_rgeVehicles[vehicleid][e_bValid] = false;
-    g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = INVALID_PLAYER_ID;
-    g_rgeVehicles[vehicleid][e_iVehicleDbId] = 0;
+
+    if(IsPlayerConnected(Vehicle_OwnerId(vehicleid)))
+    {
+        if(Iter_Contains(PlayerVehicles[Vehicle_OwnerId(vehicleid)], vehicleid))
+        {
+            Iter_SafeRemove(PlayerVehicles[Vehicle_OwnerId(vehicleid)], vehicleid, vehicleid);
+        }
+    }
+
+    g_rgeVehicles[vehicleid] = g_rgeVehicles[MAX_VEHICLES];
 
     return 1;
 }

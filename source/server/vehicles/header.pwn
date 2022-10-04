@@ -161,7 +161,7 @@ enum eVehicleData
     bool:e_bRepairing
 };
 
-new g_rgeVehicles[MAX_VEHICLES][eVehicleData];
+new g_rgeVehicles[MAX_VEHICLES + 1][eVehicleData];
 
 enum eTrunk
 {
