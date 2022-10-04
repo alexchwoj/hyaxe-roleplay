@@ -28,9 +28,9 @@ Graffiti_Finish()
         if (Player_Gang(i) == g_iGraffitiGang)
         {
             if (g_rgbGangGraffitiPainted[i])
-                Player_GiveMoney(i, 2000);
-            else
                 Player_GiveMoney(i, 4000);
+            else
+                Player_GiveMoney(i, 2000);
         }
     }
 

@@ -61,7 +61,6 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                             Notification_ShowBeatingText(playerid, 1500, 0x64A752, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
 
                             Player_RemoveWeaponSlot(playerid, GetWeaponSlot(weaponid));
-                            SetPlayerArmedWeapon(playerid, 0);
 
                             new engine, lights, alarm, doors, bonnet, boot, objective;
 	                        GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);

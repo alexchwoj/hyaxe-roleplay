@@ -73,7 +73,6 @@ public GVENT_TruckSpawnLoot()
         {ITEM_CRACK, 2, 8},
         {ITEM_MEDICINE, 25, 50},
         {ITEM_TEC9, 1, 1},
-        {ITEM_KNIFE, 1, 1},
         {ITEM_SAWEDOFF, 1, 1},
         {ITEM_DEAGLE, 1, 1},
         {ITEM_CRACK, 2, 8}

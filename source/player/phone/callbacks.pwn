@@ -171,7 +171,69 @@ phone_menu main(playerid, response, listitem)
 				Phone_AddItem(playerid, line, .extra = vehicleid);
 			}
 		}
+		case 3:
+		{
+			if (!Iter_Count(PlayerVehicles[playerid]))
+			{
+				Player_ShowGPS(playerid);
+				Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes vehículos");
+				return 0;
+			}
+
+			Phone_Show(playerid, "crane");
+
+			foreach(new vehicleid : PlayerVehicles[playerid])
+			{
+				if (!g_rgeVehicles[vehicleid][e_bValid])
+					continue;
+
+				new line[32];
+				format(line, sizeof(line), "%s", g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_szModelName]);
+				Phone_AddItem(playerid, line, .extra = vehicleid);
+			}
+		}
 	}
+	return 1;
+}
+
+phone_menu crane(playerid, response, listitem)
+{
+	if (!response)
+		return Player_ShowGPS(playerid);
+
+	if (!Iter_Count(PlayerVehicles[playerid]))
+	{
+		Player_ShowGPS(playerid);
+		Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes vehículos");
+		return 0;
+	}
+
+	new vehicleid = Listitem_Extra(listitem);
+	if (!IsValidVehicle(vehicleid))
+	{
+		Player_ShowGPS(playerid);
+		Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "El vehículo se encuentra destruido");
+		return 0;
+	}
+
+	if (Player_Money(playerid) < 500)
+	{
+		Player_ShowGPS(playerid);
+		Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No tienes dinero para remolcar tu vehículo ($500)");
+		return 1;
+	}
+	Player_GiveMoney(playerid, -500);
+
+	GetVehiclePos(vehicleid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
+	Player_SetGPSCheckpoint(playerid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
+	
+	new Float:distance = GetPlayerDistanceFromPoint(playerid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
+
+	new city[45], zone[45];
+	GetPointZone(g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], city, zone);
+
+	format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Tu %s fue remolcado a %s, %s. A %.2f kilómetros de distancia.", g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_szModelName], zone, city, distance * 0.01);
+	Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 5000, 0xDAA838FF);
 	return 1;
 }
 

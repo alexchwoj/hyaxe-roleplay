@@ -52,6 +52,8 @@ Player_GiveAllWeapons(playerid)
 
 Player_RemoveWeaponSlot(playerid, slot, bool:save = true)
 {
+    Player_SetImmunityForCheat(playerid, CHEAT_WEAPON, 1000 + GetPlayerPing(playerid));
+
     ResetPlayerWeapons(playerid);
     g_rgiPlayerWeapons[playerid][slot] = 0;
     Player_GiveAllWeapons(playerid);
@@ -61,6 +63,8 @@ Player_RemoveWeaponSlot(playerid, slot, bool:save = true)
         mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYER_WEAPONS` SET `SLOT_%i` = 0 WHERE `ACCOUNT_ID` = %i LIMIT 1;", slot, Player_AccountID(playerid));
         mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
     }
+
+    SetPlayerArmedWeapon(playerid, 0);
     return 1;
 }
 
