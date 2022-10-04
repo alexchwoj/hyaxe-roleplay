@@ -6,5 +6,5 @@
 - [x] Vehicle dashboard
 - [x] Phone
 - [x] Food stores
-- [ ] Police
+- [x] Police
 - [x] Locate personal vehicles
