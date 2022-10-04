@@ -8,7 +8,7 @@ static SellVeh_OnPress(playerid)
     if(!Iter_Count(PlayerVehicles[playerid]))
         return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes vehículos");
 
-    StrCpy(YSI_UNSAFE_HUGE_STRING, "{DADADA}Vehículo\t{DADADA}Matrícula\n", YSI_UNSAFE_HUGE_LENGTH);
+    StrCpy(YSI_UNSAFE_HUGE_STRING, "{CB3126}Vehículo\t{CB3126}Matrícula\n", YSI_UNSAFE_HUGE_LENGTH);
 
     new vehicles[9], tmp;
 
