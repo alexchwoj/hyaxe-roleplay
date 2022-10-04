@@ -19,6 +19,7 @@ static GunsmakerBuildingEvent(playerid, bool:enter, data)
         if(Player_Job(playerid) == JOB_GUNSMAKER)
         {
             Job_TriggerCallback(playerid, JOB_GUNSMAKER, JOB_EV_LEAVE_PLACE);
+            Player_Job(playerid) = JOB_NONE;
         }
     }
 
