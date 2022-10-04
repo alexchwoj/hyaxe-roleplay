@@ -403,6 +403,8 @@ Inventory_InsertItem(playerid, type, amount, extra)
 	new slot = Inventory_GetFreeSlot(playerid);
     if (slot < HYAXE_MAX_INVENTORY_SLOTS)
 	{
+		g_rgePlayerInventory[playerid][slot][e_bValid] = true;
+		
 		mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
 			INSERT INTO `PLAYER_INVENTORY` (`ITEM_TYPE`, `AMOUNT`, `EXTRA`, `ACCOUNT_ID`) VALUES (%d, %d, %d, %i);\
 		", type, amount, extra, Player_AccountID(playerid));

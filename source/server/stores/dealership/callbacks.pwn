@@ -141,7 +141,7 @@ dialog buy_vehicle(playerid, dialogid, response, listitem, const inputtext[])
         Player_RegisterVehicle(playerid, vehicleid);
 
         Player_AddXP(playerid, 500);
-        PlayerPlaySound(playerid, 31205);
+        PlayerPlaySound(playerid, SOUND_TRUMPET);
         Player_GiveMoney(playerid, -g_rgeVehicleModelData[modelid][e_iPrice]);
     }
     return 1;

@@ -370,6 +370,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
             InventorySlot_Subtract(playerid, g_rgePlayerTempData[playerid][e_iPlayerItemSlot], g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount]);
         
             g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] = 1;
+            g_rgePlayerTempData[playerid][e_iPlayerItemSlot] = -1;
         }
     }
 

@@ -143,3 +143,26 @@ dialog buy_fishing_rod(playerid, dialogid, response, listitem, inputtext[])
     }
     return 1;
 }
+
+public OnPlayerConnect(playerid)
+{
+    ApplyAnimation(playerid, "OTB", "WTCHRACE_WIN", 4.1, false, false, false, false, 0, true);
+    ApplyAnimation(playerid, "OTB", "WTCHRACE_LOSE", 4.1, false, false, false, false, 0, true);
+    ApplyAnimation(playerid, "SWORD", "SWORD_IDLE", 4.1, true, false, false, false, 0, true);
+
+    #if defined FISH_OnPlayerConnect
+        return FISH_OnPlayerConnect(playerid);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerConnect
+    #undef OnPlayerConnect
+#else
+    #define _ALS_OnPlayerConnect
+#endif
+#define OnPlayerConnect FISH_OnPlayerConnect
+#if defined FISH_OnPlayerConnect
+    forward FISH_OnPlayerConnect(playerid);
+#endif
