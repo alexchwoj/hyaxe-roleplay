@@ -7,6 +7,8 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
 {
     #pragma unused data
 
+    DEBUG_PRINT("[func] Trucker_JobEvent(playerid = %d, eJobEvent:ev = %d, data = %d)", playerid, _:ev, data);
+
     switch(ev)
     {
         case JOB_EV_JOIN:
