@@ -216,7 +216,7 @@ phone_menu crane(playerid, response, listitem)
 		return 0;
 	}
 
-	if (!Player_VIP(playerid) >= 2)
+	if (Player_VIP(playerid) >= 2)
 	{
 		if (Player_Money(playerid) < 500)
 		{

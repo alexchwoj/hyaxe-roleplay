@@ -150,6 +150,7 @@ Account_LoadFromCache(playerid)
     cache_get_value_name_int(0, !"ADMIN_LEVEL", Player_AdminLevel(playerid));
     cache_get_value_name_int(0, !"PLAYED_TIME", Player_SavedPlayedTime(playerid));
     cache_get_value_name_int(0, !"MUTED_TIME", Player_MutedTime(playerid));
+    cache_get_value_name_bool(0, !"BONUS", Player_Bonus(playerid));
     cache_get_value_name_int(0, !"JAIL_TIME", Player_Data(playerid, e_iJailTime));
 
     // Muted time

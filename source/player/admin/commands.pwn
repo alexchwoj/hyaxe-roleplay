@@ -675,3 +675,36 @@ command dropitem(playerid, const params[], "Crea un item en el suelo")
 	return 1;
 }
 flags:dropitem(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)
+
+command bonus(playerid, const params[], "Recibir un bonus")
+{
+    if (Player_Bonus(playerid))
+        return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Ya has recibido la bonificación.");
+
+    Inventory_AddFixedItem(playerid, ITEM_PHONE, 1, 0);
+    Inventory_AddFixedItem(playerid, ITEM_MEDIC_KIT, 1, 0);
+    Inventory_AddFixedItem(playerid, ITEM_MEDIC_KIT, 1, 0);
+    Inventory_AddFixedItem(playerid, ITEM_MEDICINE, 150, 0);
+    Inventory_AddFixedItem(playerid, ITEM_CRACK, 75, 0);
+    Inventory_AddFixedItem(playerid, ITEM_BURGER, 1, 0);
+    Inventory_AddFixedItem(playerid, ITEM_BURGER, 1, 0);
+    Inventory_AddFixedItem(playerid, ITEM_ORANGE_JUICE, 1, 0);
+    Inventory_AddFixedItem(playerid, ITEM_APPLE_JUICE, 1, 0);
+    Player_GiveMoney(playerid, 75000);
+    Player_AddXP(playerid, 1000);
+
+    SendClientMessage(playerid, 0xDAA838FF, "[Bonus] › {DADADA} Bonificación recibida");
+    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 1 Celular");
+    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 1 Jugo de naranja");
+    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 1 Jugo de manzana");
+    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 2 Hamburguesas");
+    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 75 gramos de crack");
+    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 150 Medicamentos");
+    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 1000 XP");
+    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} $75.000");
+
+    Player_Bonus(playerid) = true;
+    mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `BONUS` = %d WHERE `ID` = %d;", Player_Bonus(playerid), Player_AccountID(playerid));
+    mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+    return 1;
+}

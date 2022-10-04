@@ -102,6 +102,7 @@ enum ePlayerData
     e_iPlayerPausedTime,
     e_iMutedTime,
     e_iJailTime,
+    bool:e_bBonus
 };
 
 enum _:ePlayerTimers
@@ -166,6 +167,7 @@ new
 #define Player_AdminLevel(%0) (g_rgePlayerData[(%0)][e_iAdminLevel])
 #define Player_SavedPlayedTime(%0) (g_rgePlayerData[(%0)][e_iPlayedTime])
 #define Player_MutedTime(%0) (g_rgePlayerData[(%0)][e_iMutedTime])
+#define Player_Bonus(%0) (g_rgePlayerData[(%0)][e_bBonus])
 #define Player_PlayedTime(%0) ((gettime() - g_rgePlayerData[(%0)][e_iCurrentConnectionTime]) + g_rgePlayerData[(%0)][e_iPlayedTime] - g_rgePlayerData[(%0)][e_iPlayerPausedTime])
 #define Player_Data(%0,%1) (g_rgePlayerData[(%0)][(%1)])
 #define Player_Timer(%0,%1) (g_rgePlayerTempData[(%0)][e_rgiTimers][(%1)])

@@ -51,9 +51,9 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
         // Transfer
         else if (clickedid == g_tdBankATM[5])
         {
-            if(Player_Level(playerid) < 2)
+            if(Player_Level(playerid) < 3)
             {
-                Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas ser nivel 2 para usar esto");
+                Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas ser nivel 3 para usar esto");
                 return 1;
             }
             

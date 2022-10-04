@@ -227,6 +227,9 @@ static AccountRegistered(playerid)
     Needs_ShowBars(playerid);
     Needs_StartUpdating(playerid);
     
+    Player_Bonus(playerid) = false;
+    SendClientMessage(playerid, 0xDAA838FF, "[Bonus] › {DADADA} ¡Una nueva bonificación está disponible!");
+    SendClientMessage(playerid, 0xDAA838FF, "[Bonus] › {DADADA} Utilice el comando {DAA838}/bonus{DADADA} para recibirlo");
     return 1;
 }
 
@@ -326,5 +329,10 @@ public AUTH_PasswordCheckDone(playerid)
     Player_SetImmunityForCheat(playerid, CHEAT_FLY, 3000);
     Player_SetImmunityForCheat(playerid, CHEAT_AIRBREAK, 3000);
 
+    if (!Player_Bonus(playerid))
+    {
+        SendClientMessage(playerid, 0xDAA838FF, "[Bonus] › {DADADA} ¡Una nueva bonificación está disponible!");
+        SendClientMessage(playerid, 0xDAA838FF, "[Bonus] › {DADADA} Utilice el comando {DAA838}/bonus{DADADA} para recibirlo");
+    }
     return 1;
 }
