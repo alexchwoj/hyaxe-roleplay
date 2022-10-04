@@ -216,13 +216,26 @@ phone_menu crane(playerid, response, listitem)
 		return 0;
 	}
 
-	if (Player_Money(playerid) < 500)
+	if (!Player_VIP(playerid) >= 2)
 	{
-		Player_ShowGPS(playerid);
-		Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No tienes dinero para remolcar tu vehículo ($500)");
-		return 1;
+		if (Player_Money(playerid) < 500)
+		{
+			Player_ShowGPS(playerid);
+			Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No tienes dinero para remolcar tu vehículo ($500)");
+			return 1;
+		}
+		Player_GiveMoney(playerid, -500);
 	}
-	Player_GiveMoney(playerid, -500);
+	else
+		Notification_Show(playerid, "¡No te han cobrado la grúa porque eres VIP Super!", 5000, 0xDAA838FF);
+
+	new pos = random(sizeof(g_rgfParkingSlots));
+	SetVehiclePos(vehicleid, g_rgfParkingSlots[pos][0], g_rgfParkingSlots[pos][1], g_rgfParkingSlots[pos][2]);
+	SetVehicleZAngle(vehicleid, g_rgfParkingSlots[pos][3]);
+	Vehicle_Locked(vehicleid) = true;
+
+	Vehicle_Repair(vehicleid);
+	UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, 0);
 
 	GetVehiclePos(vehicleid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
 	Player_SetGPSCheckpoint(playerid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
@@ -232,7 +245,7 @@ phone_menu crane(playerid, response, listitem)
 	new city[45], zone[45];
 	GetPointZone(g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], city, zone);
 
-	format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Tu %s fue remolcado a %s, %s. A %.2f kilómetros de distancia.", g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_szModelName], zone, city, distance * 0.01);
+	format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Tu %s fue remolcado a %s, %s (%.2f kilómetros de distancia).", g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_szModelName], zone, city, distance * 0.01);
 	Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 5000, 0xDAA838FF);
 	return 1;
 }
