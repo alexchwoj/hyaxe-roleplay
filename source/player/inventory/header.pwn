@@ -83,6 +83,7 @@ enum _:eItems
     ITEM_CAMERA,
     ITEM_PARACHUTE,
     ITEM_FLAG,
+    ITEM_HOTDOG,
 
 	ITEM_INVALID
 };
@@ -200,6 +201,7 @@ new
         {"Camara", 367, true, -1}, // ITEM_CAMERA
         {"Paracaidas", 371, true, -1}, // ITEM_PARACHUTE
         {"Bandera", 19306, true, -1}, // ITEM_FLAG
+        {"Pancho", 19346, true, -1}, // ITEM_HOTDOG
 
 		{"Invalid item", 18631, false, -1} // ITEM_INVALID
 	},

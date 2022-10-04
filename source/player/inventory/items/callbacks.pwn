@@ -329,6 +329,11 @@ public OnScriptInit()
     Item_Callback(ITEM_BURRITO) = __addressof(Food_OnUse);
     Item_SetPreviewRot(ITEM_BURRITO, -46.000000, 0.000000, 2.000000, 1.000000);
 
+    // HotDog
+    Item_Hunger(ITEM_HOTDOG) = -15.0;
+    Item_Callback(ITEM_HOTDOG) = __addressof(Food_OnUse);
+    Item_SetPreviewRot(ITEM_HOTDOG, -79.000000, 0.000000, -14.000000, 1.000000);
+
     // Burger
     Item_Hunger(ITEM_BURGER) = -15.0;
     Item_Callback(ITEM_BURGER) = __addressof(Food_OnUse);
