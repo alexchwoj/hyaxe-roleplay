@@ -237,10 +237,7 @@ phone_menu crane(playerid, response, listitem)
 	Vehicle_Repair(vehicleid);
 	UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, 0);
 
-	GetVehiclePos(vehicleid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
-	Player_SetGPSCheckpoint(playerid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
-	
-	new Float:distance = GetPlayerDistanceFromPoint(playerid, g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], g_rgeVehicles[vehicleid][e_fPosZ]);
+	new Float:distance = GetPlayerDistanceFromPoint(playerid, g_rgfParkingSlots[pos][0], g_rgfParkingSlots[pos][1], g_rgfParkingSlots[pos][2]);
 
 	new city[45], zone[45];
 	GetPointZone(g_rgeVehicles[vehicleid][e_fPosX], g_rgeVehicles[vehicleid][e_fPosY], city, zone);
