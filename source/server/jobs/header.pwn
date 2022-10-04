@@ -42,6 +42,6 @@ new const
 #define Player_Job(%0) (g_rgePlayerJobData[(%0)][e_iPlayerCurrentJob])
 #define PlayerJob_Paycheck(%0) (g_rgePlayerJobData[(%0)][e_iPlayerPaycheck])
 
-forward Job_CreateSite(eJobs:jobid, Float:x, Float:y, Float:z, vw, interior, const extra_text[] = "", cb_data = cellmin);
+forward Job_CreateSite(eJobs:jobid, Float:x, Float:y, Float:z, vw, interior, const extra_text[] = "", cb_data = 0);
 forward Job_SetCallback(eJobs:jobid, callback);
-forward Job_TriggerCallback(playerid, eJobs:jobid, eJobEvent:event, data = -1);
+forward Job_TriggerCallback(playerid, eJobs:jobid, eJobEvent:event, data = 0);

@@ -60,7 +60,7 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
 
             if(data == 1)
             {
-                Notification_ShowBeatingText(playerid, 5000, 0xED2B2, 100, 255, "Abandonaste tu trabajo como camionero");
+                Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Abandonaste tu trabajo como camionero");
             }
         }
         case JOB_EV_LEAVE_VEHICLE:
