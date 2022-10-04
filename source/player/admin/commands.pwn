@@ -35,7 +35,7 @@ command ban(playerid, const params[], "Veta a un jugador")
     return 1;
 }
 alias:ban("vetar", "banear")
-flags:ban(CMD_FLAG<RANK_LEVEL_MODERATOR> | CMD_DONT_LOG_COMMAND)
+flags:ban(CMD_FLAG<RANK_LEVEL_MODERATOR>)
 
 command kick(playerid, const params[], "Expulsa a un jugador")
 {
