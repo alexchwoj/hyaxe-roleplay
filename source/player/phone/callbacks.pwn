@@ -151,7 +151,7 @@ phone_menu main(playerid, response, listitem)
 		{
 			if (!Iter_Count(PlayerVehicles[playerid]))
 			{
-				Player_ShowGPS(playerid);
+				PhoneMenu_Main(playerid);
 				Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes vehículos");
 				return 0;
 			}
@@ -175,7 +175,7 @@ phone_menu main(playerid, response, listitem)
 		{
 			if (!Iter_Count(PlayerVehicles[playerid]))
 			{
-				Player_ShowGPS(playerid);
+				PhoneMenu_Main(playerid);
 				Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes vehículos");
 				return 0;
 			}
@@ -203,7 +203,7 @@ phone_menu crane(playerid, response, listitem)
 
 	if (!Iter_Count(PlayerVehicles[playerid]))
 	{
-		Player_ShowGPS(playerid);
+		PhoneMenu_Main(playerid);
 		Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes vehículos");
 		return 0;
 	}
@@ -211,7 +211,7 @@ phone_menu crane(playerid, response, listitem)
 	new vehicleid = Listitem_Extra(listitem);
 	if (!IsValidVehicle(vehicleid))
 	{
-		Player_ShowGPS(playerid);
+		PhoneMenu_Main(playerid);
 		Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "El vehículo se encuentra destruido");
 		return 0;
 	}
@@ -220,7 +220,7 @@ phone_menu crane(playerid, response, listitem)
 	{
 		if (Player_Money(playerid) < 500)
 		{
-			Player_ShowGPS(playerid);
+			PhoneMenu_Main(playerid);
 			Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No tienes dinero para remolcar tu vehículo ($500)");
 			return 1;
 		}
@@ -250,11 +250,11 @@ phone_menu crane(playerid, response, listitem)
 phone_menu my_vehicles(playerid, response, listitem)
 {
 	if (!response)
-		return Player_ShowGPS(playerid);
+		return PhoneMenu_Main(playerid);
 
 	if (!Iter_Count(PlayerVehicles[playerid]))
 	{
-		Player_ShowGPS(playerid);
+		PhoneMenu_Main(playerid);
 		Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes vehículos");
 		return 0;
 	}
@@ -262,7 +262,7 @@ phone_menu my_vehicles(playerid, response, listitem)
 	new vehicleid = Listitem_Extra(listitem);
 	if (!IsValidVehicle(vehicleid))
 	{
-		Player_ShowGPS(playerid);
+		PhoneMenu_Main(playerid);
 		Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "El vehículo se encuentra destruido");
 		return 0;
 	}
