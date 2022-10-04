@@ -58,17 +58,15 @@ public OnScriptInit()
 
         CreateDynamic3DTextLabel("{DADADA}Panchero", 0xDADADA00, g_rgfHotdogPos[i][0], g_rgfHotdogPos[i][1], g_rgfHotdogPos[i][2] + 1.0, 5.0, .worldid = 0, .interiorid = 0);
 
-        new Float:x = g_rgfHotdogPos[i][0], Float:y = g_rgfHotdogPos[i][1];
-		GetXYFromAngle(x, y, g_rgfHotdogPos[i][3], 1.0);
-		
-        CreateDynamicObject(
+		GetXYFromAngle(g_rgfHotdogPos[i][0], g_rgfHotdogPos[i][1], g_rgfHotdogPos[i][3], 1.0);
+		CreateDynamicObject(
 			1340,
-			x, y, g_rgfHotdogPos[i][2],
+			g_rgfHotdogPos[i][0], g_rgfHotdogPos[i][1], g_rgfHotdogPos[i][2],
 			0.0, 0.0, g_rgfHotdogPos[i][3] + 90.0, 0, 0
 		);
 
         Key_Alert(
-            x, y, g_rgfHotdogPos[i][2], 1.8,
+            g_rgfHotdogPos[i][0], g_rgfHotdogPos[i][1], g_rgfHotdogPos[i][2], 1.8,
             KEYNAME_YES, 0, 0,
             .callback_on_press = __addressof(HOTDOG_OnPress), .cb_data = i
         );

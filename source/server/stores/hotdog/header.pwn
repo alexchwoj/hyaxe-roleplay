@@ -3,7 +3,7 @@
 #endif
 #define _hotdog_header_
 
-new const Float:g_rgfHotdogPos[][4] = {
+new Float:g_rgfHotdogPos[][4] = {
     {1726.5123, -1150.1809, 23.8484, 178.6953}, 
     {1835.2562, -1314.4753, 13.5917, 268.2881}, 
     {1810.5223, -1624.0001, 13.5465, 299.9577}, 
