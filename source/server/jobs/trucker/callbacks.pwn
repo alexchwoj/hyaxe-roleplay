@@ -27,16 +27,15 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
                 Player_SetImmunityForCheat(playerid, CHEAT_TELEPORT, 1000);
                 Player_SetImmunityForCheat(playerid, CHEAT_AIRBREAK, 1000);
 
-                SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 0, 0);
+                new vehicleid = g_rgiPlayerUsingTruck[playerid];
+                SetVehicleParamsForPlayer(vehicleid, playerid, 0, 0);
+                SetVehicleParamsEx(vehicleid, 0, 0, 0, 0, 0, 0, 0);
+                Vehicle_Locked(vehicleid) = false;
 
-                new engine, lights, alarm, doors, bonnet, boot, objective;
-                GetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, doors, bonnet, boot, objective);
-                SetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, doors, bonnet, 0, objective);
+                Vehicle_OwnerId(vehicleid) = INVALID_PLAYER_ID;
 
-                Vehicle_OwnerId(g_rgiPlayerUsingTruck[playerid]) = INVALID_PLAYER_ID;
-
-                Vehicle_Respawn(g_rgiPlayerUsingTruck[playerid]);
-                Vehicle_SetHealth(g_rgiPlayerUsingTruck[playerid], 1000.0);
+                Vehicle_Respawn(vehicleid);
+                Vehicle_SetHealth(vehicleid, 1000.0);
 
                 g_rgbPlayerLoadingTruck{playerid} = 
                 g_rgbTruckLoaded{g_rgiPlayerUsingTruck[playerid]} =
