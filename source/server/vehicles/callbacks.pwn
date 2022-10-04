@@ -68,6 +68,11 @@ public OnVehicleDeath(vehicleid, killerid)
     g_rgeVehicles[vehicleid][e_fHealth] = 1000.0;
     g_rgeVehicles[vehicleid][e_fFuel] = g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_fMaxFuel];
 
+    if(Vehicle_Type(vehicleid) == VEHICLE_TYPE_PERSONAL)
+    {
+        SendClientMessagef(g_rgeVehicles[vehicleid][e_iVehicleOwnerId], 0xED2B2BFF, "›{DADADA} Tu {ED2B2B}%s{DADADA} fue destruido. La aseguradora te dejó uno nuevo en el estacionamiento municipal.", Vehicle_GetModelName(GetVehicleModel(vehicleid)));
+    }
+
     #if defined VEH_OnVehicleDeath
         return VEH_OnVehicleDeath(vehicleid, killerid);
     #else
@@ -87,17 +92,25 @@ public OnVehicleDeath(vehicleid, killerid)
 
 public OnVehicleSpawn(vehicleid)
 {
-    if(g_rgeVehicles[vehicleid][e_iVehicleType] == VEHICLE_TYPE_WORK && g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != INVALID_PLAYER_ID)
+    if(Vehicle_Type(vehicleid) == VEHICLE_TYPE_WORK && g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != INVALID_PLAYER_ID)
     {
         Job_TriggerCallback(g_rgeVehicles[vehicleid][e_iVehicleOwnerId], g_rgeVehicles[vehicleid][e_iVehicleWork], JOB_EV_LEAVE_VEHICLE);
         g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = INVALID_PLAYER_ID;
         g_rgeVehicles[vehicleid][e_fHealth] = 1000.0;
         g_rgeVehicles[vehicleid][e_bLocked] = false;
     }
+    else if(Vehicle_Type(vehicleid) == VEHICLE_TYPE_PERSONAL)
+    {
+        new pos = random(sizeof(g_rgfParkingSlots));
+        SetVehiclePos(vehicleid, g_rgfParkingSlots[pos][0], g_rgfParkingSlots[pos][1], g_rgfParkingSlots[pos][2]);
+        SetVehicleZAngle(vehicleid, g_rgfParkingSlots[pos][3]);
+        Vehicle_Locked(vehicleid) = true;
+    }
 
     g_rgeVehicles[vehicleid][e_bSpawned] = true;
     SetVehicleHealth(vehicleid, g_rgeVehicles[vehicleid][e_fHealth]);
     SetVehicleParamsEx(vehicleid, 0, 0, 0, Vehicle_Locked(vehicleid), 0, 0, 0);
+    UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, 0);
 
     #if defined VEH_OnVehicleSpawn
         return VEH_OnVehicleSpawn(vehicleid);
