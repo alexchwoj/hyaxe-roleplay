@@ -141,7 +141,7 @@ static Food_OnUse(playerid, slot)
     }
     else
     {
-        if (Item_Hunger(type) >= Item_Thirst(type))
+        if (Item_Hunger(type) > Item_Thirst(type))
         {
             ApplyAnimation(playerid, "FOOD", "EAT_Pizza", 4.1, false, true, true, false, 1000);
         }
@@ -332,7 +332,7 @@ public OnScriptInit()
     // HotDog
     Item_Hunger(ITEM_HOTDOG) = -15.0;
     Item_Callback(ITEM_HOTDOG) = __addressof(Food_OnUse);
-    Item_SetPreviewRot(ITEM_HOTDOG, -79.000000, 0.000000, -14.000000, 1.000000);
+    Item_SetPreviewRot(ITEM_HOTDOG, -46.000000, 0.000000, 2.000000, 1.000000);
 
     // Burger
     Item_Hunger(ITEM_BURGER) = -15.0;
