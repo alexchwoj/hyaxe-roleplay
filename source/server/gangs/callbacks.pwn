@@ -3,6 +3,8 @@
 #endif
 #define _gangs_callbacks_
 
+#include <YSI_Coding/y_hooks>
+
 static 
     s_rgbSelectingNewOwner[MAX_PLAYERS char];
 
@@ -1047,7 +1049,7 @@ public OnPlayerCancelTDSelection(playerid)
     forward GANGS_OnPlayerCancelTDSelection(playerid);
 #endif
 
-public OnPlayerText(playerid, text[])
+hook OnPlayerText(playerid, text[])
 {
     if (text[0] == '!')
     {
@@ -1058,23 +1060,9 @@ public OnPlayerText(playerid, text[])
             for(new i, j = SplitChatMessageInLines(HYAXE_UNSAFE_HUGE_STRING, messages); i < j; ++i)
                 Gang_SendMessage(Player_Gang(playerid), messages[i]);
 
-            return 0;
+            return ~0;
         }
     }
 
-    #if defined GANGS_OnPlayerText
-        return GANGS_OnPlayerText(playerid, text);
-    #else
-        return 0;
-    #endif
+    return 0;
 }
-
-#if defined _ALS_OnPlayerText
-    #undef OnPlayerText
-#else
-    #define _ALS_OnPlayerText
-#endif
-#define OnPlayerText GANGS_OnPlayerText
-#if defined GANGS_OnPlayerText
-    forward GANGS_OnPlayerText(playerid, text[]);
-#endif

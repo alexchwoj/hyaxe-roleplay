@@ -3,6 +3,8 @@
 #endif
 #define _police_callbacks_
 
+#include <YSI_Coding/y_hooks>
+
 static PoliceLocker_OnKeyPress(playerid)
 {
     static const male_skins[] = { 280, 281, 265, 266, 267, 300, 301 };
@@ -306,3 +308,15 @@ public OnPlayerLeaveDynamicArea(playerid, areaid)
 #if defined POLICE_OnPlayerLeaveDynamicArea
     forward POLICE_OnPlayerLeaveDynamicArea(playerid, areaid);
 #endif
+
+hook OnPlayerText(playerid, text[])
+{
+    if(text[0] == '&' && Police_OnDuty(playerid))
+    {
+        format(YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "[Policía]{DADADA} %s: %s", Player_RPName(playerid), text[1]);
+        Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, YSI_UNSAFE_HUGE_STRING);
+        return ~0;
+    }
+
+    return 0;
+}
