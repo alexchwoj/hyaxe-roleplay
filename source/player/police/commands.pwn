@@ -196,10 +196,16 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
     }
 
     extract params -> new player:target, charges; else {
-        SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} USO: {3A86FF}/cargos{DADADA} <jugador> <cantidad>");
+        SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} USO: {3A86FF}/cargos{DADADA} <jugador> <cantidad: 0-6>");
         return 1;
     }
 
+    if(!(0 <= charges <= 6))
+    {
+        SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Solo puedes asignar entre 0 y 6 cargos.");
+        return 1;
+    }
+    
     if(!IsPlayerConnected(target))
     {
         SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Jugador inválido");
@@ -232,6 +238,7 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
                 (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid), Player_RPName(target)
             ),
         10, target);
+        Notification_Show(target, "Un oficial de policía eliminó la orden de arresto en tu contra", 5000);
     }
     else if(!Player_WantedLevel(target))
     {
@@ -241,6 +248,7 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
                 (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid), charges, Player_RPName(target)
             ),
         10, target);
+        Notification_Show(target, va_return("Un oficial de policía emitió una orden de arresto de nivel %d en tu contra", charges), 5000);
     }
     else if(Player_WantedLevel(target) > charges)
     {
@@ -250,6 +258,7 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
                 (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid), Player_RPName(target), charges
             ),
         10, target);
+        Notification_Show(target, va_return("Un oficial de policía aumentó la orden de arresto en tu contra a nivel %d", charges), 5000);
     }
     else
     {
@@ -259,6 +268,7 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
                 (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid), Player_RPName(target), charges
             ),
         10, target);
+        Notification_Show(target, va_return("Un oficial de policía disminuyó la orden de arresto en tu contra a nivel %d", charges), 5000);
     }
 
     Player_SetWantedLevel(target, charges);
