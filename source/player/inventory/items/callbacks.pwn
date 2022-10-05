@@ -143,11 +143,11 @@ static Food_OnUse(playerid, slot)
     {
         if (Item_Hunger(type) > Item_Thirst(type))
         {
-            ApplyAnimation(playerid, "FOOD", "EAT_Pizza", 4.1, false, true, true, false, 1000);
+            ApplyAnimation(playerid, "BAR", "DNK_STNDM_LOOP", 4.1, false, false, false, false, 0, false);
         }
         else
         {
-            ApplyAnimation(playerid, "BAR", "DNK_STNDM_LOOP", 4.1, false, false, false, false, 0, false);
+            ApplyAnimation(playerid, "FOOD", "EAT_Pizza", 4.1, false, true, true, false, 1000);
         }
     }
 
