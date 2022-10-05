@@ -31,6 +31,7 @@ Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, c
 
 Vehicle_Destroy(&vehicleid)
 {
+    PrintBacktrace();
     DEBUG_PRINT("Destroying vehicleid %i (model = %i, ownerid = %i)", vehicleid, GetVehicleModel(vehicleid), Vehicle_OwnerId(vehicleid));
 
     if (!DestroyVehicle(vehicleid))
@@ -51,6 +52,7 @@ Vehicle_Destroy(&vehicleid)
     {
         if(Iter_Contains(PlayerVehicles[Vehicle_OwnerId(vehicleid)], vehicleid))
         {
+            printf("Removed player vehicle from iterator: vehicleid = %d, playerid = %d", vehicleid, Vehicle_OwnerId(vehicleid));
             Iter_SafeRemove(PlayerVehicles[Vehicle_OwnerId(vehicleid)], vehicleid, vehicleid);
         }
     }

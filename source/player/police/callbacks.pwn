@@ -17,6 +17,8 @@ static PoliceLocker_OnKeyPress(playerid)
 
     if(Police_OnDuty(playerid))
     {
+        Player_SetImmunityForCheat(playerid, CHEAT_WEAPON, 1000 + GetPlayerPing(playerid));
+        
         Police_ClearMarkers(playerid);
         Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s oficial %s ahora está fuera de servicio.", (Player_Sex(playerid) == SEX_MALE ? "El" : "La"), Player_RPName(playerid)), 21, playerid);
 

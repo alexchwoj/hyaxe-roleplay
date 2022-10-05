@@ -52,8 +52,9 @@ GangEvent_Cancel()
         {
             KillTimer(g_iGangTruckTimer);
             DestroyDynamicObject(g_iGangTruckParticle);
-            Vehicle_Destroy(g_iGangTruckVehicleID);
             DestroyDynamicMapIcon(g_iGangEventMapIcon);
+
+            SetVehicleVirtualWorld(g_iGangTruckVehicleID, 20);
         }
         case EVENT_GRAFFITI:
         {
