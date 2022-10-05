@@ -33,6 +33,11 @@ public OnScriptInit()
         SetDynamicObjectMaterialText(g_rgeGraffiti[i][e_iGraffitiObject], 0, zone, OBJECT_MATERIAL_SIZE_512x64, "Comic Sans MS", 60, 0, Random(cellmin, cellmax) | 0xFF000000, 0x00000000, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
     }
 
+    // Create truck
+    g_iGangTruckVehicleID = Vehicle_Create(498, 0.0, 0.0, 0.0, 0.0, 252, 252, 0);
+    SetVehicleVirtualWorld(g_iGangTruckVehicleID, 20);
+    Vehicle_ToggleLock(g_iGangTruckVehicleID);
+
     #if defined GVENT_OnScriptInit
         return GVENT_OnScriptInit();
     #else

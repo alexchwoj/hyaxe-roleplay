@@ -85,19 +85,17 @@ GangEvent_Start(event_type)
     {
         case EVENT_TRUCK_DEFENSE:
         {
-            // Create truck
+            // Update truck
             g_iGangTruckIndex = random( sizeof(g_rgfTruckDefensePositions) );
 
-            Vehicle_Destroy(g_iGangTruckVehicleID);
-            g_iGangTruckVehicleID = Vehicle_Create(
-                498,
+            SetVehiclePos(
+                g_iGangTruckVehicleID,
                 g_rgfTruckDefensePositions[g_iGangTruckIndex][0],
                 g_rgfTruckDefensePositions[g_iGangTruckIndex][1],
-                g_rgfTruckDefensePositions[g_iGangTruckIndex][2],
-                g_rgfTruckDefensePositions[g_iGangTruckIndex][3],
-                252, 252, 0
+                g_rgfTruckDefensePositions[g_iGangTruckIndex][2] + 0.2
             );
-            Vehicle_ToggleLock(g_iGangTruckVehicleID);
+            SetVehicleZAngle(g_iGangTruckVehicleID, g_rgfTruckDefensePositions[g_iGangTruckIndex][3]);
+            SetVehicleVirtualWorld(g_iGangTruckVehicleID, 0);
 
             g_iGangEventMapIcon = CreateDynamicMapIcon(
                 g_rgfTruckDefensePositions[g_iGangTruckIndex][0],
