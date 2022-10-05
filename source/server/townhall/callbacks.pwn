@@ -46,6 +46,7 @@ static SellVeh_OnPress(playerid)
             Player_GiveMoney(playerid, pay);
             Iter_Remove(PlayerVehicles[playerid], vehicleid);
 
+            printf("SellVeh_OnPress, vehicle: %d (%d), player: %s (%d)", g_rgeVehicles[vehicleid][e_iVehicleDbId], vehicleid, Player_RPName(playerid), playerid);
             mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "DELETE FROM `PLAYER_VEHICLES` WHERE `VEHICLE_ID` = %d;", g_rgeVehicles[vehicleid][e_iVehicleDbId]);
             mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
 
