@@ -12,6 +12,7 @@ Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE
 	if (g_rgePlayerMenu[playerid][e_bClearChat])
 		Chat_Clear(playerid);
 
+	Player_DisableChat(playerid, true);
 	Notification_DestroyAll(playerid);
 
 	for (new i; i < g_rgePlayerMenu[playerid][e_iTextdrawCount]; ++i)
@@ -183,6 +184,8 @@ Menu_Hide(playerid)
 
     g_rgePlayerMenu[playerid][e_iTextdrawCount] = 0;
     g_rgePlayerMenu[playerid] = g_rgePlayerMenu[MAX_PLAYERS];
+	Player_DisableChat(playerid, false);
+	
 	return 1;
 }
 

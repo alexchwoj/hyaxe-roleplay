@@ -3,16 +3,8 @@
 #endif
 #define _CHAT_HEADER_
 
-enum eMessageData
-{
-    e_iColor,
-    e_szMessage[144]
-};
-
-const CHAT_BUFFER_SIZE = 200;
-
 new
-    g_rgeChatBuffer[MAX_PLAYERS][CHAT_BUFFER_SIZE][eMessageData],
-    bool:g_rgbRegisterChatMessages[MAX_PLAYERS char] = { bool:0x01010101, ... };
+    bool:g_rgbMessagesDisabled[MAX_PLAYERS char] = { false, ... };
 
 forward Chat_SendMessageToRange(playerid, color, Float:range, const string[]);
+#define Player_DisableChat(%0,%1) (g_rgbMessagesDisabled{(%0)} = (%1))

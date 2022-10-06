@@ -112,20 +112,6 @@ Chat_Resend(playerid)
     if(FCNPC_IsValid(playerid))
         return 0;
 
-    g_rgbRegisterChatMessages{playerid} = false;
-
-    /*
-    for(new i; i < CHAT_BUFFER_SIZE; ++i)
-    {
-        if(!g_rgeChatBuffer[playerid][i][e_szMessage][0])
-            break;
-
-        SendClientMessage(playerid, g_rgeChatBuffer[playerid][i][e_iColor], g_rgeChatBuffer[playerid][i][e_szMessage]);
-    }
-    */
-    
-    g_rgbRegisterChatMessages{playerid} = true;
-
     return 1;
 }
 

@@ -3,22 +3,19 @@
 #endif
 #define _CHAT_CALLABACKS_
 
-/*
 #include <YSI_Coding/y_hooks>
 
 hook native SendClientMessage(playerid, color, const message[])
 {
-    if(g_rgbRegisterChatMessages{playerid})
-    {
-        ChatBuffer_Push(playerid, color, message);
-    }
+    if(g_rgbMessagesDisabled{playerid})
+        return 1;
 
     return continue(playerid, color, message);
 }
 
 public OnPlayerConnect(playerid)
 {
-    Circular_Init_(sizeof(g_rgeChatBuffer[]) * cellbytes, sizeof(g_rgeChatBuffer[][]), g_rgeChatBuffer[playerid]);
+    g_rgbMessagesDisabled{playerid} = false;
 
     #if defined CHAT_OnPlayerConnect
         return CHAT_OnPlayerConnect(playerid);
@@ -36,7 +33,6 @@ public OnPlayerConnect(playerid)
 #if defined CHAT_OnPlayerConnect
     forward CHAT_OnPlayerConnect(playerid);
 #endif
-*/
 
 public OnPlayerText(playerid, text[])
 {
