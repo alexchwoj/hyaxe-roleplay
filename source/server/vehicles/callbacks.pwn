@@ -408,11 +408,17 @@ public VEHICLE_ToggleEngineTimer(playerid, vehicleid)
 forward VEHICLE_LoadFromDatabase(playerid);
 public VEHICLE_LoadFromDatabase(playerid)
 {
+    printf("[dbg:veh] VEHICLE_LoadFromDatabase(playerid = %d)", playerid);
+
     new row_count;
     cache_get_row_count(row_count);
 
+    printf("[dbg:veh] Player has %d vehicles", row_count);
+
     for(new i = 0; i < row_count; ++i)
     {
+        printf("[dbg:veh] Loading vehicle %d", i);
+
         new
             model, colorone, colortwo,
             Float:x, Float:y, Float:z, Float:angle,
@@ -428,16 +434,28 @@ public VEHICLE_LoadFromDatabase(playerid)
         cache_get_value_name_float(i, "POS_Z", z);
         cache_get_value_name_float(i, "ANGLE", angle);
 
+        printf("[dbg:veh] model = %d", model);
+        printf("[dbg:veh] colorone = %d", colorone);
+        printf("[dbg:veh] colortwo = %d", colortwo);
+        printf("[dbg:veh] pos_x = %f", x);
+        printf("[dbg:veh] pos_y = %f", y);
+        printf("[dbg:veh] pos_z = %f", z);
+        printf("[dbg:veh] angle = %f", angle);
+
         new vehicleid = Vehicle_Create(model, x, y, z, angle, colorone, colortwo, -1);
         if(vehicleid == INVALID_VEHICLE_ID)
         {
             printf("[vehicles] Failed to create vehicle of playerid %i (model: %i)", playerid, model);
             continue;
         }
-        
+
+        printf("[dbg:veh] vehicle created with id %d", vehicleid);
+
         cache_get_value_name_int(i, "VEHICLE_ID", g_rgeVehicles[vehicleid][e_iVehicleDbId]);
         g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = playerid;
         Vehicle_Type(vehicleid) = VEHICLE_TYPE_PERSONAL;
+
+        printf("[dbg:veh] vehicle dbid = %d", g_rgeVehicles[vehicleid][e_iVehicleDbId]);
         
         cache_get_value_name_float(i, "HEALTH", g_rgeVehicles[vehicleid][e_fHealth]);
         cache_get_value_name_float(i, "FUEL", g_rgeVehicles[vehicleid][e_fFuel]);
@@ -508,6 +526,8 @@ public VEHICLE_LoadFromDatabase(playerid)
 
 public OnPlayerAuthenticate(playerid)
 {
+    printf("[dbg:veh] Loading vehicles for player %d", playerid);
+
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
         SELECT * FROM `PLAYER_VEHICLES` WHERE `OWNER_ID` = %i;\
     ", Player_AccountID(playerid));

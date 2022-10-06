@@ -334,6 +334,11 @@ public Speedometer_Update(playerid)
 
 Player_RegisterVehicle(playerid, vehicleid)
 {
+    if(g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != INVALID_PLAYER_ID)
+    {
+        Iter_Remove(PlayerVehicles[g_rgeVehicles[vehicleid][e_iVehicleOwnerId]], vehicleid);
+    }
+
     g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = playerid;
     Vehicle_Type(vehicleid) = VEHICLE_TYPE_PERSONAL;
     Iter_Add(PlayerVehicles[playerid], vehicleid);
@@ -463,23 +468,23 @@ Player_SaveVehicles(playerid)
 
         mysql_format(g_hDatabase, query, sizeof(query), "\
             UPDATE `PLAYER_VEHICLES` SET \
-                HEALTH = %.2f, \
-                FUEL = %f, \
-                PANELS_STATUS = %d, \
-                DOORS_STATUS = %d, \
-                LIGHTS_STATUS = %d, \
-                TIRES_STATUS = %d, \
-                COLOR_ONE = %d, \
-                COLOR_TWO = %d, \
-                PAINTJOB = %d, \
-                POS_X = %f, \
-                POS_Y = %f, \
-                POS_Z = %f, \
-                ANGLE = %f, \
-                INTERIOR = %d, \
-                VW = %d, \
-                COMPONENTS = '%s', \
-                PARAMS = %d \
+                `HEALTH` = %.2f, \
+                `FUEL` = %f, \
+                `PANELS_STATUS` = %d, \
+                `DOORS_STATUS` = %d, \
+                `LIGHTS_STATUS` = %d, \
+                `TIRES_STATUS` = %d, \
+                `COLOR_ONE` = %d, \
+                `COLOR_TWO` = %d, \
+                `PAINTJOB` = %d, \
+                `POS_X` = %f, \
+                `POS_Y` = %f, \
+                `POS_Z` = %f, \
+                `ANGLE` = %f, \
+                `INTERIOR` = %d, \
+                `VW` = %d, \
+                `COMPONENTS` = '%s', \
+                `PARAMS` = %d \
             WHERE `VEHICLE_ID` = %d; \
         ",
             g_rgeVehicles[vehicleid][e_fHealth],
