@@ -296,7 +296,7 @@ public Speedometer_Update(playerid)
     {
         if(g_rgiSpeedometerUpdateTimer[playerid])
         {
-            KillTimer(g_rgiSpeedometerUpdateTimer[playerid]);
+            Timer_Kill(g_rgiSpeedometerUpdateTimer[playerid]);
         }
 
         return 1;

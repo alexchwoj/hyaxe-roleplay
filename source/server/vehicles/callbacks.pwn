@@ -30,10 +30,9 @@ public OnScriptInit()
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    if(g_rgiSpeedometerUpdateTimer[playerid] != -1)
+    if(g_rgiSpeedometerUpdateTimer[playerid])
     {
-        KillTimer(g_rgiSpeedometerUpdateTimer[playerid]);
-        g_rgiSpeedometerUpdateTimer[playerid] = -1;
+        Timer_Kill(g_rgiSpeedometerUpdateTimer[playerid]);
     }
 
     Player_SaveVehicles(playerid);
@@ -133,7 +132,9 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
 {
     if(newstate == PLAYER_STATE_DRIVER)
     {
-        Speedometer_Show(playerid);
+        if (Bit_Get(Player_Config(playerid), CONFIG_DISPLAY_SPEEDOMETER))
+            Speedometer_Show(playerid);
+        
         if(Vehicle_GetEngineState(GetPlayerVehicleID(playerid)) == VEHICLE_STATE_OFF)
         {
             Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Presiona ~k~~CONVERSATION_NO~ para encender el vehículo");
@@ -607,4 +608,39 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 #define OnPlayerEnterVehicle VEH_OnPlayerEnterVehicle
 #if defined VEH_OnPlayerEnterVehicle
     forward VEH_OnPlayerEnterVehicle(playerid, vehicleid, ispassenger);
+#endif
+
+public OnPlayerPauseStateChange(playerid, pausestate)
+{
+    if(pausestate)
+    {
+        if(g_rgiSpeedometerUpdateTimer[playerid])
+        {
+            Timer_Kill(g_rgiSpeedometerUpdateTimer[playerid]);
+        }
+    }
+    else
+    {
+        if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+        {
+            Speedometer_Update(playerid);
+            g_rgiSpeedometerUpdateTimer[playerid] = SetTimerEx("Speedometer_Update", 1000, true, "i", playerid);
+        }
+    }
+
+    #if defined VEH_OnPlayerPauseStateChange
+        return VEH_OnPlayerPauseStateChange(playerid, pausestate);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerPauseStateChange
+    #undef OnPlayerPauseStateChange
+#else
+    #define _ALS_OnPlayerPauseStateChange
+#endif
+#define OnPlayerPauseStateChange VEH_OnPlayerPauseStateChange
+#if defined VEH_OnPlayerPauseStateChange
+    forward VEH_OnPlayerPauseStateChange(playerid, pausestate);
 #endif
