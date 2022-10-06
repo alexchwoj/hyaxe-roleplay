@@ -14,6 +14,9 @@ IPacket:__ac_rc_VehicleSync(playerid, BitStream:bs)
         PR_FLOAT, vehicle_health
     );
 
+    if (!g_rgeVehicles[vehicleid][e_bValid])
+        return 0;
+        
     if (vehicle_health < 375.0)
     {
         vehicle_health = 375.0;
@@ -21,9 +24,6 @@ IPacket:__ac_rc_VehicleSync(playerid, BitStream:bs)
         BS_SetWriteOffset(bs, 8 + 16 + 368);
         BS_WriteValue(bs, PR_FLOAT, 375.0);
     }
-
-    if (!g_rgeVehicles[vehicleid][e_bValid])
-        return 0;
 
     if (Player_HasImmunityForCheat(playerid, CHEAT_REPAIR_CAR))
         return 1;
