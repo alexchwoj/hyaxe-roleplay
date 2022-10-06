@@ -16,7 +16,7 @@ IPacket:__ac_rc_VehicleSync(playerid, BitStream:bs)
 
     if (!g_rgeVehicles[vehicleid][e_bValid])
         return 0;
-        
+
     if (vehicle_health < 375.0)
     {
         vehicle_health = 375.0;
@@ -28,7 +28,7 @@ IPacket:__ac_rc_VehicleSync(playerid, BitStream:bs)
     if (Player_HasImmunityForCheat(playerid, CHEAT_REPAIR_CAR))
         return 1;
 
-    if (g_rgeVehicles[vehicleid][e_bValid] && Vehicle_GetHealth(vehicleid) < vehicle_health)
+    if (Vehicle_GetHealth(vehicleid) < vehicle_health)
     {
         Anticheat_Trigger(playerid, CHEAT_REPAIR_CAR);
         return 0;
