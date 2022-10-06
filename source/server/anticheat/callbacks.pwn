@@ -20,6 +20,7 @@ static Anticheat_PopulateDatabase()
     db_free_result(db_query(g_hAnticheatDatabase, "COMMIT;"));
 }
 
+/*
 public OnScriptInit()
 {
     g_hAnticheatDatabase = db_open("anticheat.db");
@@ -107,6 +108,7 @@ public OnGameModeExit()
 #if defined AC_OnGameModeExit
     forward AC_OnGameModeExit();
 #endif
+*/
 
 public OnIncomingPacket(playerid, packetid, BitStream:bs)
 {

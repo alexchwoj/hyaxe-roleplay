@@ -28,8 +28,8 @@ dialog ac_settings(playerid, dialogid, response, listitem, const inputtext[])
         return 1;
 
     g_rgeDetectionData[eCheats:listitem][e_bDetectionEnabled] = !g_rgeDetectionData[eCheats:listitem][e_bDetectionEnabled];
-    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `DETECTIONS` SET `ENABLED` = %i WHERE `DETECTION_ID` = %i;", g_rgeDetectionData[eCheats:listitem][e_bDetectionEnabled], listitem);
-    db_free_result(db_query(g_hAnticheatDatabase, HYAXE_UNSAFE_HUGE_STRING));
+    //format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `DETECTIONS` SET `ENABLED` = %i WHERE `DETECTION_ID` = %i;", g_rgeDetectionData[eCheats:listitem][e_bDetectionEnabled], listitem);
+    //db_free_result(db_query(g_hAnticheatDatabase, HYAXE_UNSAFE_HUGE_STRING));
     
     strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Detección\t{DADADA}Estado\n");
 

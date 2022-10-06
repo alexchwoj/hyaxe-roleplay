@@ -53,7 +53,7 @@ new g_rgeDetectionData[eCheats][eDetectionData] =
     { "Sincronización inválida", true, PUNISHMENT_KICK, 0 },
     { "AirBreak", true, PUNISHMENT_WARN_ADMINS, 15 },
     { "Vehicle AirBreak", true, PUNISHMENT_KICK_ON_MAX_TRIGGERS, 3 },
-    { "Sincronización fabricada", true, PUNISHMENT_BAN, 0 },
+    { "Sincronización fabricada", true, PUNISHMENT_KICK, 0 },
     { "RapidFire", true, PUNISHMENT_KICK_ON_MAX_TRIGGERS, 5 }
 };
 
