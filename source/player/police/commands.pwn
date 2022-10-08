@@ -133,7 +133,7 @@ dialog police_change_rank(playerid, dialogid, response, listitem, inputtext[])
     if(response)
     {
         new new_rank = _:POLICE_RANK_GEN_COMMISSIONER - listitem;
-        if(new_rank > Police_Rank(playerid) || Player_AdminLevel(playerid) < _:RANK_LEVEL_ADMINISTRATOR)
+        if(new_rank > Police_Rank(playerid) && Player_AdminLevel(playerid) < RANK_LEVEL_ADMINISTRATOR)
         {
             Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Debes asignar un rango menor o igual al tuyo");
             
