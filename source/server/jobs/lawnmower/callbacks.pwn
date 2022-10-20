@@ -98,7 +98,7 @@ static LawnMowerEvent(playerid, eJobEvent:event, areaid)
 
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Empieza a cortar el césped. Te quedan %i matorrales.", g_rgeLawnmowerAreas[areaid][e_iCurrentGrassCount]);
             Notification_ShowBeatingText(playerid, 15000, 0xED2B2B, 75, 255, HYAXE_UNSAFE_HUGE_STRING);
-            PlayAudioStreamForPlayer(playerid, "https://cdn.discordapp.com/attachments/883089457329344523/938212731952181268/lawnmower.mp3", .usepos = false);
+            PlayAudioStreamForPlayer(playerid, "https://samp.hyaxe.com/static/audio/lawnmower.mp3", .usepos = false);
             Chat_Resend(playerid);
         }
         case JOB_EV_LEAVE_VEHICLE:
