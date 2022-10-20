@@ -45,7 +45,25 @@ public OnPlayerDataLoaded(playerid)
     }
 
     new song_link[65];
-    format(song_link, sizeof(song_link), "https://samp.hyaxe.com/static/audio/ost_intro%d.mp3", random(12));
+
+    new year, month, day;
+    getdate(year, month, day);
+
+    if (month == 10 && day >= 14) // Halloween
+    {
+        format(song_link, sizeof(song_link), "https://samp.hyaxe.com/static/audio/halloween_%d.mp3", random(4));
+    }
+    else if (month == 11 && day >= 27) // Christmas
+    {
+        format(song_link, sizeof(song_link), "https://samp.hyaxe.com/static/audio/christmas_%d.mp3", random(3));
+    }
+    else if (month == 3 && day >= 13 && day <= 17) // Hyaxe's Birthday
+    {
+        format(song_link, sizeof(song_link), "https://samp.hyaxe.com/static/audio/happy_birthday.mp3");
+    }
+    else // Normal
+        format(song_link, sizeof(song_link), "https://samp.hyaxe.com/static/audio/ost_intro%d.mp3", random(12));
+
     PlayAudioStreamForPlayer(playerid, song_link);
 
     if(!Bit_Get(Player_Flags(playerid), PFLAG_REGISTERED))
