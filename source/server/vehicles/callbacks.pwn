@@ -554,8 +554,6 @@ public OnPlayerAuthenticate(playerid)
 // - Prevent car jacking
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
-    SetPlayerArmedWeapon(playerid, 0);
-
     if(!ispassenger)
     {
         new last_driver = GetVehicleLastDriver(vehicleid);
@@ -592,6 +590,8 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
             return 0;
         }
     }
+
+    SetPlayerArmedWeapon(playerid, 0);
 
     #if defined VEH_OnPlayerEnterVehicle
         return VEH_OnPlayerEnterVehicle(playerid, vehicleid, ispassenger);

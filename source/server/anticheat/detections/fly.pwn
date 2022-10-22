@@ -27,7 +27,7 @@ IPacket:__ac_fly_PlayerSync(playerid, BitStream:bs)
         PR_INT16, animation_id
     );
     
-    if(special_action == SPECIAL_ACTION_USEJETPACK)
+    if(special_action == SPECIAL_ACTION_USEJETPACK && !Player_AdminLevel(playerid))
     {
         Anticheat_Trigger(playerid, CHEAT_FLY);
         return 0;

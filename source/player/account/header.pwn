@@ -134,7 +134,8 @@ enum ePlayerTemp
     e_iDoubtSentTime,
     e_iReportSentTime,
     e_iLastTrunk,
-    bool:e_bPassingItems
+    bool:e_bPassingItems,
+    bool:e_bUFO
 };
 
 new 

@@ -44,6 +44,7 @@ public OnScriptInit()
     getdate(year, month, day);
 	if (month == 10 && day >= 14) // Halloween
     {
+        SetTimer("HLWE_SpawnPumpkins", 300000, true);
         Key_Alert(817.2799, -1103.3270, 25.7921, 1.5, KEYNAME_YES, .callback_on_press = __addressof(Witch_OnKeyPress));   
 
         for(new i; i < sizeof(g_rgfWitchPos); ++i)
@@ -77,4 +78,50 @@ public OnScriptInit()
 #define OnScriptInit HLWE_OnScriptInit
 #if defined HLWE_OnScriptInit
     forward HLWE_OnScriptInit();
+#endif
+
+forward HLWE_ResetGravity();
+public HLWE_ResetGravity()
+{
+    SetGravity(0.008);
+    return 1;
+}
+
+forward HLWE_SpawnPumpkins();
+public HLWE_SpawnPumpkins()
+{
+    new year, month, day;
+    getdate(year, month, day);
+	if (month == 10 && day >= 14) // Halloween
+    {
+        for(new i; i < sizeof(g_rgfWitchPos); ++i)
+        {
+            GenerateRandomPumpkins(3 + random(4), g_rgfWitchPos[i][0], g_rgfWitchPos[i][1], g_rgfWitchPos[i][2] - 1.0, 20.0);
+        }
+    }
+    return 1;
+}
+
+public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
+{
+    if (g_rgePlayerTempData[playerid][e_bUFO])
+    {
+        CreateExplosion(fX, fY, fZ, 12, 1.0);
+    }
+
+    #if defined HLWE_OnPlayerWeaponShot
+        return HLWE_OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerWeaponShot
+    #undef OnPlayerWeaponShot
+#else
+    #define _ALS_OnPlayerWeaponShot
+#endif
+#define OnPlayerWeaponShot HLWE_OnPlayerWeaponShot
+#if defined HLWE_OnPlayerWeaponShot
+    forward HLWE_OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ);
 #endif
