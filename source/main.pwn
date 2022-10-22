@@ -95,7 +95,7 @@ JYYYYYYJJJJJJJJ7!?JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ??????????!!777777777777777777
 
 #define SERVER_VERSION "v1.0.5-alpha"
 
-#define NDEBUG 0
+#define NDEBUG 1
 
 #if NDEBUG
 	#pragma option -d0
@@ -234,6 +234,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/car_rental/header.pwn"
 #include "server/weather/header.pwn"
 #include "server/tuning/header.pwn"
+#include "server/halloween/header.pwn"
 #include "player/account/header.pwn"
 #include "player/config/header.pwn"
 #include "player/damage/header.pwn"
@@ -275,6 +276,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/territories/functions.pwn"
 #include "server/fuel_station/functions.pwn"
 #include "server/tuning/functions.pwn"
+#include "server/halloween/functions.pwn"
 #include "player/account/functions.pwn"
 #include "player/config/functions.pwn"
 #include "player/damage/functions.pwn"
@@ -329,6 +331,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/weather/callbacks.pwn"
 #include "server/tuning/callbacks.pwn"
 #include "server/townhall/callbacks.pwn"
+#include "server/halloween/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/damage/callbacks.pwn"
 #include "player/leveling/callbacks.pwn"

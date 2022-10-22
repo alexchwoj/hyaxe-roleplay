@@ -339,6 +339,11 @@ public OnScriptInit()
     Item_Callback(ITEM_BURGER) = __addressof(Food_OnUse);
     Item_SetPreviewRot(ITEM_BURGER, -79.000000, 0.000000, -14.000000, 1.000000);
 
+    // Pumpkin
+    Item_Hunger(ITEM_PUMPKIN) = -15.0;
+    Item_Callback(ITEM_PUMPKIN) = __addressof(Food_OnUse);
+    Item_SetPreviewRot(ITEM_PUMPKIN, -15.000000, 0.000000, 30.000000, 0.800000);
+
     // Meat
     Item_Hunger(ITEM_MEAT) = -5.0;
     Item_Callback(ITEM_MEAT) = __addressof(Food_OnUse);

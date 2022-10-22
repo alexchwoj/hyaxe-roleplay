@@ -84,6 +84,7 @@ enum _:eItems
     ITEM_PARACHUTE,
     ITEM_FLAG,
     ITEM_HOTDOG,
+    ITEM_PUMPKIN,
 
 	ITEM_INVALID
 };
@@ -202,6 +203,7 @@ new
         {"Paracaidas", 371, true, -1}, // ITEM_PARACHUTE
         {"Bandera", 19306, true, -1}, // ITEM_FLAG
         {"Pancho", 19346, true, -1}, // ITEM_HOTDOG
+        {"Calabaza", 19320, false, -1}, // ITEM_PUMPKIN
 
 		{"Invalid item", 18631, false, -1} // ITEM_INVALID
 	},

@@ -34,7 +34,23 @@ public OnScriptInit()
 		AllowNickNameCharacter(g_rgcAllowedNameChars[i], true);
 	}
 
-	SendRconCommand(!"hostname Hyaxe Roleplay [Rol en español]");
+	new year, month, day;
+    getdate(year, month, day);
+	if (month == 10 && day >= 14) // Halloween
+    {
+		SendRconCommand(!"hostname Hyaxe Roleplay [Halloween]");
+    }
+    else if (month == 11 && day >= 27) // Christmas
+    {
+		SendRconCommand(!"hostname Hyaxe Roleplay [Feliz Navidad]");
+    }
+    else if (month == 3 && day >= 13 && day <= 17) // Hyaxe's Birthday
+    {
+		SendRconCommand(!"hostname Hyaxe Roleplay [Aniversario]");
+    }
+    else // Normal
+        SendRconCommand(!"hostname Hyaxe Roleplay [Rol en español]");
+
 	SendRconCommand(!"language Español / Spanish");
 	SendRconCommand(!"gamemodetext Roleplay / RPG");
 
