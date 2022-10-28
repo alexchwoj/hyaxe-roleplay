@@ -14,7 +14,7 @@ public OnScriptInit()
     for(new i; i < sizeof(g_rgfFuelStations); ++i)
     {
         Key_Alert(
-            g_rgfFuelStations[i][0], g_rgfFuelStations[i][1], g_rgfFuelStations[i][2], 12.5,
+            g_rgfFuelStations[i][0], g_rgfFuelStations[i][1], g_rgfFuelStations[i][2], 6.0,
             KEYNAME_CROUCH, 0, 0, KEY_TYPE_VEHICLE, .callback_on_press = __addressof(GasStation_OnKeyPress)
         );
 
