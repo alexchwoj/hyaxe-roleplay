@@ -244,3 +244,10 @@ command mypos(playerid, const params[], "")
     );
     return 1;
 }
+
+command clearchat(playerid, const params[], "Limpiar el chat")
+{
+    Chat_Clear(playerid);
+    return 1;
+}
+alias:clearchat("limpiarchat")

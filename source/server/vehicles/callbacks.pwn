@@ -138,6 +138,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
         if(Vehicle_GetEngineState(GetPlayerVehicleID(playerid)) == VEHICLE_STATE_OFF)
         {
             Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Presiona ~k~~CONVERSATION_NO~ para encender el vehículo");
+            SetPlayerArmedWeapon(playerid, 0);
         }
     }
     else if(oldstate == PLAYER_STATE_DRIVER)
