@@ -111,9 +111,10 @@ static Crack_OnUse(playerid, slot)
 
     if(g_rgePlayerTempData[playerid][e_iCrackUseTime] && gettime() - g_rgePlayerTempData[playerid][e_iCrackUseTime] < (Player_VIP(playerid) >= 3 ? 3 : 10))
     {
-        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, va_return("Debes esperar %d segundos para consumir crack", ((Player_VIP(playerid) >= 3 ? 3 : 10) - (gettime() - g_rgePlayerTempData[playerid][e_iMedicineUseTime]))));
+        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, va_return("Debes esperar %d segundos para consumir crack", ((gettime() - (g_rgePlayerTempData[playerid][e_iMedicineUseTime] - (Player_VIP(playerid) >= 3 ? 3 : 10))))));
         return 1;
     }
+    
     ApplyAnimation(playerid, "FOOD", "EAT_Pizza", 4.1, false, true, true, false, 1000);
     PlayerPlaySound(playerid, SOUND_EAT);
 

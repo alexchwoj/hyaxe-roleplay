@@ -245,9 +245,9 @@ command mypos(playerid, const params[], "")
     return 1;
 }
 
-command clearchat(playerid, const params[], "Limpiar el chat")
+command clearmychat(playerid, const params[], "Limpia el chat local")
 {
     Chat_Clear(playerid);
     return 1;
 }
-alias:clearchat("limpiarchat")
+alias:clearmychat("limpiarchat")
