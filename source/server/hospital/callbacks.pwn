@@ -98,9 +98,6 @@ player_menu hospital_menu(playerid, response, listitem)
                     return 1;
                 }
 
-                if (Inventory_GetItemAmount(playerid, ITEM_MEDICINE) >= 100)
-                    return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No puedes llevar más de 100 analgésicos.");
-
                 if (Inventory_AddItem(playerid, ITEM_MEDICINE, 5, 0))
                 {
                     Player_GiveMoney(playerid, -150);
