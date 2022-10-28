@@ -81,9 +81,9 @@ static Medicine_OnUse(playerid, slot)
     if (Player_Health(playerid) >= 100)
         return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Tienes la vida llena.");
 
-    if(g_rgePlayerTempData[playerid][e_iMedicineUseTime] && gettime() - g_rgePlayerTempData[playerid][e_iMedicineUseTime] < (Player_VIP(playerid) >= 3 ? 3 : 10))
+    if(g_rgePlayerTempData[playerid][e_iMedicineUseTime] > gettime())
     {
-        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, va_return("Debes esperar %d segundos para consumir otro medicamento", ((Player_VIP(playerid) >= 3 ? 3 : 10) - (gettime() - g_rgePlayerTempData[playerid][e_iMedicineUseTime]))));
+        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, va_return("Debes esperar %d segundos para consumir otro medicamento", g_rgePlayerTempData[playerid][e_iMedicineUseTime] - gettime()));
         return 1;
     }
 
@@ -92,7 +92,8 @@ static Medicine_OnUse(playerid, slot)
 
     Notification_ShowBeatingText(playerid, 2000, 0xF7F7F7, 100, 255, "Has usado un medicamento (~g~+5~w~ de salud)");
     Player_SetHealth(playerid, Player_Health(playerid) + 5);
-    g_rgePlayerTempData[playerid][e_iMedicineUseTime] = gettime();
+
+    g_rgePlayerTempData[playerid][e_iMedicineUseTime] = gettime() + (Player_VIP(playerid) >= 3 ? 3 : 10);
 
     InventorySlot_Subtract(playerid, slot);
     return 1;
@@ -109,9 +110,9 @@ static Crack_OnUse(playerid, slot)
     if (Player_Armor(playerid) >= 100)
         return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Tienes el chaleco lleno.");
 
-    if(g_rgePlayerTempData[playerid][e_iCrackUseTime] && gettime() - g_rgePlayerTempData[playerid][e_iCrackUseTime] < (Player_VIP(playerid) >= 3 ? 3 : 10))
+    if(g_rgePlayerTempData[playerid][e_iCrackUseTime] > gettime())
     {
-        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, va_return("Debes esperar %d segundos para consumir crack", ((gettime() - (g_rgePlayerTempData[playerid][e_iMedicineUseTime] - (Player_VIP(playerid) >= 3 ? 3 : 10))))));
+        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, va_return("Debes esperar %d segundos para consumir crack", g_rgePlayerTempData[playerid][e_iCrackUseTime] - gettime()) );
         return 1;
     }
     
@@ -120,7 +121,8 @@ static Crack_OnUse(playerid, slot)
 
     Notification_ShowBeatingText(playerid, 2000, 0xF7F7F7, 100, 255, "Has usado un gramo de crack (~g~+10~w~ de chaleco)");
     Player_SetArmor(playerid, Player_Armor(playerid) + 10);
-    g_rgePlayerTempData[playerid][e_iCrackUseTime] = gettime();
+    
+    g_rgePlayerTempData[playerid][e_iCrackUseTime] = gettime() + (Player_VIP(playerid) >= 3 ? 3 : 10);
 
     InventorySlot_Subtract(playerid, slot);
     return 1;
