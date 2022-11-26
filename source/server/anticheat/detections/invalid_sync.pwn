@@ -54,7 +54,7 @@ IPacket:__ac_inv_sync_PlayerSync(playerid, BitStream:bs)
         if (quaternion_y != 0.0 || quaternion_z != 0.0)
         {
             //printf("quaternion_y = %f, quaternion_z = %f, data[PR_animationId] = %d", quaternion_y, quaternion_z, data[PR_animationId]);
-            Anticheat_Trigger(playerid, CHEAT_INVALID_SYNC, 4);
+            //Anticheat_Trigger(playerid, CHEAT_INVALID_SYNC, 4);
             return 0;
         }
     }
