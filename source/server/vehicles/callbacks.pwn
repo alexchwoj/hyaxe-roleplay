@@ -137,7 +137,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
         
         if(Vehicle_GetEngineState(GetPlayerVehicleID(playerid)) == VEHICLE_STATE_OFF)
         {
-            Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Presiona ~k~~CONVERSATION_NO~ para encender el vehículo");
+            Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Presiona 2 para encender el vehículo");
             SetPlayerArmedWeapon(playerid, 0);
         }
     }
@@ -198,14 +198,14 @@ public VEHICLE_Update(vehicleid)
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if ((newkeys & KEY_NO) != 0 && !(newkeys & KEY_HANDBRAKE))
+    /*if ((newkeys & KEY_NO) != 0 && !(newkeys & KEY_HANDBRAKE))
     {
         if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
         {
             Vehicle_PlayerStartEngine(playerid);
         }
-    }
-    else if ((newkeys & KEY_YES) != 0 && !(newkeys & KEY_SPRINT))
+    }*/
+    if ((newkeys & KEY_YES) != 0 && !(newkeys & KEY_SPRINT))
     {
         if(GetTickCount() - s_rgiVehicleLockTick[playerid] > 500)
         {
