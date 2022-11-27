@@ -47,20 +47,6 @@ Vehicle_Destroy(&vehicleid)
     }
 
     Vehicle_StopUpdating(vehicleid);
-
-    new ownerid = Vehicle_OwnerId(vehicleid);
-    g_rgeVehicles[vehicleid] = g_rgeVehicles[MAX_VEHICLES];
-
-    if(IsPlayerConnected(ownerid))
-    {
-        if(Iter_Contains(PlayerVehicles[ownerid], vehicleid))
-        {
-            printf("[dbg:veh] Removed player vehicle from iterator: vehicleid = %d, playerid = %d", vehicleid, ownerid);
-            Iter_SafeRemove(PlayerVehicles[ownerid], vehicleid, vehicleid);
-            printf("[dbg:veh] vehicleid is now %d", vehicleid);
-        }
-    }
-
     return 1;
 }
 
@@ -336,7 +322,7 @@ Player_RegisterVehicle(playerid, vehicleid)
 {
     if(g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != INVALID_PLAYER_ID)
     {
-        Iter_Remove(PlayerVehicles[g_rgeVehicles[vehicleid][e_iVehicleOwnerId]], vehicleid);
+        Iter_SafeRemove(PlayerVehicles[g_rgeVehicles[vehicleid][e_iVehicleOwnerId]], vehicleid);
     }
 
     g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = playerid;
