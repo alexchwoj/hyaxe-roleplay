@@ -322,7 +322,7 @@ Player_RegisterVehicle(playerid, vehicleid)
 {
     if(g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != INVALID_PLAYER_ID)
     {
-        Iter_SafeRemove(PlayerVehicles[g_rgeVehicles[vehicleid][e_iVehicleOwnerId]], vehicleid);
+        Iter_SafeRemove(PlayerVehicles[g_rgeVehicles[vehicleid][e_iVehicleOwnerId]], vehicleid, vehicleid);
     }
 
     g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = playerid;
