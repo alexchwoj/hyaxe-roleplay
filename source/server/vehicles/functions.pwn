@@ -29,7 +29,7 @@ Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, c
     return vehicleid;
 }
 
-Vehicle_Destroy(&vehicleid)
+Vehicle_Destroy(vehicleid)
 {
     PrintBacktrace();
     DEBUG_PRINT("Destroying vehicleid %i (model = %i, ownerid = %i)", vehicleid, GetVehicleModel(vehicleid), Vehicle_OwnerId(vehicleid));

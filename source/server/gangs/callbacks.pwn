@@ -480,11 +480,13 @@ dialog gang_kick_member(playerid, dialogid, response, listitem, const inputtext[
                 Gangs_ClosePanel(i);
 
             Player_Gang(i) = -1;
-            Iter_SafeRemove(GangMember[Player_Gang(playerid)], i, i);
+            Iter_Remove(GangMember[Player_Gang(playerid)], i);
         }
-
-        if(Bit_Get(Player_Flags(i), PFLAG_GANG_PANEL_OPEN))
-            Gangs_UpdatePanel(i);
+        else
+        {
+            if(Bit_Get(Player_Flags(i), PFLAG_GANG_PANEL_OPEN))
+                Gangs_UpdatePanel(i);
+        }
     }
 
     Gangs_OpenPanel(playerid);

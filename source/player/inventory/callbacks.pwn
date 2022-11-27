@@ -466,7 +466,7 @@ public INV_RefreshDroppedItems()
         Streamer_GetArrayData(STREAMER_TYPE_AREA, i, E_STREAMER_CUSTOM(0x49544D), info);
 
         if (gettime() > info[4])
-            i = DroppedItem_Delete(i);
+            DroppedItem_Delete(i);
     }
     return 1;
 }
