@@ -546,6 +546,9 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 DroppedItem_Delete(area_id)
 {
 	printf("DroppedItem_Delete(area_id = %d)", area_id);
+	if (!IsValidDynamicArea(area_id))
+		return 0;
+		
 	if(!Streamer_HasArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x49544D)))
 		return 0;
 
