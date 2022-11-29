@@ -229,13 +229,14 @@ phone_menu crane(playerid, response, listitem)
 	else
 		Notification_Show(playerid, "¡No te han cobrado la grúa porque eres VIP Super!", 5000, 0xDAA838FF);
 
+	Vehicle_Respawn(vehicleid);
+	Vehicle_Repair(vehicleid);
+	UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, 0);
+
 	new pos = random(sizeof(g_rgfParkingSlots));
 	SetVehiclePos(vehicleid, g_rgfParkingSlots[pos][0], g_rgfParkingSlots[pos][1], g_rgfParkingSlots[pos][2]);
 	SetVehicleZAngle(vehicleid, g_rgfParkingSlots[pos][3]);
 	Vehicle_Locked(vehicleid) = true;
-
-	Vehicle_Repair(vehicleid);
-	UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, 0);
 
 	new Float:distance = GetPlayerDistanceFromPoint(playerid, g_rgfParkingSlots[pos][0], g_rgfParkingSlots[pos][1], g_rgfParkingSlots[pos][2]);
 
