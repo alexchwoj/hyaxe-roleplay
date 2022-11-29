@@ -31,7 +31,6 @@ Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, c
 
 Vehicle_Destroy(vehicleid)
 {
-    PrintBacktrace();
     DEBUG_PRINT("Destroying vehicleid %i (model = %i, ownerid = %i)", vehicleid, GetVehicleModel(vehicleid), Vehicle_OwnerId(vehicleid));
 
     if (!DestroyVehicle(vehicleid))
@@ -257,8 +256,8 @@ Speedometer_Show(playerid)
 
 Speedometer_Hide(playerid)
 {
-    if(!g_rgiSpeedometerUpdateTimer[playerid])
-        return 0;
+    //if(!g_rgiSpeedometerUpdateTimer[playerid])
+    //    return 0;
 
     for(new i = sizeof(g_tdSpeedometer) - 1; i != -1; --i)
     {
@@ -322,6 +321,7 @@ Player_RegisterVehicle(playerid, vehicleid)
 {
     if(g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != INVALID_PLAYER_ID)
     {
+        printf("[debug] Iter_SafeRemove(PlayerVehicles[g_rgeVehicles[vehicleid][e_iVehicleOwnerId]], vehicleid, vehicleid);");
         Iter_SafeRemove(PlayerVehicles[g_rgeVehicles[vehicleid][e_iVehicleOwnerId]], vehicleid, vehicleid);
     }
 

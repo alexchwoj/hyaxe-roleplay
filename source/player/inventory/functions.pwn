@@ -556,8 +556,9 @@ DroppedItem_Delete(area_id)
 	DestroyDynamicObject(info[2]);
 	DestroyDynamic3DTextLabel(Text3D:info[3]);
 
-	Iter_Remove(DroppedItems, area_id);
-	return 1;
+	new next;
+	Iter_SafeRemove(DroppedItems, area_id, next);
+	return next;
 }
 
 // Trunk

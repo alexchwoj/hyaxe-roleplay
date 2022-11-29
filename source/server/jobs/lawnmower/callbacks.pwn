@@ -204,7 +204,8 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
         }
         else
         {
-            SendClientMessagef(playerid, 0xDADADAFF, "Te quedan {ED2B2B}%i{DADADA} matorrales.", g_rgeLawnmowerAreas[park_id][e_iCurrentGrassCount]);
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Te quedan %i matorrales.", g_rgeLawnmowerAreas[park_id][e_iCurrentGrassCount]);
+            Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 75, 255, HYAXE_UNSAFE_HUGE_STRING);
         }
 
         return 1;
