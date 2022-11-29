@@ -17,6 +17,8 @@ crashinfo.txt
 *.cadb
 *.so
 *.html
+*.zip
+*.rar
 
 bans.json
 log.txt
