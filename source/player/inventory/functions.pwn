@@ -545,6 +545,10 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 
 DroppedItem_Delete(area_id)
 {
+#if !NDEBUG
+	PrintBacktrace();
+#endif
+
 	printf("DroppedItem_Delete(area_id = %d)", area_id);
 	if (!area_id || !IsValidDynamicArea(area_id))
 		return 0;
@@ -559,9 +563,8 @@ DroppedItem_Delete(area_id)
 	DestroyDynamicObject(info[2]);
 	DestroyDynamic3DTextLabel(Text3D:info[3]);
 
-	new next;
-	Iter_SafeRemove(DroppedItems, area_id, next);
-	return next;
+	Iter_Remove(DroppedItems, area_id);
+	return 1;
 }
 
 // Trunk
