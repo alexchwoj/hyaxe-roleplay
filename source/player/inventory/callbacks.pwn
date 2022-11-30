@@ -107,12 +107,14 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     {
                         Player_GiveWeapon(playerid, weapon);
 
+                        printf("[1] DroppedItem_Delete");
                         DroppedItem_Delete(areaid);
                         PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
                         ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
                     }
                     else if (Inventory_AddItem(playerid, info[0], info[1], info[5]))
                     {
+                        printf("[2] DroppedItem_Delete");
                         DroppedItem_Delete(areaid);
                         PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
                         ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
@@ -462,11 +464,17 @@ public INV_RefreshDroppedItems()
 {
     foreach(new i : DroppedItems)
     {
-        new info[6];
-        Streamer_GetArrayData(STREAMER_TYPE_AREA, i, E_STREAMER_CUSTOM(0x49544D), info);
+        if (i || IsValidDynamicArea(i))
+        {
+            new info[6];
+            Streamer_GetArrayData(STREAMER_TYPE_AREA, i, E_STREAMER_CUSTOM(0x49544D), info);
 
-        if (gettime() > info[4])
-            DroppedItem_Delete(i);
+            if (gettime() > info[4])
+            {
+                printf("[3] DroppedItem_Delete");
+                DroppedItem_Delete(i);
+            }
+        }
     }
     return 1;
 }

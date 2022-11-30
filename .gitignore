@@ -19,6 +19,7 @@ crashinfo.txt
 *.html
 *.zip
 *.rar
+/gamemodes/*.zip
 
 bans.json
 log.txt
