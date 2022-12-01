@@ -451,7 +451,8 @@ public OnFilterScriptInit()
 
         CreateDynamic3DTextLabel("{F98835}Bruja perazoli{F7F7F7}\nHabla con ella si quieres vender calabazas", 0xF0F0F0FF, 817.2799, -1103.3270, 25.7921, 20.0, .testlos = true, .worldid = 0, .interiorid = 0);
     }
-    else if (month >= 11 && day >= 27) // Christmas
+    
+    if ( (month == 11 && day >= 27) || (month == 12 && day >= 1) ) // Christmas
     {
         tmpobjid = CreateDynamicObject(19482, 1750.525024, -1132.583251, 25.315921, 0.000000, 0.000000, -118.299995, -1, -1, -1, 300.00, 300.00); 
         SetDynamicObjectMaterialText(tmpobjid, 0, "EL PEPINERO", 120, "Ariel", 18, 1, 0xFFF41414, 0x00000000, 1);
@@ -507,6 +508,9 @@ public OnFilterScriptInit()
         tmpobjid = CreateDynamicObject(2695, 1746.141235, -1129.347778, 24.058145, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
         tmpobjid = CreateDynamicObject(2121, 1744.622192, -1129.603759, 23.448133, 0.000000, 0.000000, 35.099983, -1, -1, -1, 300.00, 300.00); 
         tmpobjid = CreateDynamicObject(3171, 1752.287597, -1132.118530, 23.015933, 0.000000, 0.000000, 62.199954, -1, -1, -1, 300.00, 300.00);
+
+        tmpactid = CreateActor(33, 1746.9813, -1130.0811, 24.0781, 180.7610);
+        ApplyActorAnimation(tmpactid, "SMOKING", "M_smklean_loop", 4.0, 1, 0, 0, 0, 0);
     }
 
     // Trucker
