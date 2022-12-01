@@ -28,6 +28,14 @@ public OnScriptInit()
     forward VEH_OnScriptInit();
 #endif
 
+hook native DestroyVehicle(vehicleid)
+{
+#if !NDEBUG
+	PrintBacktrace();
+#endif
+    return continue(vehicleid);
+}
+
 public OnPlayerDisconnect(playerid, reason)
 {
     if(g_rgiSpeedometerUpdateTimer[playerid])
@@ -39,7 +47,8 @@ public OnPlayerDisconnect(playerid, reason)
 
     foreach(new v : PlayerVehicles[playerid])
     {
-        Vehicle_Destroy(v);
+        if (Vehicle_OwnerId(vehicleid) == playerid)
+            Vehicle_Destroy(v);
     }
 
     printf("[debug] Claning vehicle iterator for playerid %d", playerid);

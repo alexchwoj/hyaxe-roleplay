@@ -18,11 +18,11 @@ public OnScriptInit()
     getdate(year, month, day);
     if ( (month == 11 && day >= 27) || (month == 12 && day >= 1) ) // Christmas
     {
-        Key_Alert(
+        /*Key_Alert(
             1746.9813, -1130.0811, 24.0781, 2.5,
             KEYNAME_YES, 0, 0,
             .callback_on_press = __addressof(PYRO_OnPress)
-        );
+        );*/
 
         new area = CreateDynamicSphere(1746.9813, -1130.0811, 24.0781, 20.0, 0, 0);
         Streamer_SetIntData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x5059524f), 1); // PYRO
