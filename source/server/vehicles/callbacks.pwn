@@ -47,7 +47,7 @@ public OnPlayerDisconnect(playerid, reason)
 
     foreach(new v : PlayerVehicles[playerid])
     {
-        if (Vehicle_OwnerId(vehicleid) == playerid)
+        if (Vehicle_OwnerId(v) == playerid)
             Vehicle_Destroy(v);
     }
 
