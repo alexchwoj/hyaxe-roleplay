@@ -372,6 +372,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/police/commands.pwn"
 #include "server/gangs/commands.pwn"
 #include "player/weapons/commands.pwn"
+#include "player/auth/commands.pwn"
 
 // Prevents runtime error 20 (invalid index)
 main() { return 0; }

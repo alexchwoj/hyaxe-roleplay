@@ -451,7 +451,7 @@ public OnFilterScriptInit()
 
         CreateDynamic3DTextLabel("{F98835}Bruja perazoli{F7F7F7}\nHabla con ella si quieres vender calabazas", 0xF0F0F0FF, 817.2799, -1103.3270, 25.7921, 20.0, .testlos = true, .worldid = 0, .interiorid = 0);
     }
-    else if (month == 11 && day >= 27) // Christmas
+    else if (month >= 11 && day >= 27) // Christmas
     {
         tmpobjid = CreateDynamicObject(19482, 1750.525024, -1132.583251, 25.315921, 0.000000, 0.000000, -118.299995, -1, -1, -1, 300.00, 300.00); 
         SetDynamicObjectMaterialText(tmpobjid, 0, "EL PEPINERO", 120, "Ariel", 18, 1, 0xFFF41414, 0x00000000, 1);
