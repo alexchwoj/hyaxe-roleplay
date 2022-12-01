@@ -13,6 +13,9 @@ alias:password("clave", "contrasena", "pass", "contraseña")
 
 dialog change_password(playerid, dialogid, response, listitem, inputtext[])
 {
+    if (!response)
+        return 1;
+        
     new pw_len = strlen(inputtext);
     if(!(6 <= pw_len <= 18))
     {
