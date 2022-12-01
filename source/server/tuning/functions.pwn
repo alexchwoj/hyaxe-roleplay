@@ -25,7 +25,7 @@ TuningMenu_Main(playerid)
 
     g_rgiTuningCamera[playerid] = 0;
 
-    Menu_Show(playerid, "tuning_main", "Tuning", .clearChat = true);
+    Menu_Show(playerid, "tuning_main", "Tuning");
     Menu_AddItem(playerid, "Reparar", "Precio: ~g~$250");
     Menu_AddItem(playerid, "Colores");
 	Menu_AddItem(playerid, "Paintjob");
@@ -37,7 +37,7 @@ TuningMenu_Main(playerid)
 
 TuningMenu_SelectColorSlot(playerid)
 {
-    Menu_Show(playerid, "tuning_color_type", "Colores", .clearChat = true);
+    Menu_Show(playerid, "tuning_color_type", "Colores");
     Menu_AddItem(playerid, "Color primario", "Precio: ~g~$100");
     Menu_AddItem(playerid, "Color secundario", "Precio: ~g~$75");
     Menu_UpdateListitems(playerid);

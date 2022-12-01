@@ -3,14 +3,11 @@
 #endif
 #define _menu_functions_
 
-Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE UNA OPCIÓN", captionTextColor = 0x1B1B1BFF, captionBoxColor = 0xAC3E36FF, bool:clearChat = true)
+Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE UNA OPCIÓN", captionTextColor = 0x1B1B1BFF, captionBoxColor = 0xAC3E36FF)
 {
+	Chat_Clear(playerid);
 	TogglePlayerControllable(playerid, false);
 	PlayerPlaySound(playerid, SOUND_BUTTON);
-
-	g_rgePlayerMenu[playerid][e_bClearChat] = clearChat;
-	if (g_rgePlayerMenu[playerid][e_bClearChat])
-		Chat_Clear(playerid);
 
 	Player_DisableChat(playerid, true);
 	Notification_DestroyAll(playerid);
@@ -175,8 +172,13 @@ Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE
 
 Menu_Hide(playerid)
 {
-	TogglePlayerControllable(playerid, true);
 	g_rgePlayerMenu[playerid][e_iEnabled] = false;
+
+	printf("[1] g_rgbMessagesDisabled = %d", g_rgbMessagesDisabled{playerid});
+	Player_DisableChat(playerid, false);
+	printf("[2] g_rgbMessagesDisabled = %d", g_rgbMessagesDisabled{playerid});
+
+	TogglePlayerControllable(playerid, true);
 	KillTimer(g_rgePlayerMenu[playerid][e_iKeyProcessTimer]);
 
     for (new i; i < g_rgePlayerMenu[playerid][e_iTextdrawCount]; ++i)
@@ -184,8 +186,6 @@ Menu_Hide(playerid)
 
     g_rgePlayerMenu[playerid][e_iTextdrawCount] = 0;
     g_rgePlayerMenu[playerid] = g_rgePlayerMenu[MAX_PLAYERS];
-	Player_DisableChat(playerid, false);
-	
 	return 1;
 }
 
@@ -278,6 +278,8 @@ Menu_SendResponse(playerid, response)
 		g_rgePlayerMenu[playerid][e_iTextdrawCount] = 0;
 		g_rgePlayerMenu[playerid][e_iEnabled] = false;
 		TogglePlayerControllable(playerid, true);
+
+		Menu_Hide(playerid);
 	}
 
 	CallLocalFunction(menu_id, "iii", playerid, response, (g_rgePlayerMenu[playerid][e_iListitem] + (g_rgePlayerMenu[playerid][e_iPage] * MENU_MAX_LISTITEMS_PERPAGE)));

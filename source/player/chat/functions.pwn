@@ -3,27 +3,10 @@
 #endif
 #define _CHAT_FUNCTIONS_
 
-Chat_Clear(playerid = INVALID_PLAYER_ID, lines = 20)
+Chat_Clear(playerid, lines = 20)
 {
-	if (playerid != INVALID_PLAYER_ID && !IsPlayerConnected(playerid))
-	{
-		return 0;
-	}
-
-	if (playerid == INVALID_PLAYER_ID)
-	{
-		while (lines-- != -1)
-		{
-			SendClientMessageToAll(0, " ");
-		}
-	}
-	else
-	{
-		while (lines-- != -1)
-		{
-			SendClientMessage(playerid, 0, " ");
-		}
-	}
+	for(new i; i != lines; i++)
+        SendClientMessage(playerid, -1, "");
 
 	return 1;
 }

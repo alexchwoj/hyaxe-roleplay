@@ -350,7 +350,7 @@ player_menu tuning_color_type(playerid, response, listitem)
     {
         g_rgiSelectedColorType[playerid] = listitem;
 
-        Menu_Show(playerid, "tuning_color", (g_rgiSelectedColorType[playerid] ? "Color 2" : "Color 1"), .clearChat = true);
+        Menu_Show(playerid, "tuning_color", (g_rgiSelectedColorType[playerid] ? "Color 2" : "Color 1"));
 
         for(new i; i < 128; ++i)
         {

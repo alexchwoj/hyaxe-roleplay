@@ -516,7 +516,8 @@ flags:unfreeze(CMD_FLAG<RANK_LEVEL_MODERATOR>)
 
 command clearchat(playerid, const params[], "Limpia el chat")
 {
-    for(new i = 0; i != 40; i ++) SendClientMessageToAll(-1, " ");
+    for(new i; i != 40; ++i)
+        SendClientMessageToAll(-1, " ");
     return 1;
 }
 flags:clearchat(CMD_FLAG<RANK_LEVEL_MANAGER>)

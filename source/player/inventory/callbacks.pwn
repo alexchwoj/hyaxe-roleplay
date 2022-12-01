@@ -464,7 +464,7 @@ public INV_RefreshDroppedItems()
 {
     foreach(new i : DroppedItems)
     {
-        if (i || IsValidDynamicArea(i))
+        if (IsValidDynamicArea(i))
         {
             new info[6];
             Streamer_GetArrayData(STREAMER_TYPE_AREA, i, E_STREAMER_CUSTOM(0x49544D), info);
@@ -475,6 +475,10 @@ public INV_RefreshDroppedItems()
                 DroppedItem_Delete(i);
             }
         }
+        else
+        {
+	        Iter_Remove(DroppedItems, i);
+        }
     }
     return 1;
 }
@@ -482,7 +486,7 @@ public INV_RefreshDroppedItems()
 
 public OnScriptInit()
 {
-    SetTimer("INV_RefreshDroppedItems", 180000, true);
+    SetTimer("INV_RefreshDroppedItems", 30000, true);
 
     #if defined INV_OnScriptInit
         return INV_OnScriptInit();

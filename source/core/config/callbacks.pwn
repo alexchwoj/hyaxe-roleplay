@@ -42,7 +42,7 @@ public OnScriptInit()
     }
     else if (month == 11 && day >= 27) // Christmas
     {
-		SendRconCommand(!"hostname Hyaxe Roleplay [Feliz Navidad]");
+		SendRconCommand(!"hostname Hyaxe Roleplay [Happy Holidays]");
     }
     else if (month == 3 && day >= 13 && day <= 17) // Hyaxe's Birthday
     {
