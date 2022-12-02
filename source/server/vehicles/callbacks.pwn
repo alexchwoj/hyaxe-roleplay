@@ -28,14 +28,6 @@ public OnScriptInit()
     forward VEH_OnScriptInit();
 #endif
 
-hook native DestroyVehicle(vehicleid)
-{
-#if !NDEBUG
-	PrintBacktrace();
-#endif
-    return continue(vehicleid);
-}
-
 public OnPlayerDisconnect(playerid, reason)
 {
     if(g_rgiSpeedometerUpdateTimer[playerid])

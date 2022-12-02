@@ -174,9 +174,7 @@ Menu_Hide(playerid)
 {
 	g_rgePlayerMenu[playerid][e_iEnabled] = false;
 
-	printf("[1] g_rgbMessagesDisabled = %d", g_rgbMessagesDisabled{playerid});
 	Player_DisableChat(playerid, false);
-	printf("[2] g_rgbMessagesDisabled = %d", g_rgbMessagesDisabled{playerid});
 
 	TogglePlayerControllable(playerid, true);
 	KillTimer(g_rgePlayerMenu[playerid][e_iKeyProcessTimer]);

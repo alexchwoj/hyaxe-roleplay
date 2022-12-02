@@ -74,8 +74,8 @@ dialog rent_car(playerid, dialogid, response, listitem, inputtext[])
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    if (IsValidVehicle(g_rgiPlayerRentalCar[playerid]))
-        Vehicle_Destroy(g_rgiPlayerRentalCar[playerid]);
+    Vehicle_Destroy(g_rgiPlayerRentalCar[playerid]);
+    g_rgiPlayerRentalCar[playerid] = INVALID_VEHICLE_ID;
 
     #if defined RENTAL_OnPlayerDisconnect
         return RENTAL_OnPlayerDisconnect(playerid, reason);

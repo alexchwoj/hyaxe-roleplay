@@ -24,14 +24,19 @@ Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, c
         g_rgeVehicles[vehicleid][e_iPaintjob] = 3;
 
         SetVehicleParamsEx(vehicleid, 0, 0, 0, 0, 0, 0, 0);
+        return vehicleid;
     }
 
-    return vehicleid;
+    return INVALID_VEHICLE_ID;
 }
 
 Vehicle_Destroy(vehicleid)
 {
     DEBUG_PRINT("Destroying vehicleid %i (model = %i, ownerid = %i)", vehicleid, GetVehicleModel(vehicleid), Vehicle_OwnerId(vehicleid));
+#if !NDEBUG
+	PrintBacktrace();
+    printf("\n");
+#endif
 
     if (!DestroyVehicle(vehicleid))
         return 0;
