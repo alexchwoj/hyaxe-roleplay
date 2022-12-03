@@ -38,7 +38,7 @@ Vehicle_Destroy(vehicleid)
     printf("\n");
 #endif
 
-    if (!DestroyVehicle(vehicleid))
+    if (vehicleid == INVALID_VEHICLE_ID || !DestroyVehicle(vehicleid))
         return 0;
 
     DEBUG_PRINT("Destroy native called (vehicle existed)");
