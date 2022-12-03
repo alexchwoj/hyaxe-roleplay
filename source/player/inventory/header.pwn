@@ -85,6 +85,14 @@ enum _:eItems
     ITEM_FLAG,
     ITEM_HOTDOG,
     ITEM_PUMPKIN,
+    ITEM_GIFT,
+    ITEM_FIREWORK_LAUNCHER,
+    ITEM_COCONUT_CHARGE,
+    ITEM_STROBE_CHARGE,
+    ITEM_COLORED_CHARGE,
+    ITEM_FISH_CHARGE,
+    ITEM_WAVE_CHARGE,
+    ITEM_RING_CHARGE,
 
 	ITEM_INVALID
 };
@@ -204,6 +212,14 @@ new
         {"Bandera", 19306, true, -1}, // ITEM_FLAG
         {"Pancho", 19346, true, -1}, // ITEM_HOTDOG
         {"Calabaza", 19320, false, -1}, // ITEM_PUMPKIN
+        {"Regalo", 19054, false, -1}, // ITEM_GIFT
+        {"Lanzador", 3013, true, -1}, // ITEM_FIREWORK_LAUNCHER
+        {"Carga Coconut", 1636, true, -1},
+        {"Carga Strobe", 1636, true, -1},
+        {"Carga Colored Sphere", 1636, true, -1},
+        {"Carga Fish", 1636, true, -1},
+        {"Carga Wave", 1636, true, -1},
+        {"Carga Ring", 1636, true, -1},
 
 		{"Invalid item", 18631, false, -1} // ITEM_INVALID
 	},

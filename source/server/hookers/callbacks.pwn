@@ -245,7 +245,7 @@ dialog hooker_accept(playerid, dialogid, response, listitem, inputtext[])
             g_rgiHookerUpdateTimer[hookerid] = SetTimerEx("HOOKER_Update", 750, true, "i", hookerid);
             FCNPC_ResetAnimation(npcid);
 
-            Notification_Show(playerid, "La prostituta te seguirá a un lugar alejado. Usa ~r~Y~w~ para empezar. Si lo haces en un lugar público podras ser multado por obscenidad.", 8000);
+            Notification_Show(playerid, "La prostituta te seguirá a un lugar alejado. Usa ~r~Y~w~ para empezar. Si lo haces en un lugar público podras ser multado por obscenidad.", 10000);
             FCNPC_ApplyAnimation(g_rgiHookers[hookerid], "BLOWJOBZ", "null", 4.1, 0, 0, 0, 0, 0);
             FCNPC_ApplyAnimation(g_rgiHookers[hookerid], "KISSING", "null", 4.1, 0, 0, 0, 0, 0);
             ApplyAnimation(playerid, "BLOWJOBZ", "null", 4.1, 0, 0, 0, 0, 0, 0);

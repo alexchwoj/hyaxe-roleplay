@@ -276,8 +276,7 @@ Menu_SendResponse(playerid, response)
 		g_rgePlayerMenu[playerid][e_iTextdrawCount] = 0;
 		g_rgePlayerMenu[playerid][e_iEnabled] = false;
 		TogglePlayerControllable(playerid, true);
-
-		Menu_Hide(playerid);
+		Player_DisableChat(playerid, false);
 	}
 
 	CallLocalFunction(menu_id, "iii", playerid, response, (g_rgePlayerMenu[playerid][e_iListitem] + (g_rgePlayerMenu[playerid][e_iPage] * MENU_MAX_LISTITEMS_PERPAGE)));

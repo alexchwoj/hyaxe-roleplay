@@ -508,9 +508,6 @@ public OnFilterScriptInit()
         tmpobjid = CreateDynamicObject(2695, 1746.141235, -1129.347778, 24.058145, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
         tmpobjid = CreateDynamicObject(2121, 1744.622192, -1129.603759, 23.448133, 0.000000, 0.000000, 35.099983, -1, -1, -1, 300.00, 300.00); 
         tmpobjid = CreateDynamicObject(3171, 1752.287597, -1132.118530, 23.015933, 0.000000, 0.000000, 62.199954, -1, -1, -1, 300.00, 300.00);
-
-        tmpactid = CreateActor(33, 1746.9813, -1130.0811, 24.0781, 180.7610);
-        ApplyActorAnimation(tmpactid, "SMOKING", "M_smklean_loop", 4.0, 1, 0, 0, 0, 0);
     }
 
     // Trucker

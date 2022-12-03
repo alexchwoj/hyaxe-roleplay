@@ -73,6 +73,7 @@ public OnScriptInit()
 	getdate(y, m, d);
 
 	AddServerRule(!"última actualización", Date_ToString(y, m, d));
+	AddServerRule(!"versión de hyaxe", SERVER_VERSION);
 
 	SetModeRestartTime(1.0);
 	YSF_EnableNightVisionFix(true);

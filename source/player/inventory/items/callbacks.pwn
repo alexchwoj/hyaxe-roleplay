@@ -11,6 +11,66 @@ static Phone_OnUse(playerid, slot)
     return 1;
 }
 
+static FireworkCharge_OnUse(playerid, slot)
+{
+    if (!Inventory_GetItemCount(playerid, ITEM_FIREWORK_LAUNCHER))
+        return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes un lanzador");
+
+    new charge_type = InventorySlot_Type(playerid, slot);
+    InventorySlot_Subtract(playerid, slot);
+
+    Inventory_Hide(playerid);
+
+    new Float:x, Float:y, Float:z;
+    GetPlayerPos(playerid, x, y, z);
+    
+    ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
+
+    new
+        launcher_object = CreateDynamicObject(3013, x, y, z - 0.9, 0.0, 0.0, 0.0, 0, 0),
+        Text3D:launcher_text = CreateDynamic3DTextLabel("Lanzador\n{DADADA}Detonará en 5 segundos.", 0xDAA838FF, x, y, z, 2.0)
+    ;
+    
+    Streamer_Update(playerid);
+
+    new remaining_seconds = 5;
+    inline DetonateCharge()
+	{
+        --remaining_seconds;
+
+        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Lanzador\n{DADADA}Detonará en %d segundos.", remaining_seconds);
+        UpdateDynamic3DTextLabelText(launcher_text, 0xDAA838FF, HYAXE_UNSAFE_HUGE_STRING);
+
+        if (!remaining_seconds)
+        {
+            DestroyDynamicObject(launcher_object);
+            DestroyDynamic3DTextLabel(launcher_text);
+
+            CreateExplosion(x, y, z, 12, 0.0);
+
+            switch(charge_type)
+            {
+                case ITEM_COCONUT_CHARGE: Firework_Coconut(x, y, z, 50.0);
+                case ITEM_STROBE_CHARGE: Firework_Strobe(x, y, z, 50.0);
+                case ITEM_COLORED_CHARGE: Firework_ColoredSphere(x, y, z, 50.0);
+                case ITEM_FISH_CHARGE: Firework_Fish(x, y, z, 50.0);
+                case ITEM_WAVE_CHARGE: Firework_Wave(x, y, z, 50.0);
+                case ITEM_RING_CHARGE: Firework_Ring(x, y, z, 50.0);
+            }
+        }
+	}
+    Timer_CreateCallback(using inline DetonateCharge, 1000, 5);
+    return 1;
+}
+
+static FireworkLauncher_OnUse(playerid, slot)
+{
+    #pragma unused slot
+    Notification_Show(playerid, "El lanzador se utiliza para colocar pirotecnia en el suelo, selecciona una carga en tu inventario para lanzarla.", 10000);
+    Inventory_Hide(playerid);
+    return 1;
+}
+
 static Flag_OnUse(playerid, slot)
 {
     if (Player_Gang(playerid) == -1)
@@ -467,7 +527,32 @@ public OnScriptInit()
     Item_Callback(ITEM_FLAG) = __addressof(Flag_OnUse);
     Item_SetPreviewRot(ITEM_FLAG, -19.000000, 49.000000, -171.000000, 0.770000);
 
-    /* Weapon */
+    /* Fireworks*/
+
+    // Launcher
+    Item_Callback(ITEM_FIREWORK_LAUNCHER) = __addressof(FireworkLauncher_OnUse);
+    Item_SetPreviewRot(ITEM_FIREWORK_LAUNCHER, 0.0, 10.0, 0.0, 0.770000);
+
+    // Charges
+    Item_Callback(ITEM_COCONUT_CHARGE) = __addressof(FireworkCharge_OnUse);
+    Item_SetPreviewRot(ITEM_COCONUT_CHARGE, 0.0, 10.0, 50.0, 0.770000);
+
+    Item_Callback(ITEM_STROBE_CHARGE) = __addressof(FireworkCharge_OnUse);
+    Item_SetPreviewRot(ITEM_STROBE_CHARGE, 0.0, 10.0, 50.0, 0.770000);
+
+    Item_Callback(ITEM_COLORED_CHARGE) = __addressof(FireworkCharge_OnUse);
+    Item_SetPreviewRot(ITEM_COLORED_CHARGE, 0.0, 10.0, 50.0, 0.770000);
+
+    Item_Callback(ITEM_FISH_CHARGE) = __addressof(FireworkCharge_OnUse);
+    Item_SetPreviewRot(ITEM_FISH_CHARGE, 0.0, 10.0, 50.0, 0.770000);
+
+    Item_Callback(ITEM_WAVE_CHARGE) = __addressof(FireworkCharge_OnUse);
+    Item_SetPreviewRot(ITEM_WAVE_CHARGE, 0.0, 10.0, 50.0, 0.770000);
+
+    Item_Callback(ITEM_RING_CHARGE) = __addressof(FireworkCharge_OnUse);
+    Item_SetPreviewRot(ITEM_RING_CHARGE, 0.0, 10.0, 50.0, 0.770000);
+
+    // Weapon
     Item_SetPreviewRot(ITEM_BRASSKNUCKLE, -15.000000, 0.000000, 30.000000, 1.000000);
     Item_SetPreviewRot(ITEM_GOLFCLUB, -15.000000, 0.000000, 30.000000, 1.000000);
     Item_SetPreviewRot(ITEM_NITESTICK, -15.000000, 0.000000, 30.000000, 1.000000);

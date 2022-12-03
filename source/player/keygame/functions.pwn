@@ -27,7 +27,7 @@ Player_StartKeyGame(playerid, cb, Float:key_percentage_up = 9.9, Float:decrease_
     g_rgeKeyGameData[playerid][e_iKgKeyRedTick] = 0;
 
     g_rgeKeyGameData[playerid][e_iKgTimers][KG_TIMER_DECREASE_BAR] = 0;
-    g_rgeKeyGameData[playerid][e_iKgTimers][KG_TIMER_PROCESS_KEY]  = SetTimerEx("KEYGAME_ProcessKey", 200, true, "i", playerid);
+    g_rgeKeyGameData[playerid][e_iKgTimers][KG_TIMER_PROCESS_KEY]  = SetTimerEx("KEYGAME_ProcessKey", 100, true, "i", playerid);
 
     return 1;
 }

@@ -24,6 +24,7 @@ Firework_Coconut(Float:x, Float:y, Float:z, Float:height = 20.0)
     MoveDynamicObject(bengal_id, x, y, z + height, 15.0, 0.0, 0.0, 0.0);
 
     SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", CreateDynamicObject(18716, x, y, z, 0.0, 0.0, 0.0, 0, 0));
+    Streamer_UpdateForAll(x, y, z);
 
     inline Explode()
 	{
@@ -40,6 +41,7 @@ Firework_Coconut(Float:x, Float:y, Float:z, Float:height = 20.0)
 
             SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
         }
+        Streamer_UpdateForAll(x, y, z);
 	}
     Timer_CreateCallback(using inline Explode, floatround(height * 50), 1);
     return 1;
@@ -51,6 +53,7 @@ Firework_Strobe(Float:x, Float:y, Float:z, Float:height = 20.0)
     MoveDynamicObject(bengal_id, x, y, z + height, 15.0, 0.0, 0.0, 0.0);
 
     SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", CreateDynamicObject(18716, x, y, z, 0.0, 0.0, 0.0, 0, 0));
+    Streamer_UpdateForAll(x, y, z);
 
     inline Explode()
 	{
@@ -67,6 +70,7 @@ Firework_Strobe(Float:x, Float:y, Float:z, Float:height = 20.0)
 
             SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
         }
+        Streamer_UpdateForAll(x, y, z);
 	}
     Timer_CreateCallback(using inline Explode, floatround(height * 50), 1);
     return 1;
@@ -78,6 +82,7 @@ Firework_ColoredSphere(Float:x, Float:y, Float:z, Float:height = 20.0)
     MoveDynamicObject(bengal_id, x, y, z + height, 15.0, 0.0, 0.0, 0.0);
 
     SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", CreateDynamicObject(18716, x, y, z, 0.0, 0.0, 0.0, 0, 0));
+    Streamer_UpdateForAll(x, y, z);
 
     inline Explode()
 	{
@@ -95,6 +100,140 @@ Firework_ColoredSphere(Float:x, Float:y, Float:z, Float:height = 20.0)
 
             SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
         }
+        Streamer_UpdateForAll(x, y, z);
+	}
+    Timer_CreateCallback(using inline Explode, floatround(height * 50), 1);
+    return 1;
+}
+
+Firework_Fish(Float:x, Float:y, Float:z, Float:height = 20.0)
+{
+    new bengal_id = CreateDynamicObject(19281, x, y, z, 0.0, 0.0, 0.0, 0, 0);
+    MoveDynamicObject(bengal_id, x, y, z + height, 15.0, 0.0, 0.0, 0.0);
+
+    SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", CreateDynamicObject(18716, x, y, z, 0.0, 0.0, 0.0, 0, 0));
+    Streamer_UpdateForAll(x, y, z);
+    
+    inline Explode()
+	{
+        CreateExplosion(x, y, z + height, 12, 0.5);
+        DestroyDynamicObject(bengal_id);
+
+        for(new i; i != 16; i++)
+        {
+            new Float:px, Float:py, Float:pz;
+            RandomPointInSphere(5.0, px, py, pz);
+            
+            new particle_id = CreateDynamicObject(19281, x, y, z + height, 0.0, 0.0, 0.0, 0, 0);
+            MoveDynamicObject(particle_id, x + px, y + py, z + pz + height, 20.0, 0.0, 0.0, 0.0);
+
+            SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
+        }
+
+        for(new i; i != 96; i++)
+        {
+            new Float:px, Float:py, Float:pz;
+            RandomPointInSphere(10.0, px, py, pz);
+            
+            new particle_id = CreateDynamicObject(19286, x, y, z + height, 0.0, 0.0, 0.0, 0, 0);
+            MoveDynamicObject(particle_id, x + px, y + py, z + pz + height, 20.0, 0.0, 0.0, 0.0);
+
+            SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
+        }
+        Streamer_UpdateForAll(x, y, z);
+	}
+    Timer_CreateCallback(using inline Explode, floatround(height * 50), 1);
+    return 1;
+}
+
+Firework_Wave(Float:x, Float:y, Float:z, Float:height = 20.0)
+{
+    new bengal_id = CreateDynamicObject(19281, x, y, z, 0.0, 0.0, 0.0, 0, 0);
+    MoveDynamicObject(bengal_id, x, y, z + height, 15.0, 0.0, 0.0, 0.0);
+
+    SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", CreateDynamicObject(18716, x, y, z, 0.0, 0.0, 0.0, 0, 0));
+    Streamer_UpdateForAll(x, y, z);
+
+    inline Explode()
+	{
+        CreateExplosion(x, y, z + height, 12, 0.5);
+        DestroyDynamicObject(bengal_id);
+
+        for(new i; i != 32; i++)
+        {
+            new Float:px, Float:py, Float:pz;
+            RandomPointInSphere(5.0, px, py, pz);
+            
+            new particle_id = CreateDynamicObject(19293, x, y, z + height, 0.0, 0.0, 0.0, 0, 0);
+            MoveDynamicObject(particle_id, x + px + 20.0, y + py, z + pz + height - 5.0, 25.0, 0.0, 0.0, 0.0);
+
+            SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
+        }
+
+        for(new i; i != 32; i++)
+        {
+            new Float:px, Float:py, Float:pz;
+            RandomPointInSphere(5.0, px, py, pz);
+            
+            new particle_id = CreateDynamicObject(19293, x, y, z + height, 0.0, 0.0, 0.0, 0, 0);
+            MoveDynamicObject(particle_id, x + px, y + py, z + pz + height, 20.0, 0.0, 0.0, 0.0);
+
+            SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
+        }
+
+        for(new i; i != 32; i++)
+        {
+            new Float:px, Float:py, Float:pz;
+            RandomPointInSphere(5.0, px, py, pz);
+            
+            new particle_id = CreateDynamicObject(19293, x, y, z + height, 0.0, 0.0, 0.0, 0, 0);
+            MoveDynamicObject(particle_id, x + px - 20.0, y + py, z + pz + height - 5.0, 25.0, 0.0, 0.0, 0.0);
+
+            SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
+        }
+
+        Streamer_UpdateForAll(x, y, z);
+	}
+    Timer_CreateCallback(using inline Explode, floatround(height * 50), 1);
+    return 1;
+}
+
+Firework_Ring(Float:x, Float:y, Float:z, Float:height = 20.0)
+{
+    new bengal_id = CreateDynamicObject(19281, x, y, z, 0.0, 0.0, 0.0, 0, 0);
+    MoveDynamicObject(bengal_id, x, y, z + height, 15.0, 0.0, 0.0, 0.0);
+
+    SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", CreateDynamicObject(18716, x, y, z, 0.0, 0.0, 0.0, 0, 0));
+    Streamer_UpdateForAll(x, y, z);
+
+    inline Explode()
+	{
+        CreateExplosion(x, y, z + height, 12, 0.5);
+        DestroyDynamicObject(bengal_id);
+
+        for(new i; i != 16; i++)
+        {
+            new Float:px, Float:py, Float:pz;
+            RandomPointInSphere(4.0, px, py, pz);
+            
+            new particle_id = CreateDynamicObject(19294, x, y, z + height, 0.0, 0.0, 0.0, 0, 0);
+            MoveDynamicObject(particle_id, x + px, y + py, z + pz + height, 20.0, 0.0, 0.0, 0.0);
+
+            SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
+        }
+
+        for(new i; i != 32; i++)
+        {
+            new Float:px, Float:py, Float:pz;
+            RandomPointInSphere(10.0, px, py, pz);
+            
+            new particle_id = CreateDynamicObject(19281, x, y, z + height, 0.0, 0.0, 0.0, 0, 0);
+            MoveDynamicObject(particle_id, x + px, y + py, z + pz + height, 20.0, 0.0, 0.0, 0.0);
+
+            SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
+        }
+
+        Streamer_UpdateForAll(x, y, z);
 	}
     Timer_CreateCallback(using inline Explode, floatround(height * 50), 1);
     return 1;

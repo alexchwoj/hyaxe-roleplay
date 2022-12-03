@@ -61,7 +61,7 @@ public FIRE_DelayedDestroyObject(objectid)
     return 1;
 }
 
-command firework1(playerid, const params[], "")
+/*command firework1(playerid, const params[], "")
 {
     Firework_Coconut(0.0, 0.0, 0.0, 50.0);
     Streamer_Update(playerid);
@@ -81,3 +81,24 @@ command firework3(playerid, const params[], "")
     Streamer_Update(playerid);
     return 1;
 }
+
+command firework4(playerid, const params[], "")
+{
+    Firework_Fish(0.0, 0.0, 0.0, 50.0);
+    Streamer_Update(playerid);
+    return 1;
+}
+
+command firework5(playerid, const params[], "")
+{
+    Firework_Wave(0.0, 0.0, 0.0, 50.0);
+    Streamer_Update(playerid);
+    return 1;
+}
+
+command firework6(playerid, const params[], "")
+{
+    Firework_Ring(0.0, 0.0, 0.0, 50.0);
+    Streamer_Update(playerid);
+    return 1;
+}*/
