@@ -208,15 +208,39 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     {
         if(GetTickCount() - s_rgiVehicleLockTick[playerid] > 500)
         {
-            new vehicleid = (IsPlayerInAnyVehicle(playerid) ? GetPlayerVehicleID(playerid) : GetPlayerCameraTargetVehicle(playerid));
-            if(IsValidVehicle(vehicleid))
+            new vehicleid = INVALID_VEHICLE_ID;
+            new const in_vehicle = IsPlayerInAnyVehicle(playerid);
+            
+            if (Bit_Get(Player_Config(playerid), CONFIG_ANDROID_MODE) && !in_vehicle)
             {
-                if(Vehicle_OwnerId(vehicleid) == playerid || (Vehicle_Type(vehicleid) == VEHICLE_TYPE_ADMIN && Player_AdminLevel(playerid) >= RANK_LEVEL_HELPER))
+                new 
+                    Float:distance = Float:0x7FFFFFFF, Float:veh_dist,
+                    Float:x, Float:y, Float:z;
+
+                GetPlayerPos(playerid, x, y, z);
+
+                foreach (new i : StreamedVehicle[playerid])
+                {
+                    if ((veh_dist = GetVehicleDistanceFromPoint(i, x, y, z)) < distance)
+                    {
+                        distance = veh_dist;
+                        vehicleid = i;
+                    }
+                }
+            }
+            else
+            {
+                vehicleid = (in_vehicle ? GetPlayerVehicleID(playerid) : GetPlayerCameraTargetVehicle(playerid));
+            }
+
+            if (IsValidVehicle(vehicleid))
+            {
+                if (Vehicle_OwnerId(vehicleid) == playerid || (Vehicle_Type(vehicleid) == VEHICLE_TYPE_ADMIN && Player_AdminLevel(playerid) >= RANK_LEVEL_HELPER))
                 {
                     Vehicle_ToggleLock(vehicleid);
                     SetPlayerChatBubble(playerid, (g_rgeVehicles[vehicleid][e_bLocked] ? "* Bloqueó su vehículo" : "* Desbloqueó su vehículo"), 0xB39B6BFF, 15.0, 5000);
                     
-                    if(Speedometer_Shown(playerid))
+                    if (Speedometer_Shown(playerid))
                     {
                         PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{0}, (g_rgeVehicles[vehicleid][e_bLocked] ? 0xA83225FF : 0x64A752FF));
                         PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{0});

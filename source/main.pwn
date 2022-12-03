@@ -167,7 +167,6 @@ const HYAXE_MAX_NPCS = 100;
 #define YSI_NO_GET_IP
 #define FOREACH_NO_BOTS
 #define FOREACH_NO_LOCALS
-#define FOREACH_NO_VEHICLES
 #define FOREACH_NO_ACTORS
 
 #include <YSI_Core\y_cell>

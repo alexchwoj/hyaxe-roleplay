@@ -12,6 +12,7 @@ enum _:ePlayerConfig
     CONFIG_SHOW_DOUBT_CHANNEL,
     CONFIG_DISABLE_NOTIFICATIONS,
     CONFIG_DISABLE_ADMIN_MESSAGES,
+    CONFIG_ANDROID_MODE,
     
     CONFIG_MAX
 };
@@ -26,19 +27,21 @@ new const
         "Mostrar canal de dudas",
         "Deshabilitar notificaciones",
         "Deshabilitar mensajes administrativos",
+        "Compatibilidad para Android",
         ""
     },
     bool:g_rgbConfigOptionDefaults[ePlayerConfig char] =
     {
         // 00 = false
         // 01 = true
-        0x00010101, // CONFIG_PERFORMANCE_MODE = false
-                    // CONFIG_MUSIC = true
-                    // CONFIG_DISPLAY_NEED_BARS = true
-                    // CONFIG_DISPLAY_SPEEDOMETER = true
-        0x01000000, // CONFIG_SHOW_DOUBT_CHANNEL = true
-                    // CONFIG_DISABLE_NOTIFICATIONS = false
-                    // CONFIG_DISABLE_ADMIN_MESSAGES = false
+        0x00010101, // CONFIG_PERFORMANCE_MODE          = false
+                    // CONFIG_MUSIC                     = true
+                    // CONFIG_DISPLAY_NEED_BARS         = true
+                    // CONFIG_DISPLAY_SPEEDOMETER       = true
+        0x01000000, // CONFIG_SHOW_DOUBT_CHANNEL        = true
+                    // CONFIG_DISABLE_NOTIFICATIONS     = false
+                    // CONFIG_DISABLE_ADMIN_MESSAGES    = false
+                    // CONFIG_ANDROID_MODE              = false
     };
 
 new BitArray:g_rgbsPlayerConfig[MAX_PLAYERS]<CONFIG_MAX>;
