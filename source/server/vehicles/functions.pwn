@@ -32,16 +32,10 @@ Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, c
 
 Vehicle_Destroy(vehicleid)
 {
-    DEBUG_PRINT("Destroying vehicleid %i (model = %i, ownerid = %i)", vehicleid, GetVehicleModel(vehicleid), Vehicle_OwnerId(vehicleid));
-#if !NDEBUG
-	PrintBacktrace();
-    printf("\n");
-#endif
-
     if (vehicleid == INVALID_VEHICLE_ID || !DestroyVehicle(vehicleid))
         return 0;
 
-    DEBUG_PRINT("Destroy native called (vehicle existed)");
+    DEBUG_PRINT("Destroying vehicleid %i (model = %i, ownerid = %i)", vehicleid, GetVehicleModel(vehicleid), Vehicle_OwnerId(vehicleid));
     
     new last_driver = GetVehicleLastDriver(vehicleid);
     if (IsPlayerConnected(last_driver))

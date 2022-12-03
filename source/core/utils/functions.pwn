@@ -363,3 +363,8 @@ Data_CheckOutputLimit(Float:data, Float:max, Float:min = 0.0, bool:check = false
 	
     return 0;
 }
+
+Random_Rand(min, max)
+{
+	return random(max - min) + min;
+}

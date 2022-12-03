@@ -38,6 +38,8 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 #define IS_NAN(%0) (_:((Float:0x7FFFFFFF) & (%0)) > (0x7F800000))
 #define IsNaN(%0) IS_NAN(%0)
 
+#define M_PI 3.141592
+
 #include "core/utils/sounds.pwn"
 #include "core/utils/zones.pwn"
 #include "core/utils/calendar.pwn"

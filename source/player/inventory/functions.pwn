@@ -6,7 +6,6 @@
 // Items
 Item_SetPreviewRot(type, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fZoom = 1.0)
 {
-	printf("Item_SetPreviewRot(type = %d, Float:fRotX = %f, Float:fRotY = %f, Float:fRotZ = %f, Float:fZoom = %f)", type, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fZoom);
 	g_rgeItemData[type][e_fRotX] = fRotX;
 	g_rgeItemData[type][e_fRotY] = fRotY;
 	g_rgeItemData[type][e_fRotZ] = fRotZ;
