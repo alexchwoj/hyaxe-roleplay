@@ -28,12 +28,12 @@ static FireworkCharge_OnUse(playerid, slot)
 
     new
         launcher_object = CreateDynamicObject(3013, x, y, z - 0.9, 0.0, 0.0, 0.0, 0, 0),
-        Text3D:launcher_text = CreateDynamic3DTextLabel("Lanzador\n{DADADA}Detonará en 5 segundos.", 0xDAA838FF, x, y, z, 2.0)
+        Text3D:launcher_text = CreateDynamic3DTextLabel("Lanzador\n{DADADA}Detonará en 10 segundos.", 0xDAA838FF, x, y, z, 5.0)
     ;
     
     Streamer_Update(playerid);
 
-    new remaining_seconds = 5;
+    new remaining_seconds = 10;
     inline DetonateCharge()
 	{
         --remaining_seconds;
@@ -59,7 +59,7 @@ static FireworkCharge_OnUse(playerid, slot)
             }
         }
 	}
-    Timer_CreateCallback(using inline DetonateCharge, 1000, 5);
+    Timer_CreateCallback(using inline DetonateCharge, 1000, 10);
     return 1;
 }
 
