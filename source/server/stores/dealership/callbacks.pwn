@@ -143,6 +143,8 @@ dialog buy_vehicle(playerid, dialogid, response, listitem, const inputtext[])
         Player_AddXP(playerid, 500);
         PlayerPlaySound(playerid, SOUND_TRUMPET);
         Player_GiveMoney(playerid, -g_rgeVehicleModelData[modelid][e_iPrice]);
+
+        DEBUG_PRINT("[vehicle] Buy vehicle, playerid = %d, vehicleid = %d, %s, %s (%d)", playerid, vehicleid, g_rgeVehicleModelData[modelid][e_szModelName], Vehicle_GetModelName(GetVehicleModel(vehicleid)), modelid + 400);
     }
     return 1;
 }

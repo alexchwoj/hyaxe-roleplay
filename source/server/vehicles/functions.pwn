@@ -32,6 +32,10 @@ Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, c
 
 Vehicle_Destroy(vehicleid)
 {
+    printf("=================================");
+    PrintBacktrace();
+    printf("=================================");
+
     if (vehicleid == INVALID_VEHICLE_ID || !DestroyVehicle(vehicleid))
         return 0;
 
@@ -45,6 +49,10 @@ Vehicle_Destroy(vehicleid)
     }
 
     Vehicle_StopUpdating(vehicleid);
+    
+    MemSet(g_rgeVehicles[vehicleid], '\0');
+    g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = INVALID_PLAYER_ID;
+    g_rgeVehicles[vehicleid][e_iSellIndex] = -1;
     return 1;
 }
 
@@ -207,6 +215,10 @@ Vehicle_Repair(vehicleid)
 
 Vehicle_Respawn(vehicleid)
 {
+    printf("=================================");
+    PrintBacktrace();
+    printf("=================================");
+    
     g_rgeVehicles[vehicleid][e_bSpawned] = false;
     return SetVehicleToRespawn(vehicleid);
 }
@@ -318,6 +330,7 @@ public Speedometer_Update(playerid)
 
 Player_RegisterVehicle(playerid, vehicleid)
 {
+    DEBUG_PRINT("Player_RegisterVehicle(playerid = %d, vehicleid = %d)", playerid, vehicleid);
     if(g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != INVALID_PLAYER_ID)
     {
         printf("[debug] Iter_Remove(PlayerVehicles[g_rgeVehicles[vehicleid][e_iVehicleOwnerId]], vehicleid, vehicleid);");
@@ -435,6 +448,8 @@ Player_SaveVehicles(playerid)
     new query[1024];
     foreach(new vehicleid : PlayerVehicles[playerid])
     {
+        printf("[veh] Saving vehicle %d for playerid %d", vehicleid, playerid);
+
         if(!g_rgeVehicles[vehicleid][e_bValid])
             continue;
 

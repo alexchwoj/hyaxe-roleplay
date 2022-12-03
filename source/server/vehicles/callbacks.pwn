@@ -39,8 +39,7 @@ public OnPlayerDisconnect(playerid, reason)
 
     foreach(new v : PlayerVehicles[playerid])
     {
-        if (Vehicle_OwnerId(v) == playerid)
-            Vehicle_Destroy(v);
+        Vehicle_Destroy(v);
     }
 
     printf("[debug] Claning vehicle iterator for playerid %d", playerid);
