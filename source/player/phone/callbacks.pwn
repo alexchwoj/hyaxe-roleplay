@@ -59,7 +59,7 @@ public PHONE_ProcessKey(playerid)
 	if (Bit_Get(Player_Flags(playerid), PFLAG_USING_PHONE))
 	{
 		new keys, updown, leftright;
-		GetPlayerKeys(playerid, keys, updown, leftright);
+		GetPlayerWrappedKeys(playerid, keys, updown, leftright);
 
 		#pragma unused leftright
 		#pragma unused keys

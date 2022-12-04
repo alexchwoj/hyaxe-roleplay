@@ -32,6 +32,10 @@ Phone_Show(playerid, const menu_id[])
 	Needs_HideBars(playerid);
     Inventory_Hide(playerid);
 	Speedometer_Hide(playerid);
+
+	if (Bit_Get(Player_Config(playerid), CONFIG_ANDROID_MODE))
+		Controller_Show(playerid);
+		
     return 1;
 }
 
@@ -108,6 +112,7 @@ Phone_Hide(playerid)
     if (Bit_Get(Player_Config(playerid), CONFIG_DISPLAY_NEED_BARS))
         Needs_ShowBars(playerid);
 
+	Controller_Hide(playerid);
     return 1;
 }
 

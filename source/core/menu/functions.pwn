@@ -167,6 +167,10 @@ Menu_Show(playerid, const menu_id[], const caption[], const type[] = "SELECCIONE
 
 	g_rgePlayerMenu[playerid][e_iKeyProcessTimer] = SetTimerEx("MENU_ProcessKey", 100, true, "i", playerid);
 	g_rgePlayerMenu[playerid][e_iEnabled] = true;
+
+	if (Bit_Get(Player_Config(playerid), CONFIG_ANDROID_MODE))
+		Controller_Show(playerid);
+		
 	return 1;
 }
 
@@ -184,6 +188,8 @@ Menu_Hide(playerid)
 
     g_rgePlayerMenu[playerid][e_iTextdrawCount] = 0;
     g_rgePlayerMenu[playerid] = g_rgePlayerMenu[MAX_PLAYERS];
+
+	Controller_Hide(playerid);
 	return 1;
 }
 
@@ -277,6 +283,7 @@ Menu_SendResponse(playerid, response)
 		g_rgePlayerMenu[playerid][e_iEnabled] = false;
 		TogglePlayerControllable(playerid, true);
 		Player_DisableChat(playerid, false);
+		Controller_Hide(playerid);
 	}
 
 	CallLocalFunction(menu_id, "iii", playerid, response, (g_rgePlayerMenu[playerid][e_iListitem] + (g_rgePlayerMenu[playerid][e_iPage] * MENU_MAX_LISTITEMS_PERPAGE)));

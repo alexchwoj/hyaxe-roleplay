@@ -73,7 +73,7 @@ public MENU_ProcessKey(playerid)
 	if (g_rgePlayerMenu[playerid][e_iEnabled])
 	{
 		new keys, updown, leftright;
-		GetPlayerKeys(playerid, keys, updown, leftright);
+		GetPlayerWrappedKeys(playerid, keys, updown, leftright);
 
 		#pragma unused leftright
 		#pragma unused keys
