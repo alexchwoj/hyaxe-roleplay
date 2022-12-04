@@ -245,6 +245,8 @@ phone_menu crane(playerid, response, listitem)
 
 	format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Tu %s fue remolcado a %s, %s (%.2f kilómetros de distancia).", g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_szModelName], zone, city, distance * 0.01);
 	Notification_Show(playerid, HYAXE_UNSAFE_HUGE_STRING, 5000, 0xDAA838FF);
+
+	Phone_Hide(playerid);
 	return 1;
 }
 

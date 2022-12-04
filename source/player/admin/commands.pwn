@@ -162,7 +162,7 @@ command ban_account(playerid, const params[], "Veta a una cuenta offline")
 
     return 1;
 }
-alias:ban_account("banoff")
+alias:ban_account("banoff", "banaccount")
 flags:ban_account(CMD_FLAG<RANK_LEVEL_MODERATOR> | CMD_DONT_LOG_COMMAND)
 
 static 
@@ -571,6 +571,7 @@ command set_skin(playerid, const params[], "Asigna la ropa de un jugador")
 
     return 1;
 }
+alias:set_skin("setskin")
 flags:set_skin(CMD_FLAG<RANK_LEVEL_MANAGER>)
 
 command report(playerid, const params[], "Informar al personal sobre un usuario")
@@ -710,5 +711,11 @@ command bonus(playerid, const params[], "Recibir un bonus")
 
     PlayerPlaySound(playerid, SOUND_TRUMPET);
     ApplyAnimation(playerid, "OTB", "WTCHRACE_WIN", 4.1, false, false, false, false, 0, true);
+    return 1;
+}
+
+command update(playerid, const params[], "Actualiza los objetos")
+{
+    Streamer_Update(playerid);
     return 1;
 }
