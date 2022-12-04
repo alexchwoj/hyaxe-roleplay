@@ -692,7 +692,7 @@ command bonus(playerid, const params[], "Recibir un bonus")
     Inventory_AddFixedItem(playerid, ITEM_ORANGE_JUICE, 1, 0);
     Inventory_AddFixedItem(playerid, ITEM_APPLE_JUICE, 1, 0);
     Player_GiveMoney(playerid, 25000);
-    Player_AddXP(playerid, 1000);
+    Player_AddXP(playerid, 500);
 
     SendClientMessage(playerid, 0xDAA838FF, "[Bonus] › {DADADA} Bonificación recibida");
     SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 1 Celular");
@@ -701,7 +701,7 @@ command bonus(playerid, const params[], "Recibir un bonus")
     SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 2 Hamburguesas");
     SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 75 gramos de crack");
     SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 150 Medicamentos");
-    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 1000 XP");
+    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 500 XP");
     SendClientMessage(playerid, 0x64A752FF, "+{DADADA} $25.000");
 
     Player_Bonus(playerid) = true;

@@ -81,7 +81,7 @@ phone_menu gps_jobs(playerid, response, listitem)
     {
         switch(listitem)
         {
-            case 0: Player_SetGPSCheckpoint(playerid, 91.6690, -313.3107, 1.5781); // Camionero
+            case 0: Player_SetGPSCheckpoint(playerid, 125.2116, -285.1135, 1.5781); // Camionero
             case 1: Player_SetGPSCheckpoint(playerid, 2156.9067, -97.8114, 3.1911); // Pescador
             case 2: Player_SetGPSCheckpoint(playerid, 2055.0747, -1248.8661, 23.8589); // Cortacesped
             case 3: Player_SetGPSCheckpoint(playerid, 1976.0343, -1923.4221, 13.5469); // Fabricante de armas

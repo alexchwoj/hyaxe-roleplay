@@ -63,21 +63,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if((newkeys & KEY_YES) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
-        new 
-            Float:distance = 5.0, Float:veh_dist, vehicleid,
-            Float:x, Float:y, Float:z;
-
-        GetPlayerPos(playerid, x, y, z);
-
-        foreach (new i : StreamedVehicle[playerid])
-        {
-            if ((veh_dist = GetVehicleDistanceFromPoint(i, x, y, z)) < distance)
-            {
-                distance = veh_dist;
-                vehicleid = i;
-            }
-        }
-
+        new vehicleid = GetPlayerNearestVehicle(playerid);
         if (IsValidVehicle(vehicleid))
         {
             if (g_rgeVehicles[vehicleid][e_iSellIndex] != -1)

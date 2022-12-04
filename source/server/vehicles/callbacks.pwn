@@ -212,27 +212,10 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             new const in_vehicle = IsPlayerInAnyVehicle(playerid);
             
             if (Bit_Get(Player_Config(playerid), CONFIG_ANDROID_MODE) && !in_vehicle)
-            {
-                new 
-                    Float:distance = Float:0x7FFFFFFF, Float:veh_dist,
-                    Float:x, Float:y, Float:z;
-
-                GetPlayerPos(playerid, x, y, z);
-
-                foreach (new i : StreamedVehicle[playerid])
-                {
-                    if ((veh_dist = GetVehicleDistanceFromPoint(i, x, y, z)) < distance)
-                    {
-                        distance = veh_dist;
-                        vehicleid = i;
-                    }
-                }
-            }
+                vehicleid = GetPlayerNearestVehicle(playerid);
             else
-            {
                 vehicleid = (in_vehicle ? GetPlayerVehicleID(playerid) : GetPlayerCameraTargetVehicle(playerid));
-            }
-
+                
             if (IsValidVehicle(vehicleid))
             {
                 if (Vehicle_OwnerId(vehicleid) == playerid || (Vehicle_Type(vehicleid) == VEHICLE_TYPE_ADMIN && Player_AdminLevel(playerid) >= RANK_LEVEL_HELPER))

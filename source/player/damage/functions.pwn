@@ -188,7 +188,7 @@ command revive(playerid, const params[], "Revivir a un jugador")
         SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Reviviste a {ED2B2B}%s{DADADA} con la vida a {ED2B2B}%d{DADADA}.", Player_RPName(destination), health);
     }
     
-    SendClientMessagef(destination, 0xED2B2BFF, "›{DADADA} Te reviviste con la vida a {ED2B2B}%d{DADADA}.", health);
+    SendClientMessagef(destination, 0xED2B2BFF, "›{DADADA} Reviviste con la vida a {ED2B2B}%d{DADADA}.", health);
 
     return 1;
 }

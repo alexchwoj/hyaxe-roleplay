@@ -368,3 +368,23 @@ Random_Rand(min, max)
 {
 	return random(max - min) + min;
 }
+
+GetPlayerNearestVehicle(playerid)
+{
+    new 
+        Float:distance = 5.0, Float:veh_dist, vehicleid = INVALID_VEHICLE_ID,
+        Float:x, Float:y, Float:z;
+
+    GetPlayerPos(playerid, x, y, z);
+
+    foreach (new i : StreamedVehicle[playerid])
+    {
+        if ((veh_dist = GetVehicleDistanceFromPoint(i, x, y, z)) < distance)
+        {
+            distance = veh_dist;
+            vehicleid = i;
+        }
+    }
+
+    return vehicleid;
+}
