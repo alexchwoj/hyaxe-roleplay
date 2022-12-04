@@ -38,6 +38,7 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
 
                 Vehicle_Respawn(vehicleid);
                 Vehicle_SetHealth(vehicleid, 1000.0);
+                Vehicle_Fuel(vehicleid) = 100.0;
 
                 g_rgbPlayerLoadingTruck{playerid} = 
                 g_rgbTruckLoaded{g_rgiPlayerUsingTruck[playerid]} =

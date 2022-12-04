@@ -93,7 +93,7 @@ JYYYYYYJJJJJJJJ7!?JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ??????????!!777777777777777777
 #pragma warning disable 239
 #pragma warning disable 214
 
-#define SERVER_VERSION "v1.1.0-alpha"
+#define SERVER_VERSION "v1.1.1-alpha"
 
 #define NDEBUG 0
 
