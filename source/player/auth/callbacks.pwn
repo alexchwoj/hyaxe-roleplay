@@ -356,5 +356,8 @@ public AUTH_PasswordCheckDone(playerid)
     if (IsAndroidPlayer(playerid))
         Notification_Show(playerid, "~w~Hemos detectado que estás jugando desde Android, por favor, activa el soporte de android desde ~g~/config~w~ para una mejor experiencia.", 10000, 0x64A752FF);
     
+    new hour, minute;
+    gettime(hour, minute);
+    SetPlayerTime(playerid, hour, minute);
     return 1;
 }
