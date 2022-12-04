@@ -22,6 +22,56 @@ new g_rgeTruckerRoutes[][eTruckerRoute] = {
         "Insumos de pesca", 4,
         2792.2153, -2418.1289, 13.6326, INVALID_STREAMER_ID, 
         2794.8582, -2410.6621, 13.6319, INVALID_STREAMER_ID
+    },
+    { 
+        "Componentes de armas", 4,
+        1362.4979, -1288.3708, 13.1802, INVALID_STREAMER_ID, 
+        1367.8650, -1280.9642, 13.5469, INVALID_STREAMER_ID
+    },
+    { 
+        "Camisetas", 2,
+        1447.2266, -1155.7386, 23.4868, INVALID_STREAMER_ID, 
+        1454.6130, -1141.1637, 24.0324, INVALID_STREAMER_ID
+    },
+    { 
+        "Embutidos", 4,
+        2095.2532, -1799.4185, 13.1115, INVALID_STREAMER_ID, 
+        2104.7903, -1803.8447, 13.5547, INVALID_STREAMER_ID
+    },
+    { 
+        "Papelería", 2,
+        1534.6432, -1656.4700, 13.1890, INVALID_STREAMER_ID, 
+        1545.9600, -1670.2737, 13.5614, INVALID_STREAMER_ID
+    },
+    { 
+        "Productos médicos", 5,
+        1190.4902, -1304.9115, 13.1954, INVALID_STREAMER_ID, 
+        1174.5510, -1308.3054, 13.9967, INVALID_STREAMER_ID
+    },
+    { 
+        "Objetivos de cámaras", 3,
+        867.8788, -1239.7361, 14.7283, INVALID_STREAMER_ID, 
+        861.6719, -1245.3281, 14.7805, INVALID_STREAMER_ID
+    },
+    { 
+        "Juguetes", 5,
+        500.3575, -1413.8433, 15.8066, INVALID_STREAMER_ID, 
+        500.5059, -1408.0498, 16.1650, INVALID_STREAMER_ID
+    },
+    { 
+        "Discos de vinilo", 4,
+        484.8156, -1277.9757, 15.3928, INVALID_STREAMER_ID, 
+        480.3590, -1276.8557, 15.6073, INVALID_STREAMER_ID
+    },
+    { 
+        "Carnes secas", 4,
+        2376.4756, -1195.7256, 27.1530, INVALID_STREAMER_ID, 
+        2380.0854, -1194.3000, 27.4138, INVALID_STREAMER_ID
+    },
+    { 
+        "Productos de limpieza", 5,
+        2436.7595, -1475.5543, 23.6360, INVALID_STREAMER_ID, 
+        2439.9189, -1471.0582, 24.0000, INVALID_STREAMER_ID
     }
 };
 
