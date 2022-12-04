@@ -93,7 +93,7 @@ JYYYYYYJJJJJJJJ7!?JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ??????????!!777777777777777777
 #pragma warning disable 239
 #pragma warning disable 214
 
-#define SERVER_VERSION "v1.0.9-alpha"
+#define SERVER_VERSION "v1.1.0-alpha"
 
 #define NDEBUG 0
 
@@ -211,6 +211,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "core/commands/header.pwn"
 #include "core/key/header.pwn"
 #include "core/fireworks/header.pwn"
+#include "core/controller/header.pwn"
 #include "server/anticheat/header.pwn"
 #include "server/textdraws/header.pwn"
 #include "server/vehicles/header.pwn"
@@ -261,6 +262,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "core/commands/functions.pwn"
 #include "core/key/functions.pwn"
 #include "core/fireworks/functions.pwn"
+#include "core/controller/functions.pwn"
 #include "server/anticheat/functions.pwn"
 #include "server/vehicles/functions.pwn"
 #include "server/enter_exits/functions.pwn"
@@ -305,6 +307,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "core/commands/callbacks.pwn"
 #include "core/key/callbacks.pwn"
 #include "core/fireworks/callbacks.pwn"
+#include "core/controller/callbacks.pwn"
 #include "server/anticheat/callbacks.pwn"
 #include "server/textdraws/callbacks.pwn"
 #include "server/vehicles/callbacks.pwn"

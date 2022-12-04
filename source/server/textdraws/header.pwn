@@ -17,7 +17,8 @@ new
     Text:g_tdGangs[9],
     Text:g_tdGangMemberSlotBg[7],
     Text:g_tdGangEventText,
-    Text:g_tdPhone[30]
+    Text:g_tdPhone[30],
+    Text:g_tdController[6]
     //Text:g_tdDebugScreen[4]
 ;
 

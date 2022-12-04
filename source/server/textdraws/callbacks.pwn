@@ -1498,6 +1498,91 @@ public OnScriptInit()
     TextDrawUseBox(g_tdPhone[29], 0);
     TextDrawSetProportional(g_tdPhone[29], 1);
     TextDrawSetSelectable(g_tdPhone[29], 0);
+
+    // Android controller
+    g_tdController[0] = TextDrawCreate(315.000000, 397.000000, "Seleccionar");
+    TextDrawFont(g_tdController[0], 1);
+    TextDrawLetterSize(g_tdController[0], 0.291666, 1.500000);
+    TextDrawTextSize(g_tdController[0], 15.500000, 77.000000);
+    TextDrawSetOutline(g_tdController[0], 0);
+    TextDrawSetShadow(g_tdController[0], 0);
+    TextDrawAlignment(g_tdController[0], 2);
+    TextDrawColor(g_tdController[0], -1);
+    TextDrawBackgroundColor(g_tdController[0], 255);
+    TextDrawBoxColor(g_tdController[0], 454761471);
+    TextDrawUseBox(g_tdController[0], 1);
+    TextDrawSetProportional(g_tdController[0], 1);
+    TextDrawSetSelectable(g_tdController[0], 1);
+
+    g_tdController[1] = TextDrawCreate(315.000000, 419.000000, "Volver");
+    TextDrawFont(g_tdController[1], 1);
+    TextDrawLetterSize(g_tdController[1], 0.291666, 1.500000);
+    TextDrawTextSize(g_tdController[1], 400.000000, 77.000000);
+    TextDrawSetOutline(g_tdController[1], 0);
+    TextDrawSetShadow(g_tdController[1], 0);
+    TextDrawAlignment(g_tdController[1], 2);
+    TextDrawColor(g_tdController[1], -1);
+    TextDrawBackgroundColor(g_tdController[1], 255);
+    TextDrawBoxColor(g_tdController[1], 454761471);
+    TextDrawUseBox(g_tdController[1], 1);
+    TextDrawSetProportional(g_tdController[1], 1);
+    TextDrawSetSelectable(g_tdController[1], 1);
+
+    g_tdController[2] = TextDrawCreate(315.000000, 347.000000, "W");
+    TextDrawFont(g_tdController[2], 1);
+    TextDrawLetterSize(g_tdController[2], 0.425000, 1.750000);
+    TextDrawTextSize(g_tdController[2], 15.500000, 21.000000);
+    TextDrawSetOutline(g_tdController[2], 0);
+    TextDrawSetShadow(g_tdController[2], 0);
+    TextDrawAlignment(g_tdController[2], 2);
+    TextDrawColor(g_tdController[2], -1);
+    TextDrawBackgroundColor(g_tdController[2], 255);
+    TextDrawBoxColor(g_tdController[2], 454761471);
+    TextDrawUseBox(g_tdController[2], 1);
+    TextDrawSetProportional(g_tdController[2], 1);
+    TextDrawSetSelectable(g_tdController[2], 1);
+
+    g_tdController[3] = TextDrawCreate(315.000000, 372.000000, "S");
+    TextDrawFont(g_tdController[3], 1);
+    TextDrawLetterSize(g_tdController[3], 0.425000, 1.750000);
+    TextDrawTextSize(g_tdController[3], 15.500000, 21.000000);
+    TextDrawSetOutline(g_tdController[3], 0);
+    TextDrawSetShadow(g_tdController[3], 0);
+    TextDrawAlignment(g_tdController[3], 2);
+    TextDrawColor(g_tdController[3], -1);
+    TextDrawBackgroundColor(g_tdController[3], 255);
+    TextDrawBoxColor(g_tdController[3], 454761471);
+    TextDrawUseBox(g_tdController[3], 1);
+    TextDrawSetProportional(g_tdController[3], 1);
+    TextDrawSetSelectable(g_tdController[3], 1);
+
+    g_tdController[4] = TextDrawCreate(287.000000, 372.000000, "A");
+    TextDrawFont(g_tdController[4], 1);
+    TextDrawLetterSize(g_tdController[4], 0.425000, 1.750000);
+    TextDrawTextSize(g_tdController[4], 15.500000, 21.000000);
+    TextDrawSetOutline(g_tdController[4], 0);
+    TextDrawSetShadow(g_tdController[4], 0);
+    TextDrawAlignment(g_tdController[4], 2);
+    TextDrawColor(g_tdController[4], -1);
+    TextDrawBackgroundColor(g_tdController[4], 255);
+    TextDrawBoxColor(g_tdController[4], 454761471);
+    TextDrawUseBox(g_tdController[4], 1);
+    TextDrawSetProportional(g_tdController[4], 1);
+    TextDrawSetSelectable(g_tdController[4], 1);
+
+    g_tdController[5] = TextDrawCreate(343.000000, 372.000000, "D");
+    TextDrawFont(g_tdController[5], 1);
+    TextDrawLetterSize(g_tdController[5], 0.425000, 1.750000);
+    TextDrawTextSize(g_tdController[5], 15.500000, 21.000000);
+    TextDrawSetOutline(g_tdController[5], 0);
+    TextDrawSetShadow(g_tdController[5], 0);
+    TextDrawAlignment(g_tdController[5], 2);
+    TextDrawColor(g_tdController[5], -1);
+    TextDrawBackgroundColor(g_tdController[5], 255);
+    TextDrawBoxColor(g_tdController[5], 454761471);
+    TextDrawUseBox(g_tdController[5], 1);
+    TextDrawSetProportional(g_tdController[5], 1);
+    TextDrawSetSelectable(g_tdController[5], 1);
     
     #if defined TD_OnScriptInit
         return TD_OnScriptInit();
