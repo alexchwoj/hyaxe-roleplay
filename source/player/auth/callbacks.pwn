@@ -352,5 +352,9 @@ public AUTH_PasswordCheckDone(playerid)
         SendClientMessage(playerid, 0xDAA838FF, "[Bonus] › {DADADA} ¡Una nueva bonificación está disponible!");
         SendClientMessage(playerid, 0xDAA838FF, "[Bonus] › {DADADA} Utilice el comando {DAA838}/bonus{DADADA} para recibirlo");
     }
+
+    if (IsAndroidPlayer(playerid))
+        Notification_Show(playerid, "~w~Hemos detectado que estás jugando desde Android, por favor, activa el soporte de android desde ~g~/config~w~ para una mejor experiencia.", 10000, 0x64A752FF);
+    
     return 1;
 }

@@ -162,7 +162,6 @@ const HYAXE_MAX_NPCS = 100;
 							*/
 #define YSI_NO_KEYWORD_List
 #define YSI_NO_HEAP_MALLOC
-#define YSI_NO_ANDROID_CHECK
 #define YSI_NO_VERSION_CHECK
 #define YSI_NO_GET_IP
 #define FOREACH_NO_BOTS
@@ -181,6 +180,7 @@ const HYAXE_MAX_NPCS = 100;
 #include <YSI_Extra\y_inline_mysql>
 #include <YSI_Extra\y_inline_timers>
 #include <YSI_Storage\y_amx>
+#include <YSI_Players\y_android>
 #include <YSI_Visual\y_dialog>
 #include <amx/amx_header>
 
