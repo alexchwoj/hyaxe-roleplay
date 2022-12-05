@@ -21,7 +21,7 @@ static GangCreation_ShowDialog(playerid)
     return 1;
 }
 
-command banda(playerid, const params[], "Abre el panel de creación de una banda")
+command banda(playerid, const params[], "Abre el panel de banda")
 {
     if(Player_Level(playerid) < 2)
     {
@@ -31,7 +31,8 @@ command banda(playerid, const params[], "Abre el panel de creación de una banda"
 
     if(Player_Gang(playerid) != -1)
     {
-        Dialog_Show(playerid, DIALOG_STYLE_MSGBOX, "{DADADA}Error - {CB3126}Creación de banda", "{DADADA}No puedes crear una banda si ya estás en una.", "Entendido");
+        //Dialog_Show(playerid, DIALOG_STYLE_MSGBOX, "{DADADA}Error - {CB3126}Creación de banda", "{DADADA}No puedes crear una banda si ya estás en una.", "Entendido");
+        Gangs_OpenPanel(playerid);
         return 1;
     }
 

@@ -276,6 +276,7 @@ command givemoney(playerid, const params[], "Le da dinero a un jugador")
 
     return 1;
 }
+alias:givemoney("give_cash", "givecash", "give_money")
 flags:givemoney(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)
 
 static 
@@ -678,44 +679,56 @@ command dropitem(playerid, const params[], "Crea un item en el suelo")
 }
 flags:dropitem(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)
 
-command bonus(playerid, const params[], "Recibir un bonus")
+command tpveh(playerid, const params[], "Traer un vehículo")
 {
-    if (Player_Bonus(playerid))
-        return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Ya has recibido la bonificación.");
+    extract params -> new vehicleid = INVALID_VEHICLE_ID, player:destination = 0xFFFF; else {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/tpveh {DADADA}[vehicleid] [jugador = tú]");
+        return 1;
+    }
 
-    Inventory_AddFixedItem(playerid, ITEM_PHONE, 1, 0);
-    Inventory_AddFixedItem(playerid, ITEM_MEDIC_KIT, 1, 0);
-    Inventory_AddFixedItem(playerid, ITEM_MEDIC_KIT, 1, 0);
-    Inventory_AddFixedItem(playerid, ITEM_MEDICINE, 150, 0);
-    Inventory_AddFixedItem(playerid, ITEM_CRACK, 75, 0);
-    Inventory_AddFixedItem(playerid, ITEM_BURGER, 1, 0);
-    Inventory_AddFixedItem(playerid, ITEM_BURGER, 1, 0);
-    Inventory_AddFixedItem(playerid, ITEM_ORANGE_JUICE, 1, 0);
-    Inventory_AddFixedItem(playerid, ITEM_APPLE_JUICE, 1, 0);
-    Player_GiveMoney(playerid, 25000);
-    Player_AddXP(playerid, 500);
+	if (destination == INVALID_PLAYER_ID)
+        destination = playerid;
 
-    SendClientMessage(playerid, 0xDAA838FF, "[Bonus] › {DADADA} Bonificación recibida");
-    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 1 Celular");
-    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 1 Jugo de naranja");
-    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 1 Jugo de manzana");
-    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 2 Hamburguesas");
-    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 75 gramos de crack");
-    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 150 Medicamentos");
-    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 500 XP");
-    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} $25.000");
+	if (IsValidVehicle(vehicleid))
+    {
+        new Float:x, Float:y, Float:z;
+        GetPlayerPos(destination, x, y, z);
+        SetVehiclePos(vehicleid, x, y, z);
 
-    Player_Bonus(playerid) = true;
-    mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `BONUS` = %d WHERE `ID` = %d;", Player_Bonus(playerid), Player_AccountID(playerid));
-    mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} Vehículo transportado");
+    }
+    else
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No hay un vehículo con esa ID");
 
-    PlayerPlaySound(playerid, SOUND_TRUMPET);
-    ApplyAnimation(playerid, "OTB", "WTCHRACE_WIN", 4.1, false, false, false, false, 0, true);
     return 1;
 }
+alias:tpveh("bringveh")
+flags:tpveh(CMD_FLAG<RANK_LEVEL_MODERATOR>)
 
-command update(playerid, const params[], "Actualiza los objetos")
+command vehicles(playerid, const params[], "Ver los vehículos de un jugador")
 {
-    Streamer_Update(playerid);
+    new destination;
+    if(sscanf(params, "r", destination))
+    {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/vehicles{DADADA} <jugador>");
+        return 1;
+    }
+
+    if(!IsPlayerConnected(destination))
+        return SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} Jugador inválido.");
+
+    SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Vehiculos de %s (id = %d, count = %d):", Player_Name(destination), destination, Iter_Count(PlayerVehicles[destination]));
+
+    new count = 1;
+    foreach(new vehicleid : PlayerVehicles[destination])
+    {
+        if (IsValidVehicle(vehicleid))
+            SendClientMessagef(playerid, 0xDADADAFF, "%d. %s (vehicleid = %d, dbid = %d)", count, Vehicle_GetModelName( GetVehicleModel(vehicleid) ), vehicleid, Vehicle_ID(vehicleid));
+        else
+            SendClientMessagef(playerid, 0xDADADAFF, "%d. Vehículo desconocido (vehicleid = %d)", count, vehicleid);
+
+        count++;
+    }
     return 1;
 }
+flags:vehicles(CMD_FLAG<RANK_LEVEL_MODERATOR>)

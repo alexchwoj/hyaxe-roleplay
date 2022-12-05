@@ -22,3 +22,30 @@ hook OnPlayerText(playerid, text[])
 
     return 0;
 }
+
+public OnPlayerDeath(playerid, killerid, reason)
+{
+    if (Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME) && !Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL))
+    {
+        foreach(new i : Admin)
+        {
+            SendDeathMessageToPlayer(i, killerid, playerid, reason);
+        }
+    }
+
+    #if defined ADMIN_OnPlayerDeath
+        return ADMIN_OnPlayerDeath(playerid, killerid, reason);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerDeath
+    #undef OnPlayerDeath
+#else
+    #define _ALS_OnPlayerDeath
+#endif
+#define OnPlayerDeath ADMIN_OnPlayerDeath
+#if defined ADMIN_OnPlayerDeath
+    forward ADMIN_OnPlayerDeath(playerid, killerid, reason);
+#endif

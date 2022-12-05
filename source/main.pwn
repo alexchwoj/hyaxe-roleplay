@@ -93,7 +93,7 @@ JYYYYYYJJJJJJJJ7!?JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ??????????!!777777777777777777
 #pragma warning disable 239
 #pragma warning disable 214
 
-#define SERVER_VERSION "v1.1.1-alpha"
+#define SERVER_VERSION "v1.1.2-alpha"
 
 #define NDEBUG 0
 
@@ -236,6 +236,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/weather/header.pwn"
 #include "server/tuning/header.pwn"
 #include "server/halloween/header.pwn"
+#include "server/safe_zones/header.pwn"
 #include "player/account/header.pwn"
 #include "player/config/header.pwn"
 #include "player/damage/header.pwn"
@@ -338,6 +339,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/tuning/callbacks.pwn"
 #include "server/townhall/callbacks.pwn"
 #include "server/halloween/callbacks.pwn"
+#include "server/safe_zones/callbacks.pwn"
 #include "player/account/callbacks.pwn"
 #include "player/damage/callbacks.pwn"
 #include "player/leveling/callbacks.pwn"
@@ -379,6 +381,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "server/gangs/commands.pwn"
 #include "player/weapons/commands.pwn"
 #include "player/auth/commands.pwn"
+#include "player/account/commands.pwn"
 
 // Prevents runtime error 20 (invalid index)
 main() { return 0; }

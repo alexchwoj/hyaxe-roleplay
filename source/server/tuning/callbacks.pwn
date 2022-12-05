@@ -21,6 +21,7 @@ public OnScriptInit()
 
     for(new i; i < sizeof(g_rgeRepairPositions); ++i)
     {
+        CreateDynamicMapIcon(g_rgeRepairPositions[i][e_fRepairPosX], g_rgeRepairPositions[i][e_fRepairPosY], g_rgeRepairPositions[i][e_fRepairPosZ], 27, -1, .worldid = 0, .interiorid = 0);
         CreateDynamic3DTextLabel("{CB3126}Taller mecánico\n{DADADA}Modifique su vehículo aquí", 0xFFFFFFFF, g_rgeRepairPositions[i][e_fRepairPosX], g_rgeRepairPositions[i][e_fRepairPosY], g_rgeRepairPositions[i][e_fRepairPosZ], 10.0, .testlos = 1);
         Key_Alert(g_rgeRepairPositions[i][e_fRepairPosX], g_rgeRepairPositions[i][e_fRepairPosY], g_rgeRepairPositions[i][e_fRepairPosZ], 1.5, KEYNAME_YES, 0, 0, KEY_TYPE_VEHICLE, .callback_on_press = __addressof(Tuning_OnPress), .cb_data = i);
     }
