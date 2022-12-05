@@ -41,8 +41,8 @@ Vehicle_Destroy(vehicleid)
 
     DEBUG_PRINT("Destroying vehicleid %i (model = %i, ownerid = %i)", vehicleid, GetVehicleModel(vehicleid), Vehicle_OwnerId(vehicleid));
     
-    new last_driver = GetVehicleLastDriver(vehicleid);
-    if (IsPlayerConnected(last_driver))
+    new last_driver = INVALID_PLAYER_ID;
+    if (IsVehicleOccupied(vehicleid) && IsPlayerConnected((last_driver = GetVehicleLastDriver(vehicleid))))
     {
         Player_SetImmunityForCheat(last_driver, CHEAT_TELEPORT, 1000);
         Player_SetImmunityForCheat(last_driver, CHEAT_AIRBREAK, 1000);
