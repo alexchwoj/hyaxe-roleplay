@@ -28,30 +28,6 @@ public OnScriptInit()
     forward SAZO_OnScriptInit();
 #endif
 
-public OnPlayerEnterDynamicArea(playerid, areaid)
-{
-    if (Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x534146)) && !Player_IsPolice(playerid))
-    {
-        Notification_Show(playerid, "Has entrado en una zona segura si matas a alguien serás encarcelado.", 3000, 0x64A752FF);
-    }
-
-    #if defined SAZO_OnPlayerEnterDynamicArea
-        return SAZO_OnPlayerEnterDynamicArea(playerid, areaid);
-    #else
-        return 1;
-    #endif
-}
-
-#if defined _ALS_OnPlayerEnterDynamicArea
-    #undef OnPlayerEnterDynamicArea
-#else
-    #define _ALS_OnPlayerEnterDynamicArea
-#endif
-#define OnPlayerEnterDynamicArea SAZO_OnPlayerEnterDynamicArea
-#if defined SAZO_OnPlayerEnterDynamicArea
-    forward SAZO_OnPlayerEnterDynamicArea(playerid, areaid);
-#endif
-
 public OnPlayerDeath(playerid, killerid, reason)
 {
     if (Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME) && !Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL) && IsPlayerConnected(killerid))
@@ -67,17 +43,7 @@ public OnPlayerDeath(playerid, killerid, reason)
                 new areaid = YSI_UNSAFE_HUGE_STRING[i];
                 if(Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x534146)))
                 {
-                    new jailtime = 900 * 60;
-                    Player_Data(killerid, e_iJailTime) = gettime() + jailtime;
-                    Player_Timer(killerid, e_iPlayerJailTimer) = SetTimerEx("ARREST_ReleaseFromPrison", jailtime * 1000, false, "i", killerid);
-
-                    new pos = random(sizeof(g_rgfJailPositions));
-                    SetPlayerVirtualWorld(killerid, 0);
-                    SetPlayerInterior(killerid, 0);
-                    Player_SetPos(killerid, g_rgfJailPositions[pos][0], g_rgfJailPositions[pos][1], g_rgfJailPositions[pos][2]);
-                    Notification_Show(killerid, "Estás en prisión y cumples una condena de ~r~15 minutos~w~. Para ver el tiempo restante usa ~r~/tiempo~w~.", 10000);
-                    Player_WantedLevel(killerid) = 0;
-                    SetPlayerWantedLevel(killerid, 0);
+                    Police_AddChargesToPlayer(playerid, 4);
                 }
             }
         }

@@ -68,3 +68,15 @@ Police_ClearMarkers(playerid)
         }
     }
 }
+
+Police_AddChargesToPlayer(playerid, charges)
+{
+    new c = charges + Player_WantedLevel(playerid);
+    if (c > 6)
+        c = 6;
+
+    Player_WantedLevel(playerid) = c;
+    Player_SetWantedLevel(playerid, c);
+
+    return 1;
+}
