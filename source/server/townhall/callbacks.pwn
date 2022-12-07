@@ -62,7 +62,7 @@ static SellVeh_OnPress(playerid)
 public OnScriptInit()
 {
     CreateDynamic3DTextLabel("Vender un vehículo", 0xCB3126FF, -2090.4336, 446.9664, 2982.7620, 15.0, .testlos = 1, .worldid = 0, .interiorid = 0);
-    //Key_Alert(-2090.4336, 446.9664, 2982.7620, 1.5, KEYNAME_YES, .world = 0, .interior = 0, .callback_on_press = __addressof(SellVeh_OnPress));
+    Key_Alert(-2090.4336, 446.9664, 2982.7620, 1.5, KEYNAME_YES, .world = 0, .interior = 0, .callback_on_press = __addressof(SellVeh_OnPress));
 
     EnterExit_Create(19902, "{CB3126}Ayuntamiento", "{DADADA}Salida", 1480.9773, -1771.9276, 18.7958, 357.3669, 0, 0, -2058.3188, 448.1226, 2975.7590, 90.6303, 0, 0);
     CreateDynamicMapIcon(1480.9773, -1771.9276, 18.7958, 8, -1, .worldid = 0, .interiorid = 0);

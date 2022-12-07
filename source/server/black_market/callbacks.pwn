@@ -178,8 +178,8 @@ public OnScriptInit()
         2456.884521, -1968.482543, 13.564177, // End
         __addressof(RifleShop_OnBuy)
     );
-    Shop_AddItem(rifle_shop, "AK-47", 355, 10000, 84.000061, -39.400012, 150.699996);
-    Shop_AddItem(rifle_shop, "M4", 356, 16000, 84.000061, -39.400012, 150.699996);
+    Shop_AddItem(rifle_shop, "AK-47", 355, 20000, 84.000061, -39.400012, 150.699996);
+    Shop_AddItem(rifle_shop, "M4", 356, 25000, 84.000061, -39.400012, 150.699996);
     Shop_AddItem(rifle_shop, "Country Rifle", 357, 5000, 84.000061, -39.400012, 150.699996);
 
     #if defined BMARKET_OnScriptInit
