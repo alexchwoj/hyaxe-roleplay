@@ -64,7 +64,7 @@ dialog fuel_station(playerid, dialogid, response, listitem, inputtext[])
                     return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Tienes el tanque lleno.");
                 }
 
-                format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}¿Quieres cargar %.2f litros de combustible por {64A752}$%d{DADADA}?", fuel_to_load, floatround(fuel_to_load) * (Player_VIP(playerid) >= 3 ? 2 : 3));
+                format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}¿Quieres cargar %.2f litros de combustible por {64A752}$%d{DADADA}?", fuel_to_load, floatround(fuel_to_load) * (Player_VIP(playerid) >= 2 ? 2 : 3));
                 Dialog_ShowCallback(playerid, using public _hydg@fuel_station_full<iiiis>, DIALOG_STYLE_MSGBOX, !"{CB3126}Gasolinera", HYAXE_UNSAFE_HUGE_STRING, !"Si", !"No");
             }
             case 1: Dialog_ShowCallback(playerid, using public _hydg@fuel_station_manual<iiiis>, DIALOG_STYLE_INPUT, !"{CB3126}Gasolinera", !"{DADADA}¿Cuántos litros de gasolina quieres cargar?", !"Seguir", !"Cerrar");
