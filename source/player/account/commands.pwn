@@ -108,11 +108,11 @@ command cuenta(playerid, const params[], "Ver los datos de una cuenta")
 command vip(playerid, const params[], "Ver el estado de la suscripción VIP")
 {
     if (Player_VIP(playerid))
-        return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes VIP");
+        return Notification_Show(playerid, "No tienes VIP. Dirígete a ~r~samp.hyaxe.com/store~w~ para comprarlo.", 10000);
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}\
         Tipo: {DAA838}VIP %s{DADADA}\n\
-        Expira: {9C9C9C}%s{DADADA}\
+        Expira el: {9C9C9C}%s{DADADA}\
     ",
         g_rgszVIPNames[ Player_VIP(playerid) ],
         Player_Data(playerid, e_szVIPExpiracy)

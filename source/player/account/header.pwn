@@ -63,7 +63,7 @@ new const g_rgszRankLevelNames[eRankLevels][2][24] = {
 };
 
 new const g_rgszVIPNames[][16] = {
-    "No tiene",
+    "Ninguno",
     "Aspire",
     "Turbo",
     "Super"
