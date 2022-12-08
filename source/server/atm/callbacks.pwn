@@ -118,8 +118,15 @@ public OnPlayerAuthenticate(playerid)
 #endif
 
 
-static ATM_OnPress(playerid)
+static ATM_OnPress(playerid, atm_id)
 {
+    if (!g_rgeATMBank[atm_id][e_fAtmHealth])
+    {
+        Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Este cajero no puede utilizarse porque está destruido.");
+        ATM_HideMenu(playerid);
+        return 1;
+    }
+
     ATM_ShowMenu(playerid);
     return 1;
 }

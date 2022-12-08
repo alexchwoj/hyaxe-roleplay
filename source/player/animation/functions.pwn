@@ -5,6 +5,9 @@
 
 command parar(playerid, const params[], "Para la animación")
 {
+    if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT || Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING) || Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
+        return 0;
+        
     ClearAnimations(playerid, 1);
     return 1;
 }

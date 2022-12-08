@@ -112,6 +112,11 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
                         ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
                     }
+                    else if (info[0] == ITEM_MONEY)
+                    {
+                        Player_GiveMoney(playerid, info[5]);
+                        return 1;
+                    }
                     else if (Inventory_AddItem(playerid, info[0], info[1], info[5]))
                     {
                         printf("[2] DroppedItem_Delete");

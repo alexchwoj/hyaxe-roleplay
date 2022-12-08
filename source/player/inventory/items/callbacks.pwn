@@ -33,6 +33,7 @@ static Dynamite_OnUse(playerid, slot)
             DestroyDynamic3DTextLabel(dynamite_text);
 
             CreateExplosion(x, y, z, 12, 1.0);
+            Player_DestroyNearestATM(playerid);
         }
     }
 
