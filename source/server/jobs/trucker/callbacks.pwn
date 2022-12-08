@@ -21,7 +21,8 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
 
             if(g_rgbPlayerHasBoxInHands{playerid})
             {
-                RemovePlayerAttachedObject(playerid, 0);    
+                RemovePlayerAttachedObject(playerid, 0);
+                SetPlayerSPecialAction(playerid, SPECIAL_ACTION_NONE);
             }
 
             if(g_rgiPlayerUsingTruck[playerid])
@@ -370,6 +371,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     }
 
                     TogglePlayerDynamicCP(playerid, g_rgiPlayerTruckCheckpoint[playerid], true);
+                    Streamer_Update(playerid, STREAMER_TYPE_CP);
                     g_rgbPlayerHasBoxInHands{playerid} = true;
 
                     SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 1, 0);
@@ -456,7 +458,7 @@ dialog select_trucker_route(playerid, dialogid, response, listitem, const inputt
     
     new engine, lights, alarm, doors, bonnet, boot, objective;
     GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-    SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, 1, objective);
+    SetVehicleParamsEx(vehicleid, engine, lights, alarm, 1, bonnet, 1, objective);
 
     ApplyAnimation(playerid, "CARRY", "null", 4.1, false, false, false, false, 0, false);
 
