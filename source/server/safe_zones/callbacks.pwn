@@ -40,10 +40,9 @@ public OnPlayerDeath(playerid, killerid, reason)
             
             for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
             {
-                new areaid = YSI_UNSAFE_HUGE_STRING[i];
-                if(Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x534146)))
+                if(Streamer_HasIntData(STREAMER_TYPE_AREA, YSI_UNSAFE_HUGE_STRING[i], E_STREAMER_CUSTOM(0x534146)))
                 {
-                    Police_AddChargesToPlayer(playerid, 4);
+                    Police_AddChargesToPlayer(killerid, 4);
                 }
             }
         }
