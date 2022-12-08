@@ -356,25 +356,39 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     SetPlayerAttachedObject(playerid, 0, 2912, 6, 0.08, 0.145, -0.016, 151.4, 0.0, -13.0, 0.552, 0.359, 0.636);
                     Notification_ShowBeatingText(playerid, 3000, 0xFFFFFF, 100, 255, "~w~Deja la caja en el ~y~camión");
 
-                    if(!g_rgiPlayerTruckCheckpoint[playerid])
+                    printf("==================== TRUCKER LOAD INFO FOR %d (%s) ====================", playerid, Player_Name(playerid));
+
+                    if(!IsValidDynamicCP(g_rgiPlayerTruckCheckpoint[playerid]))
                     {
+                        printf("= INVALID CHECKPOINT (%d)", g_rgiPlayerTruckCheckpoint[playerid]);
+
                         new Float:x, Float:y, Float:z, Float:angle;
                         GetVehiclePos(g_rgiPlayerUsingTruck[playerid], x, y, z);
                         GetVehicleZAngle(g_rgiPlayerUsingTruck[playerid], angle);
+
+                        printf("= TRUCK POS (%f, %f, %f), ANG %f", x, y, z, angle);
 
                         new Float:part_x, Float:part_y, Float:part_z;
                         GetVehicleModelInfo(499, VEHICLE_MODEL_INFO_WHEELSREAR, part_x, part_y, part_z);
                         x += (part_x + 0.5) * floatsin(-angle + 180.0, degrees) + (part_y * floatsin(-angle, degrees));
                         y += (part_x + 0.5) * floatcos(-angle + 180.0, degrees) + (part_y * floatcos(-angle, degrees));
 
+                        printf("= CREATING CHECKPOINT AT (%f, %f, %f)", x, y, z);
+
                         g_rgiPlayerTruckCheckpoint[playerid] = CreateDynamicCP(x, y, z, 2.0, .playerid = playerid);
+                    
+                        printf("= CHECKPOINT CREATED WITH ID %d", g_rgiPlayerTruckCheckpoint[playerid]);
                     }
 
-                    TogglePlayerDynamicCP(playerid, g_rgiPlayerTruckCheckpoint[playerid], true);
-                    Streamer_Update(playerid, STREAMER_TYPE_CP);
-                    g_rgbPlayerHasBoxInHands{playerid} = true;
+                    printf("= SHOWING CHECKPOINT ID %d FOR PLAYER", g_rgiPlayerTruckCheckpoint[playerid]);
 
                     SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 1, 0);
+                    TogglePlayerDynamicCP(playerid, g_rgiPlayerTruckCheckpoint[playerid], true);
+                    Streamer_Update(playerid, STREAMER_TYPE_CP);
+                    
+                    printf("===================================================================");
+                    
+                    g_rgbPlayerHasBoxInHands{playerid} = true;
                 
                     return 1;
                 }
