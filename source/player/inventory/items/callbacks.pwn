@@ -3,11 +3,66 @@
 #endif
 #define _medicine_callbacks_
 
+static Dynamite_OnUse(playerid, slot)
+{
+    if(Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED) || Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL) || Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+    {
+        Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes hacer esto ahora mismo");
+        return 1;
+    }
+
+    Inventory_Hide(playerid);
+
+    ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
+    InventorySlot_Subtract(playerid, slot);
+
+    new Float:x, Float:y, Float:z, worldid = GetPlayerVirtualWorld(playerid), interiorid = GetPlayerInterior(playerid);
+    GetPlayerPos(playerid, x, y, z);
+
+    new remaining_seconds = 10, phase, dynamite_object, Text3D:dynamite_text;
+    inline ExplodeDynamite()
+    {
+        --remaining_seconds;
+
+        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Dinamita\n{DADADA}Detonará en %d segundos.", remaining_seconds);
+        UpdateDynamic3DTextLabelText(dynamite_text, 0xCB3126FF, HYAXE_UNSAFE_HUGE_STRING);
+
+        if (!remaining_seconds)
+        {
+            DestroyDynamicObject(dynamite_object);
+            DestroyDynamic3DTextLabel(dynamite_text);
+
+            CreateExplosion(x, y, z, 12, 1.0);
+        }
+    }
+
+    inline PlacingDynamite()
+    {
+        ++phase;
+        ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
+
+        if (phase >= 3)
+        {
+            dynamite_object = CreateDynamicObject(1654, x, y, z - 0.8, 0.0, 0.0, 0.0, worldid, interiorid);
+            dynamite_text = CreateDynamic3DTextLabel("Dinamita\n{DADADA}Detonará en 10 segundos.", 0xCB3126FF, x, y, z, 10.0, .worldid = worldid, .interiorid = interiorid);
+            Streamer_Update(playerid);
+
+            Timer_CreateCallback(using inline ExplodeDynamite, 1000, 10);
+
+            Sound_PlayInRange(25800, 10.0, x, y, z, worldid, interiorid);
+            Notification_ShowBeatingText(playerid, 3000, 0x64A752, 100, 255, "La dinamita ha sido colocada");
+        }
+    }
+    Timer_CreateCallback(using inline PlacingDynamite, 1000, 3);
+    Notification_ShowBeatingText(playerid, 3000, 0xCB3126, 100, 255, "Colocando dinamita...");
+
+    return 1;
+}
+
 static Phone_OnUse(playerid, slot)
 {
     #pragma unused slot
     PhoneMenu_Main(playerid);
-
     return 1;
 }
 
@@ -522,6 +577,10 @@ public OnScriptInit()
     Item_Thirst(ITEM_FISH) = 40.0;
     Item_Callback(ITEM_FISH) = __addressof(Food_OnUse);
     Item_SetPreviewRot(ITEM_FISH, -19.000000, 49.000000, -171.000000, 0.770000);
+
+    // Dynamite
+    Item_Callback(ITEM_DYNAMITE) = __addressof(Dynamite_OnUse);
+    Item_SetPreviewRot(ITEM_DYNAMITE, -19.000000, 49.000000, -171.000000, 0.770000);
 
     // Flag
     Item_Callback(ITEM_FLAG) = __addressof(Flag_OnUse);

@@ -126,7 +126,7 @@ player_menu misc_shop(playerid, response, listitem)
                 {
                     Player_GiveMoney(playerid, -5000);
                     PlayerPlaySound(playerid, SOUND_SUCCESS);
-                    Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste una dinamica.");
+                    Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste dinamica.");
                 }
                 else
                 {
