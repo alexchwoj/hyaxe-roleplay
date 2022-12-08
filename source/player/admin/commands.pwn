@@ -93,8 +93,8 @@ flags:kick(CMD_FLAG<RANK_LEVEL_MODERATOR> | CMD_DONT_LOG_COMMAND)
 
 command ban_account(playerid, const params[], "Veta a una cuenta offline")
 {
-    new account_id, account_name[25], reason[51], time_seconds;
-    if(!sscanf(params, "iI(-1)S(No especificada)[50]", account_id, time_seconds, reason))
+    new account_id, account_name[25], reason[51], time_hours;
+    if(!sscanf(params, "iI(-1)S(No especificada)[50]", account_id, time_hours, reason))
     {
         if(account_id < 1)
         {
@@ -116,7 +116,7 @@ command ban_account(playerid, const params[], "Veta a una cuenta offline")
             cache_get_value_name(0, !"NAME", account_name);
             cache_get_value_name_int(0, !"SEX", sex);
 
-            Account_Ban(account_name, playerid, reason, time_seconds);
+            Account_Ban(account_name, playerid, reason, (time_hours == -1 ? -1 : time_hours * 3600) );
 
             Admins_SendMessage(RANK_LEVEL_HELPER, 0x415BA2FF, 
                 va_return("{DADADA}%s {415BA2}%s{DADADA} ({415BA2}%i{DADADA}) fue vetad%c por %s %s {415BA2}%s{DADADA}.", 
@@ -129,9 +129,9 @@ command ban_account(playerid, const params[], "Veta a una cuenta offline")
 
         return 1;
     }
-    else if(sscanf(params, "s[24]I(-1)S(No especificada)[50]", account_name, time_seconds, reason))
+    else if(sscanf(params, "s[24]I(-1)S(No especificada)[50]", account_name, time_hours, reason))
     {
-        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/ban_account {DADADA}<id o nombre> {969696}[tiempo en segundos = -1 (permanente)] [razón = \"No especificada\"]");
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/ban_account {DADADA}<dbid o nombre> {969696}[tiempo en horas = -1 (permanente)] [razón = \"No especificada\"]");
         return 1;
     }
 
@@ -149,7 +149,7 @@ command ban_account(playerid, const params[], "Veta a una cuenta offline")
         cache_get_value_name_int(0, !"ID", account_id);
         cache_get_value_name_int(0, !"SEX", sex);
 
-        Account_Ban(account_name, playerid, reason, time_seconds);
+        Account_Ban(account_name, playerid, reason, (time_hours == -1 ? -1 : time_hours * 3600));
 
         Admins_SendMessage(RANK_LEVEL_HELPER, 0x415BA2FF, 
             va_return("{DADADA}%s {415BA2}%s{DADADA} ({415BA2}%i{DADADA}) fue vetad%c por %s %s {415BA2}%s{DADADA}.", 

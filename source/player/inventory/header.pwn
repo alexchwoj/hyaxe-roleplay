@@ -93,6 +93,7 @@ enum _:eItems
     ITEM_FISH_CHARGE,
     ITEM_WAVE_CHARGE,
     ITEM_RING_CHARGE,
+    ITEM_DYNAMITE,
 
 	ITEM_INVALID
 };
@@ -214,12 +215,13 @@ new
         {"Calabaza", 19320, false, -1}, // ITEM_PUMPKIN
         {"Regalo", 19054, false, -1}, // ITEM_GIFT
         {"Lanzador", 3013, true, -1}, // ITEM_FIREWORK_LAUNCHER
-        {"Carga Coconut", 1636, true, -1},
-        {"Carga Strobe", 1636, true, -1},
-        {"Carga Colored Sphere", 1636, true, -1},
-        {"Carga Fish", 1636, true, -1},
-        {"Carga Wave", 1636, true, -1},
-        {"Carga Ring", 1636, true, -1},
+        {"Carga Coconut", 1636, true, -1}, // ITEM_COCONUT_CHARGE
+        {"Carga Strobe", 1636, true, -1}, // ITEM_STROBE_CHARGE
+        {"Carga Colored Sphere", 1636, true, -1}, // ITEM_COLORED_CHARGE
+        {"Carga Fish", 1636, true, -1}, // ITEM_FISH_CHARGE
+        {"Carga Wave", 1636, true, -1}, // ITEM_WAVE_CHARGE
+        {"Carga Ring", 1636, true, -1}, // ITEM_RING_CHARGE
+        {"Dinamita", 1654, true, -1}, // ITEM_DYNAMITE
 
 		{"Invalid item", 18631, false, -1} // ITEM_INVALID
 	},

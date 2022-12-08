@@ -61,14 +61,17 @@ static RifleShop_OnBuy(playerid, shop_id, item_id)
 
 static MiscShop_OnEnter(playerid)
 {
-    Dialog_ShowCallback(playerid, using public _hydg@misc_shop<iiiis>, DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Varios", "{F7F7F7}Productor\t{F7F7F7}Precio\nBandera para conquistar\t{64A752}$100\nBote de spray\t{64A752}$150\n", !"Comprar", !"Cerrar");
-    PlayerPlaySound(playerid, SOUND_BUTTON);
+    Menu_Show(playerid, "misc_shop", "Comprar");
+    Menu_AddItem(playerid, "Bandera para conquistar", "Precio: ~g~$100");
+    Menu_AddItem(playerid, "Bote de spray", "Precio: ~g~$150");
+    Menu_AddItem(playerid, "Dinamita", "Precio: ~g~$5000");
+    Menu_UpdateListitems(playerid);
     return 1;
 }
 
-dialog misc_shop(playerid, dialogid, response, listitem, const inputtext[])
+player_menu misc_shop(playerid, response, listitem)
 {
-    if (response)
+    if (response == MENU_RESPONSE_SELECT)
     {
         switch(listitem)
         {
@@ -108,9 +111,30 @@ dialog misc_shop(playerid, dialogid, response, listitem, const inputtext[])
                 Player_GiveMoney(playerid, -150);
                 PlayerPlaySound(playerid, SOUND_SUCCESS);
 
-                Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un bote de pintura.");
+                Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un spray de pintura.");
             }
+            case 2:
+            {
+                if (5000 > Player_Money(playerid))
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 1;
+                }
 
+                if (Inventory_AddItem(playerid, ITEM_DYNAMITE, 1, 0))
+                {
+                    Player_GiveMoney(playerid, -5000);
+                    PlayerPlaySound(playerid, SOUND_SUCCESS);
+                    Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste una dinamica.");
+                }
+                else
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes el inventario lleno.");
+                    return 1;
+                }
+            }
         }
     }
     return 1;
