@@ -1000,7 +1000,7 @@ dialog gang_invite_notice(playerid, dialogid, response, listitem, const inputtex
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    if(g_rgiPanelSelectedRole{playerid} != 0xFF && g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankId] == -1)
+    if(Player_Gang(playerid) != -1 && g_rgiPanelSelectedRole{playerid} != 0xFF && g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankId] == -1)
     {
         g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankId] = 0;
         g_rgiPanelSelectedRole{playerid} = 0xFF;
