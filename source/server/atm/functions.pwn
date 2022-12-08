@@ -49,7 +49,6 @@ ATM_HideMenu(playerid)
 
 ATM_Destroy(atm_id)
 {
-    printf("atm destroyyy");
     DestroyDynamicObject(g_rgeATMBank[atm_id][e_iAtmObject]);
 
     g_rgeATMBank[atm_id][e_iAtmObject] = CreateDynamicObject(2943,
@@ -67,7 +66,7 @@ ATM_Destroy(atm_id)
     {
         ATM_Repair(atm_id);
     }
-    Timer_CreateCallback(using inline RepairATM, 5000, 1);
+    Timer_CreateCallback(using inline RepairATM, 300000, 1);
     return 1;
 }
 
@@ -143,18 +142,19 @@ Bank_RegisterTransaction(bank_account, type, amount, extra = 0)
     return 1;
 }
 
-Player_DestroyNearestATM(playerid)
+Player_DestroyNearestATM(playerid, Float:x, Float:y, Float:z)
 {
     for(new i; i < sizeof(g_rgeATMBank); ++i)
     {
-        if(IsPlayerInRangeOfPoint(playerid, 5.0, g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], g_rgeATMBank[i][e_fAtmPosZ]))
-        {
-            ATM_Destroy(i);
-            
-            new money = Random(5000, (Player_VIP(playerid) >= 2 ? 6000 : 5800) );
+        if ( GetDistanceBetweenPoints3D(
+            x, y, z,
+            g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], g_rgeATMBank[i][e_fAtmPosZ]
+        ) <= 5.0)
+        {   
+            new money = Random(30000, (Player_VIP(playerid) >= 2 ? 31000 : 30800) );
             Player_GiveMoney(playerid, money);
 
-            Notification_Show(playerid, va_return("Robaste un cajero y recibiste ~g~$%i~w~. Huye antes de que venga la policía.", money), 7000);
+            Notification_Show(playerid, va_return("Robaste un cajero y recibiste ~g~$%i~w~. Huye antes de que venga la policía.", money), 8000);
 
             Police_AddChargesToPlayer(playerid, 3);
 
@@ -162,15 +162,17 @@ Player_DestroyNearestATM(playerid)
             GetPointZone(g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], city, zone);
             Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s ha destrozado a un cajero en %s, %s.", Player_RPName(playerid), zone, city));
             
-            for(new j; j < Random(2, 6); ++j)
+            for(new j; j < Random(5, 10); ++j)
             {
                 DroppedItem_Create(
-                    ITEM_MONEY, 1, Random(50, 150),
+                    ITEM_MONEY, 1, Random(25, 90),
                     g_rgeATMBank[i][e_fAtmPosX] + RandomFloat(-2.0, 2.0),
                     g_rgeATMBank[i][e_fAtmPosY] + RandomFloat(-2.0, 2.0),
                     g_rgeATMBank[i][e_fAtmPosZ], 0, 0, .timeout = 300 + random(300)
                 );
             }
+
+            ATM_Destroy(i);
             break;
         }
     }

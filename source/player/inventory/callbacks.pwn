@@ -115,6 +115,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     else if (info[0] == ITEM_MONEY)
                     {
                         Player_GiveMoney(playerid, info[5]);
+                        printf("[3] DroppedItem_Delete");
+                        DroppedItem_Delete(areaid);
                         return 1;
                     }
                     else if (Inventory_AddItem(playerid, info[0], info[1], info[5]))

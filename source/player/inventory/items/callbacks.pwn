@@ -16,8 +16,10 @@ static Dynamite_OnUse(playerid, slot)
     ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
     InventorySlot_Subtract(playerid, slot);
 
-    new Float:x, Float:y, Float:z, worldid = GetPlayerVirtualWorld(playerid), interiorid = GetPlayerInterior(playerid);
+    new Float:x, Float:y, Float:z, Float:angle, worldid = GetPlayerVirtualWorld(playerid), interiorid = GetPlayerInterior(playerid);
     GetPlayerPos(playerid, x, y, z);
+    GetPlayerFacingAngle(playerid, angle);
+    GetXYFromAngle(x, y, angle, 0.8);
 
     new remaining_seconds = 10, phase, dynamite_object, Text3D:dynamite_text;
     inline ExplodeDynamite()
@@ -27,13 +29,20 @@ static Dynamite_OnUse(playerid, slot)
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Dinamita\n{DADADA}Detonará en %d segundos.", remaining_seconds);
         UpdateDynamic3DTextLabelText(dynamite_text, 0xCB3126FF, HYAXE_UNSAFE_HUGE_STRING);
 
+        if (remaining_seconds == 3)
+        {
+            Sound_PlayInRange(19600, 10.0, x, y, z, worldid, interiorid);
+        }
+
         if (!remaining_seconds)
         {
             DestroyDynamicObject(dynamite_object);
             DestroyDynamic3DTextLabel(dynamite_text);
 
-            CreateExplosion(x, y, z, 12, 1.0);
-            Player_DestroyNearestATM(playerid);
+            CreateExplosion(x, y, z, 0, 1.0);
+            Player_DestroyNearestATM(playerid, x, y, z);
+
+            Sound_PlayInRange(20800, 20.0, x, y, z, worldid, interiorid);
         }
     }
 
@@ -50,7 +59,7 @@ static Dynamite_OnUse(playerid, slot)
 
             Timer_CreateCallback(using inline ExplodeDynamite, 1000, 10);
 
-            Sound_PlayInRange(25800, 10.0, x, y, z, worldid, interiorid);
+            Sound_PlayInRange(25800, 20.0, x, y, z, worldid, interiorid);
             Notification_ShowBeatingText(playerid, 3000, 0x64A752, 100, 255, "La dinamita ha sido colocada");
         }
     }

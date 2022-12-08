@@ -64,7 +64,7 @@ static MiscShop_OnEnter(playerid)
     Menu_Show(playerid, "misc_shop", "Comprar");
     Menu_AddItem(playerid, "Bandera para conquistar", "Precio: ~g~$100");
     Menu_AddItem(playerid, "Bote de spray", "Precio: ~g~$150");
-    Menu_AddItem(playerid, "Dinamita", "Precio: ~g~$5000");
+    Menu_AddItem(playerid, "Dinamita", "Precio: ~g~$30000");
     Menu_UpdateListitems(playerid);
     return 1;
 }
@@ -115,7 +115,7 @@ player_menu misc_shop(playerid, response, listitem)
             }
             case 2:
             {
-                if (5000 > Player_Money(playerid))
+                if (30000 > Player_Money(playerid))
                 {
                     PlayerPlaySound(playerid, SOUND_ERROR);
                     Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
@@ -124,7 +124,7 @@ player_menu misc_shop(playerid, response, listitem)
 
                 if (Inventory_AddItem(playerid, ITEM_DYNAMITE, 1, 0))
                 {
-                    Player_GiveMoney(playerid, -5000);
+                    Player_GiveMoney(playerid, -30000);
                     PlayerPlaySound(playerid, SOUND_SUCCESS);
                     Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste dinamica.");
                 }
