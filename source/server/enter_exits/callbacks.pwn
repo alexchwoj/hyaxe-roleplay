@@ -71,6 +71,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     }
                     else
                     {
+                        Player_LastEnterExit(playerid) = id;
+                        
                         SetPlayerFacingAngle(playerid, g_rgeEnterExits[id][e_fEnterAngle]);
                         SetPlayerInterior(playerid, g_rgeEnterExits[id][e_iEnterInterior]);
                         SetPlayerVirtualWorld(playerid, g_rgeEnterExits[id][e_iEnterWorld]);

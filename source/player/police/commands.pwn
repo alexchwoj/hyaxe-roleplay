@@ -206,7 +206,7 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
         return 1;
     }
 
-    if(!IsPlayerConnected(target))
+    if(!IsPlayerConnected(target) || IsPlayerNPC(target))
     {
         SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Jugador inválido");
         return 1;
@@ -295,7 +295,7 @@ command reclutar(playerid, const params[], "Recluta a alguien como policía")
         return 1;
     }
 
-    if(!IsPlayerConnected(target))
+    if(!IsPlayerConnected(target) || IsPlayerNPC(target))
     {
         SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Jugador inválido.");
         return 1;
@@ -354,7 +354,7 @@ command arrestar(playerid, const params[], "Arresta a un jugador")
     }
 
     new target = GetPlayerCameraTargetPlayer(playerid);
-    if(!IsPlayerConnected(target))
+    if(!IsPlayerConnected(target) || IsPlayerNPC(target))
     {
         SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Necesitas estar viendo a un jugador para arrestarlo.");
         return 1;

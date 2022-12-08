@@ -63,6 +63,10 @@ Actor_Rob(playerid, actorid)
     if (!id)
         return 0;
 
+    new diff = GetTickCount() - g_rgeRobbableActors[id][e_iLastStealTick];
+    if(300000 > diff)
+        return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, va_return("Esta tienda fue robada recientemente. Puede volver a ser robada en %i minutos.", ((300000 - diff) / 60000)));
+
     Bit_Set(Player_Flags(playerid), PFLAG_ROBBING_STORE, true);
     g_rgeRobbableActors[id][e_iRobbingPlayer] = playerid;
 
@@ -70,5 +74,7 @@ Actor_Rob(playerid, actorid)
     ApplyDynamicActorAnimation(actorid, "SHOP", (TryPercentage(50) ? "SHP_ROB_REACT" : "SHP_ROB_HANDSUP"), 4.1, false, false, false, true, 0);
     
     g_rgeRobbableActors[id][e_iRobberyTimer] = SetTimerEx("ROBBERY_Progress", 5000, false, "iii", playerid, actorid, 0);
+
+    Notification_Show(playerid, "Estás robando esta tienda, no dejes de apuntar hasta que el vendedor te dé el dinero.", 5000);
     return 1;
 }

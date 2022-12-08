@@ -18,7 +18,7 @@ static FishMarket_OnKeyPress(playerid)
     if (amount < 5)
         return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Necesitas al menos 5 peces.");
 
-    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}¿Quieres vender %d %s por {64A752}$%d{DADADA}?", amount, (amount > 1 ? "peces" : "pez"), Job_ApplyPaycheckBenefits(playerid, 25 * amount));
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}¿Quieres vender %d %s por {64A752}$%d{DADADA}?", amount, (amount > 1 ? "peces" : "pez"), Job_ApplyPaycheckBenefits(playerid, 75 * amount));
     Dialog_ShowCallback(playerid, using public _hydg@sell_fish<iiiis>, DIALOG_STYLE_MSGBOX, !"{CB3126}Pescadería", HYAXE_UNSAFE_HUGE_STRING, !"Vender", !"Cerrar");
 
     return 1;
@@ -105,7 +105,7 @@ dialog sell_fish(playerid, dialogid, response, listitem, inputtext[])
     if (response)
     {
         new amount = Inventory_GetItemAmount(playerid, ITEM_FISH);
-        new pay = Job_ApplyPaycheckBenefits(playerid, 25 * amount);
+        new pay = Job_ApplyPaycheckBenefits(playerid, 75 * amount);
 
         Player_AddXP(playerid, amount);
         Player_GiveMoney(playerid, pay);

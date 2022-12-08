@@ -72,6 +72,12 @@ public ROBBERY_Progress(playerid, actorid, phase)
             g_rgeRobbableActors[id][e_iRobberyTimer] = 0;
 
             Bit_Set(Player_Flags(playerid), PFLAG_ROBBING_STORE, false);
+
+            Police_AddChargesToPlayer(playerid, 2);
+
+            new city[45], zone[45];
+            GetPointZone(g_rgeEnterExits[ Player_LastEnterExit(playerid) ][e_fExitX], g_rgeEnterExits[ Player_LastEnterExit(playerid) ][e_fExitY], city, zone);
+            Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s ha robado una tienda en %s, %s.", Player_RPName(playerid), zone, city));
         }
     }
 

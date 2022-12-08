@@ -30,6 +30,7 @@ public OnScriptInit()
 
 public OnPlayerDeath(playerid, killerid, reason)
 {
+    DEBUG_PRINT("OnPlayerDeath(playerid = %d, killerid = %d, reason = %d)", playerid, killerid, reason);
     if (Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME) && !Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL) && IsPlayerConnected(killerid))
     {
         new areas = GetPlayerNumberDynamicAreas(killerid);
@@ -43,6 +44,7 @@ public OnPlayerDeath(playerid, killerid, reason)
                 if(Streamer_HasIntData(STREAMER_TYPE_AREA, YSI_UNSAFE_HUGE_STRING[i], E_STREAMER_CUSTOM(0x534146)))
                 {
                     Police_AddChargesToPlayer(killerid, 4);
+                    break;
                 }
             }
         }
