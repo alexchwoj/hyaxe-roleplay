@@ -7,7 +7,7 @@ public OnPlayerDisconnect(playerid, reason)
 {
     g_rgiPlayerCurrentShopItem{playerid} = 0;
     g_rgiPlayerCurrentShop{playerid} = 0xFF;
-    g_rgbPlayerWaitingObjectMove{playerid} = false;
+    g_rgiPlayerWaitingObjectMove{playerid} = false;
     if(IsValidPlayerObject(playerid, g_rgiPlayerShopObject[playerid]))
     {
         DestroyPlayerObject(playerid, g_rgiPlayerShopObject[playerid]);
@@ -33,22 +33,26 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerObjectMoved(playerid, objectid)
 {
-    if(g_rgbPlayerWaitingObjectMove{playerid})
+    if(g_rgiPlayerWaitingObjectMove{playerid})
     {
-        g_rgbPlayerWaitingObjectMove{playerid} = false;
         Bit_Set(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS, true);
 
         PlayerPlaySound(playerid, 1145);
-        DestroyPlayerObject(playerid, g_rgiPlayerShopObject[playerid]);
+        if(g_rgiPlayerWaitingObjectMove{playerid} != 0b11)
+        {
+            DestroyPlayerObject(playerid, g_rgiPlayerShopObject[playerid]);
 
-        new current_shop = g_rgiPlayerCurrentShop{playerid};
-        new current_item = g_rgiPlayerCurrentShopItem{playerid};
-        g_rgiPlayerShopObject[playerid] = CreatePlayerObject(playerid, g_rgeShopItems[current_shop][current_item][e_iItemModel], g_rgeShops[current_shop][e_fShopObjectStartX], g_rgeShops[current_shop][e_fShopObjectStartY], g_rgeShops[current_shop][e_fShopObjectStartZ], g_rgeShopItems[current_shop][current_item][e_fRotX], g_rgeShopItems[current_shop][current_item][e_fRotY], g_rgeShopItems[current_shop][current_item][e_fRotZ]);
-        MovePlayerObject(playerid, g_rgiPlayerShopObject[playerid], g_rgeShops[current_shop][e_fShopObjectIdleX], g_rgeShops[current_shop][e_fShopObjectIdleY], g_rgeShops[current_shop][e_fShopObjectIdleZ], 1.2);
+            new current_shop = g_rgiPlayerCurrentShop{playerid};
+            new current_item = g_rgiPlayerCurrentShopItem{playerid};
+            g_rgiPlayerShopObject[playerid] = CreatePlayerObject(playerid, g_rgeShopItems[current_shop][current_item][e_iItemModel], g_rgeShops[current_shop][e_fShopObjectStartX], g_rgeShops[current_shop][e_fShopObjectStartY], g_rgeShops[current_shop][e_fShopObjectStartZ], g_rgeShopItems[current_shop][current_item][e_fRotX], g_rgeShopItems[current_shop][current_item][e_fRotY], g_rgeShopItems[current_shop][current_item][e_fRotZ]);
+            MovePlayerObject(playerid, g_rgiPlayerShopObject[playerid], g_rgeShops[current_shop][e_fShopObjectIdleX], g_rgeShops[current_shop][e_fShopObjectIdleY], g_rgeShops[current_shop][e_fShopObjectIdleZ], 1.2);
 
-        TextDrawSetStringForPlayer(g_tdShops[10], playerid, "$%d", g_rgeShopItems[current_shop][current_item][e_iItemPrice]);
-        TextDrawSetStringForPlayer(g_tdShops[11], playerid, Str_FixEncoding(g_rgeShopItems[current_shop][current_item][e_szItemName]));
-    
+            TextDrawSetStringForPlayer(g_tdShops[10], playerid, "$%d", g_rgeShopItems[current_shop][current_item][e_iItemPrice]);
+            TextDrawSetStringForPlayer(g_tdShops[11], playerid, Str_FixEncoding(g_rgeShopItems[current_shop][current_item][e_szItemName]));
+        }
+
+        g_rgiPlayerWaitingObjectMove{playerid} = false;
+
         return 1;
     }
 
@@ -82,7 +86,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
                 return 1;
 
             Bit_Set(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS, false);
-            g_rgbPlayerWaitingObjectMove{playerid} = true;
+            g_rgiPlayerWaitingObjectMove{playerid} = true;
 
             --g_rgiPlayerCurrentShopItem{playerid};
             MovePlayerObject(playerid, g_rgiPlayerShopObject[playerid], g_rgeShops[shop_id][e_fShopObjectEndX], g_rgeShops[shop_id][e_fShopObjectEndY], g_rgeShops[shop_id][e_fShopObjectEndZ], 1.2);
@@ -94,7 +98,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
                 return 1;
             
             Bit_Set(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS, false);
-            g_rgbPlayerWaitingObjectMove{playerid} = true;
+            g_rgiPlayerWaitingObjectMove{playerid} = true;
 
             ++g_rgiPlayerCurrentShopItem{playerid};
             MovePlayerObject(playerid, g_rgiPlayerShopObject[playerid], g_rgeShops[shop_id][e_fShopObjectEndX], g_rgeShops[shop_id][e_fShopObjectEndY], g_rgeShops[shop_id][e_fShopObjectEndZ], 1.2);

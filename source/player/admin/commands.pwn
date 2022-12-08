@@ -681,7 +681,7 @@ flags:dropitem(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)
 
 command tpveh(playerid, const params[], "Traer un vehículo")
 {
-    extract params -> new vehicleid = INVALID_VEHICLE_ID, player:destination = 0xFFFF; else {
+    extract params -> new vehicleid = 0xFFFF, player:destination = 0xFFFF; else {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/tpveh {DADADA}[vehicleid] [jugador = tú]");
         return 1;
     }

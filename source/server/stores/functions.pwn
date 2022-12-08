@@ -59,7 +59,7 @@ static Shop_OnPress(playerid, shop_id)
     PlayerPlaySound(playerid, 1145);
     g_rgiPlayerCurrentShop{playerid} = shop_id;
     g_rgiPlayerCurrentShopItem{playerid} = 0;
-    g_rgbPlayerWaitingObjectMove{playerid} = true;
+    g_rgiPlayerWaitingObjectMove{playerid} = 0b11;
     g_rgiPlayerShopObject[playerid] = CreatePlayerObject(playerid, g_rgeShopItems[shop_id][0][e_iItemModel], g_rgeShops[shop_id][e_fShopObjectStartX], g_rgeShops[shop_id][e_fShopObjectStartY], g_rgeShops[shop_id][e_fShopObjectStartZ], g_rgeShopItems[shop_id][0][e_fRotX], g_rgeShopItems[shop_id][0][e_fRotY], g_rgeShopItems[shop_id][0][e_fRotZ]);
     MovePlayerObject(playerid, g_rgiPlayerShopObject[playerid], g_rgeShops[shop_id][e_fShopObjectIdleX], g_rgeShops[shop_id][e_fShopObjectIdleY], g_rgeShops[shop_id][e_fShopObjectIdleZ], 1.2);
 
@@ -151,7 +151,7 @@ Player_StopShopping(playerid)
     g_rgiPlayerShopObject[playerid] = INVALID_OBJECT_ID;
     g_rgiPlayerCurrentShopItem{playerid} = 0;
     g_rgiPlayerCurrentShop{playerid} = 0xFF;
-    g_rgbPlayerWaitingObjectMove{playerid} = false;
+    g_rgiPlayerWaitingObjectMove{playerid} = false;
 
     return 1;
 }

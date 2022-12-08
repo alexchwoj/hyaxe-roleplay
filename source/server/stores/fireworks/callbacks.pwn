@@ -1,7 +1,7 @@
-#if defined _pyroctenia_callbacks_
+#if defined _fireworks_callbacks_
     #endinput
 #endif
-#define _pyroctenia_callbacks_
+#define _fireworks_callbacks_
 
 static PYRO_OnPress(playerid)
 {
