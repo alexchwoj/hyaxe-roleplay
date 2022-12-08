@@ -221,7 +221,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
 
             if(g_rgiPlayerRemainingBoxes{playerid} - 1 > 0)
             {
-                SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 0, 0);
+                SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 0, 1);
 
                 g_rgiPlayerRemainingBoxes{playerid}--;
                 TogglePlayerDynamicCP(playerid, g_iPickBoxCheckpoint, true);
@@ -236,7 +236,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
 
                 new engine, lights, alarm, doors, bonnet, dummy;
                 GetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, doors, bonnet, dummy, dummy);
-                SetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, doors, bonnet, 0, dummy);
+                SetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, 0, bonnet, 0, dummy);
                 SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 0, 0);
 
                 DestroyDynamicCP(g_rgiPlayerTruckCheckpoint[playerid]);
@@ -254,8 +254,8 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
         
             new engine, lights, alarm, doors, bonnet, objective;
             GetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, doors, bonnet, objective, objective);
-            SetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, doors, bonnet, 1, objective);
-            SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 1, 0);
+            SetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, 1, bonnet, 1, objective);
+            SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 1, 1);
         }
         else if(checkpointid == g_rgeTruckerRoutes[g_rgiPlayerTruckerRoute{playerid}][e_iBoxUnloadCp])
         {
@@ -268,7 +268,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
 
                 if(g_rgiPlayerRemainingBoxes{playerid} - 1 > 0)
                 {
-                    SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 1, 0);
+                    SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 1, 1);
 
                     g_rgiPlayerRemainingBoxes{playerid}--;
                     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "~w~Te queda%s ~y~%i caja%s~w~ por descargar", g_rgiPlayerRemainingBoxes{playerid} > 1 ? "n" : "", g_rgiPlayerRemainingBoxes{playerid}, g_rgiPlayerRemainingBoxes{playerid} > 1 ? "s" : "");
@@ -282,7 +282,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
 
                     new engine, lights, alarm, doors, bonnet, dummy;
                     GetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, doors, bonnet, dummy, dummy);
-                    SetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, doors, bonnet, 0, 0);
+                    SetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, 0, bonnet, 0, 0);
                     SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 0, 0);
 
                     TogglePlayerDynamicCP(playerid, checkpointid, false);
@@ -382,12 +382,12 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
                     printf("= SHOWING CHECKPOINT ID %d FOR PLAYER", g_rgiPlayerTruckCheckpoint[playerid]);
 
-                    SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 1, 0);
+                    SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 1, 1);
                     TogglePlayerDynamicCP(playerid, g_rgiPlayerTruckCheckpoint[playerid], true);
                     Streamer_Update(playerid, STREAMER_TYPE_CP);
                     
                     printf("===================================================================");
-                    
+
                     g_rgbPlayerHasBoxInHands{playerid} = true;
                 
                     return 1;
@@ -417,7 +417,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     TogglePlayerDynamicCP(playerid, g_rgeTruckerRoutes[g_rgiPlayerTruckerRoute{playerid}][e_iBoxUnloadCp], true);
                     Streamer_Update(playerid, STREAMER_TYPE_CP);
 
-                    SetVehicleParamsForPlayer(truckid, playerid, 0, 0);
+                    SetVehicleParamsForPlayer(truckid, playerid, 0, 1);
 
                     return 1;
                 }
