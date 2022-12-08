@@ -19,6 +19,8 @@ public Timer_WeatherUpdate()
 
         SetPlayerWeather(i, g_iWeatherType);
     }
+
+    API_UpdateWeather(g_iWeatherIndex);
     return 1;
 }
 
@@ -72,6 +74,7 @@ public OnScriptInit()
 {
     g_iWeatherIndex = random(sizeof(g_iWeatherTypesList));
     SetTimer("Timer_WeatherUpdate", HYAXE_WEATHER_INTERVAL, true);
+    API_UpdateWeather(g_iWeatherIndex);
 
     #if defined Clock_OnScriptInit
         return Clock_OnScriptInit();

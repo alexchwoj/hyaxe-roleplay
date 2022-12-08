@@ -17,7 +17,7 @@ command bonus(playerid, const params[], "Recibir un bonus")
     Inventory_AddFixedItem(playerid, ITEM_BURGER, 1, 0);
     Inventory_AddFixedItem(playerid, ITEM_ORANGE_JUICE, 1, 0);
     Inventory_AddFixedItem(playerid, ITEM_APPLE_JUICE, 1, 0);
-    Player_GiveMoney(playerid, 25000);
+    Player_GiveMoney(playerid, 10000);
     Player_AddXP(playerid, 500);
 
     SendClientMessage(playerid, 0xDAA838FF, "[Bonus] › {DADADA} Bonificación recibida");
@@ -28,7 +28,7 @@ command bonus(playerid, const params[], "Recibir un bonus")
     SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 75 gramos de crack");
     SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 150 Medicamentos");
     SendClientMessage(playerid, 0x64A752FF, "+{DADADA} 500 XP");
-    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} $25.000");
+    SendClientMessage(playerid, 0x64A752FF, "+{DADADA} $10.000");
 
     Player_Bonus(playerid) = true;
     mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `BONUS` = %d WHERE `ID` = %d;", Player_Bonus(playerid), Player_AccountID(playerid));

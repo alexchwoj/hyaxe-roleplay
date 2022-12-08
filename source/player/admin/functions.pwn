@@ -3,7 +3,7 @@
 #endif
 #define _admin_functions_
 
-Admins_SendMessage(level, color, const message[])
+Admins_SendMessage(level, color, const message[], bool:webhook = true)
 {
     foreach(new i : Admin)
     {
@@ -14,6 +14,11 @@ Admins_SendMessage(level, color, const message[])
                 SendClientMessage(i, color, message);
             }
         }
+    }
+
+    if (webhook)
+    {
+        API_SendWebhook(message, color);
     }
 
     return 1;

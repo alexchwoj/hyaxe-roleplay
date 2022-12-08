@@ -93,7 +93,7 @@ JYYYYYYJJJJJJJJ7!?JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ??????????!!777777777777777777
 #pragma warning disable 239
 #pragma warning disable 214
 
-#define SERVER_VERSION "v1.1.3-alpha"
+#define SERVER_VERSION "v1.2.3"
 
 #define NDEBUG 0
 
@@ -255,6 +255,7 @@ const HYAXE_MAX_NPCS = 100;
 
 // Functions
 ///////////////
+#include "core/api/functions.pwn"
 #include "core/utils/functions.pwn"
 #include "core/animations/functions.pwn"
 #include "core/notification/functions.pwn"
