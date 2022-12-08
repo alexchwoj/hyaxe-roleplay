@@ -22,7 +22,7 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
             if(g_rgbPlayerHasBoxInHands{playerid})
             {
                 RemovePlayerAttachedObject(playerid, 0);
-                SetPlayerSPecialAction(playerid, SPECIAL_ACTION_NONE);
+                SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
             }
 
             if(g_rgiPlayerUsingTruck[playerid])
