@@ -73,3 +73,51 @@ command pagar(playerid, const params[], "Pagarle a un jugador")
 
     return 1;
 }
+
+command cuenta(playerid, const params[], "Ver los datos de una cuenta")
+{
+    extract params -> new player:destination = 0xFFFF; else {
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/id {DADADA}[jugador = tú]");
+        return 1;
+    }
+
+    if (destination == INVALID_PLAYER_ID)
+        destination = playerid;
+
+    if (!IsPlayerConnected(destination))
+        return SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No hay un usuario que concuerde con el ID o nombre dados.");
+
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}\
+        Nombre: {9C9C9C}%s{DADADA}\n\
+        Rango: {9C9C9C}%s{DADADA}\n\
+        Nivel: {9C9C9C}%d (Exp. %d/%d){DADADA}\n\
+        Tiempo jugado: {9C9C9C}%.1f h registradas{DADADA}\n\
+        Fecha de registro: {9C9C9C}%s{DADADA}\
+    ",
+        Player_RPName(destination),
+        g_rgszRankLevelNames[ Player_AdminLevel(destination) ][ Player_Sex(destination) ],
+        Player_Level(destination), Player_XP(destination), Level_GetRequiredXP(Player_Level(destination)),
+        float(Player_SavedPlayedTime(destination)) / 3600,
+        Player_RegistrationDate(destination)
+    );
+
+    Dialog_Show(playerid, DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe {DADADA}- Cuenta", HYAXE_UNSAFE_HUGE_STRING, "Cerrar");
+    return 1;
+}
+
+command vip(playerid, const params[], "Ver el estado de la suscripción VIP")
+{
+    if (Player_VIP(playerid))
+        return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes VIP");
+
+    format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}\
+        Tipo: {DAA838}VIP %s{DADADA}\n\
+        Expira: {9C9C9C}%s{DADADA}\
+    ",
+        g_rgszVIPNames[ Player_VIP(playerid) ],
+        Player_Data(playerid, e_szVIPExpiracy)
+    );
+
+    Dialog_Show(playerid, DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe {DADADA}- Cuenta", HYAXE_UNSAFE_HUGE_STRING, "Cerrar");
+    return 1;
+}

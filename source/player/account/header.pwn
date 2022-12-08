@@ -62,6 +62,13 @@ new const g_rgszRankLevelNames[eRankLevels][2][24] = {
     { "Superadministradora", "Superadministrador" } // 5
 };
 
+new const g_rgszVIPNames[][16] = {
+    "No tiene",
+    "Aspire",
+    "Turbo",
+    "Super"
+};
+
 enum ePlayerData
 {
     e_iPlayerAccountId,
@@ -72,6 +79,7 @@ enum ePlayerData
     e_iPlayerIp,
     e_szPlayerLastConnection[20],
     e_szPassword[129],
+    e_szRegistrationDate[24],
     
     e_iPlayerHealth,
     e_iPlayerArmor,
@@ -102,7 +110,8 @@ enum ePlayerData
     e_iPlayerPausedTime,
     e_iMutedTime,
     e_iJailTime,
-    bool:e_bBonus
+    bool:e_bBonus,
+    e_szVIPExpiracy
 };
 
 enum _:ePlayerTimers
@@ -176,6 +185,7 @@ new
 #define Player_Timer(%0,%1) (g_rgePlayerTempData[(%0)][e_rgiTimers][(%1)])
 #define Player_VIP(%0) (g_rgePlayerData[(%0)][e_iVipLevel])
 #define Player_WantedLevel(%0) (g_rgePlayerData[(%0)][e_iPlayerWantedLevel])
+#define Player_RegistrationDate(%0) (g_rgePlayerData[(%0)][e_szRegistrationDate])
 
 forward Player_SetWantedLevel(playerid, level);
 

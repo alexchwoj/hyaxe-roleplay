@@ -137,9 +137,11 @@ Account_LoadFromCache(playerid)
     cache_get_value_name_int(0, !"LEVEL", Player_Level(playerid));
     cache_get_value_name_int(0, !"ADMIN_LEVEL", Player_AdminLevel(playerid));
     cache_get_value_name_int(0, !"PLAYED_TIME", Player_SavedPlayedTime(playerid));
+    cache_get_value_name(0, !"REGISTRATION_DATE", Player_RegistrationDate(playerid));
     cache_get_value_name_int(0, !"MUTED_TIME", Player_MutedTime(playerid));
     cache_get_value_name_bool(0, !"BONUS", Player_Bonus(playerid));
     cache_get_value_name_int(0, !"JAIL_TIME", Player_Data(playerid, e_iJailTime));
+    cache_get_value_name(0, !"VIP_EXPIRACY", Player_Data(playerid, e_szVIPExpiracy));
 
     // Muted time
     Player_MutedTime(playerid) += gettime();
