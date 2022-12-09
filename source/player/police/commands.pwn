@@ -121,7 +121,45 @@ dialog police_manage_officer(playerid, dialogid, response, listitem, inputtext[]
         }
         case 1: // Expulsar
         {
+            inline const Response(res, li, string:it[])
+            {
+                #pragma unused li, it
 
+                if(!res)
+                {
+                    PC_EmulateCommand(playerid, "/policias");
+                    return 1;
+                }
+
+                mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "DELETE FROM `POLICE_OFFICERS` WHERE `ACCOUNT_ID` = %d;", g_rgszSelectedOfficer[playerid][25]);
+                mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
+
+                Police_SendMessage(POLICE_RANK_NONE, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s fue relevado de su cargo.", g_rgszSelectedOfficer[playerid]));
+                
+                foreach(new i : Police)
+                {
+                    if(Player_AccountID(i) == g_rgszSelectedOfficer[playerid][25])
+                    {
+                        if(g_rgbPlayerOnPoliceDuty{i})
+                        {
+                            Player_SetImmunityForCheat(i, CHEAT_WEAPON, 1000 + GetPlayerPing(i));
+                            
+                            Police_ClearMarkers(i);
+
+                            SetPlayerSkin(i, Player_Skin(i));
+                            ResetPlayerWeapons(i);
+                            Player_ClearWeaponsArray(i);
+                            Police_OnDuty(i) = false;
+
+                            Notification_Show(i, "Fuiste expulsado del cuerpo policial.", 5000);
+                        }
+
+                        Police_Rank(i) = POLICE_RANK_NONE;
+                        Iter_Remove(Police, i);
+                    }
+                }
+            }
+            Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_MSGBOX, "{DADADA}Expulsar a un oficial", va_return("{DADADA}Al continuar, {3A86FF}%s{DADADA} será expulsado del cuerpo de policía.", g_rgszSelectedOfficer[playerid]), "Continuar", "Cancelar");
         }
     }
 
@@ -552,7 +590,7 @@ command tiempo(playerid, const params[], "Ve el tiempo restante de condena")
 
 command liberar(playerid, const params[], "Libera a un jugador de sus esposas")
 {
-    if(!Police_OnDuty(playerid))
+    if(!Police_OnDuty(playerid) && Player_AdminLevel(playerid) < RANK_LEVEL_MODERATOR)
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas estar de servicio como policía");
         return 1;
@@ -586,5 +624,18 @@ command liberar(playerid, const params[], "Libera a un jugador de sus esposas")
 
     Police_SendMessage(POLICE_RANK_OFFICER, 0xED2B2BFF, va_return("[Policía] {DADADA}%s {ED2B2B}›{DADADA} Sospechos%c %s liberad%c.", Player_RPName(playerid), (Player_Sex(target) == SEX_MALE ? 'o' : 'a'), Player_RPName(target), (Player_Sex(target) == SEX_MALE ? 'o' : 'a')), 6, target);
 
+    return 1;
+}
+
+command absolver(playerid, const params[], "Absuelve a un jugador de su condena")
+{
+    if(!Police_OnDuty(playerid) && Player_AdminLevel(playerid) < RANK_LEVEL_MODERATOR)
+    {
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas estar de servicio como policía");
+        return 1;
+    }
+
+    // todo
+    
     return 1;
 }
