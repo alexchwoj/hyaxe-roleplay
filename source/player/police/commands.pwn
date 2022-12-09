@@ -156,6 +156,8 @@ dialog police_manage_officer(playerid, dialogid, response, listitem, inputtext[]
 
                         Police_Rank(i) = POLICE_RANK_NONE;
                         Iter_Remove(Police, i);
+
+                        break;
                     }
                 }
             }
@@ -636,6 +638,6 @@ command absolver(playerid, const params[], "Absuelve a un jugador de su condena"
     }
 
     // todo
-    
+
     return 1;
 }
