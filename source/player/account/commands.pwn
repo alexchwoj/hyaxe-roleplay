@@ -107,7 +107,7 @@ command cuenta(playerid, const params[], "Ver los datos de una cuenta")
 
 command vip(playerid, const params[], "Ver el estado de la suscripción VIP")
 {
-    if (Player_VIP(playerid))
+    if (!Player_VIP(playerid))
         return Notification_Show(playerid, "No tienes VIP. Dirígete a ~r~samp.hyaxe.com/store~w~ para comprarlo.", 10000);
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}\
