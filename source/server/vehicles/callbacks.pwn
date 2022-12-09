@@ -113,6 +113,14 @@ public OnVehicleSpawn(vehicleid)
     SetVehicleParamsEx(vehicleid, 0, 0, 0, Vehicle_Locked(vehicleid), 0, 0, 0);
     UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, 0);
 
+    for(new i; i < 14; ++i)
+    {
+        if(g_rgeVehicles[vehicleid][e_iComponents][i])
+        {
+            AddVehicleComponent(vehicleid, g_rgeVehicles[vehicleid][e_iComponents][i]);
+        }
+    }
+    
     #if defined VEH_OnVehicleSpawn
         return VEH_OnVehicleSpawn(vehicleid);
     #else
