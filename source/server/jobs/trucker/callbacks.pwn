@@ -459,6 +459,7 @@ dialog select_trucker_route(playerid, dialogid, response, listitem, const inputt
 
     TogglePlayerDynamicCP(playerid, g_iPickBoxCheckpoint, true);
     Streamer_Update(playerid, STREAMER_TYPE_CP);
+    RemovePlayerFromVehicle(playerid);
 
     Notification_Show(playerid, "Empieza a cargar el camión con las cajas del punto marcado en el mapa.", 5000);
 
