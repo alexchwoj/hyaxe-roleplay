@@ -24,7 +24,7 @@ Firework_Coconut(Float:x, Float:y, Float:z, Float:height = 20.0)
     MoveDynamicObject(bengal_id, x, y, z + height, 15.0, 0.0, 0.0, 0.0);
 
     SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", CreateDynamicObject(18716, x, y, z, 0.0, 0.0, 0.0, 0, 0));
-    Streamer_UpdateForAll(x, y, z);
+    Streamer_UpdateInStreamRange(x, y, z);
 
     inline Explode()
 	{
@@ -41,7 +41,7 @@ Firework_Coconut(Float:x, Float:y, Float:z, Float:height = 20.0)
 
             SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
         }
-        Streamer_UpdateForAll(x, y, z);
+        Streamer_UpdateInStreamRange(x, y, z);
 	}
     Timer_CreateCallback(using inline Explode, floatround(height * 50), 1);
     return 1;
@@ -53,7 +53,7 @@ Firework_Strobe(Float:x, Float:y, Float:z, Float:height = 20.0)
     MoveDynamicObject(bengal_id, x, y, z + height, 15.0, 0.0, 0.0, 0.0);
 
     SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", CreateDynamicObject(18716, x, y, z, 0.0, 0.0, 0.0, 0, 0));
-    Streamer_UpdateForAll(x, y, z);
+    Streamer_UpdateInStreamRange(x, y, z);
 
     inline Explode()
 	{
@@ -70,7 +70,7 @@ Firework_Strobe(Float:x, Float:y, Float:z, Float:height = 20.0)
 
             SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
         }
-        Streamer_UpdateForAll(x, y, z);
+        Streamer_UpdateInStreamRange(x, y, z);
 	}
     Timer_CreateCallback(using inline Explode, floatround(height * 50), 1);
     return 1;
@@ -82,7 +82,7 @@ Firework_ColoredSphere(Float:x, Float:y, Float:z, Float:height = 20.0)
     MoveDynamicObject(bengal_id, x, y, z + height, 15.0, 0.0, 0.0, 0.0);
 
     SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", CreateDynamicObject(18716, x, y, z, 0.0, 0.0, 0.0, 0, 0));
-    Streamer_UpdateForAll(x, y, z);
+    Streamer_UpdateInStreamRange(x, y, z);
 
     inline Explode()
 	{
@@ -100,7 +100,7 @@ Firework_ColoredSphere(Float:x, Float:y, Float:z, Float:height = 20.0)
 
             SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
         }
-        Streamer_UpdateForAll(x, y, z);
+        Streamer_UpdateInStreamRange(x, y, z);
 	}
     Timer_CreateCallback(using inline Explode, floatround(height * 50), 1);
     return 1;
@@ -112,7 +112,7 @@ Firework_Fish(Float:x, Float:y, Float:z, Float:height = 20.0)
     MoveDynamicObject(bengal_id, x, y, z + height, 15.0, 0.0, 0.0, 0.0);
 
     SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", CreateDynamicObject(18716, x, y, z, 0.0, 0.0, 0.0, 0, 0));
-    Streamer_UpdateForAll(x, y, z);
+    Streamer_UpdateInStreamRange(x, y, z);
     
     inline Explode()
 	{
@@ -140,7 +140,7 @@ Firework_Fish(Float:x, Float:y, Float:z, Float:height = 20.0)
 
             SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
         }
-        Streamer_UpdateForAll(x, y, z);
+        Streamer_UpdateInStreamRange(x, y, z);
 	}
     Timer_CreateCallback(using inline Explode, floatround(height * 50), 1);
     return 1;
@@ -152,7 +152,7 @@ Firework_Wave(Float:x, Float:y, Float:z, Float:height = 20.0)
     MoveDynamicObject(bengal_id, x, y, z + height, 15.0, 0.0, 0.0, 0.0);
 
     SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", CreateDynamicObject(18716, x, y, z, 0.0, 0.0, 0.0, 0, 0));
-    Streamer_UpdateForAll(x, y, z);
+    Streamer_UpdateInStreamRange(x, y, z);
 
     inline Explode()
 	{
@@ -192,7 +192,7 @@ Firework_Wave(Float:x, Float:y, Float:z, Float:height = 20.0)
             SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
         }
 
-        Streamer_UpdateForAll(x, y, z);
+        Streamer_UpdateInStreamRange(x, y, z);
 	}
     Timer_CreateCallback(using inline Explode, floatround(height * 50), 1);
     return 1;
@@ -204,7 +204,7 @@ Firework_Ring(Float:x, Float:y, Float:z, Float:height = 20.0)
     MoveDynamicObject(bengal_id, x, y, z + height, 15.0, 0.0, 0.0, 0.0);
 
     SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", CreateDynamicObject(18716, x, y, z, 0.0, 0.0, 0.0, 0, 0));
-    Streamer_UpdateForAll(x, y, z);
+    Streamer_UpdateInStreamRange(x, y, z);
 
     inline Explode()
 	{
@@ -233,7 +233,7 @@ Firework_Ring(Float:x, Float:y, Float:z, Float:height = 20.0)
             SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
         }
 
-        Streamer_UpdateForAll(x, y, z);
+        Streamer_UpdateInStreamRange(x, y, z);
 	}
     Timer_CreateCallback(using inline Explode, floatround(height * 50), 1);
     return 1;

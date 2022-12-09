@@ -49,20 +49,16 @@ ATM_HideMenu(playerid)
 
 ATM_Destroy(atm_id)
 {
-    DestroyDynamicObject(g_rgeATMBank[atm_id][e_iAtmObject]);
-
-    g_rgeATMBank[atm_id][e_iAtmObject] = CreateDynamicObject(2943,
-        g_rgeATMBank[atm_id][e_fAtmPosX], g_rgeATMBank[atm_id][e_fAtmPosY], g_rgeATMBank[atm_id][e_fAtmPosZ],
-        g_rgeATMBank[atm_id][e_fAtmRotX], g_rgeATMBank[atm_id][e_fAtmRotY], g_rgeATMBank[atm_id][e_fAtmRotZ],
-        g_rgeATMBank[atm_id][e_iAtmWorld], g_rgeATMBank[atm_id][e_iAtmInterior],
-        .streamdistance = 100.0, .drawdistance = 100.0
-    );
-
+    Streamer_SetIntData(STREAMER_TYPE_OBJECT, g_rgeATMBank[atm_id][e_iAtmObject], E_STREAMER_MODEL_ID, 2943);
     g_rgeATMBank[atm_id][e_fAtmHealth] = 0.0;
 
-    Streamer_UpdateForAll(g_rgeATMBank[atm_id][e_fAtmPosX], g_rgeATMBank[atm_id][e_fAtmPosY], g_rgeATMBank[atm_id][e_fAtmPosZ]);
+    Streamer_UpdateInStreamRange(
+        g_rgeATMBank[atm_id][e_fAtmPosX], g_rgeATMBank[atm_id][e_fAtmPosY], g_rgeATMBank[atm_id][e_fAtmPosZ], 
+        g_rgeATMBank[atm_id][e_iAtmWorld], g_rgeATMBank[atm_id][e_iAtmInterior], 
+        STREAMER_TYPE_OBJECT, 100.0
+    );
 
-    inline RepairATM()
+    inline const RepairATM()
     {
         ATM_Repair(atm_id);
     }
@@ -72,18 +68,15 @@ ATM_Destroy(atm_id)
 
 ATM_Repair(atm_id)
 {
-    DestroyDynamicObject(g_rgeATMBank[atm_id][e_iAtmObject]);
-
-    g_rgeATMBank[atm_id][e_iAtmObject] = CreateDynamicObject(19324,
-        g_rgeATMBank[atm_id][e_fAtmPosX], g_rgeATMBank[atm_id][e_fAtmPosY], g_rgeATMBank[atm_id][e_fAtmPosZ],
-        g_rgeATMBank[atm_id][e_fAtmRotX], g_rgeATMBank[atm_id][e_fAtmRotY], g_rgeATMBank[atm_id][e_fAtmRotZ],
-        g_rgeATMBank[atm_id][e_iAtmWorld], g_rgeATMBank[atm_id][e_iAtmInterior],
-        .streamdistance = 100.0, .drawdistance = 100.0
-    );
-
+    Streamer_SetIntData(STREAMER_TYPE_OBJECT, g_rgeATMBank[atm_id][e_iAtmObject], E_STREAMER_MODEL_ID, 19324);
     g_rgeATMBank[atm_id][e_fAtmHealth] = 1000.0;
 
-    Streamer_UpdateForAll(g_rgeATMBank[atm_id][e_fAtmPosX], g_rgeATMBank[atm_id][e_fAtmPosY], g_rgeATMBank[atm_id][e_fAtmPosZ]);
+    Streamer_UpdateInStreamRange(
+        g_rgeATMBank[atm_id][e_fAtmPosX], g_rgeATMBank[atm_id][e_fAtmPosY], g_rgeATMBank[atm_id][e_fAtmPosZ], 
+        g_rgeATMBank[atm_id][e_iAtmWorld], g_rgeATMBank[atm_id][e_iAtmInterior], 
+        STREAMER_TYPE_OBJECT, 100.0
+    );
+
     return 1;
 }
 

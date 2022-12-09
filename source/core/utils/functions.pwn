@@ -3,6 +3,18 @@
 #endif
 #define _utils_functions_
 
+iterfunc stock PlayerInRange(Float:range, Float:x, Float:y, Float:z, vw = 0, interior = 0)
+{
+	foreach(new i : Player)
+	{
+		if(IsPlayerInRangeOfPoint(i, range, x, y, z) && GetPlayerInterior(i) == interior && GetPlayerVirtualWorld(i) == vw)
+		{
+			yield return i;
+		}
+	}
+}
+#define Iterator@PlayerInRange iteryield
+
 GetTickDiff(newtick, oldtick)
 {
 	if (oldtick > newtick) 
@@ -392,4 +404,14 @@ GetPlayerNearestVehicle(playerid)
 Float:GetDistanceBetweenPoints3D(Float:x1, Float:y1, Float:z1, Float:x2, Float:y2, Float:z2)
 {
     return VectorSize(x1 - x2, y1 - y2, z1 - z2);
+}
+
+Streamer_UpdateInStreamRange(Float:x, Float:y, Float:z, worldid = 0, interiorid = 0, type = -1, Float:range = 200.0)
+{
+    foreach(new i : PlayerInRange(range, x, y, z, worldid, interiorid))
+    {
+        Streamer_Update(i, type);
+    }
+
+    return 1;
 }

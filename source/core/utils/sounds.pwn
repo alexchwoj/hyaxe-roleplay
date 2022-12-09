@@ -58,13 +58,3 @@ Sound_PlayInRange(soundid, Float:range, Float:x, Float:y, Float:z, worldid = -1,
 
     return 1;
 }
-
-forward Streamer_UpdateForAll(Float:x, Float:y, Float:z, worldid = -1, interiorid = -1, type = -1, compensatedtime = -1, freezeplayer = 1);
-Streamer_UpdateForAll(Float:x, Float:y, Float:z, worldid = -1, interiorid = -1, type = -1, compensatedtime = -1, freezeplayer = 1)
-{
-    foreach(new i : Player)
-    {
-        Streamer_UpdateEx(i, x, y, z, worldid, interiorid, type, compensatedtime, freezeplayer);
-    }
-    return 1;
-}
