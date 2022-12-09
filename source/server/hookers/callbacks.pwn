@@ -122,6 +122,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
                 FCNPC_AimAtPlayer(g_rgiHookers[hookerid], playerid);
                 FCNPC_GoTo(g_rgiHookers[hookerid], x, y, z, FCNPC_MOVE_TYPE_WALK);
+                FCNPC_SetAngleToPlayer(g_rgiHookers[hookerid], playerid);
                 g_rgiHookerPendingTask{hookerid} = HOOKER_BLOWJOB;
 
                 ApplyAnimation(g_rgiHookerInteractingPlayer[hookerid], "BLOWJOBZ", "BJ_STAND_START_P", 4.1, 0, 0, 0, 1, 0);
