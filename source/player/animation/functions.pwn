@@ -6,7 +6,7 @@
 command parar(playerid, const params[], "Para la animación")
 {
     if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT || Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING) || Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
-        return 0;
+        return Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes hacer esto ahora mismo");
         
     ClearAnimations(playerid, 1);
     return 1;

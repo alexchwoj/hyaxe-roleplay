@@ -64,6 +64,9 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     if((newkeys & KEY_YES) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
         new vehicleid = GetPlayerNearestVehicle(playerid);
+        if (vehicleid == INVALID_VEHICLE_ID)
+            vehicleid = GetPlayerCameraTargetVehicle(playerid);
+            
         if (IsValidVehicle(vehicleid))
         {
             if (g_rgeVehicles[vehicleid][e_iSellIndex] != -1)

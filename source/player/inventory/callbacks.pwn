@@ -117,6 +117,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                         Player_GiveMoney(playerid, info[5]);
                         printf("[3] DroppedItem_Delete");
                         DroppedItem_Delete(areaid);
+                        ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
                         return 1;
                     }
                     else if (Inventory_AddItem(playerid, info[0], info[1], info[5]))
