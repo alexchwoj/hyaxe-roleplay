@@ -440,3 +440,15 @@ command closeserver(playerid, const params[], "Apagar el servidor")
 	return 1;
 }
 flags:closeserver(CMD_FLAG<RANK_LEVEL_SUPERADMIN>)
+
+iterfunc stock PlayerInRange(Float:range, Float:x, Float:y, Float:z, vw = 0, interior = 0)
+{
+	foreach(new i : Player)
+	{
+		if(IsPlayerInRangeOfPoint(i, range, x, y, z) && GetPlayerInterior(i) == interior && GetPlayerVirtualWorld(i) == vw)
+		{
+			yield return i;
+		}
+	}
+}
+#define Iterator@PlayerInRange iteryield
