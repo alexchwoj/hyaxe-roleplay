@@ -40,25 +40,25 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
                 Vehicle_Respawn(vehicleid);
                 Vehicle_SetHealth(vehicleid, 1000.0);
                 Vehicle_Fuel(vehicleid) = 100.0;
-
-                g_rgbPlayerLoadingTruck{playerid} = 
-                g_rgbTruckLoaded{g_rgiPlayerUsingTruck[playerid]} =
-                g_rgbTruckLoadDispatched{g_rgiPlayerUsingTruck[playerid]} = 
-                g_rgbPlayerHasBoxInHands{playerid} = 
-                bool:(
-                g_rgiPlayerUsingTruck[playerid] =
-                g_rgiPlayerRemainingBoxes{playerid} = 
-                g_rgiPlayerTruckerRoute{playerid} = 0
-                );
-
-                if(IsValidDynamicCP(g_rgiPlayerTruckCheckpoint[playerid]))
-                {
-                    DestroyDynamicCP(g_rgiPlayerTruckCheckpoint[playerid]);
-                    g_rgiPlayerTruckCheckpoint[playerid] = INVALID_STREAMER_ID;
-                }
-
-                TogglePlayerAllDynamicCPs(playerid, false);
             }
+
+            if(IsValidDynamicCP(g_rgiPlayerTruckCheckpoint[playerid]))
+            {
+                DestroyDynamicCP(g_rgiPlayerTruckCheckpoint[playerid]);
+                g_rgiPlayerTruckCheckpoint[playerid] = INVALID_STREAMER_ID;
+            }
+
+            TogglePlayerAllDynamicCPs(playerid, false);
+
+            g_rgbPlayerLoadingTruck{playerid} = 
+            g_rgbTruckLoaded{g_rgiPlayerUsingTruck[playerid]} =
+            g_rgbTruckLoadDispatched{g_rgiPlayerUsingTruck[playerid]} = 
+            g_rgbPlayerHasBoxInHands{playerid} = 
+            bool:(
+            g_rgiPlayerUsingTruck[playerid] =
+            g_rgiPlayerRemainingBoxes{playerid} = 
+            g_rgiPlayerTruckerRoute{playerid} = 0
+            );
 
             if(data == 1)
             {
