@@ -117,16 +117,10 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 GetPlayerPos(playerid, x, y, z);
                 GetPlayerFacingAngle(playerid, angle);
 
-                x += (0.8 * floatsin(-angle, degrees));
-                y += (0.8 * floatcos(-angle, degrees));
-
-                FCNPC_AimAtPlayer(g_rgiHookers[hookerid], playerid);
-                FCNPC_GoTo(g_rgiHookers[hookerid], x, y, z, FCNPC_MOVE_TYPE_WALK);
-                FCNPC_SetAngleToPlayer(g_rgiHookers[hookerid], playerid);
-                g_rgiHookerPendingTask{hookerid} = HOOKER_BLOWJOB;
-
-                ApplyAnimation(g_rgiHookerInteractingPlayer[hookerid], "BLOWJOBZ", "BJ_STAND_START_P", 4.1, 0, 0, 0, 1, 0);
-
+                GetXYFromAngle(x, y, angle, 1.0);
+                FCNPC_GoTo(g_rgiHookers[hookerid], x, y, z, FCNPC_MOVE_TYPE_WALK, FCNPC_MOVE_SPEED_RUN);
+                
+                g_rgiHookerPendingTask{hookerid} = HOOKER_WAIT_FOR_BLOWJOB;
                 return 1;
             }
         }
@@ -280,11 +274,16 @@ public FCNPC_OnReachDestination(npcid)
             FCNPC_SetAnimationByName(npcid, "BAR:BARCUSTOM_LOOP", 4.1, 1, 0, 0, 0, 0);
             g_rgiHookerPendingTask{hookerid} = HOOKER_NONE;
         }
-        else if(g_rgiHookerPendingTask{hookerid} == HOOKER_BLOWJOB)
+        else if(g_rgiHookerPendingTask{hookerid} == HOOKER_WAIT_FOR_BLOWJOB)
         {
+            FCNPC_AimAtPlayer(g_rgiHookers[hookerid], g_rgiHookerInteractingPlayer[hookerid]);
+            FCNPC_SetAngleToPlayer(g_rgiHookers[hookerid], g_rgiHookerInteractingPlayer[hookerid]);
+
             FCNPC_StopAim(g_rgiHookers[hookerid]);
             FCNPC_ApplyAnimation(npcid, "BLOWJOBZ", "BJ_STAND_START_W", 4.1, 0, 0, 0, 1, 0);
             g_rgiHookerUpdateTimer[hookerid] = SetTimerEx("HOOKER_StartBlowing", 2000, false, "ii", hookerid, g_rgiHookerInteractingPlayer[hookerid]);
+
+            ApplyAnimation(g_rgiHookerInteractingPlayer[hookerid], "BLOWJOBZ", "BJ_STAND_START_P", 4.1, 0, 0, 0, 1, 0);
         }
     }
 

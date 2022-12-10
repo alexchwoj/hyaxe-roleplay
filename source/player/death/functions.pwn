@@ -19,8 +19,8 @@ Player_Revive(playerid)
 
 command kill(playerid, const params[], "Suicidarse")
 {
-    if (Player_WantedLevel(playerid))
-        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes usar esto ahora mismo");
+    if (Player_WantedLevel(playerid) || Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING) || Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
+        return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes usar esto ahora mismo");
 
     Player_SetHealth(playerid, 0);
     return 1;
