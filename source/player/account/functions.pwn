@@ -65,11 +65,13 @@ Account_Save(playerid, bool:disconnect = false)
     new jailtime = 0;
     if(Player_Data(playerid, e_iJailTime))
         jailtime = Player_Data(playerid, e_iJailTime) - gettime();
-    else if(Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
+    
+    else if(Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED) || Player_WantedLevel(playerid))
     {
         jailtime = (Player_WantedLevel(playerid) * 2) * 60;
         Player_WantedLevel(playerid) = 0;
     }
+    printf("saved jail time = %d", jailtime);
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
         UPDATE `ACCOUNT` SET \

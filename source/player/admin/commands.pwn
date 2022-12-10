@@ -8,7 +8,7 @@ command ban(playerid, const params[], "Veta a un jugador")
     new banned, time, reason[51];
     if(sscanf(params, "rI(-1)S(No especificada)[50]", banned, time, reason))
     {
-        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/ban {DADADA}<jugador> {969696}[tiempo en segundos = -1 (permanente)] [razón = \"No especificada\"]");
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/ban {DADADA}<jugador> {969696}[tiempo en horas = -1 (permanente)] [razón = \"No especificada\"]");
         return 1;
     }
 
@@ -24,7 +24,7 @@ command ban(playerid, const params[], "Veta a un jugador")
         return 1;
     }
 
-    Player_Ban(banned, playerid, reason, time);
+    Player_Ban(banned, playerid, reason, (time == -1 ? -1 : time * 3600));
 
     Admins_SendMessage(RANK_LEVEL_HELPER, 0x415BA2FF, 
         va_return("{DADADA}%s {415BA2}%s{DADADA} ({415BA2}%i{DADADA}-{415BA2}%i{DADADA}) fue vetado por %s %s {415BA2}%s{DADADA}.", 

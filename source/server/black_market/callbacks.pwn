@@ -176,7 +176,7 @@ public OnScriptInit()
     );
     Shop_AddItem(shotgun_shop, "Shotgun", 349, 900, 96.000076, 75.499954, 173.299972);
     Shop_AddItem(shotgun_shop, "Sawnoff Shotgun", 350, 800, 96.000076, 75.499954, 173.299972);
-    Shop_AddItem(shotgun_shop, "Combat Shotgun", 351, 6000, 96.000076, 75.499954, 173.299972);
+    Shop_AddItem(shotgun_shop, "Combat Shotgun", 351, 10000, 96.000076, 75.499954, 173.299972);
 
     // Submachine shop
     CreateDynamicActor(122, 2451.5879, -1963.2706, 13.5539, 184.8346, .worldid = 0, .interiorid = 0);
@@ -202,9 +202,9 @@ public OnScriptInit()
         2456.884521, -1968.482543, 13.564177, // End
         __addressof(RifleShop_OnBuy)
     );
-    Shop_AddItem(rifle_shop, "AK-47", 355, 20000, 84.000061, -39.400012, 150.699996);
-    Shop_AddItem(rifle_shop, "M4", 356, 25000, 84.000061, -39.400012, 150.699996);
-    Shop_AddItem(rifle_shop, "Country Rifle", 357, 5000, 84.000061, -39.400012, 150.699996);
+    Shop_AddItem(rifle_shop, "AK-47", 355, 30000, 84.000061, -39.400012, 150.699996);
+    Shop_AddItem(rifle_shop, "M4", 356, 35000, 84.000061, -39.400012, 150.699996);
+    Shop_AddItem(rifle_shop, "Country Rifle", 357, 9000, 84.000061, -39.400012, 150.699996);
 
     #if defined BMARKET_OnScriptInit
         return BMARKET_OnScriptInit();
@@ -221,4 +221,36 @@ public OnScriptInit()
 #define OnScriptInit BMARKET_OnScriptInit
 #if defined BMARKET_OnScriptInit
     forward BMARKET_OnScriptInit();
+#endif
+
+public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
+{
+    if(Player_Level(playerid) < 3)
+    {
+        TogglePlayerControllable(playerid, false);
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas ser nivel 3 para disparar armas");
+        
+        inline const UnfreezePlayer()
+        {
+            TogglePlayerControllable(playerid, true);
+        }
+        Timer_CreateCallback(using inline UnfreezePlayer, 2000, 1);
+        return 1;
+    }
+
+    #if defined BMARKET_OnPlayerWeaponShot
+        return BMARKET_OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnPlayerWeaponShot
+    #undef OnPlayerWeaponShot
+#else
+    #define _ALS_OnPlayerWeaponShot
+#endif
+#define OnPlayerWeaponShot BMARKET_OnPlayerWeaponShot
+#if defined BMARKET_OnPlayerWeaponShot
+    forward BMARKET_OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ);
 #endif

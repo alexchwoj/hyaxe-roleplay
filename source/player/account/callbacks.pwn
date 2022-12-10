@@ -310,6 +310,9 @@ public OnPlayerSpawn(playerid)
     gettime(hour, minute);
     SetPlayerTime(playerid, hour, minute);
 
+    if(Player_Data(playerid, e_iJailTime))
+        PC_EmulateCommand(playerid, "/tiempo");
+
     inline const Due()
     {
         ApplyAnimation(playerid, "CAR", "null", 4.1, 0, 0, 0, 0, 0, 0);
