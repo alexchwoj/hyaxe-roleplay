@@ -500,11 +500,14 @@ DroppedItem_CreateFrontPlayer(playerid, type, amount, extra)
 	DroppedItem_Create(type, amount, extra, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
 }
 
-DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, interior = 0, playerid = INVALID_PLAYER_ID, timeout = 300, bool:no_physics = false)
+DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, interior = 0, playerid = INVALID_PLAYER_ID, timeout = 300, bool:physics = true)
 {
-	//printf("DroppedItem_Create(type = %d, amount = %d, extra = %d, Float:x = %f, Float:y = %f, Float:z = %f, world = %d, interior = %d, playerid = %d, timeout = %d)", type, amount, extra, Float:x, Float:y, Float:z, world, interior, playerid, timeout);
+	printf("DroppedItem_Create(type = %d, amount = %d, extra = %d, Float:x = %f, Float:y = %f, Float:z = %f, world = %d, interior = %d, playerid = %d, timeout = %d, physics = %d)", type, amount, extra, Float:x, Float:y, Float:z, world, interior, playerid, timeout, physics);
+	if (interior)
+		physics = false;
+
 	new objectid = CreateDynamicObject(
-		Item_ModelID(type), x, y, z + 0.9,
+		Item_ModelID(type), x, y, z + (physics ? 0.9 : 0.0),
 		RandomFloat(-180.0, 180.0), RandomFloat(-180.0, 180.0), RandomFloat(-180.0, 180.0),
 		world, interior, .streamdistance = 50.0, .drawdistance = 50.0
 	);
@@ -515,17 +518,20 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 	Streamer_SetIntData(STREAMER_TYPE_OBJECT, objectid, E_STREAMER_CUSTOM(0x4449544D), 1); // DITM
 
 	new Float:dest_z = z, Float:rx, Float:ry, Float:rz;
-	if (!interior || no_physics)
+	if (physics)
 	{
 		CA_RayCastLineAngle(x, y, 700.0, x, y, -1000.0, x, y, dest_z, rx, ry, rz);
 		if ( dest_z > z )
 			dest_z = z - 0.9;
+
+		MoveDynamicObject(objectid, x, y, dest_z, 10.0, rx, ry, rz);
 	}
+	else MoveDynamicObject(objectid, x, y, dest_z, 10.0, rx, ry, rz);
+
+	printf("rx = %f, ry = %f, rz = %f", rx, ry, rz);
 
 	format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "%s (%d)", Item_Name(type), amount);
-	new Text3D:labelid = CreateDynamic3DTextLabel(HYAXE_UNSAFE_HUGE_STRING, 0xF7F7F7AA, x, y, dest_z + 0.4, 5.0, .testlos = 1, .worldid = world, .interiorid = interior);
-
-	MoveDynamicObject(objectid, x, y, dest_z, 10.0, rx, ry, rz);
+	new Text3D:labelid = CreateDynamic3DTextLabel(HYAXE_UNSAFE_HUGE_STRING, 0xF7F7F7AA, x, y, dest_z + (physics ? 0.4 : 0.0), 5.0, .testlos = 1, .worldid = world, .interiorid = interior);
 
 	new area_info[6];
 	area_info[0] = type; // Item type
@@ -535,7 +541,7 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 	area_info[4] = (gettime() + timeout); // Time
 	area_info[5] = extra; // Extra
 
-	new area_id = CreateDynamicSphere(x, y, dest_z + 0.9, 1.0, world, interior);
+	new area_id = CreateDynamicSphere(x, y, dest_z + (physics ? 0.9 : 0.0), 1.0, world, interior);
 	Streamer_SetArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x49544d), area_info);
 
 	Iter_Add(DroppedItems, area_id);

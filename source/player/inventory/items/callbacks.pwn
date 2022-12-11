@@ -268,6 +268,8 @@ static Medicine_OnUse(playerid, slot)
     g_rgePlayerTempData[playerid][e_iMedicineUseTime] = gettime() + (Player_VIP(playerid) >= 2 ? 3 : 10);
 
     InventorySlot_Subtract(playerid, slot);
+
+    Chat_SendAction(playerid, "consume medicamentos");
     return 1;
 }
 
@@ -297,6 +299,8 @@ static Crack_OnUse(playerid, slot)
     g_rgePlayerTempData[playerid][e_iCrackUseTime] = gettime() + (Player_VIP(playerid) >= 2 ? 3 : 10);
 
     InventorySlot_Subtract(playerid, slot);
+
+    Chat_SendAction(playerid, "consume crack");
     return 1;
 }
 
@@ -319,10 +323,12 @@ static Food_OnUse(playerid, slot)
         if (Item_Hunger(type) > Item_Thirst(type))
         {
             ApplyAnimation(playerid, "BAR", "DNK_STNDM_LOOP", 4.1, false, false, false, false, 0, false);
+            Chat_SendAction(playerid, va_return("se toma un/a %s", Item_Name(type)));
         }
         else
         {
             ApplyAnimation(playerid, "FOOD", "EAT_Pizza", 4.1, false, true, true, false, 1000);
+            Chat_SendAction(playerid, va_return("se come un/a %s", Item_Name(type)));
         }
     }
 

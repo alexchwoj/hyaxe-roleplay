@@ -22,7 +22,7 @@ Grill_Create(playerid, Float:x, Float:y, Float:z, Float:angle)
 
         g_rgeGrills[ grill_id ][e_bValid] = true;
         g_rgeGrills[ grill_id ][e_iOwnerID] = playerid;
-        g_rgeGrills[ grill_id ][e_i3DLabel] = CreateDynamic3DTextLabel(va_return("{DADADA}Parrilla de %s", Player_RPName(playerid)), 0xDADADA00, x, y, z + 0.2, 5.0, .worldid = 0, .interiorid = 0);
+        g_rgeGrills[ grill_id ][e_i3DLabel] = CreateDynamic3DTextLabel(va_return("{DADADA}Parrilla de {DD6A4D}%s", Player_RPName(playerid)), 0xDADADA00, x, y, z + 0.2, 5.0, .worldid = 0, .interiorid = 0);
         g_rgeGrills[ grill_id ][e_iBBQObject] = CreateDynamicObject(19831, x, y, z - 1.0, 0.0, 0.0, angle, 0, 0);
 
         g_rgeGrills[ grill_id ][e_iArea] = CreateDynamicSphere(
@@ -47,6 +47,9 @@ Grill_Destroy(grill_id)
 
     DestroyDynamic3DTextLabel( g_rgeGrills[ grill_id ][e_i3DLabel] );
     DestroyDynamicArea( g_rgeGrills[ grill_id ][e_iArea] );
+
+    g_rgeGrills[ grill_id ][e_bCooking] = false;
+    g_rgeGrills[ grill_id ][e_iOwnerID] = INVALID_PLAYER_ID;
     return 1;
 }
 
@@ -75,8 +78,8 @@ Grill_StartCooking(grill_id)
     new Float:x, Float:y, Float:z;
     GetDynamicObjectPos(g_rgeGrills[ grill_id ][e_iBBQObject], x, y, z);
 
-    g_rgeGrills[ grill_id ][e_iContentObject] = CreateDynamicObject(2804, x, y, z + 0.8, 0.0, 0.0, 0.0, 0, 0);
-    g_rgeGrills[ grill_id ][e_iSmokeObject] = CreateDynamicObject(18735, x, y, z, 0.0, 0.0, 0.0, 0, 0);
+    g_rgeGrills[ grill_id ][e_iContentObject] = CreateDynamicObject(2804, x, y, z + 0.9, 0.0, 0.0, 0.0, 0, 0);
+    g_rgeGrills[ grill_id ][e_iSmokeObject] = CreateDynamicObject(18735, x, y, z - 0.3, 0.0, 0.0, 0.0, 0, 0);
 
     g_rgeGrills[ grill_id ][e_bCooking] = true;
 
@@ -89,6 +92,8 @@ Grill_StartCooking(grill_id)
         {
             DestroyDynamicObject( g_rgeGrills[ grill_id ][e_iContentObject] );
             DestroyDynamicObject( g_rgeGrills[ grill_id ][e_iSmokeObject] );
+
+            DroppedItem_Create(ITEM_HAM, 1, 0, x, y, z + 0.9, 0, 0, .physics = false);
         }
 	}
     Timer_CreateCallback(using inline FinishCooking, 1000, 15);
