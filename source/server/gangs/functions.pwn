@@ -233,3 +233,8 @@ Gang_PlayerStartConquest(playerid, territory_index)
     Streamer_Update(playerid);
     return 1;
 }
+
+Player_HasGangPermission(playerid, eGangRankPermissions:perm)
+{
+    return Player_IsGangOwner(playerid) || ((eGangRankPermissions:(Player_GangRankData(playerid)[e_iRankPermisionFlags]) & perm) == perm);
+}

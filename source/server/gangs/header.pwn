@@ -90,6 +90,7 @@ forward Gangs_PanelBackwards(playerid);
 forward Gang_SendMessage(gangid, const message[]);
 forward Gang_SendMessage_s(gangid, ConstString:message);
 forward Gang_GetLowestRank(gangid);
+forward Player_HasGangPermission(playerid, eGangRankPermissions:perm);
 
 forward GANGS_PanelDataFetched(playerid);
 forward GANGS_PanelMembersFetched(playerid);

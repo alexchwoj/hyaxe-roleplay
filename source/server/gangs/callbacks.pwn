@@ -314,9 +314,37 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
                     return 1;
                 }
 
-                Gangs_ClosePanel(playerid);
+                if (!(Player_HasGangPermission(playerid, GANG_PERM_EDIT_MEMBERS) || Player_HasGangPermission(playerid, GANG_PERM_KICK_MEMBERS)))
+                {
+                    Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes permiso para editar o expulsar miembros");
+                    return 1;
+                }
 
-                Dialog_ShowCallback(playerid, using public _hydg@gang_member<iiiis>, DIALOG_STYLE_LIST, va_return("{CB3126}>>{DADADA} %s", s_rgszSelectedGangMember[playerid]), "{CB3126}>{DADADA} Cambiar rol\n{CB3126}>>{DADADA} Expulsar miembro", "Seleccionar", "Atrás");
+                inline const QueryDone()
+                {
+                    new rowc;
+                    cache_get_row_count(rowc);
+                    if (!rowc)
+                    {
+                        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Hubo un error al solicitar a este jugador. Intenta nuevamente.");
+                        return 1;
+                    }
+                    
+                    new rank, accid;
+                    cache_get_value_name_int(0, "ID", accid);
+                    cache_get_value_name_int(0, "GANG_RANK", rank);
+
+                    if (g_rgeGangs[Player_Gang(playerid)][e_iGangOwnerId] == rank || rank >= Player_GangRank(playerid))
+                    {
+                        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes editar a miembros de rangos superiores o iguales al tuyo");
+                        return 1;
+                    }
+
+                    Gangs_ClosePanel(playerid);
+                    Dialog_ShowCallback(playerid, using public _hydg@gang_member<iiiis>, DIALOG_STYLE_LIST, va_return("{CB3126}>>{DADADA} %s", s_rgszSelectedGangMember[playerid]), "{CB3126}>{DADADA} Cambiar rol\n{CB3126}>>{DADADA} Expulsar miembro", "Seleccionar", "Atrás");
+                }
+                MySQL_TQueryInline(g_hDatabase, using inline QueryDone, "SELECT `ID`, `GANG_RANK` FROM `ACCOUNT` WHERE `NAME` = '%e';", s_rgszSelectedGangMember[playerid]);
+                
                 return 1;
             }
         }
