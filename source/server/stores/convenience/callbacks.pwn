@@ -30,13 +30,274 @@ static Convenience_OnBuy(playerid, shop_id, item_id)
             Inventory_AddFixedItem(playerid, ITEM_PHONE, 1, 100000 + random(100000));
             Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un celular");
         }
+        case 3: // Phone
+        {
+            Inventory_AddFixedItem(playerid, ITEM_GRILL, 1, 0);
+            Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste una parrilla");
+        }
     }
 
     return 1;
 }
 
+player_menu meats_buy(playerid, response, listitem)
+{
+    if (response == MENU_RESPONSE_SELECT)
+    {
+        switch(listitem)
+        {
+            case 0:
+            {
+                if (150 > Player_Money(playerid))
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 1;
+                }
+
+                Player_GiveMoney(playerid, -150);
+
+                Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un kilo de carne");
+                Inventory_AddFixedItem(playerid, ITEM_MEAT, 1, 0);
+            }
+        }
+    }
+    return 1;
+}
+
+player_menu milk_buy(playerid, response, listitem)
+{
+    if (response == MENU_RESPONSE_SELECT)
+    {
+        switch(listitem)
+        {
+            case 0:
+            {
+                if (100 > Player_Money(playerid))
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 1;
+                }
+
+                Player_GiveMoney(playerid, -100);
+
+                Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste una caja de leche");
+                Inventory_AddFixedItem(playerid, ITEM_MILK, 1, 0);
+            }
+        }
+    }
+    return 1;
+}
+
+player_menu icecream_buy(playerid, response, listitem)
+{
+    if (response == MENU_RESPONSE_SELECT)
+    {
+        switch(listitem)
+        {
+            case 0:
+            {
+                if (100 > Player_Money(playerid))
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 1;
+                }
+
+                Player_GiveMoney(playerid, -100);
+
+                Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un helado de chocolate");
+                Inventory_AddFixedItem(playerid, ITEM_CHOCOLATE_ICE_CREAM, 1, 0);
+            }
+
+            case 1:
+            {
+                if (100 > Player_Money(playerid))
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 1;
+                }
+
+                Player_GiveMoney(playerid, -100);
+
+                Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un helado de frutilla");
+                Inventory_AddFixedItem(playerid, ITEM_STRAWBERRY_ICE_CREAM, 1, 0);
+            }
+        }
+    }
+    return 1;
+}
+
+player_menu beverages_buy(playerid, response, listitem)
+{
+    if (response == MENU_RESPONSE_SELECT)
+    {
+        switch(listitem)
+        {
+            case 0:
+            {
+                if (100 > Player_Money(playerid))
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 1;
+                }
+
+                Player_GiveMoney(playerid, -100);
+
+                Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un jugo de naranja");
+                Inventory_AddFixedItem(playerid, ITEM_ORANGE_JUICE, 1, 0);
+            }
+
+            case 1:
+            {
+                if (100 > Player_Money(playerid))
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 1;
+                }
+
+                Player_GiveMoney(playerid, -100);
+
+                Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un jugo de manzana");
+                Inventory_AddFixedItem(playerid, ITEM_APPLE_JUICE, 1, 0);
+            }
+
+            case 2:
+            {
+                if (200 > Player_Money(playerid))
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 1;
+                }
+
+                Player_GiveMoney(playerid, -200);
+
+                Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste una cerveza");
+                Inventory_AddFixedItem(playerid, ITEM_BEER, 1, 0);
+            }
+
+            case 3:
+            {
+                if (200 > Player_Money(playerid))
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 1;
+                }
+
+                Player_GiveMoney(playerid, -200);
+
+                Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un wisky");
+                Inventory_AddFixedItem(playerid, ITEM_WISKY, 1, 0);
+            }
+
+            case 4:
+            {
+                if (200 > Player_Money(playerid))
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 1;
+                }
+
+                Player_GiveMoney(playerid, -200);
+
+                Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un champagne");
+                Inventory_AddFixedItem(playerid, ITEM_CHAMPAGNE, 1, 0);
+            }
+
+            case 5:
+            {
+                if (200 > Player_Money(playerid))
+                {
+                    PlayerPlaySound(playerid, SOUND_ERROR);
+                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes el dinero suficiente.");
+                    return 1;
+                }
+
+                Player_GiveMoney(playerid, -200);
+
+                Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste una cerveza artesanal");
+                Inventory_AddFixedItem(playerid, ITEM_CRAFT_BEER, 1, 0);
+            }
+        }
+    }
+    return 1;
+}
+
+static Meats_OnPress(playerid)
+{
+    Menu_Show(playerid, "meats_buy", "Comprar");
+    Menu_AddItem(playerid, "Un kilo de carne", "Precio: ~g~$150");
+    Menu_UpdateListitems(playerid);
+    return 1;
+}
+
+static Milk_OnPress(playerid)
+{
+    Menu_Show(playerid, "milk_buy", "Comprar");
+    Menu_AddItem(playerid, "Leche", "Precio: ~g~$100");
+    Menu_UpdateListitems(playerid);
+    return 1;
+}
+
+static IceCream_OnPress(playerid)
+{
+    Menu_Show(playerid, "icecream_buy", "Comprar");
+    Menu_AddItem(playerid, "Helado de chocolate", "Precio: ~g~$100");
+    Menu_AddItem(playerid, "Helado de frutilla", "Precio: ~g~$100");
+    Menu_UpdateListitems(playerid);
+    return 1;
+}
+
+static Beverages_OnPress(playerid)
+{
+    Menu_Show(playerid, "beverages_buy", "Comprar");
+    Menu_AddItem(playerid, "Jugo de naranja", "Precio: ~g~$100");
+    Menu_AddItem(playerid, "Jugo de manzana", "Precio: ~g~$100");
+    Menu_AddItem(playerid, "Cerveza", "Precio: ~g~$200");
+    Menu_AddItem(playerid, "Wisky", "Precio: ~g~$200");
+    Menu_AddItem(playerid, "Champagne", "Precio: ~g~$200");
+    Menu_AddItem(playerid, "Cerveza artesanal", "Precio: ~g~$200");
+    Menu_UpdateListitems(playerid);
+    return 1;
+}
+
 public OnScriptInit()
 {
+    CreateDynamic3DTextLabel("{ED2B2B}Carnes\n{DADADA}1 producto disponible", 0xFFFFFFFF, 0.9752, -25.8198, 1003.5494, 10.0, .worldid = -1, .interiorid = 10);
+    Key_Alert(
+        0.9752, -25.8198, 1003.5494, 1.2,
+        KEYNAME_YES, -1, 10,
+        .callback_on_press = __addressof(Meats_OnPress)
+    );
+
+    CreateDynamic3DTextLabel("{ED2B2B}Leche\n{DADADA}1 producto disponible", 0xFFFFFFFF, 8.3222, -27.3006, 1003.5494, 10.0, .worldid = -1, .interiorid = 10);
+    Key_Alert(
+        8.3222, -27.3006, 1003.5494, 1.2,
+        KEYNAME_YES, -1, 10,
+        .callback_on_press = __addressof(Milk_OnPress)
+    );
+
+    CreateDynamic3DTextLabel("{ED2B2B}Helados\n{DADADA}2 productos disponible", 0xFFFFFFFF, 4.9930, -21.8446, 1003.5494, 10.0, .worldid = -1, .interiorid = 10);
+    Key_Alert(
+        4.9930, -21.8446, 1003.5494, 1.2,
+        KEYNAME_YES, -1, 10,
+        .callback_on_press = __addressof(IceCream_OnPress)
+    );
+
+    CreateDynamic3DTextLabel("{ED2B2B}Bebidas\n{DADADA}6 productos disponible", 0xFFFFFFFF, 2.6388, -26.2849, 1003.5494, 10.0, .worldid = -1, .interiorid = 10);
+    Key_Alert(
+        2.6388, -26.2849, 1003.5494, 1.2,
+        KEYNAME_YES, -1, 10,
+        .callback_on_press = __addressof(Beverages_OnPress)
+    );
+
     EnterExit_Create(19902, "{ED2B2B}24/7", "{DADADA}Salida", 2001.8507, -1761.6123, 13.5391, 359.4877, 0, 0, 6.0728,-31.3407, 1003.5494, 6.2127, 0, 10, -1, 0);
     EnterExit_Create(19902, "{ED2B2B}24/7", "{DADADA}Salida", 1352.314941, -1758.961425, 13.507812, 0.0, 0, 0, 6.0728,-31.3407, 1003.5494, 6.2127, 1, 10, -1, 0);
     EnterExit_Create(19902, "{ED2B2B}24/7", "{DADADA}Salida", 1833.540771, -1842.542724, 13.578125, 90.0, 0, 0, 6.0728,-31.3407, 1003.5494, 6.2127, 2, 10, -1, 0);
@@ -55,7 +316,7 @@ public OnScriptInit()
     EnterExit_Create(19902, "{ED2B2B}24/7", "{DADADA}Salida", -1676.0208, 432.0192, 7.1797, 223.0368, 0, 0, 6.0728,-31.3407, 1003.5494, 6.2127, 15, 10, -1, 0);
     EnterExit_Create(19902, "{ED2B2B}24/7", "{DADADA}Salida", -2419.8621, 969.9724, 45.2969, 271.3646, 0, 0, 6.0728,-31.3407, 1003.5494, 6.2127, 16, 10, -1, 0);
     EnterExit_Create(19902, "{ED2B2B}24/7", "{DADADA}Salida", -2442.8604, 755.0207, 35.1719, 179.8825, 0, 0, 6.0728,-31.3407, 1003.5494, 6.2127, 17, 10, -1, 0);
-    EnterExit_Create(19902, "{ED2B2B}24/7", "{DADADA}Salida", 1582.2601, -1170.5659, 24.0781, 357.4225, 0, 0, 6.0728,-31.3407, 1003.5494, 6.2127, 18, 10, -1, 0);
+    EnterExit_Create(19902, "{ED2B2B}24/7", "{DADADA}Salida", 1582.2601, -1170.5659, 24.0781, 357.4225, 0, 0, 6.0728, -31.3407, 1003.5494, 6.2127, 18, 10, -1, 0);
 
     // Actors
     Actor_CreateRobbable(229, 500, 1000, 2.0491, -30.7007, 1004.5494, 358.3559, .worldid = 0, .interiorid = 10);
@@ -114,6 +375,7 @@ public OnScriptInit()
     Shop_AddItem(shopid, "Kit de reparación", 19921, 2000, 0.0, 0.0, 0.0);
     Shop_AddItem(shopid, "Vaso de cafe", 19835, 10, 0.0, 0.0, 0.0);
     Shop_AddItem(shopid, "Celular", 18866, 1500, 0.0, 0.0, 0.0);
+    Shop_AddItem(shopid, "Parrilla", 19831, 1500, 0.0, 0.0, 0.0);
 
     #if defined SHOP_CONV_OnScriptInit
         return SHOP_CONV_OnScriptInit();

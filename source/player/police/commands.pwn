@@ -620,7 +620,7 @@ command tiempo(playerid, const params[], "Ve el tiempo restante de condena")
     }
 
     new time = Player_Data(playerid, e_iJailTime) - gettime();
-    if (time <= 0)
+    if (time < 0)
     {
         KillTimer(Player_Timer(playerid, e_iPlayerJailTimer));
         ARREST_ReleaseFromPrison(playerid);
