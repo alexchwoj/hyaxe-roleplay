@@ -653,6 +653,9 @@ public OnScriptInit()
     Item_Callback(ITEM_FLAG) = __addressof(Flag_OnUse);
     Item_SetPreviewRot(ITEM_FLAG, -19.000000, 49.000000, -171.000000, 0.770000);
 
+    // Grill
+    Item_SetPreviewRot(ITEM_GRILL, 0.0, 10.0, 190.0, 0.770000);
+
     /* Fireworks*/
 
     // Launcher

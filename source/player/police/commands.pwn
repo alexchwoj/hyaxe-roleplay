@@ -586,7 +586,14 @@ command tiempo(playerid, const params[], "Ve el tiempo restante de condena")
     }
 
     new time = Player_Data(playerid, e_iJailTime) - gettime();
-    SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Te quedan {ED2B2B}%d segundos{DADADA} de condena.", time);
+    if (!time)
+    {
+        KillTimer(Player_Timer(playerid, e_iPlayerJailTimer));
+        ARREST_ReleaseFromPrison(playerid);
+    }
+    else
+        SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Te quedan {ED2B2B}%d segundos{DADADA} de condena.", time);
+
     return 1;
 }
 

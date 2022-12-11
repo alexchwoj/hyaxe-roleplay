@@ -107,7 +107,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     {
                         Player_GiveWeapon(playerid, weapon);
 
-                        printf("[1] DroppedItem_Delete");
+                        //printf("[1] DroppedItem_Delete");
                         DroppedItem_Delete(areaid);
                         PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
                         ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
@@ -115,14 +115,14 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     else if (info[0] == ITEM_MONEY)
                     {
                         Player_GiveMoney(playerid, info[5]);
-                        printf("[3] DroppedItem_Delete");
+                        //printf("[3] DroppedItem_Delete");
                         DroppedItem_Delete(areaid);
                         ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
                         return 1;
                     }
                     else if (Inventory_AddItem(playerid, info[0], info[1], info[5]))
                     {
-                        printf("[2] DroppedItem_Delete");
+                        //printf("[2] DroppedItem_Delete");
                         DroppedItem_Delete(areaid);
                         PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
                         ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
@@ -159,7 +159,7 @@ public INV_LoadFromDatabase(playerid)
     new row_count;
     cache_get_row_count(row_count);
 
-    printf("===== Loading inventory from playerid %d =====", playerid);
+    //printf("===== Loading inventory from playerid %d =====", playerid);
     for(new i = 0; i < row_count; ++i)
     {
         new slot = Inventory_GetFreeSlot(playerid);
@@ -171,16 +171,16 @@ public INV_LoadFromDatabase(playerid)
             cache_get_value_name_int(i, "AMOUNT", g_rgePlayerInventory[playerid][slot][e_iAmount]);
             cache_get_value_name_int(i, "EXTRA", g_rgePlayerInventory[playerid][slot][e_iExtra]);
 
-            DEBUG_PRINT("type: %d (%s)", g_rgePlayerInventory[playerid][slot][e_iType], g_rgeItemData[ g_rgePlayerInventory[playerid][slot][e_iType] ][e_szName]);
-            DEBUG_PRINT("amount: %d", g_rgePlayerInventory[playerid][slot][e_iAmount]);
-            DEBUG_PRINT("extra: %d", g_rgePlayerInventory[playerid][slot][e_iExtra]);
+            //DEBUG_PRINT("type: %d (%s)", g_rgePlayerInventory[playerid][slot][e_iType], g_rgeItemData[ g_rgePlayerInventory[playerid][slot][e_iType] ][e_szName]);
+            //DEBUG_PRINT("amount: %d", g_rgePlayerInventory[playerid][slot][e_iAmount]);
+            //DEBUG_PRINT("extra: %d", g_rgePlayerInventory[playerid][slot][e_iExtra]);
         }
-        else
+        /*else
         {
             DEBUG_PRINT("full inventory: %d", playerid);
-        }
+        }*/
     }
-    printf("=====================================");
+    //printf("=====================================");
     return 1;
 }
 
@@ -190,7 +190,7 @@ public TRUNK_LoadFromDatabase(vehicleid)
     new row_count;
     cache_get_row_count(row_count);
 
-    printf("===== Loading trunk from vehicleid %d =====", vehicleid);
+    //printf("===== Loading trunk from vehicleid %d =====", vehicleid);
     for(new i = 0; i < row_count; ++i)
     {
         new slot = Trunk_GetFreeSlot(vehicleid);
@@ -207,7 +207,7 @@ public TRUNK_LoadFromDatabase(vehicleid)
             DEBUG_PRINT("full trunk: %d", vehicleid);
         }
     }
-    printf("=====================================");
+    //printf("=====================================");
     return 1;
 }
 
@@ -479,7 +479,7 @@ public INV_RefreshDroppedItems()
 
             if (gettime() > info[4])
             {
-                printf("[3] DroppedItem_Delete");
+                //printf("[3] DroppedItem_Delete");
                 DroppedItem_Delete(i);
             }
         }
@@ -517,7 +517,7 @@ public OnScriptInit()
 forward INV_OnItemInserted(playerid, slot, type, amount, extra);
 public INV_OnItemInserted(playerid, slot, type, amount, extra)
 {
-    printf("INV_OnItemInserted(playerid = %d, slot = %d, type = %d, amount = %d, extra = %d)", playerid, slot, type, amount, extra);
+    //printf("INV_OnItemInserted(playerid = %d, slot = %d, type = %d, amount = %d, extra = %d)", playerid, slot, type, amount, extra);
 
     g_rgePlayerInventory[playerid][slot][e_bValid] = true;
     g_rgePlayerInventory[playerid][slot][e_iID] = cache_insert_id();
@@ -532,7 +532,7 @@ public INV_OnItemInserted(playerid, slot, type, amount, extra)
 forward TRUNK_OnItemInserted(vehicleid, slot, type, amount, extra, playerid);
 public TRUNK_OnItemInserted(vehicleid, slot, type, amount, extra, playerid)
 {
-    printf("TRUNK_OnItemInserted(vehicleid = %d, slot = %d, type = %d, amount = %d, extra = %d, playerid = %d)", vehicleid, slot, type, amount, extra, playerid);
+    //printf("TRUNK_OnItemInserted(vehicleid = %d, slot = %d, type = %d, amount = %d, extra = %d, playerid = %d)", vehicleid, slot, type, amount, extra, playerid);
     g_rgeVehicleTrunk[vehicleid][slot][e_bValid] = true;
     g_rgeVehicleTrunk[vehicleid][slot][e_iID] = cache_insert_id();
     g_rgeVehicleTrunk[vehicleid][slot][e_iType] = type;

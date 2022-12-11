@@ -123,6 +123,7 @@ PhoneMenu_Main(playerid)
 	Phone_AddItem(playerid, "Cámara");
 	Phone_AddItem(playerid, "Mis vehículos");
 	Phone_AddItem(playerid, "Remolcar");
+	Phone_AddItem(playerid, "Banco");
 	return 1;
 }
 

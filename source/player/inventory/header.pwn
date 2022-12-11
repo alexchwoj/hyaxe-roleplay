@@ -95,6 +95,7 @@ enum _:eItems
     ITEM_RING_CHARGE,
     ITEM_DYNAMITE,
     ITEM_MONEY,
+    ITEM_GRILL,
 
 	ITEM_INVALID
 };
@@ -224,6 +225,7 @@ new
         {"Carga Ring", 1636, true, -1}, // ITEM_RING_CHARGE
         {"Dinamita", 1654, true, -1}, // ITEM_DYNAMITE
         {"Dinero", 1212, false, -1}, // ITEM_MONEY
+        {"Parrilla pequeña", 19831, true, -1}, // ITEM_GRILL
 
 		{"Invalid item", 18631, false, -1} // ITEM_INVALID
 	},

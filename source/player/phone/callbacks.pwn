@@ -192,6 +192,17 @@ phone_menu main(playerid, response, listitem)
 				Phone_AddItem(playerid, line, .extra = vehicleid);
 			}
 		}
+		case 4:
+		{
+			Phone_Hide(playerid);
+
+			inline const FixedShow()
+			{
+				ATM_ShowMenu(playerid);
+			}
+			Timer_CreateCallback(using inline FixedShow, GetPlayerPing(playerid), 1);
+			
+		}
 	}
 	return 1;
 }

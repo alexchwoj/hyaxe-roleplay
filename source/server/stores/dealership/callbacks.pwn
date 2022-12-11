@@ -21,7 +21,7 @@ public OnScriptInit()
             g_rgeVehiclesForSale[i][e_fVehicleAngle],
             g_rgeVehiclesForSale[i][e_iColor1],
             g_rgeVehiclesForSale[i][e_iColor2],
-            60
+            1
         );
         Vehicle_ToggleLock(g_rgeVehiclesForSale[i][e_iVehicleID]);
 
@@ -76,6 +76,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 {
                     PlayerPlaySound(playerid, SOUND_ERROR);
                     Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, va_return("Solo puedes tener hasta %d vehículos.", vehicles_per_privilege_level[Player_VIP(playerid)]));
+                    Notification_Show(playerid, "Dirígete a ~r~samp.hyaxe.com/store~w~ para adquirir VIP y tener más vehículos.", 10000);
                     return 1;
                 }
 

@@ -52,7 +52,7 @@ command ayuda(playerid, const params[], "Link de ayuda")
 }
 alias:ayuda("help", "ajuda")
 
-command pagar(playerid, const params[], "Pagarle a un jugador")
+/*command pagar(playerid, const params[], "Pagarle a un jugador")
 {
     extract params -> new player:destination, money; else {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/pagar {DADADA}[jugador] [dinero]");
@@ -72,7 +72,7 @@ command pagar(playerid, const params[], "Pagarle a un jugador")
     SendClientMessagef(destination, 0xED2B2BFF, "›{DADADA} Recibiste {ED2B2B}$%d{DADADA} de {ED2B2B}%s{DADADA}.", money, Player_Name(playerid));
 
     return 1;
-}
+}*/
 
 command cuenta(playerid, const params[], "Ver los datos de una cuenta")
 {
@@ -119,5 +119,14 @@ command vip(playerid, const params[], "Ver el estado de la suscripción VIP")
     );
 
     Dialog_Show(playerid, DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe {DADADA}- Cuenta", HYAXE_UNSAFE_HUGE_STRING, "Cerrar");
+    return 1;
+}
+
+command gps(playerid, const params[], "Ver el GPS")
+{
+    if (!Inventory_GetItemCount(playerid, ITEM_PHONE))
+        return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "No tienes un teléfono celular");
+
+    Player_ShowGPS(playerid);
     return 1;
 }
