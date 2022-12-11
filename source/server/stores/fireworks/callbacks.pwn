@@ -1,7 +1,7 @@
-#if defined _fireworks_callbacks_
+#if defined _fireworks_store_callbacks_
     #endinput
 #endif
-#define _fireworks_callbacks_
+#define _fireworks_store_callbacks_
 
 static PYRO_OnPress(playerid)
 {

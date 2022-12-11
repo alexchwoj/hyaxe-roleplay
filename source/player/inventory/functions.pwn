@@ -500,7 +500,7 @@ DroppedItem_CreateFrontPlayer(playerid, type, amount, extra)
 	DroppedItem_Create(type, amount, extra, x, y, z, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
 }
 
-DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, interior = 0, playerid = INVALID_PLAYER_ID, timeout = 300)
+DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, interior = 0, playerid = INVALID_PLAYER_ID, timeout = 300, bool:no_physics = false)
 {
 	//printf("DroppedItem_Create(type = %d, amount = %d, extra = %d, Float:x = %f, Float:y = %f, Float:z = %f, world = %d, interior = %d, playerid = %d, timeout = %d)", type, amount, extra, Float:x, Float:y, Float:z, world, interior, playerid, timeout);
 	new objectid = CreateDynamicObject(
@@ -515,7 +515,7 @@ DroppedItem_Create(type, amount, extra, Float:x, Float:y, Float:z, world = 0, in
 	Streamer_SetIntData(STREAMER_TYPE_OBJECT, objectid, E_STREAMER_CUSTOM(0x4449544D), 1); // DITM
 
 	new Float:dest_z = z, Float:rx, Float:ry, Float:rz;
-	if (!interior)
+	if (!interior || no_physics)
 	{
 		CA_RayCastLineAngle(x, y, 700.0, x, y, -1000.0, x, y, dest_z, rx, ry, rz);
 		if ( dest_z > z )

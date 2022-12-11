@@ -3,6 +3,53 @@
 #endif
 #define _medicine_callbacks_
 
+static Meat_OnUse(playerid, slot)
+{
+    Inventory_Hide(playerid);
+
+    new grill_id = Player_GetNearestGrill(playerid);
+    if (grill_id < HYAXE_MAX_GRILLS)
+    {
+        if (g_rgeGrills[ grill_id ][e_bCooking])
+            return Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Alguien más ya está cocinando en esta parrilla.");
+
+        InventorySlot_Subtract(playerid, slot);
+
+        Grill_StartCooking(grill_id);
+        Streamer_Update(playerid);
+
+        Notification_Show(playerid, "La carne estará lista en 15 segundos.", 3000, 0xDD6A4DFF);
+    }
+    else return Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No hay parrillas cerca.");
+
+    return 1;
+}
+
+static Grill_OnUse(playerid, slot)
+{
+    Inventory_Hide(playerid);
+
+    if (GetPlayerVirtualWorld(playerid) || GetPlayerInterior(playerid))
+        return Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes poner la parrilla aquí.");
+
+    new Float:x, Float:y, Float:z, Float:angle;
+	GetPlayerPos(playerid, x, y, z);
+	GetPlayerFacingAngle(playerid, angle);
+
+	GetXYFromAngle(x, y, angle, 0.8);
+
+    new grill_id = Grill_Create(playerid, x, y, z, angle);
+    if (grill_id > HYAXE_MAX_GRILLS)
+        return Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes poner la parrilla porque ya hay demasiadas, inténtalo más tarde.");
+
+    Notification_Show(playerid, "Pusiste una parrilla, para sacarla presiona H cerca de ella.", 3000, 0xDD6A4DFF);
+    ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
+    Chat_SendAction(playerid, "pone una parilla en el suelo");
+    
+    InventorySlot_Subtract(playerid, slot);
+    return 1;
+}
+
 static Dynamite_OnUse(playerid, slot)
 {
     if(Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED) || Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL) || Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
@@ -531,7 +578,7 @@ public OnScriptInit()
 
     // Meat
     Item_Hunger(ITEM_MEAT) = -5.0;
-    Item_Callback(ITEM_MEAT) = __addressof(Food_OnUse);
+    Item_Callback(ITEM_MEAT) = __addressof(Meat_OnUse);
     Item_SetPreviewRot(ITEM_MEAT, -79.000000, 0.000000, -127.000000, 1.000000);
 
     // Ham
@@ -654,6 +701,7 @@ public OnScriptInit()
     Item_SetPreviewRot(ITEM_FLAG, -19.000000, 49.000000, -171.000000, 0.770000);
 
     // Grill
+    Item_Callback(ITEM_GRILL) = __addressof(Grill_OnUse);
     Item_SetPreviewRot(ITEM_GRILL, 0.0, 10.0, 190.0, 0.770000);
 
     /* Fireworks*/

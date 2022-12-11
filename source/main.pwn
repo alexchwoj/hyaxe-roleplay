@@ -93,7 +93,7 @@ JYYYYYYJJJJJJJJ7!?JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ??????????!!777777777777777777
 #pragma warning disable 239
 #pragma warning disable 214
 
-#define SERVER_VERSION "v1.2.6"
+#define SERVER_VERSION "v1.2.7"
 
 #define NDEBUG 0
 
@@ -252,6 +252,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/police/header.pwn"
 #include "player/gps/header.pwn"
 #include "player/phone/header.pwn"
+#include "player/grill/header.pwn"
 
 // Functions
 ///////////////
@@ -297,6 +298,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/animation/functions.pwn"
 #include "player/gps/functions.pwn"
 #include "player/phone/functions.pwn"
+#include "player/grill/functions.pwn"
 
 // Callbacks
 ///////////////
@@ -356,6 +358,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/weapons/callbacks.pwn"
 #include "player/gps/callbacks.pwn"
 #include "player/phone/callbacks.pwn"
+#include "player/grill/callbacks.pwn"
 
 // Anticheat
 ///////////////
