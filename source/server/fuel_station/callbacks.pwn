@@ -54,7 +54,7 @@ public OnScriptInit()
         );
 
         CreateDynamic3DTextLabel(
-            "Gasolinera\n{F7F7F7}Precio del litro: {64A752}$3\n{F7F7F7}Pulsa {64A752}H{F7F7F7} para comprar un bidón de gasolina", 0xDAA838FF,
+            "Gasolinera\n{F7F7F7}Precio del litro: {64A752}$3\n{F7F7F7}Pulsa {64A752}H{F7F7F7} a pie para comprar un bidón de gasolina", 0xDAA838FF,
             g_rgfFuelStations[i][0], g_rgfFuelStations[i][1], g_rgfFuelStations[i][2] + 0.5, 15.0,
             .testlos = true, .worldid = 0, .interiorid = 0
         );
