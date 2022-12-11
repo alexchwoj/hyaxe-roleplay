@@ -133,11 +133,13 @@ public OnFilterScriptInit()
         CreateDynamicObject(18689, 1919.5471, -1429.3662, 9.8993, 0.0000, 0.0000, 0.0000); //fire_bike
         CreateDynamicObject(18689, 1919.2873, -1430.6269, 9.0393, 0.0000, 0.0000, 0.0000); //fire_bike
         CreateDynamicObject(18689, 1919.9477, -1429.5467, 9.4193, 0.0000, 0.0000, 0.0000); //fire_bike
-        tmpactid = CreateActor(286, 1912.5045, -1425.1394, 10.6270, -131.8999); //Federal Agent
-        ApplyActorAnimation(tmpactid, "CAMERA", "PICCRCH_TAKE", 4.0999, 1, 0, 0, 0, 0);
-        CreateActor(286, 1915.0941, -1423.9527, 10.3193, -178.0999); //Federal Agent
-        tmpactid = CreateActor(77, 1875.9691, -1315.0555, 29.4921, 0.0000); //Homeless
-        ApplyActorAnimation(tmpactid, "CRACK", "CRCKIDLE4", 4.0999, 1, 0, 0, 0, 0);
+        tmpactid = CreateDynamicActor(286, 1912.5045, -1425.1394, 10.6270, -131.8999); //Federal Agent
+        ApplyDynamicActorAnimation(tmpactid, "CAMERA", "null", 4.1, 0, 0, 0, 0, 0);
+        ApplyDynamicActorAnimation(tmpactid, "CAMERA", "PICCRCH_TAKE", 4.1, 1, 0, 0, 0, 0);
+        CreateDynamicActor(286, 1915.0941, -1423.9527, 10.3193, -178.0999); //Federal Agent
+        tmpactid = CreateDynamicActor(77, 1875.9691, -1315.0555, 29.4921, 0.0000); //Homeless
+        ApplyDynamicActorAnimation(tmpactid, "CRACK", "null", 4.1, 0, 0, 0, 0, 0);
+        ApplyDynamicActorAnimation(tmpactid, "CRACK", "CRCKIDLE4", 4.1, 1, 0, 0, 0, 0);
 
         CreateDynamicObject(3461, 1179.73865, -1318.25232, 14.50220,   0.00000, 0.00000, 1.14000);
         CreateDynamicObject(3461, 1180.00281, -1329.13269, 14.50220,   0.00000, 0.00000, 1.14000);
@@ -439,15 +441,17 @@ public OnFilterScriptInit()
         g_Object[257] = CreateDynamicObject(1712, 820.7225, -1098.3498, 24.7811, 0.0000, 0.0000, -90.0000); //kb_couch05
         g_Object[258] = CreateDynamicObject(11712, 816.4440, -1103.3115, 25.3131, 0.0000, -10.3000, 0.0000); //Cross1
 
-        g_Actor[0] = CreateActor(0, 815.4608, -1100.0388, 25.7884, -145.6999); //Carl "CJ" Johnson (M
-        g_Actor[1] = CreateActor(130, 814.6951, -1103.2867, 26.4762, -87.2001); //Farm Inhabitant
-        g_Actor[2] = CreateActor(80, 819.2561, -1094.6157, 25.7957, 179.4998); //Boxer
-        g_Actor[3] = CreateActor(1, 816.4967, -1106.0788, 25.7917, -48.9999); //The Truth
-        g_Actor[4] = CreateActor(264, 814.6436, -1092.9514, 25.7936, 89.4999); //Clown (Ice-cream Van
-        g_Actor[5] = CreateActor(246, 813.6090, -1093.2789, 25.7903, 87.0998); //Stripper
-        ApplyActorAnimation(g_Actor[5], "BD_FIRE", "BD_PANIC_03", 4.0998, 1, 0, 0, 0, 0);
-        g_Actor[6] = CreateActor(82, 816.4625, -1097.3935, 25.7933, 100.8999); //Black Elvis
-        ApplyActorAnimation(g_Actor[6], "CLOTHES", "CLO_POSE_SHOES", 4.0998, 1, 0, 0, 0, 0);
+        g_Actor[0] = CreateDynamicActor(0, 815.4608, -1100.0388, 25.7884, -145.6999); //Carl "CJ" Johnson (M
+        g_Actor[1] = CreateDynamicActor(130, 814.6951, -1103.2867, 26.4762, -87.2001); //Farm Inhabitant
+        g_Actor[2] = CreateDynamicActor(80, 819.2561, -1094.6157, 25.7957, 179.4998); //Boxer
+        g_Actor[3] = CreateDynamicActor(1, 816.4967, -1106.0788, 25.7917, -48.9999); //The Truth
+        g_Actor[4] = CreateDynamicActor(264, 814.6436, -1092.9514, 25.7936, 89.4999); //Clown (Ice-cream Van
+        g_Actor[5] = CreateDynamicActor(246, 813.6090, -1093.2789, 25.7903, 87.0998); //Stripper
+        ApplyDynamicActorAnimation(g_Actor[5], "BD_FIRE", "null", 4.1, 0, 0, 0, 0, 0);
+        ApplyDynamicActorAnimation(g_Actor[5], "BD_FIRE", "BD_PANIC_03", 4.1, 1, 0, 0, 0, 0);
+        g_Actor[6] = CreateDynamicActor(82, 816.4625, -1097.3935, 25.7933, 100.8999); //Black Elvis
+        ApplyDynamicActorAnimation(g_Actor[6], "CLOTHES", "null", 4.1, 0, 0, 0, 0, 0);
+        ApplyDynamicActorAnimation(g_Actor[6], "CLOTHES", "CLO_POSE_SHOES", 4.1, 1, 0, 0, 0, 0);
 
         CreateDynamic3DTextLabel("{F98835}Bruja perazoli{F7F7F7}\nHabla con ella si quieres vender calabazas", 0xF0F0F0FF, 817.2799, -1103.3270, 25.7921, 20.0, .testlos = true, .worldid = 0, .interiorid = 0);
     }
