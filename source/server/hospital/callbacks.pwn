@@ -29,7 +29,7 @@ public OnPlayerDisconnect(playerid, reason)
 forward HP_HealPlayer(playerid, nearest_hospital);
 public HP_HealPlayer(playerid, nearest_hospital)
 {
-    new const max_health = (Player_VIP(playerid) >= 2 ? 100 : 50);
+    new const max_health = (Player_VIP(playerid) >= 3 ? 100 : 50);
     new progress = floatround(floatdiv(float(Player_Health(playerid)), float(max_health)) * 100.0);
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Curando las heridas... ~r~%d%", progress);
@@ -60,7 +60,7 @@ public HP_HealPlayer(playerid, nearest_hospital)
         SetPlayerFacingAngle(playerid, g_rgeHospitalData[ nearest_hospital ][e_fHospitalAngle]);
         SetCameraBehindPlayer(playerid);
 
-        if(Player_VIP(playerid) >= 2)
+        if(Player_VIP(playerid) >= 3)
             Player_SetArmor(playerid, 50);
 
         Notification_Show(playerid, "Los médicos te han dado de alta.", 3000, 0x64A752FF);
@@ -70,7 +70,7 @@ public HP_HealPlayer(playerid, nearest_hospital)
         return 1;
     }
 
-    Player_SetHealth(playerid, Player_Health(playerid) + (Player_VIP(playerid) >= 2 ? 10 : 5));
+    Player_SetHealth(playerid, Player_Health(playerid) + (Player_VIP(playerid) >= 3 ? 10 : 5));
     return 1;
 }
 

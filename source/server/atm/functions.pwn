@@ -144,7 +144,7 @@ Player_DestroyNearestATM(playerid, Float:x, Float:y, Float:z)
             g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], g_rgeATMBank[i][e_fAtmPosZ]
         ) <= 5.0)
         {   
-            new money = Random(31500, (Player_VIP(playerid) >= 2 ? 33500 : 32500) );
+            new money = Random(31500, (Player_VIP(playerid) >= 3 ? 33500 : 32500) );
             Player_GiveMoney(playerid, money);
 
             Notification_Show(playerid, va_return("Robaste un cajero y recibiste ~g~$%i~w~. Huye antes de que venga la policía.", money), 8000);

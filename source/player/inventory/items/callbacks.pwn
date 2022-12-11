@@ -265,7 +265,7 @@ static Medicine_OnUse(playerid, slot)
     Notification_ShowBeatingText(playerid, 2000, 0xF7F7F7, 100, 255, "Has usado un medicamento (~g~+5~w~ de salud)");
     Player_SetHealth(playerid, Player_Health(playerid) + 5);
 
-    g_rgePlayerTempData[playerid][e_iMedicineUseTime] = gettime() + (Player_VIP(playerid) >= 2 ? 3 : 10);
+    g_rgePlayerTempData[playerid][e_iMedicineUseTime] = gettime() + (Player_VIP(playerid) >= 3 ? 3 : 10);
 
     InventorySlot_Subtract(playerid, slot);
 
@@ -296,7 +296,7 @@ static Crack_OnUse(playerid, slot)
     Notification_ShowBeatingText(playerid, 2000, 0xF7F7F7, 100, 255, "Has usado un gramo de crack (~g~+10~w~ de chaleco)");
     Player_SetArmor(playerid, Player_Armor(playerid) + 10);
     
-    g_rgePlayerTempData[playerid][e_iCrackUseTime] = gettime() + (Player_VIP(playerid) >= 2 ? 3 : 10);
+    g_rgePlayerTempData[playerid][e_iCrackUseTime] = gettime() + (Player_VIP(playerid) >= 3 ? 3 : 10);
 
     InventorySlot_Subtract(playerid, slot);
 
@@ -508,14 +508,14 @@ static MediKit_OnUse(playerid, slot)
     Inventory_Hide(playerid);
     InventorySlot_Subtract(playerid, slot);
 
-    new const time = (Player_VIP(playerid) >= 2 ? 5000 : 15000);
+    new const time = (Player_VIP(playerid) >= 3 ? 5000 : 15000);
     ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 1, 1, 1, 1, 0, 1);
     Notification_ShowBeatingText(playerid, time, 0xED2B2B, 100, 255, va_return("Reanimando %s...", Player_Sex(target) == SEX_MALE ? "jugador" : "jugadora"));
     Notification_Show(target, va_return("Estás siendo reanimad%c por ~r~%s~w~.", (Player_Sex(target) == SEX_MALE ? 'o' : 'a'), Player_RPName(playerid)), time);
 
     inline const Due()
     {
-        Player_SetHealth(target, (Player_VIP(playerid) >= 2 ? 100 : 25));
+        Player_SetHealth(target, (Player_VIP(playerid) >= 3 ? 100 : 25));
 	    Player_Revive(target);
         ClearAnimations(playerid);
     }

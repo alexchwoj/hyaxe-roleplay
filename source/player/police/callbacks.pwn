@@ -32,7 +32,7 @@ static PoliceLocker_OnKeyPress(playerid)
         return 1;
     }
 
-    if(Player_VIP(playerid) >= 2)
+    if(Player_VIP(playerid) >= 3)
     {
         inline const Response(response, listitem, string:inputtext[])
         {
