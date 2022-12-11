@@ -14,7 +14,7 @@ enum _:eItems
     ITEM_MEDIC_KIT,
     ITEM_MEDICINE,
     ITEM_CRACK,
-    ITEM_PETROL_CAN,
+    ITEM_GAS_CAN,
     ITEM_PHONE,
     ITEM_REPAIR_KIT,
     ITEM_PORRETE,
@@ -143,7 +143,7 @@ new
 		{"Botiquín", 11738, true, -1}, // ITEM_MEDIC_KIT
 		{"Medicamento", 11736, false, -1}, // ITEM_MEDICINE
 		{"Crack", 1575, false, -1}, // ITEM_CRACK
-		{"Bidón de gasolina", 1650, true, -1}, // ITEM_PETROL_CAN
+		{"Bidón de gasolina", 1650, true, -1}, // ITEM_GAS_CAN
 		{"Celular", 18866, true, -1}, // ITEM_PHONE
 		{"Kit de reparación", 19921, true, -1}, // ITEM_REPAIR_KIT
 		{"Porro", 3027, true, -1}, // ITEM_PORRETE

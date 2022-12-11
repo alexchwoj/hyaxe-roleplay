@@ -293,6 +293,62 @@ static Food_OnUse(playerid, slot)
     return 1;
 }
 
+static GasCan_OnUse(playerid, slot)
+{
+    if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+    {
+        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes usar esto abatido");
+        return 1;
+    }
+
+    // todo: android alt (fuck them)
+    new vehicleid = GetPlayerCameraTargetVehicle(playerid);
+    if (vehicleid == INVALID_VEHICLE_ID)
+    {
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas estar viendo un vehículo");
+        return 1;
+    }
+
+    new Float:veh_x, Float:veh_y, Float:veh_z;
+    GetVehiclePos(vehicleid, veh_x, veh_y, veh_z);
+
+    if (!IsPlayerInRangeOfPoint(playerid, 2.0, veh_x, veh_y, veh_z))
+    {
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas estar cerca del vehículo");
+        return 1;
+    }
+
+    SetPlayerAttachedObject(playerid, 0, 1650, 5, 0.08, 0.101000, -0.07999, 89.40, -21.0, 0.0, 1.0, 1.0, 1.0, 0, 0);
+    TogglePlayerControllable(playerid, false);
+    ApplyAnimation(playerid, "CHAINSAW", "IDLE_CSAW", 4.1, true, true, true, true, 0, false);
+    Notification_ShowBeatingText(playerid, 5000, 0xF29624, 100, 255, "Vertiendo gasolina...");
+    PlayerPlaySound(playerid, 14200);
+
+    Inventory_Hide(playerid);
+    InventorySlot_Subtract(playerid, slot);
+
+    inline const FuelPoured()
+    {
+        PlayerPlaySound(playerid, 0);
+        ClearAnimations(playerid);
+        RemovePlayerAttachedObject(playerid, 0);
+        TogglePlayerControllable(playerid, true);
+
+        new const 
+            Float:max_fuel = Vehicle_GetModelMaxFuel(GetVehicleModel(vehicleid)),
+            Float:new_fuel = Vehicle_Fuel(vehicleid) + 25.0;
+
+        Vehicle_Fuel(vehicleid) = (new_fuel > max_fuel ? max_fuel : new_fuel);
+
+        new last_driver = GetVehicleLastDriver(vehicleid);
+        if (IsPlayerConnected(last_driver))
+            Speedometer_Update(last_driver);
+    }
+    Timer_CreateCallback(using inline FuelPoured, 5000, 1);
+
+    return 1;
+}
+
 static RepairKit_OnUse(playerid, slot)
 {
     if(Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
@@ -434,8 +490,9 @@ public OnScriptInit()
 
     /* Vehicles */
 
-    // Petrol can
-    Item_SetPreviewRot(ITEM_PETROL_CAN, -21.000000, 0.000000, 159.000000, 1.000000);
+    // Gas can
+    Item_Callback(ITEM_GAS_CAN) = __addressof(GasCan_OnUse);
+    Item_SetPreviewRot(ITEM_GAS_CAN, -21.000000, 0.000000, 159.000000, 1.000000);
 
     // Repair kit
     Item_Callback(ITEM_REPAIR_KIT) = __addressof(RepairKit_OnUse);

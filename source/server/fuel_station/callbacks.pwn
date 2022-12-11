@@ -9,6 +9,36 @@ static GasStation_OnKeyPress(playerid)
     return 1;
 }
 
+static GasStationCanisters_OnKeyPress(playerid)
+{
+    if (Inventory_GetItemCount(playerid, ITEM_GAS_CAN) >= 2)
+    {
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Solo puedes tener 2 bidones de gasolina");
+        return 0;
+    }
+
+    inline const Response(response, listitem, string:inputtext[])
+    {
+        #pragma unused listitem, inputtext
+
+        if (Player_Money(playerid) < 300)
+        {
+            Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes esa cantidad de dinero");
+            return 1;
+        }
+
+        if (response)
+        {
+            Player_GiveMoney(playerid, -300);
+            Inventory_AddFixedItem(playerid, ITEM_GAS_CAN, 1, 0);
+            Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un bidón de gasolina de 25 litros");
+        }
+    }
+    Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_MSGBOX, "{CB3126}>{DADADA} Comprar bidón", "{DADADA}¿Estás seguro de que quieres comprar un bidón de gasolina de {CB3126}25 litros{DADADA} por {64A752}$300{DADADA}?", "Comprar", "Salir");
+
+    return 1;
+}
+
 public OnScriptInit()
 {
     for(new i; i < sizeof(g_rgfFuelStations); ++i)
@@ -18,8 +48,13 @@ public OnScriptInit()
             KEYNAME_CROUCH, 0, 0, KEY_TYPE_VEHICLE, .callback_on_press = __addressof(GasStation_OnKeyPress)
         );
 
+        Key_Alert(
+            g_rgfFuelStations[i][0], g_rgfFuelStations[i][1], g_rgfFuelStations[i][2], 6.0,
+            KEYNAME_CTRL_BACK, 0, 0, KEY_TYPE_FOOT, .callback_on_press = __addressof(GasStationCanisters_OnKeyPress)
+        );
+
         CreateDynamic3DTextLabel(
-            "Gasolinera\n{F7F7F7}Precio del litro: {64A752}$3", 0xDAA838FF,
+            "Gasolinera\n{F7F7F7}Precio del litro: {64A752}$3\n{F7F7F7}Pulsa {64A752}H{F7F7F7} para comprar un bidón de gasolina", 0xDAA838FF,
             g_rgfFuelStations[i][0], g_rgfFuelStations[i][1], g_rgfFuelStations[i][2] + 0.5, 15.0,
             .testlos = true, .worldid = 0, .interiorid = 0
         );
