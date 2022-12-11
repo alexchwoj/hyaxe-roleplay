@@ -38,6 +38,8 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 #define IS_NAN(%0) (_:((Float:0x7FFFFFFF) & (%0)) > (0x7F800000))
 #define IsNaN(%0) IS_NAN(%0)
 
+#define MAKE_CELL(%0,%1,%2,%3) (((%0) << 24) | ((%1) << 16) | ((%2) << 8) | %3)
+
 #define M_PI 3.141592
 
 #include "core/utils/sounds.pwn"

@@ -38,10 +38,7 @@ static Grill_OnUse(playerid, slot)
 
 	GetXYFromAngle(x, y, angle, 0.8);
 
-    new grill_id = Grill_Create(playerid, x, y, z, angle);
-    if (grill_id > HYAXE_MAX_GRILLS)
-        return Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes poner la parrilla porque ya hay demasiadas, inténtalo más tarde.");
-
+    Grill_Create(playerid, x, y, z, angle);
     Notification_Show(playerid, "Pusiste una parrilla, para sacarla presiona H cerca de ella.", 3000, 0xDD6A4DFF);
     ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 0, 0, 0, 0, 1000, 1);
     Chat_SendAction(playerid, "pone una parilla en el suelo");

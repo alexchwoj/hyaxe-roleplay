@@ -3,99 +3,109 @@
 #endif
 #define _grill_functions_
 
-Grill_FreeSlot()
-{
-    for(new i; i < HYAXE_MAX_GRILLS; ++i)
-	{
-		if (!g_rgeGrills[i][e_bValid])
-		    return i;
-	}
-    return HYAXE_MAX_GRILLS + 1;
-}
-
 Grill_Create(playerid, Float:x, Float:y, Float:z, Float:angle)
 {
-    new grill_id = Grill_FreeSlot();
-    if (grill_id < HYAXE_MAX_GRILLS)
+    Sound_PlayInRange(12200, 10.0, x, y, z, 0, 0);
+
+    new data[eGrillData];
+    data[e_iOwnerID] = playerid;
+    data[e_i3DLabel] = CreateDynamic3DTextLabel(va_return("{DADADA}Parrilla de {DD6A4D}%s", Player_RPName(playerid)), 0xDADADA00, x, y, z + 0.2, 5.0, .worldid = 0, .interiorid = 0);
+    data[e_iBBQObject] = CreateDynamicObject(19831, x, y, z - 1.0, 0.0, 0.0, angle, 0, 0);
+    new grill_id = CreateDynamicSphere(
+        x, y, z, 2.0,
+        .worldid = 0, .interiorid = 0
+    );
+    Streamer_SetArrayData(STREAMER_TYPE_AREA, grill_id, E_STREAMER_CUSTOM(MAKE_CELL(0,'B','B','Q')) , data); // BBQ
+
+    Player_Grill(playerid) = grill_id;
+
+    foreach (new i : PlayerInRange(30.0, x, y, z))
     {
-        Sound_PlayInRange(12200, 10.0, x, y, z, 0, 0);
-
-        g_rgeGrills[ grill_id ][e_bValid] = true;
-        g_rgeGrills[ grill_id ][e_iOwnerID] = playerid;
-        g_rgeGrills[ grill_id ][e_i3DLabel] = CreateDynamic3DTextLabel(va_return("{DADADA}Parrilla de {DD6A4D}%s", Player_RPName(playerid)), 0xDADADA00, x, y, z + 0.2, 5.0, .worldid = 0, .interiorid = 0);
-        g_rgeGrills[ grill_id ][e_iBBQObject] = CreateDynamicObject(19831, x, y, z - 1.0, 0.0, 0.0, angle, 0, 0);
-
-        g_rgeGrills[ grill_id ][e_iArea] = CreateDynamicSphere(
-            x, y, z, 2.0,
-            .worldid = 0, .interiorid = 0
-        );
-        Streamer_SetIntData(STREAMER_TYPE_AREA, g_rgeGrills[ grill_id ][e_iArea], E_STREAMER_CUSTOM(0x424251), grill_id); // BBQ
-
-        Player_Grill(playerid) = grill_id;
-        Streamer_Update(playerid);
-        return grill_id;
+        Streamer_Update(i);
     }
-    return HYAXE_MAX_GRILLS + 1;
+
+    return grill_id;
 }
 
 Grill_Destroy(grill_id)
 {
-    g_rgeGrills[ grill_id ][e_bValid] = false;
-    DestroyDynamicObject( g_rgeGrills[ grill_id ][e_iBBQObject] );
-    DestroyDynamicObject( g_rgeGrills[ grill_id ][e_iContentObject] );
-    DestroyDynamicObject( g_rgeGrills[ grill_id ][e_iSmokeObject] );
+    if (!Streamer_HasArrayData(STREAMER_TYPE_AREA, grill_id, E_STREAMER_CUSTOM(MAKE_CELL(0,'B','B','Q'))))
+        return 0;
 
-    DestroyDynamic3DTextLabel( g_rgeGrills[ grill_id ][e_i3DLabel] );
-    DestroyDynamicArea( g_rgeGrills[ grill_id ][e_iArea] );
+    new data[eGrillData];
+    Streamer_GetArrayData(STREAMER_TYPE_AREA, grill_id, E_STREAMER_CUSTOM(MAKE_CELL(0,'B','B','Q')), data);
 
-    g_rgeGrills[ grill_id ][e_bCooking] = false;
-    g_rgeGrills[ grill_id ][e_iOwnerID] = INVALID_PLAYER_ID;
+    if (IsValidDynamicObject(data[e_iBBQObject]))
+        DestroyDynamicObject(data[e_iBBQObject]);
+
+    if (IsValidDynamicObject(data[e_iContentObject]))
+        DestroyDynamicObject(data[e_iContentObject]);
+
+    if (IsValidDynamicObject(data[e_iSmokeObject]))
+        DestroyDynamicObject(data[e_iSmokeObject]);
+
+    DestroyDynamic3DTextLabel(data[e_i3DLabel]);
+    DestroyDynamicArea(grill_id);
+
     return 1;
 }
 
 Player_GetNearestGrill(playerid)
 {
     new areas = GetPlayerNumberDynamicAreas(playerid);
-    if(areas)
+    if (areas)
     {
         YSI_UNSAFE_HUGE_STRING[areas] = INVALID_STREAMER_ID;
         GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
 
-        for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
+        for (new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
         {
             new area = YSI_UNSAFE_HUGE_STRING[i];
-            if(Streamer_HasIntData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x424251)))
+            if (Streamer_HasArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(MAKE_CELL(0,'B','B','Q'))))
             {
-                return Streamer_GetIntData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x424251));
+                return area;
             }
         }
     }
-    return HYAXE_MAX_GRILLS + 1;
+
+    return INVALID_STREAMER_ID;
 }
 
 Grill_StartCooking(grill_id)
 {
+    if (!Streamer_HasArrayData(STREAMER_TYPE_AREA, grill_id, E_STREAMER_CUSTOM(MAKE_CELL(0,'B','B','Q'))))
+        return 0;
+
+    new data[eGrillData];
+    Streamer_GetArrayData(STREAMER_TYPE_AREA, grill_id, E_STREAMER_CUSTOM(MAKE_CELL(0,'B','B','Q')), data);
+
     new Float:x, Float:y, Float:z;
-    GetDynamicObjectPos(g_rgeGrills[ grill_id ][e_iBBQObject], x, y, z);
+    GetDynamicObjectPos(data[e_iBBQObject], x, y, z);
 
-    g_rgeGrills[ grill_id ][e_iContentObject] = CreateDynamicObject(2804, x, y, z + 0.9, 0.0, 0.0, 0.0, 0, 0);
-    g_rgeGrills[ grill_id ][e_iSmokeObject] = CreateDynamicObject(18735, x, y, z - 0.3, 0.0, 0.0, 0.0, 0, 0);
+    data[e_iContentObject] = CreateDynamicObject(2804, x, y, z + 0.9, 0.0, 0.0, 0.0, 0, 0);
+    data[e_iSmokeObject] = CreateDynamicObject(18735, x, y, z - 0.3, 0.0, 0.0, 0.0, 0, 0);
+    data[e_bCooking] = true;
 
-    g_rgeGrills[ grill_id ][e_bCooking] = true;
+    Streamer_SetArrayData(STREAMER_TYPE_AREA, grill_id, E_STREAMER_CUSTOM(MAKE_CELL(0,'B','B','Q')), data);
 
-    new remaining_seconds = 15;
-    inline FinishCooking()
+    inline const FinishCooking()
 	{
-        --remaining_seconds;
+        if (!IsValidDynamicArea(grill_id) || !Streamer_HasArrayData(STREAMER_TYPE_AREA, grill_id, E_STREAMER_CUSTOM(MAKE_CELL(0,'B','B','Q'))))
+            return 1;
 
-        if (!remaining_seconds)
-        {
-            DestroyDynamicObject( g_rgeGrills[ grill_id ][e_iContentObject] );
-            DestroyDynamicObject( g_rgeGrills[ grill_id ][e_iSmokeObject] );
+        new timer_data[eGrillData];
+        Streamer_GetArrayData(STREAMER_TYPE_AREA, grill_id, E_STREAMER_CUSTOM(MAKE_CELL(0,'B','B','Q')), timer_data);
 
-            DroppedItem_Create(ITEM_HAM, 1, 0, x, y, z + 0.9, 0, 0, .physics = false);
-        }
+        DestroyDynamicObject(timer_data[e_iContentObject]);
+        timer_data[e_iContentObject] = INVALID_STREAMER_ID;
+        DestroyDynamicObject(timer_data[e_iSmokeObject]);
+        timer_data[e_iSmokeObject] = INVALID_STREAMER_ID;
+        timer_data[e_bCooking] = false;
+
+        Streamer_SetArrayData(STREAMER_TYPE_AREA, grill_id, E_STREAMER_CUSTOM(MAKE_CELL(0,'B','B','Q')), timer_data);
+
+        DroppedItem_Create(ITEM_HAM, 1, 0, x, y, z + 0.9, 0, 0, .physics = false);
 	}
-    Timer_CreateCallback(using inline FinishCooking, 1000, 15);
+    Timer_CreateCallback(using inline FinishCooking, 15000, 1);
     return 1;
 }

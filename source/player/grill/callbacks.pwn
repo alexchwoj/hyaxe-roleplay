@@ -5,8 +5,11 @@
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    if ( Player_Grill(playerid) < HYAXE_MAX_GRILLS )
-        Grill_Destroy( Player_Grill(playerid) );
+    if (!Player_Grill(playerid))
+    {
+        Grill_Destroy(Player_Grill(playerid));
+        Player_Grill(playerid) = INVALID_STREAMER_ID;
+    }
 
     #if defined GRILL_OnPlayerDisconnect
         return GRILL_OnPlayerDisconnect(playerid, reason);
@@ -25,36 +28,17 @@ public OnPlayerDisconnect(playerid, reason)
     forward GRILL_OnPlayerDisconnect(playerid, reason);
 #endif
 
-
-public OnPlayerConnect(playerid)
-{
-    Player_Grill(playerid) = HYAXE_MAX_GRILLS + 1;
-
-    #if defined GRILL_OnPlayerConnect
-        return GRILL_OnPlayerConnect(playerid);
-    #else
-        return 1;
-    #endif
-}
-
-#if defined _ALS_OnPlayerConnect
-    #undef OnPlayerConnect
-#else
-    #define _ALS_OnPlayerConnect
-#endif
-#define OnPlayerConnect GRILL_OnPlayerConnect
-#if defined GRILL_OnPlayerConnect
-    forward GRILL_OnPlayerConnect(playerid);
-#endif
-
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if((newkeys & KEY_CTRL_BACK) != 0)
     {
         new grill_id = Player_GetNearestGrill(playerid);
-        if (grill_id < HYAXE_MAX_GRILLS)
+        if (grill_id != INVALID_STREAMER_ID)
         {
-            if (g_rgeGrills[ grill_id ][e_iOwnerID] == playerid)
+            new data[eGrillData];
+            Streamer_GetArrayData(STREAMER_TYPE_AREA, grill_id, E_STREAMER_CUSTOM(MAKE_CELL(0,'B','B','Q')), data);
+
+            if (data[e_iOwnerID] == playerid)
             {
                 Grill_Destroy(grill_id);
                 Inventory_AddFixedItem(playerid, ITEM_GRILL, 1, 0);
