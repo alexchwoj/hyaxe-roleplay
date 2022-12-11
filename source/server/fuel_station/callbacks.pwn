@@ -21,14 +21,14 @@ static GasStationCanisters_OnKeyPress(playerid)
     {
         #pragma unused listitem, inputtext
 
-        if (Player_Money(playerid) < 300)
-        {
-            Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes esa cantidad de dinero");
-            return 1;
-        }
-
         if (response)
         {
+            if (Player_Money(playerid) < 300)
+            {
+                Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes esa cantidad de dinero");
+                return 1;
+            }
+
             Player_GiveMoney(playerid, -300);
             Inventory_AddFixedItem(playerid, ITEM_GAS_CAN, 1, 0);
             Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un bidón de gasolina de 25 litros");
