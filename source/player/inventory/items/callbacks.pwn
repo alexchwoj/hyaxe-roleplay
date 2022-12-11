@@ -8,9 +8,12 @@ static Meat_OnUse(playerid, slot)
     Inventory_Hide(playerid);
 
     new grill_id = Player_GetNearestGrill(playerid);
-    if (grill_id < HYAXE_MAX_GRILLS)
+    if (grill_id != INVALID_STREAMER_ID)
     {
-        if (g_rgeGrills[ grill_id ][e_bCooking])
+        new data[eGrillData];
+        Streamer_GetArrayData(STREAMER_TYPE_AREA, grill_id, E_STREAMER_CUSTOM(MAKE_CELL(0,'B','B','Q')), data);
+
+        if (data[e_bCooking])
             return Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Alguien más ya está cocinando en esta parrilla.");
 
         InventorySlot_Subtract(playerid, slot);
