@@ -5,7 +5,7 @@
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    if (!Player_Grill(playerid))
+    if (Player_Grill(playerid) != INVALID_STREAMER_ID)
     {
         Grill_Destroy(Player_Grill(playerid));
         Player_Grill(playerid) = INVALID_STREAMER_ID;

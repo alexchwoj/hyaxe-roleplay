@@ -23,7 +23,7 @@ static Meat_OnUse(playerid, slot)
 
         Notification_Show(playerid, "La carne estará lista en 15 segundos.", 3000, 0xDD6A4DFF);
     }
-    else return Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No hay parrillas cerca.");
+    else return Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No hay parrillas cerca");
 
     return 1;
 }
@@ -33,7 +33,10 @@ static Grill_OnUse(playerid, slot)
     Inventory_Hide(playerid);
 
     if (GetPlayerVirtualWorld(playerid) || GetPlayerInterior(playerid))
-        return Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes poner la parrilla aquí.");
+        return Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes poner la parrilla aquí");
+
+    if (Player_Grill(playerid) != INVALID_STREAMER_ID)
+        return Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Solo puedes poner una parrilla a la vez");
 
     new Float:x, Float:y, Float:z, Float:angle;
 	GetPlayerPos(playerid, x, y, z);
