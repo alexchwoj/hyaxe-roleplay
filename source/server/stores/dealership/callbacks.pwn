@@ -63,8 +63,10 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if((newkeys & KEY_YES) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
-        new vehicleid = GetPlayerNearestVehicle(playerid);
-        if (vehicleid == INVALID_VEHICLE_ID)
+        new vehicleid = INVALID_VEHICLE_ID;
+        if (Bit_Get(Player_Config(playerid), CONFIG_ANDROID_MODE))
+            vehicleid = GetPlayerNearestVehicle(playerid);
+        else
             vehicleid = GetPlayerCameraTargetVehicle(playerid);
             
         if (IsValidVehicle(vehicleid))
@@ -75,8 +77,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 if (Iter_Count(PlayerVehicles[playerid]) >= vehicles_per_privilege_level[Player_VIP(playerid)])
                 {
                     PlayerPlaySound(playerid, SOUND_ERROR);
-                    Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, va_return("Solo puedes tener hasta %d vehículos.", vehicles_per_privilege_level[Player_VIP(playerid)]));
-                    Notification_Show(playerid, "Dirígete a ~r~samp.hyaxe.com/store~w~ para adquirir VIP y tener más vehículos.", 10000);
+                    Notification_Show(playerid, va_return("Solo puedes tener hasta %d vehículos. Dirígete a ~r~samp.hyaxe.com/store~w~ para adquirir VIP y tener más vehículos.", vehicles_per_privilege_level[Player_VIP(playerid)]), 10000);
                     return 1;
                 }
 
