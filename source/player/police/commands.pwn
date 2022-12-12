@@ -507,6 +507,8 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
         Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] {DADADA}%s {ED2B2B}›{DADADA} Sospechos%c %s procesad%c.", Player_RPName(playerid), (Player_Sex(target) == SEX_MALE ? 'o' : 'a'), Player_RPName(target), (Player_Sex(target) == SEX_MALE ? 'o' : 'a')), 6, target);
 
         new jailtime = (Player_WantedLevel(target) * 2) * 60;
+        DEBUG_PRINT("JAIL TIME FOR PLAYER %d = %d (wanted level = %d)", target, jailtime, Player_WantedLevel(target));
+        DEBUG_PRINT("JAILTIME * 1000 = %d", jailtime * 1000);
         Player_Data(target, e_iJailTime) = gettime() + jailtime;
         Player_Timer(target, e_iPlayerJailTimer) = SetTimerEx("ARREST_ReleaseFromPrison", jailtime * 1000, false, "i", target);
 
