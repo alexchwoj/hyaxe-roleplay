@@ -403,6 +403,13 @@ dialog gang_member(playerid, dialogid, response, listitem, const inputtext[])
     {
         case 0: // Change role
         {
+            if (!Player_HasGangPermission(playerid, GANG_PERM_EDIT_MEMBERS))
+            {
+                Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes permiso para usar esto");
+                Gangs_OpenPanel(playerid);
+                return 1;
+            }
+
             strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Los roles están ordenados por su importancia jerárquica\t \n");
             new line[120];
 
@@ -425,6 +432,13 @@ dialog gang_member(playerid, dialogid, response, listitem, const inputtext[])
         }
         case 1: // Kick member
         {
+            if (!Player_HasGangPermission(playerid, GANG_PERM_KICK_MEMBERS))
+            {
+                Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes permiso para expulsar miembros");
+                Gangs_OpenPanel(playerid);
+                return 1;
+            }
+
             Dialog_ShowCallback(playerid, using public _hydg@gang_kick_member<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Expulsar miembro", va_return("{DADADA}¿Estás seguro de que quieres expulsar a {CB3126}%s{DADADA}?", s_rgszSelectedGangMember[playerid]), "Expulsar", "Cancelar");
         }
     }
