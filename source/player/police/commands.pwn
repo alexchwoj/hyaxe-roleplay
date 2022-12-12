@@ -441,18 +441,18 @@ command arrestar(playerid, const params[], "Arresta a un jugador")
 
 public OnPlayerStateChange(playerid, newstate, oldstate)
 {
-    if(newstate == PLAYER_STATE_DRIVER && s_rgiPoliceArrestingPlayer[playerid] != INVALID_PLAYER_ID)
+    if (newstate == PLAYER_STATE_DRIVER && s_rgiPoliceArrestingPlayer[playerid] != INVALID_PLAYER_ID)
     {
         new vehicleid = GetPlayerVehicleID(playerid);
-        if(IsValidVehicle(vehicleid) && Vehicle_Type(vehicleid) == VEHICLE_TYPE_POLICE)
+        if (IsValidVehicle(vehicleid) && Vehicle_Type(vehicleid) == VEHICLE_TYPE_POLICE)
         {
             new occupied_seats = 0;
-            foreach(new i : VehicleOccupant(vehicleid, .includeDriver = false))
+            foreach (new i : VehicleOccupant(vehicleid, .includeDriver = false))
             {
                 occupied_seats = (1 << GetPlayerVehicleSeat(i));
             }
 
-            if(occupied_seats >= 0b1100)
+            if (occupied_seats >= 0b1100)
             {
                 Notification_Show(playerid, "No se pudo subir al sospechoso a la patrulla. Libera uno de los asientos traseros.", 5000);
             }
@@ -462,6 +462,38 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
                 PutPlayerInVehicle(s_rgiPoliceArrestingPlayer[playerid], GetPlayerVehicleID(playerid), Cell_GetLowestBlank(occupied_seats));
                 Notification_Show(playerid, "Lleva al sospechoso a la comisaría para procesarlo.", 5000);
                 TogglePlayerDynamicCP(playerid, g_iArrestCheckpoint, true);
+            }
+        }
+    }
+    else if (newstate == PLAYER_STATE_ONFOOT && oldstate == PLAYER_STATE_PASSENGER && Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
+    {
+        new arresting_player = INVALID_PLAYER_ID;
+        foreach (new i : Police)
+        {
+            if (s_rgiPoliceArrestingPlayer[i] == playerid)
+            {
+                arresting_player = i;
+                break;
+            }
+        }
+
+        if (IsPlayerConnected(arresting_player))
+        {
+            new vehicleid = GetPlayerVehicleID(arresting_player);
+            if (IsValidVehicle(vehicleid) && Vehicle_Type(vehicleid) == VEHICLE_TYPE_POLICE)
+            {
+                new occupied_seats = 0;
+                foreach (new i : VehicleOccupant(vehicleid, .includeDriver = false))
+                {
+                    occupied_seats = (1 << GetPlayerVehicleSeat(i));
+                }
+
+                if (occupied_seats <= 0b1100)
+                {
+                    occupied_seats |= 0b11;
+                    PutPlayerInVehicle(playerid, vehicleid, Cell_GetLowestBlank(occupied_seats));
+                    TogglePlayerControllable(playerid, false);
+                }
             }
         }
     }
