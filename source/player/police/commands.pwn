@@ -500,9 +500,9 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
         TogglePlayerControllable(target, true);
         SetPlayerSpecialAction(target, SPECIAL_ACTION_NONE);
 
-        Player_GiveMoney(playerid, 500);
-        Player_AddXP(playerid, 250);
-        Notification_Show(playerid, va_return("Arrestaste a %s y se te dio una bonificación de ~g~500$", Player_RPName(target)), 5000);
+        Player_GiveMoney(playerid, 3000);
+        Player_AddXP(playerid, 300);
+        Notification_Show(playerid, va_return("Arrestaste a %s y se te dio una bonificación de ~g~3000$", Player_RPName(target)), 5000);
 
         Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] {DADADA}%s {ED2B2B}›{DADADA} Sospechos%c %s procesad%c.", Player_RPName(playerid), (Player_Sex(target) == SEX_MALE ? 'o' : 'a'), Player_RPName(target), (Player_Sex(target) == SEX_MALE ? 'o' : 'a')), 6, target);
 
@@ -552,9 +552,10 @@ public OnPlayerDisconnect(playerid, reason)
         {
             if(s_rgiPoliceArrestingPlayer[i] == playerid)
             {
-                Notification_Show(i, "El jugador al que arrestabas se desconecto. Se te dio una bonificación de ~r~500$~w~ por su arresto.", 10000);
+                Player_GiveMoney(i, 3000);
+                Notification_Show(i, "El jugador al que arrestabas se desconecto. Se te dio una bonificación de ~r~3000$~w~ por su arresto.", 10000);
                 s_rgiPoliceArrestingPlayer[i] = INVALID_PLAYER_ID;
-                TogglePlayerDynamicCP(playerid, g_iArrestCheckpoint, false);
+                TogglePlayerDynamicCP(i, g_iArrestCheckpoint, false);
                 break;
             }
         }
