@@ -459,7 +459,6 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
             else
             {
                 occupied_seats |= 0b11;
-                Cell_GetLowestBlank(occupied_seats);
                 PutPlayerInVehicle(s_rgiPoliceArrestingPlayer[playerid], GetPlayerVehicleID(playerid), Cell_GetLowestBlank(occupied_seats));
                 Notification_Show(playerid, "Lleva al sospechoso a la comisaría para procesarlo.", 5000);
                 TogglePlayerDynamicCP(playerid, g_iArrestCheckpoint, true);
