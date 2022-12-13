@@ -229,6 +229,11 @@ command id(playerid, const params[], "Ver los datos de un jugador")
             NetStats_BytesSent(destination),
             NetStats_BytesReceived(destination)
         );
+
+        if (Bit_Get(Player_Config(destination), CONFIG_ANDROID_MODE))
+            SendClientMessage(playerid, 0x415BA2FF, "›{DADADA} Admin:{BBBBBB} Modo: {A4C639}Android");
+        else
+            SendClientMessage(playerid, 0x415BA2FF, "›{DADADA} Admin:{BBBBBB} Modo: {CB3126}PC");
     }
     return 1;
 }
