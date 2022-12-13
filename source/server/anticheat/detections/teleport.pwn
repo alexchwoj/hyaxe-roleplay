@@ -3,32 +3,8 @@
 #endif
 #define _detections_teleport_
 
-public OnPlayerPauseStateChange(playerid, pausestate)
-{
-    printf("OnPlayerPauseStateChange(playerid = %i, pausestate = %i)", playerid, pausestate);
-
-    #if defined AC_OnPlayerPauseStateChange
-        return AC_OnPlayerPauseStateChange(playerid, pausestate);
-    #else
-        return 1;
-    #endif
-}
-
-#if defined _ALS_OnPlayerPauseStateChange
-    #undef OnPlayerPauseStateChange
-#else
-    #define _ALS_OnPlayerPauseStateChange
-#endif
-#define OnPlayerPauseStateChange AC_OnPlayerPauseStateChange
-#if defined AC_OnPlayerPauseStateChange
-    forward AC_OnPlayerPauseStateChange(playerid, pausestate);
-#endif
-
 public OnPlayerUpdate(playerid)
 {
-    printf("OnPlayerUpdate(playerid = %i)", playerid);
-    printf("%d", IsPlayerPaused(playerid));
-
     if (IsPlayerSpawned(playerid) && Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
     {
         if(!GetPlayerInterior(playerid))
