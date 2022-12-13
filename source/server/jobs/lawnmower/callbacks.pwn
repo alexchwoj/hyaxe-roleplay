@@ -114,6 +114,11 @@ static LawnMowerEvent(playerid, eJobEvent:event, areaid)
             LawnMower_ClearJob(playerid);
             Notification_Show(playerid, "El capataz te vio fuera del parque y te ~r~despidió~w~.", 5000);
         }
+        case JOB_EV_RESIGN:
+        {
+            LawnMower_ClearJob(playerid);
+            Notification_Show(playerid, "Renunciaste a tu labor como cortacesped.", 5000);
+        }
     }
     #pragma unused playerid, event, areaid
     return 1;

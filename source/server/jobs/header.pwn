@@ -17,7 +17,8 @@ enum eJobEvent
     JOB_EV_JOIN,
     JOB_EV_LEAVE,
     JOB_EV_LEAVE_PLACE,
-    JOB_EV_LEAVE_VEHICLE
+    JOB_EV_LEAVE_VEHICLE,
+    JOB_EV_RESIGN
 };
 
 enum ePlayerJobData

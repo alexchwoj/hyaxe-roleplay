@@ -121,6 +121,23 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
                 Notification_Show(playerid, "Abandonaste la cola para trabajar como fabricante de armas.", 5000);
             }
         }
+        case JOB_EV_RESIGN:
+        {
+            if (g_rgiGunsmakerUsedBench{playerid} != 0xFF)
+            {
+                TogglePlayerDynamicCP(playerid, g_rgiGunsmakerBenchCheckpoint[g_rgiGunsmakerUsedBench{playerid}], false);
+                g_iGunsmakerUsedBenchs &= ~(1 << g_rgiGunsmakerUsedBench{playerid});
+                g_rgiGunsmakerUsedBench{playerid} = 0xFF;
+                Gunsmaker_ProcessQueue();
+
+                Notification_Show(playerid, "Abandonaste tu labor como fabricante de armas.", 5000);
+            }
+            else if (Iter_Contains(GunsmakerBenchQueue, playerid))
+            {
+                Iter_Remove(GunsmakerBenchQueue, playerid);
+                Notification_Show(playerid, "Abandonaste la cola para trabajar como fabricante de armas.", 5000);
+            }
+        }
     }
     return 1;
 }

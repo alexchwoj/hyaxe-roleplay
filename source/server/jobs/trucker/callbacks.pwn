@@ -15,7 +15,7 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
         {
             Notification_ShowBeatingText(playerid, 5000, 0xDAA838, 100, 255, "Súbete en uno de los camiones de la central para empezar a trabajar");
         }
-        case JOB_EV_LEAVE:
+        case JOB_EV_LEAVE, JOB_EV_RESIGN:
         {
             Player_Job(playerid) = JOB_NONE;
 
