@@ -24,7 +24,7 @@ Admins_SendMessage(level, color, const message[], bool:webhook = true)
     return 1;
 }
 
-Player_Ban(playerid, adminid, const reason[] = "No especificada", time_seconds = -1)
+Player_Ban(playerid, adminid, const reason[] = "No especificada", time_seconds = -1, bool:ban_ip = true)
 {
     new admin_db[24] = "NULL";
     if(adminid != ADMIN_ID_ANTICHEAT)
@@ -38,9 +38,9 @@ Player_Ban(playerid, adminid, const reason[] = "No especificada", time_seconds =
         INSERT INTO `BANS` \
             (`BANNED_USER`, `BANNED_IP`, `ADMIN_ID`, `REASON`, `EXPIRATION_DATE`) \
         VALUES \
-            ('%e', '%e', %s, '%e', %s);\
+            ('%e', %s, %s, '%e', %s);\
     ",
-        Player_Name(playerid), RawIpToString(Player_IP(playerid)), admin_db, reason, expiration_db
+        Player_Name(playerid), (ban_ip ? "NULL" : va_return("%s", RawIpToString(Player_IP(playerid)))), admin_db, reason, expiration_db
     );
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 
