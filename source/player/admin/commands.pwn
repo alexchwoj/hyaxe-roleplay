@@ -8,7 +8,7 @@ command ban(playerid, const params[], "Veta a un jugador")
     new banned, bool:ban_ip, time, reason[51];
     if(sscanf(params, "rK<boolean>(0)I(-1)S(No especificada)[50]", banned, ban_ip, time, reason))
     {
-        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/ban {DADADA}<jugador> {969696}[prohibir ip = no (0/1/si/no)][tiempo en horas = -1 (permanente)] [razón = \"No especificada\"]");
+        SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/ban {DADADA}<jugador> {969696}[prohibir ip = no (0/1/si/no)] [tiempo en horas = -1 (permanente)] [razón = \"No especificada\"]");
         return 1;
     }
 
