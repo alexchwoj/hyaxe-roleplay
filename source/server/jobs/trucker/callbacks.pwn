@@ -40,12 +40,6 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
                 Vehicle_Fuel(vehicleid) = 100.0;
             }
 
-            if(IsValidDynamicCP(g_rgiPlayerTruckCheckpoint[playerid]))
-            {
-                DestroyDynamicCP(g_rgiPlayerTruckCheckpoint[playerid]);
-                g_rgiPlayerTruckCheckpoint[playerid] = INVALID_STREAMER_ID;
-            }
-
             TogglePlayerAllDynamicCPs(playerid, false);
 
             g_rgbPlayerLoadingTruck{playerid} = 
@@ -207,55 +201,21 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
         return 1;
     }
     else if(g_rgiPlayerUsingTruck[playerid])
-    { 
-        if(checkpointid == g_rgiPlayerTruckCheckpoint[playerid])
-        {
-            SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
-            ApplyAnimation(playerid, "CARRY", "PUTDWN", 4.1, false, false, false, false, 0, false);
-            RemovePlayerAttachedObject(playerid, 0);
-            g_rgbPlayerHasBoxInHands{playerid} = false;
-
-            TogglePlayerDynamicCP(playerid, g_rgiPlayerTruckCheckpoint[playerid], false);
-
-            if(g_rgiPlayerRemainingBoxes{playerid} - 1 > 0)
-            {
-                SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 0, 1);
-
-                g_rgiPlayerRemainingBoxes{playerid}--;
-                TogglePlayerDynamicCP(playerid, g_iPickBoxCheckpoint, true);
-                format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "~w~Te queda%s ~y~%i caja%s~w~ por cargar.", g_rgiPlayerRemainingBoxes{playerid} > 1 ? "n" : "", g_rgiPlayerRemainingBoxes{playerid}, g_rgiPlayerRemainingBoxes{playerid} > 1 ? "s" : "");
-                Notification_ShowBeatingText(playerid, 5000, 0xFFFFFF, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
-            }
-            else
-            {
-                g_rgiPlayerRemainingBoxes{playerid} = g_rgeTruckerRoutes[g_rgiPlayerTruckerRoute{playerid}][e_iBoxCount];
-                g_rgbPlayerLoadingTruck{playerid} = false;
-                g_rgbTruckLoaded{g_rgiPlayerUsingTruck[playerid]} = true;
-
-                new engine, lights, alarm, doors, bonnet, dummy;
-                GetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, doors, bonnet, dummy, dummy);
-                SetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, 0, bonnet, 0, dummy);
-                SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 0, 0);
-
-                DestroyDynamicCP(g_rgiPlayerTruckCheckpoint[playerid]);
-                g_rgiPlayerTruckCheckpoint[playerid] = INVALID_STREAMER_ID;
-                Notification_ShowBeatingText(playerid, 5000, 0xDAA838, 100, 255, "Sube al camión y empieza el recorrido");
-            }
-        }
-        else if(checkpointid == g_rgeTruckerRoutes[g_rgiPlayerTruckerRoute{playerid}][e_iTruckCp])
+    {
+        if (checkpointid == g_rgeTruckerRoutes[g_rgiPlayerTruckerRoute{playerid}][e_iTruckCp])
         {
             TogglePlayerDynamicCP(playerid, checkpointid, false);
             TogglePlayerDynamicCP(playerid, g_rgeTruckerRoutes[g_rgiPlayerTruckerRoute{playerid}][e_iBoxUnloadCp], true);
             g_rgbPlayerUnloadingTruck{playerid} = true;
             
-            Notification_Show(playerid, "Empieza a descargar las cajas del camión~n~con ~r~~k~~SNEAK_ABOUT~~w~ y déjalas en el punto marcado en el mapa.", 10000);
+            Notification_Show(playerid, "Empieza a descargar las cajas del camión~n~con ~r~~k~~GROUP_CONTROL_BWD~~w~ y déjalas en el punto marcado en el mapa.", 10000);
         
             new engine, lights, alarm, doors, bonnet, objective;
             GetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, doors, bonnet, objective, objective);
             SetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, 1, bonnet, 1, objective);
             SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 1, 1);
         }
-        else if(checkpointid == g_rgeTruckerRoutes[g_rgiPlayerTruckerRoute{playerid}][e_iBoxUnloadCp])
+        else if (checkpointid == g_rgeTruckerRoutes[g_rgiPlayerTruckerRoute{playerid}][e_iBoxUnloadCp])
         {
             if(g_rgbPlayerHasBoxInHands{playerid})
             {
@@ -289,7 +249,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
                 }
             }
         }
-        else if(checkpointid == g_iTruckerCentralCp)
+        else if (checkpointid == g_iTruckerCentralCp)
         {
             new Float:truck_health = Vehicle_GetHealth(g_rgiPlayerUsingTruck[playerid]);
 
@@ -341,57 +301,26 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if((newkeys & KEY_CTRL_BACK) != 0)
+    if ((newkeys & KEY_CTRL_BACK) != 0)
     {
-        if(!g_rgbPlayerHasBoxInHands{playerid})
+        if (!g_rgbPlayerHasBoxInHands{playerid})
         {
-            if(g_rgbPlayerLoadingTruck{playerid})
+            if (g_rgbPlayerLoadingTruck{playerid})
             {
-                if(IsPlayerInRangeOfPoint(playerid, 3.0, 91.6690, -313.3107, 1.5781))
+                if (IsPlayerInRangeOfPoint(playerid, 3.0, 91.6690, -313.3107, 1.5781))
                 {
                     ApplyAnimation(playerid, "CARRY", "PUTDWN", 4.1, false, false, false, false, 0, false);
                     SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
                     SetPlayerAttachedObject(playerid, 0, 2912, 6, 0.08, 0.145, -0.016, 151.4, 0.0, -13.0, 0.552, 0.359, 0.636);
-                    Notification_ShowBeatingText(playerid, 3000, 0xFFFFFF, 100, 255, "~w~Deja la caja en el ~y~camión");
-
-                    printf("==================== TRUCKER LOAD INFO FOR %d (%s) ====================", playerid, Player_Name(playerid));
-
-                    if(!IsValidDynamicCP(g_rgiPlayerTruckCheckpoint[playerid]))
-                    {
-                        printf("= INVALID CHECKPOINT (%d)", g_rgiPlayerTruckCheckpoint[playerid]);
-
-                        new Float:x, Float:y, Float:z, Float:angle;
-                        GetVehiclePos(g_rgiPlayerUsingTruck[playerid], x, y, z);
-                        GetVehicleZAngle(g_rgiPlayerUsingTruck[playerid], angle);
-
-                        printf("= TRUCK POS (%f, %f, %f), ANG %f", x, y, z, angle);
-
-                        new Float:part_x, Float:part_y, Float:part_z;
-                        GetVehicleModelInfo(499, VEHICLE_MODEL_INFO_WHEELSREAR, part_x, part_y, part_z);
-                        x += (part_x + 0.5) * floatsin(-angle + 180.0, degrees) + (part_y * floatsin(-angle, degrees));
-                        y += (part_x + 0.5) * floatcos(-angle + 180.0, degrees) + (part_y * floatcos(-angle, degrees));
-
-                        printf("= CREATING CHECKPOINT AT (%f, %f, %f)", x, y, z);
-
-                        g_rgiPlayerTruckCheckpoint[playerid] = CreateDynamicCP(x, y, z, 2.0, .playerid = playerid);
-                    
-                        printf("= CHECKPOINT CREATED WITH ID %d", g_rgiPlayerTruckCheckpoint[playerid]);
-                    }
-
-                    printf("= SHOWING CHECKPOINT ID %d FOR PLAYER", g_rgiPlayerTruckCheckpoint[playerid]);
-
+                    Notification_ShowBeatingText(playerid, 3000, 0xFFFFFF, 100, 255, "~w~Acercate a la parte trasera del ~y~camión~w~ y presiona la tecla ~y~~k~~GROUP_CONTROL_BWD~~w~ para dejar la caja.");
                     SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 1, 1);
-                    TogglePlayerDynamicCP(playerid, g_rgiPlayerTruckCheckpoint[playerid], true);
-                    Streamer_Update(playerid, STREAMER_TYPE_CP);
-                    
-                    printf("===================================================================");
-
+                
                     g_rgbPlayerHasBoxInHands{playerid} = true;
                 
                     return 1;
                 }
             }
-            else if(g_rgbPlayerUnloadingTruck{playerid})
+            else if (g_rgbPlayerUnloadingTruck{playerid})
             {
                 new truckid = g_rgiPlayerUsingTruck[playerid];
                 new Float:x, Float:y, Float:z, Float:angle;
@@ -403,7 +332,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 x += (px) * floatsin(-angle + 180.0, degrees) + (py * floatsin(-angle, degrees));
                 y += (px) * floatcos(-angle + 180.0, degrees) + (py * floatcos(-angle, degrees));
 
-                if(IsPlayerInRangeOfPoint(playerid, 5.0, x, y, z))
+                if (IsPlayerInRangeOfPoint(playerid, 5.0, x, y, z))
                 {
                     g_rgbPlayerHasBoxInHands{playerid} = true;
 
@@ -418,6 +347,51 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     SetVehicleParamsForPlayer(truckid, playerid, 0, 1);
 
                     return 1;
+                }
+            }
+        }
+        else
+        {
+            if (g_rgbPlayerLoadingTruck{playerid})
+            {
+                new Float:x, Float:y, Float:z, Float:angle;
+                GetVehiclePos(g_rgiPlayerUsingTruck[playerid], x, y, z);
+                GetVehicleZAngle(g_rgiPlayerUsingTruck[playerid], angle);
+
+                new Float:part_x, Float:part_y, Float:part_z;
+                GetVehicleModelInfo(499, VEHICLE_MODEL_INFO_WHEELSREAR, part_x, part_y, part_z);
+                x += (part_x + 0.5) * floatsin(-angle + 180.0, degrees) + (part_y * floatsin(-angle, degrees));
+                y += (part_x + 0.5) * floatcos(-angle + 180.0, degrees) + (part_y * floatcos(-angle, degrees));
+
+                if (IsPlayerInRangeOfPoint(playerid, 3.0, x, y, z))
+                {
+                    SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
+                    ApplyAnimation(playerid, "CARRY", "PUTDWN", 4.1, false, false, false, false, 0, false);
+                    RemovePlayerAttachedObject(playerid, 0);
+                    g_rgbPlayerHasBoxInHands{playerid} = false;
+
+                    if (g_rgiPlayerRemainingBoxes{playerid} - 1 > 0)
+                    {
+                        SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 0, 1);
+
+                        g_rgiPlayerRemainingBoxes{playerid}--;
+                        TogglePlayerDynamicCP(playerid, g_iPickBoxCheckpoint, true);
+                        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "~w~Te queda%s ~y~%i caja%s~w~ por cargar.", g_rgiPlayerRemainingBoxes{playerid} > 1 ? "n" : "", g_rgiPlayerRemainingBoxes{playerid}, g_rgiPlayerRemainingBoxes{playerid} > 1 ? "s" : "");
+                        Notification_ShowBeatingText(playerid, 5000, 0xFFFFFF, 100, 255, HYAXE_UNSAFE_HUGE_STRING);
+                    }
+                    else
+                    {
+                        g_rgiPlayerRemainingBoxes{playerid} = g_rgeTruckerRoutes[g_rgiPlayerTruckerRoute{playerid}][e_iBoxCount];
+                        g_rgbPlayerLoadingTruck{playerid} = false;
+                        g_rgbTruckLoaded{g_rgiPlayerUsingTruck[playerid]} = true;
+
+                        new engine, lights, alarm, doors, bonnet, dummy;
+                        GetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, doors, bonnet, dummy, dummy);
+                        SetVehicleParamsEx(g_rgiPlayerUsingTruck[playerid], engine, lights, alarm, 0, bonnet, 0, dummy);
+                        SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 0, 0);
+
+                        Notification_ShowBeatingText(playerid, 5000, 0xDAA838, 100, 255, "Sube al camión y empieza el recorrido");
+                    }
                 }
             }
         }

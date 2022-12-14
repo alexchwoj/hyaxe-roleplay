@@ -104,7 +104,6 @@ new
     g_iPickBoxCheckpoint = INVALID_STREAMER_ID,
     g_iTruckerCentralArea = INVALID_STREAMER_ID,
     g_iTruckerCentralCp = INVALID_STREAMER_ID,
-    g_rgiPlayerTruckCheckpoint[MAX_PLAYERS],
     g_rgiPlayerRemainingBoxes[MAX_PLAYERS char],
     bool:g_rgbPlayerLoadingTruck[MAX_PLAYERS char],
     bool:g_rgbPlayerUnloadingTruck[MAX_PLAYERS char],
