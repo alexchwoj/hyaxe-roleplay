@@ -5,8 +5,8 @@
 
 Player_SetArmor(playerid, amount)
 {
-	Player_Armor(playerid) = amount;
-	SetPlayerArmour(playerid, amount);
+	Player_Armor(playerid) = clamp(amount, 0, 100);
+	SetPlayerArmour(playerid, float(Player_Armor(playerid)));
 	return 1;
 }
 
@@ -25,7 +25,7 @@ Player_SetHealth(playerid, amount)
 		CallLocalFunction(!"OnPlayerDeath", !"iid", playerid, INVALID_PLAYER_ID, 54);
 		g_rgiLastDeathTick[playerid] = GetTickCount() + 1000;
 	}
-	else SetPlayerHealth(playerid, amount);
+	else SetPlayerHealth(playerid, float(Player_Health(playerid)));
 
 	return 1;
 }
