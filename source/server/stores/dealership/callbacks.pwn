@@ -3,6 +3,43 @@
 #endif
 #define _dealership_callbacks_
 
+public OnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, Float:new_x, Float:new_y, Float:new_z, Float:vel_x, Float:vel_y, Float:vel_z)
+{
+    if (IsValidVehicle(vehicleid) && Vehicle_Type(vehicleid) == VEHICLE_TYPE_DEALERSHIP)
+    {
+        SetExclusiveBroadcast(true);
+        BroadcastToPlayer(playerid);
+
+        new Float:x, Float:y, Float:z, Float:ang;
+        GetVehiclePos(vehicleid, x, y, z);
+        GetVehicleZAngle(vehicleid, ang);
+        
+        SetVehiclePos(vehicleid, x, y, z);
+        SetVehicleZAngle(vehicleid, ang);
+
+        BroadcastToPlayer(playerid, 0);
+        SetExclusiveBroadcast(false);
+        
+        return 0;
+    }
+
+    #if defined DS_OnUnoccupiedVehicleUpdate
+        return DS_OnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, Float:new_x, Float:new_y, Float:new_z, Float:vel_x, Float:vel_y, Float:vel_z);
+    #else
+        return 1;
+    #endif
+}
+
+#if defined _ALS_OnUnoccupiedVehicleUpdate
+    #undef OnUnoccupiedVehicleUpdate
+#else
+    #define _ALS_OnUnoccupiedVehicleUpdate
+#endif
+#define OnUnoccupiedVehicleUpdate DS_OnUnoccupiedVehicleUpdate
+#if defined DS_OnUnoccupiedVehicleUpdate
+    forward DS_OnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, Float:new_x, Float:new_y, Float:new_z, Float:vel_x, Float:vel_y, Float:vel_z);
+#endif
+
 public OnScriptInit()
 {
     CreateDynamicMapIcon(-1920.1965, 302.7697, 40.5643, 55, -1, .worldid = 0, .interiorid = 0);
@@ -21,8 +58,9 @@ public OnScriptInit()
             g_rgeVehiclesForSale[i][e_fVehicleAngle],
             g_rgeVehiclesForSale[i][e_iColor1],
             g_rgeVehiclesForSale[i][e_iColor2],
-            1
+            1, .static_veh = true
         );
+        Vehicle_Type(g_rgeVehiclesForSale[i][e_iVehicleID]) = VEHICLE_TYPE_DEALERSHIP;
         Vehicle_ToggleLock(g_rgeVehiclesForSale[i][e_iVehicleID]);
 
         format(
