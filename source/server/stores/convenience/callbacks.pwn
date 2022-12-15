@@ -30,10 +30,15 @@ static Convenience_OnBuy(playerid, shop_id, item_id)
             Inventory_AddFixedItem(playerid, ITEM_PHONE, 1, 100000 + random(100000));
             Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un celular");
         }
-        case 3: // Phone
+        case 3: // Grill
         {
             Inventory_AddFixedItem(playerid, ITEM_GRILL, 1, 0);
             Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste una parrilla");
+        }
+        case 4: // Boombox
+        {
+            Inventory_AddFixedItem(playerid, ITEM_BOOMBOX, 1, 0);
+            Notification_ShowBeatingText(playerid, 3000, 0x98D592, 100, 255, "Compraste un parlante");
         }
     }
 
@@ -376,6 +381,7 @@ public OnScriptInit()
     Shop_AddItem(shopid, "Vaso de cafe", 19835, 10, 0.0, 0.0, 0.0);
     Shop_AddItem(shopid, "Celular", 18866, 1500, 0.0, 0.0, 0.0);
     Shop_AddItem(shopid, "Parrilla", 19831, 1500, 0.0, 0.0, 0.0);
+    Shop_AddItem(shopid, "Parlante", 2226, 3000, 0.0, 0.0, 0.0);
 
     #if defined SHOP_CONV_OnScriptInit
         return SHOP_CONV_OnScriptInit();

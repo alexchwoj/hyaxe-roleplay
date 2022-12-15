@@ -146,7 +146,8 @@ enum ePlayerTemp
     bool:e_bPassingItems,
     bool:e_bUFO,
     e_iLastEnterExit,
-    e_iActualGrill
+    e_iActualGrill,
+    e_iPlayerBoombox
 };
 
 new 
@@ -157,6 +158,7 @@ new
     Iterator:LoggedIn<MAX_PLAYERS>;
 
 #define Player_Grill(%0) (g_rgePlayerTempData[(%0)][e_iActualGrill])
+#define Player_Boombox(%0) (g_rgePlayerTempData[(%0)][e_iPlayerBoombox])
 #define Player_LastEnterExit(%0) (g_rgePlayerTempData[(%0)][e_iLastEnterExit])
 #define Player_ResetTemp(%0) g_rgePlayerTempData[(%0)] = g_rgePlayerTempData[MAX_PLAYERS]
 #define Player_Flags(%0) Bit:(g_rgiPlayerFlags[(%0)])

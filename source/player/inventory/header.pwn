@@ -96,6 +96,7 @@ enum _:eItems
     ITEM_DYNAMITE,
     ITEM_MONEY,
     ITEM_GRILL,
+    ITEM_BOOMBOX,
 
 	ITEM_INVALID
 };
@@ -226,6 +227,7 @@ new
         {"Dinamita", 1654, true, -1}, // ITEM_DYNAMITE
         {"Dinero", 1212, false, -1}, // ITEM_MONEY
         {"Parrilla pequeña", 19831, true, -1}, // ITEM_GRILL
+        {"Parlante", 2226, true, -1}, // ITEM_BOOMBOX
 
 		{"Invalid item", 18631, false, -1} // ITEM_INVALID
 	},

@@ -527,6 +527,37 @@ static MediKit_OnUse(playerid, slot)
     return 1;
 }
 
+static Boombox_OnUse(playerid, slot)
+{
+    if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+    {
+        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes usar esto abatido");
+        return 1;
+    }
+
+    if (Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
+    {
+        Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes usar esto arrestado");
+        return 1;
+    }
+
+    Inventory_Hide(playerid);
+    InventorySlot_Subtract(playerid, slot);
+    Notification_Show(playerid, "~w~Pusiste un parlante en el suelo.~n~Usa ~r~~k~~SNEAK_ABOUT~~w~ + ~r~~k~~CONVERSATION_NO~~w~ cerca de él para configurarlo.", 7000);
+
+    new Float:x, Float:y, Float:z;
+    GetPlayerPos(playerid, x, y, z);
+
+    if (!GetPlayerInterior(playerid))
+        CA_FindZ_For2DCoord(x, y, z);
+    else
+        z -= 0.3;
+    
+    Boombox_Create(playerid, x, y, z, 50.0);
+
+    return 1;
+}
+
 public OnScriptInit()
 {
     /* Medical */
@@ -712,6 +743,10 @@ public OnScriptInit()
     // Grill
     Item_Callback(ITEM_GRILL) = __addressof(Grill_OnUse);
     Item_SetPreviewRot(ITEM_GRILL, 0.0, 10.0, 190.0, 0.770000);
+
+    // Boombox
+    Item_Callback(ITEM_BOOMBOX) = __addressof(Boombox_OnUse);
+    Item_SetPreviewRot(ITEM_BOOMBOX, 0.0, 10.0, 190.0, 0.770000);
 
     /* Fireworks*/
 

@@ -81,7 +81,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             }
         }
     }
-    else if ((newkeys & KEY_NO) != 0 && !g_rgePlayerTempData[playerid][e_bPassingItems])
+    else if ((newkeys & KEY_NO) != 0 && !(newkeys & KEY_WALK) && !g_rgePlayerTempData[playerid][e_bPassingItems])
     {
         if (!Bit_Get(Player_Flags(playerid), PFLAG_IN_KEYGAME) && !Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
             Inventory_Show(playerid);
