@@ -13,4 +13,4 @@ enum eBoomboxData
     bool:e_bBoomboxPlayingFor[MAX_PLAYERS]
 };
 
-#define STEREO_API_ENDPOINT(%0) "134.255.218.239:5000"%0
+#define STEREO_API_ENDPOINT(%0) "ws.hyaxe.com"%0

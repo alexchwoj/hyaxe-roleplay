@@ -146,8 +146,8 @@ static enum eVideoData
     e_iVideoDurationSecs,
 };
 
-forward STEREO_SearchResponse(playerid, response_code, data[]);
-public STEREO_SearchResponse(playerid, response_code, data[])
+forward STEREO_SearchResponse(playerid, response_code, const data[]);
+public STEREO_SearchResponse(playerid, response_code, const data[])
 {
     printf("[func] STEREO_SearchResponse(playerid = %d, response_code = %d, data[] = \"%s\")", playerid, response_code, data);
 
@@ -158,24 +158,66 @@ public STEREO_SearchResponse(playerid, response_code, data[])
         return 1;
     }
 
+    if (response_code != 200)
+    {
+        s_rgiUsingBoombox[playerid] = INVALID_STREAMER_ID;
+        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Error del servidor. Informe a un administrador e intente nuevamente");
+        return 1;
+    }
+
     if (!Boombox_Exists(s_rgiUsingBoombox[playerid]))
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "El parlante que estabas usando fue guardado");
         return 1;
     }
 
-    printf("%s", data);
+    // parse results
+    new 
+        cur = 0, next = -1,
+        result_count = 0, 
+        videos[10][eVideoData];
 
-    new videos[10][eVideoData];
-    if (sscanf(data, "p<,>a<e<s[12]s[128]s[12]i>>[10]", videos))
+    while ((next = strfind(data, "\n", .pos = cur)) != -1)
     {
-        Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Error normalizando datos. Informe a un administrador e intentelo nuevamente.");
-        print("[stereo!] Error parsing data with sscanf.");
-        print("[stereo!] data:");
-        printf("[stereo!] %s", data);
+        new result_str[256];
+        strmid(result_str, data, cur, next);
 
-        return 1;
+        if (sscanf(result_str, "p<,>s[12]s[128]s[12]i", videos[result_count][e_szVideoId], videos[result_count][e_szVideoTitle], videos[result_count][e_szVideoDuration], videos[result_count][e_iVideoDurationSecs]))
+        {
+            Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Error normalizando datos. Informe a un administrador e intentelo nuevamente.");
+            print("[stereo!] Error parsing data with sscanf.");
+            print("[stereo!] line:");
+            printf("[stereo!] %s", result_str);
+            break;
+        }
+
+        for (new i; i < 128; ++i)
+        {
+            if(!videos[result_count][e_szVideoTitle][i])
+                break;
+
+            if(videos[result_count][e_szVideoTitle][i] == 247)
+            {
+                videos[result_count][e_szVideoTitle][i] = ',';
+            }
+        }
+
+        cur = next + 1;
+        result_count++;
     }
+
+    StrCpy(YSI_UNSAFE_HUGE_STRING, "{DADADA}Título\t{DADADA}Duración\t{DADADA}ID\n", YSI_UNSAFE_HUGE_LENGTH);
+
+    for(new i; i < result_count; ++i)
+    {
+        strcat(YSI_UNSAFE_HUGE_STRING, va_return("{DADADA}%s\t{DADADA}%s\t{DADADA}%s\n", videos[i][e_szVideoTitle], videos[i][e_szVideoDuration], videos[i][e_szVideoId]), YSI_UNSAFE_HUGE_LENGTH);
+    }
+
+    inline const Response(response, listitem, string:inputtext[])
+    {
+
+    }
+    Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}>>{DADADA} Parlante {CB3126}>{DADADA} Búsqueda", YSI_UNSAFE_HUGE_STRING, "Seleccionar", "Cancelar");
 
     return 1;
 }
