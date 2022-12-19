@@ -147,7 +147,9 @@ enum ePlayerTemp
     bool:e_bUFO,
     e_iLastEnterExit,
     e_iActualGrill,
-    e_iPlayerBoombox
+    e_iPlayerBoombox,
+    e_iCosmeticSlot,
+    e_iCosmeticMenuSlot
 };
 
 new 
@@ -157,6 +159,8 @@ new
     BitArray:g_rgiPlayerFlags[MAX_PLAYERS]<MAX_PLAYER_FLAGS>,
     Iterator:LoggedIn<MAX_PLAYERS>;
 
+#define Player_SelectedCosmeticMenu(%0) (g_rgePlayerTempData[(%0)][e_iCosmeticMenuSlot])
+#define Player_SelectedCosmetic(%0) (g_rgePlayerTempData[(%0)][e_iCosmeticSlot])
 #define Player_Grill(%0) (g_rgePlayerTempData[(%0)][e_iActualGrill])
 #define Player_Boombox(%0) (g_rgePlayerTempData[(%0)][e_iPlayerBoombox])
 #define Player_LastEnterExit(%0) (g_rgePlayerTempData[(%0)][e_iLastEnterExit])

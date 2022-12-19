@@ -1779,7 +1779,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawSetProportional(playerid, p_tdInventoryExpText{playerid}, 1);
     PlayerTextDrawSetSelectable(playerid, p_tdInventoryExpText{playerid}, 0);
 
-    p_tdToyView[playerid]{0} = CreatePlayerTextDraw(playerid, 368.000000, 63.000000, "Preview_Model");
+    p_tdToyView[playerid]{0} = CreatePlayerTextDraw(playerid, 227.000000, 63.000000, "Preview_Model");
     PlayerTextDrawFont(playerid, p_tdToyView[playerid]{0}, 5);
     PlayerTextDrawLetterSize(playerid, p_tdToyView[playerid]{0}, 0.600000, 2.000000);
     PlayerTextDrawTextSize(playerid, p_tdToyView[playerid]{0}, 38.000000, 44.500000);
@@ -1796,7 +1796,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{0}, -100.000000, -15.000000, -103.000000, 0.740000);
     PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{0}, 1, 1);
 
-    p_tdToyView[playerid]{1} = CreatePlayerTextDraw(playerid, 368.000000, 115.000000, "Preview_Model");
+    p_tdToyView[playerid]{1} = CreatePlayerTextDraw(playerid, 227.000000, 114.000000, "Preview_Model");
     PlayerTextDrawFont(playerid, p_tdToyView[playerid]{1}, 5);
     PlayerTextDrawLetterSize(playerid, p_tdToyView[playerid]{1}, 0.600000, 2.000000);
     PlayerTextDrawTextSize(playerid, p_tdToyView[playerid]{1}, 38.000000, 44.500000);
@@ -1813,7 +1813,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{1}, -100.000000, -15.000000, -103.000000, 0.740000);
     PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{1}, 1, 1);
 
-    p_tdToyView[playerid]{2} = CreatePlayerTextDraw(playerid, 368.000000, 167.000000, "Preview_Model");
+    p_tdToyView[playerid]{2} = CreatePlayerTextDraw(playerid, 227.000000, 165.000000, "Preview_Model");
     PlayerTextDrawFont(playerid, p_tdToyView[playerid]{2}, 5);
     PlayerTextDrawLetterSize(playerid, p_tdToyView[playerid]{2}, 0.600000, 2.000000);
     PlayerTextDrawTextSize(playerid, p_tdToyView[playerid]{2}, 38.000000, 44.500000);
@@ -1830,7 +1830,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{2}, -100.000000, -15.000000, -103.000000, 0.740000);
     PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{2}, 1, 1);
 
-    p_tdToyView[playerid]{3} = CreatePlayerTextDraw(playerid, 227.000000, 63.000000, "Preview_Model");
+    p_tdToyView[playerid]{3} = CreatePlayerTextDraw(playerid, 368.000000, 63.000000, "Preview_Model");
     PlayerTextDrawFont(playerid, p_tdToyView[playerid]{3}, 5);
     PlayerTextDrawLetterSize(playerid, p_tdToyView[playerid]{3}, 0.600000, 2.000000);
     PlayerTextDrawTextSize(playerid, p_tdToyView[playerid]{3}, 38.000000, 44.500000);
@@ -1847,7 +1847,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{3}, -100.000000, -15.000000, -103.000000, 0.740000);
     PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{3}, 1, 1);
 
-    p_tdToyView[playerid]{4} = CreatePlayerTextDraw(playerid, 227.000000, 114.000000, "Preview_Model");
+    p_tdToyView[playerid]{4} = CreatePlayerTextDraw(playerid, 368.000000, 115.000000, "Preview_Model");
     PlayerTextDrawFont(playerid, p_tdToyView[playerid]{4}, 5);
     PlayerTextDrawLetterSize(playerid, p_tdToyView[playerid]{4}, 0.600000, 2.000000);
     PlayerTextDrawTextSize(playerid, p_tdToyView[playerid]{4}, 38.000000, 44.500000);
@@ -1864,7 +1864,7 @@ public OnPlayerConnect(playerid)
     PlayerTextDrawSetPreviewRot(playerid, p_tdToyView[playerid]{4}, -100.000000, -15.000000, -103.000000, 0.740000);
     PlayerTextDrawSetPreviewVehCol(playerid, p_tdToyView[playerid]{4}, 1, 1);
 
-    p_tdToyView[playerid]{5} = CreatePlayerTextDraw(playerid, 227.000000, 165.000000, "Preview_Model");
+    p_tdToyView[playerid]{5} = CreatePlayerTextDraw(playerid, 368.000000, 167.000000, "Preview_Model");
     PlayerTextDrawFont(playerid, p_tdToyView[playerid]{5}, 5);
     PlayerTextDrawLetterSize(playerid, p_tdToyView[playerid]{5}, 0.600000, 2.000000);
     PlayerTextDrawTextSize(playerid, p_tdToyView[playerid]{5}, 38.000000, 44.500000);

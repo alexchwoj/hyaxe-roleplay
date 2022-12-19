@@ -307,7 +307,23 @@ Inventory_Show(playerid)
 
 	// Toys view
 	for(new i; i < 6; ++i)
+	{
+		if (g_rgiCosmeticsSlots[playerid][i] != -1)
+		{
+			new slot = g_rgiCosmeticsSlots[playerid][i];
+			if (g_rgePlayerCosmetics[playerid][slot][e_bPlaced])
+				PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{i}, g_rgePlayerCosmetics[playerid][slot][e_iModelID]);
+			else
+			{
+				g_rgiCosmeticsSlots[playerid][i] = -1;
+				PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{i}, 19482);
+			}
+			
+		}
+		else PlayerTextDrawSetPreviewModel(playerid, p_tdToyView[playerid]{i}, 19482);
+		
 		PlayerTextDrawShow(playerid, p_tdToyView[playerid]{i});
+	}
 
 	// Item slots
 	Inventory_Update(playerid);
