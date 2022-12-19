@@ -254,6 +254,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/phone/header.pwn"
 #include "player/grill/header.pwn"
 #include "player/boombox/header.pwn"
+#include "player/cosmetics/header.pwn"
 
 // Functions
 ///////////////
@@ -301,6 +302,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/phone/functions.pwn"
 #include "player/grill/functions.pwn"
 #include "player/boombox/functions.pwn"
+#include "player/cosmetics/functions.pwn"
 
 // Callbacks
 ///////////////
@@ -361,6 +363,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "player/phone/callbacks.pwn"
 #include "player/grill/callbacks.pwn"
 #include "player/boombox/callbacks.pwn"
+#include "player/cosmetics/callbacks.pwn"
 
 // Anticheat
 ///////////////
