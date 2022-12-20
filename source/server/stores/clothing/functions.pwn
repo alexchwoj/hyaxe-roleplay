@@ -21,6 +21,10 @@ static Clothing_OnPress(playerid, store_type)
     GetPlayerFacingAngle(playerid, angle);
     GetXYFromAngle(x, y, angle, 2.0);
 
+    s_rgfPreviousPositions[playerid][0] = x;
+    s_rgfPreviousPositions[playerid][1] = y;
+    s_rgfPreviousPositions[playerid][2] = z;
+
     InterpolateCameraPos(playerid, x, y, z + 1.0, x, y, z + 1.0, 1000);
     GetPlayerPos(playerid, x, y, z);
     InterpolateCameraLookAt(playerid, x, y, z + 0.5, x, y, z, 1000);
@@ -66,5 +70,24 @@ Clothing_Select(playerid, index)
     SetPlayerSkin(playerid, g_rgiClothingSkins[ g_rgiPlayerClothingStore[playerid] ][ Player_Sex(playerid) ][index][0]);
     TextDrawSetStringForPlayer(g_tdShops[10], playerid, "$%d", g_rgiClothingSkins[ g_rgiPlayerClothingStore[playerid] ][ Player_Sex(playerid) ][index][1]);
     TextDrawSetStringForPlayer(g_tdShops[11], playerid, "Skin %d", g_rgiClothingSkins[ g_rgiPlayerClothingStore[playerid] ][ Player_Sex(playerid) ][index][0]);
+    return 1;
+}
+
+Cosmetics_ShowShop(playerid)
+{
+    SetPlayerTime(playerid, 12, 0);
+
+    Menu_Show(playerid, "cosmetics_shop", "Cosméticos");
+    Menu_AddItem(playerid, "Sombreros");
+    Menu_AddItem(playerid, "Gafas");
+    Menu_AddItem(playerid, "Relojes");
+    Menu_AddItem(playerid, "Máscaras");
+    Menu_UpdateListitems(playerid);
+
+    Streamer_SetIntData(STREAMER_TYPE_OBJECT, Player_StoreCosmeticObject(playerid), E_STREAMER_MODEL_ID, 19482);
+    Streamer_Update(playerid, STREAMER_TYPE_OBJECT);
+
+    InterpolateCameraPos(playerid, 1289.789672, 1564.599121, 12.737116, 1289.789672, 1564.599121 - 1.0, 12.737116 + 1.0, 1000);
+    InterpolateCameraLookAt(playerid, 1289.737304, 1569.565063, 12.156714, 1289.737304, 1569.565063, 12.156714, 1000);
     return 1;
 }

@@ -65,9 +65,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
                         Streamer_UpdateEx(playerid, g_rgeEnterExits[id][e_fExitX], g_rgeEnterExits[id][e_fExitY], g_rgeEnterExits[id][e_fExitZ], .worldid = g_rgeEnterExits[id][e_iExitWorld], .interiorid = g_rgeEnterExits[id][e_iExitInterior], .compensatedtime = 3000, .freezeplayer = true);
 
-                        new hour, minute;
-                        gettime(hour, minute);
-                        SetPlayerTime(playerid, hour, minute);
+                        Player_SyncTime(playerid);
                     }
                     else
                     {

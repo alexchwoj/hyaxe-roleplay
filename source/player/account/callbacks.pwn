@@ -13,9 +13,7 @@ public OnPlayerConnect(playerid)
         return 1;
         
     TogglePlayerSpectating(playerid, true);
-    new hour, minute;
-    gettime(hour, minute);
-    SetPlayerTime(playerid, hour, minute);
+    Player_SyncTime(playerid);
     
     GetPlayerName(playerid, Player_Name(playerid));
 
@@ -306,9 +304,7 @@ public OnPlayerSpawn(playerid)
 {
     SetPlayerColor(playerid, 0xF7F7F700);
 
-    new hour, minute;
-    gettime(hour, minute);
-    SetPlayerTime(playerid, hour, minute);
+    Player_SyncTime(playerid);
 
     if(Player_Data(playerid, e_iJailTime))
         PC_EmulateCommand(playerid, "/tiempo");

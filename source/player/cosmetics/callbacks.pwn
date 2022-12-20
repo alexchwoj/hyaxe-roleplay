@@ -3,13 +3,6 @@
 #endif
 #define _cosmetics_callbacks_
 
-forward COS_OnCosmeticInserted(playerid, slot);
-public COS_OnCosmeticInserted(playerid, slot)
-{
-    g_rgePlayerCosmetics[playerid][slot][e_iID] = cache_insert_id();
-    return 1;
-}
-
 forward COS_LoadFromDatabase(playerid);
 public COS_LoadFromDatabase(playerid)
 {
@@ -97,6 +90,7 @@ public OnPlayerConnect(playerid)
 public OnPlayerDisconnect(playerid, reason)
 {
     g_rgePlayerCosmetics[playerid] = g_rgePlayerCosmetics[MAX_PLAYERS];
+    Cosmetics_ResetSlots(playerid);
 
     #if defined COS_OnPlayerDisconnect
         return COS_OnPlayerDisconnect(playerid, reason);
@@ -159,17 +153,25 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 
                 if (slot != -1)
                 {
-                    Dialog_ShowCallback(playerid, using public _hydg@cosmetic_options<iiiis>, DIALOG_STYLE_LIST, "{CB3126}>>{DADADA} Cosmético {CB3126}>{DADADA} Opciones", va_return("%s\nCambiar nombre\nAjustar automáticamente\nAjuste manual\n{343434}Borrar cosmético", g_rgePlayerCosmetics[playerid][slot][e_bPlaced] ? "Sacar cosmético" : "Poner cosmético"), "Seleccionar", "Cerrar");
+                    Player_SelectedCosmetic(playerid) = slot;
+                    Dialog_ShowCallback(playerid, using public _hydg@cosmetic_options<iiiis>, DIALOG_STYLE_LIST, va_return("{CB3126}>>{DADADA} Cosmético {CB3126}>{DADADA} Opciones (%s)", g_rgePlayerCosmetics[playerid][slot][e_szName]), "Sacar cosmético\nCambiar nombre\nAjustar automáticamente\nAjuste manual\n{343434}Borrar cosmético", "Seleccionar", "Cerrar");
                 }
                 else
                 {
+                    if (Player_GetPlacedCosmeticsCount(playerid) >= 4)
+                    {
+                        PlayerPlaySound(playerid, SOUND_ERROR);
+                        Notification_Show(playerid, "Solo puedes tener hasta 4 cosméticos activados. Dirígete a ~r~samp.hyaxe.com/store~w~ para adquirir VIP SUPER y tener más cosméticos.", 10000);
+                        return 1;
+                    }
+
                     HYAXE_UNSAFE_HUGE_STRING[0] = '\0';
                     new line[64];
                     for (new j; j < HYAXE_MAX_COSMETICS; j++)
                     {
-                        if (g_rgePlayerCosmetics[playerid][j][e_bValid] && !g_rgePlayerCosmetics[playerid][j][e_bPlaced])
+                        if (g_rgePlayerCosmetics[playerid][j][e_bValid])
                         {
-                            format(line, sizeof(line), "%s (#%d)\n", g_rgePlayerCosmetics[playerid][j][e_szName], g_rgePlayerCosmetics[playerid][j][e_iID]);
+                            format(line, sizeof(line), "%s%s\n", g_rgePlayerCosmetics[playerid][j][e_bPlaced] ? "{343434}" : "{DADADA}", g_rgePlayerCosmetics[playerid][j][e_szName]);
                             strcat(HYAXE_UNSAFE_HUGE_STRING, line);
                         }
                     }
@@ -202,10 +204,24 @@ dialog select_cosmetic(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {
-        PlayerPlaySound(playerid, SOUND_BUTTON);
+        if (g_rgePlayerCosmetics[playerid][listitem][e_bPlaced])
+        {
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_Show(playerid, "Este cosmético ya está puesto", 3000);
+            return 1;
+        }
 
-        Player_SelectedCosmetic(playerid) = listitem;
-        Dialog_ShowCallback(playerid, using public _hydg@cosmetic_options<iiiis>, DIALOG_STYLE_LIST, "{CB3126}>>{DADADA} Cosmético {CB3126}>{DADADA} Opciones", va_return("%s\nCambiar nombre\nAjustar automáticamente\nAjuste manual\n{343434}Borrar cosmético", g_rgePlayerCosmetics[playerid][listitem][e_bPlaced] ? "Sacar cosmético" : "Poner cosmético"), "Seleccionar", "Cerrar");
+        g_rgePlayerCosmetics[playerid][listitem][e_bPlaced] = true;
+
+        Notification_ShowBeatingText(playerid, 2000, 0xFFFFFF, 100, 255, "Cosmético ~g~activado");
+        
+        ApplyAnimation(playerid, "CARRY", "putdwn05", 4.1, 0, 0, 0, 0, 1);
+        Chat_SendAction(playerid, va_return("se pone un cosmético (%s)", g_rgePlayerCosmetics[playerid][listitem][e_szName]));
+
+        Player_SetCosmetics(playerid);
+        Cosmetics_UpdateData(playerid, listitem);
+
+        PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
     }
     return 1;
 }
@@ -221,97 +237,104 @@ dialog cosmetic_options(playerid, dialogid, response, listitem, inputtext[])
         {
             case 0:
             {
-                g_rgePlayerCosmetics[playerid][slot][e_bPlaced] = !g_rgePlayerCosmetics[playerid][slot][e_bPlaced];
-                if (!g_rgePlayerCosmetics[playerid][slot][e_bPlaced])
-                    g_rgiCosmeticsSlots[playerid][Player_SelectedCosmeticMenu(playerid)] = -1;
-                
-                Notification_ShowBeatingText(playerid, 2000, 0xFFFFFF, 100, 255, va_return("Cosmético %s", g_rgePlayerCosmetics[playerid][slot][e_bPlaced] ? "~g~activado" : "~r~desactivado"));
-                
+                g_rgePlayerCosmetics[playerid][slot][e_bPlaced] = false;
+
+                Notification_ShowBeatingText(playerid, 2000, 0xFFFFFF, 100, 255, "Cosmético ~r~desactivado");
+
                 ApplyAnimation(playerid, "CARRY", "putdwn05", 4.1, 0, 0, 0, 0, 1);
-                Chat_SendAction(playerid, va_return("se %s un cosmético (%s)", g_rgePlayerCosmetics[playerid][slot][e_bPlaced] ? "pone" : "saca", g_rgePlayerCosmetics[playerid][slot][e_szName]));
+                Chat_SendAction(playerid, va_return("se saca un cosmético (%s)", g_rgePlayerCosmetics[playerid][slot][e_szName]));
 
                 Player_SetCosmetics(playerid);
                 Cosmetics_UpdateData(playerid, slot);
 
                 PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
+                return 1;
             }
             case 1:
             {
-                Dialog_ShowCallback(playerid, using public _hydg@cosmetic_name<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Cosmético {CB3126}>{DADADA} Cambiar nombre", va_return("{DADADA}Introduzca un nuevo nombre para el cosmético \"%s\":", g_rgePlayerCosmetics[playerid][slot][e_szName]), "Cambiar", "Cancelar");
+                return Cosmetic_ChangeName(playerid, slot);
             }
             case 2:
             {
-                g_rgePlayerCosmetics[playerid][slot][e_iBone] = g_rgeCosmeticsOffsets[g_rgePlayerCosmetics[playerid][slot][e_iType]][e_iBone];
-                g_rgePlayerCosmetics[playerid][slot][e_fPosX] = g_rgeCosmeticsOffsets[g_rgePlayerCosmetics[playerid][slot][e_iType]][e_fPosX];
-                g_rgePlayerCosmetics[playerid][slot][e_fPosY] = g_rgeCosmeticsOffsets[g_rgePlayerCosmetics[playerid][slot][e_iType]][e_fPosY];
-                g_rgePlayerCosmetics[playerid][slot][e_fPosZ] = g_rgeCosmeticsOffsets[g_rgePlayerCosmetics[playerid][slot][e_iType]][e_fPosZ];
-                g_rgePlayerCosmetics[playerid][slot][e_fRotX] = g_rgeCosmeticsOffsets[g_rgePlayerCosmetics[playerid][slot][e_iType]][e_fRotX];
-                g_rgePlayerCosmetics[playerid][slot][e_fRotY] = g_rgeCosmeticsOffsets[g_rgePlayerCosmetics[playerid][slot][e_iType]][e_fRotY];
-                g_rgePlayerCosmetics[playerid][slot][e_fRotZ] = g_rgeCosmeticsOffsets[g_rgePlayerCosmetics[playerid][slot][e_iType]][e_fRotZ];
-                g_rgePlayerCosmetics[playerid][slot][e_fScaleX] = g_rgeCosmeticsOffsets[g_rgePlayerCosmetics[playerid][slot][e_iType]][e_fScaleX];
-                g_rgePlayerCosmetics[playerid][slot][e_fScaleY] = g_rgeCosmeticsOffsets[g_rgePlayerCosmetics[playerid][slot][e_iType]][e_fScaleY];
-                g_rgePlayerCosmetics[playerid][slot][e_fScaleZ] = g_rgeCosmeticsOffsets[g_rgePlayerCosmetics[playerid][slot][e_iType]][e_fScaleZ];
-
-                Player_SetCosmetics(playerid);
-                Cosmetics_UpdateData(playerid, slot);
-
                 Notification_ShowBeatingText(playerid, 2000, 0xFFFFFF, 100, 255, "Cosmético ~g~ajustado");
                 PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
+
+                return Cosmetic_AutoAdjust(playerid, slot);
             }
             case 3:
             {
                 if (!g_rgePlayerCosmetics[playerid][slot][e_bPlaced])
                     return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "Tienes que tener el cosmético activado para poder editarlo");
+
+                return Cosmetic_StartEdit(playerid, slot);
             }
             case 4:
             {
-                Dialog_ShowCallback(playerid, using public _hydg@cosmetic_confirm_delete<iiiis>, DIALOG_STYLE_MSGBOX, "{CB3126}>>{DADADA} Cosmético {CB3126}>{DADADA} Borrar", va_return("{DADADA}¿Estás seguro de que quieres borrar el cosmético \"%s\"?", g_rgePlayerCosmetics[playerid][slot][e_szName]), "Borrar", "Cancelar");
+                return Cosmetic_Delete(playerid, slot);
             }
         }
     }
     return 1;
 }
 
-dialog cosmetic_confirm_delete(playerid, dialogid, response, listitem, inputtext[])
+public OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, Float:fOffsetX, Float:fOffsetY, Float:fOffsetZ, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fScaleX, Float:fScaleY, Float:fScaleZ)
 {
     if (response)
     {
-        g_rgiCosmeticsSlots[playerid][Player_SelectedCosmeticMenu(playerid)] = -1;
-        g_rgePlayerCosmetics[playerid][Player_SelectedCosmetic(playerid)][e_bValid] = false;
-        g_rgePlayerCosmetics[playerid][Player_SelectedCosmetic(playerid)][e_bPlaced] = false;
-
-        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `PLAYER_COSMETICS` WHERE `ID` = %d;", g_rgePlayerCosmetics[playerid][Player_SelectedCosmetic(playerid)][e_iID]);
-        mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
-
-        Player_SetCosmetics(playerid);
-        Notification_ShowBeatingText(playerid, 2000, 0xFFFFFF, 100, 255, "Cosmético ~r~borrado");
-    }
-    return 1;
-}
-
-dialog cosmetic_name(playerid, dialogid, response, listitem, inputtext[])
-{
-    if (response)
-    {
-        if(isnull(inputtext) || strlen(inputtext) > 32)
-        {
-            Dialog_ShowCallback(playerid, using public _hydg@cosmetic_name<iiiis>, DIALOG_STYLE_INPUT, "{CB3126}>>{DADADA} Cosmético {CB3126}>{DADADA} Cambiar nombre", va_return("{DADADA}Introduzca un nuevo nombre para el cosmético \"%s\":", g_rgePlayerCosmetics[playerid][Player_SelectedCosmetic(playerid)][e_szName]), "Cambiar", "Cancelar");
+        if (fScaleX >= 1.5 || fScaleY >= 1.5 || fScaleZ >= 1.5)
+		{
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "El objeto es demasiado grande");
+            Player_SetCosmetics(playerid);
             return 1;
         }
 
-        strcpy(g_rgePlayerCosmetics[playerid][Player_SelectedCosmetic(playerid)][e_szName], inputtext);
+        if ((fOffsetX >= 0.6 || -0.6 >= fOffsetX) || (fOffsetY >= 0.6 || -0.6 >= fOffsetY) || (fOffsetZ >= 0.6 || -0.6 >= fOffsetZ))
+		{
+            PlayerPlaySound(playerid, SOUND_ERROR);
+            Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "El objeto está demasiado lejos del cuerpo");
+            Player_SetCosmetics(playerid);
+            return 1;
+        }
 
-        mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-            UPDATE `PLAYER_COSMETICS` SET \
-                `NAME` = %e \
-            WHERE `ID` = %i;\
-        ",
-            g_rgePlayerCosmetics[playerid][Player_SelectedCosmetic(playerid)][e_szName],
-            g_rgePlayerCosmetics[playerid][Player_SelectedCosmetic(playerid)][e_iID]
-        );
-        mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+        new slot = Player_SelectedCosmetic(playerid);
 
-        Notification_ShowBeatingText(playerid, 2000, 0xFFFFFF, 100, 255, "Nombre ~g~cambiado");
+        g_rgePlayerCosmetics[playerid][slot][e_iBone] = boneid;
+        g_rgePlayerCosmetics[playerid][slot][e_fPosX] = fOffsetX;
+        g_rgePlayerCosmetics[playerid][slot][e_fPosY] = fOffsetY;
+        g_rgePlayerCosmetics[playerid][slot][e_fPosZ] = fOffsetZ;
+        g_rgePlayerCosmetics[playerid][slot][e_fRotX] = fRotX;
+        g_rgePlayerCosmetics[playerid][slot][e_fRotY] = fRotY;
+        g_rgePlayerCosmetics[playerid][slot][e_fRotZ] = fRotZ;
+        g_rgePlayerCosmetics[playerid][slot][e_fScaleX] = fScaleX;
+        g_rgePlayerCosmetics[playerid][slot][e_fScaleY] = fScaleY;
+        g_rgePlayerCosmetics[playerid][slot][e_fScaleZ] = fScaleZ;
+
+        Player_SetCosmetics(playerid);
+        Cosmetics_UpdateData(playerid, slot);
+
+        Notification_ShowBeatingText(playerid, 2000, 0xFFFFFF, 100, 255, "Cosmético ~g~ajustado");
+        PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
     }
-    return 1;
+    else
+    {
+        Player_SetCosmetics(playerid);
+        Notification_ShowBeatingText(playerid, 2000, 0xFFFFFF, 100, 255, "Edición ~r~cancelada");
+    }
+
+    #if defined COS_OnPlayerEditAttachedObject
+        return COS_OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, Float:fOffsetX, Float:fOffsetY, Float:fOffsetZ, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fScaleX, Float:fScaleY, Float:fScaleZ);
+    #else
+        return 1;
+    #endif
 }
+
+#if defined _ALS_OnPlayerEditAttachedObject
+    #undef OnPlayerEditAttachedObject
+#else
+    #define _ALS_OnPlayerEditAttachedObject
+#endif
+#define OnPlayerEditAttachedObject COS_OnPlayerEditAttachedObject
+#if defined COS_OnPlayerEditAttachedObject
+    forward COS_OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, Float:fOffsetX, Float:fOffsetY, Float:fOffsetZ, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fScaleX, Float:fScaleY, Float:fScaleZ);
+#endif

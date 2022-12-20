@@ -12,3 +12,5 @@ forward Player_Ban(playerid, adminid, const reason[] = "No especificada", time_s
 forward Account_Ban(const account_name[], adminid, const reason[] = "No especificada", time_seconds = -1);
 
 #define Player_GetRankName(%0) (g_rgszRankLevelNames[Player_AdminLevel(%0)][Player_Sex(%0)])
+
+new Float:s_rgfPreviousPositions[MAX_PLAYERS][4];

@@ -167,7 +167,6 @@ flags:ban_account(CMD_FLAG<RANK_LEVEL_MODERATOR> | CMD_DONT_LOG_COMMAND)
 
 static 
     bool:s_rgbHasBeenTeleported[MAX_PLAYERS char],
-    Float:s_rgfPreviousPositions[MAX_PLAYERS][4],
     s_rgiPreviousInteriors[MAX_PLAYERS],
     s_rgiPreviousWorlds[MAX_PLAYERS]
 ;

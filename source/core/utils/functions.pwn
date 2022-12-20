@@ -419,3 +419,11 @@ Streamer_UpdateInStreamRange(Float:x, Float:y, Float:z, worldid = 0, interiorid 
 
     return 1;
 }
+
+Player_SyncTime(playerid)
+{
+    new hour, minute;
+    gettime(hour, minute);
+    SetPlayerTime(playerid, hour, minute);
+    return 1;
+}

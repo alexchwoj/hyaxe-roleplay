@@ -61,3 +61,4 @@ new
 ;
 
 #define Listitem_Extra(%0) (g_rgeMenuListitem[playerid][%0][e_iExtra])
+#define Listitem_Text(%0) g_rgeMenuListitem[playerid][%0][e_szText]

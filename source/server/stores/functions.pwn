@@ -134,6 +134,13 @@ Shop_AddItem(shop_id, const name[], model, price, Float:rx, Float:ry, Float:rz)
 Player_StopShopping(playerid)
 {
     KillTimer(g_rgiRotateSkinTimer[playerid]);
+
+    if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES))
+    {
+        Player_SetPos(playerid, s_rgfPreviousPositions[playerid][0], s_rgfPreviousPositions[playerid][1], s_rgfPreviousPositions[playerid][2]);
+        DestroyDynamicObject(Player_StoreCosmeticObject(playerid));
+    }
+
     Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING, false);
     Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES, false);
     Bit_Set(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS, false);
@@ -153,5 +160,6 @@ Player_StopShopping(playerid)
     g_rgiPlayerCurrentShop{playerid} = 0xFF;
     g_rgiPlayerWaitingObjectMove{playerid} = false;
 
+    Player_SyncTime(playerid);
     return 1;
 }

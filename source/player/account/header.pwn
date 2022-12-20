@@ -149,7 +149,9 @@ enum ePlayerTemp
     e_iActualGrill,
     e_iPlayerBoombox,
     e_iCosmeticSlot,
-    e_iCosmeticMenuSlot
+    e_iCosmeticMenuSlot,
+    e_iCosmeticObject,
+    e_iBone
 };
 
 new 
@@ -159,6 +161,8 @@ new
     BitArray:g_rgiPlayerFlags[MAX_PLAYERS]<MAX_PLAYER_FLAGS>,
     Iterator:LoggedIn<MAX_PLAYERS>;
 
+#define Player_StoreCosmeticObject(%0) (g_rgePlayerTempData[(%0)][e_iCosmeticObject])
+#define Player_SelectedBone(%0) (g_rgePlayerTempData[(%0)][e_iBone])
 #define Player_SelectedCosmeticMenu(%0) (g_rgePlayerTempData[(%0)][e_iCosmeticMenuSlot])
 #define Player_SelectedCosmetic(%0) (g_rgePlayerTempData[(%0)][e_iCosmeticSlot])
 #define Player_Grill(%0) (g_rgePlayerTempData[(%0)][e_iActualGrill])

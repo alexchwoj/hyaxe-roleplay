@@ -583,6 +583,23 @@ public OnFilterScriptInit()
         tmpobjid = CreateDynamicObject(19122, 1279.441650, -1339.863769, 12.399950, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00);
     }
 
+    // Cosmetics
+    //CreateDynamicObject(18947, 1290.0186, 1565.5777, 12.6356, -9.6999, -75.0998, -128.0998); //HatBowler1
+    tmpobjid = CreateDynamicObject(19447, 1290.6284, 1568.9993, 12.0703, 0.0000, 0.0000, -91.6999); //wall087
+    SetDynamicObjectMaterial(tmpobjid, 0, 14581, "ab_mafiasuitea", "cof_wood2", 0x00000000);
+    tmpobjid = CreateDynamicObject(19447, 1290.5834, 1567.4089, 10.3527, 0.0000, -89.2999, -91.6999); //wall087
+    SetDynamicObjectMaterial(tmpobjid, 0, 3881, "apsecurity_sfxrf", "CJ_WOOD1", 0x00000000);
+    CreateDynamicObject(2400, 1291.4482, 1568.7646, 10.7095, 0.0000, 0.0000, -2.4999); //CJ_SPORTS_WALL01
+    CreateDynamicObject(2399, 1291.3469, 1568.5612, 12.0733, 0.0000, 0.0000, 0.0000); //CJ_4_S_SWEATER_2
+    CreateDynamicObject(2390, 1292.5389, 1568.4932, 11.2240, 0.0000, 0.0000, 0.0000); //CJ_4way_clothes
+    CreateDynamicObject(2145, 1286.2801, 1568.8245, 10.3796, 0.0000, 0.0000, 0.0000); //CJ_K3_UNIT06
+    CreateDynamicObject(2226, 1287.0565, 1568.7264, 10.4475, 0.0000, 0.0000, 0.0000); //LOW_HI_FI_3
+    CreateDynamicObject(2652, 1290.5545, 1568.5224, 10.9268, 0.0000, 0.0000, -95.0999); //CJ_SKATE_CUBES
+    CreateDynamicObject(2620, 1287.8945, 1568.3348, 11.4326, 0.0000, 0.0000, 0.0000); //CJ_TRAINER_ERIS
+    tmpobjid = CreateDynamicObject(19447, 1290.6284, 1568.9993, 15.5403, 0.0000, 0.0000, -91.6999); //wall087
+    SetDynamicObjectMaterial(tmpobjid, 0, 14581, "ab_mafiasuitea", "cof_wood2", 0x00000000);
+    CreateDynamicObject(2729, 1289.2346, 1568.8621, 12.3162, 0.0000, 0.0000, 0.0000); //CJ_BINC_POST3
+
     // Trucker
     tmpobjid = CA_CreateDynamicObject_SC(3578, 88.379981, -294.097015, 1.325103, 0.000000, 0.000000, -0.799999, -1, -1, -1, 200.00, 200.00); 
     tmpobjid = CA_CreateDynamicObject_SC(1431, 85.212455, -292.665649, 1.098124, 0.000000, 0.000000, -15.400000, -1, -1, -1, 200.00, 200.00); 
