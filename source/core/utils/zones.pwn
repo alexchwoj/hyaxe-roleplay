@@ -388,16 +388,16 @@ new g_rgeCities[][e_ZoneInfo] =
 	{"Whetstone",                   -2997.40, -2892.90,  -242.90, -1213.90, -1115.50,   900.00}
 };
 
-GetPointZone(Float:x, Float:y, city[], zone[])
+GetPointZone(Float:x, Float:y, city[], zone[], city_len = sizeof(city), zone_len = sizeof(zone))
 {
-	format(city, 45, "San Andreas");
-    format(zone, 45, "Desconocida");
+	StrCpy(city, "San Andreas", city_len);
+    StrCpy(zone, "Desconocida", zone_len);
 
 	for(new i = 0; i < sizeof(g_rgeCities); i++)
 	{
 	    if ( (x >= g_rgeCities[i][e_fMinX] && x < g_rgeCities[i][e_fMaxX]) && (y >= g_rgeCities[i][e_fMinY] && y < g_rgeCities[i][e_fMaxY]) )
 		{
-			format(city, 45, g_rgeCities[i][e_szName]);
+			StrCpy(city, g_rgeCities[i][e_szName], city_len);
 		    break;
 		}
 	}
@@ -406,7 +406,7 @@ GetPointZone(Float:x, Float:y, city[], zone[])
 	{
 	    if ( (x >= g_rgeZones[i][e_fMinX] && x < g_rgeZones[i][e_fMaxX]) && (y >= g_rgeZones[i][e_fMinY] && y < g_rgeZones[i][e_fMaxY]) )
 		{
-			format(zone, 45, g_rgeZones[i][e_szName]);
+			StrCpy(zone, g_rgeZones[i][e_szName], zone_len);
 		    break;
 		}
 	}

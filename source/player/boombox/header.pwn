@@ -10,7 +10,8 @@ enum eBoomboxData
     Text3D:e_iBoomboxLabelId,
     Float:e_fBoomboxVolume,
     bool:e_bBoomboxIsPublic,
-    bool:e_bBoomboxPlayingFor[MAX_PLAYERS]
+    e_szBoomboxCurrentlyPlaying[12],
+    bool:e_bBoomboxDownloadDone
 };
 
 #define STEREO_API_ENDPOINT(%0) "ws.hyaxe.com"%0

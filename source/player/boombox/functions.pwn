@@ -33,18 +33,16 @@ Boombox_Destroy(boombox_id)
     new data[eBoomboxData];
     Streamer_GetArrayData(STREAMER_TYPE_AREA, boombox_id, E_STREAMER_CUSTOM(MAKE_CELL('S','T','R','O')), data);
 
-    foreach (new i : Player)
+    foreach (new i : PlayerInArea(boombox_id, true))
     {
-        if(data[e_bBoomboxPlayingFor][i])
-        {
-            StopAudioStreamForPlayer(i);
-        }
+        StopAudioStreamForPlayer(i);
     }
 
     DestroyDynamicObject(data[e_iBoomboxObjectId]);
     DestroyDynamic3DTextLabel(data[e_iBoomboxLabelId]);
     DestroyDynamicArea(boombox_id);
-
+    Player_Boombox(data[e_iBoomboxOwnerId]) = INVALID_STREAMER_ID;
+    
     return 1;
 }
 
