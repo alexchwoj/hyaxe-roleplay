@@ -447,7 +447,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
         if (IsValidVehicle(vehicleid) && Vehicle_Type(vehicleid) == VEHICLE_TYPE_POLICE)
         {
             new occupied_seats = 0;
-            foreach (new i : VehicleOccupant(vehicleid, .includeDriver = false))
+            foreach (new i : VehiclePassenger(vehicleid))
             {
                 occupied_seats = (1 << GetPlayerVehicleSeat(i));
             }
@@ -483,7 +483,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
             if (IsValidVehicle(vehicleid) && Vehicle_Type(vehicleid) == VEHICLE_TYPE_POLICE)
             {
                 new occupied_seats = 0;
-                foreach (new i : VehicleOccupant(vehicleid, .includeDriver = false))
+                foreach (new i : VehiclePassenger(vehicleid))
                 {
                     occupied_seats = (1 << GetPlayerVehicleSeat(i));
                 }

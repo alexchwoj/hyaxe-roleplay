@@ -93,14 +93,18 @@ public OnVehicleDeath(vehicleid, killerid)
 
 public OnVehicleSpawn(vehicleid)
 {
-    if(Vehicle_Type(vehicleid) == VEHICLE_TYPE_WORK && g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != INVALID_PLAYER_ID)
+    if (Vehicle_Type(vehicleid) == VEHICLE_TYPE_WORK)
     {
-        Job_TriggerCallback(g_rgeVehicles[vehicleid][e_iVehicleOwnerId], g_rgeVehicles[vehicleid][e_iVehicleWork], JOB_EV_LEAVE_VEHICLE);
-        g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = INVALID_PLAYER_ID;
+        if (g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != INVALID_PLAYER_ID)
+        {
+            Job_TriggerCallback(g_rgeVehicles[vehicleid][e_iVehicleOwnerId], g_rgeVehicles[vehicleid][e_iVehicleWork], JOB_EV_LEAVE_VEHICLE);
+            g_rgeVehicles[vehicleid][e_iVehicleOwnerId] = INVALID_PLAYER_ID;
+        }
+        
         g_rgeVehicles[vehicleid][e_fHealth] = 1000.0;
         g_rgeVehicles[vehicleid][e_bLocked] = false;
     }
-    else if(Vehicle_Type(vehicleid) == VEHICLE_TYPE_PERSONAL)
+    else if (Vehicle_Type(vehicleid) == VEHICLE_TYPE_PERSONAL)
     {
         new pos = random(sizeof(g_rgfParkingSlots));
         SetVehiclePos(vehicleid, g_rgfParkingSlots[pos][0], g_rgfParkingSlots[pos][1], g_rgfParkingSlots[pos][2]);

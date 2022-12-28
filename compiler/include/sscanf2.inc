@@ -1,5 +1,5 @@
 /*
- *  sscanf 2.13.1
+ *  sscanf 2.13.4
  *
  *  Version: MPL 1.1
  *
@@ -156,8 +156,8 @@ static stock SSCANF_VERSION_MINOR = 13;
  * The sscanf build number.
  * </remarks>
  */
-static stock SSCANF_VERSION_BUILD =  1;
-#define SSCANF_VERSION_BUILD  1
+static stock SSCANF_VERSION_BUILD = 4;
+#define SSCANF_VERSION_BUILD  4
 
 /**
  * <library>sscanf</library>
@@ -227,6 +227,7 @@ stock const SSCANF_VERSION_BCD = SSCANF_VERSION;
 
 #define sscanf_%0\32; sscanf_
 #define SSCANF:%0(%1) forward sscanf_%0(%1);public sscanf_%0(%1)
+#define @kustom()%0(%1) forward sscanf_%0(%1);public sscanf_%0(%1)
 
 // The check for `SSCANF_GetClosestString` ensures that this is the first
 // compiler pass and thus the check for `sscanf` only finds earlier definitions
@@ -249,7 +250,7 @@ stock const SSCANF_VERSION_BCD = SSCANF_VERSION;
  * compatibility with older versions of this include.
  * </remarks>
  */
-native SSCANF__(const file[], const line, const data[], const format[], {Float, _}:...);
+/* */ native SSCANF__(const file[], const line, const data[], const format[], {T_WEAPON, Float, _}:...);
 
 /**
  * <library>sscanf</library>
@@ -262,7 +263,7 @@ native SSCANF__(const file[], const line, const data[], const format[], {Float, 
  * name can be used as a macro.
  * </remarks>
  */
-native UNFORMAT__(const file[], const line, const data[], const format[], {Float, _}:...) = SSCANF__;
+/* */ native UNFORMAT__(const file[], const line, const data[], const format[], {T_WEAPON, Float, _}:...) = SSCANF__;
 
 /**
  * <library>sscanf</library>
@@ -273,7 +274,7 @@ native UNFORMAT__(const file[], const line, const data[], const format[], {Float
  * Initialise the plugin with real server information.
  * </remarks>
  */
-native SSCANF_Init(players, invalid, len);
+/* */ native SSCANF_Init(players, invalid, len);
 
 /**
  * <library>sscanf</library>
@@ -284,7 +285,7 @@ native SSCANF_Init(players, invalid, len);
  * Called when a player joins to inform the plugin of the connection.
  * </remarks>
  */
-native SSCANF_Join(playerid, const name[], bool:npc);
+/* */ native SSCANF_Join(playerid, const name[], bool:npc);
 
 /**
  * <library>sscanf</library>
@@ -293,7 +294,7 @@ native SSCANF_Join(playerid, const name[], bool:npc);
  * Called when a player leaves to inform the plugin of the disconnection.
  * </remarks>
  */
-native SSCANF_Leave(playerid);
+/* */ native SSCANF_Leave(playerid);
 
 /**
  * <library>sscanf</library>
@@ -303,7 +304,7 @@ native SSCANF_Leave(playerid);
  * to re-add players.
  * </remarks>
  */
-native bool:SSCANF_IsConnected(playerid);
+/* */ native bool:SSCANF_IsConnected(playerid);
 
 /**
  * <library>sscanf</library>
@@ -327,7 +328,7 @@ native SSCANF_Levenshtein(const string1[], const string2[]);
  * <remarks>
  * This works out the similarity between two strings.  The Levenshtein distance
  * often produces results that seem weird to people, for example by that measure
- * <c>NRG</c> is closer to <c>TUG</c> than <c>NRG-400</c>.  Instead this
+ * <c>NRG</c> is closer to <c>TUG</c> than <c>NRG-500</c>.  Instead this
  * function compares all pairs of letters between the two strings to work out
  * what percentage of each string is in the other string, then multiplies the
  * results to get the final similarity.  This algorithm produces much more human
@@ -363,7 +364,7 @@ native SSCANF_GetOption(const name[]) = SSCANF_Option;
  * to <c>Get__</c> and <c>Set__</c> functions.
  * </remarks>
  */
-native SSCANF_GetOption__(const name[]) = SSCANF_Option;
+/* */ native SSCANF_GetOption__(const name[]) = SSCANF_Option;
 
 /**
  * <library>sscanf</library>
@@ -393,7 +394,7 @@ native SSCANF_SetOption(const name[], {_, Float}:value) = SSCANF_Option;
  * to <c>Get__</c> and <c>Set__</c> functions.
  * </remarks>
  */
-native SSCANF_SetOption__(const name[], {_, Float}:value) = SSCANF_Option;
+/* */ native SSCANF_SetOption__(const name[], {_, Float}:value) = SSCANF_Option;
 
 /**
  * <library>sscanf</library>
@@ -443,7 +444,7 @@ native SSCANF_VersionString(version[], size = sizeof (version)) = SSCANF_Version
  * return a string when called with parameters, or a BCD value when not.
  * </remarks>
  */
-native SSCANF_VersionString__(version[], size = sizeof (version)) = SSCANF_Version;
+/* */ native SSCANF_VersionString__(version[], size = sizeof (version)) = SSCANF_Version;
 
 /**
  * <library>sscanf</library>
@@ -463,7 +464,7 @@ native SSCANF_VersionBCD() = SSCANF_Version;
  * return a string when called with parameters, or a BCD value when not.
  * </remarks>
  */
-native SSCANF_VersionBCD__() = SSCANF_Version;
+/* */ native SSCANF_VersionBCD__() = SSCANF_Version;
 
 // The `SSCANF_Version` function is overloaded to take 0 or 2 parameters (or 1 plus a default).
 
@@ -499,7 +500,12 @@ static stock SSCANF_Version(version[] = "", size = sizeof (version))
  * </remarks>
  */
 #pragma deprecated - include <sscanf2> first.
-forward sscanf(const data[], const format[], {Float, _}:...);
+forward sscanf(const data[], const format[], {T_WEAPON, Float, _}:...);
+
+// For pawno native detection.
+/*
+native sscanf(const data[], const format[], {T_WEAPON, Float, _}:...);
+*/
 
 #if defined __PawnBuild
 	#define sscanf( SSCANF__(__file,__line,
@@ -526,7 +532,12 @@ forward sscanf(const data[], const format[], {Float, _}:...);
  * </remarks>
  */
 #pragma deprecated - include <sscanf2> first.
-forward unformat(const data[], const format[], {Float, _}:...);
+forward unformat(const data[], const format[], {T_WEAPON, Float, _}:...);
+
+// For pawno native detection.
+/*
+native unformat(const data[], const format[], {T_WEAPON, Float, _}:...);
+*/
 
 #if defined __PawnBuild
 	#define unformat( SSCANF__(__file,__line,
@@ -830,7 +841,7 @@ static stock _SSCANF_IncludeStates() <_ALS : _ALS_go> {}
  * const-correct wrapper for <c>SetTimer</c>, mainly for NPC modes.
  * </remarks>
  */
-native SSCANF_SetTimer(const funcname[], interval, bool:repeating) = SetTimer;
+/* */ native SSCANF_SetTimer(const funcname[], interval, bool:repeating) = SetTimer;
 
 /// <library>sscanf</library>
 /// <remarks>
@@ -1346,7 +1357,7 @@ stock SSCANF_GetClosestValue(const input[], const candidates[][], const results[
  * </remarks>
  */
 #if defined SSCANF_NO_K_WEAPON
-	native SSCANF_no_k_weapon();
+	/* */ native SSCANF_no_k_weapon();
 	#define SSCANF_no_k_weapon()
 #else
 	SSCANF:weapon(const string[])
@@ -1434,7 +1445,7 @@ stock SSCANF_GetClosestValue(const input[], const candidates[][], const results[
  * </remarks>
  */
 #if defined SSCANF_NO_K_VEHICLE
-	native SSCANF_no_k_vehicle();
+	/* */ native SSCANF_no_k_vehicle();
 	#define SSCANF_no_k_vehicle()
 #else
 	SSCANF:vehicle(const string[])
