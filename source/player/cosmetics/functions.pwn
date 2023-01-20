@@ -49,7 +49,7 @@ Player_AddCosmetic(playerid, modelid, type, const name[])
     new cosmetic_name[32];
     StrCpy(cosmetic_name, name);
 
-    inline QueryDone()
+    inline const QueryDone()
     {
         new slot = Cosmetics_GetFreeSlot(playerid);
         if (slot != -1)

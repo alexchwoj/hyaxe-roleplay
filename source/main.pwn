@@ -164,6 +164,7 @@ const HYAXE_MAX_NPCS = 100;
 #define YSI_NO_HEAP_MALLOC
 #define YSI_NO_VERSION_CHECK
 #define YSI_NO_GET_IP
+#define YSI_NO_ANDROID_CHECK
 #define FOREACH_NO_BOTS
 #define FOREACH_NO_LOCALS
 #define FOREACH_NO_ACTORS
@@ -212,6 +213,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "core/key/header.pwn"
 #include "core/fireworks/header.pwn"
 #include "core/controller/header.pwn"
+#include "core/android/header.pwn"
 #include "server/anticheat/header.pwn"
 #include "server/textdraws/header.pwn"
 #include "server/vehicles/header.pwn"
@@ -316,6 +318,7 @@ const HYAXE_MAX_NPCS = 100;
 #include "core/key/callbacks.pwn"
 #include "core/fireworks/callbacks.pwn"
 #include "core/controller/callbacks.pwn"
+#include "core/android/callbacks.pwn"
 #include "server/anticheat/callbacks.pwn"
 #include "server/textdraws/callbacks.pwn"
 #include "server/vehicles/callbacks.pwn"
