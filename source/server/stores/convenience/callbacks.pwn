@@ -381,7 +381,7 @@ public OnScriptInit()
     Shop_AddItem(shopid, "Vaso de cafe", 19835, 10, 0.0, 0.0, 0.0);
     Shop_AddItem(shopid, "Celular", 18866, 1500, 0.0, 0.0, 0.0);
     Shop_AddItem(shopid, "Parrilla", 19831, 1500, 0.0, 0.0, 0.0);
-    Shop_AddItem(shopid, "Parlante", 2226, 3000, 0.0, 0.0, 0.0);
+    //Shop_AddItem(shopid, "Parlante", 2226, 3000, 0.0, 0.0, 0.0);
 
     #if defined SHOP_CONV_OnScriptInit
         return SHOP_CONV_OnScriptInit();
