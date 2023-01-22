@@ -13,6 +13,17 @@ Float:easeOutBack(Float:t)
     return 1.0 + (--t) * t * (2.70158 * t + 1.70158);
 }
 
+Float:easeInBack(Float:t)
+{
+    return t * t * (2.70158 * t - 1.70158);
+}
+
+Float:easeOutElastic(Float:t)
+{
+    new Float:t2 = (t - 1.0) * (t - 1.0);
+    return 1.0 - t2 * t2 * floatcos( t * M_PI * 4.5 );
+}
+
 static GetFreeNotificationSlot(playerid)
 {
     for(new i; i < MAX_NOTIFICATIONS; ++i)

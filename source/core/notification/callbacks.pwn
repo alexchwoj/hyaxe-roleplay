@@ -55,7 +55,7 @@ public NotificationMoveToLeft(playerid, index, Float:pos_y, Float:max, count)
 	g_rgeNotificationData[playerid][index][e_iFrameCount] -= count;
 
     new Float:pct = floatdiv(g_rgeNotificationData[playerid][index][e_iFrameCount], max);
-    new Float:pos_x = lerp(0.0, -100.0, easeInOutCubic(pct));
+    new Float:pos_x = lerp(0.0, -100.0, easeInBack(pct)); // Salida
 
     PlayerTextDrawSetPos(playerid, g_rgeNotificationData[playerid][index][e_tdTextdraw][0], 55.000000 - pos_x, pos_y);
     PlayerTextDrawSetPos(playerid, g_rgeNotificationData[playerid][index][e_tdTextdraw][1], 100.000000 - pos_x, pos_y);
@@ -86,7 +86,7 @@ public NotificationMoveToRight(playerid, index, time, Float:pos_y, Float:max, co
 	g_rgeNotificationData[playerid][index][e_iFrameCount] += count;
 
     new Float:pct = floatdiv(g_rgeNotificationData[playerid][index][e_iFrameCount], max);
-    new Float:pos_x = lerp(0.0, 100.0, easeOutBack(pct));
+    new Float:pos_x = lerp(0.0, 100.0, easeOutElastic(pct)); // Entrada
 
     PlayerTextDrawSetPos(playerid, g_rgeNotificationData[playerid][index][e_tdTextdraw][0], -45.000000 + pos_x, pos_y);
     PlayerTextDrawSetPos(playerid, g_rgeNotificationData[playerid][index][e_tdTextdraw][1], 0.000000 + pos_x, pos_y);
