@@ -181,7 +181,6 @@ const HYAXE_MAX_NPCS = 100;
 #include <YSI_Extra\y_inline_mysql>
 #include <YSI_Extra\y_inline_timers>
 #include <YSI_Storage\y_amx>
-#include <YSI_Players\y_android>
 #include <YSI_Visual\y_dialog>
 #include <amx/amx_header>
 

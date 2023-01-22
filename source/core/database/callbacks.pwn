@@ -54,14 +54,14 @@ public OnScriptInit()
 
 public OnScriptExit()
 {
+	#if defined DB_OnScriptExit
+		DB_OnScriptExit();
+	#endif
+
 	print("[db] Closing database connection...");
 	mysql_close(g_hDatabase);
 
-	#if defined DB_OnScriptExit
-		return DB_OnScriptExit();
-	#else
-		return 1;
-	#endif
+	return 1;
 }
 
 #if defined _ALS_OnScriptExit
