@@ -10,6 +10,12 @@ command giveweapon(playerid, const params[], "Dale un arma a alguien")
         return 1;
     }
 
+    if (weaponid == -1)
+    {
+        SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} Arma inválida.");
+        return 1;
+    }
+    
     if(destination == 0xFFFF)
         destination = playerid;
 

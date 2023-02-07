@@ -3,6 +3,7 @@
 #endif
 #define _hookers_functions_
 
+/*
 Hooker_Spawn(hookerid)
 {
     g_rgbHookerAvailable{hookerid} = true;
@@ -26,5 +27,32 @@ Hooker_Spawn(hookerid)
     FCNPC_SetVirtualWorld(npcid, 0);
     FCNPC_SetAnimationByName(npcid, "BAR:BARCUSTOM_LOOP", 4.1, 1, 0, 0, 0, 0);
 
+    return 1;
+}
+*/
+
+Hooker_FindIdxFromPlayerId(npcid)
+{
+    for (new i; i < HYAXE_MAX_HOOKERS; ++i)
+    {
+        if (g_rgiHookers[i] == npcid)
+            return i;
+    }
+
+    return INVALID_HOOKER_ID;
+}
+
+Hooker_WalkToFrontOfPlayer(hookernpcid, playerid, Float:dist = 0.9)
+{
+    new Float:x, Float:y, Float:z, Float:ang;
+    GetPlayerPos(playerid, x, y, z);
+    GetPlayerFacingAngle(playerid, ang);
+
+    new Float:add_x, Float:add_y;
+    GetXYFromAngle(add_x, add_y, ang, dist);
+    x += add_x;
+    y += add_y;
+
+    FCNPC_GoTo(hookernpcid, x, y, z, FCNPC_MOVE_TYPE_WALK);
     return 1;
 }

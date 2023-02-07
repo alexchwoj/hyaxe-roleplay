@@ -3,16 +3,17 @@
 #endif
 #define _hookers_header_
 
-enum eHookerAction
+const INVALID_HOOKER_ID = -1;
+
+enum eHookerTask(<<=1)
 {
-    HOOKER_NONE,
-    HOOKER_KISS_ONFOOT = 1,
-    HOOKER_WALK_TO_VEHICLE,
-    HOOKER_ASK_DRIVER,
-    HOOKER_WAIT_FOR_AREA,
-    HOOKER_WALK_TO_PLAYER,
-    HOOKER_WAIT_FOR_BLOWJOB,
-    HOOKER_WALK_BACK_TO_SITE
+    HOOKER_TASK_IDLE = 0,
+    HOOKER_TASK_WAIT_FOR_CUSTOMER = 1,
+    HOOKER_TASK_GO_TO_FRONT_OF_PLY,
+    HOOKER_TASK_KISS,
+    HOOKER_TASK_FOLLOW_PLAYER,
+    HOOKER_TASK_BLOWJOB,
+    HOOKER_TASK_GO_BACK_TO_SPOT
 };
 
 new const 
@@ -35,11 +36,12 @@ new const
     };
 
 const HYAXE_MAX_HOOKERS = sizeof(g_rgfHookerPos);
-new 
-    g_rgiHookers[HYAXE_MAX_HOOKERS] = { INVALID_PLAYER_ID, ... },
-    g_rgiHookerAreas[HYAXE_MAX_HOOKERS] = { INVALID_STREAMER_ID, ... },
-    g_rgbHookerAvailable[HYAXE_MAX_HOOKERS char],
-    g_rgiHookerInteractingPlayer[HYAXE_MAX_HOOKERS] = { INVALID_PLAYER_ID, ... },
-    g_rgiPlayerInteractingHooker[MAX_PLAYERS] = { INVALID_PLAYER_ID, ... },
+new
+    g_rgiHookers[HYAXE_MAX_HOOKERS],
+    eHookerTask:g_rgeHookerTasks[HYAXE_MAX_HOOKERS],
+    g_rgiHookerCustomer[HYAXE_MAX_HOOKERS] = { INVALID_PLAYER_ID, ... },
+    g_rgiPlayerHooker[MAX_PLAYERS] = { INVALID_HOOKER_ID, ... },
     g_rgiHookerUpdateTimer[HYAXE_MAX_HOOKERS],
-    eHookerAction:g_rgiHookerPendingTask[HYAXE_MAX_HOOKERS char];
+    Iterator:Hookers<MAX_PLAYERS>;
+
+forward Hooker_WalkToFrontOfPlayer(hookernpcid, playerid, Float:dist = 0.9);

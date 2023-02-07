@@ -208,10 +208,14 @@ Account_LoadFromCache(playerid)
 
 Player_GiveMoney(playerid, money, bool:update = true)
 {
+    new const old_money = Player_Money(playerid);
+
+    // Check for overflowing integers
     Player_Money(playerid) = clamp(Player_Money(playerid) + money, 0, cellmax);
 
-	ResetPlayerMoney(playerid);
-	GivePlayerMoney(playerid, Player_Money(playerid));
+    // Save one RPC
+	// ResetPlayerMoney(playerid);
+	GivePlayerMoney(playerid, Player_Money(playerid) - old_money);
 
 	if(update)
 	{

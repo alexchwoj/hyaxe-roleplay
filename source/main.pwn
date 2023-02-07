@@ -156,6 +156,7 @@ const HYAXE_MAX_NPCS = 100;
 #include <colandreas>
 #include <FCNPC>
 #include <md-sort>
+//#include <PawnPlus>
 
 /*
 		YSI is pozzed
@@ -165,6 +166,7 @@ const HYAXE_MAX_NPCS = 100;
 #define YSI_NO_VERSION_CHECK
 #define YSI_NO_GET_IP
 #define YSI_NO_ANDROID_CHECK
+#define YSI_NO_AUTO_VA
 #define FOREACH_NO_BOTS
 #define FOREACH_NO_LOCALS
 #define FOREACH_NO_ACTORS
