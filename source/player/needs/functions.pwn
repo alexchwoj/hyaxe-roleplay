@@ -35,19 +35,19 @@ static Needs_UpdateBar(playerid, bool:hunger = true, bool:thirst = true, bool:sh
 
 Needs_StartUpdating(playerid)
 {
-    if(!g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateHunger])
+    if (!g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateHunger])
         g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateHunger] = SetTimerEx(!"NEEDS_ProcessHunger", 120000, true, !"i", playerid);
 
-    if(!g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateThirst])
+    if (!g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateThirst])
         g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateHunger] = SetTimerEx(!"NEEDS_ProcessThirst", 60000, true, !"i", playerid);
 }
 
 Needs_StopUpdating(playerid)
 {
-    if(g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateHunger])
+    if (g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateHunger])
         KillTimer(g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateHunger]);
 
-    if(g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateThirst])
+    if (g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateThirst])
         KillTimer(g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateThirst]);
 
     g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateHunger] =    
@@ -80,7 +80,7 @@ Player_AddHunger(playerid, Float:hunger)
 
 Needs_ShowBars(playerid)
 {
-    for(new i = sizeof(g_tdNeedBars) - 1; i != -1; --i)
+    for (new i = sizeof(g_tdNeedBars) - 1; i != -1; --i)
     {
         TextDrawShowForPlayer(playerid, g_tdNeedBars[i]);
     }
@@ -91,12 +91,12 @@ Needs_ShowBars(playerid)
 
 Needs_HideBars(playerid)
 {
-    for(new i = sizeof(g_tdNeedBars) - 1; i != -1; --i)
+    for (new i = sizeof(g_tdNeedBars) - 1; i != -1; --i)
     {
         TextDrawHideForPlayer(playerid, g_tdNeedBars[i]);
     }
 
-    for(new i = 1; i != -1; --i)
+    for (new i = 1; i != -1; --i)
     {
         PlayerTextDrawHide(playerid, p_tdNeedBars[playerid]{i});
     }
@@ -125,7 +125,7 @@ command set_thirst(playerid, const params[], "Asigna la sed de un jugador")
 {
     new destination, Float:thirst;
 
-    if(sscanf(params, "rf", destination, thirst) || !(0.0 <= thirst <= 100.0))
+    if (sscanf(params, "rf", destination, thirst) || !(0.0 <= thirst <= 100.0))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/set_thirst {DADADA}<jugador> <nivel de sed [0.0, 100.0]>");
         return 1;
@@ -142,7 +142,7 @@ command set_hunger(playerid, const params[], "Asigna el hambre de un jugador")
 {
     new destination, Float:hunger;
 
-    if(sscanf(params, "rf", destination, hunger) || !(0.0 <= hunger <= 100.0))
+    if (sscanf(params, "rf", destination, hunger) || !(0.0 <= hunger <= 100.0))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/set_hunger {DADADA}<jugador> <nivel de hambre [0.0, 100.0]>");
         return 1;

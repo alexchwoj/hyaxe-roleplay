@@ -9,7 +9,7 @@ public COS_LoadFromDatabase(playerid)
     new row_count;
     cache_get_row_count(row_count);
 
-    for(new i = 0; i < row_count; ++i)
+    for (new i = 0; i < row_count; ++i)
     {
         new slot = Cosmetics_GetFreeSlot(playerid);
         if (slot != -1)
@@ -111,7 +111,7 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerSpawn(playerid)
 {
-    if(Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
     {
         Player_SetCosmetics(playerid);
     }
@@ -137,7 +137,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 {
     if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
     {
-        for(new i; i < 6; ++i)
+        for (new i; i < 6; ++i)
 	    {
             if (playertextid == p_tdToyView[playerid]{i})
             {
@@ -233,7 +233,7 @@ dialog cosmetic_options(playerid, dialogid, response, listitem, inputtext[])
         new slot = Player_SelectedCosmetic(playerid);
         PlayerPlaySound(playerid, SOUND_BUTTON);
 
-        switch(listitem)
+        switch (listitem)
         {
             case 0:
             {

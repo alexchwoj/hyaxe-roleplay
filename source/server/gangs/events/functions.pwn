@@ -46,7 +46,7 @@ Graffiti_Finish()
 
 GangEvent_Cancel()
 {
-    switch(g_iGangEventType)
+    switch (g_iGangEventType)
     {
         case EVENT_TRUCK_DEFENSE:
         {
@@ -81,7 +81,7 @@ GangEvent_Start(event_type)
 
     g_iGangEventType = event_type;
 
-    switch(event_type)
+    switch (event_type)
     {
         case EVENT_TRUCK_DEFENSE:
         {
@@ -136,7 +136,7 @@ GangEvent_Start(event_type)
             GangEvent_SendNotification(HYAXE_UNSAFE_HUGE_STRING, 10000, 0xDAA838FF, .started = true);
             TextDrawSetString(g_tdGangEventText, "GRAFFITI ~g~LIBRE");
             
-            for(new i; i < HYAXE_MAX_GANGS; ++i) g_rgfGangGraffitiProgress[i] = 0.0;
+            for (new i; i < HYAXE_MAX_GANGS; ++i) g_rgfGangGraffitiProgress[i] = 0.0;
         }
     }
     

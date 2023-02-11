@@ -10,13 +10,13 @@ static GunsmakerBuildingEvent(playerid, bool:enter, data)
 {
     #pragma unused data
 
-    if(enter)
+    if (enter)
     {
         Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Habla con el supervisor para trabajar como fabricante de armas");
     }
     else
     {
-        if(Player_Job(playerid) == JOB_GUNSMAKER)
+        if (Player_Job(playerid) == JOB_GUNSMAKER)
         {
             Job_TriggerCallback(playerid, JOB_GUNSMAKER, JOB_EV_LEAVE_PLACE);
             Player_Job(playerid) = JOB_NONE;
@@ -30,14 +30,14 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
 {
     #pragma unused data
        
-    switch(event)
+    switch (event)
     {
         case JOB_EV_JOIN:
         {
             new id = Cell_GetLowestBlank(g_iGunsmakerUsedBenchs);
-            if(id == sizeof(g_rgfGunsmakerBenchSites))
+            if (id == sizeof(g_rgfGunsmakerBenchSites))
             {
-                if(Iter_Contains(GunsmakerBenchQueue, playerid))
+                if (Iter_Contains(GunsmakerBenchQueue, playerid))
                 {
                     Notification_ShowBeatingText(playerid, 7000, 0xED2B2B, 100, 255, "Ya estás en la cola");
                 }
@@ -58,7 +58,7 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
         }
         case JOB_EV_LEAVE:
         {
-            if(PlayerJob_Paycheck(playerid) > 0)
+            if (PlayerJob_Paycheck(playerid) > 0)
             {
                 Player_Job(playerid) = JOB_GUNSMAKER;
                 new pay = Job_ApplyPaycheckBenefits(playerid, PlayerJob_Paycheck(playerid));
@@ -72,7 +72,7 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
                 return 0;
             }
 
-            if(g_rgiGunsmakerUsedBench{playerid} != 0xFF)
+            if (g_rgiGunsmakerUsedBench{playerid} != 0xFF)
             {
                 TogglePlayerDynamicCP(playerid, g_rgiGunsmakerBenchCheckpoint[g_rgiGunsmakerUsedBench{playerid}], false);
                 g_iGunsmakerUsedBenchs &= ~(1 << g_rgiGunsmakerUsedBench{playerid});
@@ -81,7 +81,7 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
                 Gunsmaker_ProcessQueue();
             }
             
-            if(Iter_Contains(GunsmakerBenchQueue, playerid))
+            if (Iter_Contains(GunsmakerBenchQueue, playerid))
             {
                 Iter_Remove(GunsmakerBenchQueue, playerid);
                 Notification_Show(playerid, "Abandonaste la cola para trabajar como fabricante de armas.", 5000);
@@ -93,7 +93,7 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
         }
         case JOB_EV_LEAVE_PLACE:
         {
-            if(PlayerJob_Paycheck(playerid) > 0)
+            if (PlayerJob_Paycheck(playerid) > 0)
             {
                 new pay = Job_ApplyPaycheckBenefits(playerid, PlayerJob_Paycheck(playerid));
                 Player_GiveMoney(playerid, pay, true);
@@ -108,14 +108,14 @@ static GunsmakerEvent(playerid, eJobEvent:event, data)
                 Notification_Show(playerid, "Fuiste despedido por abandonar la fábrica.", 6000, 0xCB3126);
             }
 
-            if(g_rgiGunsmakerUsedBench{playerid} != 0xFF)
+            if (g_rgiGunsmakerUsedBench{playerid} != 0xFF)
             {
                 TogglePlayerDynamicCP(playerid, g_rgiGunsmakerBenchCheckpoint[g_rgiGunsmakerUsedBench{playerid}], false);
                 g_iGunsmakerUsedBenchs &= ~(1 << g_rgiGunsmakerUsedBench{playerid});
                 g_rgiGunsmakerUsedBench{playerid} = 0xFF;
                 Gunsmaker_ProcessQueue();
             }
-            else if(Iter_Contains(GunsmakerBenchQueue, playerid))
+            else if (Iter_Contains(GunsmakerBenchQueue, playerid))
             {
                 Iter_Remove(GunsmakerBenchQueue, playerid);
                 Notification_Show(playerid, "Abandonaste la cola para trabajar como fabricante de armas.", 5000);
@@ -160,7 +160,7 @@ public OnScriptInit()
     tmpobjectid = CreateDynamicObject(19447, 2530.55127, -1306.86475, 1048.78259, 0.00000, 0.00000, 0.00000, .worldid = 0, .interiorid = 2);
     SetDynamicObjectMaterial(tmpobjectid, 0, 19297, "matlights", "emergencylights64", 0x00FFFFFF);
 
-    for(new i = sizeof(g_rgfGunsmakerBenchSites) - 1; i != -1; --i)
+    for (new i = sizeof(g_rgfGunsmakerBenchSites) - 1; i != -1; --i)
     {
         g_rgiGunsmakerBenchCheckpoint[i] = CreateDynamicCP(g_rgfGunsmakerBenchSites[i][0], g_rgfGunsmakerBenchSites[i][1], g_rgfGunsmakerBenchSites[i][2], 1.0, .worldid = 0, .interiorid = 2);
     }
@@ -197,7 +197,7 @@ static GunsmakerKeyGameCallback(playerid, bool:success)
     ClearAnimations(playerid);
     TogglePlayerControllable(playerid, true);
 
-    if(success)
+    if (success)
     {
         new crafted_gun = random(sizeof(gun_names));
         PlayerJob_Paycheck(playerid) += 50 * (crafted_gun + 1);
@@ -218,12 +218,12 @@ static GunsmakerKeyGameCallback(playerid, bool:success)
 
 public OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
-    if(Player_Job(playerid) == JOB_GUNSMAKER && g_rgiGunsmakerUsedBench{playerid} != 0xFF)
+    if (Player_Job(playerid) == JOB_GUNSMAKER && g_rgiGunsmakerUsedBench{playerid} != 0xFF)
     {
         new benchid = g_rgiGunsmakerUsedBench{playerid};
-        if(g_rgiGunsmakerBenchCheckpoint[benchid] == checkpointid)
+        if (g_rgiGunsmakerBenchCheckpoint[benchid] == checkpointid)
         {
-            if(s_rgbPlayerIsInJobCp{playerid})
+            if (s_rgbPlayerIsInJobCp{playerid})
                 return 1;
 
             s_rgbPlayerIsInJobCp{playerid} = true;
@@ -258,7 +258,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
 
 public OnPlayerLeaveDynamicCP(playerid, checkpointid)
 {
-    if(Player_Job(playerid) == JOB_GUNSMAKER && g_rgiGunsmakerUsedBench{playerid} != 0xFF)
+    if (Player_Job(playerid) == JOB_GUNSMAKER && g_rgiGunsmakerUsedBench{playerid} != 0xFF)
     {
         s_rgbPlayerIsInJobCp{playerid} = false;
         return 1;
@@ -283,13 +283,13 @@ public OnPlayerLeaveDynamicCP(playerid, checkpointid)
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    if(Player_Job(playerid) == JOB_GUNSMAKER)
+    if (Player_Job(playerid) == JOB_GUNSMAKER)
     {
-        if(Iter_Contains(GunsmakerBenchQueue, playerid))
+        if (Iter_Contains(GunsmakerBenchQueue, playerid))
         {
             Iter_Remove(GunsmakerBenchQueue, playerid);
         }
-        else if(g_rgiGunsmakerUsedBench{playerid} != 0xFF)
+        else if (g_rgiGunsmakerUsedBench{playerid} != 0xFF)
         {
             g_iGunsmakerUsedBenchs &= ~(1 << g_rgiGunsmakerUsedBench{playerid});
             g_rgiGunsmakerUsedBench{playerid} = 0xFF;
@@ -297,7 +297,7 @@ public OnPlayerDisconnect(playerid, reason)
             Gunsmaker_ProcessQueue();
         }
 
-        if(PlayerJob_Paycheck(playerid) > 0)
+        if (PlayerJob_Paycheck(playerid) > 0)
         {
             Player_Money(playerid) += PlayerJob_Paycheck(playerid);
         }

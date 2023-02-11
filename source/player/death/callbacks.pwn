@@ -7,7 +7,7 @@ public OnPlayerDeath(playerid, killerid, reason)
 {
     if (Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
     {
-        if(Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL))
+        if (Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL))
         {
             Player_SpawnInPrison(playerid);
             SetSpawnInfo(playerid, NO_TEAM, Player_Skin(playerid), g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ], g_rgePlayerData[playerid][e_fPosAngle], 0, 0, 0, 0, 0, 0);
@@ -102,7 +102,7 @@ public DEATH_DeleteCorpse(playerid)
     if (Skin_IsFat( Player_Skin(playerid) ))
         amount += 4;
 
-    for(new i; i < amount; ++i)
+    for (new i; i < amount; ++i)
     {
         DroppedItem_Create(ITEM_MEAT, 1, 0, x + RandomFloat(-1.0, 1.0), y + RandomFloat(-1.0, 1.0), z, GetDynamicActorVirtualWorld(g_rgiPlayerCorpseActor[playerid]), 0, playerid, .timeout = 15 + random(60));
     }

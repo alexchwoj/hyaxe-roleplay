@@ -44,13 +44,13 @@ Account_Register(playerid, callback = -1)
 
 Account_Save(playerid, bool:disconnect = false)
 {
-    if(!Player_AccountID(playerid))
+    if (!Player_AccountID(playerid))
         return 0;
 
-    if(!Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
+    if (!Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
         return 0;
 
-    if(IsPlayerSpawned(playerid))
+    if (IsPlayerSpawned(playerid))
     {
         GetPlayerPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
         GetPlayerFacingAngle(playerid, g_rgePlayerData[playerid][e_fPosAngle]);
@@ -63,10 +63,10 @@ Account_Save(playerid, bool:disconnect = false)
         muted_time = 0;
     
     new jailtime = 0;
-    if(Player_Data(playerid, e_iJailTime))
+    if (Player_Data(playerid, e_iJailTime))
         jailtime = Player_Data(playerid, e_iJailTime) - gettime();
     
-    else if(Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED) || Player_WantedLevel(playerid))
+    else if (Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED) || Player_WantedLevel(playerid))
     {
         jailtime = (Player_WantedLevel(playerid) * 2) * 60;
         Player_WantedLevel(playerid) = 0;
@@ -114,7 +114,7 @@ Account_LoadFromCache(playerid)
 {
     DEBUG_PRINT("[func] Account_LoadFromCache(playerid = %i)", playerid);
     
-    if(Player_Cache(playerid) == MYSQL_INVALID_CACHE)
+    if (Player_Cache(playerid) == MYSQL_INVALID_CACHE)
         return 0;
 
     cache_set_active(Player_Cache(playerid));
@@ -149,7 +149,7 @@ Account_LoadFromCache(playerid)
     Player_MutedTime(playerid) += gettime();
 
     printf("jailtime = %i", Player_Data(playerid, e_iJailTime));
-    if(Player_Data(playerid, e_iJailTime))
+    if (Player_Data(playerid, e_iJailTime))
     {
         Bit_Set(Player_Flags(playerid), PFLAG_IN_JAIL, true);
 
@@ -161,13 +161,13 @@ Account_LoadFromCache(playerid)
     // Gang load
     new bool:no_gang;
     cache_is_value_name_null(0, "GANG_ID", no_gang);
-    if(!no_gang)
+    if (!no_gang)
     {
         new gang;
         cache_get_value_name_int(0, !"GANG_ID", gang);
 
         new gang_arrid = gang_id_from_dbid(gang);
-        if(gang_arrid != -1)
+        if (gang_arrid != -1)
         {
             Player_Gang(playerid) = gang_arrid;
             Iter_Add(GangMember[gang_arrid], playerid);
@@ -181,11 +181,11 @@ Account_LoadFromCache(playerid)
     // VIP load
     new bool:vip_expired_null;
     cache_is_value_name_null(0, "VIP_EXPIRED", vip_expired_null);
-    if(!vip_expired_null)
+    if (!vip_expired_null)
     {
         new vip_expired;
         cache_get_value_name_int(0, "VIP_EXPIRED", vip_expired);
-        if(vip_expired)
+        if (vip_expired)
         {
             Notification_Show(playerid, "Tu VIP expiró. Dirígete a ~r~samp.hyaxe.com/store~w~ para renovarlo.", 10000);
             Player_VIP(playerid) = -1;
@@ -217,7 +217,7 @@ Player_GiveMoney(playerid, money, bool:update = true)
 	// ResetPlayerMoney(playerid);
 	GivePlayerMoney(playerid, Player_Money(playerid) - old_money);
 
-	if(update)
+	if (update)
 	{
         mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `MONEY` = %i WHERE `ID` = %i;", Player_Money(playerid), Player_AccountID(playerid));
 		mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
@@ -233,7 +233,7 @@ Player_SetMoney(playerid, money, bool:update = true)
 	ResetPlayerMoney(playerid);
 	GivePlayerMoney(playerid, money);
 
-	if(update)
+	if (update)
 	{
         mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `MONEY` = %i WHERE `ID` = %i;", Player_Money(playerid), Player_AccountID(playerid));
 		mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
@@ -268,12 +268,12 @@ Player_PutInVehicle(playerid, vehicle_id, seat_id = 0)
 
 Player_SetSkin(playerid, skinid, bool:update = true)
 {
-    if(skinid == 74 || !(0 <= skinid <= 311))
+    if (skinid == 74 || !(0 <= skinid <= 311))
         return 0;
 
     Player_Skin(playerid) = skinid;
 
-    if(update)
+    if (update)
     {
         mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `SKIN` = %i WHERE `ID` = %i;", skinid, Player_AccountID(playerid));
         mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
@@ -287,7 +287,7 @@ Player_SetWantedLevel(playerid, level)
     Player_WantedLevel(playerid) = level;
     new const ret = SetPlayerWantedLevel(playerid, level);
 
-    if(ret)
+    if (ret)
     {
         mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `WANTED_LEVEL` = %d WHERE `ID` = %d;", level, Player_AccountID(playerid));
         mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);

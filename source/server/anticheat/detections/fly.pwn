@@ -27,29 +27,29 @@ IPacket:__ac_fly_PlayerSync(playerid, BitStream:bs)
         PR_INT16, animation_id
     );
     
-    if(special_action == SPECIAL_ACTION_USEJETPACK && !Player_AdminLevel(playerid))
+    if (special_action == SPECIAL_ACTION_USEJETPACK && !Player_AdminLevel(playerid))
     {
         Anticheat_Trigger(playerid, CHEAT_FLY);
         return 0;
     }
 
-    if(surfing_vehicle_id != 0 || position_z < 1.0)
+    if (surfing_vehicle_id != 0 || position_z < 1.0)
         return 1;
     
-    if((958 <= animation_id <= 959) && weapon_id != WEAPON_PARACHUTE)
+    if ((958 <= animation_id <= 959) && weapon_id != WEAPON_PARACHUTE)
     {
         Anticheat_Trigger(playerid, CHEAT_FLY);
         return 0;
     }
 
-    if(157 <= animation_id <= 162)
+    if (157 <= animation_id <= 162)
     {
         Anticheat_Trigger(playerid, CHEAT_FLY);
         return 0;
     }
 
     new Float:dummy;
-    if(((1538 <= animation_id <= 1544) || animation_id == 1250) && !CA_IsPlayerInWater(playerid, dummy, dummy))
+    if (((1538 <= animation_id <= 1544) || animation_id == 1250) && !CA_IsPlayerInWater(playerid, dummy, dummy))
     {
         Anticheat_Trigger(playerid, CHEAT_FLY);
         return 0;

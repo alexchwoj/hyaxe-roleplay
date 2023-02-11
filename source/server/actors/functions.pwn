@@ -5,9 +5,9 @@
 
 static Actor_FindRobbableFreeIndex()
 {
-    for(new i; i < MAX_ROBBABLE_ACTORS; ++i)
+    for (new i; i < MAX_ROBBABLE_ACTORS; ++i)
     {
-        if(!g_rgeRobbableActors[i][e_iActorId])
+        if (!g_rgeRobbableActors[i][e_iActorId])
             return i;
     }
 
@@ -16,7 +16,7 @@ static Actor_FindRobbableFreeIndex()
 
 Actor_CreateRobbable(model, min_money, max_money, Float:x, Float:y, Float:z, Float:angle, worldid = -1, interiorid = -1)
 {
-    if(max_money < min_money)
+    if (max_money < min_money)
     {
         printf("[actors!] Swapped max_money with min_money (was max = %i, min = %i)", max_money, min_money);
 
@@ -26,7 +26,7 @@ Actor_CreateRobbable(model, min_money, max_money, Float:x, Float:y, Float:z, Flo
     }
 
     new idx = Actor_FindRobbableFreeIndex();
-    if(idx == -1)
+    if (idx == -1)
     {
         print("[actors!] Couldn't find free index for a robbable actor.");
         return -1;
@@ -46,12 +46,12 @@ Actor_CreateRobbable(model, min_money, max_money, Float:x, Float:y, Float:z, Flo
 
 Actor_Stealable(actorid)
 {
-    if(!Streamer_HasIntData(STREAMER_TYPE_ACTOR, actorid, E_STREAMER_CUSTOM(0x524F42)))
+    if (!Streamer_HasIntData(STREAMER_TYPE_ACTOR, actorid, E_STREAMER_CUSTOM(0x524F42)))
         return 0;
         
     new id = Streamer_GetIntData(STREAMER_TYPE_ACTOR, actorid, E_STREAMER_CUSTOM(0x524F42));
 
-    if(!(0 <= id < sizeof(g_rgeRobbableActors)) || !g_rgeRobbableActors[id][e_iActorId] || g_rgeRobbableActors[id][e_iRobbingPlayer] != INVALID_PLAYER_ID)
+    if (!(0 <= id < sizeof(g_rgeRobbableActors)) || !g_rgeRobbableActors[id][e_iActorId] || g_rgeRobbableActors[id][e_iRobbingPlayer] != INVALID_PLAYER_ID)
         return 0;
     
     return id;
@@ -64,7 +64,7 @@ Actor_Rob(playerid, actorid)
         return 0;
 
     new diff = GetTickCount() - g_rgeRobbableActors[id][e_iLastStealTick];
-    if(300000 > diff)
+    if (300000 > diff)
         return Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, va_return("Esta tienda fue robada recientemente. Puede volver a ser robada en %i minutos.", ((300000 - diff) / 60000)));
 
     Bit_Set(Player_Flags(playerid), PFLAG_ROBBING_STORE, true);

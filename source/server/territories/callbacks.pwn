@@ -11,7 +11,7 @@ public OnScriptInit()
     new rowc;
     cache_get_row_count(rowc);
     
-    for(new i; i < rowc; ++i)
+    for (new i; i < rowc; ++i)
     {
         g_rgeTerritories[i][e_bValid] = true;
 
@@ -90,7 +90,7 @@ public OnScriptInit()
 
 public OnPlayerConnect(playerid)
 {
-    for(new i; i < HYAXE_MAX_TERRITORIES; ++i)
+    for (new i; i < HYAXE_MAX_TERRITORIES; ++i)
     {
         if (g_rgeTerritories[i][e_bValid] && g_rgeTerritories[i][e_bIsConquerable])
         {
@@ -161,12 +161,12 @@ public TERR_UpdateProgress(territory_index)
     format(str_text, sizeof(str_text), "Progreso de conquista: {CA3737}%.1f%%{FFFFFF}\n{CA3737}", g_rgeTerritories[territory_index][e_fConquestProgress]);
 
     new painted_lines = floatround(3 * (g_rgeTerritories[territory_index][e_fConquestProgress] / 5.0));
-    for(new i; i <= painted_lines; ++i)
+    for (new i; i <= painted_lines; ++i)
         strcat(str_text, "|");
 
     new unpainted_lines = 60 - painted_lines;
     strcat(str_text, "{7D3535}");
-    for(new i; i <= unpainted_lines; ++i)
+    for (new i; i <= unpainted_lines; ++i)
         strcat(str_text, "|");
 
     UpdateDynamic3DTextLabelText(g_rgeTerritories[territory_index][e_iLabel], 0xFFFFFFFF, str_text);

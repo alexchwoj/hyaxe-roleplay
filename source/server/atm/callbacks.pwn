@@ -51,7 +51,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
         // Transfer
         else if (clickedid == g_tdBankATM[5])
         {
-            if(Player_Level(playerid) < 3)
+            if (Player_Level(playerid) < 3)
             {
                 Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas ser nivel 3 para usar esto");
                 return 1;
@@ -133,7 +133,7 @@ static ATM_OnPress(playerid, atm_id)
 
 public OnScriptInit()
 {
-    for(new i; i < sizeof(g_rgeATMBank); ++i)
+    for (new i; i < sizeof(g_rgeATMBank); ++i)
     {
         g_rgeATMBank[i][e_iAtmObject] = CreateDynamicObject(19324,
             g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], g_rgeATMBank[i][e_fAtmPosZ],

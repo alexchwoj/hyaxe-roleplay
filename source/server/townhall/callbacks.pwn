@@ -5,7 +5,7 @@
 
 static SellVeh_OnPress(playerid)
 {
-    if(!Iter_Count(PlayerVehicles[playerid]))
+    if (!Iter_Count(PlayerVehicles[playerid]))
         return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes vehículos");
 
     StrCpy(YSI_UNSAFE_HUGE_STRING, "{CB3126}Vehículo\t{CB3126}Matrícula\n", YSI_UNSAFE_HUGE_LENGTH);
@@ -24,7 +24,7 @@ static SellVeh_OnPress(playerid)
     {
         #pragma unused inputtext
         
-        if(!response)
+        if (!response)
             return 1;
 
         new vehicleid = vehicles[listitem];
@@ -36,7 +36,7 @@ static SellVeh_OnPress(playerid)
         {
             #pragma unused r, l, it
 
-            if(!r)
+            if (!r)
             {
                 SellVeh_OnPress(playerid);
                 return 1;

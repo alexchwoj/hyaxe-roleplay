@@ -18,7 +18,7 @@ static GenerateGrassInArea(areaid)
         Float:min_z = (g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinZ] < g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxZ] ? g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinZ] : g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxZ]),
         Float:max_z = (g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinZ] < g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxZ] ? g_rgeLawnmowerAreas[areaid][e_fGrassAreaMaxZ] : g_rgeLawnmowerAreas[areaid][e_fGrassAreaMinZ]);
 
-    for(new i = grass_count; i != -1; --i)
+    for (new i = grass_count; i != -1; --i)
     {
         new bool:is_above_water = false;
         new Float:x, Float:y, Float:z;
@@ -31,9 +31,9 @@ static GenerateGrassInArea(areaid)
             is_above_water = CA_RayCastLine(x, y, 100.0, x, y, -100.0, x, y, z) == WATER_OBJECT;
 
             // FIXME
-            if(z > 35.0)
+            if (z > 35.0)
                 is_above_water = true;
-        } while(is_above_water);
+        } while (is_above_water);
 
         g_rgeLawnmowerAreas[areaid][e_rgiGrassObjects][i] = CreateDynamicObject(817, x, y, z + 0.6, 0.0, 0.0, 0.0, .worldid = 0, .interiorid = 0);
         g_rgeLawnmowerAreas[areaid][e_rgiGrassAreas][i] = CreateDynamicCircle(x, y, 1.2, .worldid = 0, .interiorid = 0, .playerid = g_rgeLawnmowerAreas[areaid][e_iMowingPlayer]);
@@ -46,7 +46,7 @@ static GenerateGrassInArea(areaid)
 static LawnMower_ClearJob(playerid)
 {
     new parkid = g_rgiPlayerLawnmowerArea{playerid};
-    if(!(0 <= parkid < sizeof(g_rgeLawnmowerAreas)))
+    if (!(0 <= parkid < sizeof(g_rgeLawnmowerAreas)))
         return 0;
 
     StopAudioStreamForPlayer(playerid);
@@ -54,7 +54,7 @@ static LawnMower_ClearJob(playerid)
     Player_SetImmunityForCheat(playerid, CHEAT_CARJACK, 3000);
     Vehicle_Destroy(g_rgeLawnmowerAreas[parkid][e_iMowerId]);
 
-    for(new i; i < MAX_GRASS_PER_AREA; ++i)
+    for (new i; i < MAX_GRASS_PER_AREA; ++i)
     {
         DestroyDynamicObject(g_rgeLawnmowerAreas[parkid][e_rgiGrassObjects][i]);
         DestroyDynamicArea(g_rgeLawnmowerAreas[parkid][e_rgiGrassAreas][i]);
@@ -74,11 +74,11 @@ static LawnMower_ClearJob(playerid)
 
 static LawnMowerEvent(playerid, eJobEvent:event, areaid)
 {
-    switch(event)
+    switch (event)
     {
         case JOB_EV_JOIN:
         {
-            if(g_rgeLawnmowerAreas[areaid][e_iMowingPlayer] != INVALID_PLAYER_ID)
+            if (g_rgeLawnmowerAreas[areaid][e_iMowingPlayer] != INVALID_PLAYER_ID)
             {
                 Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Ya hay alguien trabajando este parque. Diríjete a otro o espera.");
                 return 0;
@@ -126,7 +126,7 @@ static LawnMowerEvent(playerid, eJobEvent:event, areaid)
 
 public OnScriptInit()
 {
-    for(new i; i < sizeof(g_rgeLawnmowerAreas); ++i)
+    for (new i; i < sizeof(g_rgeLawnmowerAreas); ++i)
     {
         g_rgeLawnmowerAreas[i][e_iAreaId] = CreateDynamicRectangle(g_rgeLawnmowerAreas[i][e_fParkAreaMinX], g_rgeLawnmowerAreas[i][e_fParkAreaMinY], g_rgeLawnmowerAreas[i][e_fParkAreaMaxX], g_rgeLawnmowerAreas[i][e_fParkAreaMaxY], .worldid = 0, .interiorid = 0);
         Streamer_SetIntData(STREAMER_TYPE_AREA, g_rgeLawnmowerAreas[i][e_iAreaId], E_STREAMER_CUSTOM(0x4c4d4a53), 1); // LMJS (LawnMower Job Site)
@@ -158,12 +158,12 @@ public OnScriptInit()
 
 public OnPlayerEnterDynamicArea(playerid, areaid)
 {
-    if(Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4D4F57)))
+    if (Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4D4F57)))
     {
         new grass_id = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4D4F57));
         new park_id = g_rgiPlayerLawnmowerArea{playerid};
 
-        if(!IsValidDynamicObject(g_rgeLawnmowerAreas[park_id][e_rgiGrassObjects][grass_id]))
+        if (!IsValidDynamicObject(g_rgeLawnmowerAreas[park_id][e_rgiGrassObjects][grass_id]))
             return 1;
             
         PlayerPlaySound(playerid, 20800);
@@ -176,7 +176,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
         g_rgeLawnmowerAreas[park_id][e_rgiGrassObjects][grass_id] = INVALID_STREAMER_ID;
 
         g_rgeLawnmowerAreas[park_id][e_iCurrentGrassCount]--;        
-        if(!g_rgeLawnmowerAreas[park_id][e_iCurrentGrassCount])
+        if (!g_rgeLawnmowerAreas[park_id][e_iCurrentGrassCount])
         {
             Player_SetImmunityForCheat(playerid, CHEAT_CARJACK, 3000);
             StopAudioStreamForPlayer(playerid);
@@ -198,9 +198,9 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
             g_rgeLawnmowerAreas[park_id][e_iInitialGrassCount] = 
             g_rgeLawnmowerAreas[park_id][e_iCurrentGrassCount] = 0;
             
-            for(new i; i < MAX_GRASS_PER_AREA; ++i)
+            for (new i; i < MAX_GRASS_PER_AREA; ++i)
             {
-                if(IsValidDynamicObject(g_rgeLawnmowerAreas[park_id][e_rgiGrassObjects][i]))
+                if (IsValidDynamicObject(g_rgeLawnmowerAreas[park_id][e_rgiGrassObjects][i]))
                 {
                     DestroyDynamicObject(g_rgeLawnmowerAreas[park_id][e_rgiGrassObjects][i]);
                     DestroyDynamicArea(g_rgeLawnmowerAreas[park_id][e_rgiGrassAreas][i]);
@@ -238,7 +238,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
 
 public OnPlayerLeaveDynamicArea(playerid, areaid)
 {
-    if(Player_Job(playerid) == JOB_LAWNMOWER && Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4c4d4a53)))
+    if (Player_Job(playerid) == JOB_LAWNMOWER && Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4c4d4a53)))
     {
         Job_TriggerCallback(playerid, JOB_LAWNMOWER, JOB_EV_LEAVE_PLACE);
         Player_Job(playerid) = JOB_NONE;
@@ -264,9 +264,9 @@ public OnPlayerLeaveDynamicArea(playerid, areaid)
 
 public OnPlayerStateChange(playerid, newstate, oldstate)
 {
-    if(newstate == PLAYER_STATE_ONFOOT && oldstate == PLAYER_STATE_DRIVER)
+    if (newstate == PLAYER_STATE_ONFOOT && oldstate == PLAYER_STATE_DRIVER)
     {
-        if(Player_Job(playerid) == JOB_LAWNMOWER)
+        if (Player_Job(playerid) == JOB_LAWNMOWER)
         {
             Job_TriggerCallback(playerid, JOB_LAWNMOWER, JOB_EV_LEAVE_VEHICLE, g_rgiPlayerLawnmowerArea{playerid});
             Player_Job(playerid) = JOB_NONE;
@@ -292,7 +292,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    if(Player_Job(playerid) == JOB_LAWNMOWER)
+    if (Player_Job(playerid) == JOB_LAWNMOWER)
     {
         LawnMower_ClearJob(playerid);
     }

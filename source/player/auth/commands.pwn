@@ -17,7 +17,7 @@ dialog change_password(playerid, dialogid, response, listitem, inputtext[])
         return 1;
         
     new pw_len = strlen(inputtext);
-    if(!(6 <= pw_len <= 18))
+    if (!(6 <= pw_len <= 18))
     {
         PC_EmulateCommand(playerid, "/password");
         return 1;

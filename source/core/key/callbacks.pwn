@@ -93,7 +93,7 @@ public KEY_MoveToBottom(playerid, Float:max, count)
 
 public OnPlayerLeaveDynamicArea(playerid, areaid)
 {
-    if(Streamer_HasArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4B4559)))
+    if (Streamer_HasArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4B4559)))
     {
         if (g_rgeKeyData[playerid][e_bKeyActivated])
         {
@@ -132,7 +132,7 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
         new info[4];
         Streamer_GetArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x4B4559), info);
 
-        if(info[1] == KEY_TYPE_VEHICLE && !IsPlayerInAnyVehicle(playerid))
+        if (info[1] == KEY_TYPE_VEHICLE && !IsPlayerInAnyVehicle(playerid))
             return 1;
 
         if (info[1] == KEY_TYPE_FOOT && GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
@@ -183,22 +183,22 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     new areas = GetPlayerNumberDynamicAreas(playerid);
-    if(areas > 0)
+    if (areas > 0)
     {
         YSI_UNSAFE_HUGE_STRING[areas] = INVALID_STREAMER_ID;
         GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
 
-        for(new i; i < areas; ++i)
+        for (new i; i < areas; ++i)
         {
-            if(Streamer_HasArrayData(STREAMER_TYPE_AREA, YSI_UNSAFE_HUGE_STRING[i], E_STREAMER_CUSTOM(0x4B4559)))
+            if (Streamer_HasArrayData(STREAMER_TYPE_AREA, YSI_UNSAFE_HUGE_STRING[i], E_STREAMER_CUSTOM(0x4B4559)))
             {
                 new info[4];
                 Streamer_GetArrayData(STREAMER_TYPE_AREA, YSI_UNSAFE_HUGE_STRING[i], E_STREAMER_CUSTOM(0x4B4559), info);
 
-                if(info[2] == -1)
+                if (info[2] == -1)
                     break;
                     
-                if((newkeys & Key_KeyNameToKeyBit(info[0])) != 0)
+                if ((newkeys & Key_KeyNameToKeyBit(info[0])) != 0)
                 {
                     if (info[1] == KEY_TYPE_FOOT && GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
                         continue;

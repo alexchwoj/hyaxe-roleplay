@@ -393,7 +393,7 @@ GetPointZone(Float:x, Float:y, city[], zone[], city_len = sizeof(city), zone_len
 	StrCpy(city, "San Andreas", city_len);
     StrCpy(zone, "Desconocida", zone_len);
 
-	for(new i = 0; i < sizeof(g_rgeCities); i++)
+	for (new i = 0; i < sizeof(g_rgeCities); i++)
 	{
 	    if ( (x >= g_rgeCities[i][e_fMinX] && x < g_rgeCities[i][e_fMaxX]) && (y >= g_rgeCities[i][e_fMinY] && y < g_rgeCities[i][e_fMaxY]) )
 		{
@@ -402,7 +402,7 @@ GetPointZone(Float:x, Float:y, city[], zone[], city_len = sizeof(city), zone_len
 		}
 	}
 
-	for(new i = 0; i < sizeof(g_rgeZones); i++)
+	for (new i = 0; i < sizeof(g_rgeZones); i++)
 	{
 	    if ( (x >= g_rgeZones[i][e_fMinX] && x < g_rgeZones[i][e_fMaxX]) && (y >= g_rgeZones[i][e_fMinY] && y < g_rgeZones[i][e_fMaxY]) )
 		{

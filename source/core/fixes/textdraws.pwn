@@ -42,9 +42,9 @@ stock GetPlayerTextDrawSelectionColor(playerid)
 
 public OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-    if(clickedid == INVALID_TEXT_DRAW)
+    if (clickedid == INVALID_TEXT_DRAW)
     {
-        if(!s_TextDrawCancelTick[playerid] || (GetTickCount() - s_TextDrawCancelTick[playerid] > 50 + GetPlayerPing(playerid)))
+        if (!s_TextDrawCancelTick[playerid] || (GetTickCount() - s_TextDrawCancelTick[playerid] > 50 + GetPlayerPing(playerid)))
         {
             CallLocalFunction(!"OnPlayerCancelTDSelection", !"i", playerid);
         }

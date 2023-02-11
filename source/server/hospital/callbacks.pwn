@@ -60,7 +60,7 @@ public HP_HealPlayer(playerid, nearest_hospital)
         SetPlayerFacingAngle(playerid, g_rgeHospitalData[ nearest_hospital ][e_fHospitalAngle]);
         SetCameraBehindPlayer(playerid);
 
-        if(Player_VIP(playerid) >= 3)
+        if (Player_VIP(playerid) >= 3)
             Player_SetArmor(playerid, 50);
 
         Notification_Show(playerid, "Los médicos te han dado de alta.", 3000, 0x64A752FF);
@@ -87,7 +87,7 @@ player_menu hospital_menu(playerid, response, listitem)
 {
     if (response == MENU_RESPONSE_SELECT)
     {
-        switch(listitem)
+        switch (listitem)
         {
             case 0:
             {
@@ -144,7 +144,7 @@ player_menu hospital_menu(playerid, response, listitem)
 
 public OnScriptInit()
 {
-    for(new i; i < sizeof(g_rgeHospitalData); ++i)
+    for (new i; i < sizeof(g_rgeHospitalData); ++i)
     {
         new int = g_rgeHospitalData[i][e_iHospitalInteriorType];
 

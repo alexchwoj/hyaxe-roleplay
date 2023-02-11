@@ -16,7 +16,7 @@ player_menu hotdog_buy(playerid, response, listitem)
 {
     if (response == MENU_RESPONSE_SELECT)
     {
-        switch(listitem)
+        switch (listitem)
         {
             case 0:
             {
@@ -52,7 +52,7 @@ player_menu hotdog_buy(playerid, response, listitem)
 
 public OnScriptInit()
 {
-    for(new i; i < sizeof(g_rgfHotdogPos); ++i)
+    for (new i; i < sizeof(g_rgfHotdogPos); ++i)
     {
         CreateDynamicActor(168, g_rgfHotdogPos[i][0], g_rgfHotdogPos[i][1], g_rgfHotdogPos[i][2], g_rgfHotdogPos[i][3], .worldid = 0, .interiorid = 0);
 

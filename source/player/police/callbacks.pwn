@@ -9,13 +9,13 @@ static PoliceLocker_OnKeyPress(playerid)
 {
     static const male_skins[] = { 280, 281, 265, 266, 267, 300, 301 };
 
-    if(!Police_Rank(playerid))
+    if (!Police_Rank(playerid))
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No eres policía");
         return 1;
     }
 
-    if(Police_OnDuty(playerid))
+    if (Police_OnDuty(playerid))
     {
         Player_SetImmunityForCheat(playerid, CHEAT_WEAPON, 1000 + GetPlayerPing(playerid));
         
@@ -32,20 +32,20 @@ static PoliceLocker_OnKeyPress(playerid)
         return 1;
     }
 
-    if(Player_VIP(playerid) >= 3)
+    if (Player_VIP(playerid) >= 3)
     {
         inline const Response(response, listitem, string:inputtext[])
         {
             #pragma unused inputtext
 
-            if(response)
+            if (response)
             {
                 Police_OnDuty(playerid) = true;
 
                 ResetPlayerWeapons(playerid);
                 Player_ClearWeaponsArray(playerid);
 
-                if(listitem == 1)
+                if (listitem == 1)
                 {
                     SetPlayerSkin(playerid, 285);
                     Player_GiveWeapon(playerid, 3, false);  // Nightstick
@@ -102,7 +102,7 @@ public OnScriptInit()
     EnterExit_Create(19902, "{ED2B2B}LSPD", "{DADADA}Salida", 1554.9965, -1675.5953, 16.1953, 82.5943, 0, 0, 1560.6276, -1675.4996, 20.5919, 271.2696, 0, 0);
     CreateDynamicMapIcon(1554.9965, -1675.5953, 16.1953, 30, -1, 0, 0);
 
-    for(new i = sizeof(g_rgeCopCars) - 1; i != -1; --i)
+    for (new i = sizeof(g_rgeCopCars) - 1; i != -1; --i)
     {
         new vehicleid = Vehicle_Create(g_rgeCopCars[i][e_iModel], g_rgeCopCars[i][e_fPosX], g_rgeCopCars[i][e_fPosY], g_rgeCopCars[i][e_fPosZ], g_rgeCopCars[i][e_fAngle], 0, 1, 600, .addsiren = true);
         Vehicle_Type(vehicleid) = VEHICLE_TYPE_POLICE;
@@ -152,11 +152,11 @@ public POLICE_UserLoaded(playerid)
     new rowc;
     cache_get_row_count(rowc);
 
-    if(rowc)
+    if (rowc)
     {
         new rank;
         cache_get_value_name_int(0, "RANK", rank);
-        if(rank > _:POLICE_RANK_NONE)
+        if (rank > _:POLICE_RANK_NONE)
         {
             Police_Rank(playerid) = rank;
             Iter_Add(Police, playerid);
@@ -172,7 +172,7 @@ public OnPlayerDisconnect(playerid, reason)
     Police_Rank(playerid) = POLICE_RANK_NONE;
     Police_ClearMarkers(playerid);
 
-    if(Iter_Contains(Police, playerid))
+    if (Iter_Contains(Police, playerid))
         Iter_Remove(Police, playerid);
 
     #if defined POLICE_OnPlayerDisconnect
@@ -194,7 +194,7 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
-    if(Vehicle_Type(vehicleid) == VEHICLE_TYPE_POLICE && !Police_OnDuty(playerid))
+    if (Vehicle_Type(vehicleid) == VEHICLE_TYPE_POLICE && !Police_OnDuty(playerid))
     {
         ClearAnimations(playerid, 1);
 
@@ -233,12 +233,12 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 
 public OnPlayerStateChange(playerid, newstate, oldstate)
 {
-    if(newstate == PLAYER_STATE_DRIVER)
+    if (newstate == PLAYER_STATE_DRIVER)
     {
         new vehicleid = GetPlayerVehicleID(playerid);
-        if(IsValidVehicle(vehicleid))
+        if (IsValidVehicle(vehicleid))
         {
-            if(Vehicle_Type(vehicleid) == VEHICLE_TYPE_POLICE && !Police_OnDuty(playerid))
+            if (Vehicle_Type(vehicleid) == VEHICLE_TYPE_POLICE && !Police_OnDuty(playerid))
             {
                 Anticheat_Trigger(playerid, CHEAT_CARJACK, 2);
                 return 1;
@@ -288,7 +288,7 @@ public ARREST_ReleaseFromPrison(playerid)
 
 public OnPlayerLeaveDynamicArea(playerid, areaid)
 {
-    if(areaid == g_iPrisonArea && Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL))
+    if (areaid == g_iPrisonArea && Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL))
     {
         new pos = random(sizeof(g_rgfJailPositions));
         Player_SetPos(playerid, g_rgfJailPositions[pos][0], g_rgfJailPositions[pos][1], g_rgfJailPositions[pos][2]);
@@ -313,7 +313,7 @@ public OnPlayerLeaveDynamicArea(playerid, areaid)
 
 hook OnPlayerText(playerid, text[])
 {
-    if(text[0] == '&' && Police_OnDuty(playerid))
+    if (text[0] == '&' && Police_OnDuty(playerid))
     {
         format(YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "[Policía]{DADADA} %s: %s", Player_RPName(playerid), text[1]);
         Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, YSI_UNSAFE_HUGE_STRING);

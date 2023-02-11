@@ -8,7 +8,7 @@ public OnPlayerDisconnect(playerid, reason)
     g_rgiPlayerCurrentShopItem{playerid} = 0;
     g_rgiPlayerCurrentShop{playerid} = 0xFF;
     g_rgiPlayerWaitingObjectMove{playerid} = false;
-    if(IsValidPlayerObject(playerid, g_rgiPlayerShopObject[playerid]))
+    if (IsValidPlayerObject(playerid, g_rgiPlayerShopObject[playerid]))
     {
         DestroyPlayerObject(playerid, g_rgiPlayerShopObject[playerid]);
     }
@@ -33,12 +33,12 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerObjectMoved(playerid, objectid)
 {
-    if(g_rgiPlayerWaitingObjectMove{playerid})
+    if (g_rgiPlayerWaitingObjectMove{playerid})
     {
         Bit_Set(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS, true);
 
         PlayerPlaySound(playerid, 1145);
-        if(g_rgiPlayerWaitingObjectMove{playerid} != 0b11)
+        if (g_rgiPlayerWaitingObjectMove{playerid} != 0b11)
         {
             DestroyPlayerObject(playerid, g_rgiPlayerShopObject[playerid]);
 
@@ -75,14 +75,14 @@ public OnPlayerObjectMoved(playerid, objectid)
 
 public OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-    if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING) && Bit_Get(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING) && Bit_Get(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS))
     {
         new shop_id = g_rgiPlayerCurrentShop{playerid};
 
         // Left button
-        if(clickedid == g_tdShops[7])
+        if (clickedid == g_tdShops[7])
         {
-            if(g_rgiPlayerCurrentShopItem{playerid} <= 0)
+            if (g_rgiPlayerCurrentShopItem{playerid} <= 0)
                 return 1;
 
             Bit_Set(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS, false);
@@ -92,9 +92,9 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
             MovePlayerObject(playerid, g_rgiPlayerShopObject[playerid], g_rgeShops[shop_id][e_fShopObjectEndX], g_rgeShops[shop_id][e_fShopObjectEndY], g_rgeShops[shop_id][e_fShopObjectEndZ], 1.2);
         }
         // Right button
-        else if(clickedid == g_tdShops[8])
+        else if (clickedid == g_tdShops[8])
         {
-            if(g_rgiPlayerCurrentShopItem{playerid} + 1 >= g_rgeShops[shop_id][e_iShopItemAmount])
+            if (g_rgiPlayerCurrentShopItem{playerid} + 1 >= g_rgeShops[shop_id][e_iShopItemAmount])
                 return 1;
             
             Bit_Set(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS, false);
@@ -104,7 +104,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
             MovePlayerObject(playerid, g_rgiPlayerShopObject[playerid], g_rgeShops[shop_id][e_fShopObjectEndX], g_rgeShops[shop_id][e_fShopObjectEndY], g_rgeShops[shop_id][e_fShopObjectEndZ], 1.2);
         }
         // Buy button
-        else if(clickedid == g_tdShops[9])
+        else if (clickedid == g_tdShops[9])
         {
             new 
                 item_id = g_rgiPlayerCurrentShopItem{playerid},
@@ -133,7 +133,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
                 stor.s.pri ret
             }
 
-            if(ret)
+            if (ret)
             {
                 Player_GiveMoney(playerid, -(g_rgeShopItems[shop_id][item_id][e_iItemPrice]), true);
                 PlayerPlaySound(playerid, 1054);
@@ -164,7 +164,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 
 public OnPlayerCancelTDSelection(playerid)
 {
-    if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES))
     {
         SetPlayerVirtualWorld(playerid, g_rgePlayerTempData[playerid][e_iPlayerLastWorld]);
         Player_StopShopping(playerid);
@@ -172,7 +172,7 @@ public OnPlayerCancelTDSelection(playerid)
         return 1;
     }
 
-    if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING))
     {
         KillTimer(g_rgiRotateSkinTimer[playerid]);
         Player_StopShopping(playerid);

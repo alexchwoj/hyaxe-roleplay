@@ -6,7 +6,7 @@
 // least significant byte is the weaponid, rest of the integer is the ammo
 bool:Weapon_IsExplosive(weapon)
 {
-    switch(weapon)
+    switch (weapon)
     {
         case WEAPON_GRENADE: return true;
         case WEAPON_TEARGAS: return true;
@@ -28,7 +28,7 @@ Player_GiveWeapon(playerid, weaponid, bool:save = true)
     g_rgiPlayerWeapons[playerid][slot] = weaponid;
     GivePlayerWeapon(playerid, weaponid, 32767);
 
-    if(save && slot > 1)
+    if (save && slot > 1)
     {
         mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYER_WEAPONS` SET `SLOT_%i` = %i WHERE `ACCOUNT_ID` = %i LIMIT 1;", slot, weaponid, Player_AccountID(playerid));
         mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
@@ -39,9 +39,9 @@ Player_GiveWeapon(playerid, weaponid, bool:save = true)
 
 Player_GiveAllWeapons(playerid)
 {
-    for(new i = 1; i < MAX_WEAPON_SLOTS; ++i)
+    for (new i = 1; i < MAX_WEAPON_SLOTS; ++i)
     {
-        if(g_rgiPlayerWeapons[playerid][i])
+        if (g_rgiPlayerWeapons[playerid][i])
         {
             GivePlayerWeapon(playerid, g_rgiPlayerWeapons[playerid][i], 32767);
         }
@@ -58,7 +58,7 @@ Player_RemoveWeaponSlot(playerid, slot, bool:save = true)
     g_rgiPlayerWeapons[playerid][slot] = 0;
     Player_GiveAllWeapons(playerid);
 
-    if(save && slot > 1)
+    if (save && slot > 1)
     {
         mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `PLAYER_WEAPONS` SET `SLOT_%i` = 0 WHERE `ACCOUNT_ID` = %i LIMIT 1;", slot, Player_AccountID(playerid));
         mysql_tquery(g_hDatabase, YSI_UNSAFE_HUGE_STRING);
@@ -74,7 +74,7 @@ Player_LoadWeaponsFromCache(playerid)
 
     new slot[10];
 
-    for(new i = 1; i < MAX_WEAPON_SLOTS; ++i)
+    for (new i = 1; i < MAX_WEAPON_SLOTS; ++i)
     {
         format(slot, sizeof(slot), "SLOT_%d", i);
         DEBUG_PRINT("Loading slot %s", slot);
@@ -111,6 +111,6 @@ Player_RemoveAllWeapons(playerid)
 
 Player_ClearWeaponsArray(playerid)
 {
-    for(new i; i < sizeof(g_rgiPlayerWeapons[]); ++i)
+    for (new i; i < sizeof(g_rgiPlayerWeapons[]); ++i)
         g_rgiPlayerWeapons[playerid][i] = 0;
 }

@@ -7,7 +7,7 @@ TD_Fade(playerid, PlayerText:textdraw, rounds = 5, interval = 5, Func:callback<>
 {
     DEBUG_PRINT("[func] TD_Fade(playerid = %i, PlayerText:textdraw = %i, rounds = %i, interval = %i, Func:callback<> = %i)", playerid, _:textdraw, rounds, interval, _:callback);
 
-    if((interval % 2) != 0 && (interval % 5) != 0)
+    if ((interval % 2) != 0 && (interval % 5) != 0)
     {
         return 0;
     }
@@ -16,7 +16,7 @@ TD_Fade(playerid, PlayerText:textdraw, rounds = 5, interval = 5, Func:callback<>
     g_rgiFadingRounds[playerid]{textdraw} = 0;
     g_rgbFadingInOut[playerid]{textdraw} = FADING_IN;
 
-    if(_:callback != -1)
+    if (_:callback != -1)
     {
         Indirect_Claim(callback);
         g_rgpFadingCallbacks[playerid][textdraw] = callback;

@@ -5,7 +5,7 @@
 
 Chat_Clear(playerid, lines = 20)
 {
-	for(new i; i != lines; i++)
+	for (new i; i != lines; i++)
         SendClientMessage(playerid, -1, "");
 
 	return 1;
@@ -24,7 +24,7 @@ Chat_SendMessageToRange(playerid, color, Float:range, const string[])
     new interior = (is_npc ? FCNPC_GetInterior(playerid) : GetPlayerInterior(playerid));
 
     new Float:x, Float:y, Float:z;
-    if(is_npc)
+    if (is_npc)
     {
         FCNPC_GetPosition(playerid, x, y, z);
 
@@ -37,13 +37,13 @@ Chat_SendMessageToRange(playerid, color, Float:range, const string[])
                 continue;
 
             new Float:distance = GetPlayerDistanceFromPoint(i, x, y, z);
-            if(distance > range)
+            if (distance > range)
                 continue;
             
             new color_relative = clamp(255 - floatround(distance * 3.0), 1, 255);
             new color_darkened = (color & 0xFFFFFF00) | color_relative;
 
-            for(new j; j < count; ++j)
+            for (new j; j < count; ++j)
                 SendClientMessage(i, color_darkened, messages[j]);
         }
     }
@@ -60,18 +60,18 @@ Chat_SendMessageToRange(playerid, color, Float:range, const string[])
                 continue;
 
             new Float:distance = GetPlayerDistanceFromPoint(i, x, y, z);
-            if(distance > range)
+            if (distance > range)
                 continue;
             
             new color_relative = clamp(255 - floatround(distance * 3.0), 1, 255);
             new color_darkened = (color & 0xFFFFFF00) | color_relative;
 
-            for(new j; j < count; ++j)
+            for (new j; j < count; ++j)
                 SendClientMessage(i, color_darkened, messages[j]);
         }
     }
 
-    for(new j; j < count; ++j)
+    for (new j; j < count; ++j)
         SendClientMessage(playerid, color, messages[j]);
 
     return 1;
@@ -79,7 +79,7 @@ Chat_SendMessageToRange(playerid, color, Float:range, const string[])
 
 ChatBuffer_Push(playerid, color, const message[])
 {    
-    if(FCNPC_IsValid(playerid))
+    if (FCNPC_IsValid(playerid))
         return 0;
 
     new msg[eMessageData];
@@ -92,7 +92,7 @@ ChatBuffer_Push(playerid, color, const message[])
 
 Chat_Resend(playerid)
 {
-    if(FCNPC_IsValid(playerid))
+    if (FCNPC_IsValid(playerid))
         return 0;
 
     return 1;
@@ -121,10 +121,10 @@ Chat_SendDoubt(playerid, const message[])
         Regex:tag_regex,
         Regex:command_regex;
     
-    if(!tag_regex)
+    if (!tag_regex)
         tag_regex = Regex_New("\\B@(\\w+)");
 
-    if(!command_regex)
+    if (!command_regex)
         command_regex = Regex_New("\\B/(\\w+)");
 
     Regex_Replace(string, tag_regex, "{91B787}@$1{DADADA}", string);

@@ -1889,7 +1889,7 @@ public OnPlayerConnect(playerid)
         row, column
     ;  
 
-    for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+    for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
         if (column >= 7)
         {
@@ -1938,7 +1938,7 @@ public OnPlayerConnect(playerid)
     slot_x = 223.000000;
     slot_y = 220.000000;
 
-    for(new i; i < 14; ++i)
+    for (new i; i < 14; ++i)
 	{
         if (column >= 7)
         {

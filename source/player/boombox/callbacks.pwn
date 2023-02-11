@@ -64,7 +64,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                                     }
                                     case 1:
                                     {
-                                        if(data[e_iBoomboxOwnerId] != playerid)
+                                        if (data[e_iBoomboxOwnerId] != playerid)
                                         {
                                             Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No eres el dueño del parlante");
                                             return 1;
@@ -76,7 +76,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                                     }
                                     case 2:
                                     {
-                                        if(data[e_iBoomboxOwnerId] != playerid)
+                                        if (data[e_iBoomboxOwnerId] != playerid)
                                         {
                                             Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No eres el dueño del parlante");
                                             return 1;
@@ -217,7 +217,7 @@ public STEREO_SearchResponse(playerid, response_code, const data[])
 
     StrCpy(YSI_UNSAFE_HUGE_STRING, "{DADADA}Título\t{DADADA}Duración\t{DADADA}ID\n", YSI_UNSAFE_HUGE_LENGTH);
 
-    for(new i; i < result_count; ++i)
+    for (new i; i < result_count; ++i)
     {
         strcat(YSI_UNSAFE_HUGE_STRING, va_return("{DADADA}%s\t{DADADA}%s\t{DADADA}%s\n", videos[i][e_szVideoTitle], videos[i][e_szVideoDuration], videos[i][e_szVideoId]), YSI_UNSAFE_HUGE_LENGTH);
     }

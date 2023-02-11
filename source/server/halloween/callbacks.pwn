@@ -28,7 +28,7 @@ dialog sell_pumpkin(playerid, dialogid, response, listitem, inputtext[])
 
         Inventory_DeleteItemByType(playerid, ITEM_PUMPKIN);
 
-        if(amount > 1)
+        if (amount > 1)
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Vendiste tus %d calabazas por $%d", amount, pay);
         else
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Vendiste una calabaza por $%d", pay);
@@ -47,7 +47,7 @@ public OnScriptInit()
         SetTimer("HLWE_SpawnPumpkins", 300000, true);
         Key_Alert(817.2799, -1103.3270, 25.7921, 1.5, KEYNAME_YES, .callback_on_press = __addressof(Witch_OnKeyPress));   
 
-        for(new i; i < sizeof(g_rgfWitchPos); ++i)
+        for (new i; i < sizeof(g_rgfWitchPos); ++i)
         {
             GenerateRandomPumpkins(3 + random(4), g_rgfWitchPos[i][0], g_rgfWitchPos[i][1], g_rgfWitchPos[i][2] - 1.0, 20.0);
 
@@ -94,7 +94,7 @@ public HLWE_SpawnPumpkins()
     getdate(year, month, day);
 	if (month == 10 && day >= 14) // Halloween
     {
-        for(new i; i < sizeof(g_rgfWitchPos); ++i)
+        for (new i; i < sizeof(g_rgfWitchPos); ++i)
         {
             GenerateRandomPumpkins(3 + random(4), g_rgfWitchPos[i][0], g_rgfWitchPos[i][1], g_rgfWitchPos[i][2] - 1.0, 20.0);
         }

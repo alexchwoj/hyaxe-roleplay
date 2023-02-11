@@ -66,7 +66,7 @@ public OnPlayerDataLoaded(playerid)
 
     PlayAudioStreamForPlayer(playerid, song_link);
 
-    if(!Bit_Get(Player_Flags(playerid), PFLAG_REGISTERED))
+    if (!Bit_Get(Player_Flags(playerid), PFLAG_REGISTERED))
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
             {DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta no está registrada.\n\n\
@@ -108,14 +108,14 @@ dialog register(playerid, dialogid, response, listitem, inputtext[])
     DEBUG_PRINT("Dialog: Register (%i, %i, %i, \"%s\")", playerid, response, listitem, inputtext);
     PlayerPlaySound(playerid, SOUND_BUTTON);
 
-    if(!response)
+    if (!response)
     {
         DEBUG_PRINT("Kicking player");
         return Kick(playerid);
     }
 
     new pw_len = strlen(inputtext);
-    if(!(6 <= pw_len <= 18))
+    if (!(6 <= pw_len <= 18))
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
             {DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta no está registrada.\n\n\
@@ -145,7 +145,7 @@ dialog register_email(playerid, dialogid, response, listitem, inputtext[])
 {
     PlayerPlaySound(playerid, SOUND_BUTTON);
 
-    if(!response)
+    if (!response)
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
             {DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta no está registrada.\n\n\
@@ -158,7 +158,7 @@ dialog register_email(playerid, dialogid, response, listitem, inputtext[])
         return 1;
     }
 
-    if(isnull(inputtext))
+    if (isnull(inputtext))
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
             {DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta no está registrada.\n\n\
@@ -171,7 +171,7 @@ dialog register_email(playerid, dialogid, response, listitem, inputtext[])
         return 1;
     }
 
-    if(!IsValidEmailAddress(inputtext))
+    if (!IsValidEmailAddress(inputtext))
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
             {DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta no está registrada.\n\n\
@@ -190,7 +190,7 @@ dialog register_email(playerid, dialogid, response, listitem, inputtext[])
     {
         new exists;
         cache_get_value_index_int(0, 0, exists);
-        if(exists)
+        if (exists)
         {
             Player_Email(playerid)[0] = '\0';
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
@@ -268,7 +268,7 @@ dialog login(playerid, dialogid, response, listitem, inputtext[])
 {
     PlayerPlaySound(playerid, SOUND_BUTTON);
     
-    if(!response)
+    if (!response)
         return Kick(playerid);
 
     argon_check(inputtext, Player_Password(playerid), "AUTH_PasswordCheckDone", "i", playerid);
@@ -279,7 +279,7 @@ dialog login(playerid, dialogid, response, listitem, inputtext[])
 forward AUTH_PasswordCheckDone(playerid);
 public AUTH_PasswordCheckDone(playerid)
 {
-    if(!argon_is_equal())
+    if (!argon_is_equal())
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{DADADA}Contraseña {CB3126}incorrecta{DADADA}.\nIntroduce la contraseña correcta para entrar al servidor:", Player_RPName(playerid));
         Dialog_ShowCallback(playerid, using public _hydg@login<iiiis>, DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Ingresa a tu cuenta", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
@@ -289,7 +289,7 @@ public AUTH_PasswordCheckDone(playerid)
     Account_LoadFromCache(playerid);
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `CURRENT_PLAYERID` = %i, `CURRENT_CONNECTION` = UNIX_TIMESTAMP()", playerid);
-    if(Player_VIP(playerid) == -1)
+    if (Player_VIP(playerid) == -1)
     {
         Player_VIP(playerid) = 0;
         strcat(HYAXE_UNSAFE_HUGE_STRING, ", `VIP_LEVEL` = 0, `VIP_EXPIRACY` = NULL", HYAXE_UNSAFE_HUGE_LENGTH);
@@ -306,7 +306,7 @@ public AUTH_PasswordCheckDone(playerid)
 
     CallLocalFunction(!"OnPlayerAuthenticate", !"i", playerid);
     
-    if(Player_Health(playerid) == 0)
+    if (Player_Health(playerid) == 0)
     {
         Player_SetArmor(playerid, 0);
         Player_SetHealth(playerid, 4);

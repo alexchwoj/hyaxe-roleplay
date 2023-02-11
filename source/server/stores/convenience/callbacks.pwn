@@ -7,11 +7,11 @@ static Convenience_OnBuy(playerid, shop_id, item_id)
 {
     #pragma unused shop_id
 
-    switch(item_id)
+    switch (item_id)
     {
         case 0: // Repair kit
         {
-            if(Inventory_GetItemCount(playerid, ITEM_REPAIR_KIT) >= 2)
+            if (Inventory_GetItemCount(playerid, ITEM_REPAIR_KIT) >= 2)
             {
                 Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Solo puedes tener 2 kits de reparación");
                 return 0;
@@ -49,7 +49,7 @@ player_menu meats_buy(playerid, response, listitem)
 {
     if (response == MENU_RESPONSE_SELECT)
     {
-        switch(listitem)
+        switch (listitem)
         {
             case 0:
             {
@@ -74,7 +74,7 @@ player_menu milk_buy(playerid, response, listitem)
 {
     if (response == MENU_RESPONSE_SELECT)
     {
-        switch(listitem)
+        switch (listitem)
         {
             case 0:
             {
@@ -99,7 +99,7 @@ player_menu icecream_buy(playerid, response, listitem)
 {
     if (response == MENU_RESPONSE_SELECT)
     {
-        switch(listitem)
+        switch (listitem)
         {
             case 0:
             {
@@ -139,7 +139,7 @@ player_menu beverages_buy(playerid, response, listitem)
 {
     if (response == MENU_RESPONSE_SELECT)
     {
-        switch(listitem)
+        switch (listitem)
         {
             case 0:
             {

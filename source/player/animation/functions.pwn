@@ -14,7 +14,7 @@ command parar(playerid, const params[], "Para la animación")
 
 command mear(playerid, const params[], "Echa un meo")
 {
-    if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING) || Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING) || Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
         return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes hacer eso");
         
     if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
@@ -44,7 +44,7 @@ command sentarse(playerid, const params[], "Sentate bien mostro")
         return 1;
     }
 
-    switch(idx)
+    switch (idx)
     {
         case 0: ApplyAnimation(playerid, "INT_HOUSE", "LOU_IN", 4.1, 0, 1, 1, 0, 0);
         case 1: ApplyAnimation(playerid, "INT_OFFICE", "OFF_SIT_BORED_LOOP", 4.1, 1, 1, 1, 0, 0);
@@ -68,7 +68,7 @@ command bailar(playerid, const params[], "Baila")
         return 1;
     }
 
-    switch(idx)
+    switch (idx)
     {
         case 1: SetPlayerSpecialAction(playerid, SPECIAL_ACTION_DANCE1);
         case 2: SetPlayerSpecialAction(playerid, SPECIAL_ACTION_DANCE2);

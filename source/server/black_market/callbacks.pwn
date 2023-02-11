@@ -5,7 +5,7 @@
 
 static PistolShop_OnBuy(playerid, shop_id, item_id)
 {
-    switch(item_id)
+    switch (item_id)
     {
         case 0: Player_GiveWeapon(playerid, 22);
         case 1: Player_GiveWeapon(playerid, 23);
@@ -19,7 +19,7 @@ static PistolShop_OnBuy(playerid, shop_id, item_id)
 
 static ShotgunShop_OnBuy(playerid, shop_id, item_id)
 {
-    switch(item_id)
+    switch (item_id)
     {
         case 0: Player_GiveWeapon(playerid, 25);
         case 1: Player_GiveWeapon(playerid, 26);
@@ -33,7 +33,7 @@ static ShotgunShop_OnBuy(playerid, shop_id, item_id)
 
 static SubmachineShop_OnBuy(playerid, shop_id, item_id)
 {
-    switch(item_id)
+    switch (item_id)
     {
         case 0: Player_GiveWeapon(playerid, 28);
         case 1: Player_GiveWeapon(playerid, 29);
@@ -47,7 +47,7 @@ static SubmachineShop_OnBuy(playerid, shop_id, item_id)
 
 static RifleShop_OnBuy(playerid, shop_id, item_id)
 {
-    switch(item_id)
+    switch (item_id)
     {
         case 0: Player_GiveWeapon(playerid, 30);
         case 1: Player_GiveWeapon(playerid, 31);
@@ -73,7 +73,7 @@ player_menu misc_shop(playerid, response, listitem)
 {
     if (response == MENU_RESPONSE_SELECT)
     {
-        switch(listitem)
+        switch (listitem)
         {
             case 0:
             {
@@ -225,7 +225,7 @@ public OnScriptInit()
 
 public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
 {
-    if(Player_Level(playerid) < 3)
+    if (Player_Level(playerid) < 3)
     {
         TogglePlayerControllable(playerid, false);
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas ser nivel 3 para disparar armas");

@@ -35,11 +35,11 @@ public LEVELS_InterpolateTo(playerid, Float:init_x, Float:end_x, Float:start_xp,
     TextDrawShowForPlayer(playerid, g_tdLevelingBar[3]);
     TextDrawSetStringForPlayer(g_tdLevelingBar[5], playerid, "%i/%i", xp_bar_str, Level_GetRequiredXP((new_level ? start_level : Player_Level(playerid))));
 
-    if(t >= 1.0)
+    if (t >= 1.0)
     {
         KillTimer(g_rgiLevelingTimer[playerid]);
 
-        if(new_level)
+        if (new_level)
         {
             inline const Faded()
             {
@@ -49,7 +49,7 @@ public LEVELS_InterpolateTo(playerid, Float:init_x, Float:end_x, Float:start_xp,
                 g_rgiLevelingBarSteps{playerid} = 0;
 
                 new Float:new_end_x = lerp(LEVEL_BAR_MIN_X, LEVEL_BAR_MAX_X, floatdiv(Player_XP(playerid), Level_GetRequiredXP(Player_Level(playerid))));
-                if(new_end_x == LEVEL_BAR_MIN_X)
+                if (new_end_x == LEVEL_BAR_MIN_X)
                 {
                     TextDrawTextSize(g_tdLevelingBar[3], LEVEL_BAR_MIN_X, 75.500000);
                     TextDrawShowForPlayer(playerid, g_tdLevelingBar[3]);
@@ -77,7 +77,7 @@ public LEVELS_InterpolateTo(playerid, Float:init_x, Float:end_x, Float:start_xp,
 
 public LEVELS_HideAllBars(playerid)
 {
-    for(new i = sizeof(g_tdLevelingBar) - 1; i != -1; --i)
+    for (new i = sizeof(g_tdLevelingBar) - 1; i != -1; --i)
     {
         TextDrawHideForPlayer(playerid, g_tdLevelingBar[i]);
     }

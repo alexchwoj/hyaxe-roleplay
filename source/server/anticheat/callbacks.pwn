@@ -7,7 +7,7 @@ static Anticheat_PopulateDatabase()
 {
     db_free_result(db_query(g_hAnticheatDatabase, "BEGIN;"));
 
-    for(new eCheats:i; _:i < sizeof(g_rgeDetectionData); ++i)
+    for (new eCheats:i; _:i < sizeof(g_rgeDetectionData); ++i)
     {
         format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, 
             "INSERT OR IGNORE INTO `DETECTIONS` VALUES (%i, %i, %i, %i);", 
@@ -24,7 +24,7 @@ static Anticheat_PopulateDatabase()
 public OnScriptInit()
 {
     g_hAnticheatDatabase = db_open("anticheat.db");
-    if(g_hAnticheatDatabase == DB:0)
+    if (g_hAnticheatDatabase == DB:0)
     {
         printf("[ac] Couldn't open anticheat database.");
         SendRconCommand(!"exit");
@@ -43,27 +43,27 @@ public OnScriptInit()
     new DBResult:res = db_query(g_hAnticheatDatabase, "SELECT * FROM `DETECTIONS`;");
     new rowc = db_num_rows(res);
 
-    if(!rowc)
+    if (!rowc)
     {
         Anticheat_PopulateDatabase();
         print("[ac] Created default detection options in database.");
     }
     else
     {
-        if(rowc != sizeof(g_rgeDetectionData))
+        if (rowc != sizeof(g_rgeDetectionData))
             Anticheat_PopulateDatabase();
 
         do
         {
             new eCheats:id = eCheats:db_get_field_assoc_int(res, "DETECTION_ID");
-            if(!(0 <= _:id < sizeof(g_rgeDetectionData)))
+            if (!(0 <= _:id < sizeof(g_rgeDetectionData)))
                 continue;
 
             g_rgeDetectionData[id][e_bDetectionEnabled] = bool:db_get_field_assoc_int(res, "ENABLED");
             g_rgeDetectionData[id][e_ePunishmentType] = ePunishment:db_get_field_assoc_int(res, "PUNISHMENT");
             g_rgeDetectionData[id][e_iMaxTriggers] = db_get_field_assoc_int(res, "MAX_TRIGGERS");
         } 
-        while(db_next_row(res));
+        while (db_next_row(res));
 
         print("[ac] Loaded detection options from database.");
     }
@@ -89,7 +89,7 @@ public OnScriptInit()
 
 public OnGameModeExit()
 {
-    if(g_hAnticheatDatabase != DB:0)
+    if (g_hAnticheatDatabase != DB:0)
         db_close(g_hAnticheatDatabase);
 
     #if defined AC_OnGameModeExit
@@ -112,7 +112,7 @@ public OnGameModeExit()
 
 public OnIncomingPacket(playerid, packetid, BitStream:bs)
 {
-    if(g_rgbPlayerKicked{playerid})
+    if (g_rgbPlayerKicked{playerid})
     {
         printf("[dbg] caught packet from kicked player (%i): packetid %i", playerid, packetid);
         return 0;
@@ -137,7 +137,7 @@ public OnIncomingPacket(playerid, packetid, BitStream:bs)
 
 public OnIncomingRPC(playerid, rpcid, BitStream:bs)
 {
-    if(g_rgbPlayerKicked{playerid})
+    if (g_rgbPlayerKicked{playerid})
     {
         printf("[dbg] caught rpc from kicked player (%i): rpcid %i", playerid, rpcid);
         return 0;
@@ -162,7 +162,7 @@ public OnIncomingRPC(playerid, rpcid, BitStream:bs)
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    for(new i = sizeof(g_rgeDetectionData) - 1; i != -1; --i)
+    for (new i = sizeof(g_rgeDetectionData) - 1; i != -1; --i)
     {
         g_rgiAnticheatTriggers[playerid]{eCheats:i} = 0;
     }

@@ -9,7 +9,7 @@ public OnPlayerConnect(playerid)
 
     SetPlayerColor(playerid, 0xF7F7F700);
 
-    if(FCNPC_IsValid(playerid) || IsPlayerNPC(playerid))
+    if (FCNPC_IsValid(playerid) || IsPlayerNPC(playerid))
         return 1;
         
     TogglePlayerSpectating(playerid, true);
@@ -18,10 +18,10 @@ public OnPlayerConnect(playerid)
     GetPlayerName(playerid, Player_Name(playerid));
 
     static Regex:name_regex;
-    if(!name_regex)
+    if (!name_regex)
         name_regex = Regex_New("^[A-Z][a-zA-Z]+[ _][A-Z][a-zA-Z]+$");
 
-    if(!Regex_Check(Player_Name(playerid), name_regex))
+    if (!Regex_Check(Player_Name(playerid), name_regex))
     {
         ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{CB3126}Hyaxe", 
             "{DADADA}Tu nombre no es adecuado, usa: {CB3126}N{DADADA}ombre_{CB3126}A{DADADA}pellido.\n\
@@ -38,7 +38,7 @@ public OnPlayerConnect(playerid)
     strcpy(Player_RPName(playerid), Player_Name(playerid));
 
     new space_idx = strfind(Player_Name(playerid), !"_");
-    if(space_idx != -1)
+    if (space_idx != -1)
     {
         Player_RPName(playerid)[space_idx] = ' ';
     }
@@ -94,22 +94,22 @@ public ACCOUNT_CheckForBans(playerid)
     new rowc;
     cache_get_row_count(rowc);
 
-    if(rowc)
+    if (rowc)
     {
         new bool:still_valid_null;
         cache_is_value_name_null(0, !"STILL_VALID", still_valid_null);
 
         new bool:still_valid = still_valid_null;
-        if(!still_valid_null)
+        if (!still_valid_null)
         {
             cache_get_value_name_int(0, !"STILL_VALID", _:still_valid);
         }
 
-        if(still_valid)
+        if (still_valid)
         {
             new bool:is_anticheat, admin_account_id_string[40], admin_name[24] = "Anticheat";
             cache_is_value_name_null(0, !"ADMIN_ID", is_anticheat);
-            if(!is_anticheat)
+            if (!is_anticheat)
             {
                 new admin_account_id;
                 cache_get_value_name_int(0, !"ADMIN_ID", admin_account_id);
@@ -123,12 +123,12 @@ public ACCOUNT_CheckForBans(playerid)
 
             new bool:is_permanent;
             cache_is_value_name_null(0, !"EXPIRATION_DATE", is_permanent);
-            if(!is_permanent)
+            if (!is_permanent)
                 cache_get_value_name(0, !"EXPIRATION_DATE", expiration_date);
 
             new bool:is_name_banned;
             cache_is_value_name_null(0, !"BANNED_IP", is_name_banned);
-            if(!is_name_banned)
+            if (!is_name_banned)
             {
                 cache_get_value_name(0, !"BANNED_IP", banned_name);
             }
@@ -187,10 +187,10 @@ public OnPlayerDisconnect(playerid, reason)
         ACC_OnPlayerDisconnect(playerid, reason);
     #endif
 
-    if(Player_Cache(playerid) != MYSQL_INVALID_CACHE)
+    if (Player_Cache(playerid) != MYSQL_INVALID_CACHE)
         cache_delete(Player_Cache(playerid));
     
-    if(Bit_Get(Player_Flags(playerid), PFLAG_IN_TUNING))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_IN_TUNING))
     {
         Player_SetPos(playerid, s_rgfPreviousTuningPos[playerid][0], s_rgfPreviousTuningPos[playerid][1], s_rgfPreviousTuningPos[playerid][2]);
         SetPlayerFacingAngle(playerid, s_rgfPreviousTuningPos[playerid][3]);
@@ -202,7 +202,7 @@ public OnPlayerDisconnect(playerid, reason)
     Account_Save(playerid, true);
 
     g_rgePlayerData[playerid] = g_rgePlayerData[MAX_PLAYERS];
-    for(new i = e_iMaxTimer - 1; i != -1; --i)
+    for (new i = e_iMaxTimer - 1; i != -1; --i)
     {
         KillTimer(g_rgePlayerTempData[playerid][e_rgiTimers][i]);
     }
@@ -210,15 +210,15 @@ public OnPlayerDisconnect(playerid, reason)
     Player_ResetTemp(playerid);
     Bit_SetAll(Player_Flags(playerid), false);
 
-    if(Iter_Contains(LoggedIn, playerid))
+    if (Iter_Contains(LoggedIn, playerid))
     {
-        if(Iter_Contains(Admin, playerid))
+        if (Iter_Contains(Admin, playerid))
             Iter_Remove(Admin, playerid);
 
-        if(Iter_Contains(Police, playerid))
+        if (Iter_Contains(Police, playerid))
             Iter_Remove(Police, playerid);
 
-        if(Player_Gang(playerid) != -1)
+        if (Player_Gang(playerid) != -1)
         {
             Iter_Remove(GangMember[Player_Gang(playerid)], playerid);
             Player_Gang(playerid) = -1;
@@ -247,7 +247,7 @@ public OnPlayerDataFetched(playerid)
     new rowc;
     cache_get_row_count(rowc);
 
-    if(rowc)
+    if (rowc)
     {
         Bit_Set(Player_Flags(playerid), PFLAG_REGISTERED, true);
         cache_get_value_name_int(0, !"ID", Player_AccountID(playerid));
@@ -283,7 +283,7 @@ public OnAccountInserted(playerid, callback)
     cache_get_value_name_int(0, "ACCOUNT_ID", Player_AccountID(playerid));
     DEBUG_PRINT("[account] Registered player %i with account ID %i", playerid, Player_AccountID(playerid));
 
-    if(callback != -1)
+    if (callback != -1)
     {
         __emit {
             push.s playerid
@@ -306,7 +306,7 @@ public OnPlayerSpawn(playerid)
 
     Player_SyncTime(playerid);
 
-    if(Player_Data(playerid, e_iJailTime))
+    if (Player_Data(playerid, e_iJailTime))
         PC_EmulateCommand(playerid, "/tiempo");
 
     inline const Due()

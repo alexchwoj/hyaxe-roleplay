@@ -94,7 +94,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             YSI_UNSAFE_HUGE_STRING[areas] = INVALID_STREAMER_ID;
             GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
 
-            for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
+            for (new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
             {
                 new areaid = YSI_UNSAFE_HUGE_STRING[i];
                 if (Streamer_HasArrayData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x49544d)))
@@ -160,7 +160,7 @@ public INV_LoadFromDatabase(playerid)
     cache_get_row_count(row_count);
 
     //printf("===== Loading inventory from playerid %d =====", playerid);
-    for(new i = 0; i < row_count; ++i)
+    for (new i = 0; i < row_count; ++i)
     {
         new slot = Inventory_GetFreeSlot(playerid);
         if (slot < HYAXE_MAX_INVENTORY_SLOTS)
@@ -191,7 +191,7 @@ public TRUNK_LoadFromDatabase(vehicleid)
     cache_get_row_count(row_count);
 
     //printf("===== Loading trunk from vehicleid %d =====", vehicleid);
-    for(new i = 0; i < row_count; ++i)
+    for (new i = 0; i < row_count; ++i)
     {
         new slot = Trunk_GetFreeSlot(vehicleid);
         if (slot < HYAXE_MAX_TRUNK_SLOTS)
@@ -239,7 +239,7 @@ public OnPlayerAuthenticate(playerid)
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+    for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
     {
         Inventory_ResetSlot(playerid, i);
     }
@@ -267,7 +267,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
     if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
     {
         // Select item
-        for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+        for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	    {
             if (playertextid == p_tdItemView[playerid]{i})
             {
@@ -282,7 +282,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
                     g_rgePlayerTempData[playerid][e_iPlayerItemSlot] = i;
                     g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount] = 1;
 
-                    for(new j; j < 6; ++j)
+                    for (new j; j < 6; ++j)
                         PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{j});
 
                     if ( InventorySlot_IsValid(playerid, i) )
@@ -359,7 +359,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 
         if (playertextid == p_tdItemOptions[playerid]{0}) // Drop item
         {
-            for(new j; j < 6; ++j)
+            for (new j; j < 6; ++j)
 		        PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{j});
 
             PlayerPlaySound(playerid, g_rgeDressingSounds[ random(sizeof(g_rgeDressingSounds)) ]);
@@ -391,7 +391,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
             return Inventory_Hide(playerid);
 
         // Inventory slots
-        for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+        for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	    {
             if (playertextid == p_tdItemView[playerid]{i})
             {
@@ -408,7 +408,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
         }
 
         // Trunk slots
-        for(new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
+        for (new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
 	    {
             if (playertextid == p_tdTrunkItemView[playerid]{i})
             {
@@ -551,7 +551,7 @@ public TRUNK_OnItemInserted(vehicleid, slot, type, amount, extra, playerid)
 
 public OnDynamicObjectMoved(objectid)
 {
-    if(Streamer_HasIntData(STREAMER_TYPE_OBJECT, objectid, E_STREAMER_CUSTOM(0x4449544D)))
+    if (Streamer_HasIntData(STREAMER_TYPE_OBJECT, objectid, E_STREAMER_CUSTOM(0x4449544D)))
     {
         new Float:x, Float:y, Float:z;
         GetDynamicObjectPos(objectid, x, y, z);

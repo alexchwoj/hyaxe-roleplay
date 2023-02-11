@@ -137,7 +137,7 @@ player_menu cosmetics_shop(playerid, response, listitem)
         InterpolateCameraPos(playerid, 1289.789672, 1564.599121 - 1.0, 12.737116 + 1.0, 1289.789672, 1564.599121, 12.737116, 1000);
         InterpolateCameraLookAt(playerid, 1289.737304, 1569.565063, 12.156714, 1289.737304, 1569.565063, 12.156714, 1000);
         
-        switch(listitem)
+        switch (listitem)
         {
             case 0:
             {
@@ -454,10 +454,10 @@ public CLOTH_RotatePlayerSkin(playerid, Float:delta)
 
 public OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-    if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES))
     {
         // Left button
-        if(clickedid == g_tdShops[7])
+        if (clickedid == g_tdShops[7])
         {
             --g_rgiPlayerSelectedSkin[playerid];
             if (g_rgiPlayerSelectedSkin[playerid] < 0)
@@ -467,7 +467,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
             PlayerPlaySound(playerid, SOUND_BACK);
         }
         // Right button
-        else if(clickedid == g_tdShops[8])
+        else if (clickedid == g_tdShops[8])
         {
             ++g_rgiPlayerSelectedSkin[playerid];
             if (!g_rgiClothingSkins[ g_rgiPlayerClothingStore[playerid] ][ Player_Sex(playerid) ][ g_rgiPlayerSelectedSkin[playerid] ][0])
@@ -477,7 +477,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
             PlayerPlaySound(playerid, SOUND_NEXT);
         }
         // Buy button
-        else if(clickedid == g_tdShops[9])
+        else if (clickedid == g_tdShops[9])
         {
             if (Player_Money(playerid) < g_rgiClothingSkins[ g_rgiPlayerClothingStore[playerid] ][ Player_Sex(playerid) ][ g_rgiPlayerSelectedSkin[playerid] ][1])
             {

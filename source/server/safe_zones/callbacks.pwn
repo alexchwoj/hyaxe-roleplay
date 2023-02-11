@@ -5,7 +5,7 @@
 
 public OnScriptInit()
 {
-    for(new i; i < sizeof(g_rgeSafeZones); ++i)
+    for (new i; i < sizeof(g_rgeSafeZones); ++i)
     {
         new area_id = CreateDynamicSphere(g_rgeSafeZones[i][e_fZoneX], g_rgeSafeZones[i][e_fZoneY], g_rgeSafeZones[i][e_fZoneZ], g_rgeSafeZones[i][e_fRange], g_rgeSafeZones[i][e_iWorld], g_rgeSafeZones[i][e_iInterior]);
         Streamer_SetIntData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x534146), 0); // SAF
@@ -39,9 +39,9 @@ public OnPlayerDeath(playerid, killerid, reason)
             YSI_UNSAFE_HUGE_STRING[areas] = INVALID_STREAMER_ID;
             GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
             
-            for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
+            for (new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
             {
-                if(Streamer_HasIntData(STREAMER_TYPE_AREA, YSI_UNSAFE_HUGE_STRING[i], E_STREAMER_CUSTOM(0x534146)))
+                if (Streamer_HasIntData(STREAMER_TYPE_AREA, YSI_UNSAFE_HUGE_STRING[i], E_STREAMER_CUSTOM(0x534146)))
                 {
                     Police_AddChargesToPlayer(killerid, 4);
                     break;

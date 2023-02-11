@@ -30,7 +30,7 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if((newkeys & KEY_CTRL_BACK) != 0)
+    if ((newkeys & KEY_CTRL_BACK) != 0)
     {
         new grill_id = Player_GetNearestGrill(playerid);
         if (grill_id != INVALID_STREAMER_ID)

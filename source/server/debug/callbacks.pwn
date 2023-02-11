@@ -27,25 +27,25 @@ public OnScriptInit()
         do
         {
             next_color = rainbow_colors[random(sizeof(rainbow_colors))];
-        } while(next_color == current_color);
+        } while (next_color == current_color);
 
         new const bool:REALLY_TRUE = true;
-        while(REALLY_TRUE)
+        while (REALLY_TRUE)
         {
-            if(GetTickCount() - last_tick < 100)
+            if (GetTickCount() - last_tick < 100)
                 continue;
 
             last_tick = GetTickCount();
             new td_color = InterpolateColourLinear(current_color, next_color, t);
             t += 0.05;
-            if(t >= 1.0)
+            if (t >= 1.0)
             {
                 t = 0.0;
                 current_color = next_color;
                 do
                 {
                     next_color = rainbow_colors[random(sizeof(rainbow_colors))];
-                } while(next_color == current_color);
+                } while (next_color == current_color);
             }
             TextDrawBoxColor(g_tdDebugScreen[0], td_color);
 
@@ -55,12 +55,12 @@ public OnScriptInit()
                 connected_players, Float:total_packet_loss, total_ping,
                 valid_vehicles;
 
-            for(new i, j = GetPlayerPoolSize(); i <= j; ++i)
+            for (new i, j = GetPlayerPoolSize(); i <= j; ++i)
             {
-                if(!IsPlayerConnected(i))
+                if (!IsPlayerConnected(i))
                     continue;
 
-                if(IsTextDrawVisibleForPlayer(i, g_tdDebugScreen[0]))
+                if (IsTextDrawVisibleForPlayer(i, g_tdDebugScreen[0]))
                 {
                     TextDrawShowForPlayer(i, g_tdDebugScreen[0]);
                 }
@@ -74,15 +74,15 @@ public OnScriptInit()
                 connected_players++;
             }
 
-            if(!connected_players)
+            if (!connected_players)
                 continue;
 
             new Float:avg_packet_loss = total_packet_loss / float(connected_players);
             new avg_ping = total_ping / connected_players; 
 
-            for(new i, j = GetVehiclePoolSize(); i <= j; ++i)
+            for (new i, j = GetVehiclePoolSize(); i <= j; ++i)
             {
-                if(IsValidVehicle(i))
+                if (IsValidVehicle(i))
                     valid_vehicles++;
             }
 

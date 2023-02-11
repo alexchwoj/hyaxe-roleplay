@@ -24,7 +24,7 @@ Key_Alert(Float:x, Float:y, Float:z, Float:range, key, world = -1, interior = -1
     );
     Streamer_SetArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x4B4559), info);
     
-    if(attachedplayer != INVALID_PLAYER_ID)
+    if (attachedplayer != INVALID_PLAYER_ID)
     {
         AttachDynamicAreaToPlayer(area, attachedplayer);
     }

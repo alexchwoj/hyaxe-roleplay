@@ -5,20 +5,20 @@
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if((newkeys & KEY_CTRL_BACK) != 0)
+    if ((newkeys & KEY_CTRL_BACK) != 0)
     {
         new areas = GetPlayerNumberDynamicAreas(playerid);
-        if(areas)
+        if (areas)
         {
             YSI_UNSAFE_HUGE_STRING[areas] = INVALID_STREAMER_ID;
             GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
 
-            for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
+            for (new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
             {
                 new area = YSI_UNSAFE_HUGE_STRING[i];
-                if(Streamer_HasArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x4545)))
+                if (Streamer_HasArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x4545)))
                 {
-                    if(Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED) || Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL))
+                    if (Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED) || Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL))
                     {
                         Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes hacer esto");
                         return 1;
@@ -28,7 +28,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     Streamer_GetArrayData(STREAMER_TYPE_AREA, area, E_STREAMER_CUSTOM(0x4545), info);
 
                     new id = info[0];
-                    if(g_rgeEnterExits[id][e_iEnterExitCallback] != 0)
+                    if (g_rgeEnterExits[id][e_iEnterExitCallback] != 0)
                     {
                         new data = g_rgeEnterExits[id][e_iEnterExitData], addr = g_rgeEnterExits[id][e_iEnterExitCallback], enter = info[1];
                         __emit {
@@ -53,7 +53,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     Player_SetImmunityForCheat(playerid, CHEAT_TELEPORT, 1000);
                     Player_SetImmunityForCheat(playerid, CHEAT_AIRBREAK, 1000);
 
-                    if(info[1])
+                    if (info[1])
                     {
                         SetPlayerFacingAngle(playerid, g_rgeEnterExits[id][e_fExitAngle]);
                         SetPlayerInterior(playerid, g_rgeEnterExits[id][e_iExitInterior]);

@@ -5,9 +5,9 @@
 
 Commands_GetFreeIndex()
 {
-    for(new i; i < HYAXE_MAX_COMMANDS; ++i)
+    for (new i; i < HYAXE_MAX_COMMANDS; ++i)
     {
-        if(g_rgeCommandStore[i][e_szCommandName][0] == '\0')
+        if (g_rgeCommandStore[i][e_szCommandName][0] == '\0')
         {
             return i;
         }
@@ -20,11 +20,11 @@ Commands_GetFreeIndex()
     new hdr[AMX_HDR];
     GetAmxHeader(hdr);
 
-    for(new i = GetNumPublics(hdr) - 1; i != -1; --i)
+    for (new i = GetNumPublics(hdr) - 1; i != -1; --i)
     {
         GetPublicNameFromIndex(i, name);
 
-        if(!strcmp("hy@cmd_", name, true, 7))
+        if (!strcmp("hy@cmd_", name, true, 7))
             est_new++;
     }
 
@@ -37,9 +37,9 @@ Commands_GetFreeIndex()
 
 Commands_GetByName(const cmd_name[])
 {
-    for(new i; i < HYAXE_MAX_COMMANDS; ++i)
+    for (new i; i < HYAXE_MAX_COMMANDS; ++i)
     {
-        if(!isnull(g_rgeCommandStore[i][e_szCommandName]) && !strcmp(g_rgeCommandStore[i][e_szCommandName], cmd_name, .ignorecase = true))
+        if (!isnull(g_rgeCommandStore[i][e_szCommandName]) && !strcmp(g_rgeCommandStore[i][e_szCommandName], cmd_name, .ignorecase = true))
             return i;
     }
 
@@ -53,24 +53,24 @@ Commands_ShowSuggestions(playerid, const command[])
     static distances[HYAXE_MAX_COMMANDS][3];
 
     new cmd_name[32], distances_length;
-    for(new i; i < cmd_size && distances_length < 20; ++i)
+    for (new i; i < cmd_size && distances_length < 20; ++i)
     {
         PC_GetCommandName(arr, i, cmd_name);
 
         new cmd_flags = PC_GetFlags(cmd_name);
-        if((cmd_flags & CMD_HIDDEN) != 0)
+        if ((cmd_flags & CMD_HIDDEN) != 0)
             continue;
 
         new cmd_admin_level = (cmd_flags >>> 24);
-        if(cmd_admin_level > Player_AdminLevel(playerid))
+        if (cmd_admin_level > Player_AdminLevel(playerid))
             continue;
 
         new cmdid = Commands_GetByName(cmd_name);
-        if(cmdid == -1)
+        if (cmdid == -1)
             continue;
 
         new distance = levenshtein(command, cmd_name);
-        if(distance >= 6)
+        if (distance >= 6)
             continue;
 
         distances[distances_length][0] = i;
@@ -81,7 +81,7 @@ Commands_ShowSuggestions(playerid, const command[])
 
     PC_FreeArray(arr);
     
-    if(!distances_length)
+    if (!distances_length)
     {
         SendClientMessagef(playerid, 0xDADADAFF, "({ED2B2B}/%s{DADADA}) Comando desconocido.", command);
         return 1;
@@ -92,7 +92,7 @@ Commands_ShowSuggestions(playerid, const command[])
     strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Sugerencias:\t \n");
 
     new line[128];
-    for(new i = distances_length - 1; i != -1; --i)
+    for (new i = distances_length - 1; i != -1; --i)
     {
         new cmdid = distances[i][2];
         new cmd_flags = PC_GetFlags(g_rgeCommandStore[cmdid][e_szCommandName]);
@@ -100,7 +100,7 @@ Commands_ShowSuggestions(playerid, const command[])
         g_rgiPlayerCommandsDialog[playerid][(distances_length - 1) - i] = cmdid;
 
         new description[50] = "Sin descripción";
-        if(!isnull(g_rgeCommandStore[cmdid][e_szCommandDescription]))
+        if (!isnull(g_rgeCommandStore[cmdid][e_szCommandDescription]))
             strcpy(description, g_rgeCommandStore[cmdid][e_szCommandDescription]);
         
         format(
@@ -126,10 +126,10 @@ dialog unknown_command(playerid, dialogid, response, listitem, inputtext[])
 {
     DEBUG_PRINT("dialog unknown_command(playerid = %i, response = %i, listitem = %i, inputtext = \"%s\")", playerid, response, listitem, inputtext);
 
-    if(response && (0 <= listitem < 20))
+    if (response && (0 <= listitem < 20))
     {      
         new cmdid = g_rgiPlayerCommandsDialog[playerid][listitem];
-        if(cmdid != -1)
+        if (cmdid != -1)
         {
             new cmd_str[25];
             format(cmd_str, sizeof(cmd_str), "/%s", g_rgeCommandStore[cmdid][e_szCommandName]);

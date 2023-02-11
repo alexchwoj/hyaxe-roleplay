@@ -409,14 +409,14 @@ public OnJITCompile()
 
 @kustom() boolean(string[])
 {
-	if('0' <= string[0] <= '9')
+	if ('0' <= string[0] <= '9')
 	{
 		return (string[0] == '1');
 	}
-	else if(!strcmp(string, "true", true)) return 1;
-	else if(!strcmp(string, "false", true)) return 0;
-	else if(!strcmp(string, "sí", true) || !strcmp(string, "si", true)) return 1;
-	else if(!strcmp(string, "no", true)) return 0;
+	else if (!strcmp(string, "true", true)) return 1;
+	else if (!strcmp(string, "false", true)) return 0;
+	else if (!strcmp(string, "sí", true) || !strcmp(string, "si", true)) return 1;
+	else if (!strcmp(string, "no", true)) return 0;
 
 	return 0;
 }
@@ -431,9 +431,9 @@ enum
 
 @kustom() time_unit(string[])
 {
-	if(!strcmp(string, "segundos", true) || !strcmp(string, "segundo", true)) return TIME_UNIT_SECONDS;
-	else if(!strcmp(string, "minutos", true) || !strcmp(string, "minuto", true)) return TIME_UNIT_MINUTES;
-	else if(!strcmp(string, "horas", true) || !strcmp(string, "hora", true)) return TIME_UNIT_HOURS;
+	if (!strcmp(string, "segundos", true) || !strcmp(string, "segundo", true)) return TIME_UNIT_SECONDS;
+	else if (!strcmp(string, "minutos", true) || !strcmp(string, "minuto", true)) return TIME_UNIT_MINUTES;
+	else if (!strcmp(string, "horas", true) || !strcmp(string, "hora", true)) return TIME_UNIT_HOURS;
 
 	return TIME_UNIT_NONE;
 }

@@ -116,7 +116,7 @@ public PHONE_ProcessKey(playerid)
 
 phone_menu main(playerid, response, listitem)
 {
-	switch(listitem)
+	switch (listitem)
 	{
 		case 0: Player_ShowGPS(playerid);
 		case 1:

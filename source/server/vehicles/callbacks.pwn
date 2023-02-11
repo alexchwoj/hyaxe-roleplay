@@ -30,7 +30,7 @@ public OnScriptInit()
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    if(g_rgiSpeedometerUpdateTimer[playerid])
+    if (g_rgiSpeedometerUpdateTimer[playerid])
     {
         Timer_Kill(g_rgiSpeedometerUpdateTimer[playerid]);
     }
@@ -69,7 +69,7 @@ public OnVehicleDeath(vehicleid, killerid)
     g_rgeVehicles[vehicleid][e_fHealth] = 1000.0;
     g_rgeVehicles[vehicleid][e_fFuel] = g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_fMaxFuel];
 
-    if(Vehicle_Type(vehicleid) == VEHICLE_TYPE_PERSONAL)
+    if (Vehicle_Type(vehicleid) == VEHICLE_TYPE_PERSONAL)
     {
         SendClientMessagef(g_rgeVehicles[vehicleid][e_iVehicleOwnerId], 0xED2B2BFF, "›{DADADA} Tu {ED2B2B}%s{DADADA} fue destruido. La aseguradora te dejó uno nuevo en el estacionamiento municipal.", Vehicle_GetModelName(GetVehicleModel(vehicleid)));
     }
@@ -117,9 +117,9 @@ public OnVehicleSpawn(vehicleid)
     SetVehicleParamsEx(vehicleid, 0, 0, 0, Vehicle_Locked(vehicleid), 0, 0, 0);
     UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, 0);
 
-    for(new i; i < 14; ++i)
+    for (new i; i < 14; ++i)
     {
-        if(g_rgeVehicles[vehicleid][e_iComponents][i])
+        if (g_rgeVehicles[vehicleid][e_iComponents][i])
         {
             AddVehicleComponent(vehicleid, g_rgeVehicles[vehicleid][e_iComponents][i]);
         }
@@ -144,18 +144,18 @@ public OnVehicleSpawn(vehicleid)
 
 public OnPlayerStateChange(playerid, newstate, oldstate)
 {
-    if(newstate == PLAYER_STATE_DRIVER)
+    if (newstate == PLAYER_STATE_DRIVER)
     {
         if (Bit_Get(Player_Config(playerid), CONFIG_DISPLAY_SPEEDOMETER))
             Speedometer_Show(playerid);
         
-        if(Vehicle_GetEngineState(GetPlayerVehicleID(playerid)) == VEHICLE_STATE_OFF)
+        if (Vehicle_GetEngineState(GetPlayerVehicleID(playerid)) == VEHICLE_STATE_OFF)
         {
             Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Presiona Y para encender el vehículo");
             SetPlayerArmedWeapon(playerid, 0);
         }
     }
-    else if(oldstate == PLAYER_STATE_DRIVER)
+    else if (oldstate == PLAYER_STATE_DRIVER)
     {
         Speedometer_Hide(playerid);
         Notification_HideBeatingText(playerid);
@@ -180,12 +180,12 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
 
 public VEHICLE_Update(vehicleid)
 {
-    if(Vehicle_GetEngineState(vehicleid) == VEHICLE_STATE_ON)
+    if (Vehicle_GetEngineState(vehicleid) == VEHICLE_STATE_ON)
     {
-        if(g_rgeVehicles[vehicleid][e_fHealth] <= 375.0)
+        if (g_rgeVehicles[vehicleid][e_fHealth] <= 375.0)
         {
             Vehicle_ToggleEngine(vehicleid, VEHICLE_STATE_OFF);
-            if(IsVehicleOccupied(vehicleid))
+            if (IsVehicleOccupied(vehicleid))
             {
                 Notification_ShowBeatingText(GetVehicleLastDriver(vehicleid), 5000, 0xED2B2B, 100, 255, "Motor averiado. Llama a un mecánico");
             }
@@ -195,10 +195,10 @@ public VEHICLE_Update(vehicleid)
 
         g_rgeVehicles[vehicleid][e_fFuel] = fclamp((g_rgeVehicles[vehicleid][e_fFuel] - ((Vehicle_GetSpeed(vehicleid) + 0.1) / VEHICLE_FUEL_DIVISOR)), 0.0, Vehicle_GetModelMaxFuel(GetVehicleModel(vehicleid)));
 
-        if(g_rgeVehicles[vehicleid][e_fFuel] <= 0.0)
+        if (g_rgeVehicles[vehicleid][e_fFuel] <= 0.0)
         {
             Vehicle_ToggleEngine(vehicleid, VEHICLE_STATE_OFF);
-            if(IsVehicleOccupied(vehicleid))
+            if (IsVehicleOccupied(vehicleid))
             {
                 Notification_ShowBeatingText(GetVehicleLastDriver(vehicleid), 5000, 0xED2B2B, 100, 255, "Tanque sin gasolina");
             }
@@ -218,7 +218,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     }
     else if ((newkeys & KEY_YES) != 0 && !(newkeys & KEY_SPRINT))
     {
-        if(GetTickCount() - s_rgiVehicleLockTick[playerid] > 500)
+        if (GetTickCount() - s_rgiVehicleLockTick[playerid] > 500)
         {
             new vehicleid = INVALID_VEHICLE_ID;
             new const in_vehicle = IsPlayerInAnyVehicle(playerid);
@@ -265,7 +265,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             return 1;
         }
     }
-    else if((newkeys & KEY_LOOK_BEHIND) != 0)
+    else if ((newkeys & KEY_LOOK_BEHIND) != 0)
     {
         new vehicleid = GetPlayerVehicleID(playerid);
         if (IsValidVehicle(vehicleid))
@@ -340,7 +340,7 @@ dialog vehicle_panel(playerid, dialogid, response, listitem, const inputtext[])
         if (!IsValidVehicle(vehicleid))
             return 1;
 
-        switch(listitem)
+        switch (listitem)
         {
             case 0:
             {
@@ -383,9 +383,9 @@ public VEHICLE_ToggleEngineTimer(playerid, vehicleid)
 {
     g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_TOGGLE_ENGINE] = 0;
     
-    if(g_rgeVehicles[vehicleid][e_fHealth] <= 375.0)
+    if (g_rgeVehicles[vehicleid][e_fHealth] <= 375.0)
     {
-        if(Speedometer_Shown(playerid))
+        if (Speedometer_Shown(playerid))
         {
             PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{2}, 0xA83225FF);
             PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{2});
@@ -395,7 +395,7 @@ public VEHICLE_ToggleEngineTimer(playerid, vehicleid)
         return 1;
     }
 
-    if(g_rgeVehicles[vehicleid][e_fFuel] <= 0.0)
+    if (g_rgeVehicles[vehicleid][e_fFuel] <= 0.0)
     {
         Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Tanque sin gasolina");
         return 1;
@@ -403,10 +403,10 @@ public VEHICLE_ToggleEngineTimer(playerid, vehicleid)
 
     Vehicle_ToggleEngine(vehicleid);
 
-    if(Vehicle_GetEngineState(vehicleid))
+    if (Vehicle_GetEngineState(vehicleid))
     {
         Notification_ShowBeatingText(playerid, 3000, 0x98D952, 100, 255, "Motor encendido");
-        if(Speedometer_Shown(playerid))
+        if (Speedometer_Shown(playerid))
         {
             PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{2}, 0x64A752FF);
             PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{2});
@@ -415,7 +415,7 @@ public VEHICLE_ToggleEngineTimer(playerid, vehicleid)
     else
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Motor apagado");
-        if(Speedometer_Shown(playerid))
+        if (Speedometer_Shown(playerid))
         {
             PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{2}, 0x2F2F2FFF);
             PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{2});
@@ -435,7 +435,7 @@ public VEHICLE_LoadFromDatabase(playerid)
 
     printf("[dbg:veh] Player has %d vehicles", row_count);
 
-    for(new i = 0; i < row_count; ++i)
+    for (new i = 0; i < row_count; ++i)
     {
         printf("[dbg:veh] Loading vehicle %d", i);
 
@@ -463,7 +463,7 @@ public VEHICLE_LoadFromDatabase(playerid)
         printf("[dbg:veh] angle = %f", angle);
 
         new vehicleid = Vehicle_Create(model, x, y, z, angle, colorone, colortwo, -1);
-        if(vehicleid == INVALID_VEHICLE_ID)
+        if (vehicleid == INVALID_VEHICLE_ID)
         {
             printf("[vehicles] Failed to create vehicle of playerid %i (model: %i)", playerid, model);
             continue;
@@ -496,9 +496,9 @@ public VEHICLE_LoadFromDatabase(playerid)
         SetVehicleVirtualWorld(vehicleid, g_rgeVehicles[vehicleid][e_iVehWorld]);
 
         sscanf(components, "p<,>a<i>[14]", g_rgeVehicles[vehicleid][e_iComponents]);
-        for(new j; j < 14; ++j)
+        for (new j; j < 14; ++j)
         {
-            if(g_rgeVehicles[vehicleid][e_iComponents][j] != 0)
+            if (g_rgeVehicles[vehicleid][e_iComponents][j] != 0)
             {
                 AddVehicleComponent(vehicleid, g_rgeVehicles[vehicleid][e_iComponents][j]);
             }
@@ -527,7 +527,7 @@ public VEHICLE_LoadFromDatabase(playerid)
         g_rgeVehicles[vehicleid][e_bLocked] = !!doors_p;
 
         // Engine is ON, start updating the vehicle
-        if(engine)
+        if (engine)
         {
             g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_UPDATE] = SetTimerEx("VEHICLE_Update", 1000, true, "i", vehicleid);
         }
@@ -573,12 +573,12 @@ public OnPlayerAuthenticate(playerid)
 // - Prevent car jacking
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
-    if(!ispassenger)
+    if (!ispassenger)
     {
         new last_driver = GetVehicleLastDriver(vehicleid);
-        if(GetPlayerVehicleID(last_driver) == vehicleid && GetPlayerState(last_driver) == PLAYER_STATE_DRIVER)
+        if (GetPlayerVehicleID(last_driver) == vehicleid && GetPlayerState(last_driver) == PLAYER_STATE_DRIVER)
         {
-            if(GetTickCount() - g_rgePlayerTempData[playerid][e_iPlayerCarJackTick] > 60000)
+            if (GetTickCount() - g_rgePlayerTempData[playerid][e_iPlayerCarJackTick] > 60000)
             {
                 g_rgePlayerTempData[playerid][e_iPlayerCarJackAmount] = 0;
             }
@@ -592,7 +592,7 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
             g_rgePlayerTempData[playerid][e_iPlayerCarJackTick] = GetTickCount();
             g_rgePlayerTempData[playerid][e_iPlayerCarJackAmount]++;
 
-            if(g_rgePlayerTempData[playerid][e_iPlayerCarJackAmount] >= 5)
+            if (g_rgePlayerTempData[playerid][e_iPlayerCarJackAmount] >= 5)
             {
                 Anticheat_Trigger(playerid, CHEAT_CARJACK);
                 return 0;
@@ -631,16 +631,16 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 
 public OnPlayerPauseStateChange(playerid, pausestate)
 {
-    if(pausestate)
+    if (pausestate)
     {
-        if(g_rgiSpeedometerUpdateTimer[playerid])
+        if (g_rgiSpeedometerUpdateTimer[playerid])
         {
             Timer_Kill(g_rgiSpeedometerUpdateTimer[playerid]);
         }
     }
     else
     {
-        if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+        if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
         {
             Speedometer_Update(playerid);
             g_rgiSpeedometerUpdateTimer[playerid] = SetTimerEx("Speedometer_Update", 1000, true, "i", playerid);

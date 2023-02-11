@@ -5,9 +5,9 @@
 
 static EnterExit_FindFreeIndex()
 {
-    for(new i; i < HYAXE_MAX_ENTER_EXITS; ++i)
+    for (new i; i < HYAXE_MAX_ENTER_EXITS; ++i)
     {
-        if(!g_rgeEnterExits[i][e_bValid])
+        if (!g_rgeEnterExits[i][e_bValid])
             return i;
     }
 
@@ -17,7 +17,7 @@ static EnterExit_FindFreeIndex()
 EnterExit_Create(pickup_model, const enter_text[], const exit_text[], Float:enter_x, Float:enter_y, Float:enter_z, Float:enter_ang, enter_world, enter_interior, Float:exit_x, Float:exit_y, Float:exit_z, Float:exit_ang, exit_world, exit_interior, extra_data = -1, callback_address = 0)
 {
     new i = EnterExit_FindFreeIndex();
-    if(i == -1)
+    if (i == -1)
     {
         print("[enterexit!] Failed to create enter-exit (pool out of space)");
         return -1;

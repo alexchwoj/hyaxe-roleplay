@@ -113,7 +113,7 @@ dialog sell_fish(playerid, dialogid, response, listitem, inputtext[])
 
         Inventory_DeleteItemByType(playerid, ITEM_FISH);
 
-        if(amount > 1)
+        if (amount > 1)
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Vendiste tus %d peces por $%d", amount, pay);
         else
             format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Vendiste un pez por $%d", pay);

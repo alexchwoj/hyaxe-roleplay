@@ -7,7 +7,7 @@
 
 hook native SendClientMessage(playerid, color, const message[])
 {
-    if(g_rgbMessagesDisabled{playerid})
+    if (g_rgbMessagesDisabled{playerid})
         return 1;
 
     return continue(playerid, color, message);

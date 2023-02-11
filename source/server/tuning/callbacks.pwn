@@ -19,7 +19,7 @@ public OnScriptInit()
     );
     Streamer_SetIntData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x4d4558), 0); // MEC
 
-    for(new i; i < sizeof(g_rgeRepairPositions); ++i)
+    for (new i; i < sizeof(g_rgeRepairPositions); ++i)
     {
         CreateDynamicMapIcon(g_rgeRepairPositions[i][e_fRepairPosX], g_rgeRepairPositions[i][e_fRepairPosY], g_rgeRepairPositions[i][e_fRepairPosZ], 27, -1, .worldid = 0, .interiorid = 0);
         CreateDynamic3DTextLabel("{CB3126}Taller mecánico\n{DADADA}Modifique su vehículo aquí", 0xFFFFFFFF, g_rgeRepairPositions[i][e_fRepairPosX], g_rgeRepairPositions[i][e_fRepairPosY], g_rgeRepairPositions[i][e_fRepairPosZ], 10.0, .testlos = 1);
@@ -128,7 +128,7 @@ public TUNING_MainComponents(playerid)
     new row_count;
     cache_get_row_count(row_count);
 
-    for(new i = 0; i < row_count; ++i)
+    for (new i = 0; i < row_count; ++i)
     {
         cache_get_value_name_int(i, "CAMERA_TYPE", g_rgeTuningMenu[playerid][i][e_iCameraType]);
         cache_get_value_name(i, "PART", g_rgeTuningMenu[playerid][i][e_szName], 24);
@@ -145,7 +145,7 @@ public TUNING_SubComponents(playerid)
     new row_count;
     cache_get_row_count(row_count);
 
-    for(new i = 0; i < row_count; ++i)
+    for (new i = 0; i < row_count; ++i)
     {
         cache_get_value_name_int(i, "ID", g_rgeTuningMenu[playerid][i][e_iID]);
         cache_get_value_name_int(i, "PRICE", g_rgeTuningMenu[playerid][i][e_iPrice]);
@@ -174,7 +174,7 @@ player_menu tuning_main(playerid, response, listitem)
     }
     else if (response == MENU_RESPONSE_SELECT)
     {
-        switch(listitem)
+        switch (listitem)
         {
             case 0:
             {
@@ -216,7 +216,7 @@ player_menu tuning_main(playerid, response, listitem)
 
                 Menu_Show(playerid, "tuning_paintjob", "Paintjob");
                 Menu_AddItem(playerid, "Eliminar paintjob", "Precio: ~g~$500");
-                for(new i; i != paintjobs; ++i)
+                for (new i; i != paintjobs; ++i)
                 {
                     new line_str[25];
                     format(line_str, sizeof line_str, "Paintjov %d", i + 1);
@@ -305,7 +305,7 @@ player_menu tuning_sel_component(playerid, response, listitem)
         {
             RemoveVehicleComponent(vehicleid, g_rgiActualTuningComponent[playerid]);
 
-            for(new i; i < 14; ++i)
+            for (new i; i < 14; ++i)
             {
                 AddVehicleComponent(vehicleid, g_rgeVehicles[vehicleid][e_iComponents][i]);
             }
@@ -353,7 +353,7 @@ player_menu tuning_color_type(playerid, response, listitem)
 
         Menu_Show(playerid, "tuning_color", (g_rgiSelectedColorType[playerid] ? "Color 2" : "Color 1"));
 
-        for(new i; i < 128; ++i)
+        for (new i; i < 128; ++i)
         {
             new line_str[32];
             format(line_str, sizeof(line_str), "%d (%x)", i, g_rgiVehicleColoursTableRGBA[i]);

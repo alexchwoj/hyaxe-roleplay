@@ -22,7 +22,7 @@ player_menu pyro_buy(playerid, response, listitem)
     if (response == MENU_RESPONSE_SELECT)
     {
         printf("listitem = %d", listitem);
-        switch(listitem)
+        switch (listitem)
         {
             case 0:
             {

@@ -38,19 +38,19 @@ Sound_PlayInRange(soundid, Float:range, Float:x, Float:y, Float:z, worldid = -1,
 {
     foreach(new i : Player)
     {
-        if(worldid != -1)
+        if (worldid != -1)
         {
-            if(GetPlayerVirtualWorld(i) != worldid)
+            if (GetPlayerVirtualWorld(i) != worldid)
                 continue;
         }
 
-        if(interiorid != -1)
+        if (interiorid != -1)
         {
-            if(GetPlayerInterior(i) != interiorid)
+            if (GetPlayerInterior(i) != interiorid)
                 continue;
         }
 
-        if(!IsPlayerInRangeOfPoint(i, range, x, y, z))
+        if (!IsPlayerInRangeOfPoint(i, range, x, y, z))
             continue;
 
         PlayerPlaySound(i, soundid, x, y, z);

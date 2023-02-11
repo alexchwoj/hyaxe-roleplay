@@ -28,7 +28,7 @@ phone_menu gps_main(playerid, response, listitem)
 {
 	if (response)
     {
-        switch(listitem)
+        switch (listitem)
         {
             case 0:
             {
@@ -43,7 +43,7 @@ phone_menu gps_main(playerid, response, listitem)
                 Phone_Show(playerid, "gps_hospital");
 
                 new line[32];
-                for(new i; i < sizeof(g_rgeHospitalData); ++i)
+                for (new i; i < sizeof(g_rgeHospitalData); ++i)
                 {
                     new Float:distance = GetPlayerDistanceFromPoint(playerid, g_rgeHospitalData[i][e_fHospitalPosX], g_rgeHospitalData[i][e_fHospitalPosY], g_rgeHospitalData[i][e_fHospitalPosZ]);
                     new city[45], zone[45];
@@ -57,7 +57,7 @@ phone_menu gps_main(playerid, response, listitem)
             {
                 Phone_Show(playerid, "gps_dealership");
                 new line[32];
-                for(new i; i < sizeof(g_rgfDealershipPosition); ++i)
+                for (new i; i < sizeof(g_rgfDealershipPosition); ++i)
                 {
                     new Float:distance = GetPlayerDistanceFromPoint(playerid, g_rgfDealershipPosition[i][0], g_rgfDealershipPosition[i][1], g_rgfDealershipPosition[i][2]);
                     new city[45], zone[45];
@@ -79,7 +79,7 @@ phone_menu gps_jobs(playerid, response, listitem)
 {
     if (response)
     {
-        switch(listitem)
+        switch (listitem)
         {
             case 0: Player_SetGPSCheckpoint(playerid, 125.2116, -285.1135, 1.5781); // Camionero
             case 1: Player_SetGPSCheckpoint(playerid, 2156.9067, -97.8114, 3.1911); // Pescador

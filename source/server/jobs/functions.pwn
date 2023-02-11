@@ -5,7 +5,7 @@
 
 static JobSite_OnPress(playerid, data)
 {
-    if(Police_OnDuty(playerid))
+    if (Police_OnDuty(playerid))
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes hacer esto de servicio como policía");
         return 1;
@@ -14,14 +14,14 @@ static JobSite_OnPress(playerid, data)
     new jobid = (data & 0xFFFF);
     new cb_data = (data >>> 16);
 
-    if(Player_Job(playerid) == JOB_NONE)
+    if (Player_Job(playerid) == JOB_NONE)
     {
-        if(Job_TriggerCallback(playerid, eJobs:jobid, JOB_EV_JOIN, cb_data))
+        if (Job_TriggerCallback(playerid, eJobs:jobid, JOB_EV_JOIN, cb_data))
             Player_Job(playerid) = eJobs:jobid;
     }
-    else if(Player_Job(playerid) == eJobs:jobid)
+    else if (Player_Job(playerid) == eJobs:jobid)
     {
-        if(Job_TriggerCallback(playerid, eJobs:jobid, JOB_EV_LEAVE, cb_data))
+        if (Job_TriggerCallback(playerid, eJobs:jobid, JOB_EV_LEAVE, cb_data))
             Player_Job(playerid) = JOB_NONE;
     }
     else
@@ -34,7 +34,7 @@ static JobSite_OnPress(playerid, data)
 
 Job_CreateSite(eJobs:jobid, Float:x, Float:y, Float:z, vw, interior, const extra_text[] = "", cb_data = 0)
 {
-    if(!(0 <= cb_data < 0xFFFF))
+    if (!(0 <= cb_data < 0xFFFF))
     {
         printf("[jobs!] cb_data (%d) can't be higher than 0xFFFF or lower than 0 (for job %d)", cb_data, _:jobid);
         return 1;
@@ -57,7 +57,7 @@ Job_SetCallback(eJobs:jobid, callback)
 
 Job_TriggerCallback(playerid, eJobs:jobid, eJobEvent:event, data = 0)
 {
-    if(g_rgePlayerJobCallbacks[jobid] != -1)
+    if (g_rgePlayerJobCallbacks[jobid] != -1)
     {
         new cb_addr = g_rgePlayerJobCallbacks[jobid];
 

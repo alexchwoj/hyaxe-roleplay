@@ -7,7 +7,7 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
 {
     DEBUG_PRINT("[func] Trucker_JobEvent(playerid = %d, eJobEvent:ev = %d, data = %d)", playerid, _:ev, data);
 
-    switch(ev)
+    switch (ev)
     {
         case JOB_EV_JOIN:
         {
@@ -17,13 +17,13 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
         {
             Player_Job(playerid) = JOB_NONE;
 
-            if(g_rgbPlayerHasBoxInHands{playerid})
+            if (g_rgbPlayerHasBoxInHands{playerid})
             {
                 RemovePlayerAttachedObject(playerid, 0);
                 SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
             }
 
-            if(g_rgiPlayerUsingTruck[playerid])
+            if (g_rgiPlayerUsingTruck[playerid])
             {
                 Player_SetImmunityForCheat(playerid, CHEAT_TELEPORT, 1000);
                 Player_SetImmunityForCheat(playerid, CHEAT_AIRBREAK, 1000);
@@ -52,7 +52,7 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
             g_rgiPlayerTruckerRoute{playerid} = 0
             );
 
-            if(data == 1)
+            if (data == 1)
             {
                 Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Abandonaste tu trabajo como camionero");
             }
@@ -69,14 +69,14 @@ static Trucker_JobEvent(playerid, eJobEvent:ev, data)
 
 public OnScriptInit()
 {
-    for(new i = sizeof(g_rgfTrucksPos) - 1; i != -1; --i)
+    for (new i = sizeof(g_rgfTrucksPos) - 1; i != -1; --i)
     {
         new truckid = Vehicle_Create(499, g_rgfTrucksPos[i][0], g_rgfTrucksPos[i][1], g_rgfTrucksPos[i][2], g_rgfTrucksPos[i][3], 1, 1, 120, .static_veh = true);
         Vehicle_Type(truckid) = VEHICLE_TYPE_WORK;
         g_rgeVehicles[truckid][e_iVehicleWork] = JOB_TRUCKER;
     }
 
-    for(new i = sizeof(g_rgeTruckerRoutes) - 1; i != -1; --i)
+    for (new i = sizeof(g_rgeTruckerRoutes) - 1; i != -1; --i)
     {
         g_rgeTruckerRoutes[i][e_iTruckCp] = CreateDynamicCP(g_rgeTruckerRoutes[i][e_fTruckCpX], g_rgeTruckerRoutes[i][e_fTruckCpY], g_rgeTruckerRoutes[i][e_fTruckCpZ], 5.0, .streamdistance = 99999999.0);
         g_rgeTruckerRoutes[i][e_iBoxUnloadCp] = CreateDynamicCP(g_rgeTruckerRoutes[i][e_fBoxUnloadX], g_rgeTruckerRoutes[i][e_fBoxUnloadY], g_rgeTruckerRoutes[i][e_fBoxUnloadZ], 3.0, .streamdistance = 99999999.0);
@@ -111,7 +111,7 @@ public OnScriptInit()
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    if(Player_Job(playerid) == JOB_TRUCKER)
+    if (Player_Job(playerid) == JOB_TRUCKER)
     {
         Job_TriggerCallback(playerid, JOB_TRUCKER, JOB_EV_LEAVE);
     }
@@ -135,23 +135,23 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerStateChange(playerid, newstate, oldstate)
 {
-    if(newstate == PLAYER_STATE_DRIVER)
+    if (newstate == PLAYER_STATE_DRIVER)
     {
         new vehicleid = GetPlayerVehicleID(playerid);
-        if(!vehicleid)
+        if (!vehicleid)
             return 1;
 
-        if(Vehicle_Job(vehicleid) == JOB_TRUCKER)
+        if (Vehicle_Job(vehicleid) == JOB_TRUCKER)
         {
-            if(g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != INVALID_PLAYER_ID)
+            if (g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != INVALID_PLAYER_ID)
             {
-                if(g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != playerid)
+                if (g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != playerid)
                 {
                     Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Este camión ya tiene un conductor");
                 }
                 else
                 {
-                    if(g_rgbTruckLoaded{vehicleid})
+                    if (g_rgbTruckLoaded{vehicleid})
                     {
                         TogglePlayerDynamicCP(playerid, g_rgeTruckerRoutes[g_rgiPlayerTruckerRoute{playerid}][e_iTruckCp], true);
                         Streamer_Update(playerid, STREAMER_TYPE_CP);
@@ -163,7 +163,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
             {
                 strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Carga\t{DADADA}Peso\t{DADADA}Paga\n");
                 new line[128];
-                for(new i; i < sizeof(g_rgeTruckerRoutes); ++i)
+                for (new i; i < sizeof(g_rgeTruckerRoutes); ++i)
                 {
                     new pay = 1000 + floatround( VectorSize(125.2116 - g_rgeTruckerRoutes[i][e_fTruckCpX], -285.1135 - g_rgeTruckerRoutes[i][e_fTruckCpY], 1.5781 - g_rgeTruckerRoutes[i][e_fTruckCpZ]) );
                     format(line, sizeof(line), "{DADADA}%s\t{DADADA}%i caja%s\t{64A752}$%i\n", g_rgeTruckerRoutes[i][e_szRouteName], g_rgeTruckerRoutes[i][e_iBoxCount], (g_rgeTruckerRoutes[i][e_iBoxCount] > 1 ? "s" : ""), pay);
@@ -195,12 +195,12 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
 
 public OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
-    if(checkpointid == g_iPickBoxCheckpoint)
+    if (checkpointid == g_iPickBoxCheckpoint)
     {
         TogglePlayerDynamicCP(playerid, checkpointid, false);
         return 1;
     }
-    else if(g_rgiPlayerUsingTruck[playerid])
+    else if (g_rgiPlayerUsingTruck[playerid])
     {
         if (checkpointid == g_rgeTruckerRoutes[g_rgiPlayerTruckerRoute{playerid}][e_iTruckCp])
         {
@@ -217,14 +217,14 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
         }
         else if (checkpointid == g_rgeTruckerRoutes[g_rgiPlayerTruckerRoute{playerid}][e_iBoxUnloadCp])
         {
-            if(g_rgbPlayerHasBoxInHands{playerid})
+            if (g_rgbPlayerHasBoxInHands{playerid})
             {
                 SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
                 ApplyAnimation(playerid, "CARRY", "PUTDWN", 4.1, false, false, false, false, 0, false);
                 RemovePlayerAttachedObject(playerid, 0);
                 g_rgbPlayerHasBoxInHands{playerid} = false;
 
-                if(g_rgiPlayerRemainingBoxes{playerid} - 1 > 0)
+                if (g_rgiPlayerRemainingBoxes{playerid} - 1 > 0)
                 {
                     SetVehicleParamsForPlayer(g_rgiPlayerUsingTruck[playerid], playerid, 1, 1);
 
@@ -257,7 +257,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
             new pay = 1000 + floatround( VectorSize(125.2116 - g_rgeTruckerRoutes[route][e_fTruckCpX], -285.1135 - g_rgeTruckerRoutes[route][e_fTruckCpY], 1.5781 - g_rgeTruckerRoutes[route][e_fTruckCpZ]) );
             new pay_subtracted = 0;
 
-            if(truck_health < 900.0)
+            if (truck_health < 900.0)
             {
                 pay -= (pay_subtracted = (100000 / floatround(truck_health)));
             }
@@ -267,7 +267,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
             Player_GiveMoney(playerid, pay);
             Player_AddXP(playerid, Random(150, 250));
 
-            if(pay_subtracted)
+            if (pay_subtracted)
             {
                 format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "Has terminado el recorrido con éxito y te pagaron ~g~$%i~w~.~n~Debido a los ~r~daños del camión~w~, se te descontaron ~r~$%i~w~ del pago inicial.", pay, pay_subtracted);
             }
@@ -418,7 +418,7 @@ dialog select_trucker_route(playerid, dialogid, response, listitem, const inputt
 {
     new vehicleid = GetPlayerVehicleID(playerid);
 
-    if(
+    if (
         !response || 
         !(0 <= listitem < sizeof(g_rgeTruckerRoutes)) || 
         !vehicleid || 
@@ -454,12 +454,12 @@ dialog select_trucker_route(playerid, dialogid, response, listitem, const inputt
 
 public OnPlayerLeaveDynamicArea(playerid, areaid)
 {
-    if(areaid == g_iTruckerCentralArea)
+    if (areaid == g_iTruckerCentralArea)
     {
-        if(Player_Job(playerid) == JOB_TRUCKER)
+        if (Player_Job(playerid) == JOB_TRUCKER)
         {
             new vehicleid = GetPlayerVehicleID(playerid);
-            if(!vehicleid || (!g_rgbTruckLoaded{vehicleid} && !g_rgbTruckLoadDispatched{vehicleid}))
+            if (!vehicleid || (!g_rgbTruckLoaded{vehicleid} && !g_rgbTruckLoadDispatched{vehicleid}))
             {
                 Job_TriggerCallback(playerid, JOB_TRUCKER, JOB_EV_LEAVE);
                 Notification_Show(playerid, "Al salir de la central de camioneros, abandonaste el trabajo.", 8000);
@@ -487,9 +487,9 @@ public OnPlayerLeaveDynamicArea(playerid, areaid)
 
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
-    if(!ispassenger)
+    if (!ispassenger)
     {
-        if(g_rgeVehicles[vehicleid][e_iVehicleWork] == JOB_TRUCKER && Player_Job(playerid) != JOB_TRUCKER)
+        if (g_rgeVehicles[vehicleid][e_iVehicleWork] == JOB_TRUCKER && Player_Job(playerid) != JOB_TRUCKER)
         {
             TogglePlayerControllable(playerid, false);
             Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "Necesitas el trabajo de camionero para subir a este vehículo");

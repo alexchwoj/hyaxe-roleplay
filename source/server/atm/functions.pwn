@@ -23,7 +23,7 @@ ATM_ShowMenu(playerid)
     SetExclusiveBroadcast(false);
     */
     
-    for(new i = sizeof(g_tdBankATM) - 1; i != -1; --i)
+    for (new i = sizeof(g_tdBankATM) - 1; i != -1; --i)
     {
         TextDrawShowForPlayer(playerid, g_tdBankATM[i]);
     }
@@ -39,7 +39,7 @@ ATM_HideMenu(playerid)
 {
     Bit_Set(Player_Flags(playerid), PFLAG_USING_ATM, false);
 
-    for(new i = sizeof(g_tdBankATM) - 1; i != -1; --i)
+    for (new i = sizeof(g_tdBankATM) - 1; i != -1; --i)
     {
         TextDrawHideForPlayer(playerid, g_tdBankATM[i]);
     }
@@ -137,7 +137,7 @@ Bank_RegisterTransaction(bank_account, type, amount, extra = 0)
 
 Player_DestroyNearestATM(playerid, Float:x, Float:y, Float:z)
 {
-    for(new i; i < sizeof(g_rgeATMBank); ++i)
+    for (new i; i < sizeof(g_rgeATMBank); ++i)
     {
         if ( GetDistanceBetweenPoints3D(
             x, y, z,
@@ -155,7 +155,7 @@ Player_DestroyNearestATM(playerid, Float:x, Float:y, Float:z)
             GetPointZone(g_rgeATMBank[i][e_fAtmPosX], g_rgeATMBank[i][e_fAtmPosY], city, zone);
             Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s ha destrozado a un cajero en %s, %s.", Player_RPName(playerid), zone, city));
             
-            for(new j; j < Random(5, 10); ++j)
+            for (new j; j < Random(5, 10); ++j)
             {
                 DroppedItem_Create(
                     ITEM_MONEY, 1, Random(25, 90),

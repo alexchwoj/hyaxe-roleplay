@@ -5,12 +5,12 @@
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if((newkeys & KEY_CTRL_BACK) != 0 && GetWeaponSlot(GetPlayerWeapon(playerid)) > 0)
+    if ((newkeys & KEY_CTRL_BACK) != 0 && GetWeaponSlot(GetPlayerWeapon(playerid)) > 0)
     {
         new actorid = GetPlayerTargetDynamicActor(playerid);
-        if(actorid != INVALID_STREAMER_ID)
+        if (actorid != INVALID_STREAMER_ID)
         {
-            if(Actor_Rob(playerid, actorid))
+            if (Actor_Rob(playerid, actorid))
                 return 1;
         }
     }
@@ -36,7 +36,7 @@ public ROBBERY_Progress(playerid, actorid, phase)
 {
     new id = Streamer_GetIntData(STREAMER_TYPE_ACTOR, actorid, E_STREAMER_CUSTOM(0x524F42));
 
-    switch(phase)
+    switch (phase)
     {
         case 0:
         {
@@ -51,7 +51,7 @@ public ROBBERY_Progress(playerid, actorid, phase)
         case 2:
         {
             /*
-            if((random(100) + 1) % 2)
+            if ((random(100) + 1) % 2)
             {
                 // Shopkeeper picked up a shotgun
             }

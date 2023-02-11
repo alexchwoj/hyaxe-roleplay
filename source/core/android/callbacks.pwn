@@ -22,7 +22,7 @@ IRPC:__android_RPC_ClientJoin(playerid, BitStream:bs)
 
     new bits_unread;
     BS_GetNumberOfUnreadBits(bs, bits_unread);
-    if(bits_unread >= 32)
+    if (bits_unread >= 32)
         g_rgbIsAndroid{playerid} = true;
 
     return 1;

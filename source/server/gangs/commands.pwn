@@ -23,13 +23,13 @@ static GangCreation_ShowDialog(playerid)
 
 command banda(playerid, const params[], "Abre el panel de banda")
 {
-    if(Player_Level(playerid) < 2)
+    if (Player_Level(playerid) < 2)
     {
         Dialog_Show(playerid, DIALOG_STYLE_MSGBOX, "{DADADA}Error - {CB3126}Creación de banda", "{DADADA}Necesitas ser al menos {CB3126}nivel 2{DADADA} para crear una banda.", "Entendido");
         return 1;
     }
 
-    if(Player_Gang(playerid) != -1)
+    if (Player_Gang(playerid) != -1)
     {
         //Dialog_Show(playerid, DIALOG_STYLE_MSGBOX, "{DADADA}Error - {CB3126}Creación de banda", "{DADADA}No puedes crear una banda si ya estás en una.", "Entendido");
         Gangs_OpenPanel(playerid);
@@ -47,14 +47,14 @@ command banda(playerid, const params[], "Abre el panel de banda")
 
 dialog gang_create(playerid, dialogid, response, listitem, const inputtext[])
 {
-    if(!response)
+    if (!response)
     {
         s_rgszGangCreationName[playerid][0] = '\0';
         s_rgiGangCreationIcon{playerid} = 0;
         return 1;
     }
 
-    switch(listitem)
+    switch (listitem)
     {
         case 0:
         {
@@ -68,7 +68,7 @@ dialog gang_create(playerid, dialogid, response, listitem, const inputtext[])
         {
             HYAXE_UNSAFE_HUGE_STRING[0] = '\0';
 
-            for(new i = 0; i < sizeof(g_rgszGangIcons); ++i)
+            for (new i = 0; i < sizeof(g_rgszGangIcons); ++i)
             {
                 strcat(HYAXE_UNSAFE_HUGE_STRING, g_rgszGangIcons[i][0]);
                 strcat(HYAXE_UNSAFE_HUGE_STRING, "\n");
@@ -100,13 +100,13 @@ dialog gang_create(playerid, dialogid, response, listitem, const inputtext[])
 
 dialog gang_creation_name(playerid, dialogid, response, listitem, const inputtext[])
 {
-    if(!response)
+    if (!response)
     {
         GangCreation_ShowDialog(playerid);
         return 1;
     }
 
-    if(isnull(inputtext) || strlen(inputtext) > 64)
+    if (isnull(inputtext) || strlen(inputtext) > 64)
     {
         Dialog_ShowCallback(playerid, using public _hydg@gang_creation_name<iiiis>, DIALOG_STYLE_INPUT, 
             "{CB3126}>{DADADA} Nombre de tu nueva {CB3126}banda{DADADA}",
@@ -126,7 +126,7 @@ dialog gang_creation_name(playerid, dialogid, response, listitem, const inputtex
 
 dialog gang_creation_icon(playerid, dialogid, response, listitem, const inputtext[])
 {
-    if(!response || !(0 <= listitem < sizeof(g_rgszGangIcons)))
+    if (!response || !(0 <= listitem < sizeof(g_rgszGangIcons)))
     {
         GangCreation_ShowDialog(playerid);
         return 1;
@@ -140,14 +140,14 @@ dialog gang_creation_icon(playerid, dialogid, response, listitem, const inputtex
 
 dialog gang_creation_color(playerid, dialogid, response, listitem, const inputtext[])
 {
-    if(!response)
+    if (!response)
     {
         GangCreation_ShowDialog(playerid);
         return 1;
     }
 
     new new_color;
-    if(sscanf(inputtext, "?<SSCANF_COLOUR_FORMS=2>m", new_color))
+    if (sscanf(inputtext, "?<SSCANF_COLOUR_FORMS=2>m", new_color))
     {
         Dialog_ShowCallback(playerid, using public _hydg@gang_creation_color<iiiis>, DIALOG_STYLE_INPUT, 
             "{CB3126}>{DADADA} Color de tu nueva {CB3126}banda",
@@ -165,14 +165,14 @@ dialog gang_creation_color(playerid, dialogid, response, listitem, const inputte
 
 dialog gang_confirm_creation(playerid, dialogid, response, listitem, const inputtext[])
 {
-    if(!response)
+    if (!response)
     {
         GangCreation_ShowDialog(playerid);
         return 1;
     }
 
     new idx = Gangs_FindFreeIndex();
-    if(idx == -1)
+    if (idx == -1)
     {
         Dialog_Show(playerid, DIALOG_STYLE_MSGBOX, "{CB3126}>{DADADA} ¡Uh, oh! Algo malio sal", "No se pudo crear tu banda. Contacta a un administrador. {969696}(0)", "Entendido");
         return 1;

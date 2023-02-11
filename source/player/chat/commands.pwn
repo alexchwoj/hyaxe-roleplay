@@ -64,7 +64,7 @@ alias:do("entorno")
 
 command gritar(playerid, const params[], "Grita")
 {
-    if(isnull(params))
+    if (isnull(params))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/gritar {DADADA}<texto>");
         return 1;
@@ -82,7 +82,7 @@ alias:gritar("g")
 
 command susurrar(playerid, const params[], "Susurra")
 {
-    if(isnull(params))
+    if (isnull(params))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/susurrar {DADADA}<texto>");
         return 1;
@@ -130,7 +130,7 @@ command mutear(playerid, const params[], "Silenciar a un usuario del canal de du
         return 1;
     }
 
-    switch(time_unit)
+    switch (time_unit)
     {
         case 1: {}
         case 2: time *= 60;

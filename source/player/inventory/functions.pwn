@@ -16,7 +16,7 @@ Item_SetPreviewRot(type, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fZoom = 1.
 Item_TypeToWeapon(type)
 {
 	//printf("Item_TypeToWeapon(type = %d)", type);
-	switch(type)
+	switch (type)
 	{
 		case ITEM_BRASSKNUCKLE: return 1;
 		case ITEM_GOLFCLUB: return 2;
@@ -66,7 +66,7 @@ Item_TypeToWeapon(type)
 Item_WeaponToType(type)
 {
 	//("Item_WeaponToType(type = %d)", type);
-	switch(type)
+	switch (type)
 	{
 		case 1: return ITEM_BRASSKNUCKLE;
 		case 2: return ITEM_GOLFCLUB;
@@ -117,7 +117,7 @@ Item_WeaponToType(type)
 Inventory_GetFreeSlot(playerid)
 {
 	//printf("Inventory_GetFreeSlot(playerid = %d)", playerid);
-    for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+    for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
 		if (!g_rgePlayerInventory[playerid][i][e_bValid])
 		    return i;
@@ -130,7 +130,7 @@ Inventory_Update(playerid)
 	//printf("Inventory_Update(playerid = %d)", playerid);
 	if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV) || Bit_Get(Player_Flags(playerid), PFLAG_USING_SECONDARY_INV))
     {
-		for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+		for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 		{
 			if (InventorySlot_IsValid(playerid, i))
 			{
@@ -170,7 +170,7 @@ Inventory_Update(playerid)
 			PlayerTextDrawShow(playerid, p_tdItemCount[playerid]{i});
 		}
 
-		for(new i; i < 6; ++i)
+		for (new i; i < 6; ++i)
 			PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{i});
 	}
 	return 1;
@@ -250,13 +250,13 @@ Inventory_Hide(playerid)
 		SetVehicleParamsEx(g_rgePlayerTempData[playerid][e_iLastTrunk], engine, lights, alarm, doors, bonnet, 0, objective);
 	}
 
-	for(new i; i < sizeof(g_tdInventoryBG); ++i)
+	for (new i; i < sizeof(g_tdInventoryBG); ++i)
 		TextDrawHideForPlayer(playerid, g_tdInventoryBG[i]);
 
-	for(new i; i < sizeof(g_tdInventoryExp); ++i)
+	for (new i; i < sizeof(g_tdInventoryExp); ++i)
 		TextDrawHideForPlayer(playerid, g_tdInventoryExp[i]);
 
-	for(new i; i < 6; ++i)
+	for (new i; i < 6; ++i)
 	{
 		PlayerTextDrawHide(playerid, p_tdToyView[playerid]{i});
 		PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{i});
@@ -265,18 +265,18 @@ Inventory_Hide(playerid)
 	TextDrawHideForPlayer(playerid, g_tdInveotrySections[0]);
 	TextDrawHideForPlayer(playerid, g_tdInveotrySections[1]);
 
-	for(new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
+	for (new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
 	{
 		PlayerTextDrawHide(playerid, p_tdTrunkItemView[playerid]{i});
 		PlayerTextDrawHide(playerid, p_tdTrunkItemCount[playerid]{i});
 	}
 
 	/*
-	for(new i; i < 6; ++i)
+	for (new i; i < 6; ++i)
 		PlayerTextDrawHide(playerid, p_tdItemOptions[playerid]{i});
 	*/
 
-	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+	for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
 		PlayerTextDrawHide(playerid, p_tdItemView[playerid]{i});
 		PlayerTextDrawHide(playerid, p_tdItemCount[playerid]{i});
@@ -299,14 +299,14 @@ Inventory_Show(playerid)
 	Bit_Set(Player_Flags(playerid), PFLAG_USING_INV, true);
 
 	// Backgrounds
-	for(new i; i < sizeof(g_tdInventoryBG) - 2; ++i)
+	for (new i; i < sizeof(g_tdInventoryBG) - 2; ++i)
 		TextDrawShowForPlayer(playerid, g_tdInventoryBG[i]);
 
 	// Username
 	TextDrawShowForPlayer(playerid, g_tdInventoryUsername);
 
 	// Toys view
-	for(new i; i < 6; ++i)
+	for (new i; i < 6; ++i)
 	{
 		if (g_rgiCosmeticsSlots[playerid][i] != -1)
 		{
@@ -349,7 +349,7 @@ Inventory_Show(playerid)
 	);
 
 	PlayerTextDrawShow(playerid, p_tdInventoryExpBar{playerid});
-	if(!IsPlayerTextDrawVisible(playerid, p_tdInventoryExpText{playerid}))
+	if (!IsPlayerTextDrawVisible(playerid, p_tdInventoryExpText{playerid}))
 		PlayerTextDrawShow(playerid, p_tdInventoryExpText{playerid});
 
 	PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{0}, "TIRAR");
@@ -373,7 +373,7 @@ InventorySlot_Delete(playerid, slot)
 Inventory_DeleteItemByType(playerid, type)
 {
 	//printf("Inventory_DeleteItemByType(playerid = %d, type = %d)", playerid, type);
-	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+	for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
 		if (InventorySlot_IsValid(playerid, i))
 		{
@@ -439,7 +439,7 @@ Inventory_AddItem(playerid, type, amount, extra)
 			Inventory_InsertItem(playerid, type, amount, extra);
 		else
 		{
-			for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+			for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 			{
 				if (InventorySlot_IsValid(playerid, i))
 				{
@@ -466,7 +466,7 @@ Inventory_AddItem(playerid, type, amount, extra)
 Inventory_GetItemAmount(playerid, type)
 {
 	//printf("Inventory_GetItemAmount(playerid = %d, type = %d)", playerid, type);
-	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+	for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
 		if (InventorySlot_IsValid(playerid, i))
 		{
@@ -481,7 +481,7 @@ Inventory_GetItemCount(playerid, type)
 {
 	//printf("Inventory_GetItemCount(playerid = %d, type = %d)", playerid, type);
 	new count;
-	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+	for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
 		if (InventorySlot_IsValid(playerid, i))
 		{
@@ -574,7 +574,7 @@ DroppedItem_Delete(area_id)
 	if (!area_id || !IsValidDynamicArea(area_id))
 		return 0;
 		
-	if(!Streamer_HasArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x49544D)))
+	if (!Streamer_HasArrayData(STREAMER_TYPE_AREA, area_id, E_STREAMER_CUSTOM(0x49544D)))
 		return 0;
 
 	new info[6];
@@ -611,13 +611,13 @@ Trunk_Show(playerid, vehicleid)
 
 	TextDrawSetStringForPlayer(g_tdInveotrySections[1], playerid, "%s", g_rgeVehicleModelData[GetVehicleModel(vehicleid) - 400][e_szModelName]);
 
-	for(new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+	for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
 		PlayerTextDrawShow(playerid, p_tdItemView[playerid]{i});
 		PlayerTextDrawShow(playerid, p_tdItemCount[playerid]{i});
 	}
 
-	for(new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
+	for (new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
 	{
 		PlayerTextDrawShow(playerid, p_tdTrunkItemView[playerid]{i});
 		PlayerTextDrawShow(playerid, p_tdTrunkItemCount[playerid]{i});
@@ -632,7 +632,7 @@ Trunk_Show(playerid, vehicleid)
 
 Trunk_GetFreeSlot(vehicleid)
 {
-    for(new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
+    for (new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
 	{
 		if (!g_rgeVehicleTrunk[vehicleid][i][e_bValid])
 		    return i;
@@ -679,7 +679,7 @@ Trunk_Update(playerid, vehicleid)
 {
 	if (Bit_Get(Player_Flags(playerid), PFLAG_USING_SECONDARY_INV))
     {
-		for(new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
+		for (new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
 		{
 			if (TrunkSlot_IsValid(vehicleid, i))
 			{

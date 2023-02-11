@@ -7,15 +7,15 @@ static Pizza_OnBuy(playerid, shop_id, item_id)
 {
     #pragma unused shop_id
 
-    if(g_rgePlayerTempData[playerid][e_iPlayerEatTick] && GetTickDiff(GetTickCount(), g_rgePlayerTempData[playerid][e_iPlayerEatTick]) >= 120000)
+    if (g_rgePlayerTempData[playerid][e_iPlayerEatTick] && GetTickDiff(GetTickCount(), g_rgePlayerTempData[playerid][e_iPlayerEatTick]) >= 120000)
     {
         g_rgePlayerTempData[playerid][e_iPlayerEatCount] = 0;
     }
 
-    if(g_rgePlayerTempData[playerid][e_iPlayerPukeTick])
+    if (g_rgePlayerTempData[playerid][e_iPlayerPukeTick])
     {
         new diff = GetTickDiff(GetTickCount(), g_rgePlayerTempData[playerid][e_iPlayerPukeTick]);
-        if(diff <= 300000)
+        if (diff <= 300000)
         {
             SendClientMessagef(playerid, 0xDADADAFF, "Vomitaste hace poco y la comida te caera mal. Espera {CB3126}%i minutos{DADADA} antes de volver a comer.", ((300000 - diff) / 60000));
             return 0;
@@ -26,7 +26,7 @@ static Pizza_OnBuy(playerid, shop_id, item_id)
     g_rgePlayerTempData[playerid][e_iPlayerEatCount]++;
     g_rgePlayerTempData[playerid][e_iPlayerEatTick] = GetTickCount();
 
-    switch(item_id)
+    switch (item_id)
     {
         case 0:
         {
@@ -60,7 +60,7 @@ static Pizza_OnBuy(playerid, shop_id, item_id)
         }
     }
 
-    if(g_rgePlayerTempData[playerid][e_iPlayerEatCount] >= (Player_Skin(playerid) == 5 ? 10 : 5))
+    if (g_rgePlayerTempData[playerid][e_iPlayerEatCount] >= (Player_Skin(playerid) == 5 ? 10 : 5))
     {
         Player_Puke(playerid);
         return 0;
@@ -75,7 +75,7 @@ static Pizza_OnBuy(playerid, shop_id, item_id)
 
 static PreloadPizzaPlaceAnims(playerid, bool:enter)
 {
-    if(enter)
+    if (enter)
     {
         ApplyAnimation(playerid, "FOOD", "null", 4.1, 0, 0, 0, 0, 0, 0);
     }

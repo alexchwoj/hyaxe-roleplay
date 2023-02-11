@@ -6,7 +6,7 @@
 Config_ToString(playerid)
 {
     new str[CONFIG_MAX + 1];
-    for(new i; i < CONFIG_MAX; ++i)
+    for (new i; i < CONFIG_MAX; ++i)
     {
         format(str, sizeof(str), "%s%i", str, Bit_Get(g_rgbsPlayerConfig[playerid], i));
     }
@@ -15,7 +15,7 @@ Config_ToString(playerid)
 
 Config_ResetDefaults(playerid)
 {
-    for(new i = 0; i < CONFIG_MAX; ++i)
+    for (new i = 0; i < CONFIG_MAX; ++i)
     {
         Bit_Set(g_rgbsPlayerConfig[playerid], i, g_rgbConfigOptionDefaults{i});
     }
@@ -30,7 +30,7 @@ Config_Save(playerid)
 
 Config_LoadFromCache(playerid)
 {
-    if(Player_Cache(playerid) == MYSQL_INVALID_CACHE)
+    if (Player_Cache(playerid) == MYSQL_INVALID_CACHE)
         return 0;
 
     Config_ResetDefaults(playerid);
@@ -38,7 +38,7 @@ Config_LoadFromCache(playerid)
     static buf[CONFIG_MAX + 1];
     cache_get_value_name(0, !"CONFIG_BITS", buf);
     
-    for(new i, j = strlen(buf); i < CONFIG_MAX && i < j; ++i)
+    for (new i, j = strlen(buf); i < CONFIG_MAX && i < j; ++i)
     {
         Bit_Set(g_rgbsPlayerConfig[playerid], i, (buf[i] == '1'));
     }
@@ -50,7 +50,7 @@ command config(playerid, const params[], "Abre el panel de configuración")
 {
     strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Opción\t{DADADA}Estado\n");
     new line[128];
-    for(new i; i < CONFIG_MAX; ++i)
+    for (new i; i < CONFIG_MAX; ++i)
     {
         format(line, sizeof(line), "{DADADA}%s\t%s\n", g_rgszConfigOptionNames[i], (Bit_Get(g_rgbsPlayerConfig[playerid], i) ? "{64A752}Sí" : "{A83225}No"));
         strcat(HYAXE_UNSAFE_HUGE_STRING, line);
@@ -62,17 +62,17 @@ command config(playerid, const params[], "Abre el panel de configuración")
 
 dialog player_config(playerid, dialogid, response, listitem, inputtext[])
 {
-    if(!response)
+    if (!response)
         return 1;
 
-    if(!(0 <= listitem < CONFIG_MAX))
+    if (!(0 <= listitem < CONFIG_MAX))
         return 1;
 
     Bit_Toggle(g_rgbsPlayerConfig[playerid], listitem);
 
     strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Opción\tEstado\n");
     new line[128];
-    for(new i; i < CONFIG_MAX; ++i)
+    for (new i; i < CONFIG_MAX; ++i)
     {
         format(line, sizeof(line), "{DADADA}%s\t%s\n", g_rgszConfigOptionNames[i], (Bit_Get(g_rgbsPlayerConfig[playerid], i) ? "{64A752}Sí" : "{A83225}No"));
         strcat(HYAXE_UNSAFE_HUGE_STRING, line);

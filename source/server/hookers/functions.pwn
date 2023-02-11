@@ -9,7 +9,7 @@ Hooker_Spawn(hookerid)
     g_rgbHookerAvailable{hookerid} = true;
     new npcid = g_rgiHookers[hookerid];
 
-    if(!FCNPC_IsSpawned(npcid))
+    if (!FCNPC_IsSpawned(npcid))
     {
         new skin = g_rgiHookerSkins[random(sizeof(g_rgiHookerSkins))];
         DEBUG_PRINT("[hookers] Spawning hooker %i with skin %i", hookerid, skin);

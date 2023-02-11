@@ -26,7 +26,7 @@ Float:easeOutElastic(Float:t)
 
 static GetFreeNotificationSlot(playerid)
 {
-    for(new i; i < MAX_NOTIFICATIONS; ++i)
+    for (new i; i < MAX_NOTIFICATIONS; ++i)
 	{
 		if (!g_rgeNotificationData[playerid][i][e_bActive])
 		    return i;
@@ -147,9 +147,9 @@ Notification_ShowBeatingText(playerid, time, color, alpha_min, alpha_max, const 
     strcat(string, text);
     Str_FixEncoding_Ref(string);
 
-    for(new i = strlen(string) - 1; i != -1; --i)
+    for (new i = strlen(string) - 1; i != -1; --i)
     {
-        if(string[i] == ' ')
+        if (string[i] == ' ')
             string[i] = '_';
     }
 
@@ -201,7 +201,7 @@ Notification_HideBeatingText(playerid)
 
 Notification_DestroyAll(playerid)
 {
-    for(new i = 0; i < MAX_NOTIFICATIONS; i++)
+    for (new i = 0; i < MAX_NOTIFICATIONS; i++)
     {
         if (g_rgeNotificationData[playerid][i][e_bActive])
         {

@@ -10,7 +10,7 @@ public OnScriptInit()
     SetTimer("GVENT_CheckTime", 60000, true);
 
     // Create graffiti object
-    for(new i; i < sizeof(g_rgeGraffiti); ++i)
+    for (new i; i < sizeof(g_rgeGraffiti); ++i)
 	{
         g_rgeGraffiti[i][e_iGraffitiObject] = CreateDynamicObject(
             19482,
@@ -83,7 +83,7 @@ public GVENT_TruckSpawnLoot()
         {ITEM_CRACK, 2, 8}
     };
 
-    for(new i, j = Random(12, 24); i < j; ++i)
+    for (new i, j = Random(12, 24); i < j; ++i)
     {
         new item = random( sizeof(loot) );
 
@@ -159,7 +159,7 @@ public GVENT_UpdateGraffiti(playerid)
         YSI_UNSAFE_HUGE_STRING[areas] = INVALID_STREAMER_ID;
         GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
         
-        for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
+        for (new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
         {
             new areaid = YSI_UNSAFE_HUGE_STRING[i];
             if (Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x47524146)))
@@ -198,7 +198,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             YSI_UNSAFE_HUGE_STRING[areas] = INVALID_STREAMER_ID;
             GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
             
-            for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
+            for (new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
             {
                 new areaid = YSI_UNSAFE_HUGE_STRING[i];
                 if (Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x47524146)))

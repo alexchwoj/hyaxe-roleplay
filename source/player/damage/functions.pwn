@@ -103,7 +103,7 @@ Damage_Validate(playerid, damagedid, weaponid, bodypart)
         if (ray)
         {
             // Ignore specific objects
-            switch(ray)
+            switch (ray)
             {
                 case WATER_OBJECT, 1411, 19837, 19838, 19839, 2247, 701, 702, 859, 677, 860, 631, 647, 8153, 1412:
                     valid_collision = true;

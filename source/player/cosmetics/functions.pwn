@@ -14,7 +14,7 @@ Cosmetics_ResetSlots(playerid)
 
 Cosmetics_GetFreeSlot(playerid)
 {
-	for(new i; i < HYAXE_MAX_COSMETICS; ++i)
+	for (new i; i < HYAXE_MAX_COSMETICS; ++i)
 	{
 		if (!g_rgePlayerCosmetics[playerid][i][e_bValid])
 		    return i;
@@ -116,7 +116,7 @@ Player_SetCosmetics(playerid)
 {
     Cosmetics_ResetSlots(playerid);
 
-    for(new i; i < 6; i++)
+    for (new i; i < 6; i++)
     {
         RemovePlayerAttachedObject(playerid, i);
     }
@@ -178,7 +178,7 @@ Cosmetic_ChangeName(playerid, slot)
 
         if (response)
         {
-            if(isnull(inputtext) || strlen(inputtext) > 32)
+            if (isnull(inputtext) || strlen(inputtext) > 32)
             {
                 Notification_ShowBeatingText(playerid, 4000, 0xED2B2B, 100, 255, "El nombre debe tener más de 1 carácter y menos de 32 caracteres");
                 return 1;

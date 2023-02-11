@@ -5,9 +5,9 @@
 
 Gangs_FindFreeIndex()
 {
-    for(new i; i < HYAXE_MAX_GANGS; ++i)
+    for (new i; i < HYAXE_MAX_GANGS; ++i)
     {
-        if(!g_rgeGangs[i][e_iGangDbId])
+        if (!g_rgeGangs[i][e_iGangDbId])
             return i;
     }
 
@@ -16,7 +16,7 @@ Gangs_FindFreeIndex()
 
 Gangs_OpenPanel(playerid)
 {
-    if(Bit_Get(Player_Flags(playerid), PFLAG_GANG_PANEL_OPEN))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_GANG_PANEL_OPEN))
         return 0;
 
     Bit_Set(Player_Flags(playerid), PFLAG_GANG_PANEL_OPEN, true);
@@ -38,7 +38,7 @@ Gangs_OpenPanel(playerid)
 
 Gangs_UpdatePanel(playerid)
 {
-    if(!Bit_Get(Player_Flags(playerid), PFLAG_GANG_PANEL_OPEN))
+    if (!Bit_Get(Player_Flags(playerid), PFLAG_GANG_PANEL_OPEN))
         return 0;
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, 
@@ -59,7 +59,7 @@ Gangs_UpdatePanel(playerid)
 Gangs_PanelForward(playerid)
 {
     g_rgiGangPanelPage{playerid}++;
-    if(!IsTextDrawVisibleForPlayer(playerid, g_tdGangs[7]))
+    if (!IsTextDrawVisibleForPlayer(playerid, g_tdGangs[7]))
     {
         TextDrawShowForPlayer(playerid, g_tdGangs[7]);
     }
@@ -80,7 +80,7 @@ Gangs_PanelForward(playerid)
 Gangs_PanelBackwards(playerid)
 {
     g_rgiGangPanelPage{playerid}--;
-    if(g_rgiGangPanelPage{playerid} == 1)
+    if (g_rgiGangPanelPage{playerid} == 1)
     {
         TextDrawHideForPlayer(playerid, g_tdGangs[7]);
     }
@@ -101,12 +101,12 @@ Gangs_PanelBackwards(playerid)
 Gangs_ClosePanel(playerid)
 {
     Bit_Set(Player_Flags(playerid), PFLAG_GANG_PANEL_OPEN, false);
-    for(new i = sizeof(g_tdGangs) - 1; i != -1; --i)
+    for (new i = sizeof(g_tdGangs) - 1; i != -1; --i)
     {
         TextDrawHideForPlayer(playerid, g_tdGangs[i]);
     }
 
-    for(new i = sizeof(p_tdGangMemberSlots[]) - 1; i != -1; --i)
+    for (new i = sizeof(p_tdGangMemberSlots[]) - 1; i != -1; --i)
     {
         PlayerTextDrawHide(playerid, p_tdGangMemberSlots[playerid][i]{0});
         PlayerTextDrawHide(playerid, p_tdGangMemberSlots[playerid][i]{1});
@@ -132,9 +132,9 @@ GangPanel_OpenRoles(playerid)
     strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Los roles están ordenados por su importancia jerárquica\t \n");
 
     new line[90];
-    for(new i = sizeof(g_rgeGangRanks[]) - 1; i != -1; --i)
+    for (new i = sizeof(g_rgeGangRanks[]) - 1; i != -1; --i)
     {
-        if(g_rgeGangRanks[Player_Gang(playerid)][i][e_iRankId])
+        if (g_rgeGangRanks[Player_Gang(playerid)][i][e_iRankId])
         {
             format(line, sizeof(line), "{DADADA}%2i {CB3126}>{DADADA} %s\t \n", i + 1, g_rgeGangRanks[Player_Gang(playerid)][i][e_szRankName]);
         }
@@ -167,7 +167,7 @@ GangPanel_OpenRolePermissions(playerid)
     strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Permiso\t{DADADA}Estado\n");
 
     new line[92];
-    for(new i; i < sizeof(g_rgszGangPermNames); ++i)
+    for (new i; i < sizeof(g_rgszGangPermNames); ++i)
     {
         format(line, sizeof(line), "{DADADA}%s\t%s\n", g_rgszGangPermNames[i], ((g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_iRankPermisionFlags] & (1 << i)) != 0 ? "{64A752}+" : "{A83225}-"));
         strcat(HYAXE_UNSAFE_HUGE_STRING, line);
@@ -182,9 +182,9 @@ GangPanel_OpenRoleSwap(playerid)
     strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Selecciona el rango para intercambiar sus posiciones\t \n");
 
     new line[90];
-    for(new i = sizeof(g_rgeGangRanks[]) - 1; i != -1; --i)
+    for (new i = sizeof(g_rgeGangRanks[]) - 1; i != -1; --i)
     {
-        if(g_rgeGangRanks[Player_Gang(playerid)][i][e_iRankId])
+        if (g_rgeGangRanks[Player_Gang(playerid)][i][e_iRankId])
         {
             format(line, sizeof(line), "{DADADA}%2i {CB3126}>{%06x} %s\t \n", i + 1, (g_rgiPanelSelectedRole{playerid} == i ? 0xCB3126 : (Player_GangRank(playerid) > i || Player_IsGangOwner(playerid) ? 0xDADADA : 0x969696)), g_rgeGangRanks[Player_Gang(playerid)][i][e_szRankName]);
         }
@@ -202,9 +202,9 @@ GangPanel_OpenRoleSwap(playerid)
 
 Gang_GetLowestRank(gangid)
 {
-    for(new i; i < sizeof(g_rgeGangRanks[]); ++i)
+    for (new i; i < sizeof(g_rgeGangRanks[]); ++i)
     {
-        if(g_rgeGangRanks[gangid][i][e_iRankId])
+        if (g_rgeGangRanks[gangid][i][e_iRankId])
             return i;
     }
     return -1;

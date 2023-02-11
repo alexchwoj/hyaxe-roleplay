@@ -5,7 +5,7 @@
 
 command policias(playerid, const params[], "Muestra el panel de policías")
 {
-    if(!Player_IsPolice(playerid) && Player_AdminLevel(playerid) < RANK_LEVEL_ADMINISTRATOR)
+    if (!Player_IsPolice(playerid) && Player_AdminLevel(playerid) < RANK_LEVEL_ADMINISTRATOR)
     {
         SendClientMessagef(playerid, 0x3A86FFFF, "{DADADA}Solo la {3A86FF}policía{DADADA} puede acceder al panel de administración policial.");
         return 1;
@@ -18,7 +18,7 @@ command policias(playerid, const params[], "Muestra el panel de policías")
         new rowc;
         cache_get_row_count(rowc);
 
-        if(!rowc)
+        if (!rowc)
         {
             SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} No hay ningún policía.");
             return 1;
@@ -27,7 +27,7 @@ command policias(playerid, const params[], "Muestra el panel de policías")
         strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Oficial\t{DADADA}Rango\t{DADADA}Reclutado por\t{DADADA}Última conexión{DADADA}\n");
 
         new line[256];
-        for(new i; i < rowc; ++i)
+        for (new i; i < rowc; ++i)
         {
             new officer_id, officer_name[25], rank, recruiter_id, recruiter_name[25], officer_current_playerid, last_connection[24];
             cache_get_value_name_int(i, "ACCOUNT_ID", officer_id);
@@ -37,7 +37,7 @@ command policias(playerid, const params[], "Muestra el panel de policías")
 
             new bool:isnt_recruited;
             cache_is_value_name_null(i, "RECRUITER_NAME", isnt_recruited);
-            if(isnt_recruited)
+            if (isnt_recruited)
             {
                 strcat(recruiter_name, "Desconocido");
                 recruiter_id = 0;
@@ -76,16 +76,16 @@ command policias(playerid, const params[], "Muestra el panel de policías")
 
 dialog police_manage(playerid, dialogid, response, listitem, inputtext[])
 {
-    if(!response)
+    if (!response)
         return 1;
 
-    if(Police_Rank(playerid) < _:POLICE_RANK_COMMISSIONER && Player_AdminLevel(playerid) < RANK_LEVEL_ADMINISTRATOR)
+    if (Police_Rank(playerid) < _:POLICE_RANK_COMMISSIONER && Player_AdminLevel(playerid) < RANK_LEVEL_ADMINISTRATOR)
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Solo los comisarios pueden hacer esto");
         return 1;
     }
 
-    if(sscanf(inputtext, "s[24]P<()>{s[2]}i", g_rgszSelectedOfficer[playerid], g_rgszSelectedOfficer[playerid][25]))
+    if (sscanf(inputtext, "s[24]P<()>{s[2]}i", g_rgszSelectedOfficer[playerid], g_rgszSelectedOfficer[playerid][25]))
         return 1;
 
     g_rgszSelectedOfficer[playerid][24] = '\0';
@@ -97,20 +97,20 @@ dialog police_manage(playerid, dialogid, response, listitem, inputtext[])
 
 dialog police_manage_officer(playerid, dialogid, response, listitem, inputtext[])
 {
-    if(!response)
+    if (!response)
     {
         PC_EmulateCommand(playerid, "/policias");
         return 1;
     }
 
-    switch(listitem)
+    switch (listitem)
     {
         case 0: // Ascender o descender
         {
             HYAXE_UNSAFE_HUGE_STRING[0] = '\0';
             
             new line[64];
-            for(new i = sizeof(g_rgszPoliceRankNames) - 2; i != 0; --i)
+            for (new i = sizeof(g_rgszPoliceRankNames) - 2; i != 0; --i)
             {
                 format(line, sizeof(line), "{3A86FF}%2i.{DADADA} %s\n", i, g_rgszPoliceRankNames[i]);
                 strcat(HYAXE_UNSAFE_HUGE_STRING, line);
@@ -125,7 +125,7 @@ dialog police_manage_officer(playerid, dialogid, response, listitem, inputtext[]
             {
                 #pragma unused li, it
 
-                if(!res)
+                if (!res)
                 {
                     PC_EmulateCommand(playerid, "/policias");
                     return 1;
@@ -138,9 +138,9 @@ dialog police_manage_officer(playerid, dialogid, response, listitem, inputtext[]
                 
                 foreach(new i : Police)
                 {
-                    if(Player_AccountID(i) == g_rgszSelectedOfficer[playerid][25])
+                    if (Player_AccountID(i) == g_rgszSelectedOfficer[playerid][25])
                     {
-                        if(g_rgbPlayerOnPoliceDuty{i})
+                        if (g_rgbPlayerOnPoliceDuty{i})
                         {
                             Player_SetImmunityForCheat(i, CHEAT_WEAPON, 1000 + GetPlayerPing(i));
                             
@@ -170,17 +170,17 @@ dialog police_manage_officer(playerid, dialogid, response, listitem, inputtext[]
 
 dialog police_change_rank(playerid, dialogid, response, listitem, inputtext[])
 {
-    if(response)
+    if (response)
     {
         new new_rank = _:POLICE_RANK_GEN_COMMISSIONER - listitem;
-        if(new_rank > Police_Rank(playerid) && Player_AdminLevel(playerid) < RANK_LEVEL_ADMINISTRATOR)
+        if (new_rank > Police_Rank(playerid) && Player_AdminLevel(playerid) < RANK_LEVEL_ADMINISTRATOR)
         {
             Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Debes asignar un rango menor o igual al tuyo");
             
             HYAXE_UNSAFE_HUGE_STRING[0] = '\0';
             
             new line[64];
-            for(new i = sizeof(g_rgszPoliceRankNames) - 2; i != 0; --i)
+            for (new i = sizeof(g_rgszPoliceRankNames) - 2; i != 0; --i)
             {
                 format(line, sizeof(line), "{3A86FF}%2i.{DADADA} %s\n", i, g_rgszPoliceRankNames[i]);
                 strcat(HYAXE_UNSAFE_HUGE_STRING, line);
@@ -198,9 +198,9 @@ dialog police_change_rank(playerid, dialogid, response, listitem, inputtext[])
         
         foreach(new i : LoggedIn)
         {
-            if(g_rgszSelectedOfficer[playerid][25] == Player_AccountID(i))
+            if (g_rgszSelectedOfficer[playerid][25] == Player_AccountID(i))
             {
-                if(Police_Rank(i) != new_rank)
+                if (Police_Rank(i) != new_rank)
                 {
                     new const bool:is_lower = (Police_Rank(i) > new_rank);
                     Police_Rank(i) = new_rank;
@@ -217,7 +217,7 @@ dialog police_change_rank(playerid, dialogid, response, listitem, inputtext[])
             }
         }
 
-        if(!reported)
+        if (!reported)
         {
             Police_SendMessage(POLICE_RANK_NONE, 0x3A86FFFF, va_return("[Policía] ›{DADADA} %s ahora es {415BA2}%s{DADADA}.", g_rgszSelectedOfficer[playerid], g_rgszPoliceRankNames[new_rank]));
         }
@@ -229,7 +229,7 @@ dialog police_change_rank(playerid, dialogid, response, listitem, inputtext[])
 
 command cargos(playerid, const params[], "Dale cargos a un jugador")
 {
-    if(!Police_OnDuty(playerid))
+    if (!Police_OnDuty(playerid))
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No estas de servicio como policía");
         return 1;
@@ -240,37 +240,37 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
         return 1;
     }
 
-    if(!(0 <= charges <= 6))
+    if (!(0 <= charges <= 6))
     {
         SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Solo puedes asignar entre 0 y 6 cargos.");
         return 1;
     }
 
-    if(!IsPlayerConnected(target) || IsPlayerNPC(target))
+    if (!IsPlayerConnected(target) || IsPlayerNPC(target))
     {
         SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Jugador inválido");
         return 1;
     }
 
-    if(target == playerid)
+    if (target == playerid)
     {
         SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} No puedes darte cargos a ti mismo.");
         return 1;
     }
 
-    if(Police_OnDuty(target))
+    if (Police_OnDuty(target))
     {
         SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} No puedes darle cargos a un policía en servicio.");
         return 1;
     }
 
-    if(Player_WantedLevel(target) == charges)
+    if (Player_WantedLevel(target) == charges)
     {
         SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} El jugador ya tiene esa cantidad de cargos.");
         return 1;
     }
 
-    if(!charges && Player_WantedLevel(target))
+    if (!charges && Player_WantedLevel(target))
     {
         Police_SendMessage(POLICE_RANK_OFFICER, 0xED2B2BFF, 
             va_return(
@@ -280,7 +280,7 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
         10, target);
         Notification_Show(target, "Un oficial de policía eliminó la orden de arresto en tu contra", 5000);
     }
-    else if(!Player_WantedLevel(target))
+    else if (!Player_WantedLevel(target))
     {
         Police_SendMessage(POLICE_RANK_OFFICER, 0xED2B2BFF, 
             va_return(
@@ -290,7 +290,7 @@ command cargos(playerid, const params[], "Dale cargos a un jugador")
         10, target);
         Notification_Show(target, va_return("Un oficial de policía emitió una orden de arresto de nivel %d en tu contra", charges), 5000);
     }
-    else if(Player_WantedLevel(target) > charges)
+    else if (Player_WantedLevel(target) > charges)
     {
         Police_SendMessage(POLICE_RANK_OFFICER, 0xED2B2BFF, 
             va_return(
@@ -324,7 +324,7 @@ alias:cargos("c")
 
 command reclutar(playerid, const params[], "Recluta a alguien como policía")
 {
-    if(Police_Rank(playerid) < _:POLICE_RANK_COMMISSIONER && Player_AdminLevel(playerid) < RANK_LEVEL_ADMINISTRATOR)
+    if (Police_Rank(playerid) < _:POLICE_RANK_COMMISSIONER && Player_AdminLevel(playerid) < RANK_LEVEL_ADMINISTRATOR)
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No tienes permiso para hacer esto");
         return 1;
@@ -335,13 +335,13 @@ command reclutar(playerid, const params[], "Recluta a alguien como policía")
         return 1;
     }
 
-    if(!IsPlayerConnected(target) || IsPlayerNPC(target))
+    if (!IsPlayerConnected(target) || IsPlayerNPC(target))
     {
         SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Jugador inválido.");
         return 1;
     }
 
-    if(Player_IsPolice(target))
+    if (Player_IsPolice(target))
     {
         SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Este jugador ya es policía.");
         return 1;
@@ -351,7 +351,7 @@ command reclutar(playerid, const params[], "Recluta a alguien como policía")
     {
         #pragma unused listitem, inputtext
 
-        if(!response)
+        if (!response)
         {
             SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} %s rechazó unirse a LSPD.", Player_RPName(target));
             return 1;
@@ -373,7 +373,7 @@ command reclutar(playerid, const params[], "Recluta a alguien como policía")
         Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, message);
         Police_OnDuty(target) = false;
 
-        if(!Police_OnDuty(playerid))
+        if (!Police_OnDuty(playerid))
             SendClientMessage(playerid, 0x3A86FFFF, message);
     }
     Dialog_ShowCallback(target, using inline Response, DIALOG_STYLE_MSGBOX, "{3A86FF}Hyaxe{DADADA} - Policía", va_return("{3A86FF}%s{DADADA} ofrecio unirte a LSPD con el rango de %s.", Player_RPName(playerid), Police_GetRankName(POLICE_RANK_OFFICER)), "Aceptar", "Cancelar");
@@ -387,26 +387,26 @@ static
 
 command arrestar(playerid, const params[], "Arresta a un jugador")
 {
-    if(!Police_OnDuty(playerid))
+    if (!Police_OnDuty(playerid))
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas estar de servicio como policía");
         return 1;
     }
 
     new target = GetPlayerCameraTargetPlayer(playerid);
-    if(!IsPlayerConnected(target) || IsPlayerNPC(target))
+    if (!IsPlayerConnected(target) || IsPlayerNPC(target))
     {
         SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Necesitas estar viendo a un jugador para arrestarlo.");
         return 1;
     }
 
-    if(!Player_WantedLevel(target))
+    if (!Player_WantedLevel(target))
     {
         SendClientMessagef(playerid, 0x3A86FFFF, "›{DADADA} %s no tiene nivel de búsqueda.", Player_Sex(target) == SEX_MALE ? "Este jugador" : "Esta jugadora");
         return 1;
     }
 
-    if(Bit_Get(Player_Flags(target), PFLAG_ARRESTED))
+    if (Bit_Get(Player_Flags(target), PFLAG_ARRESTED))
     {
         SendClientMessagef(playerid, 0x3A86FFFF, "›{DADADA} %s ya está esposad%c.", Player_Sex(target) == SEX_MALE ? "Este jugador" : "Esta jugadora", Player_Sex(target) == SEX_MALE ? 'o' : 'a');
         return 1;
@@ -414,7 +414,7 @@ command arrestar(playerid, const params[], "Arresta a un jugador")
 
     new Float:x, Float:y, Float:z;
     GetPlayerPos(target, x, y, z);
-    if(!IsPlayerInRangeOfPoint(playerid, 2.0, x, y, z))
+    if (!IsPlayerInRangeOfPoint(playerid, 2.0, x, y, z))
     {
         SendClientMessagef(playerid, 0x3A86FFFF, "›{DADADA} Necesitas estar más cerca de%s", (Player_Sex(target) == SEX_MALE ? "l jugador" : " la jugadora"));
         return 1;
@@ -422,7 +422,7 @@ command arrestar(playerid, const params[], "Arresta a un jugador")
 
     Player_RemoveAllWeapons(target);
 
-    if(Bit_Get(Player_Flags(target), PFLAG_INJURED))
+    if (Bit_Get(Player_Flags(target), PFLAG_INJURED))
     {
         Player_Revive(target);
     }
@@ -517,7 +517,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
 
 public OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
-    if(checkpointid == g_iArrestCheckpoint)
+    if (checkpointid == g_iArrestCheckpoint)
     {
         TogglePlayerDynamicCP(playerid, g_iArrestCheckpoint, false);
 
@@ -579,11 +579,11 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    if(Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
     {
         foreach(new i : Police)
         {
-            if(s_rgiPoliceArrestingPlayer[i] == playerid)
+            if (s_rgiPoliceArrestingPlayer[i] == playerid)
             {
                 Player_GiveMoney(i, 3000);
                 Notification_Show(i, "El jugador al que arrestabas se desconecto. Se te dio una bonificación de ~r~3000$~w~ por su arresto.", 10000);
@@ -613,7 +613,7 @@ public OnPlayerDisconnect(playerid, reason)
 
 command tiempo(playerid, const params[], "Ve el tiempo restante de condena")
 {
-    if(!Player_Data(playerid, e_iJailTime))
+    if (!Player_Data(playerid, e_iJailTime))
     {
         SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No estás en prisión.");
         return 1;
@@ -633,20 +633,20 @@ command tiempo(playerid, const params[], "Ve el tiempo restante de condena")
 
 command liberar(playerid, const params[], "Libera a un jugador de sus esposas")
 {
-    if(!Police_OnDuty(playerid) && Player_AdminLevel(playerid) < RANK_LEVEL_MODERATOR)
+    if (!Police_OnDuty(playerid) && Player_AdminLevel(playerid) < RANK_LEVEL_MODERATOR)
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas estar de servicio como policía");
         return 1;
     }
 
     new target = GetPlayerCameraTargetPlayer(playerid);
-    if(!IsPlayerConnected(target))
+    if (!IsPlayerConnected(target))
     {
         SendClientMessage(playerid, 0x3A86FFFF, "›{DADADA} Necesitas estar viendo a un jugador para liberarlo.");
         return 1;
     }
 
-    if(!Bit_Get(Player_Flags(target), PFLAG_ARRESTED))
+    if (!Bit_Get(Player_Flags(target), PFLAG_ARRESTED))
     {
         SendClientMessagef(playerid, 0x3A86FFFF, "›{DADADA} %s no está arrestad%c.", (Player_Sex(target) == SEX_MALE ? "Este jugador" : "Esta jugadora"), (Player_Sex(target) == SEX_MALE ? 'o' : 'a'));
         return 1;
@@ -658,7 +658,7 @@ command liberar(playerid, const params[], "Libera a un jugador de sus esposas")
 
     foreach(new i : Police)
     {
-        if(s_rgiPoliceArrestingPlayer[i] == playerid)
+        if (s_rgiPoliceArrestingPlayer[i] == playerid)
         {
             s_rgiPoliceArrestingPlayer[i] = INVALID_PLAYER_ID;
             break;
@@ -672,7 +672,7 @@ command liberar(playerid, const params[], "Libera a un jugador de sus esposas")
 
 command absolver(playerid, const params[], "Absuelve a un jugador de su condena")
 {
-    if(!Police_OnDuty(playerid) && Player_AdminLevel(playerid) < RANK_LEVEL_MODERATOR)
+    if (!Police_OnDuty(playerid) && Player_AdminLevel(playerid) < RANK_LEVEL_MODERATOR)
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas estar de servicio como policía");
         return 1;

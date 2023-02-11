@@ -20,7 +20,7 @@ public OnScriptInit()
 	mysql_log(ALL);
 
 	g_hDatabase = mysql_connect_file("hyaxe_db.ini");
-	if(mysql_errno(g_hDatabase) > 0)
+	if (mysql_errno(g_hDatabase) > 0)
 	{
 		mysql_error(HYAXE_UNSAFE_HUGE_STRING, .handle = g_hDatabase);
 		print("[db!] Failed to connect to MySQL server:");
@@ -34,7 +34,7 @@ public OnScriptInit()
 	
 	mysql_query_file(g_hDatabase, "schema.sql", false);
 
-	if(mysql_errno(g_hDatabase) != 0)
+	if (mysql_errno(g_hDatabase) != 0)
 	{
 		mysql_error(HYAXE_UNSAFE_HUGE_STRING);
 		print("[db!] Failed to connect to MySQL server:");

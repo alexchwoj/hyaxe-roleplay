@@ -16,7 +16,7 @@ CHAIN_FORWARD:Config_OnScriptInit() = 1;
 
 public OnScriptInit()
 {
-	if(GetSVarInt("hyaxe_exit") == 1)
+	if (GetSVarInt("hyaxe_exit") == 1)
 	{
 		SendRconCommand("exit");
 		return 1;
@@ -131,9 +131,9 @@ public OnGameModeInit()
 	printf(" |_| |_| |_/_/   \\_\\/_/\\_\\_____|");
 	printf("\n Hyaxe Server "SERVER_VERSION"\n");
                                 
-	for(new i = MAX_PLAYERS - 1; i != -1; --i)
+	for (new i = MAX_PLAYERS - 1; i != -1; --i)
 	{
-		if(FCNPC_IsValid(i))
+		if (FCNPC_IsValid(i))
 			SetPlayerColor(i, 0xF7F7F700);
 	}
 

@@ -7,12 +7,12 @@ Phone_Show(playerid, const menu_id[])
 {
 	Phone_Hide(playerid);
 	
-    for(new i = 5; i != -1; --i)
+    for (new i = 5; i != -1; --i)
     {
         PlayerTextDrawShow(playerid, p_tdPhone[playerid]{i});
     }
     
-    for(new i = sizeof(g_tdPhone) - 1; i != -1; --i)
+    for (new i = sizeof(g_tdPhone) - 1; i != -1; --i)
     {
         TextDrawShowForPlayer(playerid, g_tdPhone[i]);
     }
@@ -96,12 +96,12 @@ Phone_Hide(playerid)
 
     Menu_Hide(playerid);
 
-    for(new i = 5; i != -1; --i)
+    for (new i = 5; i != -1; --i)
     {
         PlayerTextDrawHide(playerid, p_tdPhone[playerid]{i});
     }
     
-    for(new i = sizeof(g_tdPhone) - 1; i != -1; --i)
+    for (new i = sizeof(g_tdPhone) - 1; i != -1; --i)
     {
         TextDrawHideForPlayer(playerid, g_tdPhone[i]);
     }
@@ -145,7 +145,7 @@ command sms(playerid, const params[], "Enviar un mensaje SMS a un usuario")
 
 	new messages[2][144];
 	format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{64A752}[SMS] › {DADADA}%s (%d) > %s (%d): %s", Player_RPName(playerid), playerid, Player_RPName(destination), destination, message);
-	for(new i, j = SplitChatMessageInLines(HYAXE_UNSAFE_HUGE_STRING, messages); i < j; ++i)
+	for (new i, j = SplitChatMessageInLines(HYAXE_UNSAFE_HUGE_STRING, messages); i < j; ++i)
 	{
 		SendClientMessage(destination, 0xDADADAFF, messages[i]);
 		SendClientMessage(playerid, 0xDADADAFF, messages[i]);

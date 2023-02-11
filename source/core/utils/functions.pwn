@@ -206,22 +206,22 @@ Str_FixEncoding_Ref(result[])
 SplitChatMessageInLines(const string[], result[][], max_lines = sizeof(result), max_line_length = sizeof(result[]))
 {
 	new len = strlen(string);
-	if(len < max_line_length)
+	if (len < max_line_length)
 	{
 		strcpy(result[0], string, max_line_length);
 		return 1;
 	}
 
 	static Regex:rgx;
-    if(!rgx)
+    if (!rgx)
         rgx = Regex_New(".{1,144}(\\s|$)");
 	
 	new RegexMatch:match, pos, startpos, line_count;
-	while(Regex_Search(string, rgx, match, pos, startpos) && line_count < max_lines)
+	while (Regex_Search(string, rgx, match, pos, startpos) && line_count < max_lines)
 	{
 		new length;
 		Match_GetGroup(match, 0, result[line_count], length, max_line_length);
-		if(result[line_count][length - 1] == ' ')
+		if (result[line_count][length - 1] == ' ')
 			result[line_count][length - 1] = '\0';
 
 		line_count++;
@@ -249,7 +249,7 @@ Format_Thousand(number)
 
 	new const bool:negative = (number < 0);
 
-	for(new i = strlen(string) - 3; i > _:negative; i -= 3)
+	for (new i = strlen(string) - 3; i > _:negative; i -= 3)
 	{
 		strins(string, ".", i);
 	}
@@ -274,7 +274,7 @@ Str_Random(dest[], len = sizeof dest)
 {
     dest[len] = '\0';
 
-    while(--len != -1)
+    while (--len != -1)
     {
         dest[len] = random(2) ? (random(26) + (random(2) ? 'a' : 'A')) : (random(10) + '0');
     }
@@ -282,16 +282,16 @@ Str_Random(dest[], len = sizeof dest)
 
 binary_search(const arr[], value, start = 0, end = -1, size = sizeof(arr))
 {
-    if(end == -1)
+    if (end == -1)
         end = size - 1;
     
-    while(start <= end)
+    while (start <= end)
     {
         new middle = start + (end - start) / 2;
-        if(arr[middle] == value)
+        if (arr[middle] == value)
             return middle;
 
-        if(arr[middle] < value)
+        if (arr[middle] < value)
             start = middle + 1;
         else
             end = middle - 1;
@@ -337,7 +337,7 @@ stock ARGBToRGBA(col)
 bool:IsValidEmailAddress(const str[])
 {
     static Regex:email_rgx;
-    if(!email_rgx)
+    if (!email_rgx)
         email_rgx = Regex_New("^[\\w\\d.!#$%&'*+/=?^`{|}~-]+@[\\w\\d-]+\\.[\\w\\d-]{2,11}$", REGEX_ICASE);
 
     return bool:Regex_Check(str, email_rgx);
@@ -345,7 +345,7 @@ bool:IsValidEmailAddress(const str[])
 
 bool:Skin_IsFat(skin)
 {
-    switch(skin)
+    switch (skin)
     {
         case 5: return true;
         case 149: return true;
@@ -360,7 +360,7 @@ bool:Skin_IsFat(skin)
 
 Vehicle_GetPaintjobs(modelid)
 {
-	switch(modelid)
+	switch (modelid)
 	{
 		case 483: return 1;
 		case 534..536: return 3;
@@ -404,7 +404,7 @@ GetPlayerNearestVehicle(playerid)
 
     foreach (new i : Vehicle)
     {
-        if(GetVehicleVirtualWorld(i) != vw || GetVehicleInterior(i) != interior)
+        if (GetVehicleVirtualWorld(i) != vw || GetVehicleInterior(i) != interior)
             continue;
             
         if ((veh_dist = GetVehicleDistanceFromPoint(i, x, y, z)) < distance)

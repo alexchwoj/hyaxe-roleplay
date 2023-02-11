@@ -11,7 +11,7 @@ static
 const __ac_cj_VehicleSync = 200;
 IPacket:__ac_cj_VehicleSync(playerid, BitStream:bs)
 {
-    if(Player_HasImmunityForCheat(playerid, CHEAT_CARJACK) || s_rgbDriver{playerid})
+    if (Player_HasImmunityForCheat(playerid, CHEAT_CARJACK) || s_rgbDriver{playerid})
         return 1;
 
     new
@@ -22,7 +22,7 @@ IPacket:__ac_cj_VehicleSync(playerid, BitStream:bs)
         PR_UINT16, vehicleid
     );
 
-    if(Vehicle_Locked(vehicleid))
+    if (Vehicle_Locked(vehicleid))
     {
         RemovePlayerFromVehicle(playerid);
 
@@ -59,17 +59,17 @@ IPacket:__ac_cj_VehicleSync(playerid, BitStream:bs)
     new driver = INVALID_PLAYER_ID;
     foreach(new i : Player)
     {
-        if(i == playerid)
+        if (i == playerid)
             continue;
             
-        if(GetPlayerVehicleID(i) == vehicleid && GetPlayerVehicleSeat(i) == 0)
+        if (GetPlayerVehicleID(i) == vehicleid && GetPlayerVehicleSeat(i) == 0)
         {
             driver = i;
             break;
         }
     }
 
-    if(driver != INVALID_PLAYER_ID)
+    if (driver != INVALID_PLAYER_ID)
     {
         Anticheat_Trigger(playerid, CHEAT_CARJACK, 1);
         return 0;
@@ -82,7 +82,7 @@ IPacket:__ac_cj_VehicleSync(playerid, BitStream:bs)
 
 public OnPlayerStateChange(playerid, newstate, oldstate)
 {
-    if(oldstate == PLAYER_STATE_DRIVER)
+    if (oldstate == PLAYER_STATE_DRIVER)
     {
         s_rgbDriver{playerid} = false;
     }

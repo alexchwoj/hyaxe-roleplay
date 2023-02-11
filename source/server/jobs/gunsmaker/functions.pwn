@@ -5,11 +5,11 @@
 
 Gunsmaker_ProcessQueue()
 {
-    if(!Iter_Count(GunsmakerBenchQueue))
+    if (!Iter_Count(GunsmakerBenchQueue))
         return 0;
 
     new id = Cell_GetLowestBlank(g_iGunsmakerUsedBenchs);
-    if(id == sizeof(g_rgfGunsmakerBenchSites))
+    if (id == sizeof(g_rgfGunsmakerBenchSites))
         return 0;
         
     new playerid = Iter_First(GunsmakerBenchQueue);

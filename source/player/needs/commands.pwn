@@ -5,23 +5,23 @@
 
 command cagar(playerid, const params[], "Echa un cago")
 {
-    if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING) || Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING) || Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED))
         return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes hacer eso");
 
-    if(GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
+    if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
         return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No estás de pie");
 
-    if(GetPlayerSurfingObjectID(playerid) != INVALID_OBJECT_ID)
+    if (GetPlayerSurfingObjectID(playerid) != INVALID_OBJECT_ID)
         return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes cagar encima de un objeto");
 
-    if(GetPlayerSurfingVehicleID(playerid) != INVALID_VEHICLE_ID)
+    if (GetPlayerSurfingVehicleID(playerid) != INVALID_VEHICLE_ID)
         return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes cagar encima de un vehículo");
 
-    if(!CA_IsPlayerOnSurface(playerid, 2.0))
+    if (!CA_IsPlayerOnSurface(playerid, 2.0))
         return Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "No puedes cagar en el aire");
 
     new diff = GetTickCount() - g_rgePlayerTempData[playerid][e_iPlayerShitTick];
-    if(120000 > diff)
+    if (120000 > diff)
     {
         SendClientMessagef(playerid, 0xDADADAFF, "Cagaste hace poco. Espera {CB3126}%i minutos{DADADA} antes de volver a cagar.", ((120000 - diff) / 60000));
         return 0;
@@ -48,7 +48,7 @@ public SHIT_StepOne(playerid)
         vw = GetPlayerVirtualWorld(playerid),
         int = GetPlayerInterior(playerid);
 
-    if(int != 0)
+    if (int != 0)
         z -= 1.0;
     else
         CA_FindZ_For2DCoord(x, y, z);

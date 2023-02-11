@@ -12,7 +12,7 @@ IPacket:__ac_money_StatsUpdate(playerid, BitStream:bs)
         PR_INT32, money
     );
 
-    if(money != Player_Money(playerid))
+    if (money != Player_Money(playerid))
     {
         ResetPlayerMoney(playerid);
         GivePlayerMoney(playerid, Player_Money(playerid));

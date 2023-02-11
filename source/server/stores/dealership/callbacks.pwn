@@ -48,7 +48,7 @@ public OnScriptInit()
     CreateDynamicMapIcon(1642.246582, 1796.102050, 10.820312, 55, -1, .worldid = 0, .interiorid = 0);
     CreateDynamicMapIcon(-1645.245361, 1217.047973, 6.732273, 55, -1, .worldid = 0, .interiorid = 0);
 
-    for(new i; i != sizeof(g_rgeVehiclesForSale); ++i)
+    for (new i; i != sizeof(g_rgeVehiclesForSale); ++i)
     {
         g_rgeVehiclesForSale[i][e_iVehicleID] = Vehicle_Create(
             g_rgeVehiclesForSale[i][e_iVehicleModelID],
@@ -99,7 +99,7 @@ public OnScriptInit()
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    if((newkeys & KEY_YES) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
+    if ((newkeys & KEY_YES) != 0 && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
         new vehicleid = INVALID_VEHICLE_ID;
         if (Bit_Get(Player_Config(playerid), CONFIG_ANDROID_MODE))

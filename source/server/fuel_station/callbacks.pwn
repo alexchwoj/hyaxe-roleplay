@@ -41,7 +41,7 @@ static GasStationCanisters_OnKeyPress(playerid)
 
 public OnScriptInit()
 {
-    for(new i; i < sizeof(g_rgfFuelStations); ++i)
+    for (new i; i < sizeof(g_rgfFuelStations); ++i)
     {
         Key_Alert(
             g_rgfFuelStations[i][0], g_rgfFuelStations[i][1], g_rgfFuelStations[i][2], 6.0,
@@ -81,7 +81,7 @@ dialog fuel_station(playerid, dialogid, response, listitem, inputtext[])
 {
     if (response)
     {
-        if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+        if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
             return 0;
             
         new vehicle_id = GetPlayerVehicleID(playerid);

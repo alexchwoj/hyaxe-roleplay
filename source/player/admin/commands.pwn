@@ -6,19 +6,19 @@
 command ban(playerid, const params[], "Veta a un jugador")
 {
     new banned, bool:ban_ip, time, reason[51];
-    if(sscanf(params, "rK<boolean>(0)I(-1)S(No especificada)[50]", banned, ban_ip, time, reason))
+    if (sscanf(params, "rK<boolean>(0)I(-1)S(No especificada)[50]", banned, ban_ip, time, reason))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/ban {DADADA}<jugador> {969696}[prohibir ip = no (0/1/si/no)] [tiempo en horas = -1 (permanente)] [razón = \"No especificada\"]");
         return 1;
     }
 
-    if(banned == playerid)
+    if (banned == playerid)
     {
         SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No puedes vetarte a ti mismo.");
         return 1;
     }
 
-    if(Player_AdminLevel(banned) > Player_AdminLevel(playerid))
+    if (Player_AdminLevel(banned) > Player_AdminLevel(playerid))
     {
         SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No puedes vetar a alguien superior a ti.");
         return 1;
@@ -40,19 +40,19 @@ flags:ban(CMD_FLAG<RANK_LEVEL_MODERATOR>)
 command kick(playerid, const params[], "Expulsa a un jugador")
 {
     new kicked, reason[51];
-    if(sscanf(params, "rS(No especificada)[50]", kicked, reason))
+    if (sscanf(params, "rS(No especificada)[50]", kicked, reason))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/kick {DADADA}<jugador> {969696}[razón = \"No especificada\"]");
         return 1;
     }
 
-    if(kicked == playerid)
+    if (kicked == playerid)
     {
         SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No puedes expulsarte a ti mismo.");
         return 1;
     }
 
-    if(Player_AdminLevel(kicked) > Player_AdminLevel(playerid))
+    if (Player_AdminLevel(kicked) > Player_AdminLevel(playerid))
     {
         SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No puedes expulsar a alguien superior a ti.");
         return 1;
@@ -94,9 +94,9 @@ flags:kick(CMD_FLAG<RANK_LEVEL_MODERATOR> | CMD_DONT_LOG_COMMAND)
 command ban_account(playerid, const params[], "Veta a una cuenta offline")
 {
     new account_id, account_name[25], reason[51], time_hours;
-    if(!sscanf(params, "iI(-1)S(No especificada)[50]", account_id, time_hours, reason))
+    if (!sscanf(params, "iI(-1)S(No especificada)[50]", account_id, time_hours, reason))
     {
-        if(account_id < 1)
+        if (account_id < 1)
         {
             SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} Para banear una cuenta offline por ID, la ID proveída debe ser mayor a 0.");
             return 1;
@@ -106,7 +106,7 @@ command ban_account(playerid, const params[], "Veta a una cuenta offline")
         {
             new rowc;
             cache_get_row_count(rowc);
-            if(!rowc)
+            if (!rowc)
             {
                 SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} No hay una cuenta asociada a la ID {ED2B2B}%i{DADADA}.", account_id);
                 return 1;
@@ -129,7 +129,7 @@ command ban_account(playerid, const params[], "Veta a una cuenta offline")
 
         return 1;
     }
-    else if(sscanf(params, "s[24]I(-1)S(No especificada)[50]", account_name, time_hours, reason))
+    else if (sscanf(params, "s[24]I(-1)S(No especificada)[50]", account_name, time_hours, reason))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/ban_account {DADADA}<dbid o nombre> {969696}[tiempo en horas = -1 (permanente)] [razón = \"No especificada\"]");
         return 1;
@@ -139,7 +139,7 @@ command ban_account(playerid, const params[], "Veta a una cuenta offline")
     {
         new rowc;
         cache_get_row_count(rowc);
-        if(!rowc)
+        if (!rowc)
         {
             SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} No hay una cuenta asociada al nombre {ED2B2B}%s{DADADA}.", account_name);
             return 1;
@@ -174,13 +174,13 @@ static
 command tp(playerid, const params[], "Teletransportate a la posición de un jugador")
 {
     new destination, player_two;
-    if(sscanf(params, "rR(-1)", destination, player_two) || !IsPlayerConnected(destination))
+    if (sscanf(params, "rR(-1)", destination, player_two) || !IsPlayerConnected(destination))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/tp{DADADA} <jugador de destino> {969696}[jugador]");
         return 1;
     }
 
-    if(IsPlayerConnected(player_two))
+    if (IsPlayerConnected(player_two))
         playerid = player_two;
 
     GetPlayerPos(playerid, s_rgfPreviousPositions[playerid][0], s_rgfPreviousPositions[playerid][1], s_rgfPreviousPositions[playerid][2]);
@@ -204,10 +204,10 @@ command back(playerid, const params[], "Devuelve a un jugador a su posición orig
 {
     new destination = -1;
     sscanf(params, "R(-1)", destination);
-    if(!IsPlayerConnected(destination))
+    if (!IsPlayerConnected(destination))
         destination = playerid;
 
-    if(!s_rgbHasBeenTeleported{destination})
+    if (!s_rgbHasBeenTeleported{destination})
     {
         SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} El jugador no ha sido teletransportado por un administrador.");
         return 1;
@@ -219,7 +219,7 @@ command back(playerid, const params[], "Devuelve a un jugador a su posición orig
     SetPlayerInterior(destination, s_rgiPreviousInteriors[destination]);
     SetPlayerVirtualWorld(destination, s_rgiPreviousWorlds[destination]);
 
-    if(destination != playerid)
+    if (destination != playerid)
         SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} %s fue devuelto a su posición original.", Player_RPName(playerid));
 
     SendClientMessagef(destination, 0xED2B2BFF, "›{DADADA} Fuiste devuelto a tu posición original.");
@@ -230,7 +230,7 @@ flags:back(CMD_FLAG<RANK_LEVEL_HELPER>)
 command bring(playerid, const params[], "Trae a un jugador a tu posición")
 {
     new destination;
-    if(sscanf(params, "r", destination))
+    if (sscanf(params, "r", destination))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/bring{DADADA} <jugador>");
         return 1;
@@ -290,7 +290,7 @@ command manage_admins(playerid, const params[], "Abre el panel de administradore
         new rowc;
         cache_get_row_count(rowc);
 
-        if(!rowc)
+        if (!rowc)
         {
             SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} No se pudo encontrar a ningun administrador en la base de datos.");
             return 1;
@@ -299,7 +299,7 @@ command manage_admins(playerid, const params[], "Abre el panel de administradore
         strcpy(HYAXE_UNSAFE_HUGE_STRING, "{DADADA}Nombre\t{DADADA}Rango administrativo\t{DADADA}Última conexión\n");
 
         new line[128];
-        for(new i; i < rowc; ++i)
+        for (new i; i < rowc; ++i)
         {
             new admin_name[25], admin_accountid, admin_playerid, admin_level, admin_sex, last_connection[24];
             cache_get_value_name(i, "NAME", admin_name);
@@ -337,13 +337,13 @@ flags:manage_admins(CMD_FLAG<RANK_LEVEL_MODERATOR>)
 
 dialog manage_admins(playerid, dialogid, response, listitem, const inputtext[])
 {
-    if(!response)
+    if (!response)
         return 1;
 
     new space;
-    for(; space < 24; ++space)
+    for (; space < 24; ++space)
     {
-        if(inputtext[space] == ' ')
+        if (inputtext[space] == ' ')
             break;
     }
 
@@ -355,26 +355,26 @@ dialog manage_admins(playerid, dialogid, response, listitem, const inputtext[])
 
 dialog manage_admin_options(playerid, dialogid, response, listitem, const inputtext[])
 {
-    if(!response)
+    if (!response)
     {
         PC_EmulateCommand(playerid, "/manage_admins");
         return 1;
     }
 
-    if(Player_AdminLevel(playerid) != RANK_LEVEL_SUPERADMIN)
+    if (Player_AdminLevel(playerid) != RANK_LEVEL_SUPERADMIN)
     {
         PC_EmulateCommand(playerid, "/manage_admins");
         Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes hacer eso");
         return 1;
     }
 
-    switch(listitem)
+    switch (listitem)
     {
         case 0:
         {
             HYAXE_UNSAFE_HUGE_STRING[0] = '\0';
             new line[64];
-            for(new i = RANK_LEVEL_USER; i <= RANK_LEVEL_SUPERADMIN; ++i)
+            for (new i = RANK_LEVEL_USER; i <= RANK_LEVEL_SUPERADMIN; ++i)
             {
                 format(line, sizeof(line), "%s\n", g_rgszRankLevelNames[i][SEX_MALE]); // Assume it's a man because I won't save anything else than the name
                 strcat(HYAXE_UNSAFE_HUGE_STRING, line);
@@ -390,9 +390,9 @@ dialog manage_admin_options(playerid, dialogid, response, listitem, const inputt
 
 dialog manage_admin_new_rank(playerid, dialogid, response, listitem, const inputtext[])
 {
-    if(response)
+    if (response)
     {
-        if(!(RANK_LEVEL_USER <= listitem <= RANK_LEVEL_SUPERADMIN))
+        if (!(RANK_LEVEL_USER <= listitem <= RANK_LEVEL_SUPERADMIN))
             return 1;
 
         mysql_format(g_hDatabase, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `ADMIN_LEVEL` = %i WHERE `NAME` = '%e' LIMIT 1;", listitem, s_rgszSelectedAdmin[playerid]);
@@ -402,9 +402,9 @@ dialog manage_admin_new_rank(playerid, dialogid, response, listitem, const input
         
         foreach(new i : LoggedIn)
         {
-            if(!strcmp(s_rgszSelectedAdmin[playerid], Player_Name(i)))
+            if (!strcmp(s_rgszSelectedAdmin[playerid], Player_Name(i)))
             {
-                if(Player_AdminLevel(i) != listitem)
+                if (Player_AdminLevel(i) != listitem)
                 {
                     new const bool:is_lower = (Player_AdminLevel(i) > listitem);
                     Player_AdminLevel(i) = listitem;
@@ -419,7 +419,7 @@ dialog manage_admin_new_rank(playerid, dialogid, response, listitem, const input
             }
         }
 
-        if(!reported)
+        if (!reported)
         {
             Admins_SendMessage(RANK_LEVEL_HELPER, 0x415BA2FF, va_return("›{DADADA} %s ahora es un {415BA2}%s{DADADA}.", s_rgszSelectedAdmin[playerid], g_rgszRankLevelNames[listitem][SEX_MALE]));
         }
@@ -460,7 +460,7 @@ flags:specoff(CMD_FLAG<RANK_LEVEL_MODERATOR>)
 command spec(playerid, const params[], "Spectea a un jugador")
 {
     new destination;
-    if(sscanf(params, "r", destination) || !IsPlayerConnected(destination))
+    if (sscanf(params, "r", destination) || !IsPlayerConnected(destination))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/spec {DADADA} <jugador>");
         return 1;
@@ -487,7 +487,7 @@ flags:spec(CMD_FLAG<RANK_LEVEL_MODERATOR>)
 command freeze(playerid, const params[], "Congela a un jugador")
 {
     new destination;
-    if(sscanf(params, "r", destination) || !IsPlayerConnected(destination))
+    if (sscanf(params, "r", destination) || !IsPlayerConnected(destination))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/freeze {DADADA} <jugador>");
         return 1;
@@ -502,7 +502,7 @@ flags:freeze(CMD_FLAG<RANK_LEVEL_MODERATOR>)
 command unfreeze(playerid, const params[], "Congela a un jugador")
 {
     new destination;
-    if(sscanf(params, "r", destination) || !IsPlayerConnected(destination))
+    if (sscanf(params, "r", destination) || !IsPlayerConnected(destination))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/unfreeze {DADADA} <jugador>");
         return 1;
@@ -516,7 +516,7 @@ flags:unfreeze(CMD_FLAG<RANK_LEVEL_MODERATOR>)
 
 command clearchat(playerid, const params[], "Limpia el chat")
 {
-    for(new i; i != 40; ++i)
+    for (new i; i != 40; ++i)
         SendClientMessageToAll(-1, " ");
     return 1;
 }
@@ -541,25 +541,25 @@ flags:asay(CMD_FLAG<RANK_LEVEL_MANAGER> | CMD_DONT_LOG_COMMAND)
 command set_skin(playerid, const params[], "Asigna la ropa de un jugador")
 {
     new destination, skin;
-    if(sscanf(params, "ri", destination, skin))
+    if (sscanf(params, "ri", destination, skin))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/set_skin{DADADA} <jugador> <skin>");
         return 1;
     }
 
-    if(!IsPlayerConnected(destination))
+    if (!IsPlayerConnected(destination))
     {
         SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} Jugador inválido.");
         return 1;
     }
 
-    if(!Player_SetSkin(destination, skin))
+    if (!Player_SetSkin(destination, skin))
     {
         SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} La ID de la skin debe estar entre el 0 y 311, excluyendo el 74.");
         return 1;
     }
 
-    if(playerid != destination)
+    if (playerid != destination)
     {
         SendClientMessage(destination, 0xED2B2BFF, "›{DADADA} Un administrador cambió tu skin.");
         SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} La skin de %s ahora es la %i.", Player_RPName(destination), skin);
@@ -589,7 +589,7 @@ command report(playerid, const params[], "Informar al personal sobre un usuario"
 
 	new messages[2][144];
 	format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{AE2012}[Reporte] › {DADADA}%s (%d) reporta a %s (%d): %s", Player_RPName(playerid), playerid, Player_RPName(destination), destination, message);
-	for(new i, j = SplitChatMessageInLines(HYAXE_UNSAFE_HUGE_STRING, messages); i < j; ++i)
+	for (new i, j = SplitChatMessageInLines(HYAXE_UNSAFE_HUGE_STRING, messages); i < j; ++i)
         Admins_SendMessage(RANK_LEVEL_HELPER, 0xDADADAFF, messages[i]);
 	
     Notification_Show(playerid, "Reporte enviado.", 3000, 0x64A752FF);
@@ -602,7 +602,7 @@ command ls(playerid, const params[], "Ir a Los Santos")
 {
     new destination = -1;
     sscanf(params, "R(-1)", destination);
-    if(!IsPlayerConnected(destination))
+    if (!IsPlayerConnected(destination))
         destination = playerid;
 
     Player_SetHealth(destination, 100);
@@ -646,7 +646,7 @@ command unban(playerid, const params[], "Desbanear a un jugador")
 
     inline const QueryDone()
     {
-        if(cache_affected_rows())
+        if (cache_affected_rows())
         {
             SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Usuario desbaneado: {ED2B2B}%s{DADADA}.", name);
         }
@@ -707,13 +707,13 @@ flags:tpveh(CMD_FLAG<RANK_LEVEL_MODERATOR>)
 command vehicles(playerid, const params[], "Ver los vehículos de un jugador")
 {
     new destination;
-    if(sscanf(params, "r", destination))
+    if (sscanf(params, "r", destination))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/vehicles{DADADA} <jugador>");
         return 1;
     }
 
-    if(!IsPlayerConnected(destination))
+    if (!IsPlayerConnected(destination))
         return SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} Jugador inválido.");
 
     SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Vehiculos de %s (id = %d, count = %d):", Player_Name(destination), destination, Iter_Count(PlayerVehicles[destination]));

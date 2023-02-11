@@ -5,7 +5,7 @@
 
 Police_SetRank(playerid, ePoliceRanks:new_rank)
 {
-    if(Police_Rank(playerid) == new_rank)
+    if (Police_Rank(playerid) == new_rank)
         return 0;
 
     Police_Rank(playerid) = new_rank;
@@ -22,12 +22,12 @@ Police_SendMessage(ePoliceRanks:rank, color, const message[], soundid = 0, suspe
 
     foreach(new i : Police)
     {
-        if(Police_OnDuty(i) && Police_Rank(i) >= _:rank)
+        if (Police_OnDuty(i) && Police_Rank(i) >= _:rank)
         {
-            for(new j; j < count; ++j)
+            for (new j; j < count; ++j)
                 SendClientMessage(i, color, messages[j]);
 
-            if(soundid && suspect != INVALID_PLAYER_ID)
+            if (soundid && suspect != INVALID_PLAYER_ID)
                 PlayCrimeReportForPlayer(i, suspect, soundid);
         }
     }
@@ -51,7 +51,7 @@ Police_SetMarkers(playerid)
 {
     foreach(new i : Player)
     {
-        if(Player_WantedLevel(i))
+        if (Player_WantedLevel(i))
         {
             SetPlayerMarkerForPlayer(playerid, i, 0xCB3126FF);
         }
@@ -62,7 +62,7 @@ Police_ClearMarkers(playerid)
 {
     foreach(new i : Player)
     {
-        if(Player_WantedLevel(i))
+        if (Player_WantedLevel(i))
         {
             SetPlayerMarkerForPlayer(playerid, i, 0xF7F7F700);
         }

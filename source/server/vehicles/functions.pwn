@@ -7,7 +7,7 @@ Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, c
 {
     new vehicleid = (static_veh ? AddStaticVehicleEx(vehicletype, x, y, z, rotation, color1, color2, respawn_delay, addsiren) : CreateVehicle(vehicletype, x, y, z, rotation, color1, color2, respawn_delay, addsiren));
 
-    if(vehicleid != INVALID_VEHICLE_ID)
+    if (vehicleid != INVALID_VEHICLE_ID)
     {
         g_rgeVehicles[vehicleid][e_bValid] =
         g_rgeVehicles[vehicleid][e_bSpawned] = true;
@@ -58,7 +58,7 @@ Vehicle_Destroy(vehicleid)
 
 Vehicle_StopUpdating(vehicleid)
 {
-    if(!g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_UPDATE])
+    if (!g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_UPDATE])
         return 0;
 
     KillTimer(g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_UPDATE]);
@@ -83,18 +83,18 @@ Float:Vehicle_GetSpeed(vehicleid)
 
 Vehicle_ToggleEngine(vehicleid, engstate = VEHICLE_STATE_DEFAULT)
 {
-    if(Vehicle_GetEngineState(vehicleid) == engstate)
+    if (Vehicle_GetEngineState(vehicleid) == engstate)
         return 1;
 
     new engine, lights, alarm, doors, bonnet, boot, objective;
     GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
     SetVehicleParamsEx(vehicleid, (engstate == VEHICLE_STATE_DEFAULT ? (_:!engine) : engstate), lights, alarm, doors, bonnet, boot, objective);
     
-    if(Vehicle_GetEngineState(vehicleid) == VEHICLE_STATE_ON)
+    if (Vehicle_GetEngineState(vehicleid) == VEHICLE_STATE_ON)
     {
         g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_UPDATE] = SetTimerEx("VEHICLE_Update", 1000, true, "i", vehicleid);
     }
-    else if(g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_UPDATE])
+    else if (g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_UPDATE])
     {
         Vehicle_StopUpdating(vehicleid);
     }
@@ -179,11 +179,11 @@ Vehicle_GetLightsStatus(vehicleid)
 
 Vehicle_SetHealth(vehicleid, Float:health)
 {
-    if(SetVehicleHealth(vehicleid, health))
+    if (SetVehicleHealth(vehicleid, health))
     {
         g_rgeVehicles[vehicleid][e_fHealth] = health;
 
-        if(IsVehicleOccupied(vehicleid))
+        if (IsVehicleOccupied(vehicleid))
         {
             new playerid = GetVehicleLastDriver(vehicleid);
             Player_SetImmunityForCheat(playerid, CHEAT_REPAIR_CAR, 1000 + GetPlayerPing(playerid));
@@ -197,11 +197,11 @@ Vehicle_SetHealth(vehicleid, Float:health)
 
 Vehicle_Repair(vehicleid)
 {
-    if(RepairVehicle(vehicleid))
+    if (RepairVehicle(vehicleid))
     {
         g_rgeVehicles[vehicleid][e_fHealth] = 1000.0;
 
-        if(IsVehicleOccupied(vehicleid))
+        if (IsVehicleOccupied(vehicleid))
         {
             new playerid = GetVehicleLastDriver(vehicleid);
             Player_SetImmunityForCheat(playerid, CHEAT_REPAIR_CAR, 1000 + GetPlayerPing(playerid));
@@ -232,13 +232,13 @@ bool:Vehicle_HasAnyDoorRemoved(vehicleid)
 
 Speedometer_Show(playerid)
 {
-    if(g_rgiSpeedometerUpdateTimer[playerid])
+    if (g_rgiSpeedometerUpdateTimer[playerid])
        return 0;
 
-    if(!IsPlayerInAnyVehicle(playerid))
+    if (!IsPlayerInAnyVehicle(playerid))
         return 0;
     
-    for(new i = sizeof(g_tdSpeedometer) - 1; i != -1; --i)
+    for (new i = sizeof(g_tdSpeedometer) - 1; i != -1; --i)
     {
         TextDrawShowForPlayer(playerid, g_tdSpeedometer[i]);
     }
@@ -247,7 +247,7 @@ Speedometer_Show(playerid)
     PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{0}, (g_rgeVehicles[vehicleid][e_bLocked] ? 0xA83225FF : 0x64A752FF));
     PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{0});
     PlayerTextDrawShow(playerid, p_tdSpeedometer[playerid]{1});
-    if(Vehicle_GetHealth(vehicleid) <= 375.0 || !Vehicle_Fuel(vehicleid))
+    if (Vehicle_GetHealth(vehicleid) <= 375.0 || !Vehicle_Fuel(vehicleid))
     {
         PlayerTextDrawBoxColor(playerid, p_tdSpeedometer[playerid]{2}, 0xA83225FF);
     }
@@ -267,10 +267,10 @@ Speedometer_Show(playerid)
 
 Speedometer_Hide(playerid)
 {
-    //if(!g_rgiSpeedometerUpdateTimer[playerid])
+    //if (!g_rgiSpeedometerUpdateTimer[playerid])
     //    return 0;
 
-    for(new i = sizeof(g_tdSpeedometer) - 1; i != -1; --i)
+    for (new i = sizeof(g_tdSpeedometer) - 1; i != -1; --i)
     {
         TextDrawHideForPlayer(playerid, g_tdSpeedometer[i]);
     }
@@ -288,9 +288,9 @@ Speedometer_Hide(playerid)
 
 public Speedometer_Update(playerid)
 {
-    if(!IsPlayerInAnyVehicle(playerid))
+    if (!IsPlayerInAnyVehicle(playerid))
     {
-        if(g_rgiSpeedometerUpdateTimer[playerid])
+        if (g_rgiSpeedometerUpdateTimer[playerid])
         {
             Timer_Kill(g_rgiSpeedometerUpdateTimer[playerid]);
         }
@@ -331,7 +331,7 @@ public Speedometer_Update(playerid)
 Player_RegisterVehicle(playerid, vehicleid)
 {
     DEBUG_PRINT("Player_RegisterVehicle(playerid = %d, vehicleid = %d)", playerid, vehicleid);
-    if(g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != INVALID_PLAYER_ID)
+    if (g_rgeVehicles[vehicleid][e_iVehicleOwnerId] != INVALID_PLAYER_ID)
     {
         printf("[debug] Iter_Remove(PlayerVehicles[g_rgeVehicles[vehicleid][e_iVehicleOwnerId]], vehicleid, vehicleid);");
         Iter_Remove(PlayerVehicles[g_rgeVehicles[vehicleid][e_iVehicleOwnerId]], vehicleid);
@@ -351,7 +351,7 @@ Player_RegisterVehicle(playerid, vehicleid)
     new components[70], tmp = 0;
     format(components, sizeof(components), "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d", PP_LOOP<14>(g_rgeVehicles[vehicleid][e_iComponents][tmp++])(,));
 
-    if(!g_rgeVehicles[vehicleid][e_iVehicleDbId])
+    if (!g_rgeVehicles[vehicleid][e_iVehicleDbId])
     {
         inline const QueryDone()
         {
@@ -384,7 +384,7 @@ Player_RegisterVehicle(playerid, vehicleid)
 
 Vehicle_Save(vehicleid)
 {
-    if(!g_rgeVehicles[vehicleid][e_bValid] || !g_rgeVehicles[vehicleid][e_iVehicleDbId])
+    if (!g_rgeVehicles[vehicleid][e_bValid] || !g_rgeVehicles[vehicleid][e_iVehicleDbId])
         return 0;
 
     new panels, doors, lights, tires;
@@ -440,7 +440,7 @@ Player_SaveVehicles(playerid)
 {
     DEBUG_PRINT("[veh] Saving player %i vehicles", playerid);
     
-    if(!Iter_Count(PlayerVehicles[playerid]))
+    if (!Iter_Count(PlayerVehicles[playerid]))
         return 0;
     
     StrCpy(YSI_UNSAFE_HUGE_STRING, "START TRANSACTION;", YSI_UNSAFE_HUGE_LENGTH);
@@ -450,7 +450,7 @@ Player_SaveVehicles(playerid)
     {
         printf("[veh] Saving vehicle %d for playerid %d", vehicleid, playerid);
 
-        if(!g_rgeVehicles[vehicleid][e_bValid])
+        if (!g_rgeVehicles[vehicleid][e_bValid])
             continue;
 
         new panels, doors, lights, tires;
@@ -500,7 +500,7 @@ Player_SaveVehicles(playerid)
 
         strcat(YSI_UNSAFE_HUGE_STRING, query, YSI_UNSAFE_HUGE_LENGTH);
 
-        for(new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
+        for (new i; i < HYAXE_MAX_TRUNK_SLOTS; ++i)
         {
             Trunk_ResetSlot(vehicleid, i);
         }
@@ -514,7 +514,7 @@ Player_SaveVehicles(playerid)
 command veh(playerid, const params[], "Crea un vehículo")
 {
     new modelid, color1, color2;
-    if(sscanf(params, "k<vehicle>D(1)D(1)", modelid, color1, color2) || modelid == -1)
+    if (sscanf(params, "k<vehicle>D(1)D(1)", modelid, color1, color2) || modelid == -1)
     {
         return SendClientMessage(playerid, 0xDADADAFF, "USO: /{ED2B2B}veh {DADADA}<modelo> {969696}[color 1] [color 2]");
     }
@@ -541,13 +541,13 @@ command rvehp(playerid, const params[], "Registra un vehículo en la cuenta de un
 {
     new vehicleid, destination;
 
-    if(sscanf(params, "ir", vehicleid, destination) || !IsValidVehicle(vehicleid))
+    if (sscanf(params, "ir", vehicleid, destination) || !IsValidVehicle(vehicleid))
     {
         SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/rvehp {DADADA}<id del vehículo> <id del destinatario>");
         return 1;
     }
 
-    if(Player_RegisterVehicle(destination, vehicleid))
+    if (Player_RegisterVehicle(destination, vehicleid))
     {
         SendClientMessagef(playerid, 0xED2B2BFF, "› {DADADA}Se registró un {ED2B2B}%s {DADADA}en la cuenta de {ED2B2B}%s{DADADA}.", Vehicle_GetModelName(GetVehicleModel(vehicleid)), Player_RPName(destination));
     }
@@ -562,14 +562,14 @@ command set_veh_health(playerid, const params[], "Cambia la vida de un vehículo"
         return SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/repairveh {969696}[id del vehículo = 0 | 0 = (actual)] {969696}[vida = 1000.0]");
     }
 
-    if(!vehicleid)
+    if (!vehicleid)
         vehicleid = GetPlayerVehicleID(playerid);
 
-    if(!IsValidVehicle(vehicleid))
+    if (!IsValidVehicle(vehicleid))
         return SendClientMessage(playerid, 0xED2B2BFF, "› {DADADA}Vehículo inválido.");
 
     health = fclamp(health, 0.0, 1000.0);
-    if(health == 1000.0)
+    if (health == 1000.0)
     {
         Vehicle_Repair(vehicleid);
     }
@@ -589,20 +589,20 @@ command dv(playerid, const params[], "Destruye un vehículo")
 {
     extract params -> new vehicleid; else {
         vehicleid = GetPlayerVehicleID(playerid);
-        if(!vehicleid)
+        if (!vehicleid)
         {
             SendClientMessage(playerid, 0xDADADAFF, "USO: {ED2B2B}/dv{969696} [id]");
             return 1;
         }
     }
 
-    if(!IsValidVehicle(vehicleid))
+    if (!IsValidVehicle(vehicleid))
     {
         SendClientMessage(playerid, 0xED2B2BFF, "›{DADADA} Vehículo inválido.");
         return 1;
     }
 
-    if(Vehicle_Type(vehicleid) != VEHICLE_TYPE_ADMIN)
+    if (Vehicle_Type(vehicleid) != VEHICLE_TYPE_ADMIN)
     {
         g_rgeVehicles[vehicleid][e_bSpawned] = false;
         g_rgeVehicles[vehicleid][e_fHealth] = 1000.0;

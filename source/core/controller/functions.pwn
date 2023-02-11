@@ -25,7 +25,7 @@ GetPlayerWrappedKeys(playerid, &keys, &updown, &leftright)
 
 Controller_Show(playerid)
 {
-    for(new i; i < 6; ++i)
+    for (new i; i < 6; ++i)
 	{
         TextDrawShowForPlayer(playerid, g_tdController[i]);
 	}
@@ -36,7 +36,7 @@ Controller_Show(playerid)
 
 Controller_Hide(playerid)
 {
-    for(new i; i < 6; ++i)
+    for (new i; i < 6; ++i)
 	{
         TextDrawHideForPlayer(playerid, g_tdController[i]);
 	}

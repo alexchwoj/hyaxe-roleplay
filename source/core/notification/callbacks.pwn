@@ -8,7 +8,7 @@ static
 
 public OnPlayerDisconnect(playerid, reason)
 {
-    for(new i = 0; i < MAX_NOTIFICATIONS; i++)
+    for (new i = 0; i < MAX_NOTIFICATIONS; i++)
     {
         if (g_rgeNotificationData[playerid][i][e_bActive])
         {

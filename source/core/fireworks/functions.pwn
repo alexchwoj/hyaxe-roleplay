@@ -31,7 +31,7 @@ Firework_Coconut(Float:x, Float:y, Float:z, Float:height = 20.0)
         CreateExplosion(x, y, z + height, 12, 0.5);
         DestroyDynamicObject(bengal_id);
 
-        for(new i; i != 64; i++)
+        for (new i; i != 64; i++)
         {
             new Float:px, Float:py, Float:pz;
             RandomPointInSphere(10.0, px, py, pz);
@@ -60,7 +60,7 @@ Firework_Strobe(Float:x, Float:y, Float:z, Float:height = 20.0)
         CreateExplosion(x, y, z + height, 12, 0.5);
         DestroyDynamicObject(bengal_id);
 
-        for(new i; i != 64; i++)
+        for (new i; i != 64; i++)
         {
             new Float:px, Float:py, Float:pz;
             RandomPointInSphere(RandomFloat(2.0, 15.0), px, py, pz);
@@ -90,7 +90,7 @@ Firework_ColoredSphere(Float:x, Float:y, Float:z, Float:height = 20.0)
         DestroyDynamicObject(bengal_id);
 
         new modelid = Random_Rand(19281, 19285);
-        for(new i; i != 64; i++)
+        for (new i; i != 64; i++)
         {
             new Float:px, Float:py, Float:pz;
             RandomPointInSphere(10.0, px, py, pz);
@@ -119,7 +119,7 @@ Firework_Fish(Float:x, Float:y, Float:z, Float:height = 20.0)
         CreateExplosion(x, y, z + height, 12, 0.5);
         DestroyDynamicObject(bengal_id);
 
-        for(new i; i != 16; i++)
+        for (new i; i != 16; i++)
         {
             new Float:px, Float:py, Float:pz;
             RandomPointInSphere(5.0, px, py, pz);
@@ -130,7 +130,7 @@ Firework_Fish(Float:x, Float:y, Float:z, Float:height = 20.0)
             SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
         }
 
-        for(new i; i != 96; i++)
+        for (new i; i != 96; i++)
         {
             new Float:px, Float:py, Float:pz;
             RandomPointInSphere(10.0, px, py, pz);
@@ -159,7 +159,7 @@ Firework_Wave(Float:x, Float:y, Float:z, Float:height = 20.0)
         CreateExplosion(x, y, z + height, 12, 0.5);
         DestroyDynamicObject(bengal_id);
 
-        for(new i; i != 32; i++)
+        for (new i; i != 32; i++)
         {
             new Float:px, Float:py, Float:pz;
             RandomPointInSphere(5.0, px, py, pz);
@@ -170,7 +170,7 @@ Firework_Wave(Float:x, Float:y, Float:z, Float:height = 20.0)
             SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
         }
 
-        for(new i; i != 32; i++)
+        for (new i; i != 32; i++)
         {
             new Float:px, Float:py, Float:pz;
             RandomPointInSphere(5.0, px, py, pz);
@@ -181,7 +181,7 @@ Firework_Wave(Float:x, Float:y, Float:z, Float:height = 20.0)
             SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
         }
 
-        for(new i; i != 32; i++)
+        for (new i; i != 32; i++)
         {
             new Float:px, Float:py, Float:pz;
             RandomPointInSphere(5.0, px, py, pz);
@@ -211,7 +211,7 @@ Firework_Ring(Float:x, Float:y, Float:z, Float:height = 20.0)
         CreateExplosion(x, y, z + height, 12, 0.5);
         DestroyDynamicObject(bengal_id);
 
-        for(new i; i != 16; i++)
+        for (new i; i != 16; i++)
         {
             new Float:px, Float:py, Float:pz;
             RandomPointInSphere(4.0, px, py, pz);
@@ -222,7 +222,7 @@ Firework_Ring(Float:x, Float:y, Float:z, Float:height = 20.0)
             SetTimerEx("FIRE_DelayedDestroyObject", 1000, false, "i", particle_id);
         }
 
-        for(new i; i != 32; i++)
+        for (new i; i != 32; i++)
         {
             new Float:px, Float:py, Float:pz;
             RandomPointInSphere(10.0, px, py, pz);

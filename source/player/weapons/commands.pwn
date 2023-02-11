@@ -16,7 +16,7 @@ command giveweapon(playerid, const params[], "Dale un arma a alguien")
         return 1;
     }
     
-    if(destination == 0xFFFF)
+    if (destination == 0xFFFF)
         destination = playerid;
 
     Player_GiveWeapon(destination, weaponid);
@@ -24,7 +24,7 @@ command giveweapon(playerid, const params[], "Dale un arma a alguien")
     new weapon[40];
     GetWeaponName(weaponid, weapon);
     
-    if(destination != playerid)
+    if (destination != playerid)
     {
         SendClientMessagef(playerid, 0xED2B2BFF, "›{DADADA} Se le asignó un(a) {ED2B2B}%s{DADADA} a {ED2B2B}%s{DADADA}.", weapon, Player_RPName(destination));
         SendClientMessagef(destination, 0xED2B2BFF, "›{DADADA} Un administrador te dio un(a) {ED2B2B}%s{DADADA}.", weapon);

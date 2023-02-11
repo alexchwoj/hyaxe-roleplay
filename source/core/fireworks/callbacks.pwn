@@ -16,21 +16,21 @@ public OnScriptInit()
         Float:z = 10.0
     ;
 
-    for(new i; i != 256 / 4; i++)
+    for (new i; i != 256 / 4; i++)
 	{
         new Float:px, Float:py, Float:pz;
         RandomPointInSphere(RandomFloat(4.0, 4.2), px, py, pz);
         CreateDynamicObject(19294, x + px, y + py, z + pz, 0.0, 0.0, 0.0, 0, 0);
     }
 
-    for(new i; i != 256 / 4; i++)
+    for (new i; i != 256 / 4; i++)
 	{
         new Float:px, Float:py, Float:pz;
         RandomPointInSphere(RandomFloat(3.0, 3.5), px, py, pz);
         CreateDynamicObject(19282, x + px, y + py, z + pz, 0.0, 0.0, 0.0, 0, 0);
     }
 
-    for(new i; i != 128 / 4; i++)
+    for (new i; i != 128 / 4; i++)
 	{
         new Float:px, Float:py, Float:pz;
         RandomPointInSphere(RandomFloat(1.0, 1.5), px, py, pz);

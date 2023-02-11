@@ -7,9 +7,9 @@ static bool:s_rgbKillFadings[MAX_PLAYERS char];
 
 public FADINGS_FadeTextDraw(playerid, PlayerText:textdraw, rounds, interval)
 {
-    if(s_rgbKillFadings{playerid})
+    if (s_rgbKillFadings{playerid})
     {
-        if(_:g_rgpFadingCallbacks[playerid][textdraw] != -1)
+        if (_:g_rgpFadingCallbacks[playerid][textdraw] != -1)
         {
             Indirect_Release(g_rgpFadingCallbacks[playerid][textdraw]);
             g_rgpFadingCallbacks[playerid][textdraw] = F@_@:-1;
@@ -22,7 +22,7 @@ public FADINGS_FadeTextDraw(playerid, PlayerText:textdraw, rounds, interval)
     new color = PlayerTextDrawGetColor(playerid, textdraw);
     new alpha = (color & 0xFF);
 
-    if(g_rgbFadingInOut[playerid]{textdraw} == FADING_OUT)
+    if (g_rgbFadingInOut[playerid]{textdraw} == FADING_OUT)
     {
         alpha += interval;
     }
@@ -35,19 +35,19 @@ public FADINGS_FadeTextDraw(playerid, PlayerText:textdraw, rounds, interval)
     PlayerTextDrawColor(playerid, textdraw, (color & 0xFFFFFF00) | alpha_new);
     PlayerTextDrawShow(playerid, textdraw);
 
-    if(alpha_new == 0)
+    if (alpha_new == 0)
     {
         g_rgbFadingInOut[playerid]{textdraw} = FADING_OUT;
     }
-    else if(alpha_new == 255)
+    else if (alpha_new == 255)
     {
         g_rgbFadingInOut[playerid]{textdraw} = FADING_IN;
         g_rgiFadingRounds[playerid]{textdraw}++;
 
-        if(g_rgiFadingRounds[playerid]{textdraw} >= rounds)
+        if (g_rgiFadingRounds[playerid]{textdraw} >= rounds)
         {
             Timer_Kill(g_rgiFadingTimers[playerid][textdraw]);
-            if(_:g_rgpFadingCallbacks[playerid][textdraw] != -1)
+            if (_:g_rgpFadingCallbacks[playerid][textdraw] != -1)
             {
                 new Func:cb<> = g_rgpFadingCallbacks[playerid][textdraw];
                 g_rgpFadingCallbacks[playerid][textdraw] = F@_@:-1;

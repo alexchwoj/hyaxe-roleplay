@@ -55,7 +55,7 @@ static Grill_OnUse(playerid, slot)
 
 static Dynamite_OnUse(playerid, slot)
 {
-    if(Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED) || Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL) || Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_ARRESTED) || Bit_Get(Player_Flags(playerid), PFLAG_IN_JAIL) || Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
     {
         Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes hacer esto ahora mismo");
         return 1;
@@ -163,7 +163,7 @@ static FireworkCharge_OnUse(playerid, slot)
 
             CreateExplosion(x, y, z, 12, 0.0);
 
-            switch(charge_type)
+            switch (charge_type)
             {
                 case ITEM_COCONUT_CHARGE: Firework_Coconut(x, y, z, 50.0);
                 case ITEM_STROBE_CHARGE: Firework_Strobe(x, y, z, 50.0);
@@ -202,7 +202,7 @@ static Flag_OnUse(playerid, slot)
         YSI_UNSAFE_HUGE_STRING[areas] = INVALID_STREAMER_ID;
         GetPlayerDynamicAreas(playerid, YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH);
 
-        for(new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
+        for (new i; YSI_UNSAFE_HUGE_STRING[i] != INVALID_STREAMER_ID; ++i)
         {
             new areaid = YSI_UNSAFE_HUGE_STRING[i];
             if (Streamer_HasIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_CUSTOM(0x544552)))
@@ -247,7 +247,7 @@ static Flag_OnUse(playerid, slot)
 
 static Medicine_OnUse(playerid, slot)
 {
-    if(Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
     {
         Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes usar esto abatido");
         return 1;
@@ -256,7 +256,7 @@ static Medicine_OnUse(playerid, slot)
     if (Player_Health(playerid) >= 100)
         return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Tienes la vida llena.");
 
-    if(g_rgePlayerTempData[playerid][e_iMedicineUseTime] > gettime())
+    if (g_rgePlayerTempData[playerid][e_iMedicineUseTime] > gettime())
     {
         Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, va_return("Debes esperar %d segundos para consumir otro medicamento", g_rgePlayerTempData[playerid][e_iMedicineUseTime] - gettime()));
         return 1;
@@ -278,7 +278,7 @@ static Medicine_OnUse(playerid, slot)
 
 static Crack_OnUse(playerid, slot)
 {
-    if(Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
     {
         Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes usar esto abatido");
         return 1;
@@ -287,7 +287,7 @@ static Crack_OnUse(playerid, slot)
     if (Player_Armor(playerid) >= 100)
         return Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Tienes el chaleco lleno.");
 
-    if(g_rgePlayerTempData[playerid][e_iCrackUseTime] > gettime())
+    if (g_rgePlayerTempData[playerid][e_iCrackUseTime] > gettime())
     {
         Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, va_return("Debes esperar %d segundos para consumir crack", g_rgePlayerTempData[playerid][e_iCrackUseTime] - gettime()) );
         return 1;
@@ -309,7 +309,7 @@ static Crack_OnUse(playerid, slot)
 
 static Food_OnUse(playerid, slot)
 {
-    if(Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
     {
         Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes usar esto abatido");
         return 1;
@@ -407,26 +407,26 @@ static GasCan_OnUse(playerid, slot)
 
 static RepairKit_OnUse(playerid, slot)
 {
-    if(Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
     {
         Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes usar esto abatido");
         return 1;
     }
     
     new vehicleid = GetPlayerCameraTargetVehicle(playerid);
-    if(vehicleid == INVALID_VEHICLE_ID)
+    if (vehicleid == INVALID_VEHICLE_ID)
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas estar viendo un vehículo");
         return 1;
     }
 
-    if(Vehicle_Repairing(vehicleid))
+    if (Vehicle_Repairing(vehicleid))
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Este vehículo ya está siendo reparado");
         return 1;
     }
 
-    if(Vehicle_GetEngineState(vehicleid) != VEHICLE_STATE_OFF || g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_TOGGLE_ENGINE])
+    if (Vehicle_GetEngineState(vehicleid) != VEHICLE_STATE_OFF || g_rgeVehicles[vehicleid][e_iVehicleTimers][VEHICLE_TIMER_TOGGLE_ENGINE])
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "El vehículo debe estar apagado");
         return 1;
@@ -444,7 +444,7 @@ static RepairKit_OnUse(playerid, slot)
     veh_x += (model_y / 2.0 + 0.5) * floatsin(-veh_ang, degrees);
     veh_y += (model_y / 2.0 + 0.5) * floatcos(-veh_ang, degrees);
 
-    if(!IsPlayerInRangeOfPoint(playerid, 1.0, veh_x, veh_y, veh_z))
+    if (!IsPlayerInRangeOfPoint(playerid, 1.0, veh_x, veh_y, veh_z))
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Necesitas estar cerca del capó");
         return 1;
@@ -489,20 +489,20 @@ public REPAIRKIT_ActionFinished(playerid, vehicleid)
 
 static MediKit_OnUse(playerid, slot)
 {
-    if(Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_INJURED))
     {
         Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "No puedes usar esto abatido");
         return 1;
     }
 
     new target = GetPlayerCameraTargetPlayer(playerid);
-    if(!IsPlayerConnected(target))
+    if (!IsPlayerConnected(target))
     {
         Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, "Necesitas ver a un jugador para usar esto");
         return 1;
     }
 
-    if(!Bit_Get(Player_Flags(target), PFLAG_INJURED))
+    if (!Bit_Get(Player_Flags(target), PFLAG_INJURED))
     {
         Notification_ShowBeatingText(playerid, 2000, 0xED2B2B, 100, 255, va_return("%s no está herid%c", (Player_Sex(target) == SEX_MALE ? "Este jugador" : "Esta jugadora"), (Player_Sex(target) == SEX_MALE ? 'o' : 'a')));
         return 1;

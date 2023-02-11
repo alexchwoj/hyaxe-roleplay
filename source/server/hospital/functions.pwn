@@ -8,7 +8,7 @@ Player_GoToTheNearestHospital(playerid)
     Bit_Set(Player_Flags(playerid), PFLAG_HOSPITAL, true);
 
     KillTimer(g_rgiHospitalHealthTimer[playerid]);
-    if(Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
         GetPlayerPos(playerid, g_rgePlayerData[playerid][e_fPosX], g_rgePlayerData[playerid][e_fPosY], g_rgePlayerData[playerid][e_fPosZ]);
 
     new
@@ -20,7 +20,7 @@ Player_GoToTheNearestHospital(playerid)
         nearest_hospital
     ;
 
-    for(new i; i < HYAXE_MAX_HOSPITALS; ++i)
+    for (new i; i < HYAXE_MAX_HOSPITALS; ++i)
     {
         new Float:distance = VectorSize(
             g_rgePlayerData[playerid][e_fPosX] - g_rgeHospitalData[i][e_fHospitalPosX],

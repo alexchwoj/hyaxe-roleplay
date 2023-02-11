@@ -5,7 +5,7 @@
 
 GenerateRandomPumpkins(amount, Float:x, Float:y, Float:z, Float:range)
 {
-    for(new i; i < amount; ++i)
+    for (new i; i < amount; ++i)
     {
         //printf("%f %f %f", x, y, z);
         DroppedItem_Create(ITEM_PUMPKIN, 1, 0, x + RandomFloat(-range, range), y + RandomFloat(-range, range), z, 0, 0, .timeout = 300 + random(300));

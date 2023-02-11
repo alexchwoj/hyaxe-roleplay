@@ -9,7 +9,7 @@ static
 const __ac_ab_PlayerSync = 207;
 IPacket:__ac_ab_PlayerSync(playerid, BitStream:bs)
 {
-    if(Player_HasImmunityForCheat(playerid, CHEAT_AIRBREAK))
+    if (Player_HasImmunityForCheat(playerid, CHEAT_AIRBREAK))
         return 1;
 
     new 
@@ -25,13 +25,13 @@ IPacket:__ac_ab_PlayerSync(playerid, BitStream:bs)
         PR_INT16, animation_id
     );
 
-    if((1061 <= animation_id <= 1067) || (1195 <= animation_id <= 1198))
+    if ((1061 <= animation_id <= 1067) || (1195 <= animation_id <= 1198))
         return 1;
     
-    if(pos_z - Player_Data(playerid, e_fPosZ) > 1.0 && speed_z == 0.0 && s_rgfLastSpeedZ[playerid] == 0.0 && (!animation_id || (animation_id != 1231) || (1253 <= animation_id <= 1273) || (1222 <= animation_id <= 1236)))
+    if (pos_z - Player_Data(playerid, e_fPosZ) > 1.0 && speed_z == 0.0 && s_rgfLastSpeedZ[playerid] == 0.0 && (!animation_id || (animation_id != 1231) || (1253 <= animation_id <= 1273) || (1222 <= animation_id <= 1236)))
     {
         printf("animation_id = %i", animation_id);
-        if(Anticheat_Trigger(playerid, CHEAT_AIRBREAK, 1))
+        if (Anticheat_Trigger(playerid, CHEAT_AIRBREAK, 1))
             return 0;
     }
 

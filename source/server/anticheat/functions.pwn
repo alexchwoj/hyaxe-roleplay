@@ -5,18 +5,18 @@
 
 Anticheat_Trigger(playerid, eCheats:cheat, extra = 0)
 {
-    if(g_rgbPlayerKicked{playerid})
+    if (g_rgbPlayerKicked{playerid})
         return 1;
         
-    if(g_rgeDetectionData[cheat][e_ePunishmentType] > PUNISHMENT_BAN)
+    if (g_rgeDetectionData[cheat][e_ePunishmentType] > PUNISHMENT_BAN)
     {
-        if(g_rgeDetectionData[cheat][e_iMaxTriggers] > ++g_rgiAnticheatTriggers[playerid]{cheat})
+        if (g_rgeDetectionData[cheat][e_iMaxTriggers] > ++g_rgiAnticheatTriggers[playerid]{cheat})
         {
             return 0;
         }
     }
 
-    switch(g_rgeDetectionData[cheat][e_ePunishmentType])
+    switch (g_rgeDetectionData[cheat][e_ePunishmentType])
     {
         case PUNISHMENT_IGNORE:
             return 1;
@@ -87,11 +87,11 @@ bool:Player_HasImmunityForCheat(playerid, eCheats:cheat)
 
 stock ac_SetPlayerChatBubble(playerid, const text[], color, Float:drawdistance, expiretime)
 {
-    if(!IsPlayerConnected(playerid))
+    if (!IsPlayerConnected(playerid))
         return 0;
 
     new bubble_length = strlen(text);
-    if(bubble_length >= 144)
+    if (bubble_length >= 144)
         return 0;
 
     new BitStream:bs = BS_New();
@@ -109,7 +109,7 @@ stock ac_SetPlayerChatBubble(playerid, const text[], color, Float:drawdistance, 
 
     foreach(new i : StreamedPlayer[playerid])
     {
-        if(!IsPlayerInRangeOfPoint(i, drawdistance + 20.0, x, y, z))
+        if (!IsPlayerInRangeOfPoint(i, drawdistance + 20.0, x, y, z))
             continue;
             
         PR_SendRPC(bs, i, 59, PR_HIGH_PRIORITY, PR_RELIABLE);

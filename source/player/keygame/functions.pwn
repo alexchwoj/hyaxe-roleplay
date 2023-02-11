@@ -13,7 +13,7 @@ Player_StartKeyGame(playerid, cb, Float:key_percentage_up = 9.9, Float:decrease_
     PlayerTextDrawSetString(playerid, p_tdKeyGame{playerid}, g_rgszKeyNames[g_rgeKeyGameData[playerid][e_iKgCurrentKey]]);
     PlayerTextDrawShow(playerid, p_tdKeyGame{playerid});
 
-    for(new i = sizeof(g_tdKeyGame) - 1; i != -1; --i)
+    for (new i = sizeof(g_tdKeyGame) - 1; i != -1; --i)
     {
         TextDrawShowForPlayer(playerid, g_tdKeyGame[i]);
     }
@@ -39,7 +39,7 @@ Player_StopKeyGame(playerid)
     KillTimer(g_rgeKeyGameData[playerid][e_iKgTimers][KG_TIMER_DECREASE_BAR]);
     KillTimer(g_rgeKeyGameData[playerid][e_iKgTimers][KG_TIMER_PROCESS_KEY]);
 
-    for(new i = sizeof(g_tdKeyGame) - 1; i != -1; --i)
+    for (new i = sizeof(g_tdKeyGame) - 1; i != -1; --i)
     {
         TextDrawHideForPlayer(playerid, g_tdKeyGame[i]);
     }

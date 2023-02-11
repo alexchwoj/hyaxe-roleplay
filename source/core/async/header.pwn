@@ -5,9 +5,9 @@
 
 stock operator~(const Cache:caches[], len)
 {
-    for(new i; i < len; ++i)
+    for (new i; i < len; ++i)
     {
-        if(cache_is_valid(caches[i]))
+        if (cache_is_valid(caches[i]))
             cache_delete(caches[i]);
     }
 }

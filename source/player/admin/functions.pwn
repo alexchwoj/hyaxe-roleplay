@@ -7,9 +7,9 @@ Admins_SendMessage(level, color, const message[], bool:webhook = true)
 {
     foreach(new i : Admin)
     {
-        if(!Bit_Get(Player_Config(i), CONFIG_DISABLE_ADMIN_MESSAGES))
+        if (!Bit_Get(Player_Config(i), CONFIG_DISABLE_ADMIN_MESSAGES))
         {
-            if(Player_AdminLevel(i) >= level)
+            if (Player_AdminLevel(i) >= level)
             {
                 SendClientMessage(i, color, message);
             }
@@ -27,11 +27,11 @@ Admins_SendMessage(level, color, const message[], bool:webhook = true)
 Player_Ban(playerid, adminid, const reason[] = "No especificada", time_seconds = -1, bool:ban_ip = true)
 {
     new admin_db[24] = "NULL";
-    if(adminid != ADMIN_ID_ANTICHEAT)
+    if (adminid != ADMIN_ID_ANTICHEAT)
         format(admin_db, sizeof(admin_db), "%i", Player_AccountID(adminid));
 
     new expiration_db[80] = "NULL";
-    if(time_seconds > 0)
+    if (time_seconds > 0)
         format(expiration_db, sizeof(expiration_db), "DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL %i SECOND)", time_seconds);
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
@@ -56,7 +56,7 @@ Player_Ban(playerid, adminid, const reason[] = "No especificada", time_seconds =
         (time_seconds < 0 ? "permanentemente" : "temporalmente")
     );
 
-    if(adminid == ADMIN_ID_ANTICHEAT)
+    if (adminid == ADMIN_ID_ANTICHEAT)
     {
         strcat(YSI_UNSAFE_HUGE_STRING, "Anticheat\n\n", YSI_UNSAFE_HUGE_LENGTH);
     }
@@ -74,7 +74,7 @@ Player_Ban(playerid, adminid, const reason[] = "No especificada", time_seconds =
         day, month, year, hour, minute, second
     ), YSI_UNSAFE_HUGE_LENGTH);
 
-    if(time_seconds < 0)
+    if (time_seconds < 0)
     {
         strcat(YSI_UNSAFE_HUGE_STRING, "Nunca", YSI_UNSAFE_HUGE_LENGTH);
     }
@@ -87,25 +87,25 @@ Player_Ban(playerid, adminid, const reason[] = "No especificada", time_seconds =
 
         new bool:has_previous = false;
 
-        if(days)
+        if (days)
         {
             strcat(YSI_UNSAFE_HUGE_STRING, va_return("%i día%s", days, (days > 1 ? "s" : "")));
             has_previous = true;
         }
 
-        if(hours)
+        if (hours)
         {
             strcat(YSI_UNSAFE_HUGE_STRING, va_return("%s%i hora%s", (has_previous ? ", " : ""), hours, (hours > 1 ? "s" : "")));
             has_previous = true;
         }
 
-        if(minutes)
+        if (minutes)
         {
             strcat(YSI_UNSAFE_HUGE_STRING, va_return("%s%i minuto%s", (has_previous ? ", " : ""), minutes, (minutes > 1 ? "s" : "")));
             has_previous = true;
         }
 
-        if(seconds)
+        if (seconds)
         {
             strcat(YSI_UNSAFE_HUGE_STRING, va_return("%s%i segundo%s", (has_previous ? " y " : ""), seconds, (seconds > 1 ? "s" : "")));
         }
@@ -120,11 +120,11 @@ Player_Ban(playerid, adminid, const reason[] = "No especificada", time_seconds =
 Account_Ban(const account_name[], adminid, const reason[] = "No especificada", time_seconds = -1)
 {
     new admin_db[24] = "NULL";
-    if(adminid != ADMIN_ID_ANTICHEAT)
+    if (adminid != ADMIN_ID_ANTICHEAT)
         format(admin_db, sizeof(admin_db), "%i", Player_AccountID(adminid));
 
     new expiration_db[80] = "NULL";
-    if(time_seconds > 0)
+    if (time_seconds > 0)
         format(expiration_db, sizeof(expiration_db), "DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL %i SECOND)", time_seconds);
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\

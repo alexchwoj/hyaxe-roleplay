@@ -7,7 +7,7 @@ public OnPlayerUpdate(playerid)
 {
     if (IsPlayerSpawned(playerid) && Bit_Get(Player_Flags(playerid), PFLAG_IN_GAME))
     {
-        if(!GetPlayerInterior(playerid))
+        if (!GetPlayerInterior(playerid))
         {
             new
                 const Float:max_dist = (IsPlayerInAnyVehicle(playerid) ? 340.0 : 50.0),

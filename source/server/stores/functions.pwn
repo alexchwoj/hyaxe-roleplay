@@ -5,9 +5,9 @@
 
 static Shop_FindFreeIndex()
 {
-    for(new i; i < HYAXE_MAX_SHOPS; ++i)
+    for (new i; i < HYAXE_MAX_SHOPS; ++i)
     {
-        if(!g_rgeShops[i][e_bShopValid])
+        if (!g_rgeShops[i][e_bShopValid])
             return i;
     }
 
@@ -16,9 +16,9 @@ static Shop_FindFreeIndex()
 
 static ShopItem_FindFreeIndex(shop_id)
 {
-    for(new i; i < HYAXE_MAX_SHOP_ITEMS; ++i)
+    for (new i; i < HYAXE_MAX_SHOP_ITEMS; ++i)
     {
-        if(!g_rgeShopItems[shop_id][i][e_iItemModel])
+        if (!g_rgeShopItems[shop_id][i][e_iItemModel])
             return i;
     }
 
@@ -41,7 +41,7 @@ static Shop_OnPress(playerid, shop_id)
     BroadcastToPlayer(playerid, false);
     SetExclusiveBroadcast(false);
 
-    for(new j = (sizeof(g_tdShops) - 1); j != -1; --j)
+    for (new j = (sizeof(g_tdShops) - 1); j != -1; --j)
     {
         TextDrawShowForPlayer(playerid, g_tdShops[j]);
     }
@@ -69,7 +69,7 @@ static Shop_OnPress(playerid, shop_id)
 Shop_Create(const name[], Float:pos_x, Float:pos_y, Float:pos_z, world, interior, Float:cam_x, Float:cam_y, Float:cam_z, Float:cam_look_x, Float:cam_look_y, Float:cam_look_z, Float:object_start_x, Float:object_start_y, Float:object_start_z, Float:object_idle_x, Float:object_idle_y, Float:object_idle_z, Float:object_end_x, Float:object_end_y, Float:object_end_z, buy_callback)
 {
     new idx = Shop_FindFreeIndex();
-    if(idx == -1)
+    if (idx == -1)
     {
         print("[shops!] Failed to create shop (pool out of space)");
         return -1;
@@ -109,11 +109,11 @@ Shop_Create(const name[], Float:pos_x, Float:pos_y, Float:pos_z, world, interior
 
 Shop_AddItem(shop_id, const name[], model, price, Float:rx, Float:ry, Float:rz)
 {
-    if(!g_rgeShops[shop_id][e_bShopValid])
+    if (!g_rgeShops[shop_id][e_bShopValid])
         return 0;
 
     new item_id = ShopItem_FindFreeIndex(shop_id);
-    if(item_id == -1)
+    if (item_id == -1)
     {
         printf("[shops!] Failed to create item for shop %i (pool out of space)", shop_id);
         return -1;
@@ -135,7 +135,7 @@ Player_StopShopping(playerid)
 {
     KillTimer(g_rgiRotateSkinTimer[playerid]);
 
-    if(Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES))
+    if (Bit_Get(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES))
     {
         Player_SetPos(playerid, s_rgfPreviousPositions[playerid][0], s_rgfPreviousPositions[playerid][1], s_rgfPreviousPositions[playerid][2]);
         DestroyDynamicObject(Player_StoreCosmeticObject(playerid));
@@ -145,7 +145,7 @@ Player_StopShopping(playerid)
     Bit_Set(Player_Flags(playerid), PFLAG_SHOPPING_CLOTHES, false);
     Bit_Set(Player_Flags(playerid), PFLAG_CAN_USE_SHOP_BUTTONS, false);
 
-    for(new i = (sizeof(g_tdShops) - 1); i != -1; --i)
+    for (new i = (sizeof(g_tdShops) - 1); i != -1; --i)
     {
         TextDrawHideForPlayer(playerid, g_tdShops[i]);
     }
