@@ -146,9 +146,6 @@ static HookerVehicle_OnKeyPress(playerid, hookerid)
 
     if (!Hooker_CanGetInVehicle(GetVehicleModel(vehicleid)))
     {
-        printf("seats = %i", Model_Seats(GetVehicleModel(vehicleid)));
-        printf("is_car = %i", Model_IsCar(GetVehicleModel(vehicleid)));
-        
         SetPlayerChatBubbleForPlayer(playerid, hookernpcid, "No voy a subirme en esa cagada.", 0xDADADAFF, 10.0, 5000);
         Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes subir prostitutas en este vehículo");
         return 1;
