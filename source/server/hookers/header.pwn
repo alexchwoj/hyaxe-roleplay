@@ -13,7 +13,9 @@ enum eHookerTask(<<=1)
     HOOKER_TASK_KISS,
     HOOKER_TASK_FOLLOW_PLAYER,
     HOOKER_TASK_BLOWJOB,
-    HOOKER_TASK_GO_BACK_TO_SPOT
+    HOOKER_TASK_BLOWJOB_VEHICLE,
+    HOOKER_TASK_GO_BACK_TO_SPOT,
+    HOOKER_TASK_APPROACH_VEHICLE
 };
 
 new const 
@@ -45,3 +47,4 @@ new
     Iterator:Hookers<MAX_PLAYERS>;
 
 forward Hooker_WalkToFrontOfPlayer(hookernpcid, playerid, Float:dist = 0.9);
+forward bool:Hooker_CanGetInVehicle(modelid);

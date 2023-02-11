@@ -56,3 +56,8 @@ Hooker_WalkToFrontOfPlayer(hookernpcid, playerid, Float:dist = 0.9)
     FCNPC_GoTo(hookernpcid, x, y, z, FCNPC_MOVE_TYPE_WALK);
     return 1;
 }
+
+bool:Hooker_CanGetInVehicle(modelid)
+{
+    return (Model_Seats(modelid) >= 1 && Model_IsCar(modelid));
+}

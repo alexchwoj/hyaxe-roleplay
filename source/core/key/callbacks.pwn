@@ -135,6 +135,9 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
         if(info[1] == KEY_TYPE_VEHICLE && !IsPlayerInAnyVehicle(playerid))
             return 1;
 
+        if (info[1] == KEY_TYPE_FOOT && GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
+            return 1;
+
         new string[64];
         format(string, sizeof(string), "PULSA ~y~\"~k~~%s~\"", (info[1] == KEY_TYPE_FOOT ? g_rgszKeyFootCode[ info[0] ] : g_rgszKeyVehicleCode[ info[0] ]));
 
@@ -197,8 +200,11 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                     
                 if((newkeys & Key_KeyNameToKeyBit(info[0])) != 0)
                 {
-                    if(info[1] == KEY_TYPE_VEHICLE && !IsPlayerInAnyVehicle(playerid))
-                        break;
+                    if (info[1] == KEY_TYPE_FOOT && GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
+                        continue;
+
+                    if (info[1] == KEY_TYPE_VEHICLE && !IsPlayerInAnyVehicle(playerid))
+                        continue;
 
                     new 
                         cb_address = info[2],
