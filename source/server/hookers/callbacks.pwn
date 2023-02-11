@@ -49,7 +49,7 @@ static Hooker_OnKeyPress(playerid, hookerid)
             {
                 if (Player_Money(playerid) < 50)
                 {
-                    SetPlayerChatBubbleForPlayer(playerid, hookernpcid, "Salí, pobretón", 0xDADADFF, 10.0, 5000);
+                    SetPlayerChatBubbleForPlayer(playerid, hookernpcid, "Salí, pobretón", 0xDADADAFF, 10.0, 5000);
                     Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No tienes dinero suficiente");
 
                     inline const Due()
@@ -83,7 +83,7 @@ static Hooker_OnKeyPress(playerid, hookerid)
             {
                 if (Player_Money(playerid) < 200)
                 {
-                    SetPlayerChatBubbleForPlayer(playerid, hookernpcid, "Salí, pobretón", 0xDADADFF, 10.0, 5000);
+                    SetPlayerChatBubbleForPlayer(playerid, hookernpcid, "Salí, pobretón", 0xDADADAFF, 10.0, 5000);
                     Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No tienes dinero suficiente");
 
                     inline const Due()
@@ -118,15 +118,11 @@ static Hooker_OnKeyPress(playerid, hookerid)
 
 static HookerVehicle_OnKeyPress(playerid, hookerid)
 {
-    printf("1");
-
     if (g_rgeHookerTasks[hookerid] != HOOKER_TASK_IDLE)
     {
         Notification_ShowBeatingText(playerid, 3000, 0xED2B2B, 100, 255, "Esta prostituta no está disponible");
         return 1;
     }
-
-    printf("2");
 
     if (g_rgiPlayerHooker[playerid] != INVALID_HOOKER_ID)
     {
@@ -134,13 +130,9 @@ static HookerVehicle_OnKeyPress(playerid, hookerid)
         return 1;
     }
 
-    printf("3");
-
     new const vehicleid = GetPlayerVehicleID(playerid);
     if (!vehicleid)
         return 1;
-
-    printf("4");
 
     new Float:x, Float:y, Float:z;
     GetVehicleVelocity(vehicleid, x, y, z);
@@ -150,8 +142,6 @@ static HookerVehicle_OnKeyPress(playerid, hookerid)
         return 1;
     }
 
-    printf("5");
-
     new const hookernpcid = g_rgiHookers[hookerid];
 
     if (!Hooker_CanGetInVehicle(GetVehicleModel(vehicleid)))
@@ -159,13 +149,11 @@ static HookerVehicle_OnKeyPress(playerid, hookerid)
         printf("seats = %i", Model_Seats(GetVehicleModel(vehicleid)));
         printf("is_car = %i", Model_IsCar(GetVehicleModel(vehicleid)));
         
-        SetPlayerChatBubbleForPlayer(playerid, hookernpcid, "No voy a subirme en esa cagada.", 0xDADADFF, 10.0, 5000);
+        SetPlayerChatBubbleForPlayer(playerid, hookernpcid, "No voy a subirme en esa cagada.", 0xDADADAFF, 10.0, 5000);
         Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes subir prostitutas en este auto");
         return 1;
     }
     
-    printf("6");
-
     foreach (new i : VehiclePassenger[vehicleid])
     {
         if (GetPlayerVehicleSeat(i) == 1)
@@ -175,8 +163,6 @@ static HookerVehicle_OnKeyPress(playerid, hookerid)
         }
     }
     
-    printf("7");
-
     g_rgiHookerCustomer[hookerid] = playerid;
     g_rgiPlayerHooker[playerid] = hookerid;
     g_rgeHookerTasks[hookerid] = HOOKER_TASK_APPROACH_VEHICLE;
@@ -293,12 +279,29 @@ public FCNPC_OnReachDestination(npcid)
             }
             case HOOKER_TASK_APPROACH_VEHICLE:
             {
+                FCNPC_SetAngleToPlayer(npcid, playerid);
+
                 inline const Response(response, listitem, string:inputtext[])
                 {
                     #pragma unused listitem, inputtext
 
                     if (!response)
                     {
+                        g_rgiHookerCustomer[hookerid] = INVALID_PLAYER_ID;
+                        g_rgiPlayerHooker[playerid] = INVALID_HOOKER_ID;
+                        g_rgeHookerTasks[hookerid] = HOOKER_TASK_GO_BACK_TO_SPOT;
+
+                        FCNPC_StopAim(npcid);
+                        FCNPC_GoTo(npcid, g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2], FCNPC_MOVE_TYPE_WALK);
+
+                        return 1;
+                    }
+                    
+                    if (Player_Money(playerid) < 300)
+                    {
+                        SetPlayerChatBubbleForPlayer(playerid, npcid, "Salí, pobretón", 0xDADADAFF, 10.0, 5000);
+                        Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No tienes dinero suficiente");
+
                         g_rgiHookerCustomer[hookerid] = INVALID_PLAYER_ID;
                         g_rgiPlayerHooker[playerid] = INVALID_HOOKER_ID;
                         g_rgeHookerTasks[hookerid] = HOOKER_TASK_GO_BACK_TO_SPOT;
@@ -398,6 +401,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             }
             else if (g_rgeHookerTasks[hookerid] == HOOKER_TASK_WAIT_FOR_CUSTOMER | HOOKER_TASK_BLOWJOB_VEHICLE)
             {
+                Player_GiveMoney(playerid, -300);
+                
                 new const hookernpcid = g_rgiHookers[hookerid];
                 g_rgeHookerTasks[hookerid] = HOOKER_TASK_BLOWJOB_VEHICLE;
 
@@ -633,7 +638,7 @@ public FCNPC_OnVehicleExitComplete(npcid, vehicleid)
     {
         if (g_rgeHookerTasks[hookerid] == HOOKER_TASK_GO_BACK_TO_SPOT)
         {
-            FCNPC_GoTo(g_rgiHookers[hookerid], g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2]);
+            FCNPC_GoTo(g_rgiHookers[hookerid], g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2], .mode = FCNPC_MOVE_MODE_COLANDREAS, .pathfinding = FCNPC_MOVE_PATHFINDING_RAYCAST);
         }
     }
 
@@ -659,11 +664,14 @@ public HOOKER_TeleportToSpot(hookerid)
 {
     new const npcid = g_rgiHookers[hookerid];
     FCNPC_Stop(npcid);
+    FCNPC_ClearAnimations(npcid);
     FCNPC_SetPosition(npcid, g_rgfHookerPos[hookerid][0], g_rgfHookerPos[hookerid][1], g_rgfHookerPos[hookerid][2]);
     FCNPC_StopAim(npcid);
     FCNPC_SetAngle(npcid, g_rgfHookerPos[hookerid][3]);
     FCNPC_SetAnimationByName(npcid, "PED:FACGUM", 4.1, true, false, false, false, 0);
 
     g_rgeHookerTasks[hookerid] = HOOKER_TASK_IDLE;
+    g_rgiHookerUpdateTimer[hookerid] = 0;
+
     return 1;
 }
