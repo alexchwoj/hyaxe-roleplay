@@ -150,7 +150,7 @@ static HookerVehicle_OnKeyPress(playerid, hookerid)
         printf("is_car = %i", Model_IsCar(GetVehicleModel(vehicleid)));
         
         SetPlayerChatBubbleForPlayer(playerid, hookernpcid, "No voy a subirme en esa cagada.", 0xDADADAFF, 10.0, 5000);
-        Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes subir prostitutas en este auto");
+        Notification_ShowBeatingText(playerid, 5000, 0xED2B2B, 100, 255, "No puedes subir prostitutas en este vehículo");
         return 1;
     }
     
@@ -402,7 +402,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             else if (g_rgeHookerTasks[hookerid] == HOOKER_TASK_WAIT_FOR_CUSTOMER | HOOKER_TASK_BLOWJOB_VEHICLE)
             {
                 Player_GiveMoney(playerid, -300);
-                
+
                 new const hookernpcid = g_rgiHookers[hookerid];
                 g_rgeHookerTasks[hookerid] = HOOKER_TASK_BLOWJOB_VEHICLE;
 
