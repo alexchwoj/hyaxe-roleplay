@@ -316,7 +316,27 @@ hook OnPlayerText(playerid, text[])
     if (text[0] == '&' && Police_OnDuty(playerid))
     {
         format(YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "[Policía]{DADADA} %s: %s", Player_RPName(playerid), text[1]);
-        Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, YSI_UNSAFE_HUGE_STRING);
+
+        new start = 0, end, next, next_color = 0x415BA2FF, bool:hyphen = false;
+        new const bool:split = IterativeColouredTextSplitter(YSI_UNSAFE_HUGE_STRING, 144, start, end, next, hyphen, next_color, false);
+        
+        if (!split)
+        {
+            Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, YSI_UNSAFE_HUGE_STRING);
+        }
+        else
+        {
+            new message[144];
+            strmid(message, YSI_UNSAFE_HUGE_STRING, start, end);
+            Police_SendMessage(POLICE_RANK_OFFICER, 0x3A86FFFF, message);   
+
+            format(message, sizeof(message), "%s", YSI_UNSAFE_HUGE_STRING[next]);
+            if ((next_color & 0xFF000000) == 0)
+                next_color = (next_color << 8) | 0xFF;
+
+            Police_SendMessage(POLICE_RANK_OFFICER, next_color, message);     
+        }
+
         return ~0;
     }
 

@@ -117,11 +117,11 @@ Gangs_ClosePanel(playerid)
     CancelSelectTextDraw(playerid);
 }
 
-Gang_SendMessage(gangid, const message[])
+Gang_SendMessage(gangid, color, const message[])
 {
     foreach(new i : GangMember[gangid])
     {
-        SendClientMessage(i, g_rgeGangs[gangid][e_iGangColor], message);
+        SendClientMessage(i, color, message);
     }
 
     return 1;

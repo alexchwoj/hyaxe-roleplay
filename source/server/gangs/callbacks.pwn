@@ -495,7 +495,7 @@ dialog gang_member_change_role(playerid, dialogid, response, listitem, const inp
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `GANG_RANK` = %i WHERE `NAME` = '%e' LIMIT 1;", rankid + 1, s_rgszSelectedGangMember[playerid]);
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 
-    Gang_SendMessage(Player_Gang(playerid), va_return("[MIEMBRO]{DADADA} %s fue asignado a %s por %s.", s_rgszSelectedGangMember[playerid], g_rgeGangRanks[Player_Gang(playerid)][rankid][e_szRankName], Player_RPName(playerid)));
+    Gang_SendMessage(Player_Gang(playerid), Gang_Data(Player_Gang(playerid))[e_iGangColor], va_return("[MIEMBRO]{DADADA} %s fue asignado a %s por %s.", s_rgszSelectedGangMember[playerid], g_rgeGangRanks[Player_Gang(playerid)][rankid][e_szRankName], Player_RPName(playerid)));
     Gangs_OpenPanel(playerid);
 
     return 1;
@@ -512,7 +512,7 @@ dialog gang_kick_member(playerid, dialogid, response, listitem, const inputtext[
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `GANG_ID` = NULL, `GANG_RANK` = 1 WHERE `NAME` = '%e';", s_rgszSelectedGangMember[playerid]);
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 
-    Gang_SendMessage(Player_Gang(playerid), va_return("[MIEMBRO]{DADADA} %s fue expulsado de la banda por %s.", s_rgszSelectedGangMember[playerid], Player_RPName(playerid)));
+    Gang_SendMessage(Player_Gang(playerid), Gang_Data(Player_Gang(playerid))[e_iGangColor], va_return("[MIEMBRO]{DADADA} %s fue expulsado de la banda por %s.", s_rgszSelectedGangMember[playerid], Player_RPName(playerid)));
     
     foreach(new i : GangMember[Player_Gang(playerid)])
     {
@@ -632,7 +632,7 @@ dialog gang_abandon(playerid, dialogid, response, listitem, const inputtext[])
         mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `GANGS` WHERE `GANG_ID` = %i;", Gang_Data(Player_Gang(playerid))[e_iGangDbId]);
         mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 
-        Gang_SendMessage(Player_Gang(playerid), "[BANDA]{DADADA} La banda fue eliminada.");
+        Gang_SendMessage(Player_Gang(playerid), Gang_Data(Player_Gang(playerid))[e_iGangColor], "[BANDA]{DADADA} La banda fue eliminada.");
         new gangid = Player_Gang(playerid);
 
         foreach(new i : GangMember[gangid])
@@ -654,7 +654,7 @@ dialog gang_abandon(playerid, dialogid, response, listitem, const inputtext[])
     }
     else
     {
-        Gang_SendMessage(Player_Gang(playerid), va_return("[MIEMBROS]{DADADA} %s abandonó la banda.", Player_RPName(playerid)));
+        Gang_SendMessage(Player_Gang(playerid), Gang_Data(Player_Gang(playerid))[e_iGangColor], va_return("[MIEMBROS]{DADADA} %s abandonó la banda.", Player_RPName(playerid)));
         
         mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "UPDATE `ACCOUNT` SET `GANG_ID` = NULL WHERE `ID` = %i;", Player_AccountID(playerid));
         mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
@@ -688,7 +688,7 @@ dialog gang_change_color(playerid, dialogid, response, listitem, inputtext[])
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "[BANDA] {DADADA}%s cambió el color de la {%06x}banda{DADADA}.", Player_RPName(playerid), new_color >>> 8);
-    Gang_SendMessage(Player_Gang(playerid), HYAXE_UNSAFE_HUGE_STRING);
+    Gang_SendMessage(Player_Gang(playerid), Gang_Data(Player_Gang(playerid))[e_iGangColor], HYAXE_UNSAFE_HUGE_STRING);
 
     Gangs_OpenPanel(playerid);
     return 1;
@@ -713,7 +713,7 @@ dialog gang_change_name(playerid, dialogid, response, listitem, inputtext[])
     ReplaceStringByRegex(Gang_Data( Player_Gang(playerid) )[e_szGangName], "~", "", Gang_Data( Player_Gang(playerid) )[e_szGangName]);
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "[BANDA] {DADADA}%s cambió el nombre de la banda a %s.", Player_RPName(playerid), inputtext);
-    Gang_SendMessage(Player_Gang(playerid), HYAXE_UNSAFE_HUGE_STRING);
+    Gang_SendMessage(Player_Gang(playerid), Gang_Data(Player_Gang(playerid))[e_iGangColor], HYAXE_UNSAFE_HUGE_STRING);
 
     mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
         UPDATE `GANGS` SET `GANG_NAME` = '%e' WHERE `GANG_ID` = %i;\
@@ -739,7 +739,7 @@ dialog gang_change_icon(playerid, dialogid, response, listitem, inputtext[])
     mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "[BANDA] {DADADA}%s cambió el ícono de la banda.", Player_RPName(playerid));
-    Gang_SendMessage(Player_Gang(playerid), HYAXE_UNSAFE_HUGE_STRING);
+    Gang_SendMessage(Player_Gang(playerid), Gang_Data(Player_Gang(playerid))[e_iGangColor], HYAXE_UNSAFE_HUGE_STRING);
 
     return 1;
 }
@@ -876,7 +876,7 @@ dialog gang_role_change_name(playerid, dialogid, response, listitem, inputtext[]
     }
 
     format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "[BANDA]{DADADA} %s cambió el nombre del rango '%s' a '%s'.", Player_RPName(playerid), g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_szRankName], inputtext);
-    Gang_SendMessage(Player_Gang(playerid), HYAXE_UNSAFE_HUGE_STRING);
+    Gang_SendMessage(Player_Gang(playerid), Gang_Data(Player_Gang(playerid))[e_iGangColor], HYAXE_UNSAFE_HUGE_STRING);
 
     strcpy(g_rgeGangRanks[Player_Gang(playerid)][g_rgiPanelSelectedRole{playerid}][e_szRankName], inputtext);
 
@@ -1032,7 +1032,7 @@ dialog gang_invite_notice(playerid, dialogid, response, listitem, const inputtex
         Player_GangRank(playerid) = Gang_GetLowestRank(gangid);
         Iter_Add(GangMember[gangid], playerid);
 
-        Gang_SendMessage(gangid, va_return("[MIEMBRO]{DADADA} %s %s se unio a la banda con el rango %s.", (Player_Sex(playerid) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(playerid), g_rgeGangRanks[gangid][Player_GangRank(playerid)][e_szRankName]));
+        Gang_SendMessage(gangid, Gang_Data(gangid)[e_iGangColor], va_return("[MIEMBRO]{DADADA} %s %s se unio a la banda con el rango %s.", (Player_Sex(playerid) == SEX_MALE ? "El jugador" : "La jugadora"), Player_RPName(playerid), g_rgeGangRanks[gangid][Player_GangRank(playerid)][e_szRankName]));
         mysql_tquery(g_hDatabase, va_return("UPDATE `ACCOUNT` SET `GANG_ID` = %i, `GANG_RANK` = %i WHERE `ID` = %i;", g_rgeGangs[gangid][e_iGangDbId], Player_GangRank(playerid) + 1, Player_AccountID(playerid)));
     }
 
@@ -1099,10 +1099,28 @@ hook OnPlayerText(playerid, text[])
     {
         if (Player_Gang(playerid) != -1)
         {
-            new messages[2][144];
-            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "{%06x}[%s] {DADADA}%s: %s", Gang_Data(Player_Gang(playerid))[e_iGangColor] >>> 8, Gang_Data(Player_Gang(playerid))[e_szGangName], Player_RPName(playerid), text[1]);
-            for (new i, j = SplitChatMessageInLines(HYAXE_UNSAFE_HUGE_STRING, messages); i < j; ++i)
-                Gang_SendMessage(Player_Gang(playerid), messages[i]);
+            format(YSI_UNSAFE_HUGE_STRING, YSI_UNSAFE_HUGE_LENGTH, "[%s] {DADADA}%s: %s", Gang_Data(Player_Gang(playerid))[e_szGangName], Player_RPName(playerid), text[1]);
+            
+            new start = 0, end, next, next_color = Gang_Data(Player_Gang(playerid))[e_iGangColor], bool:hyphen = false;
+            new const bool:split = IterativeColouredTextSplitter(YSI_UNSAFE_HUGE_STRING, 144, start, end, next, hyphen, next_color, false);
+            
+            if (!split)
+            {
+                Gang_SendMessage(Player_Gang(playerid), next_color, YSI_UNSAFE_HUGE_STRING);
+            }
+            else
+            {
+                new message[144];
+
+                strmid(message, YSI_UNSAFE_HUGE_STRING, start, end);
+                Gang_SendMessage(Player_Gang(playerid), Gang_Data(Player_Gang(playerid))[e_iGangColor], message);   
+
+                format(message, sizeof(message), "%s", YSI_UNSAFE_HUGE_STRING[next]);
+                if ((next_color & 0xFF000000) == 0)
+                    next_color = (next_color << 8) | 0xFF;
+
+                Gang_SendMessage(Player_Gang(playerid), next_color, message);     
+            }
 
             return ~0;
         }

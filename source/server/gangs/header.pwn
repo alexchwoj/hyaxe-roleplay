@@ -87,7 +87,7 @@ new
 
 forward Gangs_PanelForward(playerid);
 forward Gangs_PanelBackwards(playerid);
-forward Gang_SendMessage(gangid, const message[]);
+forward Gang_SendMessage(gangid, color, const message[]);
 forward Gang_SendMessage_s(gangid, ConstString:message);
 forward Gang_GetLowestRank(gangid);
 forward Player_HasGangPermission(playerid, eGangRankPermissions:perm);
