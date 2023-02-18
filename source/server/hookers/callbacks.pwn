@@ -114,6 +114,8 @@ static Hooker_OnKeyPress(playerid, hookerid)
         ApplyAnimation(playerid, "KISSING", "null", 4.1, 0, 0, 0, 0, 0, 0);
     }
     Dialog_ShowCallback(playerid, using inline Response, DIALOG_STYLE_TABLIST_HEADERS, "{CB3126}Prostituta", "{DADADA}Hablaste con la prostituta y te dio sus precios.\t \n{DADADA}Beso\t{64A752}50$\n{DADADA}Mamada\t{64A752}200$", "Veni mamucha", "Todas putas");
+
+    return 1;
 }
 
 static HookerVehicle_OnKeyPress(playerid, hookerid)
@@ -177,6 +179,7 @@ static HookerVehicle_OnKeyPress(playerid, hookerid)
 
     FCNPC_ResetAnimation(hookernpcid);
     FCNPC_GoTo(hookernpcid, x, y, z, FCNPC_MOVE_TYPE_WALK);
+    
     return 1;
 }
 
@@ -187,7 +190,6 @@ public OnScriptInit()
         new name[25];
         Str_Random(name, 24);
         g_rgiHookers[i] = FCNPC_Create(name);
-        Iter_Add(Hookers, g_rgiHookers[i]);
         g_rgeHookerTasks[i] = HOOKER_TASK_IDLE;
 
         printf("[hookers] Spawning hooker %d", g_rgiHookers[i]);

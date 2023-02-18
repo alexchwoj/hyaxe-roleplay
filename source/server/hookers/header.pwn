@@ -43,8 +43,7 @@ new
     eHookerTask:g_rgeHookerTasks[HYAXE_MAX_HOOKERS],
     g_rgiHookerCustomer[HYAXE_MAX_HOOKERS] = { INVALID_PLAYER_ID, ... },
     g_rgiPlayerHooker[MAX_PLAYERS] = { INVALID_HOOKER_ID, ... },
-    g_rgiHookerUpdateTimer[HYAXE_MAX_HOOKERS],
-    Iterator:Hookers<MAX_PLAYERS>;
+    g_rgiHookerUpdateTimer[HYAXE_MAX_HOOKERS];
 
 forward Hooker_WalkToFrontOfPlayer(hookernpcid, playerid, Float:dist = 0.9);
 forward bool:Hooker_CanGetInVehicle(modelid);
