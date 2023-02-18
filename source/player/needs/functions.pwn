@@ -36,10 +36,10 @@ static Needs_UpdateBar(playerid, bool:hunger = true, bool:thirst = true, bool:sh
 Needs_StartUpdating(playerid)
 {
     if (!g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateHunger])
-        g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateHunger] = SetTimerEx(!"NEEDS_ProcessHunger", 120000, true, !"i", playerid);
+        g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateHunger] = SetTimerEx(!"NEEDS_ProcessHunger", 300000, true, !"i", playerid);
 
     if (!g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateThirst])
-        g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateHunger] = SetTimerEx(!"NEEDS_ProcessThirst", 60000, true, !"i", playerid);
+        g_rgeNeedsTimers[playerid][e_iNeedsTimerUpdateThirst] = SetTimerEx(!"NEEDS_ProcessThirst", 120000, true, !"i", playerid);
 }
 
 Needs_StopUpdating(playerid)
@@ -96,10 +96,9 @@ Needs_HideBars(playerid)
         TextDrawHideForPlayer(playerid, g_tdNeedBars[i]);
     }
 
-    for (new i = 1; i != -1; --i)
-    {
-        PlayerTextDrawHide(playerid, p_tdNeedBars[playerid]{i});
-    }
+    PlayerTextDrawHide(playerid, p_tdNeedBars[playerid]{0});
+    PlayerTextDrawHide(playerid, p_tdNeedBars[playerid]{1});
+
     return 1;
 }
 
