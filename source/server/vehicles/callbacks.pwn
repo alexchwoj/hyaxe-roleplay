@@ -42,8 +42,7 @@ public OnPlayerDisconnect(playerid, reason)
         Vehicle_Destroy(v);
     }
 
-    printf("[debug] Claning vehicle iterator for playerid %d", playerid);
-    SendClientMessagef(playerid, -1, "Claning vehicle iterator for playerid %d", playerid);
+    printf("[debug] Cleaning vehicle iterator for playerid %d", playerid);
     Iter_Clear(PlayerVehicles[playerid]);
 
     #if defined VEH_OnPlayerDisconnect
