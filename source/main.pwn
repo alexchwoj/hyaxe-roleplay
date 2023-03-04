@@ -142,7 +142,7 @@ const __dada = __addressof(__beware__black_people__);
 #include <a_samp>
 
 #undef MAX_PLAYERS
-#define MAX_PLAYERS 500
+#define MAX_PLAYERS 814
 const HYAXE_MAX_NPCS = 100;
 
 #include <jit>

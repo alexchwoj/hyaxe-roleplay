@@ -58,6 +58,21 @@
 			}
 		},
 		{
+			"label": "Ensamblar archivo",
+			"args": [
+				"\"${relativeFile}\"",
+				"\"-icompiler/include\"",
+				"\"-icompiler\\include\\YSI\"",
+				"\"-isource\"",
+				"\"-o${fileDirname}\\${fileBasenameNoExtension}.asm\"",
+				"\"-a\"",
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
 			"label": "Compilar archivo",
 			"args": [
 				"\"${relativeFile}\"",
