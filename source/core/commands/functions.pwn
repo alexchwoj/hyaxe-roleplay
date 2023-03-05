@@ -7,7 +7,7 @@ Commands_GetFreeIndex()
 {
     for (new i; i < HYAXE_MAX_COMMANDS; ++i)
     {
-        if (g_rgeCommandStore[i][e_szCommandName][0] == '\0')
+        if (!g_rgeCommandStore[i][e_iCommandNameHash])
         {
             return i;
         }
@@ -37,9 +37,11 @@ Commands_GetFreeIndex()
 
 Commands_GetByName(const cmd_name[])
 {
+    new const hash = YHash(cmd_name);
+
     for (new i; i < HYAXE_MAX_COMMANDS; ++i)
     {
-        if (!isnull(g_rgeCommandStore[i][e_szCommandName]) && !strcmp(g_rgeCommandStore[i][e_szCommandName], cmd_name, .ignorecase = true))
+        if (g_rgeCommandStore[i][e_iCommandNameHash] == hash)
             return i;
     }
 

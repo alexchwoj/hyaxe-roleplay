@@ -20,6 +20,7 @@ enum _:eCommandFlags(<<=1)
 enum eCommandStore 
 {
     e_szCommandName[32],
+    e_iCommandNameHash,
     e_szCommandDescription[50]
 };
 
@@ -33,6 +34,7 @@ new g_rgiPlayerCommandsDialog[MAX_PLAYERS][20] = { -1, ... };
         DEBUG_PRINT("[cmd] Registering command \"%s\"", #%0);\
         new id = Commands_GetFreeIndex();\
         strcpy(g_rgeCommandStore[id][e_szCommandName], #%0);\
+        g_rgeCommandStore[id][e_iCommandNameHash] = _H<%0>;\
         strcpy(g_rgeCommandStore[id][e_szCommandDescription], %3);\
         return 1;\
     }\
