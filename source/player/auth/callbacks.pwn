@@ -68,15 +68,23 @@ public OnPlayerDataLoaded(playerid)
 
     if (!Bit_Get(Player_Flags(playerid), PFLAG_REGISTERED))
     {
-        format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-            {DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta no está registrada.\n\n\
-            \t{E3E3E3}1. Contraseña\n\
-            \t{5C5C5C}2. Correo\n\
-            \t{5C5C5C}3. Sexo del personaje{DADADA}\n\n\
-            Ingrese una contraseña de entre 6 y 18 caracteres de longitud.\
-        ", Player_RPName(playerid));
+        if (Player_Bot(playerid))
+        {
+            SetPlayerScore(playerid, 1 + random(6));
+            return 1;
+        }
+        else
+        {
+            format(HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+                {DADADA}Hola, {CB3126}%s{DADADA}. Esta cuenta no está registrada.\n\n\
+                \t{E3E3E3}1. Contraseña\n\
+                \t{5C5C5C}2. Correo\n\
+                \t{5C5C5C}3. Sexo del personaje{DADADA}\n\n\
+                Ingrese una contraseña de entre 6 y 18 caracteres de longitud.\
+            ", Player_RPName(playerid));
 
-        Dialog_ShowCallback(playerid, using public _hydg@register<iiiis>, DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
+            Dialog_ShowCallback(playerid, using public _hydg@register<iiiis>, DIALOG_STYLE_PASSWORD, "{CB3126}Hyaxe{DADADA} - Registrar una cuenta nueva", HYAXE_UNSAFE_HUGE_STRING, "Continuar", "Cancelar");
+        }
     }
     else
     {

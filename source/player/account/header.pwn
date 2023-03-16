@@ -151,7 +151,8 @@ enum ePlayerTemp
     e_iCosmeticSlot,
     e_iCosmeticMenuSlot,
     e_iCosmeticObject,
-    e_iBone
+    e_iBone,
+    bool:e_iBot
 };
 
 new 

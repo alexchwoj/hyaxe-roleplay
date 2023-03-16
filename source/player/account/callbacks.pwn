@@ -226,7 +226,6 @@ public OnPlayerDisconnect(playerid, reason)
 
         Iter_Remove(LoggedIn, playerid);
     }
-
     return 1;
 }
 
