@@ -42,6 +42,11 @@ new HYAXE_UNSAFE_HUGE_STRING[HYAXE_UNSAFE_HUGE_LENGTH];
 
 #define M_PI 3.141592
 
+enum _:RPCs
+{
+	RPC_GameModeExit = 40
+};
+
 #include "core/utils/sounds.pwn"
 #include "core/utils/zones.pwn"
 #include "core/utils/calendar.pwn"

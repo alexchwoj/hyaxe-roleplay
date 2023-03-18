@@ -731,3 +731,14 @@ command vehicles(playerid, const params[], "Ver los vehículos de un jugador")
     return 1;
 }
 flags:vehicles(CMD_FLAG<RANK_LEVEL_MODERATOR>)
+
+command relog(playerid, const params[], "Vuelve a entrar al servidor sin salir del juego")
+{
+    Chat_Clear(playerid);
+    
+    new BitStream:bs = BS_New();
+    PR_SendRPC(bs, playerid, RPC_GameModeExit);
+    BS_Delete(bs);
+    
+    return 1;
+}
