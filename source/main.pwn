@@ -85,8 +85,6 @@ JYYYYYYJJJJJJJJ7!?JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ??????????!!777777777777777777
 77?JYJYYYYYYYYJ77JJJJ????????????????????JJJJJJJJJYYYYYYYYYJ7!JYYYYYYYYYYYYYYYYY
 */
 
-#pragma dynamic 15000
-
 #pragma option -;+
 #pragma option -(+
 #pragma semicolon 1
@@ -156,7 +154,7 @@ const HYAXE_MAX_NPCS = 100;
 #include <colandreas>
 #include <FCNPC>
 #include <md-sort>
-//#include <PawnPlus>
+//#include <PawnPlus> ??? que usaba jajajaj
 
 /*
 		YSI is pozzed

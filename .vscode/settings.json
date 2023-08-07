@@ -10,5 +10,6 @@
 		"editor.suggestOnTriggerCharacters": true,
 		"editor.suggest.snippetsPreventQuickSuggestions": true
 	},
-	"cmake.configureOnOpen": false
+	"cmake.configureOnOpen": false,
+	"cmake.sourceDirectory": "${workspaceFolder}/source/plugin"
 }

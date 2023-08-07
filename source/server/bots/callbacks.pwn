@@ -12,7 +12,7 @@ public OnPlayerConnect(playerid)
 
         for (new i; i < sizeof(g_szBotAddressWhitelist); ++i)
         {
-            if (strfind(ip_address, g_szBotAddressWhitelist[i]))
+            if(!strcmp(ip_address, g_szBotAddressWhitelist[i]))
             {
                 TogglePlayerFakePing(playerid, true);
                 Player_Bot(playerid) = true;
