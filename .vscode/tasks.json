@@ -14,7 +14,7 @@
 			"label": "Compilar servidor",
 			"args": [
 				"--%",
-				"\"${workspaceFolder}\\source\\bare.pwn\"",
+				"\"${workspaceFolder}\\source\\main.pwn\"",
 				"\"-icompiler\\include\"",
 				"\"-icompiler\\include\\YSI\"",
 				"\"-isource\"",
