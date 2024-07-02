@@ -32,9 +32,11 @@ Vehicle_Create(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, c
 
 Vehicle_Destroy(vehicleid)
 {
+#if !NDEBUG
     printf("=================================");
     PrintBacktrace();
     printf("=================================");
+#endif
 
     if (vehicleid == INVALID_VEHICLE_ID || !DestroyVehicle(vehicleid))
         return 0;
@@ -215,10 +217,12 @@ Vehicle_Repair(vehicleid)
 
 Vehicle_Respawn(vehicleid)
 {
+#if !NDEBUG
     printf("=================================");
     PrintBacktrace();
     printf("=================================");
-    
+#endif
+
     g_rgeVehicles[vehicleid][e_bSpawned] = false;
     return SetVehicleToRespawn(vehicleid);
 }

@@ -114,6 +114,8 @@ Item_WeaponToType(type)
 }
 
 // Inventory
+
+// todo: remake this with a bitset for faster operation
 Inventory_GetFreeSlot(playerid)
 {
 	//printf("Inventory_GetFreeSlot(playerid = %d)", playerid);
@@ -431,36 +433,45 @@ Inventory_InsertItem(playerid, type, amount, extra)
 
 Inventory_AddItem(playerid, type, amount, extra)
 {
-	//printf("Inventory_AddItem(playerid = %d, type = %d, amount = %d, extra = %d)", playerid, type, amount, extra);
-	new slot = Inventory_GetFreeSlot(playerid);
-    if (slot < HYAXE_MAX_INVENTORY_SLOTS)
+	if (Item_SingleSlot(type))
 	{
-		if (Item_SingleSlot(type))
-			Inventory_InsertItem(playerid, type, amount, extra);
-		else
+		new slot = Inventory_GetFreeSlot(playerid);
+		if (slot < HYAXE_MAX_INVENTORY_SLOTS)
 		{
-			for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+			Inventory_InsertItem(playerid, type, amount, extra);
+			return 1;
+		}
+	}
+	else
+	{
+		new bool:has_valid_free_slot = false;
+
+		for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
+		{
+			if (InventorySlot_IsValid(playerid, i))
 			{
-				if (InventorySlot_IsValid(playerid, i))
+				if (InventorySlot_Type(playerid, i) == type)
 				{
-					if (InventorySlot_Type(playerid, i) == type)
-					{
-						InventorySlot_Amount(playerid, i) += amount;
-						mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
-						UPDATE `PLAYER_INVENTORY` SET `AMOUNT` = %d WHERE `ID` = %i;\
-						", InventorySlot_Amount(playerid, i), InventorySlot_ID(playerid, i));
-						mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
-						Inventory_Update(playerid);
-						return 1;
-					}
+					InventorySlot_Amount(playerid, i) += amount;
+					mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "\
+					UPDATE `PLAYER_INVENTORY` SET `AMOUNT` = %d WHERE `ID` = %i;\
+					", InventorySlot_Amount(playerid, i), InventorySlot_ID(playerid, i));
+					mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
+					Inventory_Update(playerid);
+					return 1;
 				}
 			}
-
-			Inventory_InsertItem(playerid, type, amount, extra);
+			else
+				has_valid_free_slot = true;
 		}
-		return 1;
+
+		if (!has_valid_free_slot)
+			return 0;
+
+		Inventory_InsertItem(playerid, type, amount, extra);
 	}
-	return 0;
+
+	return 1;
 }
 
 Inventory_GetItemAmount(playerid, type)
