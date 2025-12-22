@@ -3,6 +3,11 @@
 </p>
 <p align="center">Version 2 of the well-known Hyaxe Roleplay San Andreas Multiplayer server, refactored and adapted for release as an open-source project.</p>
 
+## Authors
+
+- [atom](https://github.com/alexchwoj)
+- [heix](https://github.com/leHeix)
+
 ## History
 
 Hyaxe was founded in 2019 as a roleplay server and was consistently recognized for its high standards in both code quality and gameplay innovation. In 2020, it became a pioneer among Spanish-speaking servers by introducing voice chat, which—combined with the pandemic—led to massive growth, reaching over 200 concurrent players and more than 500,000 registered accounts.
