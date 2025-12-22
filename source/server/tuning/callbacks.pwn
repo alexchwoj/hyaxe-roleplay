@@ -405,8 +405,6 @@ player_menu tuning_color(playerid, response, listitem)
     }
     else if (response == MENU_RESPONSE_DOWN)
     {
-        //printf("[DOWN] COLOR %d (%x)", listitem, g_rgiVehicleColoursTableRGBA[listitem]);
-
         if (g_rgiSelectedColorType[playerid])
             ChangeVehicleColor(vehicleid, g_rgeVehicles[vehicleid][e_iColorOne], listitem);
         else
@@ -414,8 +412,6 @@ player_menu tuning_color(playerid, response, listitem)
     }
     else if (response == MENU_RESPONSE_UP)
     {
-        //printf("[UP] COLOR %d (%x)", listitem, g_rgiVehicleColoursTableRGBA[listitem]);
-
         if (g_rgiSelectedColorType[playerid])
             ChangeVehicleColor(vehicleid, g_rgeVehicles[vehicleid][e_iColorOne], listitem);
         else

@@ -15,7 +15,6 @@ Item_SetPreviewRot(type, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fZoom = 1.
 
 Item_TypeToWeapon(type)
 {
-	//printf("Item_TypeToWeapon(type = %d)", type);
 	switch (type)
 	{
 		case ITEM_BRASSKNUCKLE: return 1;
@@ -118,7 +117,6 @@ Item_WeaponToType(type)
 // todo: remake this with a bitset for faster operation
 Inventory_GetFreeSlot(playerid)
 {
-	//printf("Inventory_GetFreeSlot(playerid = %d)", playerid);
     for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
 		if (!g_rgePlayerInventory[playerid][i][e_bValid])
@@ -129,7 +127,6 @@ Inventory_GetFreeSlot(playerid)
 
 Inventory_Update(playerid)
 {
-	//printf("Inventory_Update(playerid = %d)", playerid);
 	if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV) || Bit_Get(Player_Flags(playerid), PFLAG_USING_SECONDARY_INV))
     {
 		for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
@@ -138,7 +135,6 @@ Inventory_Update(playerid)
 			{
 				if (InventorySlot_Type(playerid, i) >= ITEM_INVALID)
 				{
-					//printf("[inventory]: Invalid item > playerid: %d, slot: %d, type: %d, db_id: %d", playerid, i, InventorySlot_Type(playerid, i), InventorySlot_ID(playerid, i));
 					Inventory_ResetSlot(playerid, i);
 				}
 				else
@@ -180,7 +176,6 @@ Inventory_Update(playerid)
 
 Inventory_UpdateSlot(playerid, slot)
 {
-	//printf("Inventory_UpdateSlot(playerid = %d, slot = %d)", playerid, slot);
 	if (Bit_Get(Player_Flags(playerid), PFLAG_USING_INV))
     {
 		if (InventorySlot_IsValid(playerid, slot))
@@ -198,8 +193,6 @@ Inventory_UpdateSlot(playerid, slot)
 
 Inventory_ResetSlot(playerid, slot)
 {
-	//printf("Inventory_ResetSlot(playerid = %d, slot = %d)", playerid, slot);
-
 	g_rgePlayerInventory[playerid][slot][e_bValid] = false;
 	g_rgePlayerInventory[playerid][slot][e_iID] = 0;
 	g_rgePlayerInventory[playerid][slot][e_iType] = 0;
@@ -210,7 +203,6 @@ Inventory_ResetSlot(playerid, slot)
 
 Inventory_UpdateDropCount(playerid)
 {
-	//printf("Inventory_UpdateDropCount(playerid = %d)", playerid);
 	new string[8];
 	valstr(string, g_rgePlayerTempData[playerid][e_iPlayerDropItemAmount]);
 	PlayerTextDrawSetString(playerid, p_tdItemOptions[playerid]{2}, string);
@@ -242,7 +234,6 @@ Inventory_UpdateDropCount(playerid)
 
 Inventory_Hide(playerid)
 {
-	//printf("Inventory_Hide(playerid = %d)", playerid);
 	g_rgePlayerTempData[playerid][e_iPlayerItemSlot] = -1;
 
 	if (IsValidVehicle(g_rgePlayerTempData[playerid][e_iLastTrunk]))
@@ -297,7 +288,6 @@ Inventory_Hide(playerid)
 
 Inventory_Show(playerid)
 {
-	//printf("Inventory_Show(playerid = %d)", playerid);
 	Bit_Set(Player_Flags(playerid), PFLAG_USING_INV, true);
 
 	// Backgrounds
@@ -363,7 +353,6 @@ Inventory_Show(playerid)
 
 InventorySlot_Delete(playerid, slot)
 {
-	//printf("InventorySlot_Delete(playerid = %d, slot = %d)", playerid, slot);
 	mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `PLAYER_INVENTORY` WHERE `ID` = %d;", InventorySlot_ID(playerid, slot));
 	mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 	Inventory_ResetSlot(playerid, slot);
@@ -374,7 +363,6 @@ InventorySlot_Delete(playerid, slot)
 
 Inventory_DeleteItemByType(playerid, type)
 {
-	//printf("Inventory_DeleteItemByType(playerid = %d, type = %d)", playerid, type);
 	for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
 		if (InventorySlot_IsValid(playerid, i))
@@ -394,7 +382,6 @@ Inventory_DeleteItemByType(playerid, type)
 
 InventorySlot_Subtract(playerid, slot, amount = 1)
 {
-	//printf("InventorySlot_Subtract(playerid = %d, slot = %d, amount = %d)", playerid, slot, amount);
 	if (InventorySlot_IsValid(playerid, slot))
 	{
 		if (!Item_SingleSlot( InventorySlot_Type(playerid, slot) ))
@@ -416,7 +403,6 @@ InventorySlot_Subtract(playerid, slot, amount = 1)
 
 Inventory_InsertItem(playerid, type, amount, extra)
 {
-	//printf("Inventory_InsertItem(playerid = %d, type = %d, amount = %d, extra = %d)", playerid, type, amount, extra);
 	new slot = Inventory_GetFreeSlot(playerid);
     if (slot < HYAXE_MAX_INVENTORY_SLOTS)
 	{
@@ -476,7 +462,6 @@ Inventory_AddItem(playerid, type, amount, extra)
 
 Inventory_GetItemAmount(playerid, type)
 {
-	//printf("Inventory_GetItemAmount(playerid = %d, type = %d)", playerid, type);
 	for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
 		if (InventorySlot_IsValid(playerid, i))
@@ -490,7 +475,6 @@ Inventory_GetItemAmount(playerid, type)
 
 Inventory_GetItemCount(playerid, type)
 {
-	//printf("Inventory_GetItemCount(playerid = %d, type = %d)", playerid, type);
 	new count;
 	for (new i; i < HYAXE_MAX_INVENTORY_SLOTS; ++i)
 	{
@@ -505,7 +489,6 @@ Inventory_GetItemCount(playerid, type)
 
 Inventory_AddFixedItem(playerid, type, amount, extra)
 {
-	//printf("Inventory_AddFixedItem(playerid = %d, type = %d, amount = %d, extra = %d)", playerid, type, amount, extra);
 	if (!Inventory_AddItem(playerid, type, amount, extra))
 	{
 		DroppedItem_CreateFrontPlayer(playerid, type, amount, extra);
@@ -518,7 +501,6 @@ Inventory_AddFixedItem(playerid, type, amount, extra)
 // Dropped items
 DroppedItem_CreateFrontPlayer(playerid, type, amount, extra)
 {
-	//printf("DroppedItem_CreateFrontPlayer(playerid = %d, type = %d, amount = %d, extra = %d)", playerid, type, amount, extra);
 	new Float:x, Float:y, Float:z, Float:angle;
 	GetPlayerPos(playerid, x, y, z);
 	GetPlayerFacingAngle(playerid, angle);
@@ -581,7 +563,6 @@ DroppedItem_Delete(area_id)
 	PrintBacktrace();
 #endif
 
-	//printf("DroppedItem_Delete(area_id = %d)", area_id);
 	if (!area_id || !IsValidDynamicArea(area_id))
 		return 0;
 		
@@ -653,7 +634,6 @@ Trunk_GetFreeSlot(vehicleid)
 
 Trunk_ResetSlot(vehicleid, slot)
 {
-	//printf("Trunk_ResetSlot(vehicleid = %d, slot = %d)", vehicleid, slot);
 	g_rgeVehicleTrunk[vehicleid][slot][e_bValid] = false;
 	g_rgeVehicleTrunk[vehicleid][slot][e_iID] = 0;
 	g_rgeVehicleTrunk[vehicleid][slot][e_iType] = 0;
@@ -664,7 +644,6 @@ Trunk_ResetSlot(vehicleid, slot)
 
 Trunk_InsertItem(vehicleid, type, amount, extra, playerid = INVALID_PLAYER_ID)
 {
-	//printf("Trunk_InsertItem(vehicleid = %d, type = %d, amount = %d, extra = %d, playerid = %d)", vehicleid, type, amount, extra, playerid);
 	new slot = Trunk_GetFreeSlot(vehicleid);
     if (slot < HYAXE_MAX_TRUNK_SLOTS)
 	{
@@ -679,7 +658,6 @@ Trunk_InsertItem(vehicleid, type, amount, extra, playerid = INVALID_PLAYER_ID)
 
 TrunkSlot_Delete(vehicleid, slot)
 {
-	//printf("TrunkSlot_Delete(vehicleid = %d, slot = %d)", vehicleid, slot);
 	mysql_format(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING, HYAXE_UNSAFE_HUGE_LENGTH, "DELETE FROM `VEHICLE_TRUNK` WHERE `ID` = %d;", TrunkSlot_ID(vehicleid, slot));
 	mysql_tquery(g_hDatabase, HYAXE_UNSAFE_HUGE_STRING);
 	Trunk_ResetSlot(vehicleid, slot);

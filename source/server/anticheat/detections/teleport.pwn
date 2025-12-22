@@ -34,7 +34,6 @@ public OnPlayerUpdate(playerid)
                         SetPlayerPos(playerid, Player_Data(playerid, e_fPosX), Player_Data(playerid, e_fPosY), Player_Data(playerid, e_fPosZ));
                     }
 
-                    //printf("CHEAT_TELEPORT > dist = %f, data[PR_animationId] = %d", dist, GetPlayerAnimationIndex(playerid));
                     Anticheat_Trigger(playerid, CHEAT_TELEPORT);
                     return 0;
                 }
@@ -50,7 +49,6 @@ public OnPlayerUpdate(playerid)
 
                 if (dist >= 5.0 && !IsPlayerInAnyVehicle(playerid))
                 {
-                    //printf("CHEAT_AIRBREAK > dist = %f, data[PR_animationId] = %d", dist, GetPlayerAnimationIndex(playerid));
                     Anticheat_Trigger(playerid, CHEAT_AIRBREAK);
                     Player_SetImmunityForCheat(playerid, CHEAT_AIRBREAK, 1000);
                     return 0;
