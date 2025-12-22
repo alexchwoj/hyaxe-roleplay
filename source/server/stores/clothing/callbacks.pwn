@@ -202,7 +202,7 @@ player_menu cosmetics_shop(playerid, response, listitem)
                 Menu_AddItem(playerid, "Bandana sponge", "Precio: ~g~$1000", .extra = 18902);
                 Menu_AddItem(playerid, "Bandana roja", "Precio: ~g~$1000", .extra = 18892);
                 Menu_AddItem(playerid, "Bandana azul", "Precio: ~g~$1000", .extra = 18897);
-                Menu_AddItem(playerid, "Bandana nigga", "Precio: ~g~$1000", .extra = 18896);
+                Menu_AddItem(playerid, "Bandana pandillera", "Precio: ~g~$1000", .extra = 18896);
                 Menu_AddItem(playerid, "Bandana skull", "Precio: ~g~$1000", .extra = 18895);
                 Menu_AddItem(playerid, "Bandana marinero", "Precio: ~g~$1000", .extra = 18893);
                 Menu_AddItem(playerid, "Bandana fuego", "Precio: ~g~$1000", .extra = 18910);

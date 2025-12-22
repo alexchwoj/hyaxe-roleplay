@@ -110,13 +110,13 @@ public const __HYAXE__ = 1;
 
 // Daniel-Cortez's Anti-DeAMX
 ////////////////////////////////
-__beware__black_people__();
-__beware__black_people__()
+__beware__thieves__();
+__beware__thieves__()
 {
 	#emit    stack    0x7FFFFFFF
 	#emit    inc.s    cellmax
 
-	static const ___[][] = { "hi", "i hate balck people" };
+	static const ___[][] = { "hi", "i hate thieves" };
 
 	#emit    retn
 	#emit    load.s.pri    ___
@@ -134,7 +134,7 @@ L1:
 	#emit    zero    cellmin
 }
 
-const __dada = __addressof(__beware__black_people__);
+const __dada = __addressof(__beware__thieves__);
 #pragma unused __dada
 
 #include <a_samp>
@@ -157,7 +157,7 @@ const HYAXE_MAX_NPCS = 100;
 //#include <PawnPlus> ??? que usaba jajajaj
 
 /*
-		YSI is pozzed
+		certified ysi classic
 							*/
 #define YSI_NO_KEYWORD_List
 #define YSI_NO_HEAP_MALLOC

@@ -673,7 +673,7 @@ public OnFilterScriptInit()
 
     // Mercado negro
     tmpobjid = CA_CreateDynamicObject_SC(19482, 2451.228027, -1985.323730, 16.173261, -13.299992, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
-    SetDynamicObjectMaterialText(tmpobjid, 0, "KILLAH NIGG*RS", 90, "courier", 20, 1, 0xFF000000, 0x00000000, 1);
+    SetDynamicObjectMaterialText(tmpobjid, 0, "KILLAH CHICKENS", 90, "courier", 20, 1, 0xFF000000, 0x00000000, 1);
     tmpobjid = CA_CreateDynamicObject_SC(19482, 2451.228027, -1988.157348, 15.496485, -0.199994, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
     SetDynamicObjectMaterialText(tmpobjid, 0, "chicken tendies!!", 90, "Ariel", 15, 0, 0xFFEA633B, 0x00000000, 1);
     tmpobjid = CA_CreateDynamicObject_SC(3863, 2441.297851, -1963.979736, 13.665780, 0.000000, 0.000000, 91.099945, -1, -1, -1, 300.00, 300.00); 
