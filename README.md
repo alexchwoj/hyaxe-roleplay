@@ -26,6 +26,7 @@ By mid-2022, a complete rewrite of the server began, prioritizing system robustn
 - **Safe zones & Hospital:** safe zone enforcement and hospital/death handling.
 - **Tuning & Customization:** vehicle tuning, paintjobs and model data.
 - **Events & Seasonal:** support for events and seasonal modules (e.g., Halloween, fireworks).
+- **Plugin:** Includes its own native plugin located in `source/plugin/` providing AMX natives (textdraw utilities, Argon2 hashing helpers, gang DB helpers) and a background worker queue for threaded tasks.
 
 ## Run queries
 
@@ -62,42 +63,42 @@ DELIMITER ;
 ## Gallery
 
 <div align="center">
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;max-width:1000px;">
-        <div style="margin:8px;text-align:center;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:18px;max-width:960px;">
+        <div style="width:100%;text-align:center;">
             <a href="https://www.youtube.com/watch?v=tmU0KFKOkf0" target="_blank">
-                <img src="https://img.youtube.com/vi/tmU0KFKOkf0/hqdefault.jpg" alt="Hyaxe 1.0 vs Hyaxe 2.0 | Brief comparison" width="320" />
+                <img src="https://img.youtube.com/vi/tmU0KFKOkf0/hqdefault.jpg" alt="Hyaxe 1.0 vs Hyaxe 2.0 | Brief comparison" style="width:100%;height:auto;max-width:960px;" />
             </a>
-            <div style="max-width:320px">Hyaxe 1.0 vs Hyaxe 2.0 | Brief comparison</div>
+            <div>Hyaxe 1.0 vs Hyaxe 2.0 | Brief comparison</div>
         </div>
-        <div style="margin:8px;text-align:center;">
+        <div style="width:100%;text-align:center;">
             <a href="https://www.youtube.com/watch?v=4iwvFKbTejA" target="_blank">
-                <img src="https://img.youtube.com/vi/4iwvFKbTejA/hqdefault.jpg" alt="Grill" width="320" />
+                <img src="https://img.youtube.com/vi/4iwvFKbTejA/hqdefault.jpg" alt="Grill" style="width:100%;height:auto;max-width:960px;" />
             </a>
-            <div style="max-width:320px">Grill</div>
+            <div>Grill</div>
         </div>
-        <div style="margin:8px;text-align:center;">
+        <div style="width:100%;text-align:center;">
             <a href="https://www.youtube.com/watch?v=QM4JX0XckmE" target="_blank">
-                <img src="https://img.youtube.com/vi/QM4JX0XckmE/hqdefault.jpg" alt="New item: Dynamite" width="320" />
+                <img src="https://img.youtube.com/vi/QM4JX0XckmE/hqdefault.jpg" alt="New item: Dynamite" style="width:100%;height:auto;max-width:960px;" />
             </a>
-            <div style="max-width:320px">New item: Dynamite</div>
+            <div>New item: Dynamite</div>
         </div>
-        <div style="margin:8px;text-align:center;">
+        <div style="width:100%;text-align:center;">
             <a href="https://www.youtube.com/watch?v=HZAcgJwBQYw" target="_blank">
-                <img src="https://img.youtube.com/vi/HZAcgJwBQYw/hqdefault.jpg" alt="Fishing job" width="320" />
+                <img src="https://img.youtube.com/vi/HZAcgJwBQYw/hqdefault.jpg" alt="Fishing job" style="width:100%;height:auto;max-width:960px;" />
             </a>
-            <div style="max-width:320px">Fishing job</div>
+            <div>Fishing job</div>
         </div>
-        <div style="margin:8px;text-align:center;">
+        <div style="width:100%;text-align:center;">
             <a href="https://www.youtube.com/watch?v=PaqUDb_RBwA" target="_blank">
-                <img src="https://img.youtube.com/vi/PaqUDb_RBwA/hqdefault.jpg" alt="Mechanic Workshop | Demonstration" width="320" />
+                <img src="https://img.youtube.com/vi/PaqUDb_RBwA/hqdefault.jpg" alt="Mechanic Workshop | Demonstration" style="width:100%;height:auto;max-width:960px;" />
             </a>
-            <div style="max-width:320px">Mechanic Workshop | Demonstration</div>
+            <div>Mechanic Workshop | Demonstration</div>
         </div>
-        <div style="margin:8px;text-align:center;">
+        <div style="width:100%;text-align:center;">
             <a href="https://www.youtube.com/watch?v=MIbdOgy1UK8" target="_blank">
-                <img src="https://img.youtube.com/vi/MIbdOgy1UK8/hqdefault.jpg" alt="Fireworks update" width="320" />
+                <img src="https://img.youtube.com/vi/MIbdOgy1UK8/hqdefault.jpg" alt="Fireworks update" style="width:100%;height:auto;max-width:960px;" />
             </a>
-            <div style="max-width:320px">Fireworks update</div>
+            <div>Fireworks update</div>
         </div>
     </div>
 </div>
