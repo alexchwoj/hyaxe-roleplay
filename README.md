@@ -1,7 +1,7 @@
 <p align="center">
     <img src="images/hyaxe.png" alt="Hyaxe logo" width="360" />
 </p>
-<p align="center">Version 2 of the well-known Hyaxe Roleplay San Andreas Multiplayer server, refactored and adapted for release as an open-source project.</p>
+<p align="center">Version 2 of the well-known Hyaxe Roleplay San Andreas Multiplayer server, refactored and adapted for release as an open-source project. <b>Please, if you're going to use code from here, leave us a star!</b></p>
 
 ## Authors
 
